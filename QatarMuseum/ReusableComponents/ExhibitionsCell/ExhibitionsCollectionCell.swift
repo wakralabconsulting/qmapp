@@ -1,0 +1,139 @@
+//
+//  ExhibitionsCollectionCell.swift
+//  QatarMuseum
+//
+//  Created by Exalture on 10/06/18.
+//  Copyright © 2018 Exalture. All rights reserved.
+//
+
+import Kingfisher
+import UIKit
+
+class ExhibitionsCollectionCell: UICollectionViewCell {
+    @IBOutlet weak var exhibitionImageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var addressLabel: UILabel!
+    @IBOutlet weak var favouriteButton: UIButton!
+    @IBOutlet weak var openCloseView: UIView!
+    @IBOutlet weak var openCloseLabel: UILabel!
+    var isFvourite : Bool = false
+    var exhibitionCellItemBtnTapAction : (()->())?
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setGradientLayer()
+    }
+    func setExhibitionCellValues(cellValues: NSDictionary,imageName: String) {
+        titleLabel.text = (cellValues.value(forKey: "title") as? String)?.uppercased()
+        dateLabel.text = (cellValues.value(forKey: "dateTitle") as? String)?.uppercased()
+        addressLabel.text = (cellValues.value(forKey: "addressTitle") as? String)?.uppercased()
+        if ((cellValues.value(forKey: "favourite") as! Bool) == true) {
+            favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
+        }
+        else {
+            favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
+        }
+        if ((cellValues.value(forKey: "open")as! Bool) == true) {
+            openCloseView.backgroundColor = UIColor.yellow
+            openCloseLabel.text = "NOW OPEN"
+            openCloseLabel.textColor = UIColor.black
+        }
+        else {
+            openCloseView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.45)
+            openCloseLabel.text = "CLOSED"
+            openCloseLabel.textColor = UIColor.white
+        }
+//        if let imageUrl = cellValues.value(forKey: "image") as? String{
+//           // exhibitionImageView.kf.indicatorType = .activity
+//            exhibitionImageView.kf.setImage(with: URL(string: imageUrl))
+//
+//        }
+        exhibitionImageView.image = UIImage(named: imageName)
+    }
+    //MARK: HeritageList data
+    func setHeritageListCellValues(cellValues: NSDictionary,imageName: String) {
+        
+        titleLabel.text = (cellValues.value(forKey: "title") as? String)?.uppercased()
+        dateLabel.text = (cellValues.value(forKey: "dateTitle") as? String)?.uppercased()
+        addressLabel.text = (cellValues.value(forKey: "addressTitle") as? String)?.uppercased()
+        if ((cellValues.value(forKey: "favourite") as! Bool) == true) {
+            favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
+        }
+        else {
+            favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
+        }
+        if ((cellValues.value(forKey: "open")as! Bool) == true) {
+            openCloseView.backgroundColor = UIColor.yellow
+            openCloseLabel.text = "NOW OPEN"
+            openCloseLabel.textColor = UIColor.black
+        }
+        else {
+            openCloseView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.45)
+            openCloseLabel.text = "CLOSED"
+            openCloseLabel.textColor = UIColor.white
+        }
+        //        if let imageUrl = cellValues.value(forKey: "image") as? String{
+        //           // exhibitionImageView.kf.indicatorType = .activity
+        //            exhibitionImageView.kf.setImage(with: URL(string: imageUrl))
+        //
+        //        }
+        exhibitionImageView.image = UIImage(named: imageName)
+    }
+    func setGradientLayer() {
+        self.exhibitionImageView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+        
+        let width = self.bounds.width
+        let height = self.bounds.height
+        let sHeight:CGFloat = 70.0
+        let shadow = UIColor.black.withAlphaComponent(0.7).cgColor
+        
+        // Add gradient bar for image on top
+//        let topImageGradient = CAGradientLayer()
+//        topImageGradient.frame = CGRect(x: 0, y: 0, width: width, height: sHeight)
+//        topImageGradient.colors = [shadow, UIColor.clear.cgColor]
+//        exhibitionImageView.layer.insertSublayer(topImageGradient, at: 0)
+        
+        let bottomImageGradient = CAGradientLayer()
+        bottomImageGradient.frame = CGRect(x: 0, y: height - sHeight, width: width, height: sHeight)
+        bottomImageGradient.colors = [UIColor.clear.cgColor, shadow]
+        exhibitionImageView.layer.insertSublayer(bottomImageGradient, at: 0)
+    }
+    @IBAction func didTapExhibitionCellButton(_ sender: UIButton) {
+        exhibitionCellItemBtnTapAction?()
+        self.favouriteButton.transform = CGAffineTransform(scaleX:1, y: 1)
+//        UIView.animate(withDuration: 0.3,
+//                       animations: {
+//                         self.favouriteButton.transform = CGAffineTransform(scaleX:0.7, y: 0.7)
+//        },
+//                       completion: { _ in
+//                        UIView.animate(withDuration: 0.3) {
+//                            self.favouriteButton.transform = CGAffineTransform.identity
+//                            self.favouriteButton.transform = CGAffineTransform(scaleX: 1, y: 1)
+//                            if (self.isFvourite) {
+//                                            self.favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
+//                                            self.isFvourite = false
+//                                        }
+//                                        else {
+//                                            self.favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
+//                                            self.isFvourite = true
+//                                        }
+//
+//                        }
+//        })
+    }
+    @IBAction func favoriteTouchDownPressed(_ sender: UIButton) {
+        
+        self.favouriteButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        if (isFvourite) {
+            favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
+            isFvourite = false
+        }
+        else {
+            favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
+            isFvourite = true
+        }
+        
+    }
+    
+}

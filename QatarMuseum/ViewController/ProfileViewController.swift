@@ -1,0 +1,106 @@
+//
+//  ProfileViewController.swift
+//  QatarMuseum
+//
+//  Created by Exalture on 10/06/18.
+//  Copyright © 2018 Exalture. All rights reserved.
+//
+
+import UIKit
+
+class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUpProtocol {
+    
+    
+   
+    @IBOutlet weak var headerView: CommonHeaderView!
+    @IBOutlet weak var profileImageView: UIImageView!
+    
+    @IBOutlet weak var viewmyCulturePassButton: UIButton!
+    @IBOutlet weak var viewMyFavoriteButton: UIButton!
+    
+    @IBOutlet weak var editButton: UIButton!
+    var popupView : ComingSoonPopUp = ComingSoonPopUp()
+    var fromHome : Bool = false
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setUpProfileUI()
+        
+    }
+
+    func setUpProfileUI() {
+        headerView.headerViewDelegate = self
+        headerView.headerTitle.text = "PROFILE"
+        headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
+       // headerView.headerBackButton.contentEdgeInsets = UIEdgeInsets(top: 23, left: 25, bottom: 25, right: 23)
+        profileImageView.image = UIImage(named: "profile_pic_round")
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    func loadComingSoonPopup() {
+        popupView  = ComingSoonPopUp(frame: self.view.frame)
+        popupView.comingSoonPopupDelegate = self
+        self.view.addSubview(popupView)
+    }
+    func closeButtonPressed() {
+        self.popupView.removeFromSuperview()
+    }
+    @IBAction func didTapViewMyFavoriteButton(_ sender: UIButton) {
+        loadComingSoonPopup()
+        self.viewMyFavoriteButton.backgroundColor = UIColor(red: 241/255, green: 60/255, blue: 134/255, alpha: 1)
+        self.viewMyFavoriteButton.setTitleColor(UIColor.white, for: .normal)
+        self.viewMyFavoriteButton.transform = CGAffineTransform(scaleX: 1, y: 1)
+        
+    }
+    @IBAction func viewMyFavoriteButtonTouchDown(_ sender: UIButton) {
+        self.viewMyFavoriteButton.backgroundColor = UIColor(red: 255/255, green: 195/255, blue: 223/255, alpha: 1)
+        self.viewMyFavoriteButton.setTitleColor(UIColor(red: 251/255, green: 50/255, blue: 134/255, alpha: 1), for: .normal)
+         self.viewMyFavoriteButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+    }
+    @IBAction func didTapViewMyCulturePassCard(_ sender: UIButton) {
+        loadComingSoonPopup()
+        self.viewmyCulturePassButton.backgroundColor = UIColor(red: 127/255, green: 167/255, blue: 211/255, alpha: 1)
+        self.viewmyCulturePassButton.setTitleColor(UIColor.white, for: .normal)
+        self.viewmyCulturePassButton.transform = CGAffineTransform(scaleX: 1, y: 1)
+    }
+    @IBAction func viewMyCulturePassButtonTouchDown(_ sender: UIButton) {
+        self.viewmyCulturePassButton.backgroundColor = UIColor(red: 196/255, green: 238/255, blue: 244/255, alpha: 1)
+        self.viewmyCulturePassButton.setTitleColor(UIColor(red: 63/255, green: 167/255, blue: 238/255, alpha: 1), for: .normal)
+        self.viewmyCulturePassButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+    }
+    @IBAction func didTapProfileEditButton(_ sender: UIButton) {
+        self.editButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        loadComingSoonPopup()
+    }
+    @IBAction func editButtonTouchDown(_ sender: UIButton) {
+        self.editButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+    }
+    
+    //MARK: headerView Protocol
+    func headerCloseButtonPressed() {
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromLeft
+        self.view.window!.layer.add(transition, forKey: kCATransition)
+        if (fromHome) {
+            let appDelegate = UIApplication.shared.delegate
+            let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
+            appDelegate?.window??.rootViewController = homeViewController
+        }
+        else {
+            self.dismiss(animated: false, completion: nil)
+        }
+    }
+    
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+
+    
+
+}

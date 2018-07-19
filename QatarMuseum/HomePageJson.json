@@ -1,0 +1,30 @@
+
+{
+    "items": [{
+              "title": "Museum Of Islamic Art",
+              "tourguide": true
+              },
+              {
+              "title": "National Museum Of Qatar",
+              "tourguide": true
+              },
+              {
+              "title": "Mathaf - Arab Museum of Modern Art",
+              "tourguide": true
+              
+              },
+              {
+              "title": "Fire Station - Artists in Residence",
+              "tourguide": false
+              },
+              {
+              "title": "Exhibitions",
+              "tourguide": false
+              
+              },
+              {
+              "title": "Qatar Olympic And Sports Museum",
+              "tourguide": true
+              }
+              ]
+}

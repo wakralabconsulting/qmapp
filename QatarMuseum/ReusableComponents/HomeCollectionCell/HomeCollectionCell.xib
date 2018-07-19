@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="DINNextLTPro-Regular.ttf">
+            <string>DINNextLTPro-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="homeCellId" id="4a2-eh-yZT" customClass="HomeCollectionViewCell" customModule="QatarMuseums" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="318" height="178"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                <rect key="frame" x="0.0" y="0.0" width="318" height="178"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4u4-Z5-ztU">
+                        <rect key="frame" x="0.0" y="0.0" width="318" height="178"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="F65-mY-d5K">
+                                <rect key="frame" x="0.0" y="0.0" width="318" height="178"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exhibitions" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="duj-59-lq3">
+                                <rect key="frame" x="11" y="145" width="245" height="21"/>
+                                <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="21"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="va1-Fv-7rX">
+                                <rect key="frame" x="264" y="130" width="34" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="PgR-7h-5qQ"/>
+                                    <constraint firstAttribute="width" constant="34" id="b3C-jn-bam"/>
+                                </constraints>
+                                <state key="normal" image="Audio CircleX1"/>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="va1-Fv-7rX" firstAttribute="leading" secondItem="duj-59-lq3" secondAttribute="trailing" constant="8" id="20u-P6-cgx"/>
+                            <constraint firstAttribute="bottom" secondItem="F65-mY-d5K" secondAttribute="bottom" id="A8v-cG-xa6"/>
+                            <constraint firstAttribute="bottom" secondItem="duj-59-lq3" secondAttribute="bottom" constant="12" id="Ftq-EE-4Hp"/>
+                            <constraint firstItem="duj-59-lq3" firstAttribute="leading" secondItem="4u4-Z5-ztU" secondAttribute="leading" constant="11" id="IAv-wk-IYt"/>
+                            <constraint firstItem="va1-Fv-7rX" firstAttribute="centerY" secondItem="duj-59-lq3" secondAttribute="centerY" constant="-8" id="Qek-hY-mdg"/>
+                            <constraint firstItem="F65-mY-d5K" firstAttribute="top" secondItem="4u4-Z5-ztU" secondAttribute="top" id="TDk-Tj-M4Y"/>
+                            <constraint firstAttribute="trailing" secondItem="F65-mY-d5K" secondAttribute="trailing" id="XHQ-xT-v1G"/>
+                            <constraint firstItem="F65-mY-d5K" firstAttribute="leading" secondItem="4u4-Z5-ztU" secondAttribute="leading" id="yY9-Qx-Dlx"/>
+                            <constraint firstAttribute="trailing" secondItem="va1-Fv-7rX" secondAttribute="trailing" constant="20" id="zWe-7f-FHj"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="4u4-Z5-ztU" secondAttribute="bottom" id="Kl5-Ab-cXa"/>
+                <constraint firstItem="4u4-Z5-ztU" firstAttribute="leading" secondItem="4a2-eh-yZT" secondAttribute="leading" id="T7o-og-adO"/>
+                <constraint firstItem="4u4-Z5-ztU" firstAttribute="top" secondItem="4a2-eh-yZT" secondAttribute="top" id="gwG-F5-q75"/>
+                <constraint firstAttribute="trailing" secondItem="4u4-Z5-ztU" secondAttribute="trailing" id="lBs-4x-VFr"/>
+            </constraints>
+            <size key="customSize" width="318" height="178"/>
+            <connections>
+                <outlet property="homeImageView" destination="F65-mY-d5K" id="63A-EK-UWW"/>
+                <outlet property="homeTitleLabel" destination="duj-59-lq3" id="c4B-bO-dnF"/>
+                <outlet property="tourGuideButton" destination="va1-Fv-7rX" id="qRQ-ZH-EaS"/>
+            </connections>
+            <point key="canvasLocation" x="-3" y="-36"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="Audio CircleX1" width="93" height="93"/>
+    </resources>
+</document>

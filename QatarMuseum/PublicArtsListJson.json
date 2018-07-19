@@ -1,0 +1,62 @@
+
+
+{
+    "items": [{
+              "title": "GANDHI'S THREE MONKEYS",
+              "subTitle": "BY SUBODH GUPTA",
+              "favourite": false
+              },
+              {
+              "title": "7 BY RICHARD SERRA",
+              "subTitle": "",
+              "favourite": false,
+              },
+              {
+              "title": "LUSAIL HANDBALL INSTALLATIONS",
+              "subTitle": "",
+              "favourite": false
+              },{
+              "title": "SMOKE BY TONY SMITH",
+              "subTitle": "",
+              "favourite": false
+              },
+              {
+              "title": "QARAR UNIVERSITY INSTALLATIONS",
+              "subTitle": "",
+              "favourite": false
+              },
+              {
+              "title": "AIRPORT INSTALLATIONS",
+              "subTitle": "",
+              "favourite": false,
+              },
+              {
+              "title": "EAST-WEST / WEST-EAST BY RICHARD SERRA",
+              "subTitle": "",
+              "favourite": false
+              },{
+              "title": "THE MIRACULOUS JOURNEY BY DAMIEN HIRST",
+              "subTitle": "",
+              "favourite": false
+              },
+              {
+              "title": "CALLIGRAFFITI BY EL SEED",
+              "subTitle": "",
+              "favourite": false
+              },
+              {
+              "title": "MAMAN BY LOUISE BOURGEOIS",
+              "subTitle": "",
+              "favourite": false,
+              },
+              {
+              "title": "PERCEVAL BY SARAH LUCAS",
+              "subTitle": "",
+              "favourite": false
+              },{
+              "title": "HEALTHY LIVING FROM THE START ",
+              "subTitle": "BY ANNE GEDDES",
+              "favourite": false
+              }
+              ]
+}
