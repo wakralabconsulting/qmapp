@@ -20,6 +20,8 @@ class CollectionDetailCell: UITableViewCell {
     @IBOutlet weak var fourthDescription: UILabel!
     @IBOutlet weak var firstImageView: UIImageView!
     @IBOutlet weak var secondImageView: UIImageView!
+    @IBOutlet weak var firstImageHeight: NSLayoutConstraint!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         

@@ -210,7 +210,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         }
         else if (selectedIndex == 4){
             let parkView = self.storyboard?.instantiateViewController(withIdentifier: "parkViewId") as! ParksViewController
-           
+            parkView.isParkViewPage = true
             let transition = CATransition()
             transition.duration = 0.3
             transition.type = kCATransitionFade
