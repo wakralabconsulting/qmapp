@@ -283,7 +283,14 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     
     func notificationbuttonPressed() {
-        loadComingSoonPopup()
+        let notificationsView =  self.storyboard?.instantiateViewController(withIdentifier: "notificationId") as! NotificationsViewController
+        notificationsView.fromHome = false
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(notificationsView, animated: false, completion: nil)
     }
     
     func profileButtonPressed() {
