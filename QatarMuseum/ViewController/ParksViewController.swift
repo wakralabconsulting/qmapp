@@ -129,6 +129,12 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
        }
         else {
             let collectionCell = tableView.dequeueReusableCell(withIdentifier: "collectionCellId", for: indexPath) as! CollectionDetailCell
+            if(indexPath.row == 0) {
+                collectionCell.firstImageHeight.constant = 0
+            }
+            else {
+                collectionCell.firstImageHeight.constant = 180
+        }
             let collectionDataDict = collectionListArray.object(at: indexPath.row) as! NSDictionary
             collectionCell.setCollectionCellValues(cellValues: collectionDataDict, imageName: collectionImageArray.object(at: indexPath.row) as! String)
             loadingView.stopLoading()

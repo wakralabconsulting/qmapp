@@ -23,17 +23,17 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="collectionCellId" id="Vcr-Kg-Pfa" customClass="CollectionDetailCell" customModule="QatarMuseums" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="720"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="760"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Vcr-Kg-Pfa" id="TYI-uZ-lpf">
-                <rect key="frame" x="0.0" y="0.0" width="414" height="719.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="414" height="759.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K24-P3-bxl">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="719.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="759.5"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fZZ-ei-6fJ">
-                                <rect key="frame" x="15" y="10" width="384" height="699.5"/>
+                                <rect key="frame" x="15" y="10" width="384" height="734.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MIA PARK" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dtA-rt-etK">
                                         <rect key="frame" x="12" y="27" width="360" height="24"/>
@@ -59,43 +59,43 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Title Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KhI-61-asj">
-                                        <rect key="frame" x="25" y="108" width="334" height="18"/>
+                                        <rect key="frame" x="25" y="113" width="334" height="18"/>
                                         <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="18"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Title Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0cE-Z3-JPJ">
-                                        <rect key="frame" x="25" y="141" width="334" height="18"/>
-                                        <fontDescription key="fontDescription" name="DINNextLTPro-Light" family="DIN Next LT Pro" pointSize="18"/>
+                                        <rect key="frame" x="25" y="146" width="334" height="19"/>
+                                        <fontDescription key="fontDescription" name="DINNextLTPro-Light" family="DIN Next LT Pro" pointSize="19"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Title Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mfu-TR-hSB">
-                                        <rect key="frame" x="25" y="174" width="334" height="17"/>
+                                        <rect key="frame" x="25" y="180" width="334" height="17"/>
                                         <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="family_play" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nkd-hc-ZFg">
-                                        <rect key="frame" x="0.0" y="206" width="384" height="163"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="family_play" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nkd-hc-ZFg">
+                                        <rect key="frame" x="0.0" y="212" width="384" height="180"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="163" id="lao-W6-YYj"/>
+                                            <constraint firstAttribute="height" constant="180" id="lao-W6-YYj"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LABEL" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qm4-BD-w5J">
-                                        <rect key="frame" x="25" y="389" width="334" height="17"/>
+                                        <rect key="frame" x="25" y="412" width="334" height="17"/>
                                         <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vqm-5f-JkR">
-                                        <rect key="frame" x="0.0" y="424" width="384" height="217"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vqm-5f-JkR">
+                                        <rect key="frame" x="0.0" y="447" width="384" height="217"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="217" id="Ay7-Py-YfN"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LABEL" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1GX-ag-ZHy">
-                                        <rect key="frame" x="25" y="656" width="334" height="17"/>
+                                        <rect key="frame" x="25" y="679" width="334" height="17"/>
                                         <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -104,6 +104,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="Mfu-TR-hSB" firstAttribute="trailing" secondItem="0cE-Z3-JPJ" secondAttribute="trailing" id="1Jp-ue-pkj"/>
+                                    <constraint firstAttribute="bottom" secondItem="1GX-ag-ZHy" secondAttribute="bottom" constant="38.5" id="3SQ-on-qcY"/>
                                     <constraint firstAttribute="trailing" secondItem="dtA-rt-etK" secondAttribute="trailing" constant="12" id="5J4-e8-VxZ"/>
                                     <constraint firstItem="dtA-rt-etK" firstAttribute="leading" secondItem="fZZ-ei-6fJ" secondAttribute="leading" constant="12" id="6nQ-wU-WUK"/>
                                     <constraint firstItem="0cE-Z3-JPJ" firstAttribute="leading" secondItem="KhI-61-asj" secondAttribute="leading" id="9Lr-13-xqP"/>
@@ -111,7 +112,6 @@
                                     <constraint firstItem="Nkd-hc-ZFg" firstAttribute="leading" secondItem="fZZ-ei-6fJ" secondAttribute="leading" id="E0M-6z-qWv"/>
                                     <constraint firstItem="0cE-Z3-JPJ" firstAttribute="leading" secondItem="Mfu-TR-hSB" secondAttribute="leading" id="H4E-sx-Gzd"/>
                                     <constraint firstAttribute="trailing" secondItem="Nkd-hc-ZFg" secondAttribute="trailing" id="HWq-X0-ZXi"/>
-                                    <constraint firstAttribute="bottom" secondItem="1GX-ag-ZHy" secondAttribute="bottom" constant="26.5" id="Jg2-8s-zZU"/>
                                     <constraint firstItem="Qm4-BD-w5J" firstAttribute="trailing" secondItem="KhI-61-asj" secondAttribute="trailing" id="LkB-U7-2d0"/>
                                     <constraint firstItem="vqm-5f-JkR" firstAttribute="leading" secondItem="fZZ-ei-6fJ" secondAttribute="leading" id="Ll4-h0-ZSS"/>
                                     <constraint firstItem="Mfu-TR-hSB" firstAttribute="top" secondItem="0cE-Z3-JPJ" secondAttribute="bottom" constant="15" id="Mxd-ym-Pj4"/>
@@ -128,7 +128,7 @@
                                     <constraint firstItem="vqm-5f-JkR" firstAttribute="top" secondItem="Qm4-BD-w5J" secondAttribute="bottom" constant="18" id="jQd-6E-GQM"/>
                                     <constraint firstItem="0cE-Z3-JPJ" firstAttribute="top" secondItem="KhI-61-asj" secondAttribute="bottom" constant="15" id="klf-gF-VHG"/>
                                     <constraint firstItem="Qm4-BD-w5J" firstAttribute="top" secondItem="Nkd-hc-ZFg" secondAttribute="bottom" constant="20" id="mAC-BL-HC1"/>
-                                    <constraint firstItem="KhI-61-asj" firstAttribute="top" secondItem="UP4-Eh-Py0" secondAttribute="bottom" constant="15" id="rVR-hs-vaa"/>
+                                    <constraint firstItem="KhI-61-asj" firstAttribute="top" secondItem="UP4-Eh-Py0" secondAttribute="bottom" constant="20" id="rVR-hs-vaa"/>
                                     <constraint firstItem="UP4-Eh-Py0" firstAttribute="leading" secondItem="fZZ-ei-6fJ" secondAttribute="leading" constant="25" id="ubz-HB-0Gb"/>
                                     <constraint firstItem="Eam-Z1-kC8" firstAttribute="centerX" secondItem="dtA-rt-etK" secondAttribute="centerX" id="v5d-na-zFj"/>
                                     <constraint firstItem="Nkd-hc-ZFg" firstAttribute="top" secondItem="Mfu-TR-hSB" secondAttribute="bottom" constant="15" id="vNW-B1-4hH"/>
@@ -143,7 +143,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.90195196870000005" green="0.90178054569999999" blue="0.89826041459999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="fZZ-ei-6fJ" secondAttribute="bottom" constant="10" id="21g-f7-hu3"/>
+                            <constraint firstAttribute="bottom" secondItem="fZZ-ei-6fJ" secondAttribute="bottom" constant="15" id="21g-f7-hu3"/>
                             <constraint firstAttribute="trailing" secondItem="fZZ-ei-6fJ" secondAttribute="trailing" constant="15" id="Bq2-xK-OwF"/>
                             <constraint firstItem="fZZ-ei-6fJ" firstAttribute="top" secondItem="K24-P3-bxl" secondAttribute="top" constant="10" id="MLs-hB-kjy"/>
                             <constraint firstItem="fZZ-ei-6fJ" firstAttribute="leading" secondItem="K24-P3-bxl" secondAttribute="leading" constant="15" id="bfl-5V-JTB"/>
@@ -159,6 +159,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="firstDescription" destination="UP4-Eh-Py0" id="Nfr-db-UCc"/>
+                <outlet property="firstImageHeight" destination="lao-W6-YYj" id="qW6-r4-Td1"/>
                 <outlet property="firstImageView" destination="Nkd-hc-ZFg" id="hJI-2R-0oz"/>
                 <outlet property="firstTitle" destination="dtA-rt-etK" id="b3M-w9-lhd"/>
                 <outlet property="fourthDescription" destination="1GX-ag-ZHy" id="g85-q2-lfI"/>
