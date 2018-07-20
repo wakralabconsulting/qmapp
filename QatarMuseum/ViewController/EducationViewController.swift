@@ -1,0 +1,101 @@
+//
+//  EducationViewController.swift
+//  QatarMuseums
+//
+//  Created by Exalture on 20/07/18.
+//  Copyright © 2018 Exalture. All rights reserved.
+//
+
+import AVKit
+import AVFoundation
+import UIKit
+
+
+class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,HeaderViewProtocol {
+
+    
+    @IBOutlet weak var headerView: CommonHeaderView!
+    
+    @IBOutlet weak var educationTitle: UILabel!
+    
+    @IBOutlet weak var videoView: UIView!
+    @IBOutlet weak var firstDescriptionLabel: UILabel!
+    @IBOutlet weak var secondDescriptionLabel: UILabel!
+    @IBOutlet weak var playButton: UIButton!
+    
+    @IBOutlet weak var videoImage: UIImageView!
+    @IBOutlet weak var discoverButton: UIButton!
+    var player = AVPlayer()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupUI()
+        loadVideo()
+    }
+    func setupUI() {
+        secondDescriptionLabel.text = "All of our education parameters privide interactive opportunities. We hope that they create lasting memories and lead to the development of creative, compassionate and engaged individuals.\n\n For school teachers and educators, we bring custom-made worshops, conferences and trainings to suit their needs. We also focus on working with children to encourage them to explore the world around them, engage with it, and express themselves through creative activities. "
+        headerView.headerViewDelegate = self
+        headerView.headerTitle.text = "EDUCATION"
+    }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    func loadVideo() {
+        let videoURL = URL(string: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
+        player = AVPlayer(url: videoURL!)
+        
+        let playerLayer = AVPlayerLayer(player: player)
+        playerLayer.frame = CGRect(x: self.videoView.bounds.origin.x, y: self.videoView.bounds.origin.y, width: self.view.frame.width-30, height: 203.0)
+        
+        self.videoView.layer.addSublayer(playerLayer)
+        
+        //player.play()
+    }
+    //MARK: header delegate
+    func headerCloseButtonPressed() {
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromLeft
+        self.view.window!.layer.add(transition, forKey: kCATransition)
+            let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
+            let appDelegate = UIApplication.shared.delegate
+            appDelegate?.window??.rootViewController = homeViewController
+        
+    }
+    
+    @IBAction func didTapPlayPauseButton(_ sender: UIButton) {
+         self.playButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        if (playButton.tag == 0) {
+            playButton.tag = 1
+            playButton.setImage((UIImage(named: "pause_blackX1")), for: .normal)
+            player.play()
+        }
+        else {
+            playButton.tag = 0
+            playButton.setImage((UIImage(named: "play_button")), for: .normal)
+            
+            player.pause()
+        }
+    }
+    
+    @IBAction func didTapDiscoverButton(_ sender: UIButton) {
+        self.discoverButton.backgroundColor = UIColor(red: 128/255, green: 166/255, blue: 215/255, alpha: 1)
+        self.discoverButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+    }
+    //For Button Animations
+    @IBAction func discovereButtonTouchDown(_ sender: UIButton) {
+        self.discoverButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        self.discoverButton.backgroundColor = UIColor(red: 128/255, green: 166/255, blue: 215/255, alpha: 0.6)
+    }
+    @IBAction func playPauseButtonTouchDown(_ sender: UIButton) {
+        self.playButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+    }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+
+   
+
+}

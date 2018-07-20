@@ -190,7 +190,13 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func educationButtonPressed() {
-        loadComingSoonPopup()
+        let educationView =  self.storyboard?.instantiateViewController(withIdentifier: "educationPageID") as! EducationViewController
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionFade
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(educationView, animated: false, completion: nil)
     }
     
     func tourGuideButtonPressed() {
