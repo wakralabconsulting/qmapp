@@ -180,6 +180,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     func eventbuttonPressed() {
         let eventView =  self.storyboard?.instantiateViewController(withIdentifier: "eventPageID") as! EventViewController
         eventView.fromHome = true
+        eventView.isLoadEventPage = true
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionFade
@@ -391,6 +392,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     func topBarEventButtonPressed() {
         let eventView =  self.storyboard?.instantiateViewController(withIdentifier: "eventPageID") as! EventViewController
         eventView.fromHome = true
+        eventView.isLoadEventPage = true
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush

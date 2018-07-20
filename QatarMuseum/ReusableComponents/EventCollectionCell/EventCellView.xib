@@ -64,7 +64,7 @@
                                     <constraint firstAttribute="height" constant="13" id="kKt-kE-LrP"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="13"/>
-                                <color key="textColor" red="0.92683249710000004" green="0.25668323040000002" blue="0.53822809459999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.92683249711990356" green="0.25668323040008545" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rvT-BX-xxz">
@@ -75,7 +75,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="252" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3om-vv-ART">
-                                <rect key="frame" x="182.5" y="61" width="201.5" height="0.0"/>
+                                <rect key="frame" x="182.5" y="64" width="201.5" height="0.0"/>
                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -145,7 +145,7 @@
                             <constraint firstItem="rvT-BX-xxz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ICe-ec-O9m" secondAttribute="trailing" constant="10" id="nEW-pQ-dcA"/>
                             <constraint firstItem="clU-2c-lZd" firstAttribute="top" secondItem="ICe-ec-O9m" secondAttribute="bottom" constant="1" id="nH0-5y-6vv"/>
                             <constraint firstItem="czc-Kh-k6x" firstAttribute="top" secondItem="Te5-jC-pHj" secondAttribute="top" constant="11" id="uSM-tj-akh"/>
-                            <constraint firstItem="3om-vv-ART" firstAttribute="top" secondItem="czc-Kh-k6x" secondAttribute="bottom" constant="2" id="xWg-yj-kEk"/>
+                            <constraint firstItem="3om-vv-ART" firstAttribute="top" secondItem="czc-Kh-k6x" secondAttribute="bottom" constant="5" id="xWg-yj-kEk"/>
                             <constraint firstItem="ICe-ec-O9m" firstAttribute="top" secondItem="enr-gf-94c" secondAttribute="bottom" constant="8" id="z8d-GO-zsg"/>
                         </constraints>
                     </view>
@@ -160,6 +160,14 @@
             <size key="customSize" width="400" height="100"/>
             <connections>
                 <outlet property="cellBackgroundView" destination="Te5-jC-pHj" id="vO3-8W-Nkd"/>
+                <outlet property="descriptionLabel" destination="czc-Kh-k6x" id="jsR-kM-2fx"/>
+                <outlet property="firstTitle" destination="Q7b-uS-wR3" id="Dz2-px-doq"/>
+                <outlet property="groupSizeLabel" destination="3om-vv-ART" id="PVS-xp-cXB"/>
+                <outlet property="secondTitleLabel" destination="enr-gf-94c" id="cyj-Pl-gkU"/>
+                <outlet property="timingLabel" destination="ICe-ec-O9m" id="sDY-oQ-tH6"/>
+                <outlet property="timingSecondLabel" destination="clU-2c-lZd" id="oYq-Pd-yBE"/>
+                <outlet property="titleLineView" destination="oFG-iA-zIj" id="7kb-3w-e2n"/>
+                <outlet property="verticalLineView" destination="rvT-BX-xxz" id="hGI-37-DeY"/>
             </connections>
             <point key="canvasLocation" x="41" y="-201"/>
         </collectionViewCell>
