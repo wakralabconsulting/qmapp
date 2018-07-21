@@ -17,10 +17,13 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     @IBOutlet weak var innerView: UIView!
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var calendarInnerView: UIView!
+    
+    @IBOutlet weak var listTitleLabel: UILabel!
     var effect:UIVisualEffect!
     var eventPopup : EventPopupView = EventPopupView()
     var selectedDateForEvent : Date = Date()
     var fromHome : Bool = false
+    var isLoadEventPage : Bool = false
     fileprivate lazy var scopeGesture: UIPanGestureRecognizer = {
         [unowned self] in
         let panGesture = UIPanGestureRecognizer(target: self.calendarView, action: #selector(self.calendarView.handleScopeGesture(_:)))
@@ -42,9 +45,20 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         headerView.headerViewDelegate = self
         headerView.headerTitle.text = "CALENDAR"
         headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
-      //  headerView.headerBackButton.contentEdgeInsets = UIEdgeInsets(top: 24, left: 25, bottom: 25, right: 23)
         self.view.addGestureRecognizer(self.scopeGesture)
-        self.eventCollectionView.panGestureRecognizer.require(toFail: self.scopeGesture)
+    self.eventCollectionView.panGestureRecognizer.require(toFail: self.scopeGesture)
+        if (isLoadEventPage == true) {
+            listTitleLabel.text = "EVENTS"
+            headerView.headerTitle.text = "CALENDAR"
+            listTitleLabel.textColor = UIColor(red: 129/255, green: 166/255, blue: 215/255, alpha: 1)
+        }
+        else {
+            listTitleLabel.text = "DETAILS"
+            headerView.headerTitle.text = "EDUCATION CALENDAR"
+            listTitleLabel.textColor = UIColor.black
+            headerView.settingsButton.isHidden = false
+            
+        }
         
        
         //calendarView.appearance.titleWeekendColor = UIColor.init(red: 236/255, green: 65/255, blue: 136/255, alpha: 1)
@@ -89,6 +103,12 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         else {
             cell.cellBackgroundView.backgroundColor = UIColor(red: 255/256, green: 255/256, blue: 255/256, alpha: 1)
         }
+        if (isLoadEventPage == true) {
+            cell.setEventCellValues()
+        }
+        else {
+            cell.setEducationCalendarValues()
+        }
         
         return cell
     
@@ -113,6 +133,9 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             self.dismiss(animated: false, completion: nil)
         }
         
+    }
+    @objc func settingsButtonPressed() {
+        print("hi")
     }
     func loadEventPopup() {
         eventPopup  = EventPopupView(frame: self.view.frame)

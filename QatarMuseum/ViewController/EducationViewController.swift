@@ -81,6 +81,15 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
     @IBAction func didTapDiscoverButton(_ sender: UIButton) {
         self.discoverButton.backgroundColor = UIColor(red: 128/255, green: 166/255, blue: 215/255, alpha: 1)
         self.discoverButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        let eventView =  self.storyboard?.instantiateViewController(withIdentifier: "eventPageID") as! EventViewController
+        eventView.fromHome = true
+        eventView.isLoadEventPage = false
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionFade
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(eventView, animated: false, completion: nil)
     }
     //For Button Animations
     @IBAction func discovereButtonTouchDown(_ sender: UIButton) {

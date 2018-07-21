@@ -7,15 +7,18 @@
 //
 
 import UIKit
-protocol HeaderViewProtocol
+@objc protocol HeaderViewProtocol
 {
     func headerCloseButtonPressed()
+    @objc optional func settingsButtonPressed()
 }
 class CommonHeaderView: UIView {
 
     @IBOutlet weak var headerBackButton: UIButton!
     @IBOutlet weak var headerTitle: UILabel!
     @IBOutlet var headerView: UIView!
+    
+    @IBOutlet weak var settingsButton: UIButton!
     var headerViewDelegate : HeaderViewProtocol?
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -41,4 +44,13 @@ class CommonHeaderView: UIView {
     @IBAction func headerCloseTouchDown(_ sender: UIButton) {
        self.headerBackButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
+    @IBAction func didTapSettings(_ sender: UIButton) {
+        self.settingsButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        self.headerViewDelegate?.settingsButtonPressed!()
+    }
+    @IBAction func settingsButtonTouchDown(_ sender: UIButton) {
+        self.settingsButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+    }
+    
+    
 }

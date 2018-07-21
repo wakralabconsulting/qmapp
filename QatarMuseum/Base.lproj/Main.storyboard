@@ -211,7 +211,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.33333333333333331" green="0.3333333432674408" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="lOW-fS-WWT" firstAttribute="top" secondItem="qGw-V5-okh" secondAttribute="top" id="2Aq-WS-H9g"/>
                                     <constraint firstAttribute="bottom" secondItem="wb0-R0-nMT" secondAttribute="bottom" id="7tJ-j1-vR1"/>
@@ -478,7 +478,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EVENTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWB-Sh-j4n">
-                                        <rect key="frame" x="166.66666666666666" y="308.66666666666669" width="81.333333333333343" height="29"/>
+                                        <rect key="frame" x="164.33333333333334" y="308.66666666666669" width="87" height="29"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="29" id="guL-0K-jjs"/>
                                         </constraints>
@@ -546,6 +546,7 @@
                         <outlet property="eventCollectionView" destination="Kwa-bH-gap" id="7jk-c8-yEr"/>
                         <outlet property="headerView" destination="09Z-XO-Tiu" id="aEF-8I-dhr"/>
                         <outlet property="innerView" destination="aKJ-8b-uBw" id="iz3-mq-Ozz"/>
+                        <outlet property="listTitleLabel" destination="TWB-Sh-j4n" id="5x6-ev-dIQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zec-1V-0XM" userLabel="First Responder" sceneMemberID="firstResponder"/>

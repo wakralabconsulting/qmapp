@@ -274,6 +274,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     func eventButtonPressed() {
         let eventView =  self.storyboard?.instantiateViewController(withIdentifier: "eventPageID") as! EventViewController
         eventView.fromHome = false
+        eventView.isLoadEventPage = true
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush
