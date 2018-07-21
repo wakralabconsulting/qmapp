@@ -1,0 +1,35 @@
+/* 
+  Localizable.strings
+  QatarMuseums
+
+  Created by Exalture on 21/07/18.
+  Copyright © 2018 Exalture. All rights reserved.
+*/
+"WEBVIEW_TITLE" = "Qatar Museums";
+"CALENDAR_TITLE" = "CALENDAR";
+"CALENDAR_EVENT_TITLE" = "EVENTS";
+"EDUCATIONCALENDAR_TITILE" = "EDUCATION CALENDAR";
+"EDUCATION_EVENT_TITLE" = "DETAILS";
+"CALENDAR_ACCESS_MTITLE" = "Access Denied";
+"CALENDAR_ACCESS_MESSAGE" = "This app doesn't have access to your Calender. Please allow it from Settings";
+"PROFILE_TITLE" = "PROFILE";
+"EXHIBITIONS_TITLE" = "EXHIBITIONS";
+"HERITAGE_SITES_TITLE" = "HERITAGE SITES";
+"PUBLIC_ARTS_TITLE" = "PUBLIC ARTS";
+"COLLECTIONS_TITLE" = "COLLECTIONS";
+"DINING_TITLE" = "DINING";
+"MIA_TOUR_GUIDES_TITLE" = "MIA TOUR GUIDES";
+"NOTIFICATIONS_TITLE" = "NOTIFICATIONS";
+"EDUCATION_TITLE" = "EDUCATION";
+"NOW_OPEN_TITLE" = "NOW OPEN";
+"CLOSED_TITLE" = "CLOSED";
+"EXHIBITIONS_LABEL" = "Exhibitions";
+"EVENTS_LABEL" = "Events";
+"EDUCATION_LABEL" = "Education";
+"TOURGUIDE_LABEL" = "Tour Guide";
+"HERITAGESITES_LABEL" = "Heritage Sites";
+"PUBLIC_ARTS_LABEL" = "Public Arts";
+"PARKS_LABEL" = "Parks";
+"DINING_LABEL" = "Dining";
+"GIFTSHOP_LABEL" = "Gift Shop";
+"SETTINGS_LABEL" = "Settings";

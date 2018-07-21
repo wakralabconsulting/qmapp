@@ -16,8 +16,12 @@ class EventPopupView: UIView {
 
     @IBOutlet var eventPopUp: UIView!
     
+    @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var eventPopupInnerView: UIView!
     @IBOutlet weak var addToCalendarButton: UIButton!
+    @IBOutlet weak var eventTitle: UILabel!
+    
+    @IBOutlet weak var eventDescription: UILabel!
     var eventPopupDelegate : EventPopUpProtocol?
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,17 +43,22 @@ class EventPopupView: UIView {
     func setUpUI() {
         
         eventPopupInnerView.layer.cornerRadius = 20.0
-        self.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0)
+        self.backgroundColor = UIColor.popupBackgroundWhite
         self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        
-       
         
     }
     @IBAction func didTapEventCloseButton(_ sender: UIButton) {
         eventPopupDelegate?.eventCloseButtonPressed()
+        self.closeButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
-    
+    @IBAction func eventCloseTouchDown(_ sender: UIButton) {
+        self.closeButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+    }
     @IBAction func didTapAddToCalendar(_ sender: UIButton) {
         eventPopupDelegate?.addToCalendarButtonPressed()
+         self.addToCalendarButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+    }
+    @IBAction func addToCalendarTouchDown(_ sender: UIButton) {
+        self.addToCalendarButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
 }

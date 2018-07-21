@@ -20,6 +20,8 @@
 		B80DC09220C7A9CE00E28034 /* TopBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B80DC09120C7A9CE00E28034 /* TopBarView.xib */; };
 		B80DC09420C7A9F500E28034 /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80DC09320C7A9F500E28034 /* TopBarView.swift */; };
 		B80DC09620C7B93800E28034 /* HomePageJson.json in Resources */ = {isa = PBXBuildFile; fileRef = B80DC09520C7B93800E28034 /* HomePageJson.json */; };
+		B811FBC62103406100960246 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B811FBC82103406100960246 /* Localizable.strings */; };
+		B811FBCC2103811400960246 /* QMColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = B811FBCB2103811400960246 /* QMColours.swift */; };
 		B818A8C020E0ABB500095A64 /* MuseumExhibitionJson.json in Resources */ = {isa = PBXBuildFile; fileRef = B818A8BF20E0ABB500095A64 /* MuseumExhibitionJson.json */; };
 		B8294CE720CBF265002AFF72 /* FSCalendarCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = B8294CC820CBF262002AFF72 /* FSCalendarCalculator.m */; };
 		B8294CE820CBF265002AFF72 /* FSCalendarConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B8294CC920CBF262002AFF72 /* FSCalendarConstants.m */; };
@@ -151,6 +153,11 @@
 		B80DC09120C7A9CE00E28034 /* TopBarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TopBarView.xib; sourceTree = "<group>"; };
 		B80DC09320C7A9F500E28034 /* TopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarView.swift; sourceTree = "<group>"; };
 		B80DC09520C7B93800E28034 /* HomePageJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = HomePageJson.json; sourceTree = "<group>"; };
+		B811FBC221033FD900960246 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
+		B811FBC321033FD900960246 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		B811FBC72103406100960246 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B811FBC92103406300960246 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B811FBCB2103811400960246 /* QMColours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QMColours.swift; sourceTree = "<group>"; };
 		B818A8BF20E0ABB500095A64 /* MuseumExhibitionJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MuseumExhibitionJson.json; sourceTree = "<group>"; };
 		B8294CC520CBF262002AFF72 /* FSCalendarCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarCollectionViewLayout.h; sourceTree = "<group>"; };
 		B8294CC620CBF262002AFF72 /* FSCalendarCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarCollectionView.h; sourceTree = "<group>"; };
@@ -358,6 +365,7 @@
 				B8C64D4820FDCA8A00C2D51A /* TourGuideJson.json */,
 				B8C64D4E20FDDE5900C2D51A /* MiaTourGuideJson.json */,
 				B8E92D1121006F0F005449FC /* CollectionDetailJson.json */,
+				B811FBC82103406100960246 /* Localizable.strings */,
 			);
 			path = QatarMuseum;
 			sourceTree = "<group>";
@@ -412,6 +420,7 @@
 		B80DC08720C7943100E28034 /* ReusableComponents */ = {
 			isa = PBXGroup;
 			children = (
+				B811FBCA210380EF00960246 /* CommonColours */,
 				B8B7604D2100E86600CEE280 /* NotificationsList */,
 				B8B54D6A20FF512600B21348 /* MuseumCollectionDetail */,
 				B8C64D4520FDC2B900C2D51A /* TourGuideHeader */,
@@ -453,6 +462,14 @@
 				B80DC09320C7A9F500E28034 /* TopBarView.swift */,
 			);
 			path = TopBarView;
+			sourceTree = "<group>";
+		};
+		B811FBCA210380EF00960246 /* CommonColours */ = {
+			isa = PBXGroup;
+			children = (
+				B811FBCB2103811400960246 /* QMColours.swift */,
+			);
+			path = CommonColours;
 			sourceTree = "<group>";
 		};
 		B82C87F420E69D2500777674 /* DiningDetailCell */ = {
@@ -796,6 +813,7 @@
 				B891D06520DBCC5200919F30 /* HeritageCell.xib in Resources */,
 				B8DC40A520C9A3230044134D /* CommonHeader.xib in Resources */,
 				B8DC478720DCF8CE0007B426 /* ParkTableCellXib.xib in Resources */,
+				B811FBC62103406100960246 /* Localizable.strings in Resources */,
 				B8E2C00E20C7E9CA00F3CE41 /* ComingSoonpopup.xib in Resources */,
 				B80DC09620C7B93800E28034 /* HomePageJson.json in Resources */,
 				B8AFA2EC20E78BA9008838A6 /* DINNextLTArabic-Light.ttf in Resources */,
@@ -911,6 +929,7 @@
 				B8294CEF20CBF265002AFF72 /* FSCalendarDelegationFactory.m in Sources */,
 				B8294CF020CBF265002AFF72 /* FSCalendarCollectionViewLayout.m in Sources */,
 				B8294CEE20CBF265002AFF72 /* FSCalendarScopeHandle.m in Sources */,
+				B811FBCC2103811400960246 /* QMColours.swift in Sources */,
 				B85BA4B020D01D1C00E7F4D1 /* SplashViewController.swift in Sources */,
 				B8294CF520CBF265002AFF72 /* FSCalendarStickyHeader.m in Sources */,
 				B8EAB77D20CA3E6100C001B2 /* EventCollectionViewCell.swift in Sources */,
@@ -1002,6 +1021,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				B80DC05D20C792E400E28034 /* Base */,
+				B811FBC221033FD900960246 /* ar */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1010,8 +1030,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				B80DC06220C792E600E28034 /* Base */,
+				B811FBC321033FD900960246 /* ar */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		B811FBC82103406100960246 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B811FBC72103406100960246 /* ar */,
+				B811FBC92103406300960246 /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1021,6 +1051,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1081,6 +1112,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

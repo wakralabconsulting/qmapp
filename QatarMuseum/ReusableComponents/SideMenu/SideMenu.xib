@@ -17,18 +17,28 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SideMenuView" customModule="QatarMuseums" customModuleProvider="target">
             <connections>
                 <outlet property="diningButton" destination="0rg-Jx-tIC" id="G4d-7w-pxz"/>
+                <outlet property="diningLabel" destination="ZgD-kd-Ifi" id="v7W-4w-sLZ"/>
                 <outlet property="educationButton" destination="kaN-0B-93b" id="XXs-TG-Zqa"/>
+                <outlet property="educationLabel" destination="lD4-Uq-zbl" id="FhH-dK-tXC"/>
                 <outlet property="eventButton" destination="yfG-03-lfe" id="903-Tu-Yre"/>
+                <outlet property="eventsLabel" destination="v6w-WF-slS" id="W2V-AK-8iI"/>
                 <outlet property="exhibitionButton" destination="Fvv-iW-IyB" id="CiL-K2-ZL4"/>
+                <outlet property="exhibitionsLabel" destination="zl8-oq-Dq8" id="Qqn-hk-94m"/>
                 <outlet property="giftShopButton" destination="dit-Jr-29x" id="nmN-jx-s99"/>
+                <outlet property="giftShopLabel" destination="5kq-vu-1pU" id="tfC-j9-oi4"/>
                 <outlet property="heritageButton" destination="kdd-Ej-bLd" id="zfY-Ty-9UJ"/>
+                <outlet property="heritageSitesLabel" destination="jSi-bv-KX3" id="iHp-m0-OtX"/>
                 <outlet property="parksButton" destination="RYF-xL-VUQ" id="DLM-0s-dob"/>
+                <outlet property="parksLabel" destination="N3x-M3-MY3" id="IzS-74-nii"/>
                 <outlet property="publicArtsButton" destination="fJY-cb-1vB" id="fsI-uJ-Qmi"/>
+                <outlet property="publicArtsLabel" destination="o94-Nx-0nR" id="siD-Fs-zbq"/>
                 <outlet property="settingsButton" destination="dLY-wQ-k4t" id="i4F-fU-UOw"/>
+                <outlet property="settingsLabel" destination="lxy-GW-Auq" id="E91-cn-V7A"/>
                 <outlet property="sideMenuContentView" destination="5yg-UN-dK5" id="nsp-oX-uQW"/>
                 <outlet property="sideMenuView" destination="2wr-3o-kpD" id="O7d-qU-hpE"/>
                 <outlet property="topBarView" destination="u50-i6-pDU" id="wOX-iC-zCl"/>
                 <outlet property="tourGuideButton" destination="W7x-LL-643" id="0aN-LA-oE2"/>
+                <outlet property="tourGuideLabel" destination="FHG-nm-rxu" id="k32-65-kdv"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

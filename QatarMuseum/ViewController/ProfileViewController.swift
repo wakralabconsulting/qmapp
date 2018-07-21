@@ -29,9 +29,8 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
 
     func setUpProfileUI() {
         headerView.headerViewDelegate = self
-        headerView.headerTitle.text = "PROFILE"
+        headerView.headerTitle.text = NSLocalizedString("PROFILE_TITLE", comment: "PROFILE_TITLE Label in the PROFILE page")
         headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
-       // headerView.headerBackButton.contentEdgeInsets = UIEdgeInsets(top: 23, left: 25, bottom: 25, right: 23)
         profileImageView.image = UIImage(named: "profile_pic_round")
     }
     
@@ -41,6 +40,7 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     func loadComingSoonPopup() {
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
+        popupView.loadPopup()
         self.view.addSubview(popupView)
     }
     func closeButtonPressed() {
@@ -48,25 +48,25 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     }
     @IBAction func didTapViewMyFavoriteButton(_ sender: UIButton) {
         loadComingSoonPopup()
-        self.viewMyFavoriteButton.backgroundColor = UIColor(red: 241/255, green: 60/255, blue: 134/255, alpha: 1)
-        self.viewMyFavoriteButton.setTitleColor(UIColor.white, for: .normal)
+        self.viewMyFavoriteButton.backgroundColor = UIColor.profilePink
+        self.viewMyFavoriteButton.setTitleColor(UIColor.whiteColor, for: .normal)
         self.viewMyFavoriteButton.transform = CGAffineTransform(scaleX: 1, y: 1)
         
     }
     @IBAction func viewMyFavoriteButtonTouchDown(_ sender: UIButton) {
-        self.viewMyFavoriteButton.backgroundColor = UIColor(red: 255/255, green: 195/255, blue: 223/255, alpha: 1)
-        self.viewMyFavoriteButton.setTitleColor(UIColor(red: 251/255, green: 50/255, blue: 134/255, alpha: 1), for: .normal)
+        self.viewMyFavoriteButton.backgroundColor = UIColor.profileLightPink
+        self.viewMyFavoriteButton.setTitleColor(UIColor.viewMyFavDarkPink, for: .normal)
          self.viewMyFavoriteButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     @IBAction func didTapViewMyCulturePassCard(_ sender: UIButton) {
         loadComingSoonPopup()
-        self.viewmyCulturePassButton.backgroundColor = UIColor(red: 127/255, green: 167/255, blue: 211/255, alpha: 1)
+        self.viewmyCulturePassButton.backgroundColor = UIColor.viewMycultureBlue
         self.viewmyCulturePassButton.setTitleColor(UIColor.white, for: .normal)
         self.viewmyCulturePassButton.transform = CGAffineTransform(scaleX: 1, y: 1)
     }
     @IBAction func viewMyCulturePassButtonTouchDown(_ sender: UIButton) {
-        self.viewmyCulturePassButton.backgroundColor = UIColor(red: 196/255, green: 238/255, blue: 244/255, alpha: 1)
-        self.viewmyCulturePassButton.setTitleColor(UIColor(red: 63/255, green: 167/255, blue: 238/255, alpha: 1), for: .normal)
+        self.viewmyCulturePassButton.backgroundColor = UIColor.viewMycultureLightBlue
+        self.viewmyCulturePassButton.setTitleColor(UIColor.viewMyculTitleBlue, for: .normal)
         self.viewmyCulturePassButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     @IBAction func didTapProfileEditButton(_ sender: UIButton) {

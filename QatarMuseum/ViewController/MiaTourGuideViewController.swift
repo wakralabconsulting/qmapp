@@ -85,9 +85,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
         
         return miaTourHeaderView
     }
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize{
-//        return CGSize(width: self.miaTourCollectionView.bounds.width, height: self.mylabel.bounds.height)
-//    }
+
     func loadMiaTourDetail() {
         let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "miaDetailId") as! MiaTourDetailViewController
         
@@ -101,6 +99,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     func loadComingSoonPopup() {
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
+        popupView.loadPopup()
         self.view.addSubview(popupView)
         
     }

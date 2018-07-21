@@ -30,7 +30,8 @@ class MiaTourDetailViewController: UIViewController,HeaderViewProtocol,comingSoo
         tourGuideDescription.text = "In this tour, you will see and learn about the achievements and contributions of Muslim scientists through history. The eight objects have an obvious scientific purpose or show how science has influenced artistic methods."
         headerView.headerViewDelegate = self
          slideshowImages = ["science_tour_object"]
-        headerView.headerTitle.text = "MIA TOUR GUIDES"
+        headerView.headerTitle.text = NSLocalizedString("MIA_TOUR_GUIDES_TITLE", comment: "MIA_TOUR_GUIDES_TITLE in the Mia tour guide page")
+
         setSlideShow(imgArray: slideshowImages)
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -103,20 +104,21 @@ class MiaTourDetailViewController: UIViewController,HeaderViewProtocol,comingSoo
         self.playButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     @IBAction func didTapStartTour(_ sender: UIButton) {
-        self.startTourButton.backgroundColor = UIColor(red: 127/255, green: 167/255, blue: 211/255, alpha: 1)
+        self.startTourButton.backgroundColor = UIColor.viewMycultureBlue
         //self.startTourButton.setTitleColor(UIColor.white, for: .normal)
         self.startTourButton.transform = CGAffineTransform(scaleX: 1, y: 1)
         loadComingSoonPopup()
     }
     @IBAction func startTourButtonTouchDown(_ sender: UIButton) {
-        self.startTourButton.backgroundColor = UIColor(red: 128/255, green: 166/255, blue: 215/255, alpha: 0.6)
-       // self.startTourButton.setTitleColor(UIColor(red: 63/255, green: 167/255, blue: 238/255, alpha: 1), for: .normal)
+        self.startTourButton.backgroundColor = UIColor.startTourLightBlue
+        self.startTourButton.setTitleColor(UIColor.viewMyculTitleBlue, for: .normal)
         
         self.startTourButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     func loadComingSoonPopup() {
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
+        popupView.loadPopup()
         self.view.addSubview(popupView)
         
     }

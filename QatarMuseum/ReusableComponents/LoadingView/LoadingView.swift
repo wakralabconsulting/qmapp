@@ -38,7 +38,7 @@ class LoadingView: UIView {
         Bundle.main.loadNibNamed("LoadingXib", owner: self, options: nil)
         addSubview(loadingView)
         loadingView.frame = self.bounds
-        self.backgroundColor = UIColor(red: 233, green: 233, blue: 233, alpha: 1)
+        self.backgroundColor = UIColor.loadingViewGray
        // loadingView.autoresizingMask = [.flexibleHeight,.flexibleWidth]
         loadingView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -50,7 +50,7 @@ class LoadingView: UIView {
             loadingView = Bundle.main.loadNibNamed("LoadingXib", owner: self, options: nil)![0] as! UIView
             loadingView.frame = self.bounds
             loadingView.translatesAutoresizingMaskIntoConstraints = false
-            self.backgroundColor = UIColor(red: 233, green: 233, blue: 233, alpha: 1)
+            self.backgroundColor = UIColor.loadingViewGray
             self.addSubview(loadingView)
             let constrants = wk_getLayouts()
             self.addConstraints(constrants.0)
@@ -67,7 +67,6 @@ class LoadingView: UIView {
     }
     func showLoading()
     {
-        activityIndicator.color = UIColor(red: 13/255, green: 50/255, blue: 68/255, alpha: 1)
         // self.isHidden = false
         self.noDataLabel.isHidden = true
         activityIndicator.isHidden = false
@@ -93,7 +92,7 @@ class LoadingView: UIView {
         let noDataText = NSLocalizedString("No_result_found", comment: "No result message")
         self.noDataLabel.text = noDataText
         self.noDataView.isHidden = false
-        self.noDataView.backgroundColor = UIColor(red: 243/255, green: 241/255, blue: 238/255, alpha: 1)
+        self.noDataView.backgroundColor = UIColor.noDataViewGray
         self.activityIndicator.stopAnimating()
         self.activityIndicator.isHidden = true
         self.noDataLabel.isHidden = false

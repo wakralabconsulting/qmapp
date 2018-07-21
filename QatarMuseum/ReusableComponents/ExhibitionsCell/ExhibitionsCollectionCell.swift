@@ -36,12 +36,13 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
         }
         if ((cellValues.value(forKey: "open")as! Bool) == true) {
             openCloseView.backgroundColor = UIColor.yellow
-            openCloseLabel.text = "NOW OPEN"
+            openCloseLabel.text = NSLocalizedString("NOW_OPEN_TITLE", comment: "NOW_OPEN_TITLE in the exhibition page")
+
             openCloseLabel.textColor = UIColor.black
         }
         else {
             openCloseView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.45)
-            openCloseLabel.text = "CLOSED"
+            openCloseLabel.text = NSLocalizedString("CLOSED_TITLE", comment: "CLOSED_TITLE in the exhibition page")
             openCloseLabel.textColor = UIColor.white
         }
 //        if let imageUrl = cellValues.value(forKey: "image") as? String{
@@ -65,12 +66,12 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
         }
         if ((cellValues.value(forKey: "open")as! Bool) == true) {
             openCloseView.backgroundColor = UIColor.yellow
-            openCloseLabel.text = "NOW OPEN"
+            openCloseLabel.text = NSLocalizedString("NOW_OPEN_TITLE", comment: "NOW_OPEN_TITLE in the exhibition page")
             openCloseLabel.textColor = UIColor.black
         }
         else {
             openCloseView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.45)
-            openCloseLabel.text = "CLOSED"
+            openCloseLabel.text = NSLocalizedString("CLOSED_TITLE", comment: "CLOSED_TITLE in the exhibition page")
             openCloseLabel.textColor = UIColor.white
         }
         //        if let imageUrl = cellValues.value(forKey: "image") as? String{
@@ -88,12 +89,6 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
         let sHeight:CGFloat = 70.0
         let shadow = UIColor.black.withAlphaComponent(0.7).cgColor
         
-        // Add gradient bar for image on top
-//        let topImageGradient = CAGradientLayer()
-//        topImageGradient.frame = CGRect(x: 0, y: 0, width: width, height: sHeight)
-//        topImageGradient.colors = [shadow, UIColor.clear.cgColor]
-//        exhibitionImageView.layer.insertSublayer(topImageGradient, at: 0)
-        
         let bottomImageGradient = CAGradientLayer()
         bottomImageGradient.frame = CGRect(x: 0, y: height - sHeight, width: width, height: sHeight)
         bottomImageGradient.colors = [UIColor.clear.cgColor, shadow]
@@ -102,25 +97,7 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
     @IBAction func didTapExhibitionCellButton(_ sender: UIButton) {
         exhibitionCellItemBtnTapAction?()
         self.favouriteButton.transform = CGAffineTransform(scaleX:1, y: 1)
-//        UIView.animate(withDuration: 0.3,
-//                       animations: {
-//                         self.favouriteButton.transform = CGAffineTransform(scaleX:0.7, y: 0.7)
-//        },
-//                       completion: { _ in
-//                        UIView.animate(withDuration: 0.3) {
-//                            self.favouriteButton.transform = CGAffineTransform.identity
-//                            self.favouriteButton.transform = CGAffineTransform(scaleX: 1, y: 1)
-//                            if (self.isFvourite) {
-//                                            self.favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
-//                                            self.isFvourite = false
-//                                        }
-//                                        else {
-//                                            self.favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
-//                                            self.isFvourite = true
-//                                        }
-//
-//                        }
-//        })
+
     }
     @IBAction func favoriteTouchDownPressed(_ sender: UIButton) {
         

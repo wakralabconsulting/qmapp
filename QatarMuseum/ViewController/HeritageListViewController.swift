@@ -33,7 +33,8 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         loadingView.showLoading()
         heritageListImageArray = ["al_zubarah","tower_of_qatar","forts_of_qatar","wells_of_qatar"];
         heritageHeader.headerViewDelegate = self
-        heritageHeader.headerTitle.text = "HERITAGE SITES"
+        heritageHeader.headerTitle.text = NSLocalizedString("HERITAGE_SITES_TITLE", comment: "HERITAGE_SITES_TITLE  in the Heritage page")
+
     }
     func registerNib() {
         let nib = UINib(nibName: "HeritageCell", bundle: nil)
@@ -82,6 +83,7 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
     func loadComingSoonPopup() {
         popUpView  = ComingSoonPopUp(frame: self.view.frame)
         popUpView.comingSoonPopupDelegate = self
+        popUpView.loadPopup()
         self.view.addSubview(popUpView)
         
     }

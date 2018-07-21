@@ -43,7 +43,16 @@ class SideMenuView: UIView,TopBarProtocol {
     @IBOutlet weak var giftShopButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet var sideMenuView: UIView!
-    
+    @IBOutlet weak var exhibitionsLabel: UILabel!
+    @IBOutlet weak var eventsLabel: UILabel!
+    @IBOutlet weak var educationLabel: UILabel!
+    @IBOutlet weak var tourGuideLabel: UILabel!
+    @IBOutlet weak var heritageSitesLabel: UILabel!
+    @IBOutlet weak var publicArtsLabel: UILabel!
+    @IBOutlet weak var diningLabel: UILabel!
+    @IBOutlet weak var giftShopLabel: UILabel!
+    @IBOutlet weak var parksLabel: UILabel!
+    @IBOutlet weak var settingsLabel: UILabel!
     var sideMenuDelegate : SideMenuProtocol?
     
     override init(frame: CGRect) {
@@ -65,6 +74,18 @@ class SideMenuView: UIView,TopBarProtocol {
        topBarView.menuButton.setImage(UIImage(named: "closeX1"), for: .normal)
         topBarView.backgroundColor = UIColor.clear
         topBarView.backButton.isHidden = true
+        
+        exhibitionsLabel.text = NSLocalizedString("EXHIBITIONS_LABEL", comment: "EXHIBITIONS_LABEL Label in the SideMenu page")
+
+         eventsLabel.text = NSLocalizedString("EVENTS_LABEL", comment: "EVENTS_LABEL Label in the SideMenu page")
+         educationLabel.text = NSLocalizedString("EDUCATION_LABEL", comment: "EDUCATION_LABEL Label in the SideMenu page")
+         tourGuideLabel.text = NSLocalizedString("TOURGUIDE_LABEL", comment: "TOURGUIDE_LABEL Label in the SideMenu page")
+         heritageSitesLabel.text = NSLocalizedString("HERITAGESITES_LABEL", comment: "HERITAGESITES_LABEL Label in the SideMenu page")
+         publicArtsLabel.text = NSLocalizedString("PUBLIC_ARTS_LABEL", comment: "PUBLIC_ARTS_LABEL Label in the SideMenu page")
+         diningLabel.text = NSLocalizedString("DINING_LABEL", comment: "DINING_LABEL Label in the SideMenu page")
+         giftShopLabel.text = NSLocalizedString("GIFTSHOP_LABEL", comment: "GIFTSHOP_LABEL Label in the SideMenu page")
+         parksLabel.text = NSLocalizedString("PARKS_LABEL", comment: "PARKS_LABEL Label in the SideMenu page")
+         settingsLabel.text = NSLocalizedString("SETTINGS_LABEL", comment: "SETTINGS_LABEL Label in the SideMenu page")
         
        
     }
