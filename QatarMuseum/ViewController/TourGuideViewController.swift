@@ -100,6 +100,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
     func loadComingSoonPopup() {
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
+        popupView.loadPopup()
         self.view.addSubview(popupView)
         
     }
@@ -115,15 +116,9 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromLeft
         self.view.window!.layer.add(transition, forKey: kCATransition)
-        //if (fromHome == true) {
             let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
             let appDelegate = UIApplication.shared.delegate
             appDelegate?.window??.rootViewController = homeViewController
-//        }
-//        else{
-//            self.dismiss(animated: false, completion: nil)
-//        }
-        
        
     }
     

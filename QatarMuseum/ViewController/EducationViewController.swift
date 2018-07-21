@@ -34,7 +34,8 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
     func setupUI() {
         secondDescriptionLabel.text = "All of our education parameters privide interactive opportunities. We hope that they create lasting memories and lead to the development of creative, compassionate and engaged individuals.\n\n For school teachers and educators, we bring custom-made worshops, conferences and trainings to suit their needs. We also focus on working with children to encourage them to explore the world around them, engage with it, and express themselves through creative activities. "
         headerView.headerViewDelegate = self
-        headerView.headerTitle.text = "EDUCATION"
+        headerView.headerTitle.text = NSLocalizedString("EDUCATION_TITLE", comment: "EDUCATION_TITLE in the education page")
+
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -79,7 +80,7 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
     }
     
     @IBAction func didTapDiscoverButton(_ sender: UIButton) {
-        self.discoverButton.backgroundColor = UIColor(red: 128/255, green: 166/255, blue: 215/255, alpha: 1)
+        self.discoverButton.backgroundColor = UIColor.viewMycultureBlue
         self.discoverButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         let eventView =  self.storyboard?.instantiateViewController(withIdentifier: "eventPageID") as! EventViewController
         eventView.fromHome = true
@@ -94,7 +95,7 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
     //For Button Animations
     @IBAction func discovereButtonTouchDown(_ sender: UIButton) {
         self.discoverButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-        self.discoverButton.backgroundColor = UIColor(red: 128/255, green: 166/255, blue: 215/255, alpha: 0.6)
+        self.discoverButton.backgroundColor = UIColor.startTourLightBlue
     }
     @IBAction func playPauseButtonTouchDown(_ sender: UIButton) {
         self.playButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)

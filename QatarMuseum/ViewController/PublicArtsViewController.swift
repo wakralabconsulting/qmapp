@@ -31,7 +31,8 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
         loadingView.showLoading()
         publicArtsListImageArray = ["gandhi's_three_monkeys","7_by_richard_serra","lusail_handball_installation","smokey_by_tony_smith","qatar_univercity_installation","airport_installation","east_west-west_east_by_richard_serra","the_miraculas_journey","calligrafiti_by_el_seed","maman","perceval","healthy_living_from_the_start"];
         pulicArtsHeader.headerViewDelegate = self
-        pulicArtsHeader.headerTitle.text = "PUBLIC ARTS"
+        pulicArtsHeader.headerTitle.text = NSLocalizedString("PUBLIC_ARTS_TITLE", comment: "PUBLIC_ARTS_TITLE Label in the PublicArts page")
+
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -80,6 +81,7 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
     func loadComingSoonPopup() {
         popUpView  = ComingSoonPopUp(frame: self.view.frame)
         popUpView.comingSoonPopupDelegate = self
+        popUpView.loadPopup()
         self.view.addSubview(popUpView)
         
     }

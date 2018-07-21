@@ -31,7 +31,8 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
         //loadingView.showLoading()
         diningListImageArray = ["idam","in_q_cafe","mia_cafe","al_reward_cafe","mia_catering","mathaf_maqha","cafe_#999"];
         diningHeader.headerViewDelegate = self
-        diningHeader.headerTitle.text = "DINING"
+        diningHeader.headerTitle.text = NSLocalizedString("DINING_TITLE", comment: "DINING_TITLE in the Dining page")
+
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -80,6 +81,7 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
     func loadComingSoonPopup() {
         popUpView  = ComingSoonPopUp(frame: self.view.frame)
         popUpView.comingSoonPopupDelegate = self
+        popUpView.loadPopup()
         self.view.addSubview(popUpView)
         
     }

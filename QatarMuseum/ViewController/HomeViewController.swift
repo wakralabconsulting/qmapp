@@ -117,6 +117,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     func loadComingSoonPopup() {
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
+        popupView.loadPopup()
         self.view.addSubview(popupView)
     
     }
@@ -266,7 +267,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 let webViewVc:WebViewController = self.storyboard?.instantiateViewController(withIdentifier: "webViewId") as! WebViewController
                 
                 webViewVc.webViewUrl = aboutUrl
-                webViewVc.titleString = "Qatar Museum"
+                webViewVc.titleString = NSLocalizedString("WEBVIEW_TITLE", comment: "WEBVIEW_TITLE  in the Webview")
                 self.present(webViewVc, animated: false, completion: nil)
                 
             }
@@ -397,7 +398,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         transition.duration = 0.3
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
-        //transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(eventView, animated: false, completion: nil)
     }
@@ -411,13 +411,5 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(profileView, animated: false, completion: nil)
     }
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let y = 300 - (scrollView.contentOffset.y + 300)
-//        let height = min(max(y, 60), 400)
-//        let point : CGPoint = scrollView.convert(CGPoint.zero, to:homeCollectionView)
-//        let indexPath = homeCollectionView!.indexPathForItem(at: point)
-//        let cell = homeCollectionView!.cellForItem(at: indexPath!)
-//        cell?.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: height)
-//        
-//    }
+
 }

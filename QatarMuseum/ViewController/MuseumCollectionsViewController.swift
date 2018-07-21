@@ -34,7 +34,8 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
         loadingView.isHidden = false
         loadingView.showLoading()
         collectionsHeader.headerViewDelegate = self
-        collectionsHeader.headerTitle.text = "COLLECTIONS"
+        collectionsHeader.headerTitle.text = NSLocalizedString("COLLECTIONS_TITLE", comment: "COLLECTIONS_TITLE Label in the collections page")
+
         collectionsImgArray = ["ceramic_collection","glass_collection","the_cavour_case","gold_and_class","mosque_lamp"]
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -97,6 +98,7 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
     func addComingSoonPopup() {
         let viewFrame : CGRect = self.view.frame
         popupView.frame = viewFrame
+        popupView.loadPopup()
         self.view.addSubview(popupView)
     }
  

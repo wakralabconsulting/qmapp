@@ -21,7 +21,8 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
     }
 
     func setUI() {
-        notificationsHeader.headerTitle.text = "NOTIFICATIONS"
+        notificationsHeader.headerTitle.text = NSLocalizedString("NOTIFICATIONS_TITLE", comment: "NOTIFICATIONS_TITLE in the Notification page")
+
         notificationsHeader.headerViewDelegate = self
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -37,7 +38,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "notificationCellId", for: indexPath) as! NotificationsTableViewCell
         if (indexPath.row % 2 == 0) {
-            cell.innerView.backgroundColor = UIColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
+            cell.innerView.backgroundColor = UIColor.notificationCellAsh
         }
         else {
             cell.innerView.backgroundColor = UIColor.white

@@ -46,20 +46,21 @@ class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol,com
         self.playButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     @IBAction func didTapStartTour(_ sender: UIButton) {
-        self.startTourButton.backgroundColor = UIColor(red: 127/255, green: 167/255, blue: 211/255, alpha: 1)
+        self.startTourButton.backgroundColor = UIColor.viewMycultureBlue
         self.startTourButton.setTitleColor(UIColor.white, for: .normal)
         self.startTourButton.transform = CGAffineTransform(scaleX: 1, y: 1)
         loadComingSoonPopup()
     }
     @IBAction func startTourButtonTouchDown(_ sender: UIButton) {
-        self.startTourButton.backgroundColor = UIColor(red: 128/255, green: 166/255, blue: 215/255, alpha: 0.6)
-        self.startTourButton.setTitleColor(UIColor(red: 63/255, green: 167/255, blue: 238/255, alpha: 1), for: .normal)
+        self.startTourButton.backgroundColor = UIColor.startTourLightBlue
+        self.startTourButton.setTitleColor(UIColor.viewMyculTitleBlue, for: .normal)
         
         self.startTourButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     func loadComingSoonPopup() {
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
+        popupView.loadPopup()
         self.view.addSubview(popupView)
         
     }
@@ -75,9 +76,6 @@ class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol,com
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromLeft
         self.view.window!.layer.add(transition, forKey: kCATransition)
-        //let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
-//        let appDelegate = UIApplication.shared.delegate
-//        appDelegate?.window??.rootViewController = homeViewController
         self.dismiss(animated: false, completion: nil)
         
     }

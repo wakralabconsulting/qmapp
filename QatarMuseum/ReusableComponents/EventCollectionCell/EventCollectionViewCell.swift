@@ -23,10 +23,10 @@ class EventCollectionViewCell: UICollectionViewCell {
     
     
     func setEventCellValues() {
-        firstTitle.textColor = UIColor(red: 236/255, green: 65/255, blue: 137/255, alpha: 1)
-        titleLineView.backgroundColor = UIColor(red: 236/255, green: 65/255, blue: 137/255, alpha: 1)
-        secondTitleLabel.textColor = UIColor(red: 236/255, green: 65/255, blue: 137/255, alpha: 1)
-        verticalLineView.backgroundColor = UIColor(red: 129/255, green: 166/255, blue: 215, alpha: 1)
+        firstTitle.textColor = UIColor.eventTitlePink
+        titleLineView.backgroundColor = UIColor.eventTitlePink
+        secondTitleLabel.textColor = UIColor.eventTitlePink
+        verticalLineView.backgroundColor = UIColor.eventlisBlue
         timingLabel.isHidden = true
         timingSecondLabel.isHidden = false
         groupSizeLabel.isHidden = false

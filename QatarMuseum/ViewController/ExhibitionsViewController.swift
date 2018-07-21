@@ -36,8 +36,8 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
          museumExhibitionImageArray = ["powder_and_damask","imperial_thread","driven_by_german_design","tamim_al_majd","dajar_women"];
          exhibitionHeaderView.headerViewDelegate = self
         exhibitionHeaderView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
-       // exhibitionHeaderView.headerBackButton.contentEdgeInsets = UIEdgeInsets(top: 13, left: 21, bottom: 13, right: 21)
-        exhibitionHeaderView.headerTitle.text = " EXHIBITIONS"
+        
+        exhibitionHeaderView.headerTitle.text = NSLocalizedString("EXHIBITIONS_TITLE", comment: "EXHIBITIONS_TITLE Label in the Exhibitions page")
         popupView.comingSoonPopupDelegate = self
     }
     func registerNib() {
@@ -125,6 +125,7 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
     func addComingSoonPopup() {
         let viewFrame : CGRect = self.view.frame
         popupView.frame = viewFrame
+        popupView.loadPopup()
         self.view.addSubview(popupView)
     }
     func loadExhibitionDetailAnimation() {

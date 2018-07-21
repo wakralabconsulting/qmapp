@@ -30,7 +30,7 @@ class WebViewController: UIViewController,UIWebViewDelegate {
         webView.delegate = self
         loadingView.isHidden = false
         loadingView.showLoading()
-        webView.backgroundColor = UIColor.white
+        webView.backgroundColor = UIColor.whiteColor
         webView.scrollView.bounces = false
         
     }

@@ -54,8 +54,6 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     override func viewDidAppear(_ animated: Bool) {
          setSlideShow(imgArray: slideshowImages)
         museumsSlideView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        //self.museumsSlideView.backgroundColor = UIColor(red: 243/255, green: 241/255, blue: 238/255, alpha: 1)
-       // setGradientLayer()
     }
     
     func setSlideShow(imgArray : NSArray) {
@@ -263,6 +261,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     func loadComingSoonPopup() {
         popUpView  = ComingSoonPopUp(frame: self.view.frame)
         popUpView.comingSoonPopupDelegate = self
+        popUpView.loadPopup()
         self.view.addSubview(popUpView)
         
     }

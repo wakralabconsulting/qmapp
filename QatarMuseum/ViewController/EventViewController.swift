@@ -8,7 +8,9 @@
 
 import UIKit
 import EventKit
-class EventViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource, HeaderViewProtocol,FSCalendarDelegate,FSCalendarDataSource,UICollectionViewDelegateFlowLayout,EventPopUpProtocol,UIViewControllerTransitioningDelegate,UIGestureRecognizerDelegate {
+class EventViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource, HeaderViewProtocol,FSCalendarDelegate,FSCalendarDataSource,UICollectionViewDelegateFlowLayout,EventPopUpProtocol,UIViewControllerTransitioningDelegate,UIGestureRecognizerDelegate,comingSoonPopUpProtocol {
+    
+    
     
     @IBOutlet weak var eventCollectionView: UICollectionView!
     @IBOutlet weak var calendarView: FSCalendar!
@@ -24,6 +26,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     var selectedDateForEvent : Date = Date()
     var fromHome : Bool = false
     var isLoadEventPage : Bool = false
+    var popupView : ComingSoonPopUp = ComingSoonPopUp()
     fileprivate lazy var scopeGesture: UIPanGestureRecognizer = {
         [unowned self] in
         let panGesture = UIPanGestureRecognizer(target: self.calendarView, action: #selector(self.calendarView.handleScopeGesture(_:)))
@@ -43,20 +46,29 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     }
     func setUpUiContent() {
         headerView.headerViewDelegate = self
-        headerView.headerTitle.text = "CALENDAR"
+        
+
         headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         self.view.addGestureRecognizer(self.scopeGesture)
     self.eventCollectionView.panGestureRecognizer.require(toFail: self.scopeGesture)
         if (isLoadEventPage == true) {
-            listTitleLabel.text = "EVENTS"
-            headerView.headerTitle.text = "CALENDAR"
-            listTitleLabel.textColor = UIColor(red: 129/255, green: 166/255, blue: 215/255, alpha: 1)
+            listTitleLabel.text = NSLocalizedString("CALENDAR_EVENT_TITLE", comment: "CALENDAR_EVENT_TITLE Label in the Event page")
+            headerView.headerTitle.text = NSLocalizedString("CALENDAR_TITLE", comment: "CALENDAR_TITLE Label in the Event page")
+            listTitleLabel.textColor = UIColor.eventlisBlue
+            
+           eventPopup.eventTitle.text = NSLocalizedString("EVENT_POPUP_TITLE", comment: "EVENT_POPUP_TITLE  in the popup view")
+            eventPopup.eventDescription.text = NSLocalizedString("EVENT_MESSAGE_TITLE", comment: "EVENT_MESSAGE_TITLE  in the popup view")
+            eventPopup.addToCalendarButton.titleLabel?.text = NSLocalizedString("POPUP_ADD_BUTTON_TITLE", comment: "POPUP_ADD_BUTTON_TITLE  in the popup view")
         }
         else {
-            listTitleLabel.text = "DETAILS"
-            headerView.headerTitle.text = "EDUCATION CALENDAR"
-            listTitleLabel.textColor = UIColor.black
+            listTitleLabel.text = NSLocalizedString("EDUCATION_EVENT_TITLE", comment: "EDUCATION_EVENT_TITLE Label in the Event page")
+            headerView.headerTitle.text = NSLocalizedString("EDUCATIONCALENDAR_TITILE", comment: "EDUCATIONCALENDAR_TITILE Label in the Event page")
+            listTitleLabel.textColor = UIColor.blackColor
             headerView.settingsButton.isHidden = false
+            
+            eventPopup.eventTitle.text = NSLocalizedString("EDUCATION_EVENT_POPUP_TITLE", comment: "EVENT_POPUP_TITLE  in the popup view")
+            eventPopup.eventDescription.text = NSLocalizedString("EDUCATION_POPUP_MESSAGE", comment: "EDUCATION_POPUP_MESSAGE  in the popup view")
+            eventPopup.addToCalendarButton.titleLabel?.text = NSLocalizedString("EDUCATION_POPUP_BUTTON_TITLE", comment: "POPUP_ADD_BUTTON_TITLE  in the popup view")
             
         }
         
@@ -98,10 +110,10 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         let cell : EventCollectionViewCell = eventCollectionView.dequeueReusableCell(withReuseIdentifier: "eventCellId", for: indexPath) as! EventCollectionViewCell
        
         if (indexPath.row % 2 == 0) {
-            cell.cellBackgroundView?.backgroundColor = UIColor(red: 248/256, green: 248/256, blue: 248/256, alpha: 1)
+            cell.cellBackgroundView?.backgroundColor = UIColor.eventCellAshColor
         }
         else {
-            cell.cellBackgroundView.backgroundColor = UIColor(red: 255/256, green: 255/256, blue: 255/256, alpha: 1)
+            cell.cellBackgroundView.backgroundColor = UIColor.whiteColor
         }
         if (isLoadEventPage == true) {
             cell.setEventCellValues()
@@ -140,7 +152,21 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     func loadEventPopup() {
         eventPopup  = EventPopupView(frame: self.view.frame)
         eventPopup.eventPopupDelegate = self
-        
+        if (isLoadEventPage == true) {
+            
+            eventPopup.eventTitle.text = NSLocalizedString("EVENT_POPUP_TITLE", comment: "EVENT_POPUP_TITLE  in the popup view")
+            eventPopup.eventDescription.text = NSLocalizedString("EVENT_MESSAGE_TITLE", comment: "EVENT_MESSAGE_TITLE  in the popup view")
+            let buttonTitle = NSLocalizedString("POPUP_ADD_BUTTON_TITLE", comment: "POPUP_ADD_BUTTON_TITLE  in the popup view")
+            eventPopup.addToCalendarButton.setTitle(buttonTitle, for: .normal)
+        }
+        else {
+           
+            eventPopup.eventTitle.text = NSLocalizedString("EDUCATION_EVENT_POPUP_TITLE", comment: "EVENT_POPUP_TITLE  in the popup view")
+            eventPopup.eventDescription.text = NSLocalizedString("EDUCATION_POPUP_MESSAGE", comment: "EDUCATION_POPUP_MESSAGE  in the popup view")
+            let buttonTitle = NSLocalizedString("EDUCATION_POPUP_BUTTON_TITLE", comment: "POPUP_ADD_BUTTON_TITLE  in the popup view")
+            eventPopup.addToCalendarButton.setTitle(buttonTitle, for: .normal)
+            
+        }
         self.view.addSubview(eventPopup)
      
         
@@ -154,7 +180,20 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     }
     func addToCalendarButtonPressed() {
         self.addEventToCalendar(title: "QM Event", description: "Event", startDate: selectedDateForEvent, endDate: selectedDateForEvent)
-        self.eventPopup.removeFromSuperview()
+        if (isLoadEventPage == true) {
+            self.eventPopup.removeFromSuperview()
+        }
+        else {
+            self.eventPopup.removeFromSuperview()
+            popupView  = ComingSoonPopUp(frame: self.view.frame)
+            popupView.comingSoonPopupDelegate = self
+            popupView.loadEducationRegSuccessPopup()
+            self.view.addSubview(popupView)
+        }
+        
+    }
+    func closeButtonPressed() {
+        self.popupView.removeFromSuperview()
     }
     func addEventToCalendar(title: String, description: String?, startDate: Date, endDate: Date, completion: ((_ success: Bool, _ error: NSError?) -> Void)? = nil) {
         let eventStore = EKEventStore()
@@ -178,7 +217,9 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 }
                 completion?(true, nil)
             } else {
-                let alert = UIAlertController(title: "Access Denied", message: "This app doesn't have access to your Calender. Please allow it from Settings", preferredStyle: UIAlertControllerStyle.alert)
+                let message = NSLocalizedString("CALENDAR_ACCESS_MESSAGE", comment: "CALENDAR_ACCESS_MESSAGE in the Event page")
+                let accessTitle = NSLocalizedString("CALENDAR_ACCESS_MTITLE", comment: "CALENDAR_ACCESS_MTITLE in the Event page")
+                let alert = UIAlertController(title: accessTitle, message: message, preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
                 completion?(false, error as NSError?)
@@ -214,17 +255,11 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             
         }
         selectedDateForEvent = date
-       //selected date got is less than one date. so add 1 to date for actual selected date
-//        let dayComponenet = NSDateComponents()
-//        dayComponenet.day = 1
-//        selectedDateForEvent = Calendar.current.date(byAdding: .day, value: 1, to: date)!
-//        print(selectedDateForEvent)
+       
         
     }
     func calendarCurrentMonthDidChange(_ calendar: FSCalendar) {
-        // Do something
-       // print(calendar.dataSource)
-        //print(calendar.currentPage)
+        
     }
   
 //    func calendar(_ calendar: FSCalendar, shouldDeselect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
