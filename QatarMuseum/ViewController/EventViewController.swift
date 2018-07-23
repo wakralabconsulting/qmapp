@@ -146,8 +146,15 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         }
         
     }
-    @objc func settingsButtonPressed() {
-        print("hi")
+    @objc func filterButtonPressed() {
+        let filterView =  self.storyboard?.instantiateViewController(withIdentifier: "filterVcId") as! FilterViewController
+        
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(filterView, animated: false, completion: nil)
     }
     func loadEventPopup() {
         eventPopup  = EventPopupView(frame: self.view.frame)

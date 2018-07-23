@@ -33,3 +33,16 @@
 "DINING_LABEL" = "Dining";
 "GIFTSHOP_LABEL" = "Gift Shop";
 "SETTINGS_LABEL" = "Settings";
+"COMINGSOON_TITLE" = "Coming Soon";
+"COMINGSOON_MESSAGE" = "We are working  hard to bring the details at the tip of your fingers. ";
+"COMINGSOON_STAY_TUNED" = "Stay Tuned.";
+"CLOSEBUTTON_TITLE" = "Close";
+"EVENT_POPUP_TITLE" = "EVENT NAME";
+"EVENT_MESSAGE_TITLE" = "Nestled in the heart of the MIA is Alain Ducasse's first restaurant in the Middle East. 'Idam' means 'generosity', and each dish is a celebration of local tastes. spices and ingredients. phillippe Starck's unique decor creates a sophisticated atmosphere.";
+"POPUP_ADD_BUTTON_TITLE" = "Add To Calendar";
+"EDUCATION_EVENT_POPUP_TITLE" = "THE HISTORY OF MS 248";
+"EDUCATION_POPUP_MESSAGE" = "MIA in association with UCLQ are delighted welcome Prof. Dr. Efim Rezvan, Editor-in-Chief of Manuscripta Orientalia the International Journal for Oriental Manuscripts Research and Deputy Director of Kunstkamera Museum (Saint-Petersburg, Russia) to give a lecture on the life of the MIA manuscript MS 248";
+"EDUCATION_POPUP_BUTTON_TITLE" = "Register Now";
+"REGISTRATION_SUCCESS_MESSAGE" = "Thank you for registering. Further Details will be sent to you on your email";
+"FILTER_LABEL" = "FILTER";
+
