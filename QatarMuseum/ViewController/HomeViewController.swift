@@ -275,7 +275,13 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func settingsButtonPressed() {
-        loadComingSoonPopup()
+        let settingsView =  self.storyboard?.instantiateViewController(withIdentifier: "settingsId") as! SettingsViewController
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(settingsView, animated: false, completion: nil)
     }
     
     func menuEventPressed() {

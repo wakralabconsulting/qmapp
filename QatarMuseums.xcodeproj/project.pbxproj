@@ -96,6 +96,7 @@
 		B8DC478920DCF8DF0007B426 /* ParkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DC478820DCF8DF0007B426 /* ParkTableViewCell.swift */; };
 		B8DC478B20DD05BA0007B426 /* ParksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DC478A20DD05BA0007B426 /* ParksViewController.swift */; };
 		B8DC478D20DD11630007B426 /* ParksJson.json in Resources */ = {isa = PBXBuildFile; fileRef = B8DC478C20DD11630007B426 /* ParksJson.json */; };
+		B8E01BF92105EDFB008D7F33 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E01BF82105EDFB008D7F33 /* SettingsViewController.swift */; };
 		B8E2C00E20C7E9CA00F3CE41 /* ComingSoonpopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8E2C00D20C7E9CA00F3CE41 /* ComingSoonpopup.xib */; };
 		B8E2C01020C7E9E900F3CE41 /* ComingSoonPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E2C00F20C7E9E900F3CE41 /* ComingSoonPopUp.swift */; };
 		B8E2C01320C7FD0000F3CE41 /* SideMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8E2C01220C7FD0000F3CE41 /* SideMenu.xib */; };
@@ -251,6 +252,7 @@
 		B8DC478820DCF8DF0007B426 /* ParkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkTableViewCell.swift; sourceTree = "<group>"; };
 		B8DC478A20DD05BA0007B426 /* ParksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParksViewController.swift; sourceTree = "<group>"; };
 		B8DC478C20DD11630007B426 /* ParksJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ParksJson.json; sourceTree = "<group>"; };
+		B8E01BF82105EDFB008D7F33 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		B8E2C00D20C7E9CA00F3CE41 /* ComingSoonpopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ComingSoonpopup.xib; sourceTree = "<group>"; };
 		B8E2C00F20C7E9E900F3CE41 /* ComingSoonPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComingSoonPopUp.swift; sourceTree = "<group>"; };
 		B8E2C01220C7FD0000F3CE41 /* SideMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideMenu.xib; sourceTree = "<group>"; };
@@ -416,6 +418,7 @@
 				B8B7604B2100E7FC00CEE280 /* NotificationsViewController.swift */,
 				B8D7BF442101A12E0085EF49 /* EducationViewController.swift */,
 				B8D4C535210453FB0096912C /* FilterViewController.swift */,
+				B8E01BF82105EDFB008D7F33 /* SettingsViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -982,6 +985,7 @@
 				B8EAB7BB20CA424300C001B2 /* LoadViewExampleViewController.swift in Sources */,
 				B8BA80B520CCDDA3007E880A /* ProfileViewController.swift in Sources */,
 				B8294CF620CBF265002AFF72 /* FSCalendarHeaderView.m in Sources */,
+				B8E01BF92105EDFB008D7F33 /* SettingsViewController.swift in Sources */,
 				B8D1229220C9095B00772507 /* LoadingView.swift in Sources */,
 				B8D4C536210453FB0096912C /* FilterViewController.swift in Sources */,
 				B8CAA93F20DC186E009A936D /* HeritageDetailViewController.swift in Sources */,

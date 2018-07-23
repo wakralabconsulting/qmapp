@@ -78,9 +78,13 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
          self.programmeButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
     @IBAction func didTapClear(_ sender: UIButton) {
+        self.clearButton.backgroundColor = UIColor.profilePink
+        self.clearButton.setTitleColor(UIColor.whiteColor, for: .normal)
          self.clearButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
     @IBAction func didTapFilter(_ sender: UIButton) {
+        self.filterButton.backgroundColor = UIColor.viewMycultureBlue
+        self.filterButton.setTitleColor(UIColor.white, for: .normal)
          self.filterButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
     @IBAction func institutionButtonTouchDown(_ sender: UIButton) {
@@ -94,9 +98,13 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         self.programmeButton.transform = CGAffineTransform(scaleX: 0.7, y:0.7)
     }
     @IBAction func clearButtonTouchDown(_ sender: UIButton) {
+        self.clearButton.backgroundColor = UIColor.profileLightPink
+        self.clearButton.setTitleColor(UIColor.viewMyFavDarkPink, for: .normal)
         self.clearButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     @IBAction func filterButtonTouchDown(_ sender: UIButton) {
+        self.filterButton.backgroundColor = UIColor.viewMycultureLightBlue
+        self.filterButton.setTitleColor(UIColor.viewMyculTitleBlue, for: .normal)
         self.filterButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     func addPickerView() {
