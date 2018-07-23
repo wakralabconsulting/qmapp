@@ -62,4 +62,7 @@ extension UIColor {
     static var noDataViewGray: UIColor {
         return UIColor(red: 243/255, green: 241/255, blue: 238/255, alpha: 1)
     }
+    static var filterTextSelectedGray: UIColor {
+        return UIColor(red: 230/255, green: 230/255, blue: 229/255, alpha: 1)
+    }
 }

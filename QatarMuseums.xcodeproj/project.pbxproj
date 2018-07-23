@@ -83,6 +83,7 @@
 		B8D1228D20C8EE8600772507 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D1228C20C8EE8600772507 /* WebViewController.swift */; };
 		B8D1229020C9092D00772507 /* LoadingXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8D1228F20C9092D00772507 /* LoadingXib.xib */; };
 		B8D1229220C9095B00772507 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D1229120C9095B00772507 /* LoadingView.swift */; };
+		B8D4C536210453FB0096912C /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D4C535210453FB0096912C /* FilterViewController.swift */; };
 		B8D52A3620E638B900E34673 /* DiningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D52A3520E638B900E34673 /* DiningViewController.swift */; };
 		B8D52A3820E63F4F00E34673 /* DiningJson.json in Resources */ = {isa = PBXBuildFile; fileRef = B8D52A3720E63F4F00E34673 /* DiningJson.json */; };
 		B8D7BF452101A12E0085EF49 /* EducationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D7BF442101A12E0085EF49 /* EducationViewController.swift */; };
@@ -237,6 +238,7 @@
 		B8D1228C20C8EE8600772507 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		B8D1228F20C9092D00772507 /* LoadingXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingXib.xib; sourceTree = "<group>"; };
 		B8D1229120C9095B00772507 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		B8D4C535210453FB0096912C /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		B8D52A3520E638B900E34673 /* DiningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningViewController.swift; sourceTree = "<group>"; };
 		B8D52A3720E63F4F00E34673 /* DiningJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = DiningJson.json; sourceTree = "<group>"; };
 		B8D7BF442101A12E0085EF49 /* EducationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationViewController.swift; sourceTree = "<group>"; };
@@ -413,6 +415,7 @@
 				B8C64C9B20FE380D00D7CD63 /* MiaTourDetailViewController.swift */,
 				B8B7604B2100E7FC00CEE280 /* NotificationsViewController.swift */,
 				B8D7BF442101A12E0085EF49 /* EducationViewController.swift */,
+				B8D4C535210453FB0096912C /* FilterViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -980,6 +983,7 @@
 				B8BA80B520CCDDA3007E880A /* ProfileViewController.swift in Sources */,
 				B8294CF620CBF265002AFF72 /* FSCalendarHeaderView.m in Sources */,
 				B8D1229220C9095B00772507 /* LoadingView.swift in Sources */,
+				B8D4C536210453FB0096912C /* FilterViewController.swift in Sources */,
 				B8CAA93F20DC186E009A936D /* HeritageDetailViewController.swift in Sources */,
 				B8A1479B20FCA2AB00833B7B /* TourGuideViewController.swift in Sources */,
 			);

@@ -10,7 +10,7 @@ import UIKit
 @objc protocol HeaderViewProtocol
 {
     func headerCloseButtonPressed()
-    @objc optional func settingsButtonPressed()
+    @objc optional func filterButtonPressed()
 }
 class CommonHeaderView: UIView {
 
@@ -46,7 +46,7 @@ class CommonHeaderView: UIView {
     }
     @IBAction func didTapSettings(_ sender: UIButton) {
         self.settingsButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        self.headerViewDelegate?.settingsButtonPressed!()
+        self.headerViewDelegate?.filterButtonPressed!()
     }
     @IBAction func settingsButtonTouchDown(_ sender: UIButton) {
         self.settingsButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
