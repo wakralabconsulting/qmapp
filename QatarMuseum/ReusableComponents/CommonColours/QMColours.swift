@@ -65,4 +65,8 @@ extension UIColor {
     static var filterTextSelectedGray: UIColor {
         return UIColor(red: 230/255, green: 230/255, blue: 229/255, alpha: 1)
     }
+    static var settingsSwitchOnTint: UIColor {
+        return UIColor(red: 82/255, green: 178/255, blue: 74/255, alpha: 1)
+    }
+    
 }
