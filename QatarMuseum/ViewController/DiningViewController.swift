@@ -32,6 +32,13 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
         diningListImageArray = ["idam","in_q_cafe","mia_cafe","al_reward_cafe","mia_catering","mathaf_maqha","cafe_#999"];
         diningHeader.headerViewDelegate = self
         diningHeader.headerTitle.text = NSLocalizedString("DINING_TITLE", comment: "DINING_TITLE in the Dining page")
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            
+            diningHeader.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
+        }
+        else {
+            diningHeader.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+        }
 
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {

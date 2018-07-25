@@ -51,10 +51,18 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         headerView.headerViewDelegate = self
         headerView.headerBackButton.setImage(UIImage(named: "closeX1"), for: .normal)
         headerView.headerBackButton.contentEdgeInsets = UIEdgeInsets(top:14, left:19, bottom: 14, right:19)
-        headerView.headerTitle.text = NSLocalizedString("FILTER_LABEL", comment: "FILTER_LABEL in the Filter page")
+        headerView.headerTitle.text = NSLocalizedString("FILTER_LABEL", comment: "FILTER_LABEL in the Filter page").uppercased()
+        institutionTitleLabel.text = NSLocalizedString("INSTITUTION_LABEL", comment: "INSTITUTION_LABEL in the Filter page") 
+        ageGroupLabel.text = NSLocalizedString("AGE_GROUP_LABEL", comment: "AGE_GROUP_LABEL in the Filter page")
+        programmeTypeLabel.text = NSLocalizedString("PROGRAMME_TYPE_LABEL", comment: "PROGRAMME_TYPE_LABEL in the Filter page")
+        let filterButtonTitle = NSLocalizedString("FILTER_LABEL", comment: "FILTER_LABEL in the Filter page")
+        filterButton.setTitle(filterButtonTitle, for: .normal)
+        let clearButtonTitle = NSLocalizedString("CLEAR_LABEL", comment: "CLEAR_LABEL in the Filter page")
+        clearButton.setTitle(clearButtonTitle, for: .normal)
         institutionText.delegate = self
         ageGroupText.delegate = self
         programmeTypeText.delegate = self
+        
         addPickerView()
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {

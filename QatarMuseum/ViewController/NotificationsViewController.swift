@@ -24,6 +24,13 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
         notificationsHeader.headerTitle.text = NSLocalizedString("NOTIFICATIONS_TITLE", comment: "NOTIFICATIONS_TITLE in the Notification page")
 
         notificationsHeader.headerViewDelegate = self
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            
+            notificationsHeader.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
+        }
+        else {
+            notificationsHeader.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+        }
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -37,6 +44,13 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "notificationCellId", for: indexPath) as! NotificationsTableViewCell
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            
+            cell.detailArrowButton.setImage(UIImage(named: "nextImg"), for: .normal)
+        }
+        else {
+            cell.detailArrowButton.setImage(UIImage(named: "previousImg"), for: .normal)
+        }
         if (indexPath.row % 2 == 0) {
             cell.innerView.backgroundColor = UIColor.notificationCellAsh
         }

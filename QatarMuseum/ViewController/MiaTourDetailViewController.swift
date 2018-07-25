@@ -70,8 +70,8 @@ class MiaTourDetailViewController: UIViewController,HeaderViewProtocol,comingSoo
     }
     
     func kaSlideShowDidShowNext(_ slideshow: KASlideShow) {
-       // pageControl.currentPage = Int(slideshowView.currentIndex)
-        print(slideshow.currentIndex)
+
+        
         pageControl.subviews.forEach {
             if (i == slideshow.currentIndex) {
                 $0.transform = CGAffineTransform(scaleX: 2, y: 2);

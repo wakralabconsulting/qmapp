@@ -31,6 +31,13 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         tourImageArray = ["museum_of_islamic_art","mathaf_arab_museum","firestation","qatar_olypic_&_sports_museum","national_museum_of_qatar"];
         topbarView.headerViewDelegate = self
         topbarView.headerTitle.isHidden = true
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            
+            topbarView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
+        }
+        else {
+            topbarView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+        }
         
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {

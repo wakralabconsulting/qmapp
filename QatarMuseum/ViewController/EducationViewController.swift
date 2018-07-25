@@ -35,6 +35,15 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
         secondDescriptionLabel.text = "All of our education parameters privide interactive opportunities. We hope that they create lasting memories and lead to the development of creative, compassionate and engaged individuals.\n\n For school teachers and educators, we bring custom-made worshops, conferences and trainings to suit their needs. We also focus on working with children to encourage them to explore the world around them, engage with it, and express themselves through creative activities. "
         headerView.headerViewDelegate = self
         headerView.headerTitle.text = NSLocalizedString("EDUCATION_TITLE", comment: "EDUCATION_TITLE in the education page")
+        let buttonLabel = NSLocalizedString("DISCOVER", comment: "DISCOVER in the education page")
+        discoverButton.setTitle(buttonLabel, for: .normal)
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            
+            headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
+        }
+        else {
+            headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+        }
 
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
