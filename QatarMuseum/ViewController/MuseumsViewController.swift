@@ -49,7 +49,21 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         museumsTopbar.menuButton.isHidden = true
         museumsTopbar.backButton.isHidden = false
         //previousConstraint.constant = 0
-        previousButton.isHidden = true
+        
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            
+            museumsTopbar.backButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
+            previousButton.isHidden = true
+            nextButton.isHidden = false
+        }
+        else {
+            
+            museumsTopbar.backButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+            previousButton.isHidden = false
+            nextButton.isHidden = true
+            previousButton.setImage(UIImage(named: "nextImg"), for: .normal)
+        }
+
     }
     override func viewDidAppear(_ animated: Bool) {
          setSlideShow(imgArray: slideshowImages)
@@ -148,13 +162,30 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         }
         
         if (museumsBottomCollectionView.contentOffset.x <= 0.0) {
-            previousButton.isHidden = true
-            nextButton.isHidden = false
+            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                previousButton.isHidden = true
+                nextButton.isHidden = false
+            }
+            else{
+                previousButton.isHidden = false
+                nextButton.isHidden = true
+                previousButton.setImage(UIImage(named: "nextImg"), for: .normal)
+           
+        }
         }
         else {
-            previousButton.isHidden = false
-            nextButton.isHidden = true
+            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                previousButton.isHidden = false
+                nextButton.isHidden = true
+                
+            }
+            else {
+                previousButton.isHidden = true
+                nextButton.isHidden = false
+                nextButton.setImage(UIImage(named: "previousImg"), for: .normal)
+            }
         }
+        
         
         museumsCell.cellItemBtnTapAction = {
             () in
@@ -233,24 +264,47 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     @IBAction func didTapPrevious(_ sender: UIButton) {
         
-        let collectionBounds = self.museumsBottomCollectionView.bounds
-        let contentOffset = CGFloat(floor(self.museumsBottomCollectionView.contentOffset.x - collectionBounds.size.width))
-        self.moveCollectionToFrame(contentOffset: contentOffset)
-        //previousConstraint.constant = 0
-        //nextConstraint.constant = 25
-        nextButton.isHidden = false
-        previousButton.isHidden = true
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            let collectionBounds = self.museumsBottomCollectionView.bounds
+            let contentOffset = CGFloat(floor(self.museumsBottomCollectionView.contentOffset.x - collectionBounds.size.width))
+            self.moveCollectionToFrame(contentOffset: contentOffset)
+            
+            nextButton.isHidden = false
+            previousButton.isHidden = true
+            
+            
+        }
+        else {
+            self.museumsBottomCollectionView.isScrollEnabled = true
+            let collectionBounds = self.museumsBottomCollectionView.bounds
+            let contentOffset = CGFloat(floor(self.museumsBottomCollectionView.contentOffset.x + collectionBounds.size.width))
+            self.moveCollectionToFrame(contentOffset: contentOffset)
+            nextButton.isHidden = false
+            previousButton.isHidden = true
+          //  nextButton.setImage(UIImage(named: "nextImg"), for: .normal)
+        }
     }
     
     @IBAction func didTapNext(_ sender: UIButton) {
-        self.museumsBottomCollectionView.isScrollEnabled = true
-        let collectionBounds = self.museumsBottomCollectionView.bounds
-        let contentOffset = CGFloat(floor(self.museumsBottomCollectionView.contentOffset.x + collectionBounds.size.width))
-        self.moveCollectionToFrame(contentOffset: contentOffset)
-        //previousConstraint.constant = 25
-        //nextConstraint.constant = 0
-        nextButton.isHidden = true
-        previousButton.isHidden = false
+       
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            self.museumsBottomCollectionView.isScrollEnabled = true
+            let collectionBounds = self.museumsBottomCollectionView.bounds
+            let contentOffset = CGFloat(floor(self.museumsBottomCollectionView.contentOffset.x + collectionBounds.size.width))
+            self.moveCollectionToFrame(contentOffset: contentOffset)
+            
+            nextButton.isHidden = true
+            previousButton.isHidden = false
+            
+        }
+        else {
+            let collectionBounds = self.museumsBottomCollectionView.bounds
+            let contentOffset = CGFloat(floor(self.museumsBottomCollectionView.contentOffset.x - collectionBounds.size.width))
+            self.moveCollectionToFrame(contentOffset: contentOffset)
+            nextButton.isHidden = true
+            previousButton.isHidden = false
+            previousButton.setImage(UIImage(named: "nextImg"), for: .normal)
+        }
     }
     func moveCollectionToFrame(contentOffset : CGFloat) {
         
@@ -305,16 +359,6 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     
     func menuButtonPressed() {
-        
-    }
-    func setGradientLayer() {
-
-        let dummyView = UIView()
-        dummyView.frame = self.view.frame
-        dummyView.backgroundColor = UIColor.black
-        dummyView.alpha = 0.32
-        print(dummyView.frame)
-         museumsSlideView.addSubview(dummyView)
         
     }
     override func didReceiveMemoryWarning() {

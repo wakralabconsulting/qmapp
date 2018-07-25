@@ -19,7 +19,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     @IBOutlet weak var innerView: UIView!
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var calendarInnerView: UIView!
-    
+    @IBOutlet weak var previousButton: UIButton!
+    @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var listTitleLabel: UILabel!
     var effect:UIVisualEffect!
     var eventPopup : EventPopupView = EventPopupView()
@@ -71,19 +72,49 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             eventPopup.addToCalendarButton.titleLabel?.text = NSLocalizedString("EDUCATION_POPUP_BUTTON_TITLE", comment: "POPUP_ADD_BUTTON_TITLE  in the popup view")
             
         }
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            
+            headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
+            previousButton.setImage(UIImage(named: "previousImg"), for: .normal)
+            nextButton.setImage(UIImage(named: "nextImg"), for: .normal)
+            
+            calendarView.locale = NSLocale.init(localeIdentifier: "en") as Locale
+            
+        
+            calendarView.identifier = NSCalendar.Identifier.gregorian.rawValue
+            calendarView.appearance.titleFont = UIFont.init(name: "DINNextLTPro-Bold", size: 19)
+            calendarView.appearance.titleWeekendColor = UIColor.profilePink
+            calendarView.appearance.titleTodayColor = UIColor.black
+            calendarView.appearance.titleSelectionColor = UIColor.black
+        }
+        else {
+           
+            headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+            //For RTL
+                    calendarView.locale = NSLocale.init(localeIdentifier: "fa-IR") as Locale
+                    calendarView.identifier = NSCalendar.Identifier.persian.rawValue
+            calendarView.setCurrentPage(Date(), animated: false)
+            
+     
+            calendarView.appearance.titleFont = UIFont.init(name: "DINNextLTArabic-Bold", size: 19)
+            calendarView.appearance.titleTodayColor = UIColor.black
+            calendarView.appearance.titleSelectionColor = UIColor.black
+            
+            previousButton.setImage(UIImage(named: "nextImg"), for: .normal)
+            nextButton.setImage(UIImage(named: "previousImg"), for: .normal)
+            calendarView.appearance.titleWeekendColor = UIColor.profilePink
+        }
         
        
-        //calendarView.appearance.titleWeekendColor = UIColor.init(red: 236/255, green: 65/255, blue: 136/255, alpha: 1)
+        
 
-        //For RTL
-//        calendarView.locale = NSLocale.init(localeIdentifier: "fa-IR") as Locale
-//        calendarView.identifier = NSCalendar.Identifier.persian.rawValue
-//        calendarView.firstWeekday = 7
+        
     }
     //For RTL
-//    func minimumDate(for calendar: FSCalendar) -> Date {
-//        return self.formatter.date(from: "2016-07-08")!
-//    }
+    func minimumDate(for calendar: FSCalendar) -> Date {
+        return self.formatter.date(from: "2016-07-08")!
+    }
+   
     fileprivate let formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd"
@@ -255,53 +286,54 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     }
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
        
-        print(date)
+      
        
         if monthPosition == .previous || monthPosition == .next {
             calendar.setCurrentPage(date, animated: true)
             
         }
         selectedDateForEvent = date
-       
+      
         
     }
     func calendarCurrentMonthDidChange(_ calendar: FSCalendar) {
         
     }
   
-//    func calendar(_ calendar: FSCalendar, shouldDeselect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
-//
-//        let key = self.formatter.string(from: date)
-//        print(key)
-////        if (calendarView.) {
-////            <#code#>
-////        }
-//
-//
-////        NSString *key = [self.dateFormatter1 stringFromDate:date];
-////        if ([_borderSelectionColors.allKeys containsObject:key]) {
-////            return yelloLayerColor;
-////        }
-//        return true
-//    }
-//    func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
-//return true
-//    }
     
     @IBAction func previoudDateSelected(_ sender: UIButton) {
-        let _calendar = Calendar.current
-        var dateComponents = DateComponents()
-        dateComponents.month = -1 // For prev button
-        calendarView.currentPage = _calendar.date(byAdding: dateComponents, to: calendarView.currentPage)!
-       calendarView.setCurrentPage(calendarView.currentPage, animated: true)// calender is object of FSCalendar
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            let _calendar = Calendar.current
+            var dateComponents = DateComponents()
+            dateComponents.month = -1 // For prev button
+            calendarView.currentPage = _calendar.date(byAdding: dateComponents, to: calendarView.currentPage)!
+            calendarView.setCurrentPage(calendarView.currentPage, animated: true)// calender is object of FSCalendar
+        }
+        else {
+            let _calendar = Calendar.current
+            var dateComponents = DateComponents()
+            dateComponents.month = 1 // For next button
+            calendarView.currentPage = _calendar.date(byAdding: dateComponents, to: calendarView.currentPage)!
+            calendarView.setCurrentPage(calendarView.currentPage, animated: true)// calender is object of FSCalendar
+        }
     }
     
     @IBAction func nextDateSelected(_ sender: UIButton) {
-        let _calendar = Calendar.current
-        var dateComponents = DateComponents()
-         dateComponents.month = 1 // For next button
-        calendarView.currentPage = _calendar.date(byAdding: dateComponents, to: calendarView.currentPage)!
-        calendarView.setCurrentPage(calendarView.currentPage, animated: true)// calender is object of FSCalendar
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            let _calendar = Calendar.current
+            var dateComponents = DateComponents()
+            dateComponents.month = 1 // For next button
+            calendarView.currentPage = _calendar.date(byAdding: dateComponents, to: calendarView.currentPage)!
+            calendarView.setCurrentPage(calendarView.currentPage, animated: true)// calender is object of FSCalendar
+        }
+        else {
+            let _calendar = Calendar.current
+            var dateComponents = DateComponents()
+            dateComponents.month = -1 // For prev button
+            calendarView.currentPage = _calendar.date(byAdding: dateComponents, to: calendarView.currentPage)!
+            calendarView.setCurrentPage(calendarView.currentPage, animated: true)// calender is object of FSCalendar
+        }
+        
     }
     
     

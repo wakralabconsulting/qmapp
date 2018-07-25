@@ -12,7 +12,9 @@ class NotificationsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var notificationLabel: UILabel!
     
+    @IBOutlet weak var detailArrowButton: UIButton!
     @IBOutlet weak var innerView: UIView!
+    
     var notificationDetailSelection : (()->())?
     override func awakeFromNib() {
         super.awakeFromNib()

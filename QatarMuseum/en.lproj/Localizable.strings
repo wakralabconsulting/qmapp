@@ -32,7 +32,7 @@
 "PARKS_LABEL" = "Parks";
 "DINING_LABEL" = "Dining";
 "GIFTSHOP_LABEL" = "Gift Shop";
-"SETTINGS_LABEL" = "Settings";
+"SIDEMENU_SETTINGS_LABEL" = "Settings";
 "COMINGSOON_TITLE" = "Coming Soon";
 "COMINGSOON_MESSAGE" = "We are working  hard to bring the details at the tip of your fingers. ";
 "COMINGSOON_STAY_TUNED" = "Stay Tuned.";
@@ -44,6 +44,25 @@
 "EDUCATION_POPUP_MESSAGE" = "MIA in association with UCLQ are delighted welcome Prof. Dr. Efim Rezvan, Editor-in-Chief of Manuscripta Orientalia the International Journal for Oriental Manuscripts Research and Deputy Director of Kunstkamera Museum (Saint-Petersburg, Russia) to give a lecture on the life of the MIA manuscript MS 248";
 "EDUCATION_POPUP_BUTTON_TITLE" = "Register Now";
 "REGISTRATION_SUCCESS_MESSAGE" = "Thank you for registering. Further Details will be sent to you on your email";
-"FILTER_LABEL" = "FILTER";
+"FILTER_LABEL" = "Filter";
+"INSTITUTION_LABEL" = "Institution";
+"AGE_GROUP_LABEL" = "Age Group";
+"PROGRAMME_TYPE_LABEL" = "Programme type";
+"CLEAR_LABEL" = "Clear";
 "SETTINGS_LABEL" = "SETTINGS";
+"SETTINGS_REDIRECTION_MSG" = "You will be redirected to home page, after changing the language.Do you want to continue?";
+"YES" = "YES";
+"NO" = "NO";
+"SELECT_LANGUAGE_LABEL" = "Select App Language";
+"NOTIFICATION_SETTINGS" = "Notification Settings";
+"ARABIC" = "Arabic";
+"ENGLISH" = "English";
+"EVENT_UPDATE_LABEL" = "Event Updates";
+"EXHIBITION_UPDATE_LABEL" = "Exhibition Updates";
+"MUSEUM_UPDATE_LABEL" = "Museum Updates";
+"CULTUREPASS_UPDATE_LABEL" = "Culture Pass Updates";
+"TOURGUIDE_UPDATE_LABEL" = "Tour Guide Updates";
+"DISCOVER" = "DISCOVER";
+
+
 

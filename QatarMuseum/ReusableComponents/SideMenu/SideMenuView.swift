@@ -85,7 +85,7 @@ class SideMenuView: UIView,TopBarProtocol {
          diningLabel.text = NSLocalizedString("DINING_LABEL", comment: "DINING_LABEL Label in the SideMenu page")
          giftShopLabel.text = NSLocalizedString("GIFTSHOP_LABEL", comment: "GIFTSHOP_LABEL Label in the SideMenu page")
          parksLabel.text = NSLocalizedString("PARKS_LABEL", comment: "PARKS_LABEL Label in the SideMenu page")
-         settingsLabel.text = NSLocalizedString("SETTINGS_LABEL", comment: "SETTINGS_LABEL Label in the SideMenu page")
+         settingsLabel.text = NSLocalizedString("SIDEMENU_SETTINGS_LABEL", comment: "SIDEMENU_SETTINGS_LABEL Label in the SideMenu page")
         
        
     }

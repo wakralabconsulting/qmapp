@@ -37,6 +37,13 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
         collectionsHeader.headerTitle.text = NSLocalizedString("COLLECTIONS_TITLE", comment: "COLLECTIONS_TITLE Label in the collections page")
 
         collectionsImgArray = ["ceramic_collection","glass_collection","the_cavour_case","gold_and_class","mosque_lamp"]
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            
+            collectionsHeader.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
+        }
+        else {
+            collectionsHeader.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+        }
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
