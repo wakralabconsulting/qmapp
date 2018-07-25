@@ -59,7 +59,12 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         imageView.addSubview(blurView)
         
         
-        closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
+        }
+        else {
+            closeButton.frame = CGRect(x: self.view.frame.width-50, y: 30, width: 40, height: 40)
+        }
         closeButton.setImage(UIImage(named: "closeX1"), for: .normal)
         closeButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom:12, right: 12)
         

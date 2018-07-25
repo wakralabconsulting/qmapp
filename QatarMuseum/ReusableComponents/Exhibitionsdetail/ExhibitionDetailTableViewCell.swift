@@ -19,17 +19,35 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var exbtnDateLabel: UILabel!
     @IBOutlet weak var exbtnTimeLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var exhibitionTimingTitle: UILabel!
+    @IBOutlet weak var locationsTitle: UILabel!
+    @IBOutlet weak var contactTitle: UILabel!
+    @IBOutlet weak var contactDescriptionLabel: UILabel!
     
     @IBOutlet weak var centerImageView: UIImageView!
     
+    @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var centerImgHeight: NSLayoutConstraint!
     var favBtnTapAction : (()->())?
     var shareBtnTapAction : (()->())?
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        setupCellUI()
     }
 
+    func setupCellUI() {
+        
+        titleLabel.textAlignment = .center
+        descriptionLabel.textAlignment = .center
+        detailSecondLabel.textAlignment = .center
+        exhibitionTimingTitle.textAlignment = .center
+        exbtnDateLabel.textAlignment = .center
+        exbtnTimeLabel.textAlignment = .center
+        locationsTitle.textAlignment = .center
+        locationLabel.textAlignment = .center
+        contactTitle.textAlignment = .center
+        contactDescriptionLabel.textAlignment = .center
+    }
     func setHomeExhibitionDetail() {
         titleLabel.text = "LAUNDROMAT"
          descriptionLabel?.text = "Ai Weiwei's Laundromat is a traveling insatallation that brings the current European migrant crisis into sharp focus. The work is centered around a vast makeshift camp near the village of Idomeni, on the border with the Republic of Macedonia."

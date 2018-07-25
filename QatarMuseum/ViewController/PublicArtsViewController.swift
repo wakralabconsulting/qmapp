@@ -32,6 +32,13 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
         publicArtsListImageArray = ["gandhi's_three_monkeys","7_by_richard_serra","lusail_handball_installation","smokey_by_tony_smith","qatar_univercity_installation","airport_installation","east_west-west_east_by_richard_serra","the_miraculas_journey","calligrafiti_by_el_seed","maman","perceval","healthy_living_from_the_start"];
         pulicArtsHeader.headerViewDelegate = self
         pulicArtsHeader.headerTitle.text = NSLocalizedString("PUBLIC_ARTS_TITLE", comment: "PUBLIC_ARTS_TITLE Label in the PublicArts page")
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            
+            pulicArtsHeader.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
+        }
+        else {
+            pulicArtsHeader.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+        }
 
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {

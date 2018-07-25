@@ -97,6 +97,8 @@
 		B8DC478B20DD05BA0007B426 /* ParksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DC478A20DD05BA0007B426 /* ParksViewController.swift */; };
 		B8DC478D20DD11630007B426 /* ParksJson.json in Resources */ = {isa = PBXBuildFile; fileRef = B8DC478C20DD11630007B426 /* ParksJson.json */; };
 		B8E01BF92105EDFB008D7F33 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E01BF82105EDFB008D7F33 /* SettingsViewController.swift */; };
+		B8E01BFD21060FDC008D7F33 /* AppLocalizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E01BFB21060FDC008D7F33 /* AppLocalizer.swift */; };
+		B8E01BFE21060FDC008D7F33 /* LocalizationLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E01BFC21060FDC008D7F33 /* LocalizationLanguage.swift */; };
 		B8E2C00E20C7E9CA00F3CE41 /* ComingSoonpopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8E2C00D20C7E9CA00F3CE41 /* ComingSoonpopup.xib */; };
 		B8E2C01020C7E9E900F3CE41 /* ComingSoonPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E2C00F20C7E9E900F3CE41 /* ComingSoonPopUp.swift */; };
 		B8E2C01320C7FD0000F3CE41 /* SideMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8E2C01220C7FD0000F3CE41 /* SideMenu.xib */; };
@@ -253,6 +255,8 @@
 		B8DC478A20DD05BA0007B426 /* ParksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParksViewController.swift; sourceTree = "<group>"; };
 		B8DC478C20DD11630007B426 /* ParksJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ParksJson.json; sourceTree = "<group>"; };
 		B8E01BF82105EDFB008D7F33 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		B8E01BFB21060FDC008D7F33 /* AppLocalizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLocalizer.swift; sourceTree = "<group>"; };
+		B8E01BFC21060FDC008D7F33 /* LocalizationLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationLanguage.swift; sourceTree = "<group>"; };
 		B8E2C00D20C7E9CA00F3CE41 /* ComingSoonpopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ComingSoonpopup.xib; sourceTree = "<group>"; };
 		B8E2C00F20C7E9E900F3CE41 /* ComingSoonPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComingSoonPopUp.swift; sourceTree = "<group>"; };
 		B8E2C01220C7FD0000F3CE41 /* SideMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideMenu.xib; sourceTree = "<group>"; };
@@ -426,6 +430,7 @@
 		B80DC08720C7943100E28034 /* ReusableComponents */ = {
 			isa = PBXGroup;
 			children = (
+				B8E01BFA21060FBC008D7F33 /* RTLSupportFiles */,
 				B811FBCA210380EF00960246 /* CommonColours */,
 				B8B7604D2100E86600CEE280 /* NotificationsList */,
 				B8B54D6A20FF512600B21348 /* MuseumCollectionDetail */,
@@ -587,6 +592,15 @@
 				B8DC478820DCF8DF0007B426 /* ParkTableViewCell.swift */,
 			);
 			path = ParkCell;
+			sourceTree = "<group>";
+		};
+		B8E01BFA21060FBC008D7F33 /* RTLSupportFiles */ = {
+			isa = PBXGroup;
+			children = (
+				B8E01BFB21060FDC008D7F33 /* AppLocalizer.swift */,
+				B8E01BFC21060FDC008D7F33 /* LocalizationLanguage.swift */,
+			);
+			path = RTLSupportFiles;
 			sourceTree = "<group>";
 		};
 		B8E284FA20CE3AC2007867BE /* Exhibitionsdetail */ = {
@@ -924,9 +938,11 @@
 			files = (
 				B8B81FE320DE2C8A004885D0 /* MuseumsViewController.swift in Sources */,
 				B80DC09420C7A9F500E28034 /* TopBarView.swift in Sources */,
+				B8E01BFE21060FDC008D7F33 /* LocalizationLanguage.swift in Sources */,
 				B8C64D5120FDF22800C2D51A /* MiaTourGuideExploreViewController.swift in Sources */,
 				B8DC478920DCF8DF0007B426 /* ParkTableViewCell.swift in Sources */,
 				B85BA4B720D03CE500E7F4D1 /* iOSDevCenters+GIF.swift in Sources */,
+				B8E01BFD21060FDC008D7F33 /* AppLocalizer.swift in Sources */,
 				B8C64C9C20FE380D00D7CD63 /* MiaTourDetailViewController.swift in Sources */,
 				B8294CF720CBF265002AFF72 /* FSCalendarDelegationProxy.m in Sources */,
 				B8B368BE20DD4B6200B1CDA4 /* MuseumCollectionsViewController.swift in Sources */,
@@ -1107,7 +1123,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1162,7 +1178,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -1179,7 +1195,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DNV2Z9FR68;
 				INFOPLIST_FILE = QatarMuseum/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.qatarmuseums.qatarmuseumsapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1201,7 +1217,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DNV2Z9FR68;
 				INFOPLIST_FILE = QatarMuseum/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.qatarmuseums.qatarmuseumsapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";

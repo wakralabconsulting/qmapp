@@ -47,8 +47,12 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         blurView.alpha = 0
         imageView.addSubview(blurView)
         
-        
-        closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
+        }
+        else {
+            closeButton.frame = CGRect(x: self.view.frame.width-50, y: 30, width: 40, height: 40)
+        }
         closeButton.setImage(UIImage(named: "closeX1"), for: .normal)
         closeButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom:12, right: 12)
         
@@ -73,6 +77,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "exhibitionDetailCellId", for: indexPath) as! ExhibitionDetailTableViewCell
+        cell.descriptionLabel.textAlignment = .center
         if (fromHome == true) {
             cell.setHomeExhibitionDetail()
         }
@@ -98,8 +103,12 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
        
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+       
+        
         let y = 300 - (scrollView.contentOffset.y + 300)
+        
         let height = min(max(y, 60), 400)
+        
         imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: height)
         
 

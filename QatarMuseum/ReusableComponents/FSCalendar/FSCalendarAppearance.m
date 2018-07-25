@@ -31,6 +31,8 @@
     if (self) {
         //changed
         //_titleFont = [UIFont systemFontOfSize:FSCalendarStandardTitleTextSize];
+      // _titleFont = [UIFont fontWithName:@"DINNextLTArabic-Bold" size:19];
+        
         _titleFont = [UIFont fontWithName:@"DINNextLTPro-Bold" size:19];
         _subtitleFont = [UIFont systemFontOfSize:FSCalendarStandardSubtitleTextSize];
         //_subtitleFont = [UIFont fontWithName:@"System" size:3];

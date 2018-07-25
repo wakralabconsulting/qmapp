@@ -34,6 +34,13 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         heritageListImageArray = ["al_zubarah","tower_of_qatar","forts_of_qatar","wells_of_qatar"];
         heritageHeader.headerViewDelegate = self
         heritageHeader.headerTitle.text = NSLocalizedString("HERITAGE_SITES_TITLE", comment: "HERITAGE_SITES_TITLE  in the Heritage page")
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            
+            heritageHeader.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
+        }
+        else {
+            heritageHeader.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+        }
 
     }
     func registerNib() {
