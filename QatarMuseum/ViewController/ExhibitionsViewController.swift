@@ -7,7 +7,9 @@
 //
 
 import UIKit
-enum ExhbitionPageName{
+import Alamofire
+
+enum ExhbitionPageName {
     case homeExhibition
     case museumExhibition
 }
@@ -18,6 +20,7 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
     
     @IBOutlet weak var exbtnLoadingView: LoadingView!
     var exhibitionArray : NSArray!
+    var exhibition: [Exhibition]! = nil
     var exhibitionImageArray = NSArray()
     var museumExhibitionArray : NSArray!
     var museumExhibitionImageArray = NSArray()
@@ -50,6 +53,28 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
     //MARK: Service call
     func getExhibitionDataFromJson(){
    
+        _ = Alamofire.request(QatarMuseumRouter.ExhibitionList()).responseObject { (response: DataResponse<Exhibitions>) -> Void in
+            
+            switch response.result {
+            case .success(let data):
+                self.exhibition = data.exhibitions
+            case .failure(let error):
+                if let unhandledError = handleError(viewController: self, errorType: error as! BackendError) {
+                    var errorMessage: String
+                    var errorTitle: String
+                    switch unhandledError.code {
+                    default: print(unhandledError.code)
+                        errorTitle = String(format: NSLocalizedString("UNKNOWN_ERROR_ALERT_TITLE",
+                                                                      comment: "Setting the title of the alert"))
+                        errorMessage = String(format: NSLocalizedString("ERROR_MESSAGE",
+                                                                        comment: "Setting the content of the alert"))
+                    }
+                    presentAlert(self, title: errorTitle, message: errorMessage)
+                }
+            }
+        }
+
+        
         if (exhibitionsPageNameString == ExhbitionPageName.homeExhibition) {
             let url = Bundle.main.url(forResource: "ExhibitionsJson", withExtension: "json")
             let dataObject = NSData(contentsOf: url!)
@@ -58,8 +83,7 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
                 exhibitionArray = jsonObj!.value(forKey: "items")
                     as! NSArray
             }
-        }
-        else {
+        } else {
             let url = Bundle.main.url(forResource: "MuseumExhibitionJson", withExtension: "json")
             let dataObject = NSData(contentsOf: url!)
             if let jsonObj = try? JSONSerialization.jsonObject(with: dataObject! as Data, options: .allowFragments) as? NSDictionary {
@@ -68,12 +92,13 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
                     as! NSArray
             }
         }
-       
     }
+    
     //MARK: collectionview delegate
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch exhibitionsPageNameString {
         case .homeExhibition?:
@@ -83,8 +108,8 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
         default:
             return 0
         }
-        
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let exhibitionCell : ExhibitionsCollectionCell = exhibitionCollectionView.dequeueReusableCell(withReuseIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
         switch exhibitionsPageNameString {
@@ -106,10 +131,12 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
         exbtnLoadingView.isHidden = true
         return exhibitionCell
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let heightValue = UIScreen.main.bounds.height/100
         return CGSize(width: exhibitionCollectionView.frame.width, height: heightValue*27)
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
        // loadExhibitionDetail()
         if (indexPath.item == 0) {
@@ -119,9 +146,11 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
             addComingSoonPopup()
         }
     }
-     func loadExhibitionCellPages(cellObj: ExhibitionsCollectionCell, selectedIndex: Int) {
+    
+    func loadExhibitionCellPages(cellObj: ExhibitionsCollectionCell, selectedIndex: Int) {
         
     }
+    
     func addComingSoonPopup() {
         let viewFrame : CGRect = self.view.frame
         popupView.frame = viewFrame
@@ -132,8 +161,7 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
         let exhibitionDtlView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionDtlId") as! ExhibitionDetailViewController
         if (exhibitionsPageNameString == ExhbitionPageName.homeExhibition) {
             exhibitionDtlView.fromHome = true
-        }
-        else {
+        } else {
             exhibitionDtlView.fromHome = false
         }
         let transition = CATransition()
@@ -164,8 +192,6 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
         default:
             break
         }
-        
-        
     }
 
     func closeButtonPressed() {
@@ -177,7 +203,5 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-   
 
 }

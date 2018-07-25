@@ -17,7 +17,7 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
     @IBOutlet weak var favouriteButton: UIButton!
     @IBOutlet weak var openCloseView: UIView!
     @IBOutlet weak var openCloseLabel: UILabel!
-    var isFvourite : Bool = false
+    var isFavourite : Bool = false
     var exhibitionCellItemBtnTapAction : (()->())?
     
     override func layoutSubviews() {
@@ -30,8 +30,7 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
         addressLabel.text = (cellValues.value(forKey: "addressTitle") as? String)?.uppercased()
         if ((cellValues.value(forKey: "favourite") as! Bool) == true) {
             favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
-        }
-        else {
+        } else {
             favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
         }
         if ((cellValues.value(forKey: "open")as! Bool) == true) {
@@ -102,13 +101,13 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
     @IBAction func favoriteTouchDownPressed(_ sender: UIButton) {
         
         self.favouriteButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-        if (isFvourite) {
+        if (isFavourite) {
             favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
-            isFvourite = false
+            isFavourite = false
         }
         else {
             favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
-            isFvourite = true
+            isFavourite = true
         }
         
     }
