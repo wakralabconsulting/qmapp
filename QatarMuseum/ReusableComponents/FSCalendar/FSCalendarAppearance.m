@@ -30,19 +30,18 @@
     self = [super init];
     if (self) {
         //changed
-        //_titleFont = [UIFont systemFontOfSize:FSCalendarStandardTitleTextSize];
-      // _titleFont = [UIFont fontWithName:@"DINNextLTArabic-Bold" size:19];
-        
-        _titleFont = [UIFont fontWithName:@"DINNextLTPro-Bold" size:19];
-        _subtitleFont = [UIFont systemFontOfSize:FSCalendarStandardSubtitleTextSize];
-        //_subtitleFont = [UIFont fontWithName:@"System" size:3];
-        //_weekdayFont = [UIFont systemFontOfSize:FSCalendarStandardWeekdayTextSize];
-      
-        _weekdayFont = [UIFont fontWithName:@"DINNextLTPro-Regular" size:13];
-        
-        _headerTitleFont = [UIFont fontWithName:@"DINNextLTPro-Bold" size:21];
-        //_headerTitleFont = [UIFont systemFontOfSize:FSCalendarStandardHeaderTextSize];
-        
+        if([[NSUserDefaults standardUserDefaults] boolForKey:@"Arabic"]) {
+            _titleFont = [UIFont fontWithName:@"DINNextLTArabic-Bold" size:19];
+            _subtitleFont = [UIFont systemFontOfSize:FSCalendarStandardSubtitleTextSize];
+            _weekdayFont = [UIFont fontWithName:@"DINNextLTArabic-Regular" size:13];
+            _headerTitleFont = [UIFont fontWithName:@"DINNextLTArabic-Bold" size:21];
+        }
+        else {
+            _titleFont = [UIFont fontWithName:@"DINNextLTPro-Bold" size:19];
+            _subtitleFont = [UIFont systemFontOfSize:FSCalendarStandardSubtitleTextSize];
+            _weekdayFont = [UIFont fontWithName:@"DINNextLTPro-Regular" size:13];
+            _headerTitleFont = [UIFont fontWithName:@"DINNextLTPro-Bold" size:21];
+        }
         _headerTitleColor = FSCalendarStandardTitleTextColor;
         _headerDateFormat = @"MMMM - yyyy";
         _headerMinimumDissolvedAlpha = 0.2;
@@ -91,8 +90,8 @@
 {
     if (![_titleFont isEqual:titleFont]) {
         //changed
-        //_titleFont = titleFont;
-        _titleFont = [UIFont boldSystemFontOfSize:18];
+        _titleFont = titleFont;
+        //_titleFont = [UIFont boldSystemFontOfSize:18];
         [self.calendar configureAppearance];
     }
 }
@@ -108,9 +107,9 @@
 - (void)setWeekdayFont:(UIFont *)weekdayFont
 {
     if (![_weekdayFont isEqual:weekdayFont]) {
-       // _weekdayFont = weekdayFont;
+        _weekdayFont = weekdayFont;
         //changed
-         _weekdayFont = [UIFont boldSystemFontOfSize:12];
+        // _weekdayFont = [UIFont boldSystemFontOfSize:12];
         [self.calendar configureAppearance];
     }
 }

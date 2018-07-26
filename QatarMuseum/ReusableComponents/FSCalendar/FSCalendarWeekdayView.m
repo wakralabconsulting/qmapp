@@ -52,6 +52,13 @@
     for (int i = 0; i < 7; i++) {
         UILabel *weekdayLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         weekdayLabel.textAlignment = NSTextAlignmentCenter;
+        //changed
+//        if([[NSUserDefaults standardUserDefaults] boolForKey:@"Arabic"]) {
+//            weekdayLabel.transform =  CGAffineTransformMakeScale(-1, 1);
+//        }
+//        else {
+//            weekdayLabel.transform =  CGAffineTransformMakeScale(1, 1);
+//        }
         [self.contentView addSubview:weekdayLabel];
         [_weekdayPointers addPointer:(__bridge void * _Nullable)(weekdayLabel)];
     }
@@ -106,6 +113,12 @@
         if ([_calendar.identifier isRTLCalendar]) {
             [label setTransform:CGAffineTransformMakeScale(-1,1)];
         }
+        //changed
+         if([[NSUserDefaults standardUserDefaults] boolForKey:@"Arabic"]) {
+             [label setTransform:CGAffineTransformMakeScale(-1,1)];
+         }
+        
+        
     }
 
 }

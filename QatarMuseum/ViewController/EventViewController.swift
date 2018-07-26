@@ -8,6 +8,7 @@
 
 import UIKit
 import EventKit
+
 class EventViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource, HeaderViewProtocol,FSCalendarDelegate,FSCalendarDataSource,UICollectionViewDelegateFlowLayout,EventPopUpProtocol,UIViewControllerTransitioningDelegate,UIGestureRecognizerDelegate,comingSoonPopUpProtocol {
     
     
@@ -73,7 +74,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             
         }
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            
+            UserDefaults.standard.set(false, forKey: "Arabic")
             headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
             previousButton.setImage(UIImage(named: "previousImg"), for: .normal)
             nextButton.setImage(UIImage(named: "nextImg"), for: .normal)
@@ -86,17 +87,30 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             calendarView.appearance.titleWeekendColor = UIColor.profilePink
             calendarView.appearance.titleTodayColor = UIColor.black
             calendarView.appearance.titleSelectionColor = UIColor.black
+            
         }
         else {
            
             headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
             //For RTL
-                    calendarView.locale = NSLocale.init(localeIdentifier: "fa-IR") as Locale
-                    calendarView.identifier = NSCalendar.Identifier.persian.rawValue
-            calendarView.setCurrentPage(Date(), animated: false)
+                    //calendarView.locale = NSLocale.init(localeIdentifier: "ar") as Locale
+            //calendarView?.locale = Locale(identifier: "ar")
+            self.calendarView.transform = CGAffineTransform(scaleX: -1, y: 1)
+            self.calendarView.locale = Locale(identifier: "fa_IR")
+//calendarView.identifier = NSCalendar.Identifier.gregorian.rawValue
             
-     
+            calendarView.setCurrentPage(Date(), animated: false)
+           
+            
+            
+            UserDefaults.standard.set(true, forKey: "Arabic")
+            
+            
+            
+         
+            
             calendarView.appearance.titleFont = UIFont.init(name: "DINNextLTArabic-Bold", size: 19)
+            calendarView.appearance.weekdayFont =  UIFont.init(name: "DINNextLTArabic-Regular", size: 13)
             calendarView.appearance.titleTodayColor = UIColor.black
             calendarView.appearance.titleSelectionColor = UIColor.black
             
@@ -115,9 +129,18 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         return self.formatter.date(from: "2016-07-08")!
     }
    
+    fileprivate let formatterForArabic: DateFormatter = {
+        let arabicFormatter = DateFormatter()
+        arabicFormatter.dateFormat = "yyyy-MM-dd"
+        arabicFormatter.locale = NSLocale(localeIdentifier: "ar") as Locale?
+        return arabicFormatter
+    }()
     fileprivate let formatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd"
+        if ((LocalizationLanguage.currentAppleLanguage()) == "fa_IR") {
+            formatter.locale = NSLocale(localeIdentifier: "ar") as Locale?
+        }
+        formatter.dateFormat = "yyyy-MM-dd"
         return formatter
     }()
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -299,6 +322,10 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     func calendarCurrentMonthDidChange(_ calendar: FSCalendar) {
         
     }
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
+        return UIColor.red
+    }
+    
   
     
     @IBAction func previoudDateSelected(_ sender: UIButton) {
@@ -335,6 +362,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         }
         
     }
+    
     
     
 }

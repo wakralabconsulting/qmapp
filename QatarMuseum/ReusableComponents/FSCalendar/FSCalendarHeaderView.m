@@ -112,6 +112,13 @@
     if ([self.calendar.identifier isRTLCalendar]) {
         [cell setTransform:CGAffineTransformMakeScale(-1, 1)];
     }
+    //changed
+    if([[NSUserDefaults standardUserDefaults] boolForKey:@"Arabic"]) {
+       [cell setTransform:CGAffineTransformMakeScale(-1, 1)];
+    }
+    else {
+       [cell setTransform:CGAffineTransformMakeScale(1, 1)];
+    }
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }

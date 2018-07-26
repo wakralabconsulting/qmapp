@@ -236,6 +236,7 @@
     if ([identifier isRTLCalendar]) {
         [self setTransform:CGAffineTransformMakeScale(-1, 1)];
     }
+   
 }
 
 - (NSString *)identifier

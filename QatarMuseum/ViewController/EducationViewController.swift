@@ -9,6 +9,7 @@
 import AVKit
 import AVFoundation
 import UIKit
+import YouTubePlayer
 
 
 class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,HeaderViewProtocol {
@@ -18,7 +19,8 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
     
     @IBOutlet weak var educationTitle: UILabel!
     
-    @IBOutlet weak var videoView: UIView!
+    
+    @IBOutlet weak var videoView: YouTubePlayerView!
     @IBOutlet weak var firstDescriptionLabel: UILabel!
     @IBOutlet weak var secondDescriptionLabel: UILabel!
     @IBOutlet weak var playButton: UIButton!
@@ -50,13 +52,18 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
         return .lightContent
     }
     func loadVideo() {
-        let videoURL = URL(string: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
-        player = AVPlayer(url: videoURL!)
+        videoView.loadVideoID("2cEYXuCTJjQ")
         
-        let playerLayer = AVPlayerLayer(player: player)
-        playerLayer.frame = CGRect(x: self.videoView.bounds.origin.x, y: self.videoView.bounds.origin.y, width: self.view.frame.width-30, height: 203.0)
         
-        self.videoView.layer.addSublayer(playerLayer)
+        
+//        let videoURL = URL(string: "https://www.youtube.com/watch?v=2cEYXuCTJjQ")
+//        player = AVPlayer(url: videoURL!)
+//
+//        let playerLayer = AVPlayerLayer(player: player)
+//        playerLayer.frame = CGRect(x: self.videoView.bounds.origin.x, y: self.videoView.bounds.origin.y, width: self.view.frame.width-30, height: 203.0)
+//
+//        self.videoView.layer.addSublayer(playerLayer)
+     
         
         //player.play()
     }
@@ -78,13 +85,13 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
         if (playButton.tag == 0) {
             playButton.tag = 1
             playButton.setImage((UIImage(named: "pause_blackX1")), for: .normal)
-            player.play()
+           // player.play()
         }
         else {
             playButton.tag = 0
             playButton.setImage((UIImage(named: "play_button")), for: .normal)
             
-            player.pause()
+            //player.pause()
         }
     }
     
