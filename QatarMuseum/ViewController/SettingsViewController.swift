@@ -93,6 +93,7 @@ class SettingsViewController: UIViewController,HeaderViewProtocol {
             let yesAction = UIAlertAction(title: yesMessage, style: .default) { (action) in
                 LocalizationLanguage.setAppleLAnguageTo(lang: "ar")
                 languageKey = 2
+                UserDefaults.standard.set(true, forKey: "Arabic")
                 if #available(iOS 9.0, *) {
                     UIView.appearance().semanticContentAttribute = .forceRightToLeft
                     let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
@@ -129,6 +130,7 @@ class SettingsViewController: UIViewController,HeaderViewProtocol {
             let yesAction = UIAlertAction(title: yesMessage, style: .default) { (action) in
                 LocalizationLanguage.setAppleLAnguageTo(lang: "en")
                 languageKey = 1
+                UserDefaults.standard.set(false, forKey: "Arabic")
                 if #available(iOS 9.0, *) {
                     UIView.appearance().semanticContentAttribute = .forceLeftToRight
                     let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
