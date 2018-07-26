@@ -20,7 +20,7 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
     
     @IBOutlet weak var exbtnLoadingView: LoadingView!
     var exhibitionArray : NSArray!
-    var exhibition: [Exhibition]! = nil
+    var exhibition: [Exhibition]! = []
     var exhibitionImageArray = NSArray()
     var museumExhibitionArray : NSArray!
     var museumExhibitionImageArray = NSArray()
@@ -44,10 +44,8 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
         popupView.comingSoonPopupDelegate = self
         
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            
             exhibitionHeaderView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
-        }
-        else {
+        } else {
             exhibitionHeaderView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
       
@@ -67,6 +65,7 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
             switch response.result {
             case .success(let data):
                 self.exhibition = data.exhibitions
+                self.exhibitionCollectionView.reloadData()
             case .failure(let error):
                 if let unhandledError = handleError(viewController: self, errorType: error as! BackendError) {
                     var errorMessage: String
@@ -111,7 +110,7 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch exhibitionsPageNameString {
         case .homeExhibition?:
-            return exhibitionArray.count
+            return exhibition.count
         case .museumExhibition?:
             return museumExhibitionArray.count
         default:
@@ -123,15 +122,15 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
         let exhibitionCell : ExhibitionsCollectionCell = exhibitionCollectionView.dequeueReusableCell(withReuseIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
         switch exhibitionsPageNameString {
         case .homeExhibition?:
-            let exhibitionDataDict = exhibitionArray.object(at: indexPath.row) as! NSDictionary
-            exhibitionCell.setExhibitionCellValues(cellValues: exhibitionDataDict, imageName: exhibitionImageArray.object(at: indexPath.row) as! String)
+//            let exhibitionDataDict = exhibitionArray.object(at: indexPath.row) as! NSDictionary
+            exhibitionCell.setExhibitionCellValues(exhibition: exhibition[indexPath.row])
             exhibitionCell.exhibitionCellItemBtnTapAction = {
                 () in
                 self.loadExhibitionCellPages(cellObj: exhibitionCell, selectedIndex: indexPath.row)
             }
         case .museumExhibition?:
             let exhibitionDataDict = museumExhibitionArray.object(at: indexPath.row) as! NSDictionary
-            exhibitionCell.setExhibitionCellValues(cellValues: exhibitionDataDict, imageName: museumExhibitionImageArray.object(at: indexPath.row) as! String)
+            exhibitionCell.setMuseumExhibitionCellValues(cellValues: exhibitionDataDict, imageName: museumExhibitionImageArray.object(at: indexPath.row) as! String)
         default:
             break
         }
@@ -150,8 +149,7 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
        // loadExhibitionDetail()
         if (indexPath.item == 0) {
             loadExhibitionDetailAnimation()
-        }
-        else {
+        } else {
             addComingSoonPopup()
         }
     }

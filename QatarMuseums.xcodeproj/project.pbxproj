@@ -331,12 +331,12 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		1BE526D52107892900C8CD51 /* Modals */ = {
+		1BE526D52107892900C8CD51 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				1BE526D62107896600C8CD51 /* Exhibition.swift */,
 			);
-			path = Modals;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		7989B881720353361A2FCB1C /* Frameworks */ = {
@@ -388,7 +388,7 @@
 				B8AFA2E920E78BA3008838A6 /* DINNextLTArabic-Light.ttf */,
 				B8AFA2EA20E78BA6008838A6 /* DINNextLTArabic-Regular.ttf */,
 				B8B2A18020D1491900E053A9 /* QMLogo.gif */,
-				1BE526D52107892900C8CD51 /* Modals */,
+				1BE526D52107892900C8CD51 /* Models */,
 				B80DC08720C7943100E28034 /* ReusableComponents */,
 				B80DC08620C792FE00E28034 /* ViewController */,
 				1BE526CE210738B600C8CD51 /* Services */,
