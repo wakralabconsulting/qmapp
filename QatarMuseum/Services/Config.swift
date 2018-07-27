@@ -13,5 +13,6 @@ import Foundation
  */
 struct Config {
     static let baseIP = "www.qm.org.qa/"
-    static let baseURL = "http://" + baseIP + LocalizationLanguage.currentAppleLanguage() + "/mobile_api"
+    static let baseURL = "http://" + baseIP
+    static let mobileApiURL = "/mobile_api"
 }

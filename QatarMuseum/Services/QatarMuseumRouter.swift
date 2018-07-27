@@ -33,7 +33,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
     
     // MARK:- URLRequestConvertible
     public var request: URLRequest {
-        let URL = NSURL(string: Config.baseURL)!
+        let URL = NSURL(string: Config.baseURL + lang() + Config.mobileApiURL)!
         var mutableURLRequest = URLRequest(url: URL.appendingPathComponent(path)!)
         mutableURLRequest.httpMethod = method.rawValue
         if let accessToken = UserDefaults.standard.value(forKey: "accessToken")
@@ -51,5 +51,9 @@ enum QatarMuseumRouter: URLRequestConvertible {
     
     public func asURLRequest() throws -> URLRequest {
         return request
+    }
+    
+    public func lang() -> String {
+        return LocalizationLanguage.currentAppleLanguage()
     }
 }
