@@ -62,7 +62,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell : HomeCollectionViewCell = miaTourCollectionView.dequeueReusableCell(withReuseIdentifier: "homeCellId", for: indexPath) as! HomeCollectionViewCell
         let homeDataDict = miaTourDataFullArray.object(at: indexPath.row) as! NSDictionary
-        cell.setHomeCellData(homeCellData: homeDataDict, imageName: miaTourImageArray.object(at: indexPath.row) as! String)
+        cell.setTourGuideCellData(homeCellData: homeDataDict, imageName: miaTourImageArray.object(at: indexPath.row) as! String)
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
