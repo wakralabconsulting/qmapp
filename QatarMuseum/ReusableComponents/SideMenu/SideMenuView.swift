@@ -53,6 +53,17 @@ class SideMenuView: UIView,TopBarProtocol {
     @IBOutlet weak var giftShopLabel: UILabel!
     @IBOutlet weak var parksLabel: UILabel!
     @IBOutlet weak var settingsLabel: UILabel!
+    @IBOutlet weak var exhibitionView: UIView!
+    @IBOutlet weak var eventView: UIView!
+    @IBOutlet weak var educationView: UIView!
+    @IBOutlet weak var tourGuideView: UIView!
+    @IBOutlet weak var heritageView: UIView!
+    @IBOutlet weak var publicArtsView: UIView!
+    @IBOutlet weak var parksView: UIView!
+    @IBOutlet weak var diningView: UIView!
+    @IBOutlet weak var giftShopView: UIView!
+    @IBOutlet weak var settingsView: UIView!
+    
     var sideMenuDelegate : SideMenuProtocol?
     
     override init(frame: CGRect) {
@@ -93,44 +104,46 @@ class SideMenuView: UIView,TopBarProtocol {
         return .lightContent
     }
     @IBAction func didTapExhibition(_ sender: UIButton) {
-        self.exhibitionButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+      
+        self.exhibitionView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
         sideMenuDelegate?.exhibitionButtonPressed()
     }
     @IBAction func didTapEvent(_ sender: UIButton) {
-        self.eventButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        self.eventView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         sideMenuDelegate?.eventbuttonPressed()
     }
     @IBAction func didTapEducation(_ sender: UIButton) {
-        self.educationButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        self.educationView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         sideMenuDelegate?.educationButtonPressed()
     }
     @IBAction func didTapTourGuide(_ sender: UIButton) {
-        self.tourGuideButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        self.tourGuideView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         sideMenuDelegate?.tourGuideButtonPressed()
     }
     @IBAction func didTapHeritageSites(_ sender: UIButton) {
-        self.heritageButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        self.heritageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         sideMenuDelegate?.heritageButtonPressed()
     }
     @IBAction func didTapPublicArts(_ sender: UIButton) {
-        self.publicArtsButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        self.publicArtsView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         sideMenuDelegate?.publicArtsButtonPressed()
     }
     @IBAction func didTapParks(_ sender: UIButton) {
-        self.parksButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        self.parksView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         sideMenuDelegate?.parksButtonPressed()
     }
     @IBAction func didTapDining(_ sender: UIButton) {
-        self.diningButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        self.diningView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         sideMenuDelegate?.diningButtonPressed()
     }
     @IBAction func didTapGiftShop(_ sender: UIButton) {
-        self.giftShopButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        self.giftShopView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         sideMenuDelegate?.giftShopButtonPressed()
         
     }
     @IBAction func didTapSettings(_ sender: UIButton) {
-        self.settingsButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        self.settingsView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         sideMenuDelegate?.settingsButtonPressed()
     }
     func eventButtonPressed() {
@@ -154,34 +167,36 @@ class SideMenuView: UIView,TopBarProtocol {
     }
     //MARK: Touchdown Actions
     @IBAction func exhibitionsTouchDown(_ sender: UIButton) {
-       self.exhibitionButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+       //self.exhibitionButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        self.exhibitionView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        
     }
     @IBAction func eventButtonTouchDown(_ sender: UIButton) {
-        self.eventButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        self.eventView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     @IBAction func educationButtonTouchDown(_ sender: UIButton) {
-        self.educationButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        self.educationView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     @IBAction func tourGuideButtonTouchDown(_ sender: UIButton) {
-        self.tourGuideButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        self.tourGuideView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     @IBAction func heritageButtonTouchDown(_ sender: UIButton) {
-        self.heritageButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        self.heritageView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     @IBAction func publicArtsButtonTouchDown(_ sender: UIButton) {
-        self.publicArtsButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        self.publicArtsView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     @IBAction func parksButtonTouchDown(_ sender: UIButton) {
-        self.parksButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        self.parksView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     @IBAction func diningButtonTouchDown(_ sender: UIButton) {
-        self.diningButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        self.diningView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     @IBAction func giftShopButtonTouchDown(_ sender: UIButton) {
-        self.giftShopButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        self.giftShopView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     @IBAction func settingsButtonTouchDown(_ sender: UIButton) {
-        self.settingsButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        self.settingsView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
 }

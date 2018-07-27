@@ -1518,7 +1518,7 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
     
     if([[NSUserDefaults standardUserDefaults] boolForKey:@"Arabic"]) {
         NSString *dateValue = [self.dataSourceProxy calendar:self titleForDate:date] ?: @([self.gregorian component:NSCalendarUnitDay fromDate:date]).stringValue;
-        NSLog(@"cell=%@",cell.titleLabel.text);
+      
         
         NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
         f.numberStyle = NSNumberFormatterDecimalStyle;

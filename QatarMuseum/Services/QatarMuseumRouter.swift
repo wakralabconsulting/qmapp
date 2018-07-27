@@ -12,12 +12,14 @@ import Alamofire
 enum QatarMuseumRouter: URLRequestConvertible {
     case ExhibitionList()
     case HomeList()
-
+    case HeritageList()
+    
     var method: Alamofire.HTTPMethod {
         switch self {
         case .ExhibitionList:
             return .get
         case .HomeList:
+        case .HeritageList:
             return .get
         }
     }
@@ -28,8 +30,11 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/Exhibition_List_Page.json"
         case .HomeList:
             return "/gethomeList.json"
+        case .HeritageList:
+            return "/Heritage_List_Page.json"
         }
     }
+
     
     // MARK:- URLRequestConvertible
     public var request: URLRequest {
@@ -45,6 +50,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .ExhibitionList():
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
         case .HomeList():
+            return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
+        case .HeritageList():
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
         }
     }

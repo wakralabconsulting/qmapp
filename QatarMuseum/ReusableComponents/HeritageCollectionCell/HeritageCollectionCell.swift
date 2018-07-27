@@ -25,40 +25,38 @@ class HeritageCollectionCell: UICollectionViewCell {
         setGradientLayer()
     }
     //MARK: HeritageList data
-    func setHeritageListCellValues(cellValues: NSDictionary,imageName: String) {
-        
-        titleLabel.text = (cellValues.value(forKey: "title") as? String)?.uppercased()
-        
-        subTitle.text = (cellValues.value(forKey: "subTitle") as? String)?.uppercased()
+    func setHeritageListCellValues(heritageList: HeritageList) {
+        titleLabel.text = heritageList.name?.uppercased()
+        //subTitle.text = heritageList..uppercased()
+        lineLabel.isHidden = true
         lineLabelHeight.constant = 2
-       // subLabelHeight.constant = 12
-        titleBottomConstraint.constant = 7
+        titleBottomConstraint.constant = 2
         lineLabel.isHidden = false
-        if ((cellValues.value(forKey: "favourite") as! Bool) == true) {
+        if (heritageList.isFavourite == true)  {
             favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
         }
         else {
             favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
         }
         
-        //        if let imageUrl = cellValues.value(forKey: "image") as? String{
-        //           // exhibitionImageView.kf.indicatorType = .activity
-        //            exhibitionImageView.kf.setImage(with: URL(string: imageUrl))
-        //
-        //        }
-        heritageImageView.image = UIImage(named: imageName)
+        if let imageUrl = heritageList.image{
+            heritageImageView.kf.setImage(with: URL(string: imageUrl))
+        }
+         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            titleLabel.font = UIFont.heritageTitleFontEn
+        }
+         else {
+            titleLabel.font = UIFont.heritageTitleFontAr
+        }
+        
     }
     //MARK: Public Arts List Data
     func setPublicArtsListCellValues(cellValues: NSDictionary,imageName: String) {
-        
-        
         titleLabel.text = (cellValues.value(forKey: "title") as? String)?.uppercased()
         lineLabelHeight.constant = 0
         lineLabel.isHidden = true
         titleBottomConstraint.constant = 0
         if ((cellValues.value(forKey: "subTitle")  != nil) && (cellValues.value(forKey: "subTitle") as! String != "")) {
-           // subLabelHeight.constant = 12
-            
             subTitle.text = (cellValues.value(forKey: "subTitle") as? String)?.uppercased()
         }
         else {
