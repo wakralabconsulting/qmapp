@@ -94,6 +94,12 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         self.filterButton.backgroundColor = UIColor.viewMycultureBlue
         self.filterButton.setTitleColor(UIColor.white, for: .normal)
          self.filterButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        let transition = CATransition()
+        transition.duration = 0.25
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromLeft
+        self.view.window!.layer.add(transition, forKey: kCATransition)
+        self.dismiss(animated: false, completion: nil)
     }
     @IBAction func institutionButtonTouchDown(_ sender: UIButton) {
         self.institutionButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
