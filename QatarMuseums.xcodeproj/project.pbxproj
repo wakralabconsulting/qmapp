@@ -27,6 +27,8 @@
 		B80DC09620C7B93800E28034 /* HomePageJson.json in Resources */ = {isa = PBXBuildFile; fileRef = B80DC09520C7B93800E28034 /* HomePageJson.json */; };
 		B811FBC62103406100960246 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B811FBC82103406100960246 /* Localizable.strings */; };
 		B811FBCC2103811400960246 /* QMColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = B811FBCB2103811400960246 /* QMColours.swift */; };
+		B812BA02210AE56B0083E0E2 /* HeritageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B812BA01210AE56B0083E0E2 /* HeritageList.swift */; };
+		B812BA04210AF3540083E0E2 /* QMFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = B812BA03210AF3540083E0E2 /* QMFont.swift */; };
 		B818A8C020E0ABB500095A64 /* MuseumExhibitionJson.json in Resources */ = {isa = PBXBuildFile; fileRef = B818A8BF20E0ABB500095A64 /* MuseumExhibitionJson.json */; };
 		B8294CE720CBF265002AFF72 /* FSCalendarCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = B8294CC820CBF262002AFF72 /* FSCalendarCalculator.m */; };
 		B8294CE820CBF265002AFF72 /* FSCalendarConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B8294CC920CBF262002AFF72 /* FSCalendarConstants.m */; };
@@ -54,7 +56,6 @@
 		B891D06020DBC6BA00919F30 /* HeritageListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B891D05F20DBC6BA00919F30 /* HeritageListViewController.swift */; };
 		B891D06320DBCC3900919F30 /* HeritageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B891D06220DBCC3900919F30 /* HeritageCollectionCell.swift */; };
 		B891D06520DBCC5200919F30 /* HeritageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B891D06420DBCC5100919F30 /* HeritageCell.xib */; };
-		B891D06720DBCFC900919F30 /* HeritageListJson.json in Resources */ = {isa = PBXBuildFile; fileRef = B891D06620DBCFC900919F30 /* HeritageListJson.json */; };
 		B8A1479B20FCA2AB00833B7B /* TourGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A1479A20FCA2AB00833B7B /* TourGuideViewController.swift */; };
 		B8AFA2EB20E78BA9008838A6 /* DINNextLTArabic-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8AFA2E820E78BA1008838A6 /* DINNextLTArabic-Bold.ttf */; };
 		B8AFA2EC20E78BA9008838A6 /* DINNextLTArabic-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8AFA2E920E78BA3008838A6 /* DINNextLTArabic-Light.ttf */; };
@@ -172,6 +173,8 @@
 		B811FBC72103406100960246 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B811FBC92103406300960246 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B811FBCB2103811400960246 /* QMColours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QMColours.swift; sourceTree = "<group>"; };
+		B812BA01210AE56B0083E0E2 /* HeritageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeritageList.swift; sourceTree = "<group>"; };
+		B812BA03210AF3540083E0E2 /* QMFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QMFont.swift; sourceTree = "<group>"; };
 		B818A8BF20E0ABB500095A64 /* MuseumExhibitionJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MuseumExhibitionJson.json; sourceTree = "<group>"; };
 		B8294CC520CBF262002AFF72 /* FSCalendarCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarCollectionViewLayout.h; sourceTree = "<group>"; };
 		B8294CC620CBF262002AFF72 /* FSCalendarCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarCollectionView.h; sourceTree = "<group>"; };
@@ -216,7 +219,6 @@
 		B891D05F20DBC6BA00919F30 /* HeritageListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeritageListViewController.swift; sourceTree = "<group>"; };
 		B891D06220DBCC3900919F30 /* HeritageCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeritageCollectionCell.swift; sourceTree = "<group>"; };
 		B891D06420DBCC5100919F30 /* HeritageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeritageCell.xib; sourceTree = "<group>"; };
-		B891D06620DBCFC900919F30 /* HeritageListJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = HeritageListJson.json; sourceTree = "<group>"; };
 		B8A1479A20FCA2AB00833B7B /* TourGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourGuideViewController.swift; sourceTree = "<group>"; };
 		B8AFA2E820E78BA1008838A6 /* DINNextLTArabic-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINNextLTArabic-Bold.ttf"; sourceTree = "<group>"; };
 		B8AFA2E920E78BA3008838A6 /* DINNextLTArabic-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINNextLTArabic-Light.ttf"; sourceTree = "<group>"; };
@@ -317,6 +319,7 @@
 			isa = PBXGroup;
 			children = (
 				1BC909CF2108E3C700D6C00B /* QMUtility.swift */,
+				B812BA03210AF3540083E0E2 /* QMFont.swift */,
 			);
 			path = CommonMethods;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 			isa = PBXGroup;
 			children = (
 				1BE526D62107896600C8CD51 /* Exhibition.swift */,
+				B812BA01210AE56B0083E0E2 /* HeritageList.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -401,7 +405,6 @@
 				B80DC09520C7B93800E28034 /* HomePageJson.json */,
 				B8EAB7C320CA95E500C001B2 /* EventDetailsJson.json */,
 				B8BA80BD20CD9977007E880A /* ExhibitionsJson.json */,
-				B891D06620DBCFC900919F30 /* HeritageListJson.json */,
 				B8DC478320DCC48C0007B426 /* PublicArtsListJson.json */,
 				B8DC478C20DD11630007B426 /* ParksJson.json */,
 				B8B368BF20DD4E4600B1CDA4 /* CollectionsJson.json */,
@@ -883,7 +886,6 @@
 				B8DC478420DCC48C0007B426 /* PublicArtsListJson.json in Resources */,
 				B8E92D1221006F0F005449FC /* CollectionDetailJson.json in Resources */,
 				B8BA80BE20CD9977007E880A /* ExhibitionsJson.json in Resources */,
-				B891D06720DBCFC900919F30 /* HeritageListJson.json in Resources */,
 				B8EAB77B20CA3E2900C001B2 /* EventCellView.xib in Resources */,
 				B8E2C01320C7FD0000F3CE41 /* SideMenu.xib in Resources */,
 				B80DC05E20C792E400E28034 /* Main.storyboard in Resources */,
@@ -999,6 +1001,7 @@
 				B8DC478220DCC1080007B426 /* PublicArtsViewController.swift in Sources */,
 				B8294CEB20CBF265002AFF72 /* FSCalendarExtensions.m in Sources */,
 				B8EAB7BA20CA424300C001B2 /* DelegateAppearanceViewController.swift in Sources */,
+				B812BA02210AE56B0083E0E2 /* HeritageList.swift in Sources */,
 				B8EAB7C220CA67E000C001B2 /* EventPopupView.swift in Sources */,
 				B8E2C01520C7FD6800F3CE41 /* SideMenuView.swift in Sources */,
 				B8294CE920CBF265002AFF72 /* FSCalendarAppearance.m in Sources */,
@@ -1044,6 +1047,7 @@
 				B8CAA93F20DC186E009A936D /* HeritageDetailViewController.swift in Sources */,
 				1BE526D42107470700C8CD51 /* Config.swift in Sources */,
 				B8A1479B20FCA2AB00833B7B /* TourGuideViewController.swift in Sources */,
+				B812BA04210AF3540083E0E2 /* QMFont.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
