@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1BC909D02108E3C700D6C00B /* QMUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC909CF2108E3C700D6C00B /* QMUtility.swift */; };
+		1BC909D2210B277F00D6C00B /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC909D1210B277F00D6C00B /* Home.swift */; };
 		1BE526D0210739BF00C8CD51 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526CF210739BE00C8CD51 /* Request.swift */; };
 		1BE526D22107460F00C8CD51 /* QatarMuseumRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526D12107460F00C8CD51 /* QatarMuseumRouter.swift */; };
 		1BE526D42107470700C8CD51 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526D32107470700C8CD51 /* Config.swift */; };
@@ -143,6 +144,7 @@
 
 /* Begin PBXFileReference section */
 		1BC909CF2108E3C700D6C00B /* QMUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QMUtility.swift; sourceTree = "<group>"; };
+		1BC909D1210B277F00D6C00B /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		1BE526CF210739BE00C8CD51 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		1BE526D12107460F00C8CD51 /* QatarMuseumRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QatarMuseumRouter.swift; sourceTree = "<group>"; };
 		1BE526D32107470700C8CD51 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 			isa = PBXGroup;
 			children = (
 				1BE526D62107896600C8CD51 /* Exhibition.swift */,
+				1BC909D1210B277F00D6C00B /* Home.swift */,
 				B812BA01210AE56B0083E0E2 /* HeritageList.swift */,
 			);
 			path = Models;
@@ -1038,6 +1041,7 @@
 				B891D06320DBCC3900919F30 /* HeritageCollectionCell.swift in Sources */,
 				1BE526D22107460F00C8CD51 /* QatarMuseumRouter.swift in Sources */,
 				B8FC190120DE854400D00E6B /* MuseumBottomCell.swift in Sources */,
+				1BC909D2210B277F00D6C00B /* Home.swift in Sources */,
 				B8EAB7BB20CA424300C001B2 /* LoadViewExampleViewController.swift in Sources */,
 				B8BA80B520CCDDA3007E880A /* ProfileViewController.swift in Sources */,
 				B8294CF620CBF265002AFF72 /* FSCalendarHeaderView.m in Sources */,

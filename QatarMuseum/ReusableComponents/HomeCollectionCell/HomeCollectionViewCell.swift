@@ -11,18 +11,28 @@ import UIKit
 
 class HomeCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var homeImageView: UIImageView!
-   
     @IBOutlet weak var homeTitleLabel: UILabel!
     @IBOutlet weak var tourGuideButton: UIButton!
-   
-    
     
     override func layoutSubviews() {
         super.layoutSubviews()
         setGradientLayer()
     }
-    func setHomeCellData(homeCellData: NSDictionary,imageName: String) {
-       // homeImageView.image =
+    
+    func setHomeCellData(home: Home) {
+        homeTitleLabel.text = home.name
+        if (home.isTourguideAvailable == true) {
+            tourGuideButton.isHidden = false
+        }
+        if home.name == "Exhibitions" {
+            homeImageView.image = UIImage(named: (home.image as! String))
+        } else if let imageUrl = home.image {
+            //homeImageView.kf.indicatorType = .activity
+            homeImageView.kf.setImage(with: URL(string: imageUrl))
+        }
+    }
+    
+    func setTourGuideCellData(homeCellData: NSDictionary, imageName: String) {
         homeTitleLabel.text = homeCellData.value(forKey: "title") as? String
         if ((homeCellData.value(forKey: "tourguide") as! Bool) == true) {
             tourGuideButton.isHidden = false
@@ -35,9 +45,9 @@ class HomeCollectionViewCell: UICollectionViewCell {
 //        }
         homeImageView.image = UIImage(named: imageName)
     }
+    
     func setGradientLayer() {
         self.homeImageView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
-        
         let width = self.bounds.width
         let height = self.bounds.height
         let sHeight:CGFloat = 60.0
@@ -54,5 +64,4 @@ class HomeCollectionViewCell: UICollectionViewCell {
         bottomImageGradient.colors = [UIColor.clear.cgColor, shadow]
         homeImageView.layer.insertSublayer(bottomImageGradient, at: 0)
     }
-     
 }

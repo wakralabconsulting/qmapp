@@ -11,33 +11,35 @@ import Alamofire
 
 enum QatarMuseumRouter: URLRequestConvertible {
     case ExhibitionList()
+    case HomeList()
     case HeritageList()
     
     var method: Alamofire.HTTPMethod {
         switch self {
         case .ExhibitionList:
             return .get
+        case .HomeList:
+            return .get
         case .HeritageList:
             return .get
         }
-        
-    
     }
     
     var path: String {
         switch self {
         case .ExhibitionList:
             return "/Exhibition_List_Page.json"
+        case .HomeList:
+            return "/gethomeList.json"
         case .HeritageList:
             return "/Heritage_List_Page.json"
         }
-        
-}
+    }
 
     
     // MARK:- URLRequestConvertible
     public var request: URLRequest {
-        let URL = NSURL(string: Config.baseURL)!
+        let URL = NSURL(string: Config.baseURL + lang() + Config.mobileApiURL)!
         var mutableURLRequest = URLRequest(url: URL.appendingPathComponent(path)!)
         mutableURLRequest.httpMethod = method.rawValue
         if let accessToken = UserDefaults.standard.value(forKey: "accessToken")
@@ -48,6 +50,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
         switch self {
         case .ExhibitionList():
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
+        case .HomeList():
+            return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
         case .HeritageList():
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
         }
@@ -55,5 +59,9 @@ enum QatarMuseumRouter: URLRequestConvertible {
     
     public func asURLRequest() throws -> URLRequest {
         return request
+    }
+    
+    public func lang() -> String {
+        return LocalizationLanguage.currentAppleLanguage()
     }
 }
