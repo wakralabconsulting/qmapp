@@ -19,6 +19,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .ExhibitionList:
             return .get
         case .HomeList:
+            return .get
         case .HeritageList:
             return .get
         }
