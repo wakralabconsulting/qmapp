@@ -84,14 +84,11 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
          self.playButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         if (playButton.tag == 0) {
             playButton.tag = 1
-            playButton.setImage((UIImage(named: "pause_blackX1")), for: .normal)
-           // player.play()
+           videoView.play()
         }
         else {
             playButton.tag = 0
-            playButton.setImage((UIImage(named: "play_button")), for: .normal)
-            
-            //player.pause()
+            videoView.pause()
         }
     }
     

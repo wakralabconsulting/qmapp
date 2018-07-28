@@ -11,8 +11,6 @@ import EventKit
 
 class EventViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource, HeaderViewProtocol,FSCalendarDelegate,FSCalendarDataSource,UICollectionViewDelegateFlowLayout,EventPopUpProtocol,UIViewControllerTransitioningDelegate,UIGestureRecognizerDelegate,comingSoonPopUpProtocol {
     
-    
-    
     @IBOutlet weak var eventCollectionView: UICollectionView!
     @IBOutlet weak var calendarView: FSCalendar!
 
@@ -23,12 +21,18 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     @IBOutlet weak var previousButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var listTitleLabel: UILabel!
+    @IBOutlet weak var calendarLeftConstraint: NSLayoutConstraint!
+    @IBOutlet weak var calendarRightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var previousConstraint: NSLayoutConstraint!
+    @IBOutlet weak var nextConstraint: NSLayoutConstraint!
+    
     var effect:UIVisualEffect!
     var eventPopup : EventPopupView = EventPopupView()
     var selectedDateForEvent : Date = Date()
     var fromHome : Bool = false
     var isLoadEventPage : Bool = false
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
+    //var calendarView = FSCalendar()
     fileprivate lazy var scopeGesture: UIPanGestureRecognizer = {
         [unowned self] in
         let panGesture = UIPanGestureRecognizer(target: self.calendarView, action: #selector(self.calendarView.handleScopeGesture(_:)))
@@ -39,6 +43,10 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         }()
     override func viewDidLoad() {
         super.viewDidLoad()
+//        calendarView.frame = CGRect(x: self.calendarInnerView.frame.origin.x+50, y: self.calendarInnerView.frame.origin.y, width: self.calendarInnerView.frame.width-100, height: self.calendarInnerView.frame.height)
+//        calendarView.delegate = self
+//        calendarView.dataSource = self
+//        self.calendarInnerView.addSubview(calendarView)
         setUpUiContent()
         registerNib()
     }
@@ -58,19 +66,13 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             headerView.headerTitle.text = NSLocalizedString("CALENDAR_TITLE", comment: "CALENDAR_TITLE Label in the Event page")
             listTitleLabel.textColor = UIColor.eventlisBlue
             
-           eventPopup.eventTitle.text = NSLocalizedString("EVENT_POPUP_TITLE", comment: "EVENT_POPUP_TITLE  in the popup view")
-            eventPopup.eventDescription.text = NSLocalizedString("EVENT_MESSAGE_TITLE", comment: "EVENT_MESSAGE_TITLE  in the popup view")
-            eventPopup.addToCalendarButton.titleLabel?.text = NSLocalizedString("POPUP_ADD_BUTTON_TITLE", comment: "POPUP_ADD_BUTTON_TITLE  in the popup view")
+           
         }
         else {
             listTitleLabel.text = NSLocalizedString("EDUCATION_EVENT_TITLE", comment: "EDUCATION_EVENT_TITLE Label in the Event page")
             headerView.headerTitle.text = NSLocalizedString("EDUCATIONCALENDAR_TITILE", comment: "EDUCATIONCALENDAR_TITILE Label in the Event page")
             listTitleLabel.textColor = UIColor.blackColor
             headerView.settingsButton.isHidden = false
-            
-            eventPopup.eventTitle.text = NSLocalizedString("EDUCATION_EVENT_POPUP_TITLE", comment: "EVENT_POPUP_TITLE  in the popup view")
-            eventPopup.eventDescription.text = NSLocalizedString("EDUCATION_POPUP_MESSAGE", comment: "EDUCATION_POPUP_MESSAGE  in the popup view")
-            eventPopup.addToCalendarButton.titleLabel?.text = NSLocalizedString("EDUCATION_POPUP_BUTTON_TITLE", comment: "POPUP_ADD_BUTTON_TITLE  in the popup view")
             
         }
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
@@ -85,8 +87,10 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             calendarView.identifier = NSCalendar.Identifier.gregorian.rawValue
             calendarView.appearance.titleFont = UIFont.init(name: "DINNextLTPro-Bold", size: 19)
             calendarView.appearance.titleWeekendColor = UIColor.profilePink
-            calendarView.appearance.titleTodayColor = UIColor.black
-            calendarView.appearance.titleSelectionColor = UIColor.black
+            calendarLeftConstraint.constant = 45
+            calendarRightConstraint.constant = 15
+            previousConstraint.constant = 30
+            nextConstraint.constant = 30
             
         }
         else {
@@ -94,29 +98,21 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
             //For RTL
                     //calendarView.locale = NSLocale.init(localeIdentifier: "ar") as Locale
-            //calendarView?.locale = Locale(identifier: "ar")
+            calendarView?.locale = Locale(identifier: "ar")
             self.calendarView.transform = CGAffineTransform(scaleX: -1, y: 1)
-            self.calendarView.locale = Locale(identifier: "fa_IR")
-//calendarView.identifier = NSCalendar.Identifier.gregorian.rawValue
-            
+            //self.calendarView.locale = Locale(identifier: "fa_IR")
             calendarView.setCurrentPage(Date(), animated: false)
-           
-            
-            
             UserDefaults.standard.set(true, forKey: "Arabic")
-            
-            
-            
-         
             
             calendarView.appearance.titleFont = UIFont.init(name: "DINNextLTArabic-Bold", size: 19)
             calendarView.appearance.weekdayFont =  UIFont.init(name: "DINNextLTArabic-Regular", size: 13)
-            calendarView.appearance.titleTodayColor = UIColor.black
-            calendarView.appearance.titleSelectionColor = UIColor.black
-            
             previousButton.setImage(UIImage(named: "nextImg"), for: .normal)
             nextButton.setImage(UIImage(named: "previousImg"), for: .normal)
             calendarView.appearance.titleWeekendColor = UIColor.profilePink
+            calendarLeftConstraint.constant = 45
+            calendarRightConstraint.constant = 15
+            previousConstraint.constant = 30
+            nextConstraint.constant = 30
         }
         
        
@@ -162,7 +158,11 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell : EventCollectionViewCell = eventCollectionView.dequeueReusableCell(withReuseIdentifier: "eventCellId", for: indexPath) as! EventCollectionViewCell
-       
+        cell.viewDetailsBtnAction = {
+            () in
+                self.loadEventPopup()
+                
+            }
         if (indexPath.row % 2 == 0) {
             cell.cellBackgroundView?.backgroundColor = UIColor.eventCellAshColor
         }
@@ -315,9 +315,14 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             calendar.setCurrentPage(date, animated: true)
             
         }
-        selectedDateForEvent = date
-      
         
+        
+        selectedDateForEvent = date
+        
+        //selected date got is less than one date. so add 1 to date for actual selected date
+        let dayComponenet = NSDateComponents()
+        dayComponenet.day = 1
+        selectedDateForEvent = Calendar.current.date(byAdding: .day, value: 1, to: date)!
     }
     func calendarCurrentMonthDidChange(_ calendar: FSCalendar) {
         

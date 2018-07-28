@@ -30,14 +30,12 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         
         heritageHeader.headerViewDelegate = self
         heritageHeader.headerTitle.text = NSLocalizedString("HERITAGE_SITES_TITLE", comment: "HERITAGE_SITES_TITLE  in the Heritage page")
+        heritageHeader.headerTitle.font = UIFont.headerFont
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            
             heritageHeader.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
-            heritageHeader.headerTitle.font = UIFont.headerFontEn
         }
         else {
             heritageHeader.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
-            heritageHeader.headerTitle.font = UIFont.headerFontAr
         }
 
     }

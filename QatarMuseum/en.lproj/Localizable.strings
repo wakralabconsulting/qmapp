@@ -63,6 +63,8 @@
 "CULTUREPASS_UPDATE_LABEL" = "Culture Pass Updates";
 "TOURGUIDE_UPDATE_LABEL" = "Tour Guide Updates";
 "DISCOVER" = "DISCOVER";
-
+"CHANGE_LANGUAGE_TITLE" = "Change Language?";
+"CONTINUE_TITLE" = "Continue";
+"MUSEUM_TITLE" = "Museum of Islamic Art";
 
 

@@ -29,9 +29,9 @@ class HeritageCollectionCell: UICollectionViewCell {
         titleLabel.text = heritageList.name?.uppercased()
         //subTitle.text = heritageList..uppercased()
         lineLabel.isHidden = true
-        lineLabelHeight.constant = 2
+        //lineLabelHeight.constant = 2
         titleBottomConstraint.constant = 2
-        lineLabel.isHidden = false
+       
         if (heritageList.isFavourite == true)  {
             favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
         }
@@ -42,12 +42,7 @@ class HeritageCollectionCell: UICollectionViewCell {
         if let imageUrl = heritageList.image{
             heritageImageView.kf.setImage(with: URL(string: imageUrl))
         }
-         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            titleLabel.font = UIFont.heritageTitleFontEn
-        }
-         else {
-            titleLabel.font = UIFont.heritageTitleFontAr
-        }
+        titleLabel.font = UIFont.heritageTitleFont
         
     }
     //MARK: Public Arts List Data

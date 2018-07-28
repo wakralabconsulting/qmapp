@@ -24,6 +24,7 @@
                 <outlet property="closeButton" destination="sXb-jN-Amu" id="oiO-cR-iIA"/>
                 <outlet property="eventDescription" destination="Mey-r4-2hy" id="1Oq-0P-qAT"/>
                 <outlet property="eventPopUp" destination="fqH-cz-Kvt" id="aWv-UP-aLk"/>
+                <outlet property="eventPopupHeight" destination="n54-4R-mIy" id="mKd-E7-kVj"/>
                 <outlet property="eventPopupInnerView" destination="PXc-a9-tee" id="I3X-iQ-GLc"/>
                 <outlet property="eventTitle" destination="m3Z-ao-pbh" id="LTs-Lz-mhZ"/>
             </connections>
@@ -92,6 +93,7 @@
                         <constraint firstItem="9hC-t7-6fH" firstAttribute="leading" secondItem="PXc-a9-tee" secondAttribute="leading" constant="15" id="XGb-xP-sNY"/>
                         <constraint firstItem="VdB-I1-K8i" firstAttribute="leading" secondItem="PXc-a9-tee" secondAttribute="leading" constant="8" id="gAz-Pt-dZB"/>
                         <constraint firstItem="Mey-r4-2hy" firstAttribute="top" secondItem="VdB-I1-K8i" secondAttribute="bottom" constant="15" id="gXG-Uy-PyR"/>
+                        <constraint firstAttribute="height" constant="393.5" id="n54-4R-mIy"/>
                         <constraint firstItem="m3Z-ao-pbh" firstAttribute="centerX" secondItem="Mey-r4-2hy" secondAttribute="centerX" id="uHU-B5-LZS"/>
                     </constraints>
                 </view>
@@ -111,7 +113,6 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="PXc-a9-tee" firstAttribute="height" secondItem="fqH-cz-Kvt" secondAttribute="height" multiplier="0.59" id="3Ag-Cw-of0"/>
                 <constraint firstItem="PXc-a9-tee" firstAttribute="top" secondItem="sXb-jN-Amu" secondAttribute="bottom" constant="-27" id="J5I-2a-TZm"/>
                 <constraint firstItem="sXb-jN-Amu" firstAttribute="trailing" secondItem="PXc-a9-tee" secondAttribute="trailing" constant="22" id="Xff-Mo-ege"/>
                 <constraint firstItem="PXc-a9-tee" firstAttribute="centerX" secondItem="fqH-cz-Kvt" secondAttribute="centerX" id="fHy-XS-8js"/>

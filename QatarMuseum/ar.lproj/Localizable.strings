@@ -50,7 +50,7 @@
 "PROGRAMME_TYPE_LABEL" = "Programme type";
 "CLEAR_LABEL" = "Clear";
 "SETTINGS_LABEL" = "SETTINGS";
-"SETTINGS_REDIRECTION_MSG" = "You will be redirected to home page, after changing the language.Do you want to continue?";
+"SETTINGS_REDIRECTION_MSG" = "سيتم تحويلك إلى الصفحة الرئيسية بعد تغيير اللغة، هل تريد المتابعة؟";
 "YES" = "YES";
 "NO" = "NO";
 "SELECT_LANGUAGE_LABEL" = "Select App Language";
@@ -63,3 +63,7 @@
 "CULTUREPASS_UPDATE_LABEL" = "Culture Pass Updates";
 "TOURGUIDE_UPDATE_LABEL" = "Tour Guide Updates";
 "DISCOVER" = "DISCOVER";
+"CHANGE_LANGUAGE_TITLE" = "Change Language?";
+"CONTINUE_TITLE" = "Continue";
+"MUSEUM_TITLE" = "Museum of Islamic Art";
+

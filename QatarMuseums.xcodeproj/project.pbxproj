@@ -175,6 +175,7 @@
 		B811FBCB2103811400960246 /* QMColours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QMColours.swift; sourceTree = "<group>"; };
 		B812BA01210AE56B0083E0E2 /* HeritageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeritageList.swift; sourceTree = "<group>"; };
 		B812BA03210AF3540083E0E2 /* QMFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QMFont.swift; sourceTree = "<group>"; };
+		B812BA06210B2FE20083E0E2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		B818A8BF20E0ABB500095A64 /* MuseumExhibitionJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MuseumExhibitionJson.json; sourceTree = "<group>"; };
 		B8294CC520CBF262002AFF72 /* FSCalendarCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarCollectionViewLayout.h; sourceTree = "<group>"; };
 		B8294CC620CBF262002AFF72 /* FSCalendarCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarCollectionView.h; sourceTree = "<group>"; };
@@ -1088,6 +1089,7 @@
 			children = (
 				B80DC05D20C792E400E28034 /* Base */,
 				B811FBC221033FD900960246 /* ar */,
+				B812BA06210B2FE20083E0E2 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

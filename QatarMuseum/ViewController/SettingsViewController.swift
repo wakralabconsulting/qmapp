@@ -8,7 +8,9 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController,HeaderViewProtocol {
+class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProtocol {
+   
+    
 
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var selectLanguageLabel: UILabel!
@@ -26,9 +28,11 @@ class SettingsViewController: UIViewController,HeaderViewProtocol {
     @IBOutlet weak var museumSwitch: UISwitch!
     @IBOutlet weak var culturePassSwitch: UISwitch!
     @IBOutlet weak var tourGuideSwitch: UISwitch!
-    
     @IBOutlet weak var resetButton: UIButton!
     @IBOutlet weak var applyButton: UIButton!
+    @IBOutlet weak var settingsInnerView: UIView!
+    
+    var eventPopup : EventPopupView = EventPopupView()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -47,6 +51,20 @@ class SettingsViewController: UIViewController,HeaderViewProtocol {
         museumLabel.text = NSLocalizedString("MUSEUM_UPDATE_LABEL", comment: "MUSEUM_UPDATE_LABEL in the Settings page")
         culturePassLabel.text = NSLocalizedString("CULTUREPASS_UPDATE_LABEL", comment: "CULTUREPASS_UPDATE_LABEL in the Settings page")
         tourGuideLabel.text = NSLocalizedString("TOURGUIDE_UPDATE_LABEL", comment: "TOURGUIDE_UPDATE_LABEL in the Settings page")
+        
+        //setting font for english and Arabic
+        headerView.headerTitle.font = UIFont.headerFont
+        selectLanguageLabel.font = UIFont.headerFont
+        arabicLabel.font = UIFont.englishTitleFont
+        englishLabel.font = UIFont.englishTitleFont
+        notificationTitleLabel.font = UIFont.headerFont
+        eventUpdateLabel.font = UIFont.settingsUpdateLabelFont
+        exhibitionLabel.font = UIFont.settingsUpdateLabelFont
+        museumLabel.font = UIFont.settingsUpdateLabelFont
+        culturePassLabel.font = UIFont.settingsUpdateLabelFont
+        tourGuideLabel.font = UIFont.settingsUpdateLabelFont
+        resetButton.titleLabel?.font = UIFont.settingResetButtonFont
+        applyButton.titleLabel?.font = UIFont.settingResetButtonFont
         
        self.languageSwitch.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
        
@@ -72,42 +90,44 @@ class SettingsViewController: UIViewController,HeaderViewProtocol {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
     @IBAction func toggleLanguageSwitch(_ sender: UISwitch) {
         let offColor = UIColor.red
         //Change to Arabic
         if (languageSwitch.isOn) {
             languageSwitch.onTintColor = UIColor.settingsSwitchOnTint
             
-            let refreshAlert = UIAlertController(title: "", message: "", preferredStyle: .alert)
-            let titleFont = [NSAttributedStringKey.font: UIFont(name: "DINNextLTPro-Bold", size: 17.0)!]
-            let redirectionMessage = NSLocalizedString("SETTINGS_REDIRECTION_MSG", comment: "redirection message in settings page")
-            let titleAttrString = NSMutableAttributedString(string: redirectionMessage, attributes: titleFont)
-            let yesMessage = NSLocalizedString("YES", comment: "yes message")
-            let noMessage = NSLocalizedString("NO", comment: "no message")
-            
-            refreshAlert.setValue(titleAttrString, forKey: "attributedTitle")
-            let noMessageAction = UIAlertAction(title: noMessage, style: .default) { (action) in
-                self.languageSwitch.isOn = false
-                refreshAlert .dismiss(animated: true, completion: nil)
-            }
-            let yesAction = UIAlertAction(title: yesMessage, style: .default) { (action) in
-                LocalizationLanguage.setAppleLAnguageTo(lang: "ar")
-                languageKey = 2
-                UserDefaults.standard.set(true, forKey: "Arabic")
-                if #available(iOS 9.0, *) {
-                    UIView.appearance().semanticContentAttribute = .forceRightToLeft
-                    let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
-                    
-                    let appDelegate = UIApplication.shared.delegate
-                    appDelegate?.window??.rootViewController = homeViewController
-                    
-                } else {
-                    // Fallback on earlier versions
-                }
-            }
-            refreshAlert.addAction(noMessageAction)
-            refreshAlert.addAction(yesAction)
-            present(refreshAlert, animated: true, completion: nil)
+//            let refreshAlert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+//            let titleFont = [NSAttributedStringKey.font: UIFont(name: "DINNextLTPro-Bold", size: 17.0)!]
+//            let redirectionMessage = NSLocalizedString("SETTINGS_REDIRECTION_MSG", comment: "redirection message in settings page")
+//            let titleAttrString = NSMutableAttributedString(string: redirectionMessage, attributes: titleFont)
+//            let yesMessage = NSLocalizedString("YES", comment: "yes message")
+//            let noMessage = NSLocalizedString("NO", comment: "no message")
+//
+//            refreshAlert.setValue(titleAttrString, forKey: "attributedTitle")
+//            let noMessageAction = UIAlertAction(title: noMessage, style: .default) { (action) in
+//                self.languageSwitch.isOn = false
+//                refreshAlert .dismiss(animated: true, completion: nil)
+//            }
+//            let yesAction = UIAlertAction(title: yesMessage, style: .default) { (action) in
+//                LocalizationLanguage.setAppleLAnguageTo(lang: "ar")
+//                languageKey = 2
+//                UserDefaults.standard.set(true, forKey: "Arabic")
+//                if #available(iOS 9.0, *) {
+//                    UIView.appearance().semanticContentAttribute = .forceRightToLeft
+//                    let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
+//
+//                    let appDelegate = UIApplication.shared.delegate
+//                    appDelegate?.window??.rootViewController = homeViewController
+//
+//                } else {
+//                    // Fallback on earlier versions
+//                }
+//            }
+//            refreshAlert.addAction(noMessageAction)
+//            refreshAlert.addAction(yesAction)
+//            present(refreshAlert, animated: true, completion: nil)
+            loadConfirmationPopup()
         }
         else {
             languageSwitch.tintColor = offColor
@@ -115,37 +135,39 @@ class SettingsViewController: UIViewController,HeaderViewProtocol {
             languageSwitch.backgroundColor = offColor
             
             
-            let refreshAlert = UIAlertController(title: "", message: "", preferredStyle: .alert)
-            let titleFont = [NSAttributedStringKey.font: UIFont(name: "DINNextLTArabic-Bold", size: 17.0)!]
+//            let refreshAlert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+//            let titleFont = [NSAttributedStringKey.font: UIFont(name: "DINNextLTArabic-Bold", size: 17.0)!]
+//
+//            let redirectionMessage = NSLocalizedString("SETTINGS_REDIRECTION_MSG", comment: "redirection message in settings page")
+//            let titleAttrString = NSMutableAttributedString(string: redirectionMessage, attributes: titleFont)
+//            let yesMessage = NSLocalizedString("YES", comment: "yes message")
+//            let noMessage = NSLocalizedString("NO", comment: "no message")
+//            refreshAlert.setValue(titleAttrString, forKey: "attributedTitle")
+//            let noMessageAction = UIAlertAction(title: noMessage, style: .default) { (action) in
+//                self.languageSwitch.isOn = true
+//                refreshAlert .dismiss(animated: true, completion: nil)
+//            }
+//            let yesAction = UIAlertAction(title: yesMessage, style: .default) { (action) in
+//                LocalizationLanguage.setAppleLAnguageTo(lang: "en")
+//                languageKey = 1
+//                UserDefaults.standard.set(false, forKey: "Arabic")
+//                if #available(iOS 9.0, *) {
+//                    UIView.appearance().semanticContentAttribute = .forceLeftToRight
+//                    let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
+//
+//                    let appDelegate = UIApplication.shared.delegate
+//                    appDelegate?.window??.rootViewController = homeViewController
+//
+//                } else {
+//                    // Fallback on earlier versions
+//
+//                }
+//            }
+//            refreshAlert.addAction(noMessageAction)
+//            refreshAlert.addAction(yesAction)
+//            present(refreshAlert, animated: true, completion: nil)
             
-            let redirectionMessage = NSLocalizedString("SETTINGS_REDIRECTION_MSG", comment: "redirection message in settings page")
-            let titleAttrString = NSMutableAttributedString(string: redirectionMessage, attributes: titleFont)
-            let yesMessage = NSLocalizedString("YES", comment: "yes message")
-            let noMessage = NSLocalizedString("NO", comment: "no message")
-            refreshAlert.setValue(titleAttrString, forKey: "attributedTitle")
-            let noMessageAction = UIAlertAction(title: noMessage, style: .default) { (action) in
-                self.languageSwitch.isOn = true
-                refreshAlert .dismiss(animated: true, completion: nil)
-            }
-            let yesAction = UIAlertAction(title: yesMessage, style: .default) { (action) in
-                LocalizationLanguage.setAppleLAnguageTo(lang: "en")
-                languageKey = 1
-                UserDefaults.standard.set(false, forKey: "Arabic")
-                if #available(iOS 9.0, *) {
-                    UIView.appearance().semanticContentAttribute = .forceLeftToRight
-                    let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
-                    
-                    let appDelegate = UIApplication.shared.delegate
-                    appDelegate?.window??.rootViewController = homeViewController
-                    
-                } else {
-                    // Fallback on earlier versions
-                    
-                }
-            }
-            refreshAlert.addAction(noMessageAction)
-            refreshAlert.addAction(yesAction)
-            present(refreshAlert, animated: true, completion: nil)
+            loadConfirmationPopup()
         }
     }
     @IBAction func toggleEventSwitch(_ sender: UISwitch) {
@@ -235,6 +257,59 @@ class SettingsViewController: UIViewController,HeaderViewProtocol {
         self.view.window!.layer.add(transition, forKey: kCATransition)
         self.dismiss(animated: false, completion: nil)
         
+    }
+    //MARK: Event Popup Delegate
+    func loadConfirmationPopup() {
+        eventPopup  = EventPopupView(frame: self.view.frame)
+        eventPopup.eventPopupHeight.constant = 250
+        eventPopup.eventPopupDelegate = self
+        eventPopup.eventTitle.text = NSLocalizedString("CHANGE_LANGUAGE_TITLE", comment: "CHANGE_LANGUAGE_TITLE  in the popup view")
+        eventPopup.eventDescription.text = NSLocalizedString("SETTINGS_REDIRECTION_MSG", comment: "SETTINGS_REDIRECTION_MSG  in the popup view")
+        eventPopup.addToCalendarButton.setTitle(NSLocalizedString("CONTINUE_TITLE", comment: "CONTINUE_TITLE  in the popup view"), for: .normal)
+        self.view.addSubview(eventPopup)
+        }
+    func eventCloseButtonPressed() {
+        if (self.languageSwitch.isOn == true) {
+            self.languageSwitch.isOn = false
+        }
+        else{
+            self.languageSwitch.isOn = true
+        }
+        self.eventPopup.removeFromSuperview()
+    }
+    
+    func addToCalendarButtonPressed() {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            LocalizationLanguage.setAppleLAnguageTo(lang: "ar")
+            languageKey = 2
+            UserDefaults.standard.set(true, forKey: "Arabic")
+            if #available(iOS 9.0, *) {
+                UIView.appearance().semanticContentAttribute = .forceRightToLeft
+                let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
+                
+                let appDelegate = UIApplication.shared.delegate
+                appDelegate?.window??.rootViewController = homeViewController
+                
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+        else {
+            LocalizationLanguage.setAppleLAnguageTo(lang: "en")
+            languageKey = 1
+            UserDefaults.standard.set(false, forKey: "Arabic")
+            if #available(iOS 9.0, *) {
+                UIView.appearance().semanticContentAttribute = .forceLeftToRight
+                let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
+                
+                let appDelegate = UIApplication.shared.delegate
+                appDelegate?.window??.rootViewController = homeViewController
+                
+            } else {
+                // Fallback on earlier versions
+                
+            }
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

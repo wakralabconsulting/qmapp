@@ -70,6 +70,7 @@
     shapeLayer.borderColor = [UIColor clearColor].CGColor;
     shapeLayer.opacity = 0;
     [self.contentView.layer insertSublayer:shapeLayer below:_titleLabel.layer];
+   
     self.shapeLayer = shapeLayer;
     
     eventIndicator = [[FSCalendarEventIndicator alloc] initWithFrame:CGRectZero];
@@ -134,10 +135,18 @@
     CGFloat titleHeight = self.bounds.size.height*5.0/6.0;
     CGFloat diameter = MIN(self.bounds.size.height*5.0/6.0,self.bounds.size.width);
     diameter = diameter > FSCalendarStandardCellDiameter ? (diameter - (diameter-FSCalendarStandardCellDiameter)*0.5) : diameter;
-    _shapeLayer.frame = CGRectMake((self.bounds.size.width-diameter)/2,
-                                   (titleHeight-diameter)/2,
+//    _shapeLayer.frame = CGRectMake((self.bounds.size.width-diameter)/2,
+//                                   (titleHeight-diameter)/2,
+//                                   diameter,
+//                                   diameter);
+    //changed
+    
+    _shapeLayer.frame = CGRectMake((_titleLabel.frame.origin.x-5),
+                                   (_titleLabel.frame.origin.y),
                                    diameter,
                                    diameter);
+    
+    
     
     CGPathRef path = [UIBezierPath bezierPathWithRoundedRect:_shapeLayer.bounds
                                                 cornerRadius:CGRectGetWidth(_shapeLayer.bounds)*0.5*self.borderRadius].CGPath;

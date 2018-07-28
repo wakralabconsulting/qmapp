@@ -89,6 +89,10 @@
                                 <state key="normal" title="View Details">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="didTapViewDetails:" destination="CX4-6a-MAb" eventType="touchUpInside" id="EPh-0T-ly9"/>
+                                    <action selector="viewDetailsButtonTouchDown:" destination="CX4-6a-MAb" eventType="touchDown" id="OTI-Pm-wGz"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dRF-RK-8Dz">
                                 <rect key="frame" x="321" y="90" width="64" height="1"/>
@@ -168,6 +172,7 @@
                 <outlet property="timingSecondLabel" destination="clU-2c-lZd" id="oYq-Pd-yBE"/>
                 <outlet property="titleLineView" destination="oFG-iA-zIj" id="7kb-3w-e2n"/>
                 <outlet property="verticalLineView" destination="rvT-BX-xxz" id="hGI-37-DeY"/>
+                <outlet property="viewDetails" destination="86L-W2-5Xg" id="PuZ-q7-AdL"/>
             </connections>
             <point key="canvasLocation" x="41" y="-201"/>
         </collectionViewCell>
