@@ -81,8 +81,8 @@ class SideMenuView: UIView,TopBarProtocol {
         sideMenuView.frame = self.bounds
         sideMenuView.autoresizingMask = [.flexibleHeight,.flexibleWidth]
         
-       topBarView.topbarDelegate = self
-       topBarView.menuButton.setImage(UIImage(named: "closeX1"), for: .normal)
+        topBarView.topbarDelegate = self
+        topBarView.menuButton.setImage(UIImage(named: "closeX1"), for: .normal)
         topBarView.backgroundColor = UIColor.clear
         topBarView.backButton.isHidden = true
         
@@ -98,53 +98,150 @@ class SideMenuView: UIView,TopBarProtocol {
          parksLabel.text = NSLocalizedString("PARKS_LABEL", comment: "PARKS_LABEL Label in the SideMenu page")
          settingsLabel.text = NSLocalizedString("SIDEMENU_SETTINGS_LABEL", comment: "SIDEMENU_SETTINGS_LABEL Label in the SideMenu page")
         
+        exhibitionsLabel.font = UIFont.sideMenuLabelFont
+        eventsLabel.font = UIFont.sideMenuLabelFont
+        educationLabel.font = UIFont.sideMenuLabelFont
+        tourGuideLabel.font = UIFont.sideMenuLabelFont
+        heritageSitesLabel.font = UIFont.sideMenuLabelFont
+        publicArtsLabel.font = UIFont.sideMenuLabelFont
+        diningLabel.font = UIFont.sideMenuLabelFont
+        giftShopLabel.font = UIFont.sideMenuLabelFont
+        parksLabel.font = UIFont.sideMenuLabelFont
+        settingsLabel.font = UIFont.sideMenuLabelFont
+        
+        
        
     }
      var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     @IBAction func didTapExhibition(_ sender: UIButton) {
-      
-        self.exhibitionView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        UIButton.animate(withDuration: 0.3,
+                         animations: {
+                            self.exhibitionView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        },
+                         completion: { finish in
+                            UIButton.animate(withDuration: 0.2, animations: {
+                                self.exhibitionView.transform = CGAffineTransform.identity
+                                self.sideMenuDelegate?.exhibitionButtonPressed()
+                            })
+        })
         
-        sideMenuDelegate?.exhibitionButtonPressed()
     }
     @IBAction func didTapEvent(_ sender: UIButton) {
-        self.eventView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        sideMenuDelegate?.eventbuttonPressed()
-    }
-    @IBAction func didTapEducation(_ sender: UIButton) {
-        self.educationView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        sideMenuDelegate?.educationButtonPressed()
-    }
-    @IBAction func didTapTourGuide(_ sender: UIButton) {
-        self.tourGuideView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        sideMenuDelegate?.tourGuideButtonPressed()
-    }
-    @IBAction func didTapHeritageSites(_ sender: UIButton) {
-        self.heritageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        sideMenuDelegate?.heritageButtonPressed()
-    }
-    @IBAction func didTapPublicArts(_ sender: UIButton) {
-        self.publicArtsView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        sideMenuDelegate?.publicArtsButtonPressed()
-    }
-    @IBAction func didTapParks(_ sender: UIButton) {
-        self.parksView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        sideMenuDelegate?.parksButtonPressed()
-    }
-    @IBAction func didTapDining(_ sender: UIButton) {
-        self.diningView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        sideMenuDelegate?.diningButtonPressed()
-    }
-    @IBAction func didTapGiftShop(_ sender: UIButton) {
-        self.giftShopView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        sideMenuDelegate?.giftShopButtonPressed()
+        UIButton.animate(withDuration: 0.3,
+                         animations: {
+                            self.eventView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        },
+                         completion: { finish in
+                            UIButton.animate(withDuration: 0.2, animations: {
+                                self.eventView.transform = CGAffineTransform.identity
+                                self.sideMenuDelegate?.eventbuttonPressed()
+                            })
+        })
         
     }
+    @IBAction func didTapEducation(_ sender: UIButton) {
+        UIButton.animate(withDuration: 0.3,
+                         animations: {
+                            self.educationView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        },
+                         completion: { finish in
+                            UIButton.animate(withDuration: 0.2, animations: {
+                                self.educationView.transform = CGAffineTransform.identity
+                                self.sideMenuDelegate?.educationButtonPressed()
+                            })
+        })
+        
+    }
+    @IBAction func didTapTourGuide(_ sender: UIButton) {
+        UIButton.animate(withDuration: 0.3,
+                         animations: {
+                            self.tourGuideView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        },
+                         completion: { finish in
+                            UIButton.animate(withDuration: 0.2, animations: {
+                                self.tourGuideView.transform = CGAffineTransform.identity
+                                self.sideMenuDelegate?.tourGuideButtonPressed()
+                            })
+        })
+        
+    }
+    @IBAction func didTapHeritageSites(_ sender: UIButton) {
+        UIButton.animate(withDuration: 0.3,
+                         animations: {
+                            self.heritageView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        },
+                         completion: { finish in
+                            UIButton.animate(withDuration: 0.2, animations: {
+                                self.heritageView.transform = CGAffineTransform.identity
+                                self.sideMenuDelegate?.heritageButtonPressed()
+                            })
+        })
+        
+    }
+    @IBAction func didTapPublicArts(_ sender: UIButton) {
+        UIButton.animate(withDuration: 0.3,
+                         animations: {
+                            self.publicArtsView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        },
+                         completion: { finish in
+                            UIButton.animate(withDuration: 0.2, animations: {
+                                self.publicArtsView.transform = CGAffineTransform.identity
+                                self.sideMenuDelegate?.publicArtsButtonPressed()
+                            })
+        })
+    }
+    @IBAction func didTapParks(_ sender: UIButton) {
+        UIButton.animate(withDuration: 0.3,
+                         animations: {
+                            self.parksView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        },
+                         completion: { finish in
+                            UIButton.animate(withDuration: 0.2, animations: {
+                                self.parksView.transform = CGAffineTransform.identity
+                                self.sideMenuDelegate?.parksButtonPressed()
+                            })
+        })
+        
+    }
+    @IBAction func didTapDining(_ sender: UIButton) {
+        UIButton.animate(withDuration: 0.3,
+                         animations: {
+                            self.diningView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        },
+                         completion: { finish in
+                            UIButton.animate(withDuration: 0.2, animations: {
+                                self.diningView.transform = CGAffineTransform.identity
+                                self.sideMenuDelegate?.diningButtonPressed()
+                            })
+        })
+        
+    }
+    @IBAction func didTapGiftShop(_ sender: UIButton) {
+        UIButton.animate(withDuration: 0.3,
+                         animations: {
+                            self.giftShopView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        },
+                         completion: { finish in
+                            UIButton.animate(withDuration: 0.2, animations: {
+                                self.giftShopView.transform = CGAffineTransform.identity
+                                self.sideMenuDelegate?.giftShopButtonPressed()
+                            })
+        })
+    }
     @IBAction func didTapSettings(_ sender: UIButton) {
-        self.settingsView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        sideMenuDelegate?.settingsButtonPressed()
+        UIButton.animate(withDuration: 0.3,
+                         animations: {
+                            self.settingsView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        },
+                         completion: { finish in
+                            UIButton.animate(withDuration: 0.2, animations: {
+                                self.settingsView.transform = CGAffineTransform.identity
+                                self.sideMenuDelegate?.settingsButtonPressed()
+                            })
+        })
+        
     }
     func eventButtonPressed() {
         sideMenuDelegate?.menuEventPressed()
@@ -165,38 +262,6 @@ class SideMenuView: UIView,TopBarProtocol {
     func backButtonPressed() {
         
     }
-    //MARK: Touchdown Actions
-    @IBAction func exhibitionsTouchDown(_ sender: UIButton) {
-       //self.exhibitionButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-        self.exhibitionView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-        
-    }
-    @IBAction func eventButtonTouchDown(_ sender: UIButton) {
-        self.eventView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-    }
-    @IBAction func educationButtonTouchDown(_ sender: UIButton) {
-        self.educationView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-    }
-    @IBAction func tourGuideButtonTouchDown(_ sender: UIButton) {
-        self.tourGuideView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-    }
-    @IBAction func heritageButtonTouchDown(_ sender: UIButton) {
-        self.heritageView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-    }
-    @IBAction func publicArtsButtonTouchDown(_ sender: UIButton) {
-        self.publicArtsView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-    }
-    @IBAction func parksButtonTouchDown(_ sender: UIButton) {
-        self.parksView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-    }
-    @IBAction func diningButtonTouchDown(_ sender: UIButton) {
-        self.diningView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-    }
-    @IBAction func giftShopButtonTouchDown(_ sender: UIButton) {
-        self.giftShopView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-    }
-    @IBAction func settingsButtonTouchDown(_ sender: UIButton) {
-        self.settingsView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-    }
+    
     
 }

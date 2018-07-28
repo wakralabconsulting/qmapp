@@ -87,6 +87,8 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         let heritageCell = tableView.dequeueReusableCell(withIdentifier: "heritageDetailCellId", for: indexPath) as! HeritageDetailCell
         if (pageNameString == PageName.heritageDetail) {
             heritageCell.setHeritageDetailCellData()
+            heritageCell.midTitleDescriptionLabel.textAlignment = .center
+           
         }
         else if(pageNameString == PageName.publicArtsDetail){
             heritageCell.setPublicArtsDetailCellData()

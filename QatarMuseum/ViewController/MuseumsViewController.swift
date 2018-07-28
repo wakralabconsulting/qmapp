@@ -10,20 +10,15 @@ import UIKit
 
 class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,comingSoonPopUpProtocol {
     
-    
-    
-    
-
     @IBOutlet weak var museumsTopbar: TopBarView!
     @IBOutlet weak var museumsSlideView: KASlideShow!
     @IBOutlet weak var pageControl: UIPageControl!
     
     @IBOutlet weak var museumsBottomCollectionView: UICollectionView!
-    
-    @IBOutlet weak var previousConstraint: NSLayoutConstraint!
-    @IBOutlet weak var nextConstraint: NSLayoutConstraint!
+ 
     @IBOutlet weak var previousButton: UIButton!
     
+    @IBOutlet weak var museumTitle: UILabel!
     @IBOutlet weak var nextButton: UIButton!
     var slideshowImages : NSArray!
     var collectionViewImages : NSArray!
@@ -31,10 +26,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     var popUpView : ComingSoonPopUp = ComingSoonPopUp()
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupUI()
-        
-       
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -48,8 +40,8 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         museumsTopbar.topbarDelegate = self
         museumsTopbar.menuButton.isHidden = true
         museumsTopbar.backButton.isHidden = false
-        //previousConstraint.constant = 0
-        
+        museumTitle.text =  NSLocalizedString("MUSEUM_TITLE", comment: "MUSEUM_TITLE  in the Heritage page")
+        museumTitle.font = UIFont.museumTitleFont
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             
             museumsTopbar.backButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)

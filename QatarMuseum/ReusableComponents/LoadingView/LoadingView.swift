@@ -41,7 +41,7 @@ class LoadingView: UIView {
         self.backgroundColor = UIColor.loadingViewGray
        // loadingView.autoresizingMask = [.flexibleHeight,.flexibleWidth]
         loadingView.translatesAutoresizingMaskIntoConstraints = false
-        
+        noDataLabel.font = UIFont.closeButtonFont
     }
     fileprivate func loadView()
     {

@@ -45,6 +45,10 @@ class ComingSoonPopUp: UIView {
         popupInnerView.layer.cornerRadius = 20.0
         self.backgroundColor = UIColor.popupBackgroundWhite
         self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        titleLabel.font = UIFont.eventPopupTitleFont
+        messageLabel.font = UIFont.englishTitleFont
+        stayTunedLabel.font = UIFont.englishTitleFont
+        closeButton.titleLabel?.font = UIFont.closeButtonFont
         
         
     }

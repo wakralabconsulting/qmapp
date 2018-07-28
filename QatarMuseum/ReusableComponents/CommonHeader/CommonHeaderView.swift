@@ -35,6 +35,7 @@ class CommonHeaderView: UIView {
         addSubview(headerView)
         headerView.frame = self.bounds
         headerView.autoresizingMask = [.flexibleHeight,.flexibleWidth]
+        headerTitle.font = UIFont.headerFont
         
     }
     @IBAction func didTapHeaderClose(_ sender: UIButton) {

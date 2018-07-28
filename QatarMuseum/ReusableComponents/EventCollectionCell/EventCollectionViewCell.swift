@@ -20,6 +20,8 @@ class EventCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var groupSizeLabel: UILabel!
     
+    @IBOutlet weak var viewDetails: UIButton!
+    var viewDetailsBtnAction : (()->())?
     
     
     func setEventCellValues() {
@@ -42,4 +44,13 @@ class EventCollectionViewCell: UICollectionViewCell {
         descriptionLabel.text = "Timimg: 8:30 am - 11:30 am (last entry 10:50)"
         groupSizeLabel.text = "Max. group size 25"
     }
+    
+    @IBAction func didTapViewDetails(_ sender: UIButton) {
+        self.viewDetails.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        self.viewDetailsBtnAction?()
+    }
+    @IBAction func viewDetailsButtonTouchDown(_ sender: UIButton) {
+        self.viewDetails.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+    }
+    
 }
