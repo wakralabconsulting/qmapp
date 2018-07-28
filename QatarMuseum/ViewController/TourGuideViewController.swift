@@ -71,18 +71,18 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         let cell : HomeCollectionViewCell = tourCollectionView.dequeueReusableCell(withReuseIdentifier: "homeCellId", for: indexPath) as! HomeCollectionViewCell
         let homeDataDict = tourDataFullArray.object(at: indexPath.row) as! NSDictionary
         cell.tourGuideButton.setImage(UIImage(named: "location"), for: .normal)
-        cell.setHomeCellData(homeCellData: homeDataDict, imageName: tourImageArray.object(at: indexPath.row) as! String)
+        cell.setTourGuideCellData(homeCellData: homeDataDict, imageName: tourImageArray.object(at: indexPath.row) as! String)
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if (indexPath.row == 0) {
             loadMiaTour() 
-        }
-        else {
+        } else {
             loadComingSoonPopup()
         }
-        
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let heightValue = UIScreen.main.bounds.height/100
         return CGSize(width: tourCollectionView.frame.width, height: heightValue*27)

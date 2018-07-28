@@ -44,17 +44,10 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
             openCloseLabel.text = NSLocalizedString("CLOSED_TITLE", comment: "CLOSED_TITLE in the exhibition page")
             openCloseLabel.textColor = UIColor.white
         }
-        if let imageUrl = exhibition.image as? String {
+        if let imageUrl = exhibition.image {
            // exhibitionImageView.kf.indicatorType = .activity
             exhibitionImageView.kf.setImage(with: URL(string: imageUrl))
         }
-        
-//        let profileUrl = URL(string: trophies[indexPath.row].profilePicUrl!)
-//        ServiceManager.sharedInstance.downloadImage(url: profileUrl!, completion: { imageData in
-//            DispatchQueue.main.async() {
-//                cell.profileImage.image = UIImage(data: imageData)
-//            }
-//        })
     }
     
     //MARK: MuseumExhibitionList data

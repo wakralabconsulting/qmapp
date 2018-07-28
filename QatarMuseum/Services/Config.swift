@@ -12,6 +12,7 @@ import Foundation
  *  Config struct for service and use as Config.<*URL> for urls
  */
 struct Config {
-    static let baseIP = "www.qm.org.qa/en/mobile_api"
+    static let baseIP = "www.qm.org.qa/"
     static let baseURL = "http://" + baseIP
+    static let mobileApiURL = "/mobile_api"
 }
