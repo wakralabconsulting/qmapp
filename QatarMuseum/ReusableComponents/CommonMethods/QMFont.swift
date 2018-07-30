@@ -18,19 +18,19 @@ extension UIFont {
     }
     static var heritageTitleFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            return UIFont.init(name: "DINNextLTPro-Bold", size: 19)!
+            return UIFont.init(name: "DINNextLTPro-Regular", size: 19)!
         }
         else{
-            return UIFont.init(name: "DINNextLTArabic-Bold", size:19)!
+            return UIFont.init(name: "DINNextLTArabic-Regular", size:19)!
         }
         
     }
     static var englishTitleFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            return UIFont.init(name: "DINNextLTPro-Regular", size: 16)!
+            return UIFont.init(name: "DINNextLTPro-Regular", size: 17)!
         }
         else{
-            return UIFont.init(name: "DINNextLTArabic-Regular", size:16)!
+            return UIFont.init(name: "DINNextLTArabic-Regular", size:17)!
         }
         
     }
@@ -63,7 +63,7 @@ extension UIFont {
     }
     static var closeButtonFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            return UIFont.init(name: "DINNextLTPro-Regular", size: 18)!
+            return UIFont.init(name: "DINNextLTPro-Bold", size: 18)!
         }
         else{
             return UIFont.init(name: "DINNextLTArabic-Bold", size:18)!
@@ -72,10 +72,10 @@ extension UIFont {
     }
     static var sideMenuLabelFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            return UIFont.init(name: "DINNextLTPro-Bold", size: 15)!
+            return UIFont.init(name: "DINNextLTPro-Regular", size: 15)!
         }
         else{
-            return UIFont.init(name: "DINNextLTArabic-Bold", size:15)!
+            return UIFont.init(name: "DINNextLTArabic-Regular", size:15)!
         }
         
     }
@@ -88,5 +88,31 @@ extension UIFont {
         }
         
     }
-    
+    static var exhibitionDateLabelFont: UIFont {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            return UIFont.init(name: "DINNextLTPro-Regular", size: 12)!
+        }
+        else{
+            return UIFont.init(name: "DINNextLTArabic-Regular", size:13)!
+        }
+        
+    }
+    static var eventCellTitleFont: UIFont {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            return UIFont.init(name: "DINNextLTPro-Regular", size: 13)!
+        }
+        else{
+            return UIFont.init(name: "DINNextLTArabic-Regular", size:14)!
+        }
+        
+    }
+    static var clearButtonFont: UIFont {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            return UIFont.init(name: "DINNextLTPro-Bold", size: 14)!
+        }
+        else{
+            return UIFont.init(name: "DINNextLTArabic-Bold", size:14)!
+        }
+        
+    }
 }

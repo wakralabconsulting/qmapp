@@ -25,6 +25,14 @@ class EventCollectionViewCell: UICollectionViewCell {
     
     
     func setEventCellValues() {
+        firstTitle.font = UIFont.eventCellTitleFont
+        secondTitleLabel.font = UIFont.eventCellTitleFont
+        timingLabel.font = UIFont.exhibitionDateLabelFont
+        secondTitleLabel.font = UIFont.exhibitionDateLabelFont
+        descriptionLabel.font = UIFont.exhibitionDateLabelFont
+        viewDetails.titleLabel?.font = UIFont.exhibitionDateLabelFont
+        
+        
         firstTitle.textColor = UIColor.eventTitlePink
         titleLineView.backgroundColor = UIColor.eventTitlePink
         secondTitleLabel.textColor = UIColor.eventTitlePink
@@ -34,6 +42,13 @@ class EventCollectionViewCell: UICollectionViewCell {
         groupSizeLabel.isHidden = false
     }
     func setEducationCalendarValues() {
+        firstTitle.font = UIFont.eventCellTitleFont
+        secondTitleLabel.font = UIFont.eventCellTitleFont
+        timingLabel.font = UIFont.exhibitionDateLabelFont
+        secondTitleLabel.font = UIFont.exhibitionDateLabelFont
+        descriptionLabel.font = UIFont.exhibitionDateLabelFont
+        groupSizeLabel.font = UIFont.exhibitionDateLabelFont
+        viewDetails.titleLabel?.font = UIFont.exhibitionDateLabelFont
         firstTitle.textColor = UIColor.black
         titleLineView.backgroundColor = UIColor.black
         secondTitleLabel.textColor = UIColor.black

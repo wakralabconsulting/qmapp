@@ -43,6 +43,7 @@ class HeritageCollectionCell: UICollectionViewCell {
             heritageImageView.kf.setImage(with: URL(string: imageUrl))
         }
         titleLabel.font = UIFont.heritageTitleFont
+        subTitle.font = UIFont.heritageTitleFont
         
     }
     //MARK: Public Arts List Data
@@ -67,6 +68,8 @@ class HeritageCollectionCell: UICollectionViewCell {
             favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
         }
         heritageImageView.image = UIImage(named: imageName)
+        titleLabel.font = UIFont.heritageTitleFont
+        subTitle.font = UIFont.heritageTitleFont
     }
     //MARK: Collections List Data
     func setCollectionsCellValues(cellValues: NSDictionary,imageName: String) {
