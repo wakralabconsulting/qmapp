@@ -63,6 +63,15 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         ageGroupText.delegate = self
         programmeTypeText.delegate = self
         
+        institutionTitleLabel.font = UIFont.closeButtonFont
+        ageGroupLabel.font = UIFont.closeButtonFont
+        programmeTypeLabel.font = UIFont.closeButtonFont
+        institutionText.font = UIFont.englishTitleFont
+        ageGroupText.font = UIFont.englishTitleFont
+        programmeTypeText.font = UIFont.englishTitleFont
+        clearButton.titleLabel?.font = UIFont.clearButtonFont
+        filterButton.titleLabel?.font = UIFont.clearButtonFont
+        
         addPickerView()
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {

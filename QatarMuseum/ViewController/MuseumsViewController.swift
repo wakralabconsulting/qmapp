@@ -60,6 +60,9 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     override func viewDidAppear(_ animated: Bool) {
          setSlideShow(imgArray: slideshowImages)
         museumsSlideView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        let dot = pageControl.subviews[0]
+        dot.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
+        
     }
     
     func setSlideShow(imgArray : NSArray) {
@@ -95,13 +98,31 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     
     func kaSlideShowDidShowNext(_ slideshow: KASlideShow) {
+        let currentIndex = Int(museumsSlideView.currentIndex)
         pageControl.currentPage = Int(museumsSlideView.currentIndex)
+        customizePageControlDot(currentIndex: currentIndex)
         
     }
     
     func kaSlideShowDidShowPrevious(_ slideshow: KASlideShow) {
-        
+        let currentIndex = Int(museumsSlideView.currentIndex)
         pageControl.currentPage = Int(museumsSlideView.currentIndex)
+        customizePageControlDot(currentIndex: currentIndex)
+    }
+    func customizePageControlDot(currentIndex: Int) {
+        for i in 0...2 {
+            if (i == currentIndex) {
+                let dot = pageControl.subviews[i]
+                for j in 0...2 {
+                    let dot1 = pageControl.subviews[j]
+                    dot1.transform = CGAffineTransform(scaleX: 1, y: 1)
+                }
+                dot.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
+                break
+            }
+        }
+      
+       
     }
     @objc func pageChanged() {
         

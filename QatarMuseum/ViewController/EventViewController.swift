@@ -320,9 +320,9 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         selectedDateForEvent = date
         
         //selected date got is less than one date. so add 1 to date for actual selected date
-        let dayComponenet = NSDateComponents()
-        dayComponenet.day = 1
-        selectedDateForEvent = Calendar.current.date(byAdding: .day, value: 1, to: date)!
+      //  let dayComponenet = NSDateComponents()
+      //  dayComponenet.day = 1
+       // selectedDateForEvent = Calendar.current.date(byAdding: .day, value: 1, to: date)!
     }
     func calendarCurrentMonthDidChange(_ calendar: FSCalendar) {
         
