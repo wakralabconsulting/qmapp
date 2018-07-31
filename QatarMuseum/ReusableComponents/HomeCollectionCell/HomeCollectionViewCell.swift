@@ -21,6 +21,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     func setHomeCellData(home: Home) {
         homeTitleLabel.text = home.name
+        homeTitleLabel.font = UIFont.homeTitleFont
         if (home.isTourguideAvailable == true) {
             tourGuideButton.isHidden = false
         }
