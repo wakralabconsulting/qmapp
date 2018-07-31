@@ -84,9 +84,9 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if (indexPath.item == self.homeList.endIndex - 1) {
+        if (indexPath.row == self.homeList.endIndex - 1) {
             loadExhibitionPage()
-        } else if(homeList[indexPath.item].id == "63") {
+        } else if(homeList[indexPath.row].id == "63") {
             loadMuseumsPage()
         } else {
             loadComingSoonPopup()
