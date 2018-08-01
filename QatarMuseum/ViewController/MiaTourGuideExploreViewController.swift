@@ -28,6 +28,13 @@ class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol,com
     func setupUI() {
         tourGuideDescription.text = "Welcome to Qatar Museum Premises. \n Explore the architrcture and the objects on display. \n Scan the QR codes available on the galleries for more information."
         headerView.headerViewDelegate = self
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            
+            headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
+        }
+        else {
+            headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+        }
     }
 
     override func didReceiveMemoryWarning() {

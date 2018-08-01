@@ -25,6 +25,7 @@ extension UIFont {
         }
         
     }
+   
     static var englishTitleFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             return UIFont.init(name: "DINNextLTPro-Regular", size: 17)!
@@ -79,6 +80,24 @@ extension UIFont {
         }
         
     }
+    static var collectionFirstDescriptionFont: UIFont {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            return UIFont.init(name: "DINNextLTPro-Regular", size: 16)!
+        }
+        else{
+            return UIFont.init(name: "DINNextLTArabic-Regular", size:16)!
+        }
+        
+    }
+    static var collectionSubTitleFont: UIFont {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            return UIFont.init(name: "DINNextLTPro-Light", size: 19)!
+        }
+        else{
+            return UIFont.init(name: "DINNextLTArabic-Light", size:19)!
+        }
+        
+    }
     static var museumTitleFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             return UIFont.init(name: "DINNextLTPro-Bold", size: 37)!
@@ -119,6 +138,14 @@ extension UIFont {
         }
         else{
             return UIFont.init(name: "DINNextLTArabic-Regular", size:21)!
+        }
+    }
+    static var diningHeaderFont: UIFont {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            return UIFont.init(name: "DINNextLTPro-Bold", size: 20)!
+        }
+        else {
+            return UIFont.init(name: "DINNextLTArabic-Bold", size: 20)!
         }
     }
 }

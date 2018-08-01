@@ -263,7 +263,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     func parksButtonPressed() {
         let parksView =  self.storyboard?.instantiateViewController(withIdentifier: "parkViewId") as! ParksViewController
-        parksView.isParkViewPage = true
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionFade

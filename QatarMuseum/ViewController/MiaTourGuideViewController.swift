@@ -31,6 +31,13 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
         miaTourImageArray = ["science_tour","museum_of_islamic_art","coming_soon_1","coming_soon_2"];
         topbarView.headerViewDelegate = self
         topbarView.headerTitle.isHidden = true
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            
+            topbarView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
+        }
+        else {
+            topbarView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+        }
         
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {

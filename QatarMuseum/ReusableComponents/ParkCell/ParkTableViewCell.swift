@@ -26,6 +26,14 @@ class ParkTableViewCell: UITableViewCell {
     // @IBOutlet weak var imageAspect: NSLayoutConstraint!
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var parkImageView: UIImageView!
+    @IBOutlet weak var favouriteViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var shareView: UIView!
+    @IBOutlet weak var favouriteView: UIView!
+    @IBOutlet weak var shareButton: UIButton!
+    @IBOutlet weak var favouriteButton: UIButton!
+    var favouriteButtonAction : (() -> ())?
+    var shareButtonAction : (() -> ())?
+    var locationButtonTapAction : (() -> ())?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -74,6 +82,42 @@ class ParkTableViewCell: UITableViewCell {
         parkImageView.image = UIImage(named: imageName)
     }
    
+    @IBAction func didTapFavourite(_ sender: UIButton) {
+        UIButton.animate(withDuration: 0.3,
+                         animations: {
+                            self.favouriteButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        },
+                         completion: { finish in
+                            UIButton.animate(withDuration: 0.1, animations: {
+                                self.favouriteButton.transform = CGAffineTransform.identity
+                                
+                            })
+                            self.favouriteButtonAction?()
+        })
+        
+    }
+    @IBAction func didTapShare(_ sender: UIButton) {
+        UIButton.animate(withDuration: 0.3,
+                         animations: {
+                            self.shareButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        },
+                         completion: { finish in
+                            UIButton.animate(withDuration: 0.1, animations: {
+                                self.shareButton.transform = CGAffineTransform.identity
+                                
+                            })
+                            self.shareButtonAction?()
+        })
+        
+    }
+    
+    @IBAction func didTapLocation(_ sender: UIButton) {
+        self.locationButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        locationButtonTapAction?()
+    }
+    @IBAction func locationButtonTouchDown(_ sender: UIButton) {
+        self.locationButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+    }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

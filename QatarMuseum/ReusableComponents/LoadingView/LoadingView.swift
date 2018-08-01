@@ -38,7 +38,7 @@ class LoadingView: UIView {
         Bundle.main.loadNibNamed("LoadingXib", owner: self, options: nil)
         addSubview(loadingView)
         loadingView.frame = self.bounds
-       
+       self.backgroundColor = UIColor.loadingViewGray
        // loadingView.autoresizingMask = [.flexibleHeight,.flexibleWidth]
         loadingView.translatesAutoresizingMaskIntoConstraints = false
         noDataLabel.font = UIFont.closeButtonFont
@@ -50,6 +50,7 @@ class LoadingView: UIView {
             loadingView = Bundle.main.loadNibNamed("LoadingXib", owner: self, options: nil)![0] as! UIView
             loadingView.frame = self.bounds
             loadingView.translatesAutoresizingMaskIntoConstraints = false
+            self.backgroundColor = UIColor.loadingViewGray
             self.addSubview(loadingView)
             let constrants = wk_getLayouts()
             self.addConstraints(constrants.0)

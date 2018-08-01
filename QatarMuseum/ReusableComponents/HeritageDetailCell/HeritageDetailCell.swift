@@ -40,9 +40,11 @@ class HeritageDetailCell: UITableViewCell {
     @IBOutlet weak var subTitleHeight: NSLayoutConstraint!
     @IBOutlet weak var locationTotalTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var locationTotalBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var locationButton: UIButton!
     
     var favBtnTapAction : (()->())?
     var shareBtnTapAction : (()->())?
+    var locationButtonTapAction : (()->())?
     override func awakeFromNib() {
         super.awakeFromNib()
         setUi()
@@ -136,6 +138,14 @@ class HeritageDetailCell: UITableViewCell {
     @IBAction func shareTouchDown(_ sender: UIButton) {
         self.shareButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
+    @IBAction func didTapLocationButton(_ sender: UIButton) {
+        self.locationButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        locationButtonTapAction?()
+    }
+    @IBAction func locationButtonTouchDown(_ sender: UIButton) {
+        self.locationButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
