@@ -19,10 +19,9 @@ class EventCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var verticalLineView: UIView!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var groupSizeLabel: UILabel!
-    
     @IBOutlet weak var viewDetails: UIButton!
-    var viewDetailsBtnAction : (()->())?
     
+    var viewDetailsBtnAction : (()->())?
     
     func setEventCellValues() {
         firstTitle.font = UIFont.eventCellTitleFont
@@ -31,7 +30,6 @@ class EventCollectionViewCell: UICollectionViewCell {
         secondTitleLabel.font = UIFont.exhibitionDateLabelFont
         descriptionLabel.font = UIFont.exhibitionDateLabelFont
         viewDetails.titleLabel?.font = UIFont.exhibitionDateLabelFont
-        
         
         firstTitle.textColor = UIColor.eventTitlePink
         titleLineView.backgroundColor = UIColor.eventTitlePink
