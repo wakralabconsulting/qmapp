@@ -91,19 +91,19 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
     }
     
     func loadCollectionDetail() {
-     let parksView =  self.storyboard?.instantiateViewController(withIdentifier: "parkViewId") as! ParksViewController
-     parksView.isParkViewPage = false
+     let collectionDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "collectionDetailId") as! CollectionDetailViewController
      let transition = CATransition()
      transition.duration = 0.25
      transition.type = kCATransitionFade
      transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
      view.window!.layer.add(transition, forKey: kCATransition)
-     self.present(parksView, animated: false, completion: nil)
+     self.present(collectionDetailView, animated: false, completion: nil)
         
         
     }
     func addComingSoonPopup() {
         let viewFrame : CGRect = self.view.frame
+         popupView.comingSoonPopupDelegate = self
         popupView.frame = viewFrame
         popupView.loadPopup()
         self.view.addSubview(popupView)

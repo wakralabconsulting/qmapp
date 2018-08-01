@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DiningDetailTableViewCell: UITableViewCell {
+class DiningDetailTableViewCell: UITableViewCell,UITextViewDelegate {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subTitleLabel: UILabel!
     @IBOutlet weak var timeTitleLabel: UILabel!
@@ -21,15 +21,18 @@ class DiningDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var shareButton: UIButton!
    // @IBOutlet weak var imageViewHeight: NSLayoutConstraint!
    
+    
    // @IBOutlet weak var locationLineViewHeight: NSLayoutConstraint!
     @IBOutlet weak var locationFirstLabel: UILabel!
     
-  
+    @IBOutlet weak var visitMIAText: UITextView!
+    
     // @IBOutlet weak var imageAspect: NSLayoutConstraint!
     @IBOutlet weak var locationButton: UIButton!
    // @IBOutlet weak var diningImageView: UIImageView!
     var favBtnTapAction : (()->())?
     var shareBtnTapAction : (()->())?
+    var locationButtonAction: (() -> ())?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -37,11 +40,24 @@ class DiningDetailTableViewCell: UITableViewCell {
     }
     func setDiningCellValues() {
         
-        
+        titleLabel.font = UIFont.diningHeaderFont
+        titleDescriptionLabel.font = UIFont.englishTitleFont
+        titleSecondDescriptionLabel.font = UIFont.englishTitleFont
+        timeTitleLabel.font = UIFont.closeButtonFont
+        timeDescriptionLabel.font = UIFont.sideMenuLabelFont
+        locationsTitleLabel.font = UIFont.closeButtonFont
+        locationFirstLabel.font = UIFont.sideMenuLabelFont
+        locationButton.titleLabel?.font = UIFont.sideMenuLabelFont
         titleLabel.text = "IDAM"
-        titleDescriptionLabel.text = "Embark on refined, generous and enchanted culinary journey at IDAM, Alain Ducasse's first restaurant in the Middle east."
-        titleSecondDescriptionLabel.text = "In the heart of the museum, with spectacular views of the Doha skyline, Idam offers an innovative and flavorsome selection of contemporary French Mediterranean cuisine designed with an Arabic twist. Timeless classics of local and regional cuisine, with most ingredients sourced locally in Qatar. \n Philippe Starck's unique and exquisite decor creates a sophisticated atmosphere. \n For more information and to make a reservation, visit MIA"
-        
+        let attributes = [
+            
+            NSAttributedStringKey.font : UIFont.englishTitleFont // Note the !
+        ]
+        titleDescriptionLabel.attributedText = NSAttributedString(string: "Embark on refined, generous and enchanted culinary journey at IDAM, Alain Ducasse's first restaurant in the Middle east.", attributes: attributes)
+        //titleDescriptionLabel.attributedText = "Embark on refined, generous and enchanted culinary journey at IDAM, Alain Ducasse's first restaurant in the Middle east."
+       // titleDescriptionLabel.text = "Embark on refined, generous and enchanted culinary journey at IDAM, Alain Ducasse's first restaurant in the Middle east."
+        titleSecondDescriptionLabel.text = "In the heart of the museum, with spectacular views of the Doha skyline, Idam offers an innovative and flavorsome selection of contemporary French Mediterranean cuisine designed with an Arabic twist. Timeless classics of local and regional cuisine, with most ingredients sourced locally in Qatar. \n Philippe Starck's unique and exquisite decor creates a sophisticated atmosphere. "
+        //\n For more information and to make a reservation, visit MIA
         
         timeTitleLabel.isHidden = false
         timeDescriptionLabel.text = "Everyday From 11 am to 11 pm"
@@ -53,24 +69,78 @@ class DiningDetailTableViewCell: UITableViewCell {
         locationsTitleLabel.text = "LOCATION"
         locationButton.setTitle("Click here to open in Google Maps", for: .normal)
         locationFirstLabel.text = "Museum of Islamic Art"
+        
+        
+        //For HyperLink in textview
+        let yourAttributes = [kCTForegroundColorAttributeName: UIColor.black, kCTFontAttributeName: UIFont.englishTitleFont]
+        let partOne = NSMutableAttributedString(string: "For more information and to make a reservation, visit ", attributes: yourAttributes as [NSAttributedStringKey : Any])
+        let yourAttributes2 = [kCTForegroundColorAttributeName: UIColor.viewMyFavDarkPink, kCTFontAttributeName: UIFont.englishTitleFont]
+        let parttwo = NSMutableAttributedString(string: "MIA ", attributes: yourAttributes2 as [NSAttributedStringKey : Any])
+        let combination = NSMutableAttributedString()
+        combination.append(partOne)
+        combination.append(parttwo)
+        
+         let linkAttributes: [NSAttributedStringKey: Any] = [
+                    .link: NSURL(string: "https://www.apple.com")!,
+                    NSAttributedStringKey.foregroundColor: UIColor.profilePink,
+                    NSAttributedStringKey.underlineStyle: NSNumber.init(value: Int8(NSUnderlineStyle.styleSingle.rawValue)),
+                    NSAttributedStringKey.font : UIFont.englishTitleFont
+                ]
+        
+        combination.setAttributes(linkAttributes, range: NSMakeRange(53, 4))
+        self.visitMIAText.delegate = self
+        
+                self.visitMIAText.attributedText = combination
+                self.visitMIAText.isUserInteractionEnabled = true
+                self.visitMIAText.isEditable = false
+                visitMIAText.tintColor = UIColor.viewMyFavDarkPink
+        
+            self.visitMIAText.textAlignment = .center
+         titleSecondDescriptionLabel.textAlignment = .center
+        titleDescriptionLabel.textAlignment = .center
+       
 
-        
-        
-       // diningImageView.image = UIImage(named: "gold_and_class")
     }
     @IBAction func didTapFavouriteButton(_ sender: UIButton) {
-        self.favoriteButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        favBtnTapAction?()
+        
+        UIButton.animate(withDuration: 0.3,
+                         animations: {
+                            self.favoriteButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        },
+                         completion: { finish in
+                            UIButton.animate(withDuration: 0.1, animations: {
+                                self.favoriteButton.transform = CGAffineTransform.identity
+                                
+                            })
+                            self.favBtnTapAction?()
+        })
+        
     }
     @IBAction func didTapShareButton(_ sender: UIButton) {
-        self.shareButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        shareBtnTapAction?()
+        
+        UIButton.animate(withDuration: 0.3,
+                         animations: {
+                            self.shareButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        },
+                         completion: { finish in
+                            UIButton.animate(withDuration: 0.1, animations: {
+                                self.shareButton.transform = CGAffineTransform.identity
+                                
+                            })
+                            self.shareBtnTapAction?()
+        })
+        
     }
-    @IBAction func favouriteTouchDown(_ sender: UIButton) {
-        self.favoriteButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+   
+    @IBAction func didTapLocation(_ sender: UIButton) {
+
+         self.locationButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        self.locationButtonAction?()
+        
     }
-    @IBAction func shareTouchDown(_ sender: UIButton) {
-        self.shareButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+    
+    @IBAction func locationButtonTouchDown(_ sender: UIButton) {
+        self.locationButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

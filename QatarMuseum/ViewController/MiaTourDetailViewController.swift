@@ -33,6 +33,13 @@ class MiaTourDetailViewController: UIViewController,HeaderViewProtocol,comingSoo
         headerView.headerTitle.text = NSLocalizedString("MIA_TOUR_GUIDES_TITLE", comment: "MIA_TOUR_GUIDES_TITLE in the Mia tour guide page")
 
         setSlideShow(imgArray: slideshowImages)
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            
+            headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
+        }
+        else {
+            headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+        }
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent

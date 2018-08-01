@@ -104,6 +104,10 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             () in
             self.setShareAction(cellObj: heritageCell)
         }
+        heritageCell.locationButtonTapAction = {
+            () in
+            self.loadLocationInMap()
+        }
         loadingView.stopLoading()
         loadingView.isHidden = true
         return heritageCell
@@ -113,6 +117,20 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     }
     func setShareAction(cellObj :HeritageDetailCell) {
         
+    }
+    func loadLocationInMap() {
+        let latitude = "10.0119266"
+        let longitude =  "76.3492956"
+        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!)
+            }
+        } else {
+            let locationUrl = URL(string: "https://maps.google.com/?q=@\(latitude),\(longitude)")!
+            UIApplication.shared.openURL(locationUrl)
+        }
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = 300 - (scrollView.contentOffset.y + 300)

@@ -106,6 +106,7 @@
 		B8E01BF92105EDFB008D7F33 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E01BF82105EDFB008D7F33 /* SettingsViewController.swift */; };
 		B8E01BFD21060FDC008D7F33 /* AppLocalizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E01BFB21060FDC008D7F33 /* AppLocalizer.swift */; };
 		B8E01BFE21060FDC008D7F33 /* LocalizationLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E01BFC21060FDC008D7F33 /* LocalizationLanguage.swift */; };
+		B8E024ED211042C200CB18E2 /* CollectionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E024EC211042C200CB18E2 /* CollectionDetailViewController.swift */; };
 		B8E2C00E20C7E9CA00F3CE41 /* ComingSoonpopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8E2C00D20C7E9CA00F3CE41 /* ComingSoonpopup.xib */; };
 		B8E2C01020C7E9E900F3CE41 /* ComingSoonPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E2C00F20C7E9E900F3CE41 /* ComingSoonPopUp.swift */; };
 		B8E2C01320C7FD0000F3CE41 /* SideMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8E2C01220C7FD0000F3CE41 /* SideMenu.xib */; };
@@ -272,6 +273,7 @@
 		B8E01BF82105EDFB008D7F33 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		B8E01BFB21060FDC008D7F33 /* AppLocalizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLocalizer.swift; sourceTree = "<group>"; };
 		B8E01BFC21060FDC008D7F33 /* LocalizationLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationLanguage.swift; sourceTree = "<group>"; };
+		B8E024EC211042C200CB18E2 /* CollectionDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionDetailViewController.swift; sourceTree = "<group>"; };
 		B8E2C00D20C7E9CA00F3CE41 /* ComingSoonpopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ComingSoonpopup.xib; sourceTree = "<group>"; };
 		B8E2C00F20C7E9E900F3CE41 /* ComingSoonPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComingSoonPopUp.swift; sourceTree = "<group>"; };
 		B8E2C01220C7FD0000F3CE41 /* SideMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideMenu.xib; sourceTree = "<group>"; };
@@ -467,6 +469,7 @@
 				B8D7BF442101A12E0085EF49 /* EducationViewController.swift */,
 				B8D4C535210453FB0096912C /* FilterViewController.swift */,
 				B8E01BF82105EDFB008D7F33 /* SettingsViewController.swift */,
+				B8E024EC211042C200CB18E2 /* CollectionDetailViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1052,6 +1055,7 @@
 				B8CAA93F20DC186E009A936D /* HeritageDetailViewController.swift in Sources */,
 				1BE526D42107470700C8CD51 /* Config.swift in Sources */,
 				B8A1479B20FCA2AB00833B7B /* TourGuideViewController.swift in Sources */,
+				B8E024ED211042C200CB18E2 /* CollectionDetailViewController.swift in Sources */,
 				B812BA04210AF3540083E0E2 /* QMFont.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

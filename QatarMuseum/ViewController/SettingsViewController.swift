@@ -301,7 +301,6 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
             if #available(iOS 9.0, *) {
                 UIView.appearance().semanticContentAttribute = .forceLeftToRight
                 let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
-                
                 let appDelegate = UIApplication.shared.delegate
                 appDelegate?.window??.rootViewController = homeViewController
                 

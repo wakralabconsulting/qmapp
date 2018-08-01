@@ -12,8 +12,6 @@ import UIKit
 class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     @IBOutlet weak var parksTableView: UITableView!
-    @IBOutlet weak var favoriteButton: UIButton!
-    @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var loadingView: LoadingView!
     let imageView = UIImageView()
     let closeButton = UIButton()
@@ -22,20 +20,11 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     var parkImageArray = NSArray()
     var collectionListArray: NSArray!
     var collectionImageArray = NSArray()
-    var isParkViewPage : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupUIContents()
-        if (isParkViewPage == true) {
-            getParksDataFromJson()
-        }
-        else  {
-            getCollectionDetailDataFromJson()
-        }
-        
+        getParksDataFromJson()
         registerCell()
-        
     }
     func setupUIContents() {
         loadingView.isHidden = false
@@ -106,46 +95,51 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     //MARK: TableView delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(isParkViewPage == true) {
             return parksListArray.count
-        }
-        else {
-             return collectionListArray.count
-        }
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       if(isParkViewPage == true) {
             let parkCell = tableView.dequeueReusableCell(withIdentifier: "parkCellId", for: indexPath) as! ParkTableViewCell
             if (indexPath.row != 0) {
                 parkCell.titleLineView.isHidden = true
                 parkCell.imageViewHeight.constant = 200
+                
             }
             else {
                 parkCell.titleLineView.isHidden = false
                 parkCell.imageViewHeight.constant = 0
             }
+            if(indexPath.row == parksListArray.count-1) {
+                parkCell.favouriteViewHeight.constant = 130
+                parkCell.favouriteView.isHidden = false
+                parkCell.shareView.isHidden = false
+                parkCell.favouriteButton.isHidden = false
+                parkCell.shareButton.isHidden = false
+            }
+            else {
+                parkCell.favouriteViewHeight.constant = 0
+                parkCell.favouriteView.isHidden = true
+                parkCell.shareView.isHidden = true
+                parkCell.favouriteButton.isHidden = true
+                parkCell.shareButton.isHidden = true
+            }
+        parkCell.favouriteButtonAction = {
+            ()in
+        }
+        parkCell.shareButtonAction = {
+            () in
+        }
+        parkCell.locationButtonTapAction = {
+            () in
+            self.loadLocationInMap()
+        }
             let parkDataDict = parksListArray.object(at: indexPath.row) as! NSDictionary
-            parkCell.setParksCellValues(cellValues: parkDataDict, imageName: parkImageArray.object(at: indexPath.row) as! String)
+        
+            parkCell.setParksCellValues(cellValues: parkDataDict, imageName:parkImageArray.object(at: indexPath.row) as! String )
             loadingView.stopLoading()
             loadingView.isHidden = true
             return parkCell
-       }
-        else {
-            let collectionCell = tableView.dequeueReusableCell(withIdentifier: "collectionCellId", for: indexPath) as! CollectionDetailCell
-            if(indexPath.row == 0) {
-                collectionCell.firstImageHeight.constant = 0
-            }
-            else {
-                collectionCell.firstImageHeight.constant = 180
-        }
-            let collectionDataDict = collectionListArray.object(at: indexPath.row) as! NSDictionary
-            collectionCell.setCollectionCellValues(cellValues: collectionDataDict, imageName: collectionImageArray.object(at: indexPath.row) as! String)
-            loadingView.stopLoading()
-            loadingView.isHidden = true
-            return collectionCell
-        }
         
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -183,6 +177,20 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         }
         
     }
+    func loadLocationInMap() {
+        let latitude = "10.0119266"
+        let longitude =  "76.3492956"
+        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!)
+            }
+        } else {
+            let locationUrl = URL(string: "https://maps.google.com/?q=@\(latitude),\(longitude)")!
+            UIApplication.shared.openURL(locationUrl)
+        }
+    }
     @objc func buttonAction(sender: UIButton!) {
         sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         let transition = CATransition()
@@ -196,20 +204,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     @objc func closeTouchDownAction(sender: UIButton!) {
         sender.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
-    @IBAction func didTapFavouriteButton(_ sender: UIButton) {
-        self.favoriteButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        
-    }
-    @IBAction func didTapShareButton(_ sender: UIButton) {
-        self.shareButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        
-    }
-    @IBAction func favouriteTouchDown(_ sender: UIButton) {
-        self.favoriteButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-    }
-    @IBAction func shareTouchDown(_ sender: UIButton) {
-        self.shareButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-    }
+   
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

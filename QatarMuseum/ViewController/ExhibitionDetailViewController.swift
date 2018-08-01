@@ -92,6 +92,11 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
             () in
             self.setShareAction(cellObj: cell)
         }
+        cell.locationButtonAction = {
+            () in
+            self.loadLocationInMap()
+        }
+        
         loadingView.stopLoading()
         loadingView.isHidden = true
         return cell
@@ -101,6 +106,20 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     }
     func setShareAction(cellObj :ExhibitionDetailTableViewCell) {
        
+    }
+    func loadLocationInMap() {
+        let latitude = "10.0119266"
+        let longitude =  "76.3492956"
+        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!)
+            }
+        } else {
+            let locationUrl = URL(string: "https://maps.google.com/?q=@\(latitude),\(longitude)")!
+            UIApplication.shared.openURL(locationUrl)
+        }
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
        

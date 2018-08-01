@@ -16,7 +16,7 @@ class MuseumBottomCell: UICollectionViewCell {
     
     @IBOutlet weak var cellView: UIView!
     @IBAction func didTapCellButton(_ sender: UIButton) {
-        UIButton.animate(withDuration: 0.3,
+        UIButton.animate(withDuration: 0.2,
                          animations: {
                             self.cellView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
         },

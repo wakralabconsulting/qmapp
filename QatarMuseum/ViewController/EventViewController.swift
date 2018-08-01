@@ -26,6 +26,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     @IBOutlet weak var previousConstraint: NSLayoutConstraint!
     @IBOutlet weak var nextConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var loadingView: LoadingView!
     var effect:UIVisualEffect!
     var eventPopup : EventPopupView = EventPopupView()
     var selectedDateForEvent : Date = Date()
@@ -55,9 +56,9 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         eventCollectionView?.register(nib, forCellWithReuseIdentifier: "eventCellId")
     }
     func setUpUiContent() {
+        loadingView.isHidden = false
+        loadingView.showLoading()
         headerView.headerViewDelegate = self
-        
-
         headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         self.view.addGestureRecognizer(self.scopeGesture)
     self.eventCollectionView.panGestureRecognizer.require(toFail: self.scopeGesture)
@@ -104,7 +105,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             calendarView.setCurrentPage(Date(), animated: false)
             UserDefaults.standard.set(true, forKey: "Arabic")
             
-            calendarView.appearance.titleFont = UIFont.init(name: "DINNextLTArabic-Bold", size: 19)
+            calendarView.appearance.titleFont = UIFont.init(name: "DINNextLTArabic-Bold", size: 18)
             calendarView.appearance.weekdayFont =  UIFont.init(name: "DINNextLTArabic-Regular", size: 13)
             previousButton.setImage(UIImage(named: "nextImg"), for: .normal)
             nextButton.setImage(UIImage(named: "previousImg"), for: .normal)
@@ -124,16 +125,10 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     func minimumDate(for calendar: FSCalendar) -> Date {
         return self.formatter.date(from: "2016-07-08")!
     }
-   
-    fileprivate let formatterForArabic: DateFormatter = {
-        let arabicFormatter = DateFormatter()
-        arabicFormatter.dateFormat = "yyyy-MM-dd"
-        arabicFormatter.locale = NSLocale(localeIdentifier: "ar") as Locale?
-        return arabicFormatter
-    }()
+
     fileprivate let formatter: DateFormatter = {
         let formatter = DateFormatter()
-        if ((LocalizationLanguage.currentAppleLanguage()) == "fa_IR") {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "ar") {
             formatter.locale = NSLocale(localeIdentifier: "ar") as Locale?
         }
         formatter.dateFormat = "yyyy-MM-dd"
@@ -175,7 +170,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         else {
             cell.setEducationCalendarValues()
         }
-        
+        loadingView.stopLoading()
+        loadingView.isHidden = true
         return cell
     
     }

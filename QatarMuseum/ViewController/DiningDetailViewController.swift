@@ -11,7 +11,7 @@ import UIKit
 class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     @IBOutlet weak var diningTableView: UITableView!
     
-   // @IBOutlet weak var loadingView: LoadingView!
+    @IBOutlet weak var loadingView: LoadingView!
     let imageView = UIImageView()
     let closeButton = UIButton()
     var blurView = UIVisualEffectView()
@@ -25,8 +25,8 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         
     }
     func setupUIContents() {
-       // loadingView.isHidden = false
-       // loadingView.showLoading()
+        loadingView.isHidden = false
+        loadingView.showLoading()
         diningTableView.estimatedRowHeight = 50
         diningTableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0)
         
@@ -69,15 +69,14 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let diningCell = tableView.dequeueReusableCell(withIdentifier: "diningDetailCellId", for: indexPath) as! DiningDetailTableViewCell
-        
-        
-      
-           diningCell.titleLineView.isHidden = true
-           
-            diningCell.setDiningCellValues()
-       
-       // loadingView.stopLoading()
-        //loadingView.isHidden = true
+        diningCell.titleLineView.isHidden = true
+        diningCell.setDiningCellValues()
+        diningCell.locationButtonAction = {
+            ()in
+            self.loadLocationOnMap()
+        }
+        loadingView.stopLoading()
+        loadingView.isHidden = true
         return diningCell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -114,6 +113,24 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
             
         }
         
+    }
+    func loadLocationOnMap() {
+        let latitude = "10.0119266"
+        let longitude =  "76.3492956"
+        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!)
+            }
+        } else {
+            let locationUrl = URL(string: "https://maps.google.com/?q=@\(latitude),\(longitude)")!
+//            let webViewVc:WebViewController = self.storyboard?.instantiateViewController(withIdentifier: "webViewId") as! WebViewController
+//            webViewVc.webViewUrl = locationUrl
+//            webViewVc.titleString = NSLocalizedString("WEBVIEW_TITLE", comment: "WEBVIEW_TITLE title Label in the webview page")
+//            self.present(webViewVc, animated: false, completion: nil)
+            UIApplication.shared.openURL(locationUrl)
+        }
     }
     @objc func buttonAction(sender: UIButton!) {
         let transition = CATransition()

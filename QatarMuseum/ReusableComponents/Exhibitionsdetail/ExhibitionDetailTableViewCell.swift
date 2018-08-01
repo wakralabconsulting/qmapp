@@ -30,6 +30,7 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var centerImgHeight: NSLayoutConstraint!
     var favBtnTapAction : (()->())?
     var shareBtnTapAction : (()->())?
+    var locationButtonAction: (() -> ())?
     override func awakeFromNib() {
         super.awakeFromNib()
         setupCellUI()
@@ -89,4 +90,14 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
     @IBAction func shareTouchDown(_ sender: UIButton) {
         self.shareButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
+    
+    
+    @IBAction func locationTouchDown(_ sender: UIButton) {
+        self.locationButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+    }
+    @IBAction func didTapLocation(_ sender: UIButton) {
+        self.locationButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        locationButtonAction?()
+    }
+    
 }

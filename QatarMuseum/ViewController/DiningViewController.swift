@@ -14,7 +14,7 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
     @IBOutlet weak var diningHeader: CommonHeaderView!
     @IBOutlet weak var diningCollectionView: UICollectionView!
     
-    //@IBOutlet weak var loadingView: LoadingView!
+    @IBOutlet weak var loadingView: LoadingView!
     var diningListArray : NSArray!
     var diningListImageArray = NSArray()
     var popUpView : ComingSoonPopUp = ComingSoonPopUp()
@@ -27,8 +27,8 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
         
     }
     func setupDiningArtsUi() {
-        //loadingView.isHidden = false
-        //loadingView.showLoading()
+        loadingView.isHidden = false
+        loadingView.showLoading()
         diningListImageArray = ["idam","in_q_cafe","mia_cafe","al_reward_cafe","mia_catering","mathaf_maqha","cafe_#999"];
         diningHeader.headerViewDelegate = self
         diningHeader.headerTitle.text = NSLocalizedString("DINING_TITLE", comment: "DINING_TITLE in the Dining page")
@@ -68,8 +68,8 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
         let publicArtsCell : HeritageCollectionCell = diningCollectionView.dequeueReusableCell(withReuseIdentifier: "heritageCellId", for: indexPath) as! HeritageCollectionCell
         let publicArtsDataDict = diningListArray.object(at: indexPath.row) as! NSDictionary
         publicArtsCell.setPublicArtsListCellValues(cellValues: publicArtsDataDict, imageName: diningListImageArray.object(at: indexPath.row) as! String)
-//        loadingView.stopLoading()
-//        loadingView.isHidden = true
+        loadingView.stopLoading()
+        loadingView.isHidden = true
         return publicArtsCell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
