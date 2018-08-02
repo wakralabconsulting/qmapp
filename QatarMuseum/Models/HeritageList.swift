@@ -19,7 +19,7 @@ struct HeritageList: ResponseObjectSerializable, ResponseCollectionSerializable 
             self.id = representation["ID"] as? String
             self.name = representation["name"] as? String
             self.image = representation["LATEST IMAGE"] as? String
-            self.sortid = representation["ORT ID"] as? String
+            self.sortid = representation["SORT ID"] as? String
            
         }
     }

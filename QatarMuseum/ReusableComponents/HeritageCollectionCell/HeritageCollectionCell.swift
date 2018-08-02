@@ -6,6 +6,7 @@
 //  Copyright © 2018 Exalture. All rights reserved.
 //
 
+import Kingfisher
 import UIKit
 
 class HeritageCollectionCell: UICollectionViewCell {
@@ -16,7 +17,6 @@ class HeritageCollectionCell: UICollectionViewCell {
     @IBOutlet weak var subTitle: UILabel!
     @IBOutlet weak var favouriteButton: UIButton!
     @IBOutlet weak var lineLabelHeight: NSLayoutConstraint!
-   // @IBOutlet weak var subLabelHeight: NSLayoutConstraint!
     @IBOutlet weak var titleBottomConstraint: NSLayoutConstraint!
     
     
@@ -80,11 +80,22 @@ class HeritageCollectionCell: UICollectionViewCell {
         lineLabel.isHidden = true
         titleBottomConstraint.constant = 0
        // subLabelHeight.constant = 0
-        
-        
        favouriteButton.isHidden = true
         heritageImageView.image = UIImage(named: imageName)
     }
+    //MARK: Dining List Data
+    func setDiningListValues(diningList: DiningList) {
+        titleLabel.text = diningList.name?.uppercased()
+        lineLabelHeight.constant = 0
+        lineLabel.isHidden = true
+        titleBottomConstraint.constant = 0
+        subTitle.isHidden = true
+        if let imageUrl = diningList.image{
+            heritageImageView.kf.setImage(with: URL(string: imageUrl))
+        }
+        titleLabel.font = UIFont.heritageTitleFont
+    }
+   
     func setGradientLayer() {
         self.heritageImageView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
         
@@ -92,13 +103,6 @@ class HeritageCollectionCell: UICollectionViewCell {
         let height = self.bounds.height
         let sHeight:CGFloat = 60.0
         let shadow = UIColor.black.withAlphaComponent(0.8).cgColor
-        
-        // Add gradient bar for image on top
-        //        let topImageGradient = CAGradientLayer()
-        //        topImageGradient.frame = CGRect(x: 0, y: 0, width: width, height: sHeight)
-        //        topImageGradient.colors = [shadow, UIColor.clear.cgColor]
-        //        exhibitionImageView.layer.insertSublayer(topImageGradient, at: 0)
-        
         let bottomImageGradient = CAGradientLayer()
         bottomImageGradient.frame = CGRect(x: 0, y: height - sHeight, width: width, height: sHeight)
         bottomImageGradient.colors = [UIColor.clear.cgColor, shadow]
