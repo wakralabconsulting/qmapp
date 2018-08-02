@@ -142,10 +142,10 @@ extension UIFont {
     }
     static var diningHeaderFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            return UIFont.init(name: "DINNextLTPro-Bold", size: 20)!
+            return UIFont.init(name: "DINNextLTPro-Bold", size: 23)!
         }
         else {
-            return UIFont.init(name: "DINNextLTArabic-Bold", size: 20)!
+            return UIFont.init(name: "DINNextLTArabic-Bold", size: 23)!
         }
     }
 }

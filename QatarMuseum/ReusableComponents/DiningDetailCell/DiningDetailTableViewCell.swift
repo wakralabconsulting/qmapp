@@ -10,54 +10,37 @@ import UIKit
 
 class DiningDetailTableViewCell: UITableViewCell,UITextViewDelegate {
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subTitleLabel: UILabel!
     @IBOutlet weak var timeTitleLabel: UILabel!
     @IBOutlet weak var locationsTitleLabel: UILabel!
-    @IBOutlet weak var titleDescriptionLabel: UILabel!
-    @IBOutlet weak var titleSecondDescriptionLabel: UILabel!
+    @IBOutlet weak var titleDescriptionLabel: UITextView!
     @IBOutlet weak var timeDescriptionLabel: UILabel!
     @IBOutlet weak var titleLineView: UIView!
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
-   // @IBOutlet weak var imageViewHeight: NSLayoutConstraint!
-   
-    
-   // @IBOutlet weak var locationLineViewHeight: NSLayoutConstraint!
     @IBOutlet weak var locationFirstLabel: UILabel!
-    
     @IBOutlet weak var visitMIAText: UITextView!
-    
-    // @IBOutlet weak var imageAspect: NSLayoutConstraint!
     @IBOutlet weak var locationButton: UIButton!
-   // @IBOutlet weak var diningImageView: UIImageView!
+ 
     var favBtnTapAction : (()->())?
     var shareBtnTapAction : (()->())?
     var locationButtonAction: (() -> ())?
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
         
     }
     func setDiningCellValues() {
         
         titleLabel.font = UIFont.diningHeaderFont
         titleDescriptionLabel.font = UIFont.englishTitleFont
-        titleSecondDescriptionLabel.font = UIFont.englishTitleFont
         timeTitleLabel.font = UIFont.closeButtonFont
         timeDescriptionLabel.font = UIFont.sideMenuLabelFont
         locationsTitleLabel.font = UIFont.closeButtonFont
         locationFirstLabel.font = UIFont.sideMenuLabelFont
         locationButton.titleLabel?.font = UIFont.sideMenuLabelFont
         titleLabel.text = "IDAM"
-        let attributes = [
-            
-            NSAttributedStringKey.font : UIFont.englishTitleFont // Note the !
-        ]
-        titleDescriptionLabel.attributedText = NSAttributedString(string: "Embark on refined, generous and enchanted culinary journey at IDAM, Alain Ducasse's first restaurant in the Middle east.", attributes: attributes)
-        //titleDescriptionLabel.attributedText = "Embark on refined, generous and enchanted culinary journey at IDAM, Alain Ducasse's first restaurant in the Middle east."
-       // titleDescriptionLabel.text = "Embark on refined, generous and enchanted culinary journey at IDAM, Alain Ducasse's first restaurant in the Middle east."
-        titleSecondDescriptionLabel.text = "In the heart of the museum, with spectacular views of the Doha skyline, Idam offers an innovative and flavorsome selection of contemporary French Mediterranean cuisine designed with an Arabic twist. Timeless classics of local and regional cuisine, with most ingredients sourced locally in Qatar. \n Philippe Starck's unique and exquisite decor creates a sophisticated atmosphere. "
-        //\n For more information and to make a reservation, visit MIA
+     
+        titleDescriptionLabel.text = "Embark on refined, generous and enchanted culinary journey at IDAM, Alain Ducasse's first restaurant in the Middle east. \n In the heart of the museum, with spectacular views of the Doha skyline, Idam offers an innovative and flavorsome selection of contemporary French Mediterranean cuisine designed with an Arabic twist. Timeless classics of local and regional cuisine, with most ingredients sourced locally in Qatar. \n Philippe Starck's unique and exquisite decor creates a sophisticated atmosphere. "
         
         timeTitleLabel.isHidden = false
         timeDescriptionLabel.text = "Everyday From 11 am to 11 pm"
@@ -69,8 +52,6 @@ class DiningDetailTableViewCell: UITableViewCell,UITextViewDelegate {
         locationsTitleLabel.text = "LOCATION"
         locationButton.setTitle("Click here to open in Google Maps", for: .normal)
         locationFirstLabel.text = "Museum of Islamic Art"
-        
-        
         //For HyperLink in textview
         let yourAttributes = [kCTForegroundColorAttributeName: UIColor.black, kCTFontAttributeName: UIFont.englishTitleFont]
         let partOne = NSMutableAttributedString(string: "For more information and to make a reservation, visit ", attributes: yourAttributes as [NSAttributedStringKey : Any])
@@ -90,13 +71,11 @@ class DiningDetailTableViewCell: UITableViewCell,UITextViewDelegate {
         combination.setAttributes(linkAttributes, range: NSMakeRange(53, 4))
         self.visitMIAText.delegate = self
         
-                self.visitMIAText.attributedText = combination
-                self.visitMIAText.isUserInteractionEnabled = true
-                self.visitMIAText.isEditable = false
-                visitMIAText.tintColor = UIColor.viewMyFavDarkPink
-        
-            self.visitMIAText.textAlignment = .center
-         titleSecondDescriptionLabel.textAlignment = .center
+        self.visitMIAText.attributedText = combination
+        self.visitMIAText.isUserInteractionEnabled = true
+        self.visitMIAText.isEditable = false
+        visitMIAText.tintColor = UIColor.viewMyFavDarkPink
+        self.visitMIAText.textAlignment = .center
         titleDescriptionLabel.textAlignment = .center
        
 
