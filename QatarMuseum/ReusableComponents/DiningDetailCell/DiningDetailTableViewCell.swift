@@ -40,7 +40,7 @@ class DiningDetailTableViewCell: UITableViewCell,UITextViewDelegate {
         locationButton.titleLabel?.font = UIFont.sideMenuLabelFont
         titleLabel.text = "IDAM"
      
-        titleDescriptionLabel.text = "Embark on refined, generous and enchanted culinary journey at IDAM, Alain Ducasse's first restaurant in the Middle east. \n In the heart of the museum, with spectacular views of the Doha skyline, Idam offers an innovative and flavorsome selection of contemporary French Mediterranean cuisine designed with an Arabic twist. Timeless classics of local and regional cuisine, with most ingredients sourced locally in Qatar. \n Philippe Starck's unique and exquisite decor creates a sophisticated atmosphere. "
+        titleDescriptionLabel.text = "Embark on refined, generous and enchanted culinary journey at IDAM, Alain Ducasse's first restaurant in the Middle east. \n In the heart of the museum, with spectacular views of the Doha skyline, Idam offers an innovative and flavorsome selection of contemporary French Mediterranean cuisine designed with an Arabic twist. Timeless classics of local and regional cuisine, with most ingredients sourced locally in Qatar. \r\n\r\n Philippe Starck's unique and exquisite decor creates a sophisticated atmosphere."
         
         timeTitleLabel.isHidden = false
         timeDescriptionLabel.text = "Everyday From 11 am to 11 pm"

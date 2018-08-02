@@ -89,7 +89,7 @@ class LoadingView: UIView {
         //self.isHidden = false
         
        
-        let noDataText = NSLocalizedString("No_result_found", comment: "No result message")
+        let noDataText = NSLocalizedString("NO_RESULT_MESSAGE", comment: "No result message")
         self.noDataLabel.text = noDataText
         self.noDataView.isHidden = false
         self.noDataView.backgroundColor = UIColor.noDataViewGray

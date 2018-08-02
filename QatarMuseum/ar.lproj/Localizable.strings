@@ -66,4 +66,5 @@
 "CHANGE_LANGUAGE_TITLE" = "Change Language?";
 "CONTINUE_TITLE" = "Continue";
 "MUSEUM_TITLE" = "Museum of Islamic Art";
-
+"NO_RESULT_MESSAGE" = "No results found";
+"CHECK_INTERNET" = "تأكد من اتصالك بالانترنت";
