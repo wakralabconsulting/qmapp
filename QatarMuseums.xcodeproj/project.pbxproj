@@ -78,6 +78,7 @@
 		B8BA80BA20CD8305007E880A /* ExhibitionsCellXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8BA80B920CD8305007E880A /* ExhibitionsCellXib.xib */; };
 		B8BA80BC20CD831D007E880A /* ExhibitionsCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BA80BB20CD831D007E880A /* ExhibitionsCollectionCell.swift */; };
 		B8BA80BE20CD9977007E880A /* ExhibitionsJson.json in Resources */ = {isa = PBXBuildFile; fileRef = B8BA80BD20CD9977007E880A /* ExhibitionsJson.json */; };
+		B8C4459C21136CE900CF001A /* DiningDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C4459B21136CE900CF001A /* DiningDetail.swift */; };
 		B8C64C9C20FE380D00D7CD63 /* MiaTourDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C64C9B20FE380D00D7CD63 /* MiaTourDetailViewController.swift */; };
 		B8C64D4720FDC71400C2D51A /* TourGuideCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C64D4620FDC71400C2D51A /* TourGuideCollectionReusableView.swift */; };
 		B8C64D4920FDCA8A00C2D51A /* TourGuideJson.json in Resources */ = {isa = PBXBuildFile; fileRef = B8C64D4820FDCA8A00C2D51A /* TourGuideJson.json */; };
@@ -245,6 +246,7 @@
 		B8BA80B920CD8305007E880A /* ExhibitionsCellXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExhibitionsCellXib.xib; sourceTree = "<group>"; };
 		B8BA80BB20CD831D007E880A /* ExhibitionsCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitionsCollectionCell.swift; sourceTree = "<group>"; };
 		B8BA80BD20CD9977007E880A /* ExhibitionsJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ExhibitionsJson.json; sourceTree = "<group>"; };
+		B8C4459B21136CE900CF001A /* DiningDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDetail.swift; sourceTree = "<group>"; };
 		B8C64C9B20FE380D00D7CD63 /* MiaTourDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiaTourDetailViewController.swift; sourceTree = "<group>"; };
 		B8C64D4620FDC71400C2D51A /* TourGuideCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourGuideCollectionReusableView.swift; sourceTree = "<group>"; };
 		B8C64D4820FDCA8A00C2D51A /* TourGuideJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = TourGuideJson.json; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 				1BC909D1210B277F00D6C00B /* Home.swift */,
 				B812BA01210AE56B0083E0E2 /* HeritageList.swift */,
 				B8FEC77B2112E57100648F66 /* DiningList.swift */,
+				B8C4459B21136CE900CF001A /* DiningDetail.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1017,6 +1020,7 @@
 				B8294CEC20CBF265002AFF72 /* FSCalendarTransitionCoordinator.m in Sources */,
 				B8CAA93D20DC15FA009A936D /* HeritageDetailCell.swift in Sources */,
 				B80DC05920C792E400E28034 /* AppDelegate.swift in Sources */,
+				B8C4459C21136CE900CF001A /* DiningDetail.swift in Sources */,
 				B80DC08C20C798BA00E28034 /* HomeViewController.swift in Sources */,
 				B8EAB7BD20CA424300C001B2 /* LunarFormatter.swift in Sources */,
 				B80DC08E20C798E400E28034 /* HomeCollectionViewCell.swift in Sources */,

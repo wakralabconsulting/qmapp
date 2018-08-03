@@ -29,8 +29,18 @@ class DiningDetailTableViewCell: UITableViewCell,UITextViewDelegate {
         
         
     }
-    func setDiningCellValues() {
-        
+    func setDiningDetailValues(diningDetail: DiningDetail) {
+        titleLabel.text = diningDetail.name?.uppercased()
+        titleDescriptionLabel.text = diningDetail.description
+        timeTitleLabel.isHidden = false
+        let toVariable = NSLocalizedString("TO",
+                                           comment: "TO in the Dining detail")
+        timeDescriptionLabel.text = (diningDetail.openingtime)! + " " + toVariable + " " + (diningDetail.closetime)!
+        titleLineView.isHidden = false
+        locationsTitleLabel.isHidden = false
+        locationButton.isHidden = false
+        locationsTitleLabel.text = NSLocalizedString("LOCATION_TITLE",
+                                                     comment: "LOCATION_TITLE in the Dining detail")
         titleLabel.font = UIFont.diningHeaderFont
         titleDescriptionLabel.font = UIFont.englishTitleFont
         timeTitleLabel.font = UIFont.closeButtonFont
@@ -38,25 +48,19 @@ class DiningDetailTableViewCell: UITableViewCell,UITextViewDelegate {
         locationsTitleLabel.font = UIFont.closeButtonFont
         locationFirstLabel.font = UIFont.sideMenuLabelFont
         locationButton.titleLabel?.font = UIFont.sideMenuLabelFont
-        titleLabel.text = "IDAM"
-     
-        titleDescriptionLabel.text = "Embark on refined, generous and enchanted culinary journey at IDAM, Alain Ducasse's first restaurant in the Middle east. \n In the heart of the museum, with spectacular views of the Doha skyline, Idam offers an innovative and flavorsome selection of contemporary French Mediterranean cuisine designed with an Arabic twist. Timeless classics of local and regional cuisine, with most ingredients sourced locally in Qatar. \r\n\r\n Philippe Starck's unique and exquisite decor creates a sophisticated atmosphere."
-        
-        timeTitleLabel.isHidden = false
-        timeDescriptionLabel.text = "Everyday From 11 am to 11 pm"
-        titleLineView.isHidden = false
-        
-        
-        locationsTitleLabel.isHidden = false
-        locationButton.isHidden = false
-        locationsTitleLabel.text = "LOCATION"
-        locationButton.setTitle("Click here to open in Google Maps", for: .normal)
-        locationFirstLabel.text = "Museum of Islamic Art"
+        let mapRedirectionMessage = NSLocalizedString("MAP_REDIRECTION_MESSAGE",
+                                                      comment: "MAP_REDIRECTION_MESSAGE in the Dining detail")
+        locationButton.setTitle(mapRedirectionMessage, for: .normal)
+        locationFirstLabel.text = diningDetail.location
         //For HyperLink in textview
         let yourAttributes = [kCTForegroundColorAttributeName: UIColor.black, kCTFontAttributeName: UIFont.englishTitleFont]
-        let partOne = NSMutableAttributedString(string: "For more information and to make a reservation, visit ", attributes: yourAttributes as [NSAttributedStringKey : Any])
+        let moreInformationMessage = NSLocalizedString("MORE_INFORMATION_MESSAGE",
+                                                       comment: "MORE_INFORMATION_MESSAGE in the Dining detail")
+        let partOne = NSMutableAttributedString(string: moreInformationMessage, attributes: yourAttributes as [NSAttributedStringKey : Any])
         let yourAttributes2 = [kCTForegroundColorAttributeName: UIColor.viewMyFavDarkPink, kCTFontAttributeName: UIFont.englishTitleFont]
-        let parttwo = NSMutableAttributedString(string: "MIA ", attributes: yourAttributes2 as [NSAttributedStringKey : Any])
+        let miaString = NSLocalizedString("MIA_TITLE",
+                                          comment: "MIA_TITLE in the Dining detail")
+        let parttwo = NSMutableAttributedString(string: miaString, attributes: yourAttributes2 as [NSAttributedStringKey : Any])
         let combination = NSMutableAttributedString()
         combination.append(partOne)
         combination.append(parttwo)

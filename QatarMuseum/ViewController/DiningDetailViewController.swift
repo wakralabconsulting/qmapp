@@ -6,6 +6,7 @@
 //  Copyright © 2018 Exalture. All rights reserved.
 //
 
+import Alamofire
 import UIKit
 
 class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
@@ -15,24 +16,30 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     let imageView = UIImageView()
     let closeButton = UIButton()
     var blurView = UIVisualEffectView()
-    var diningListArray: NSArray!
-    var diningImageArray = NSArray()
+    var diningDetailtArray: [DiningDetail] = []
+    var diningDetailId : String? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupUIContents()
-        
+        getDiningDetailsFromServer()
+        setTopBarImage()
         
     }
     func setupUIContents() {
         loadingView.isHidden = false
         loadingView.showLoading()
+    }
+    func setTopBarImage() {
         diningTableView.estimatedRowHeight = 50
         diningTableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0)
         
         imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: 300)
-       
-            imageView.image = UIImage.init(named: "idam")
+        if diningDetailtArray.count != 0 {
+            if let imageUrl = diningDetailtArray[0].image{
+                imageView.kf.setImage(with: URL(string: imageUrl))
+            }
+        }
         
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -58,19 +65,16 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         closeButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         closeButton.addTarget(self, action: #selector(closeTouchDownAction), for: .touchDown)
         view.addSubview(closeButton)
-        
-        diningImageArray = ["mia_park","park_cafe","family_play"];
     }
     //MARK: TableView delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return 1
-        
+            return diningDetailtArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let diningCell = tableView.dequeueReusableCell(withIdentifier: "diningDetailCellId", for: indexPath) as! DiningDetailTableViewCell
         diningCell.titleLineView.isHidden = true
-        diningCell.setDiningCellValues()
+        diningCell.setDiningDetailValues(diningDetail: diningDetailtArray[indexPath.row])
         diningCell.locationButtonAction = {
             ()in
             self.loadLocationOnMap()
@@ -147,7 +151,36 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
+    //MARK: WebServiceCall
+    func getDiningDetailsFromServer()
+    {
+        print(diningDetailId!)
+        _ = Alamofire.request(QatarMuseumRouter.GetDiningDetail(["nid": diningDetailId!])).responseObject { (response: DataResponse<DiningDetails>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.diningDetailtArray = data.diningDetail!
+                self.setTopBarImage()
+                self.diningTableView.reloadData()
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
+                if (self.diningDetailtArray.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
+            case .failure(let error):
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
+            }
+        }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
