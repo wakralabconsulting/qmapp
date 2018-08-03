@@ -14,6 +14,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case HomeList()
     case HeritageList()
     case DiningList()
+    case GetDiningDetail([String: Any])
     
     var method: Alamofire.HTTPMethod {
         switch self {
@@ -24,6 +25,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .HeritageList:
             return .get
         case .DiningList:
+            return .get
+        case .GetDiningDetail:
             return .get
         }
         
@@ -38,7 +41,9 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .HeritageList:
             return "/Heritage_List_Page.json"
         case .DiningList:
-            return "/getDiningLis.json"
+            return "/getDiningList.json"
+        case .GetDiningDetail( _):
+            return "/getDiningdetail.json"
         }
     }
 
@@ -62,6 +67,9 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
         case .DiningList():
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
+        case .GetDiningDetail(let parameters):
+            //return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
+            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         }
     }
     

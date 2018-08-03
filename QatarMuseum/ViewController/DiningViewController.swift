@@ -76,12 +76,13 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
         return CGSize(width: diningCollectionView.frame.width+10, height: heightValue*27)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if (indexPath.row == 0) {
-            loadDiningDetailAnimation()
-        }
-        else {
-            loadComingSoonPopup()
-        }
+        let diningId = diningListArray[indexPath.row].id
+        //if (indexPath.row == 0) {
+        loadDiningDetailAnimation(idValue: diningId!)
+//        }
+//        else {
+//            loadComingSoonPopup()
+//        }
         
     }
     func loadComingSoonPopup() {
@@ -112,9 +113,9 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
         }
         
     }
-    func loadDiningDetailAnimation() {
+    func loadDiningDetailAnimation(idValue: String) {
         let diningDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "diningDetailId") as! DiningDetailViewController
-       
+       diningDetailView.diningDetailId = idValue
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionFade
