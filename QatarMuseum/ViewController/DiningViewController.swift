@@ -77,13 +77,7 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let diningId = diningListArray[indexPath.row].id
-        //if (indexPath.row == 0) {
         loadDiningDetailAnimation(idValue: diningId!)
-//        }
-//        else {
-//            loadComingSoonPopup()
-//        }
-        
     }
     func loadComingSoonPopup() {
         popUpView  = ComingSoonPopUp(frame: self.view.frame)
