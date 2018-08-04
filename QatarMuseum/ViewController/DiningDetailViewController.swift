@@ -79,12 +79,34 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
             ()in
             self.loadLocationOnMap()
         }
+        diningCell.favBtnTapAction = {
+            () in
+            self.setFavouritesAction(cellObj: diningCell)
+        }
+        diningCell.shareBtnTapAction = {
+            () in
+            self.setShareAction(cellObj: diningCell)
+        }
         loadingView.stopLoading()
         loadingView.isHidden = true
         return diningCell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
+    }
+    func setFavouritesAction(cellObj :DiningDetailTableViewCell) {
+        if (cellObj.favoriteButton.tag == 0) {
+            cellObj.favoriteButton.tag = 1
+            cellObj.favoriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
+            
+        }
+        else {
+            cellObj.favoriteButton.tag = 0
+            cellObj.favoriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
+        }
+    }
+    func setShareAction(cellObj :DiningDetailTableViewCell) {
+        
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = 300 - (scrollView.contentOffset.y + 300)
@@ -154,7 +176,6 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     //MARK: WebServiceCall
     func getDiningDetailsFromServer()
     {
-        print(diningDetailId!)
         _ = Alamofire.request(QatarMuseumRouter.GetDiningDetail(["nid": diningDetailId!])).responseObject { (response: DataResponse<DiningDetails>) -> Void in
             switch response.result {
             case .success(let data):

@@ -6,6 +6,7 @@
 //  Copyright © 2018 Exalture. All rights reserved.
 //
 
+import Alamofire
 import UIKit
 enum PageName{
     case heritageDetail
@@ -21,27 +22,41 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     let closeButton = UIButton()
     var blurView = UIVisualEffectView()
     var pageNameString : PageName?
+    var heritageDetailtArray: [HeritageDetail] = []
+    var heritageDetailId : String? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupUIContents()
+        
+        if ((pageNameString == PageName.heritageDetail) && (heritageDetailId != nil)) {
+            getHeritageDetailsFromServer()
+        }
     }
     func setupUIContents() {
         loadingView.isHidden = false
         loadingView.showLoading()
+        setTopBarImage()
+    }
+    func setTopBarImage() {
         heritageDetailTableView.estimatedRowHeight = 50
         heritageDetailTableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0)
         
         imageView.frame = CGRect(x: 0, y:20, width: UIScreen.main.bounds.size.width, height: 300)
         
-       
-         if (pageNameString == PageName.heritageDetail) {
-            imageView.image = UIImage.init(named: "al_zubarah_details")
+        
+        if (pageNameString == PageName.heritageDetail) {
+            if heritageDetailtArray.count != 0 {
+                if let imageUrl = heritageDetailtArray[0].image{
+                    imageView.kf.setImage(with: URL(string: imageUrl))
+                }
+            }
+            
         }
-         else if (pageNameString == PageName.publicArtsDetail){
+        else if (pageNameString == PageName.publicArtsDetail){
             imageView.image = UIImage.init(named: "gandhi's_three_monkeys_details")
         }
-         else {
+        else {
             imageView.image = UIImage.init(named: "museum_of_islamic_details")
         }
         imageView.contentMode = .scaleAspectFill
@@ -78,6 +93,9 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         return .lightContent
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (pageNameString == PageName.heritageDetail) {
+            return heritageDetailtArray.count
+        }
         return 1
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -86,7 +104,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let heritageCell = tableView.dequeueReusableCell(withIdentifier: "heritageDetailCellId", for: indexPath) as! HeritageDetailCell
         if (pageNameString == PageName.heritageDetail) {
-            heritageCell.setHeritageDetailCellData()
+            heritageCell.setHeritageDetailData(heritageDetail: heritageDetailtArray[indexPath.row])
             heritageCell.midTitleDescriptionLabel.textAlignment = .center
            
         }
@@ -113,7 +131,15 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         return heritageCell
     }
     func setFavouritesAction(cellObj :HeritageDetailCell) {
-        //cellObj.favoriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
+        if (cellObj.favoriteButton.tag == 0) {
+            cellObj.favoriteButton.tag = 1
+            cellObj.favoriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
+            
+        }
+        else {
+            cellObj.favoriteButton.tag = 0
+            cellObj.favoriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
+        }
     }
     func setShareAction(cellObj :HeritageDetailCell) {
         
@@ -176,6 +202,36 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     }
     @objc func closeTouchDownAction(sender: UIButton!) {
         sender.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+    }
+    //MARK: WebServiceCall
+    func getHeritageDetailsFromServer()
+    {
+        
+        _ = Alamofire.request(QatarMuseumRouter.HeritageDetail(["nid": heritageDetailId!])).responseObject { (response: DataResponse<HeritageDetails>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.heritageDetailtArray = data.heritageDetail!
+                self.setTopBarImage()
+                self.heritageDetailTableView.reloadData()
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
+                if (self.heritageDetailtArray.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
+            case .failure(let error):
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
+            }
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

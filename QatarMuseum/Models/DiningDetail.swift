@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Foundation
 struct DiningDetail: ResponseObjectSerializable, ResponseCollectionSerializable {
     var id: String? = nil
     var name: String? = nil
