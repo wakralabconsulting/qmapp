@@ -98,9 +98,9 @@ class HeritageDetailCell: UITableViewCell {
         
         
     }
-    func setPublicArtsDetailCellData() {
-        titleLabel.text = "GANDHI'S THREE MONKEYS \n BY SUBODH GUPTA"
-        subTitleLabel.text = "AN ARRESTING INSTALLATION"
+    func setPublicArtsDetailValues(publicArsDetail: PublicArtsDetail) {
+        titleLabel.text = publicArsDetail.name?.uppercased()
+        //subTitleLabel.text =
         middleTitleLabel.isHidden = true
         midTitleDescriptionLabel.isHidden = true
         middleLabelLine.isHidden = true
@@ -118,8 +118,11 @@ class HeritageDetailCell: UITableViewCell {
         locationTotalTopConstraint.constant = 35
          locationTotalBottomConstraint.isActive = true
         locationTotalBottomConstraint.constant = 50
-        titleDescriptionLabel.text = " This is a series of three sculptures showing heads wearing military gear. One wears a gas mask, another a soldier's helmet, and the third a terrorist's hood. \n\n Each piece is composed of cooking instruments, used pals, traditional Indian lunch boxes and glass bowls. \n\n Together, they recall Gandhi's famous visual metaphor - the three wise monkeys that represent the see no evil, hear no wvil, speak no evil proverb. \n Placed in the midst of Katara, Doha's bustling cultural village, this installation captures people's attention as they go about their days. By tackling the bold theme of war and peace in a domestic setting, they are all the more arresting. \n\n Gupta's practice shifts between different mediumsincluding painting, sculpure, photography, video and performance. Throughout his work, he uses objects that are recognizable icons of Indian life, such as domestic Kitchenware, bicycles, scooters and taxis. By relocating them from their original context, he elevates their status from common object to valued artwork"
-        fridayLabel.text = "Katara Cultural Village"
+        titleDescriptionLabel.text = publicArsDetail.description
+        midTitleDescriptionLabel.text = publicArsDetail.shortdescription
+        locationTitleLabel.text = NSLocalizedString("LOCATION_TITLE",
+                                                    comment: "LOCATION_TITLE in the Heritage detail")
+        //fridayLabel.text = 
     }
     func setMuseumAboutCellData() {
         titleBottomOnlyConstraint.isActive = false
