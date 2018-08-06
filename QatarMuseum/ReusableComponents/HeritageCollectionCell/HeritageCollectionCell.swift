@@ -47,27 +47,27 @@ class HeritageCollectionCell: UICollectionViewCell {
         
     }
     //MARK: Public Arts List Data
-    func setPublicArtsListCellValues(cellValues: NSDictionary,imageName: String) {
-        titleLabel.text = (cellValues.value(forKey: "title") as? String)?.uppercased()
+    func setPublicArtsListCellValues(publicArtsList: PublicArtsList) {
+        titleLabel.text = publicArtsList.name?.uppercased()
         lineLabelHeight.constant = 0
         lineLabel.isHidden = true
         titleBottomConstraint.constant = 0
-        if ((cellValues.value(forKey: "subTitle")  != nil) && (cellValues.value(forKey: "subTitle") as! String != "")) {
-            subTitle.text = (cellValues.value(forKey: "subTitle") as? String)?.uppercased()
-        }
-        else {
+        
+     
             //subTitle.text = (cellValues.value(forKey: "title") as? String)?.uppercased()
             //titleLabel.isHidden = true
            // subLabelHeight.constant = 0
-        }
         
-        if ((cellValues.value(forKey: "favourite") as! Bool) == true) {
+        
+        if (publicArtsList.isFavourite == true) {
             favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
         }
         else {
             favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
         }
-        heritageImageView.image = UIImage(named: imageName)
+        if let imageUrl = publicArtsList.image {
+            heritageImageView.kf.setImage(with: URL(string: imageUrl))
+        }
         titleLabel.font = UIFont.heritageTitleFont
         subTitle.font = UIFont.heritageTitleFont
     }

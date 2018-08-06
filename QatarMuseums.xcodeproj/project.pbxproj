@@ -78,6 +78,7 @@
 		B8BA80BA20CD8305007E880A /* ExhibitionsCellXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8BA80B920CD8305007E880A /* ExhibitionsCellXib.xib */; };
 		B8BA80BC20CD831D007E880A /* ExhibitionsCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BA80BB20CD831D007E880A /* ExhibitionsCollectionCell.swift */; };
 		B8BA80BE20CD9977007E880A /* ExhibitionsJson.json in Resources */ = {isa = PBXBuildFile; fileRef = B8BA80BD20CD9977007E880A /* ExhibitionsJson.json */; };
+		B8C1C2BD21160B7300531AB3 /* PublicArtsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C1C2BC21160B7300531AB3 /* PublicArtsList.swift */; };
 		B8C4459C21136CE900CF001A /* DiningDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C4459B21136CE900CF001A /* DiningDetail.swift */; };
 		B8C64C9C20FE380D00D7CD63 /* MiaTourDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C64C9B20FE380D00D7CD63 /* MiaTourDetailViewController.swift */; };
 		B8C64D4720FDC71400C2D51A /* TourGuideCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C64D4620FDC71400C2D51A /* TourGuideCollectionReusableView.swift */; };
@@ -86,6 +87,7 @@
 		B8C64D4D20FDDBB700C2D51A /* MiaCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C64D4C20FDDBB700C2D51A /* MiaCollectionReusableView.swift */; };
 		B8C64D4F20FDDE5900C2D51A /* MiaTourGuideJson.json in Resources */ = {isa = PBXBuildFile; fileRef = B8C64D4E20FDDE5900C2D51A /* MiaTourGuideJson.json */; };
 		B8C64D5120FDF22800C2D51A /* MiaTourGuideExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C64D5020FDF22800C2D51A /* MiaTourGuideExploreViewController.swift */; };
+		B8C700852116F833006F3653 /* PublicArtsDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C700842116F833006F3653 /* PublicArtsDetail.swift */; };
 		B8CAA93D20DC15FA009A936D /* HeritageDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CAA93C20DC15FA009A936D /* HeritageDetailCell.swift */; };
 		B8CAA93F20DC186E009A936D /* HeritageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CAA93E20DC186E009A936D /* HeritageDetailViewController.swift */; };
 		B8D1228D20C8EE8600772507 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D1228C20C8EE8600772507 /* WebViewController.swift */; };
@@ -99,7 +101,6 @@
 		B8DC40A720C9A33A0044134D /* CommonHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DC40A620C9A33A0044134D /* CommonHeaderView.swift */; };
 		B8DC40A920C9A5760044134D /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DC40A820C9A5760044134D /* EventViewController.swift */; };
 		B8DC478220DCC1080007B426 /* PublicArtsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DC478120DCC1080007B426 /* PublicArtsViewController.swift */; };
-		B8DC478420DCC48C0007B426 /* PublicArtsListJson.json in Resources */ = {isa = PBXBuildFile; fileRef = B8DC478320DCC48C0007B426 /* PublicArtsListJson.json */; };
 		B8DC478720DCF8CE0007B426 /* ParkTableCellXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8DC478620DCF8CE0007B426 /* ParkTableCellXib.xib */; };
 		B8DC478920DCF8DF0007B426 /* ParkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DC478820DCF8DF0007B426 /* ParkTableViewCell.swift */; };
 		B8DC478B20DD05BA0007B426 /* ParksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DC478A20DD05BA0007B426 /* ParksViewController.swift */; };
@@ -247,6 +248,7 @@
 		B8BA80B920CD8305007E880A /* ExhibitionsCellXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExhibitionsCellXib.xib; sourceTree = "<group>"; };
 		B8BA80BB20CD831D007E880A /* ExhibitionsCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitionsCollectionCell.swift; sourceTree = "<group>"; };
 		B8BA80BD20CD9977007E880A /* ExhibitionsJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ExhibitionsJson.json; sourceTree = "<group>"; };
+		B8C1C2BC21160B7300531AB3 /* PublicArtsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicArtsList.swift; sourceTree = "<group>"; };
 		B8C4459B21136CE900CF001A /* DiningDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDetail.swift; sourceTree = "<group>"; };
 		B8C64C9B20FE380D00D7CD63 /* MiaTourDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiaTourDetailViewController.swift; sourceTree = "<group>"; };
 		B8C64D4620FDC71400C2D51A /* TourGuideCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourGuideCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 		B8C64D4C20FDDBB700C2D51A /* MiaCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiaCollectionReusableView.swift; sourceTree = "<group>"; };
 		B8C64D4E20FDDE5900C2D51A /* MiaTourGuideJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MiaTourGuideJson.json; sourceTree = "<group>"; };
 		B8C64D5020FDF22800C2D51A /* MiaTourGuideExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiaTourGuideExploreViewController.swift; sourceTree = "<group>"; };
+		B8C700842116F833006F3653 /* PublicArtsDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicArtsDetail.swift; sourceTree = "<group>"; };
 		B8CAA93C20DC15FA009A936D /* HeritageDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeritageDetailCell.swift; sourceTree = "<group>"; };
 		B8CAA93E20DC186E009A936D /* HeritageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeritageDetailViewController.swift; sourceTree = "<group>"; };
 		B8D1228C20C8EE8600772507 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -268,7 +271,6 @@
 		B8DC40A620C9A33A0044134D /* CommonHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonHeaderView.swift; sourceTree = "<group>"; };
 		B8DC40A820C9A5760044134D /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		B8DC478120DCC1080007B426 /* PublicArtsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicArtsViewController.swift; sourceTree = "<group>"; };
-		B8DC478320DCC48C0007B426 /* PublicArtsListJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PublicArtsListJson.json; sourceTree = "<group>"; };
 		B8DC478620DCF8CE0007B426 /* ParkTableCellXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParkTableCellXib.xib; sourceTree = "<group>"; };
 		B8DC478820DCF8DF0007B426 /* ParkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkTableViewCell.swift; sourceTree = "<group>"; };
 		B8DC478A20DD05BA0007B426 /* ParksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParksViewController.swift; sourceTree = "<group>"; };
@@ -352,6 +354,8 @@
 				B8FEC77B2112E57100648F66 /* DiningList.swift */,
 				B8C4459B21136CE900CF001A /* DiningDetail.swift */,
 				B8D4B8D62114465100937180 /* HeritageDetail.swift */,
+				B8C1C2BC21160B7300531AB3 /* PublicArtsList.swift */,
+				B8C700842116F833006F3653 /* PublicArtsDetail.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -418,7 +422,6 @@
 				B80DC09520C7B93800E28034 /* HomePageJson.json */,
 				B8EAB7C320CA95E500C001B2 /* EventDetailsJson.json */,
 				B8BA80BD20CD9977007E880A /* ExhibitionsJson.json */,
-				B8DC478320DCC48C0007B426 /* PublicArtsListJson.json */,
 				B8DC478C20DD11630007B426 /* ParksJson.json */,
 				B8B368BF20DD4E4600B1CDA4 /* CollectionsJson.json */,
 				B818A8BF20E0ABB500095A64 /* MuseumExhibitionJson.json */,
@@ -895,7 +898,6 @@
 				B8BA80BA20CD8305007E880A /* ExhibitionsCellXib.xib in Resources */,
 				B8DC478D20DD11630007B426 /* ParksJson.json in Resources */,
 				B8EAB7AD20CA41ED00C001B2 /* Info.plist in Resources */,
-				B8DC478420DCC48C0007B426 /* PublicArtsListJson.json in Resources */,
 				B8E92D1221006F0F005449FC /* CollectionDetailJson.json in Resources */,
 				B8BA80BE20CD9977007E880A /* ExhibitionsJson.json in Resources */,
 				B8EAB77B20CA3E2900C001B2 /* EventCellView.xib in Resources */,
@@ -984,6 +986,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8B81FE320DE2C8A004885D0 /* MuseumsViewController.swift in Sources */,
+				B8C1C2BD21160B7300531AB3 /* PublicArtsList.swift in Sources */,
 				B80DC09420C7A9F500E28034 /* TopBarView.swift in Sources */,
 				B8E01BFE21060FDC008D7F33 /* LocalizationLanguage.swift in Sources */,
 				B8C64D5120FDF22800C2D51A /* MiaTourGuideExploreViewController.swift in Sources */,
@@ -1059,6 +1062,7 @@
 				B8294CF620CBF265002AFF72 /* FSCalendarHeaderView.m in Sources */,
 				B8E01BF92105EDFB008D7F33 /* SettingsViewController.swift in Sources */,
 				B8D1229220C9095B00772507 /* LoadingView.swift in Sources */,
+				B8C700852116F833006F3653 /* PublicArtsDetail.swift in Sources */,
 				B8D4C536210453FB0096912C /* FilterViewController.swift in Sources */,
 				B8CAA93F20DC186E009A936D /* HeritageDetailViewController.swift in Sources */,
 				1BE526D42107470700C8CD51 /* Config.swift in Sources */,

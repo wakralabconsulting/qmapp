@@ -23,7 +23,9 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     var blurView = UIVisualEffectView()
     var pageNameString : PageName?
     var heritageDetailtArray: [HeritageDetail] = []
+    var publicArtsDetailtArray: [PublicArtsDetail] = []
     var heritageDetailId : String? = nil
+    var publicArtsDetailId : String? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,6 +33,9 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         
         if ((pageNameString == PageName.heritageDetail) && (heritageDetailId != nil)) {
             getHeritageDetailsFromServer()
+        }
+        else if ((pageNameString == PageName.publicArtsDetail) && (publicArtsDetailId != nil)) {
+            getPublicArtsDetailsFromServer()
         }
     }
     func setupUIContents() {
@@ -54,7 +59,11 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             
         }
         else if (pageNameString == PageName.publicArtsDetail){
-            imageView.image = UIImage.init(named: "gandhi's_three_monkeys_details")
+            if publicArtsDetailtArray.count != 0 {
+                if let imageUrl = publicArtsDetailtArray[0].image{
+                    imageView.kf.setImage(with: URL(string: imageUrl))
+                }
+            }
         }
         else {
             imageView.image = UIImage.init(named: "museum_of_islamic_details")
@@ -96,6 +105,10 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         if (pageNameString == PageName.heritageDetail) {
             return heritageDetailtArray.count
         }
+        else if (pageNameString == PageName.publicArtsDetail){
+            return publicArtsDetailtArray.count
+        }
+    
         return 1
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -109,7 +122,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
            
         }
         else if(pageNameString == PageName.publicArtsDetail){
-            heritageCell.setPublicArtsDetailCellData()
+            heritageCell.setPublicArtsDetailValues(publicArsDetail: publicArtsDetailtArray[indexPath.row])
         }
         else {
             heritageCell.setMuseumAboutCellData()
@@ -211,6 +224,36 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             switch response.result {
             case .success(let data):
                 self.heritageDetailtArray = data.heritageDetail!
+                self.setTopBarImage()
+                self.heritageDetailTableView.reloadData()
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
+                if (self.heritageDetailtArray.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
+            case .failure(let error):
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
+            }
+        }
+    }
+    //MARK: PublicArts webservice call
+    func getPublicArtsDetailsFromServer()
+    {
+    
+        _ = Alamofire.request(QatarMuseumRouter.GetPublicArtsDetail(["nid": publicArtsDetailId!])).responseObject { (response: DataResponse<PublicArtsDetails>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.publicArtsDetailtArray = data.publicArtsDetail!
                 self.setTopBarImage()
                 self.heritageDetailTableView.reloadData()
                 self.loadingView.stopLoading()

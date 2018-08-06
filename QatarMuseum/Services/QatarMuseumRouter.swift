@@ -14,8 +14,11 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case HomeList()
     case HeritageList()
     case DiningList()
+    case PublicArtsList()
     case GetDiningDetail([String: Any])
     case HeritageDetail([String: Any])
+    case GetPublicArtsDetail([String: Any])
+
     
     var method: Alamofire.HTTPMethod {
         switch self {
@@ -27,9 +30,13 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return .get
         case .DiningList:
             return .get
+        case .PublicArtsList:
+            return .get
         case .GetDiningDetail:
             return .get
         case .HeritageDetail:
+            return .get
+        case .GetPublicArtsDetail:
             return .get
         }
         
@@ -45,10 +52,14 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/Heritage_List_Page.json"
         case .DiningList:
             return "/getDiningList.json"
+        case .PublicArtsList:
+            return "/Public_Arts_List_Page.json"
         case .GetDiningDetail( _):
             return "/getDiningdetail.json"
         case .HeritageDetail( _):
             return "/heritage_detail_Page.json"
+        case .GetPublicArtsDetail( _):
+            return "/getpublicartdetail.json"
         }
     }
 
@@ -72,9 +83,13 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
         case .DiningList():
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
+        case .PublicArtsList():
+            return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
         case .GetDiningDetail(let parameters):
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         case .HeritageDetail(let parameters):
+            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
+        case .GetPublicArtsDetail(let parameters):
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         }
     }
