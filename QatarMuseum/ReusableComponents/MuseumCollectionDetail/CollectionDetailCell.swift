@@ -12,12 +12,12 @@ class CollectionDetailCell: UITableViewCell {
 
     
     @IBOutlet weak var firstTitle: UILabel!
-    @IBOutlet weak var firstDescription: UILabel!
+    @IBOutlet weak var firstDescription: UITextView!
     @IBOutlet weak var secondTitle: UILabel!
-    @IBOutlet weak var secondSubTitle: UILabel!
-    @IBOutlet weak var secondDescription: UILabel!
-    @IBOutlet weak var thirdDescription: UILabel!
-    @IBOutlet weak var fourthDescription: UILabel!
+    @IBOutlet weak var secondSubTitle: UITextView!
+    @IBOutlet weak var secondDescription: UITextView!
+    @IBOutlet weak var thirdDescription: UITextView!
+    @IBOutlet weak var fourthDescription: UITextView!
     @IBOutlet weak var firstImageView: UIImageView!
     @IBOutlet weak var secondImageView: UIImageView!
     @IBOutlet weak var firstImageHeight: NSLayoutConstraint!
@@ -26,9 +26,16 @@ class CollectionDetailCell: UITableViewCell {
     @IBOutlet weak var shareView: UIView!
     @IBOutlet weak var firstTitleLine: UIView!
     @IBOutlet weak var fistViewTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var firstTitleTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var favouriteButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
+    @IBOutlet weak var titleview: UIView!
+    @IBOutlet weak var descriptionBottomConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var firstLineTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var desctionTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var firstLineHeight: NSLayoutConstraint!
+    
+    
     var favouriteButtonAction : (()->())?
     var shareButtonAction : (()->())?
     override func awakeFromNib() {
@@ -57,9 +64,17 @@ class CollectionDetailCell: UITableViewCell {
             firstTitle.isHidden = false
             firstDescription.isHidden = false
             firstTitleLine.isHidden = false
-            firstTitleTopConstraint.constant = 30
-            fistViewTopConstraint.constant = 30
-            
+            //firstTitleTopConstraint.constant = 30
+            fistViewTopConstraint.constant = 20
+            titleview.isHidden = false
+            titleview.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: titleview.frame.height)
+            firstTitle.isHidden = false
+            firstTitleLine.isHidden = false
+            firstDescription.isHidden = false
+            descriptionBottomConstraint.constant = 10
+            desctionTopConstraint.constant = 13
+            firstLineTopConstraint.constant = 8
+            firstLineHeight.constant = 3
         }
         else {
             firstTitle.isHidden = true
@@ -67,8 +82,16 @@ class CollectionDetailCell: UITableViewCell {
             firstTitleLine.isHidden = true
             firstTitle.text = ""
             firstDescription.text = ""
-            firstTitleTopConstraint.constant = 0
             fistViewTopConstraint.constant = 0
+            descriptionBottomConstraint.constant = 0
+            desctionTopConstraint.constant = 0
+            firstLineTopConstraint.constant = 0
+            firstLineHeight.constant = 0
+            titleview.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+            titleview.isHidden = true
+            firstTitle.isHidden = true
+            firstTitleLine.isHidden = true
+            firstDescription.isHidden = true
         }
         
     }

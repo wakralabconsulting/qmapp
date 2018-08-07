@@ -22,7 +22,7 @@
             <connections>
                 <outlet property="addToCalendarButton" destination="9hC-t7-6fH" id="3jT-eq-g4f"/>
                 <outlet property="closeButton" destination="sXb-jN-Amu" id="oiO-cR-iIA"/>
-                <outlet property="eventDescription" destination="Mey-r4-2hy" id="1Oq-0P-qAT"/>
+                <outlet property="eventDescription" destination="EBT-IM-SzZ" id="cRj-4f-oV5"/>
                 <outlet property="eventPopUp" destination="fqH-cz-Kvt" id="aWv-UP-aLk"/>
                 <outlet property="eventPopupHeight" destination="n54-4R-mIy" id="mKd-E7-kVj"/>
                 <outlet property="eventPopupInnerView" destination="PXc-a9-tee" id="I3X-iQ-GLc"/>
@@ -58,7 +58,7 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m3Z-ao-pbh">
-                            <rect key="frame" x="149.5" y="12" width="0.0" height="27"/>
+                            <rect key="frame" x="148.5" y="12" width="0.0" height="27"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="27" id="PpN-HE-hMg"/>
                             </constraints>
@@ -66,12 +66,12 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mey-r4-2hy">
-                            <rect key="frame" x="17.5" y="63" width="262.5" height="0.0"/>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EBT-IM-SzZ">
+                            <rect key="frame" x="17" y="63" width="262.5" height="263.5"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="18"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VdB-I1-K8i">
                             <rect key="frame" x="8.5" y="47" width="280.5" height="1"/>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -84,17 +84,20 @@
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="9hC-t7-6fH" secondAttribute="trailing" constant="15" id="0s1-fd-0hM"/>
                         <constraint firstItem="m3Z-ao-pbh" firstAttribute="top" secondItem="PXc-a9-tee" secondAttribute="top" constant="12" id="1ZE-Ep-uXr"/>
+                        <constraint firstItem="m3Z-ao-pbh" firstAttribute="centerX" secondItem="PXc-a9-tee" secondAttribute="centerX" id="4TZ-y7-ZpO"/>
                         <constraint firstAttribute="bottom" secondItem="9hC-t7-6fH" secondAttribute="bottom" constant="15" id="4Tb-9i-ghc"/>
-                        <constraint firstAttribute="trailing" secondItem="Mey-r4-2hy" secondAttribute="trailing" constant="17" id="Cj4-3Q-qAt"/>
-                        <constraint firstItem="Mey-r4-2hy" firstAttribute="leading" secondItem="PXc-a9-tee" secondAttribute="leading" constant="17" id="D4e-t1-b9z"/>
+                        <constraint firstItem="EBT-IM-SzZ" firstAttribute="top" secondItem="VdB-I1-K8i" secondAttribute="bottom" constant="15" id="E4z-uE-f5h"/>
                         <constraint firstAttribute="trailing" secondItem="VdB-I1-K8i" secondAttribute="trailing" constant="8" id="E5N-z5-Moz"/>
-                        <constraint firstItem="9hC-t7-6fH" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Mey-r4-2hy" secondAttribute="bottom" constant="10" id="Lx9-jg-hLH"/>
+                        <constraint firstAttribute="trailing" secondItem="EBT-IM-SzZ" secondAttribute="trailing" constant="17" id="EL5-WN-TvY"/>
                         <constraint firstItem="VdB-I1-K8i" firstAttribute="top" secondItem="m3Z-ao-pbh" secondAttribute="bottom" constant="8" id="Wyo-e2-MN0"/>
                         <constraint firstItem="9hC-t7-6fH" firstAttribute="leading" secondItem="PXc-a9-tee" secondAttribute="leading" constant="15" id="XGb-xP-sNY"/>
+                        <constraint firstItem="9hC-t7-6fH" firstAttribute="top" secondItem="EBT-IM-SzZ" secondAttribute="bottom" constant="10" id="bd6-an-8uE"/>
+                        <constraint firstItem="m3Z-ao-pbh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="PXc-a9-tee" secondAttribute="leading" constant="17" id="di4-wp-qbQ"/>
                         <constraint firstItem="VdB-I1-K8i" firstAttribute="leading" secondItem="PXc-a9-tee" secondAttribute="leading" constant="8" id="gAz-Pt-dZB"/>
-                        <constraint firstItem="Mey-r4-2hy" firstAttribute="top" secondItem="VdB-I1-K8i" secondAttribute="bottom" constant="15" id="gXG-Uy-PyR"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="m3Z-ao-pbh" secondAttribute="trailing" constant="17" id="jct-Bu-KO7"/>
                         <constraint firstAttribute="height" constant="393.5" id="n54-4R-mIy"/>
-                        <constraint firstItem="m3Z-ao-pbh" firstAttribute="centerX" secondItem="Mey-r4-2hy" secondAttribute="centerX" id="uHU-B5-LZS"/>
+                        <constraint firstItem="EBT-IM-SzZ" firstAttribute="leading" secondItem="PXc-a9-tee" secondAttribute="leading" constant="17" id="psE-us-qCy"/>
+                        <constraint firstItem="EBT-IM-SzZ" firstAttribute="centerX" secondItem="PXc-a9-tee" secondAttribute="centerX" id="zOh-82-IUg"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sXb-jN-Amu">

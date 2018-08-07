@@ -34,7 +34,6 @@ class LoadViewExampleViewController: UIViewController, FSCalendarDataSource, FSC
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        print(date)
         if monthPosition == .previous || monthPosition == .next {
             calendar.setCurrentPage(date, animated: true)
         }
