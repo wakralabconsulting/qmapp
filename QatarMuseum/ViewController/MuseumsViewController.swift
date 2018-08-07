@@ -18,7 +18,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
  
     @IBOutlet weak var previousButton: UIButton!
     
-    @IBOutlet weak var museumTitle: UILabel!
+    @IBOutlet weak var museumTitle: UITextView!
     @IBOutlet weak var nextButton: UIButton!
     var slideshowImages : NSArray!
     var collectionViewImages : NSArray!

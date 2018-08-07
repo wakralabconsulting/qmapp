@@ -24,7 +24,7 @@ struct PublicArtsList: ResponseObjectSerializable, ResponseCollectionSerializabl
             self.name = representation["name"] as? String
             self.latitude = representation["Latitude"] as? String
             self.longitude = representation["Longitude"] as? String
-            self.image = representation["LATEST IMAGE"] as? String
+            self.image = representation["LATEST_IMAGE"] as? String
             self.areaofwork = representation["Area of Work"] as? NSArray
             self.sortcoefficient = representation["sort coefficient"] as? String
             

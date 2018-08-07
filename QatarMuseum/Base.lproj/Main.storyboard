@@ -81,7 +81,7 @@
                                         <rect key="frame" x="136.33333333333334" y="0.0" width="91.666666666666657" height="85.666666666666671"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gift Shop" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GLU-5R-3S2">
-                                                <rect key="frame" x="22.333333333333318" y="59.333333333333258" width="47.333333333333343" height="11"/>
+                                                <rect key="frame" x="22.666666666666661" y="59.333333333333258" width="47.333333333333343" height="11"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="11" id="ClB-2J-Xqb"/>
                                                 </constraints>
@@ -486,7 +486,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EVENTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWB-Sh-j4n">
-                                        <rect key="frame" x="167" y="308.66666666666669" width="81.333333333333314" height="29"/>
+                                        <rect key="frame" x="166.66666666666666" y="308.66666666666669" width="81.333333333333343" height="29"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="29" id="guL-0K-jjs"/>
                                         </constraints>
@@ -1147,7 +1147,7 @@
                                                                     </constraints>
                                                                 </view>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15 MARCH 2018 - 1 JUNE 2018" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RP0-tg-Wiv">
-                                                                    <rect key="frame" x="85.666666666666671" y="90" width="213.33333333333331" height="16"/>
+                                                                    <rect key="frame" x="86.000000000000014" y="90" width="213.33333333333337" height="16"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="16" id="3ze-tb-b3T"/>
                                                                     </constraints>
@@ -1188,7 +1188,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mzE-xw-8RO">
-                                                                    <rect key="frame" x="69" y="230.66666666666663" width="247" height="35"/>
+                                                                    <rect key="frame" x="69.333333333333314" y="230.66666666666663" width="247" height="35"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="35" id="Vtz-ED-rx4"/>
                                                                     </constraints>
@@ -1219,7 +1219,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOCATIONS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zft-4G-z2q">
-                                                                    <rect key="frame" x="147" y="152" width="90.666666666666686" height="21"/>
+                                                                    <rect key="frame" x="147.33333333333334" y="152" width="90.666666666666657" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="21" id="DT6-tQ-euQ"/>
                                                                     </constraints>
@@ -1508,7 +1508,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A UNESCO WORLD HERITAGE SITE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yut-RA-ad3">
-                                                                    <rect key="frame" x="67" y="51" width="250" height="21"/>
+                                                                    <rect key="frame" x="67.333333333333314" y="51" width="250" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="21" id="RNU-Mc-44Y"/>
                                                                     </constraints>
@@ -1631,7 +1631,7 @@
                                                                     </constraints>
                                                                 </view>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OLH-Sj-uRq">
-                                                                    <rect key="frame" x="146.66666666666666" y="165" width="90.666666666666657" height="0.0"/>
+                                                                    <rect key="frame" x="147" y="165" width="90.666666666666686" height="0.0"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -1651,7 +1651,7 @@
                                                                     </constraints>
                                                                 </view>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dQx-rQ-Aq4">
-                                                                    <rect key="frame" x="83" y="194.66666666666663" width="218" height="35"/>
+                                                                    <rect key="frame" x="83.333333333333314" y="194.66666666666663" width="218" height="35"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="35" id="676-bO-FIG"/>
                                                                     </constraints>
@@ -1683,7 +1683,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOCATIONS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PcP-Yh-3vs">
-                                                                    <rect key="frame" x="146.66666666666666" y="132" width="90.666666666666657" height="21"/>
+                                                                    <rect key="frame" x="147" y="132" width="90.666666666666686" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="21" id="XWk-7Y-h4E"/>
                                                                     </constraints>
@@ -2029,12 +2029,12 @@
                                 <rect key="frame" x="0.0" y="85" width="414" height="544"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Museum of Islamic Art" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gqx-iF-gQL">
-                                <rect key="frame" x="113.33333333333331" y="420" width="188" height="74"/>
-                                <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="37"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1st-fh-WyO">
+                                <rect key="frame" x="50" y="433.33333333333331" width="314" height="60.666666666666686"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="37"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                             <view userInteractionEnabled="NO" alpha="0.25" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="gLa-us-9im">
                                 <rect key="frame" x="0.0" y="85" width="414" height="544"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2105,7 +2105,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pML-Ib-x5b">
-                                                                    <rect key="frame" x="33.666666666666664" y="62" width="28" height="11"/>
+                                                                    <rect key="frame" x="34" y="62" width="28" height="11"/>
                                                                     <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="11"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -2171,27 +2171,27 @@
                             <constraint firstItem="iID-7E-GnV" firstAttribute="centerX" secondItem="WvS-mP-rQB" secondAttribute="centerX" id="19k-nh-e4M"/>
                             <constraint firstItem="sgy-LZ-6Sv" firstAttribute="leading" secondItem="yEJ-bp-Nsy" secondAttribute="leading" id="4M8-RH-x59"/>
                             <constraint firstItem="01e-Wo-Yjv" firstAttribute="leading" secondItem="yEJ-bp-Nsy" secondAttribute="leading" id="50V-cT-Dyo"/>
+                            <constraint firstItem="1st-fh-WyO" firstAttribute="leading" secondItem="yEJ-bp-Nsy" secondAttribute="leading" constant="50" id="7uV-Uj-lqi"/>
                             <constraint firstItem="WvS-mP-rQB" firstAttribute="top" secondItem="01e-Wo-Yjv" secondAttribute="bottom" id="Ah4-k2-qSJ"/>
-                            <constraint firstItem="iID-7E-GnV" firstAttribute="top" secondItem="gqx-iF-gQL" secondAttribute="bottom" constant="60" id="DDT-Eu-ZsP"/>
                             <constraint firstItem="gLa-us-9im" firstAttribute="bottom" secondItem="WvS-mP-rQB" secondAttribute="bottom" id="FYD-xX-VDY"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gqx-iF-gQL" secondAttribute="trailing" constant="40" id="MJX-Cn-iFB"/>
+                            <constraint firstItem="iID-7E-GnV" firstAttribute="top" secondItem="1st-fh-WyO" secondAttribute="bottom" constant="60" id="J4N-47-2Yy"/>
                             <constraint firstItem="WvS-mP-rQB" firstAttribute="leading" secondItem="yEJ-bp-Nsy" secondAttribute="leading" id="Qm2-J7-emC"/>
                             <constraint firstItem="gLa-us-9im" firstAttribute="leading" secondItem="WvS-mP-rQB" secondAttribute="leading" id="TkB-wb-oo1"/>
                             <constraint firstItem="sgy-LZ-6Sv" firstAttribute="top" secondItem="WvS-mP-rQB" secondAttribute="bottom" constant="-3" id="UVo-b3-b5e"/>
                             <constraint firstItem="iID-7E-GnV" firstAttribute="bottom" secondItem="WvS-mP-rQB" secondAttribute="bottom" constant="-25" id="Wx5-Bl-9qE"/>
                             <constraint firstAttribute="trailing" secondItem="WvS-mP-rQB" secondAttribute="trailing" id="YUe-FM-VOs"/>
-                            <constraint firstItem="gqx-iF-gQL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="yEJ-bp-Nsy" secondAttribute="leading" constant="40" id="aD3-C9-mQ8"/>
                             <constraint firstAttribute="bottom" secondItem="sgy-LZ-6Sv" secondAttribute="bottom" id="dNm-Fg-zmr"/>
+                            <constraint firstAttribute="trailing" secondItem="1st-fh-WyO" secondAttribute="trailing" constant="50" id="eBa-pa-VSq"/>
                             <constraint firstItem="gLa-us-9im" firstAttribute="top" secondItem="WvS-mP-rQB" secondAttribute="top" id="faN-77-oqd"/>
-                            <constraint firstItem="gqx-iF-gQL" firstAttribute="centerX" secondItem="yEJ-bp-Nsy" secondAttribute="centerX" id="gdg-O2-tlF"/>
                             <constraint firstItem="01e-Wo-Yjv" firstAttribute="top" secondItem="tvc-bq-9eS" secondAttribute="bottom" id="j4s-ZT-vXg"/>
                             <constraint firstAttribute="trailing" secondItem="sgy-LZ-6Sv" secondAttribute="trailing" id="kWn-Af-KZv"/>
+                            <constraint firstItem="1st-fh-WyO" firstAttribute="centerX" secondItem="yEJ-bp-Nsy" secondAttribute="centerX" id="lqm-H8-heF"/>
                             <constraint firstAttribute="trailing" secondItem="01e-Wo-Yjv" secondAttribute="trailing" id="oDc-Jl-Pru"/>
                             <constraint firstItem="gLa-us-9im" firstAttribute="trailing" secondItem="WvS-mP-rQB" secondAttribute="trailing" id="yGy-Fq-dcD"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="museumTitle" destination="gqx-iF-gQL" id="R1c-ru-ESZ"/>
+                        <outlet property="museumTitle" destination="1st-fh-WyO" id="aLq-IF-lBr"/>
                         <outlet property="museumsBottomCollectionView" destination="GPL-fF-xft" id="t1z-9r-F7r"/>
                         <outlet property="museumsSlideView" destination="WvS-mP-rQB" id="gqa-l4-icK"/>
                         <outlet property="museumsTopbar" destination="01e-Wo-Yjv" id="csd-Ys-aJP"/>
@@ -2376,7 +2376,7 @@
                                                     <rect key="frame" x="15" y="0.0" width="384" height="680"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IDAM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Za0-ND-kOW">
-                                                            <rect key="frame" x="169.33333333333334" y="27" width="46" height="26"/>
+                                                            <rect key="frame" x="169.66666666666666" y="27" width="46" height="26"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="26" id="lS5-RQ-1nV"/>
                                                             </constraints>
@@ -2417,19 +2417,19 @@
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Everyday From 11 am to 11 pm" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ufl-h2-Z0E">
-                                                            <rect key="frame" x="91.666666666666671" y="392.33333333333331" width="201.66666666666663" height="15"/>
+                                                            <rect key="frame" x="91.999999999999986" y="392.33333333333331" width="201.66666666666663" height="15"/>
                                                             <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="255" text="Museum of Islamic Art" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iln-yX-xwl">
-                                                            <rect key="frame" x="120.00000000000001" y="470.33333333333331" width="145.33333333333337" height="15"/>
+                                                            <rect key="frame" x="119.33333333333333" y="470.33333333333331" width="145.33333333333337" height="15"/>
                                                             <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pj2-NC-EPi">
-                                                            <rect key="frame" x="83.333333333333314" y="480.33333333333331" width="218" height="34.999999999999943"/>
+                                                            <rect key="frame" x="83.666666666666686" y="480.33333333333331" width="218" height="34.999999999999943"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="35" id="YqU-LA-mDR"/>
                                                             </constraints>
@@ -3132,7 +3132,7 @@
                                     <constraint firstAttribute="height" constant="65" id="it7-BT-lZT"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="f46-MC-xJm">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="f46-MC-xJm">
                                 <rect key="frame" x="0.0" y="85" width="414" height="651"/>
                                 <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
@@ -3210,13 +3210,13 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check the new event at MIA!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9l-PM-ATY">
-                                                            <rect key="frame" x="65" y="40.333333333333336" width="295" height="18"/>
+                                                            <rect key="frame" x="65" y="39.666666666666664" width="295" height="18"/>
                                                             <fontDescription key="fontDescription" name="DINNextLTPro-Light" family="DIN Next LT Pro" pointSize="18"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eb4-y1-Jq9">
-                                                            <rect key="frame" x="364" y="24" width="50" height="50"/>
+                                                            <rect key="frame" x="364" y="23" width="50" height="50"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="50" id="XOH-hX-Fih"/>
                                                                 <constraint firstAttribute="height" constant="50" id="uNC-w5-xhq"/>
@@ -3344,7 +3344,7 @@
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Our numerous programmes are designed for families, university students and adults" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NF2-vO-0c4">
-                                                <rect key="frame" x="40.333333333333343" y="78" width="333.33333333333326" height="34"/>
+                                                <rect key="frame" x="40.666666666666657" y="78" width="333.33333333333337" height="34"/>
                                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -3912,7 +3912,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notification Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2C7-23-u7x">
-                                        <rect key="frame" x="118.00000000000001" y="162" width="179.33333333333337" height="20"/>
+                                        <rect key="frame" x="117.33333333333333" y="162" width="179.33333333333337" height="20"/>
                                         <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -3921,13 +3921,13 @@
                                         <rect key="frame" x="0.0" y="194" width="414" height="69.333333333333314"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Updates" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ew-fW-6zz">
-                                                <rect key="frame" x="25.000000000000007" y="26.333333333333314" width="111.66666666666669" height="18"/>
+                                                <rect key="frame" x="25.000000000000007" y="25.666666666666686" width="111.66666666666669" height="18"/>
                                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="og4-rp-BI3">
-                                                <rect key="frame" x="350" y="19.666666666666686" width="51" height="31"/>
+                                                <rect key="frame" x="350" y="18.666666666666686" width="51" height="31"/>
                                                 <color key="onTintColor" red="0.32011085748672485" green="0.69821310043334961" blue="0.28853300213813782" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <connections>
                                                     <action selector="toggleEventSwitch:" destination="GHA-qU-agt" eventType="valueChanged" id="VJo-me-YfC"/>
@@ -3947,7 +3947,7 @@
                                         <rect key="frame" x="0.0" y="264.33333333333331" width="414" height="69.666666666666686"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exhibition Updates" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ww0-0Y-4hj">
-                                                <rect key="frame" x="25" y="26" width="144.66666666666666" height="18"/>
+                                                <rect key="frame" x="25" y="26.333333333333371" width="144.66666666666666" height="18"/>
                                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -3972,7 +3972,7 @@
                                         <rect key="frame" x="0.0" y="334" width="414" height="69"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Museum Updates" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v08-Zy-VYf">
-                                                <rect key="frame" x="25" y="25.666666666666686" width="134.66666666666666" height="18"/>
+                                                <rect key="frame" x="25" y="26" width="134.66666666666666" height="18"/>
                                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -3997,7 +3997,7 @@
                                         <rect key="frame" x="0.0" y="403" width="414" height="69.666666666666686"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Culture Pass Updates" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ucj-3T-UwV">
-                                                <rect key="frame" x="25" y="26" width="166.66666666666666" height="18"/>
+                                                <rect key="frame" x="25" y="26.333333333333371" width="166.66666666666666" height="18"/>
                                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -4082,13 +4082,13 @@
                                         <rect key="frame" x="0.0" y="471.66666666666663" width="414" height="69.333333333333371"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tour Guide Updates" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="evI-OD-mvr">
-                                                <rect key="frame" x="25" y="26.333333333333371" width="153" height="18"/>
+                                                <rect key="frame" x="25" y="25.666666666666742" width="153" height="18"/>
                                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RZv-Wr-rgO">
-                                                <rect key="frame" x="350" y="19.666666666666742" width="51" height="31"/>
+                                                <rect key="frame" x="350" y="18.666666666666742" width="51" height="31"/>
                                                 <color key="onTintColor" red="0.32011085748672485" green="0.69821310043334961" blue="0.28853300213813782" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <connections>
                                                     <action selector="toggleTourGuideSwitch:" destination="GHA-qU-agt" eventType="valueChanged" id="pjZ-I6-bJS"/>
@@ -4192,39 +4192,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FQ7-rF-mpR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="16616" y="99"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="9EC-LW-RpE">
-            <objects>
-                <viewController id="Gfe-A1-hSq" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Y2A-aR-ycg"/>
-                        <viewControllerLayoutGuide type="bottom" id="0Vr-b0-Tbf"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="lxG-zN-0Im">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wRb-pf-HKl">
-                                <rect key="frame" x="0.0" y="60" width="414" height="283"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="wRb-pf-HKl" secondAttribute="trailing" id="Uov-JG-WNw"/>
-                            <constraint firstItem="wRb-pf-HKl" firstAttribute="leading" secondItem="lxG-zN-0Im" secondAttribute="leading" id="e2I-r1-2gO"/>
-                            <constraint firstItem="wRb-pf-HKl" firstAttribute="top" secondItem="Y2A-aR-ycg" secondAttribute="bottom" constant="40" id="rPN-4o-6IY"/>
-                            <constraint firstItem="0Vr-b0-Tbf" firstAttribute="top" secondItem="wRb-pf-HKl" secondAttribute="bottom" constant="393" id="t0N-us-jta"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Lv0-RP-saF" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="17415.942028985508" y="135.32608695652175"/>
         </scene>
     </scenes>
     <resources>
