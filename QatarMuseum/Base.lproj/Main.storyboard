@@ -264,7 +264,7 @@
                                 </connections>
                             </collectionView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NdW-we-G9U" customClass="LoadingView" customModule="QatarMuseums" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="85" width="414" height="685"/>
+                                <rect key="frame" x="0.0" y="85" width="414" height="565.33333333333337"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uSs-hx-cNf">
@@ -291,13 +291,13 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="uSs-hx-cNf" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="1bW-22-FfF"/>
-                            <constraint firstItem="E8z-Zp-uwl" firstAttribute="top" secondItem="NdW-we-G9U" secondAttribute="bottom" constant="-34" id="1eI-op-l3q"/>
                             <constraint firstItem="uSs-hx-cNf" firstAttribute="top" secondItem="pKf-IS-7eH" secondAttribute="bottom" id="2US-WC-1zg"/>
                             <constraint firstItem="NdW-we-G9U" firstAttribute="top" secondItem="NkB-Zv-8hj" secondAttribute="bottom" id="AQb-6w-nz9"/>
                             <constraint firstItem="E8z-Zp-uwl" firstAttribute="top" secondItem="uSs-hx-cNf" secondAttribute="bottom" constant="-34" id="GI7-28-yiw"/>
                             <constraint firstItem="NkB-Zv-8hj" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="GQR-cl-Fkx"/>
                             <constraint firstItem="qGw-V5-okh" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="Lcw-tM-uif"/>
                             <constraint firstItem="NdW-we-G9U" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="PDC-qi-Izp"/>
+                            <constraint firstItem="qGw-V5-okh" firstAttribute="top" secondItem="NdW-we-G9U" secondAttribute="bottom" id="ayr-bP-yvL"/>
                             <constraint firstItem="qGw-V5-okh" firstAttribute="top" secondItem="la4-Sb-yJp" secondAttribute="bottom" id="bRc-Hi-suZ"/>
                             <constraint firstAttribute="trailing" secondItem="uSs-hx-cNf" secondAttribute="trailing" id="cL4-oG-74C"/>
                             <constraint firstItem="NkB-Zv-8hj" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ePo-4u-Xab"/>
@@ -486,7 +486,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EVENTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWB-Sh-j4n">
-                                        <rect key="frame" x="166.66666666666666" y="308.66666666666669" width="81.333333333333343" height="29"/>
+                                        <rect key="frame" x="164" y="308.66666666666669" width="87" height="29"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="29" id="guL-0K-jjs"/>
                                         </constraints>

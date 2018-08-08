@@ -11,22 +11,24 @@ import Foundation
 struct Home: ResponseObjectSerializable, ResponseCollectionSerializable {
     var id: String? = nil
     var name: String? = nil
+    var arabicname: String? = nil
     var image: String? = nil
-    var isTourguideAvailable: Bool? = false
-    var sortId: Int? = nil
+    var isTourguideAvailable: String? = nil
+    var sortId: String? = nil
     
     public init?(response: HTTPURLResponse, representation: AnyObject) {
         if let representation = representation as? [String: Any] {
             self.id = representation["id"] as? String
             self.name = representation["name"] as? String
             self.image = representation["image"] as? String
-            self.isTourguideAvailable = representation["tourguide available"] as? Bool
-            self.sortId = representation["SORT ID"] as? Int
+            self.isTourguideAvailable = representation["tourguide_available"] as? String
+            self.sortId = representation["SORT ID"] as? String
         }
     }
     
-    init (name: String, image: String, tourguide_available: Bool, sort_id: Int?) {
+    init (name: String?, arabicname: String? , image: String?, tourguide_available: String?, sort_id: String?) {
         self.name = name
+        self.arabicname = arabicname
         self.image = image
         self.isTourguideAvailable = tourguide_available
         self.sortId = sort_id

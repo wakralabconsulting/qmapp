@@ -25,7 +25,6 @@
 		B80DC08E20C798E400E28034 /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80DC08D20C798E400E28034 /* HomeCollectionViewCell.swift */; };
 		B80DC09220C7A9CE00E28034 /* TopBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B80DC09120C7A9CE00E28034 /* TopBarView.xib */; };
 		B80DC09420C7A9F500E28034 /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80DC09320C7A9F500E28034 /* TopBarView.swift */; };
-		B80DC09620C7B93800E28034 /* HomePageJson.json in Resources */ = {isa = PBXBuildFile; fileRef = B80DC09520C7B93800E28034 /* HomePageJson.json */; };
 		B811FBC62103406100960246 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B811FBC82103406100960246 /* Localizable.strings */; };
 		B811FBCC2103811400960246 /* QMColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = B811FBCB2103811400960246 /* QMColours.swift */; };
 		B812BA02210AE56B0083E0E2 /* HeritageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B812BA01210AE56B0083E0E2 /* HeritageList.swift */; };
@@ -50,6 +49,7 @@
 		B8294CF720CBF265002AFF72 /* FSCalendarDelegationProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = B8294CE620CBF265002AFF72 /* FSCalendarDelegationProxy.m */; };
 		B82C87F220E69C9700777674 /* DiningDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82C87F120E69C9700777674 /* DiningDetailViewController.swift */; };
 		B82C87F620E69D4100777674 /* DiningDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82C87F520E69D4100777674 /* DiningDetailTableViewCell.swift */; };
+		B839831A21196E68007090C8 /* QatarMuseums.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B839831821196E68007090C8 /* QatarMuseums.xcdatamodeld */; };
 		B85BA4AA20D01B2600E7F4D1 /* ExhibitionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4A920D01B2600E7F4D1 /* ExhibitionDetailViewController.swift */; };
 		B85BA4AC20D01BC900E7F4D1 /* ExhibitionDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4AB20D01BC800E7F4D1 /* ExhibitionDetailTableViewCell.swift */; };
 		B85BA4B020D01D1C00E7F4D1 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4AF20D01D1C00E7F4D1 /* SplashViewController.swift */; };
@@ -173,7 +173,6 @@
 		B80DC08D20C798E400E28034 /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 		B80DC09120C7A9CE00E28034 /* TopBarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TopBarView.xib; sourceTree = "<group>"; };
 		B80DC09320C7A9F500E28034 /* TopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarView.swift; sourceTree = "<group>"; };
-		B80DC09520C7B93800E28034 /* HomePageJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = HomePageJson.json; sourceTree = "<group>"; };
 		B811FBC221033FD900960246 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
 		B811FBC321033FD900960246 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		B811FBC72103406100960246 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -219,6 +218,7 @@
 		B8294CE620CBF265002AFF72 /* FSCalendarDelegationProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarDelegationProxy.m; sourceTree = "<group>"; };
 		B82C87F120E69C9700777674 /* DiningDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDetailViewController.swift; sourceTree = "<group>"; };
 		B82C87F520E69D4100777674 /* DiningDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDetailTableViewCell.swift; sourceTree = "<group>"; };
+		B839831921196E68007090C8 /* QatarMuseums.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QatarMuseums.xcdatamodel; sourceTree = "<group>"; };
 		B85BA4A920D01B2600E7F4D1 /* ExhibitionDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExhibitionDetailViewController.swift; sourceTree = "<group>"; };
 		B85BA4AB20D01BC800E7F4D1 /* ExhibitionDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExhibitionDetailTableViewCell.swift; sourceTree = "<group>"; };
 		B85BA4AF20D01D1C00E7F4D1 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -419,7 +419,6 @@
 				B80DC05F20C792E600E28034 /* Assets.xcassets */,
 				B80DC06120C792E600E28034 /* LaunchScreen.storyboard */,
 				B80DC06420C792E600E28034 /* Info.plist */,
-				B80DC09520C7B93800E28034 /* HomePageJson.json */,
 				B8EAB7C320CA95E500C001B2 /* EventDetailsJson.json */,
 				B8BA80BD20CD9977007E880A /* ExhibitionsJson.json */,
 				B8DC478C20DD11630007B426 /* ParksJson.json */,
@@ -429,6 +428,7 @@
 				B8C64D4E20FDDE5900C2D51A /* MiaTourGuideJson.json */,
 				B8E92D1121006F0F005449FC /* CollectionDetailJson.json */,
 				B811FBC82103406100960246 /* Localizable.strings */,
+				B839831821196E68007090C8 /* QatarMuseums.xcdatamodeld */,
 			);
 			path = QatarMuseum;
 			sourceTree = "<group>";
@@ -884,7 +884,6 @@
 				B8DC478720DCF8CE0007B426 /* ParkTableCellXib.xib in Resources */,
 				B811FBC62103406100960246 /* Localizable.strings in Resources */,
 				B8E2C00E20C7E9CA00F3CE41 /* ComingSoonpopup.xib in Resources */,
-				B80DC09620C7B93800E28034 /* HomePageJson.json in Resources */,
 				B8AFA2EC20E78BA9008838A6 /* DINNextLTArabic-Light.ttf in Resources */,
 				B8C64D4F20FDDE5900C2D51A /* MiaTourGuideJson.json in Resources */,
 				B80DC06020C792E600E28034 /* Assets.xcassets in Resources */,
@@ -1019,6 +1018,7 @@
 				B812BA02210AE56B0083E0E2 /* HeritageList.swift in Sources */,
 				B8EAB7C220CA67E000C001B2 /* EventPopupView.swift in Sources */,
 				B8E2C01520C7FD6800F3CE41 /* SideMenuView.swift in Sources */,
+				B839831A21196E68007090C8 /* QatarMuseums.xcdatamodeld in Sources */,
 				B8294CE920CBF265002AFF72 /* FSCalendarAppearance.m in Sources */,
 				B80DC05B20C792E400E28034 /* ViewController.swift in Sources */,
 				1BE526D0210739BF00C8CD51 /* Request.swift in Sources */,
@@ -1399,6 +1399,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		B839831821196E68007090C8 /* QatarMuseums.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B839831921196E68007090C8 /* QatarMuseums.xcdatamodel */,
+			);
+			currentVersion = B839831921196E68007090C8 /* QatarMuseums.xcdatamodel */;
+			path = QatarMuseums.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = B80DC04D20C792E400E28034 /* Project object */;
 }
