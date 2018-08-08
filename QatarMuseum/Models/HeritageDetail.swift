@@ -28,8 +28,8 @@ struct HeritageDetail: ResponseObjectSerializable, ResponseCollectionSerializabl
             self.latitude = representation["Latitude"] as? String
             self.longitude = representation["Longitude"] as? String
             self.fielditemid = representation["field_collection_item_field_data_field_body_elements_item_id"] as? String
-            self.image = representation["LATEST IMAGE"] as? String
-            self.shortdescription = representation["Short description "] as? String
+            self.image = representation["LATEST_IMAGE"] as? String
+            self.shortdescription = representation["Short_description "] as? String
             self.longdescription = representation["Long description "] as? String
             
         }

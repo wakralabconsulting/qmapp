@@ -6,6 +6,7 @@
 //  Copyright © 2018 Exalture. All rights reserved.
 //
 
+import Alamofire
 import Kingfisher
 import UIKit
 
@@ -13,16 +14,28 @@ class HomeCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var homeImageView: UIImageView!
     @IBOutlet weak var homeTitleLabel: UILabel!
     @IBOutlet weak var tourGuideButton: UIButton!
-    
+    let networkReachability = NetworkReachabilityManager()
     override func layoutSubviews() {
         super.layoutSubviews()
         setGradientLayer()
     }
     
     func setHomeCellData(home: Home) {
+        
         homeTitleLabel.text = home.name
         homeTitleLabel.font = UIFont.homeTitleFont
-        if (home.isTourguideAvailable == true) {
+        if  (networkReachability?.isReachable == false) {
+            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                homeTitleLabel.text = home.name
+            }
+            else {
+                homeTitleLabel.text = home.arabicname
+            }
+        }
+        else {
+            
+        }
+        if (home.isTourguideAvailable == "true") {
             tourGuideButton.isHidden = false
         }
         if home.name == "Exhibitions" {
