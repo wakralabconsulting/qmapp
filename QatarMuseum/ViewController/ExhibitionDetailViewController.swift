@@ -7,33 +7,104 @@
 //
 
 import UIKit
+import Alamofire
 
 class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
-
     @IBOutlet weak var exhibitionDetailTableView: UITableView!
-    
     @IBOutlet weak var loadingView: LoadingView!
+    
     let imageView = UIImageView()
     let closeButton = UIButton()
     var blurView = UIVisualEffectView()
     var fromHome : Bool = false
+    var exhibitionId : String!
+    var exhibition: [Exhibition] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setUi()
-        
+        if (fromHome == true) {
+            getExhibitionDetail()
+        }
     }
+    
     func setUi() {
         loadingView.isHidden = false
         loadingView.showLoading()
+        setTopImageUI()
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (fromHome == true) {
+            return exhibition.count
+        }
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "exhibitionDetailCellId", for: indexPath) as! ExhibitionDetailTableViewCell
+        cell.descriptionLabel.textAlignment = .center
+        if (fromHome == true) {
+            cell.setHomeExhibitionDetail(exhibition: exhibition[indexPath.row])
+        } else {
+            cell.setMuseumExhibitionDetail()
+        }
+        cell.favBtnTapAction = {
+            () in
+            self.setFavouritesAction(cellObj: cell)
+        }
+        cell.shareBtnTapAction = {
+            () in
+            self.setShareAction(cellObj: cell)
+        }
+        cell.locationButtonAction = {
+            () in
+            if (self.exhibition.count > 0 && self.fromHome == true) {
+                let exhibitionDetail = self.exhibition[indexPath.row]
+                if exhibitionDetail.latitude != nil && exhibitionDetail.longitude != nil
+                    && exhibitionDetail.latitude?.range(of:"0°") == nil
+                    && exhibitionDetail.longitude?.range(of:"0°") == nil {
+                self.loadLocationInMap(latitude: exhibitionDetail.latitude!, longitude: exhibitionDetail.longitude!)
+                }
+            } else {
+                self.loadLocationInMap(latitude: "10.0119266", longitude: "76.3492956")
+            }
+        }
+        
+        loadingView.stopLoading()
+        loadingView.isHidden = true
+        return cell
+    }
+    
+    func setFavouritesAction(cellObj :ExhibitionDetailTableViewCell) {
+        //cellObj.favoriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
+    }
+    
+    func setShareAction(cellObj :ExhibitionDetailTableViewCell) {
+       
+    }
+    
+    func setTopImageUI() {
         exhibitionDetailTableView.estimatedRowHeight = 50
         exhibitionDetailTableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0)
         
         imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: 300)
         if (fromHome == true) {
-            imageView.image = UIImage.init(named: "exhibition_detail")
-        }
-        else { 
-             imageView.image = UIImage.init(named: "powder_and_damask")
+            if exhibition.count > 0 {
+                if let imageUrl = exhibition[0].image {
+                    imageView.kf.setImage(with: URL(string: imageUrl))
+                }
+            }
+        } else {
+            imageView.image = UIImage.init(named: "powder_and_damask")
         }
         
         imageView.contentMode = .scaleAspectFill
@@ -49,8 +120,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
-        }
-        else {
+        } else {
             closeButton.frame = CGRect(x: self.view.frame.width-50, y: 30, width: 40, height: 40)
         }
         closeButton.setImage(UIImage(named: "closeX1"), for: .normal)
@@ -65,51 +135,8 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         closeButton.layer.shadowOpacity = 1.0
         view.addSubview(closeButton)
     }
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
-    }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "exhibitionDetailCellId", for: indexPath) as! ExhibitionDetailTableViewCell
-        cell.descriptionLabel.textAlignment = .center
-        if (fromHome == true) {
-            cell.setHomeExhibitionDetail()
-        }
-        else{
-            cell.setMuseumExhibitionDetail()
-        }
-        cell.favBtnTapAction = {
-            () in
-            self.setFavouritesAction(cellObj: cell)
-        }
-        cell.shareBtnTapAction = {
-            () in
-            self.setShareAction(cellObj: cell)
-        }
-        cell.locationButtonAction = {
-            () in
-            self.loadLocationInMap()
-        }
-        
-        loadingView.stopLoading()
-        loadingView.isHidden = true
-        return cell
-    }
-    func setFavouritesAction(cellObj :ExhibitionDetailTableViewCell) {
-        //cellObj.favoriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
-    }
-    func setShareAction(cellObj :ExhibitionDetailTableViewCell) {
-       
-    }
-    func loadLocationInMap() {
-        let latitude = "10.0119266"
-        let longitude =  "76.3492956"
+    func loadLocationInMap(latitude: String, longitude: String) {
         if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
             if #available(iOS 10.0, *) {
                 UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!, options: [:], completionHandler: nil)
@@ -121,42 +148,55 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
             UIApplication.shared.openURL(locationUrl)
         }
     }
+    
+    func getExhibitionDetail() {
+        _ = Alamofire.request(QatarMuseumRouter.ExhibitionDetail(["nid": exhibitionId])).responseObject { (response: DataResponse<Exhibitions>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.exhibition = data.exhibitions!
+                self.setTopImageUI()
+                self.exhibitionDetailTableView.reloadData()
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
+                if (self.exhibition.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
+            case .failure( _):
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
+            }
+        }
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-       
-        
         let y = 300 - (scrollView.contentOffset.y + 300)
-        
         let height = min(max(y, 60), 400)
-        
         imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: height)
-        
 
         if (imageView.frame.height >= 300 ){
             blurView.alpha  = 0.0
-
-        }
-        else if (imageView.frame.height >= 250 ){
+        } else if (imageView.frame.height >= 250 ){
             blurView.alpha  = 0.2
-            
-        }
-        else if (imageView.frame.height >= 200 ){
+        } else if (imageView.frame.height >= 200 ){
             blurView.alpha  = 0.4
-            
-        }
-        else if (imageView.frame.height >= 150 ){
+        } else if (imageView.frame.height >= 150 ){
             blurView.alpha  = 0.6
-            
-        }
-        else if (imageView.frame.height >= 100 ){
+        } else if (imageView.frame.height >= 100 ){
             blurView.alpha  = 0.8
-            
-        }
-        else if (imageView.frame.height >= 50 ){
+        } else if (imageView.frame.height >= 50 ){
             blurView.alpha  = 0.9
-            
         }
-        
     }
+    
     @objc func buttonAction(sender: UIButton!) {
         sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         let transition = CATransition()
@@ -165,17 +205,15 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
         self.view.window!.layer.add(transition, forKey: kCATransition)
             dismiss(animated: false, completion: nil)
-        
     }
+    
     @objc func closeButtonTouchDownAction(sender: UIButton!) {
         sender.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    
 
 }

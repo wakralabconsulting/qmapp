@@ -27,12 +27,10 @@ class HomeCollectionViewCell: UICollectionViewCell {
         if  (networkReachability?.isReachable == false) {
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                 homeTitleLabel.text = home.name
-            }
-            else {
+            } else {
                 homeTitleLabel.text = home.arabicname
             }
-        }
-        else {
+        } else {
             
         }
         if (home.isTourguideAvailable == "true") {

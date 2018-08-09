@@ -13,13 +13,13 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case ExhibitionList()
     case HomeList()
     case HeritageList()
+    case ExhibitionDetail([String: Any])
     case DiningList()
     case PublicArtsList()
     case GetDiningDetail([String: Any])
     case HeritageDetail([String: Any])
     case GetPublicArtsDetail([String: Any])
 
-    
     var method: Alamofire.HTTPMethod {
         switch self {
         case .ExhibitionList:
@@ -27,6 +27,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .HomeList:
             return .get
         case .HeritageList:
+            return .get
+        case .ExhibitionDetail:
             return .get
         case .DiningList:
             return .get
@@ -39,7 +41,6 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .GetPublicArtsDetail:
             return .get
         }
-        
     }
     
     var path: String {
@@ -50,6 +51,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/gethomeList.json"
         case .HeritageList:
             return "/Heritage_List_Page.json"
+        case .ExhibitionDetail( _):
+            return "/Exhibition_detail_Page.json"
         case .DiningList:
             return "/getDiningList.json"
         case .PublicArtsList:
@@ -63,7 +66,6 @@ enum QatarMuseumRouter: URLRequestConvertible {
         }
     }
 
-    
     // MARK:- URLRequestConvertible
     public var request: URLRequest {
         let URL = NSURL(string: Config.baseURL + lang() + Config.mobileApiURL)!
@@ -81,6 +83,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
         case .HeritageList():
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
+        case .ExhibitionDetail(let parameters):
+            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         case .DiningList():
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
         case .PublicArtsList():
