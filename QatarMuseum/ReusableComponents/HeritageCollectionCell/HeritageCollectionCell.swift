@@ -11,14 +11,12 @@ import UIKit
 
 class HeritageCollectionCell: UICollectionViewCell {
     @IBOutlet weak var heritageImageView: UIImageView!
-    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var lineLabel: UILabel!
     @IBOutlet weak var subTitle: UILabel!
     @IBOutlet weak var favouriteButton: UIButton!
     @IBOutlet weak var lineLabelHeight: NSLayoutConstraint!
     @IBOutlet weak var titleBottomConstraint: NSLayoutConstraint!
-    
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -44,8 +42,8 @@ class HeritageCollectionCell: UICollectionViewCell {
         }
         titleLabel.font = UIFont.heritageTitleFont
         subTitle.font = UIFont.heritageTitleFont
-        
     }
+    
     //MARK: Public Arts List Data
     func setPublicArtsListCellValues(publicArtsList: PublicArtsList) {
         titleLabel.text = publicArtsList.name?.uppercased()
@@ -71,6 +69,7 @@ class HeritageCollectionCell: UICollectionViewCell {
         titleLabel.font = UIFont.heritageTitleFont
         subTitle.font = UIFont.heritageTitleFont
     }
+    
     //MARK: Collections List Data
     func setCollectionsCellValues(cellValues: NSDictionary,imageName: String) {
         

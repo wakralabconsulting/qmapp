@@ -67,6 +67,13 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
         locationLabel.text = exhibition.location?.uppercased()
         centerImgHeight.constant = 0
         centerImageView.isHidden = true
+        exhibitionTimingTitle.text = NSLocalizedString("EXHIBITION_TIME_TITLE",
+                                                       comment: "EXHIBITION_TIME_TITLE in the Exhibition detail")
+        locationsTitle.text = NSLocalizedString("LOCATION_TITLE",
+                                                comment: "LOCATION_TITLE in the Exhibition detail")
+        contactTitle.text = NSLocalizedString("CONTACT_TITLE",
+                                              comment: "CONTACT_TITLE in the Exhibition detail")
+        
     }
     
     func setMuseumExhibitionDetail() {

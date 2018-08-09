@@ -231,7 +231,6 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     
     //MARK: PublicArts webservice call
     func getPublicArtsDetailsFromServer() {
-    
         _ = Alamofire.request(QatarMuseumRouter.GetPublicArtsDetail(["nid": publicArtsDetailId!])).responseObject { (response: DataResponse<PublicArtsDetails>) -> Void in
             switch response.result {
             case .success(let data):
