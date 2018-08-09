@@ -6,8 +6,9 @@
 //  Copyright © 2018 Exalture. All rights reserved.
 //
 
-import UIKit
 import Alamofire
+import CoreData
+import UIKit
 
 class HomeViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,TopBarProtocol,comingSoonPopUpProtocol,SideMenuProtocol,UIViewControllerTransitioningDelegate {
 
@@ -25,16 +26,22 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var sideView : SideMenuView = SideMenuView()
     var isSideMenuLoaded : Bool = false
-    var homeImageArray = NSArray()
     var homeList: [Home]! = []
-
+    var homeEntity: HomeEntity?
+    let networkReachability = NetworkReachabilityManager()
+    var homeDBArray:[HomeEntity]?
     override func viewDidLoad() {
         super.viewDidLoad()
 
         registerNib()
         setUpUI()
-        getDataFromJson()
-        getHomeList()
+       
+        if  (networkReachability?.isReachable)! {
+            getHomeList()
+        }
+        else {
+            self.fetchHomeInfoFromCoredata()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,7 +54,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func setUpUI() {
-        homeImageArray = ["museum_of_islamic_art","national_museum_of_qatar","mathaf_arab_museum","firestation","exhibition","qatar_olypic_&_sports_museum"];
         topbarView.topbarDelegate = self
         topbarView.backButton.isHidden = true
         effect = visualEffectView.effect
@@ -71,13 +77,14 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+       
         return homeList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
          let cell : HomeCollectionViewCell = homeCollectionView.dequeueReusableCell(withReuseIdentifier: "homeCellId", for: indexPath) as! HomeCollectionViewCell
-//        let homeDataDict = homeDataFullArray.object(at: indexPath.row) as! NSDictionary
-        cell.setHomeCellData(home: homeList[indexPath.row])
+       
+            cell.setHomeCellData(home: homeList[indexPath.row])
         loadingView.stopLoading()
         loadingView.isHidden = true
         return cell
@@ -128,23 +135,17 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     //MARK: Service call
-    func getDataFromJson(){
-        let url = Bundle.main.url(forResource: "HomePageJson", withExtension: "json")
-        let dataObject = NSData(contentsOf: url!)
-        if let jsonObj = try? JSONSerialization.jsonObject(with: dataObject! as Data, options: .allowFragments) as? NSDictionary {
-            homeDataFullArray = jsonObj!.value(forKey: "items")
-                as! NSArray
-        }
-    }
-    
     func getHomeList() {
         _ = Alamofire.request(QatarMuseumRouter.HomeList()).responseObject { (response: DataResponse<HomeList>) -> Void in
             switch response.result {
             case .success(let data):
                 self.homeList = data.homeList
-                self.homeList.insert(Home(name: "Exhibitions", image: "exhibition",
-                                          tourguide_available: false, sort_id: nil),
+                let exhibitionName = NSLocalizedString("EXHIBITIONS_LABEL",
+                                                       comment: "EXHIBITIONS_LABEL in exhibition cell")
+                self.homeList.insert(Home(name: exhibitionName , arabicname: exhibitionName,  image: "exhibition",
+                                          tourguide_available: "false", sort_id: nil),
                                      at: self.homeList.endIndex - 1)
+                self.saveOrUpdateHomeCoredata()
                 self.homeCollectionView.reloadData()
             case .failure(let error):
                 if let unhandledError = handleError(viewController: self, errorType: error as! BackendError) {
@@ -426,5 +427,163 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(profileView, animated: false, completion: nil)
+        
+    }
+    //MARK: Coredata Method
+    func saveOrUpdateHomeCoredata() {
+        let fetchData = checkAddedToCoredata(homeId: nil) as! [HomeEntity]
+        if (fetchData.count > 0) {
+            for i in 0 ... homeList.count-1 {
+                let managedContext = getContext()
+                let homeListDict = homeList[i]
+                let fetchResult = checkAddedToCoredata(homeId: homeList[i].id)
+                //update
+                if(fetchResult.count != 0) {
+                    let homedbDict = fetchResult[0] as! HomeEntity
+                    if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                        homedbDict.name = homeListDict.name
+                    }
+                    else {
+                        homedbDict.arabicname = homeListDict.name
+                    }
+                    homedbDict.image = homeListDict.image
+                    homedbDict.sortid =  homeListDict.sortId
+                    homedbDict.tourguideavailable = homeListDict.isTourguideAvailable
+                    do{
+                        try managedContext.save()
+                    }
+                    catch{
+                        print(error)
+                    }
+                }
+                else {
+                    //save
+                    self.saveToCoreData(homeListDict: homeListDict, managedObjContext: managedContext)
+                
+                }
+            }
+        }
+        else {
+        for i in 0 ... homeList.count-1 {
+            let managedContext = getContext()
+            let homeListDict : Home?
+             homeListDict = homeList[i]
+            self.saveToCoreData(homeListDict: homeListDict!, managedObjContext: managedContext)
+
+        }
+        }
+        
+    }
+    func saveToCoreData(homeListDict: Home, managedObjContext: NSManagedObjectContext) {
+        let nameString = homeListDict.name
+        
+        let idString = homeListDict.id
+        let imageString = homeListDict.image
+        let sortidString = homeListDict.sortId
+        let tourguideVar = homeListDict.isTourguideAvailable
+        //var someBoolVariable = numberValue as Bool
+        let homeInfo: HomeEntity = NSEntityDescription.insertNewObject(forEntityName: "HomeEntity", into: managedObjContext) as! HomeEntity
+        homeInfo.id = idString
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            homeInfo.name = nameString
+            
+        }
+        else{
+            
+            homeInfo.arabicname = nameString
+        }
+        homeInfo.image = imageString
+        if(sortidString != nil) {
+            homeInfo.sortid = sortidString!
+        }
+        if tourguideVar != nil {
+            homeInfo.tourguideavailable = tourguideVar!
+            
+        }
+        do {
+            try managedObjContext.save()
+            
+            
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    func fetchHomeInfoFromCoredata() {
+        var homeArray = [HomeEntity]()
+        let managedContext = getContext()
+        let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntity")
+        do {
+            homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntity])!
+            if (homeArray.count > 0) {
+                for i in 0 ... homeArray.count-1 {
+                    //need to show arabic list only when arabic values stored in db
+//                    if ((LocalizationLanguage.currentAppleLanguage()) == "ar") {
+//                        if(homeArray[i].arabicname != nil) {
+//                            print(homeArray[i].name)
+//                            print(homeArray[i].arabicname)
+//                            print(homeArray[i].image)
+//                            print(homeArray[i].tourguideavailable)
+//                            print(homeArray[i].sortid)
+//                            self.homeList.insert(Home(name: homeArray[i].name, arabicname: homeArray[i].arabicname,image: homeArray[i].image,
+//                                                      tourguide_available: homeArray[i].tourguideavailable, sort_id: homeArray[i].sortid),
+//                                                 at: i)
+//                        }
+//                    }
+//                        //need to show english list only when arabic values stored in db
+//                    else {
+                    
+                        self.homeList.insert(Home(name: homeArray[i].name, arabicname: homeArray[i].arabicname,image: homeArray[i].image,
+                                                  tourguide_available: homeArray[i].tourguideavailable, sort_id: homeArray[i].sortid),
+                                             at: i)
+                    //}
+                    
+                    
+                }
+                if(homeList.count == 0){
+                    var errorMessage: String
+                    errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                    comment: "Setting the content of the alert"))
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                    self.loadingView.noDataLabel.text = errorMessage
+                }
+                homeCollectionView.reloadData()
+            }
+            else{
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    func getContext() -> NSManagedObjectContext{
+        
+        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+        if #available(iOS 10.0, *) {
+            return
+                appDelegate!.persistentContainer.viewContext
+        } else {
+            return appDelegate!.managedObjectContext
+        }
+    }
+    func checkAddedToCoredata(homeId: String?) -> [NSManagedObject]
+    {
+        let managedContext = getContext()
+        var fetchResults : [NSManagedObject] = []
+        let homeFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "HomeEntity")
+        if (homeId != nil) {
+            homeFetchRequest.predicate = NSPredicate.init(format: "id == \(homeId!)")
+        }
+        fetchResults = try! managedContext.fetch(homeFetchRequest)
+        return fetchResults
     }
 }

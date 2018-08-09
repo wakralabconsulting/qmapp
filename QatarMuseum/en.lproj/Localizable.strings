@@ -66,5 +66,13 @@
 "CHANGE_LANGUAGE_TITLE" = "Change Language?";
 "CONTINUE_TITLE" = "Continue";
 "MUSEUM_TITLE" = "Museum of Islamic Art";
-
+"NO_RESULT_MESSAGE" = "No results found";
+"CHECK_INTERNET" = "Check your internet connections";
+"LOCATION_TITLE" = "LOCATION";
+"TO" = "to";
+"MAP_REDIRECTION_MESSAGE" = "Click here to open in Google Maps";
+"MORE_INFORMATION_MESSAGE" = "For more information and to make a reservation, visit ";
+"MIA_TITLE" = "MIA ";
+"OPENING_TIME_TITLE" = "OPENING TIMINGS";
+"CONTACT_TITLE" = "CONTACT";
 

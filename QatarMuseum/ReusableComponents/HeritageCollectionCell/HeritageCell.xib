@@ -29,17 +29,14 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HPJ-U2-xaz">
                         <rect key="frame" x="0.0" y="0.0" width="318" height="178"/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fga-0A-PUm">
-                        <rect key="frame" x="12" y="130" width="0.0" height="19"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="19" id="Y1G-2e-G7I"/>
-                        </constraints>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fga-0A-PUm">
+                        <rect key="frame" x="16" y="149" width="0.0" height="0.0"/>
                         <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="19"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tCX-2T-du8">
-                        <rect key="frame" x="12" y="156" width="11" height="2"/>
+                        <rect key="frame" x="16" y="156" width="11" height="2"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="2" id="7G7-lg-rGG"/>
@@ -50,7 +47,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nKV-Um-TYg">
-                        <rect key="frame" x="12" y="165" width="294" height="0.0"/>
+                        <rect key="frame" x="16" y="165" width="290" height="0.0"/>
                         <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="18"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -67,6 +64,7 @@
                 </subviews>
             </view>
             <constraints>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Fga-0A-PUm" secondAttribute="trailing" constant="16" id="IQY-Vl-Aut"/>
                 <constraint firstItem="nKV-Um-TYg" firstAttribute="top" secondItem="tCX-2T-du8" secondAttribute="bottom" constant="7" id="Ron-UF-O9D"/>
                 <constraint firstItem="nKV-Um-TYg" firstAttribute="leading" secondItem="tCX-2T-du8" secondAttribute="leading" id="SOv-xa-AHB"/>
                 <constraint firstAttribute="bottom" secondItem="nKV-Um-TYg" secondAttribute="bottom" constant="13" id="Ujc-Rc-ony"/>
@@ -77,7 +75,7 @@
                 <constraint firstItem="oed-HI-YhQ" firstAttribute="top" secondItem="3PW-De-upi" secondAttribute="top" constant="10" id="mR1-iY-cs9"/>
                 <constraint firstAttribute="trailing" secondItem="HPJ-U2-xaz" secondAttribute="trailing" id="qaZ-zp-oeC"/>
                 <constraint firstAttribute="bottom" secondItem="HPJ-U2-xaz" secondAttribute="bottom" id="sIF-qx-G8g"/>
-                <constraint firstItem="nKV-Um-TYg" firstAttribute="leading" secondItem="3PW-De-upi" secondAttribute="leading" constant="12" id="tAb-kw-NWc"/>
+                <constraint firstItem="nKV-Um-TYg" firstAttribute="leading" secondItem="3PW-De-upi" secondAttribute="leading" constant="16" id="tAb-kw-NWc"/>
                 <constraint firstAttribute="trailing" secondItem="oed-HI-YhQ" secondAttribute="trailing" constant="10" id="tR6-kv-wfa"/>
                 <constraint firstItem="HPJ-U2-xaz" firstAttribute="top" secondItem="3PW-De-upi" secondAttribute="top" id="v2V-jd-IbU"/>
             </constraints>

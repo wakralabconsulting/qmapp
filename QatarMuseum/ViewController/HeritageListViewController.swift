@@ -65,13 +65,8 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         return CGSize(width: heritageCollectionView.frame.width, height: heightValue*27)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if (indexPath.row == 0) {
-            loadHeritageDetailAnimation()
-        }
-        else {
-            loadComingSoonPopup()
-        }
-        
+        let heritageId = heritageListArray[indexPath.row].id
+        loadHeritageDetailAnimation(heritageListId: heritageId!)
     }
     func loadComingSoonPopup() {
         popUpView  = ComingSoonPopUp(frame: self.view.frame)
@@ -84,9 +79,10 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
     func closeButtonPressed() {
         self.popUpView.removeFromSuperview()
     }
-    func loadHeritageDetailAnimation() {
+    func loadHeritageDetailAnimation(heritageListId: String) {
         let heritageDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
         heritageDtlView.pageNameString = PageName.heritageDetail
+        heritageDtlView.heritageDetailId = heritageListId
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionFade

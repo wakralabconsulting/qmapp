@@ -22,7 +22,7 @@ class EventPopupView: UIView {
     @IBOutlet weak var eventTitle: UILabel!
     @IBOutlet weak var eventPopupHeight: NSLayoutConstraint!
     
-    @IBOutlet weak var eventDescription: UILabel!
+    @IBOutlet weak var eventDescription: UITextView!
     var eventPopupDelegate : EventPopUpProtocol?
     override init(frame: CGRect) {
         super.init(frame: frame)

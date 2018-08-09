@@ -13,7 +13,12 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case ExhibitionList()
     case HomeList()
     case HeritageList()
-    case ExhibitionDetail(String)
+    case ExhibitionDetail([String: Any])
+    case DiningList()
+    case PublicArtsList()
+    case GetDiningDetail([String: Any])
+    case HeritageDetail([String: Any])
+    case GetPublicArtsDetail([String: Any])
 
     var method: Alamofire.HTTPMethod {
         switch self {
@@ -24,6 +29,16 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .HeritageList:
             return .get
         case .ExhibitionDetail:
+            return .get
+        case .DiningList:
+            return .get
+        case .PublicArtsList:
+            return .get
+        case .GetDiningDetail:
+            return .get
+        case .HeritageDetail:
+            return .get
+        case .GetPublicArtsDetail:
             return .get
         }
     }
@@ -36,19 +51,25 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/gethomeList.json"
         case .HeritageList:
             return "/Heritage_List_Page.json"
-        case .ExhibitionDetail(let exhibitionId):
-            return "/Exhibition_detail_Page.json?nid=\(exhibitionId)"
+        case .ExhibitionDetail( _):
+            return "/Exhibition_detail_Page.json"
+        case .DiningList:
+            return "/getDiningList.json"
+        case .PublicArtsList:
+            return "/Public_Arts_List_Page.json"
+        case .GetDiningDetail( _):
+            return "/getDiningdetail.json"
+        case .HeritageDetail( _):
+            return "/heritage_detail_Page.json"
+        case .GetPublicArtsDetail( _):
+            return "/getpublicartdetail.json"
         }
     }
 
     // MARK:- URLRequestConvertible
     public var request: URLRequest {
-        let baseURLString = Config.baseURL + lang() + Config.mobileApiURL
-        let URLString = baseURLString + path
-        let urlwithPercent = URLString.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
-        var mutableURLRequest = URLRequest(url: URL(string: urlwithPercent!)!)
-//        var mutableURLRequest = URLRequest(url: URL.appendingPathComponent(path))
-
+        let URL = NSURL(string: Config.baseURL + lang() + Config.mobileApiURL)!
+        var mutableURLRequest = URLRequest(url: URL.appendingPathComponent(path)!)
         mutableURLRequest.httpMethod = method.rawValue
         if let accessToken = UserDefaults.standard.value(forKey: "accessToken")
             as? String {
@@ -62,8 +83,18 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
         case .HeritageList():
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
-        case .ExhibitionDetail( _):
+        case .ExhibitionDetail(let parameters):
+            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
+        case .DiningList():
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
+        case .PublicArtsList():
+            return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
+        case .GetDiningDetail(let parameters):
+            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
+        case .HeritageDetail(let parameters):
+            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
+        case .GetPublicArtsDetail(let parameters):
+            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         }
     }
     

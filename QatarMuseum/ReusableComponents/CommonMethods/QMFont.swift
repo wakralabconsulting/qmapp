@@ -18,10 +18,10 @@ extension UIFont {
     }
     static var heritageTitleFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            return UIFont.init(name: "DINNextLTPro-Regular", size: 19)!
+            return UIFont.init(name: "DINNextLTPro-Regular", size: 20)!
         }
         else{
-            return UIFont.init(name: "DINNextLTArabic-Regular", size:19)!
+            return UIFont.init(name: "DINNextLTArabic-Regular", size:20)!
         }
         
     }

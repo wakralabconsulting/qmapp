@@ -126,6 +126,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             }
         parkCell.favouriteButtonAction = {
             ()in
+            self.setFavouritesAction(cellObj: parkCell)
         }
         parkCell.shareButtonAction = {
             () in
@@ -144,6 +145,17 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
+    }
+    func setFavouritesAction(cellObj :ParkTableViewCell) {
+        if (cellObj.favouriteButton.tag == 0) {
+            cellObj.favouriteButton.tag = 1
+            cellObj.favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
+            
+        }
+        else {
+            cellObj.favouriteButton.tag = 0
+            cellObj.favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
+        }
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = 300 - (scrollView.contentOffset.y + 300)

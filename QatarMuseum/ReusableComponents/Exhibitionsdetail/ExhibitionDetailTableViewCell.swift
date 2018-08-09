@@ -45,6 +45,17 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
         locationLabel.textAlignment = .center
         contactTitle.textAlignment = .center
         contactDescriptionLabel.textAlignment = .center
+        
+        titleLabel.font = UIFont.settingsUpdateLabelFont
+        descriptionLabel.font = UIFont.englishTitleFont
+        detailSecondLabel.font = UIFont.englishTitleFont
+        exhibitionTimingTitle.font = UIFont.closeButtonFont
+        exbtnDateLabel.font = UIFont.sideMenuLabelFont
+        exbtnTimeLabel.font = UIFont.sideMenuLabelFont
+        locationsTitle.font = UIFont.closeButtonFont
+        locationButton.titleLabel?.font = UIFont.sideMenuLabelFont
+        contactTitle.font = UIFont.closeButtonFont
+        contactDescriptionLabel.font = UIFont.sideMenuLabelFont
     }
     
     func setHomeExhibitionDetail(exhibition: Exhibition) {

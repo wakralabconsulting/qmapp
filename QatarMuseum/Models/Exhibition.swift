@@ -33,7 +33,7 @@ struct Exhibition: ResponseObjectSerializable, ResponseCollectionSerializable {
             self.startDate  = representation["start_Date"] as? String
             self.endDate  = representation["end_Date"] as? String
             self.shortDescription  = representation["Short_description "] as? String
-            self.longDescription  = representation["Long_descriptionn "] as? String
+            self.longDescription  = representation["Long_description "] as? String
         }
     }
 }

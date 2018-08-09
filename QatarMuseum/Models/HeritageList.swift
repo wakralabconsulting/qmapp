@@ -18,8 +18,8 @@ struct HeritageList: ResponseObjectSerializable, ResponseCollectionSerializable 
         if let representation = representation as? [String: Any] {
             self.id = representation["ID"] as? String
             self.name = representation["name"] as? String
-            self.image = representation["LATEST IMAGE"] as? String
-            self.sortid = representation["ORT ID"] as? String
+            self.image = representation["LATEST_IMAGE"] as? String
+            self.sortid = representation["SORT_ID"] as? String
            
         }
     }

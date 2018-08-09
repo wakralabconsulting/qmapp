@@ -161,7 +161,7 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
         let exhibitionDtlView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionDtlId") as! ExhibitionDetailViewController
         if (exhibitionsPageNameString == ExhbitionPageName.homeExhibition) {
             exhibitionDtlView.fromHome = true
-            exhibitionDtlView.id = exhibitionId
+            exhibitionDtlView.exhibitionId = exhibitionId
         } else {
             exhibitionDtlView.fromHome = false
         }
@@ -183,7 +183,6 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
         switch exhibitionsPageNameString {
         case .homeExhibition?:
             let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
-            
             let appDelegate = UIApplication.shared.delegate
             appDelegate?.window??.rootViewController = homeViewController
         case .museumExhibition?:

@@ -17,8 +17,8 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     let closeButton = UIButton()
     var blurView = UIVisualEffectView()
     var fromHome : Bool = false
-    var id : String!
-    var exhibition: Exhibition!
+    var exhibitionId : String!
+    var exhibition: [Exhibition] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,10 +40,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (fromHome == true) {
-            if exhibition != nil {
-                return 1
-            }
-            return 0
+            return exhibition.count
         }
         return 1
     }
@@ -56,9 +53,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         let cell = tableView.dequeueReusableCell(withIdentifier: "exhibitionDetailCellId", for: indexPath) as! ExhibitionDetailTableViewCell
         cell.descriptionLabel.textAlignment = .center
         if (fromHome == true) {
-            if exhibition != nil {
-                cell.setHomeExhibitionDetail(exhibition: exhibition)
-            }
+            cell.setHomeExhibitionDetail(exhibition: exhibition[indexPath.row])
         } else {
             cell.setMuseumExhibitionDetail()
         }
@@ -72,10 +67,13 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         }
         cell.locationButtonAction = {
             () in
-            if self.exhibition != nil && self.exhibition.latitude != nil &&
-                self.exhibition.longitude != nil && self.exhibition.latitude?.range(of:"0°") == nil
-                && self.exhibition.longitude?.range(of:"0°") == nil {
-                self.loadLocationInMap(latitude: self.exhibition.latitude!, longitude: self.exhibition.longitude!)
+            if (self.exhibition.count > 0 && self.fromHome == true) {
+                let exhibitionDetail = self.exhibition[indexPath.row]
+                if exhibitionDetail.latitude != nil && exhibitionDetail.longitude != nil
+                    && exhibitionDetail.latitude?.range(of:"0°") == nil
+                    && exhibitionDetail.longitude?.range(of:"0°") == nil {
+                self.loadLocationInMap(latitude: exhibitionDetail.latitude!, longitude: exhibitionDetail.longitude!)
+                }
             } else {
                 self.loadLocationInMap(latitude: "10.0119266", longitude: "76.3492956")
             }
@@ -100,10 +98,10 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         
         imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: 300)
         if (fromHome == true) {
-            if exhibition != nil, let imageUrl = exhibition.image {
-                imageView.kf.setImage(with: URL(string: imageUrl))
-            } else {
-                imageView.image = UIImage.init(named: "exhibition_detail")
+            if exhibition.count > 0 {
+                if let imageUrl = exhibition[0].image {
+                    imageView.kf.setImage(with: URL(string: imageUrl))
+                }
             }
         } else {
             imageView.image = UIImage.init(named: "powder_and_damask")
@@ -152,16 +150,15 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     func getExhibitionDetail() {
-        _ = Alamofire.request(QatarMuseumRouter.ExhibitionDetail(id)).responseObject { (response: DataResponse<Exhibitions>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.ExhibitionDetail(["nid": exhibitionId])).responseObject { (response: DataResponse<Exhibitions>) -> Void in
             switch response.result {
             case .success(let data):
-                if data.exhibitions!.count > 0 {
-                    self.exhibition = data.exhibitions![0]
-                    self.setTopImageUI()
-                    self.exhibitionDetailTableView.reloadData()
-                    self.loadingView.stopLoading()
-                    self.loadingView.isHidden = true
-                } else {
+                self.exhibition = data.exhibitions!
+                self.setTopImageUI()
+                self.exhibitionDetailTableView.reloadData()
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
+                if (self.exhibition.count == 0) {
                     self.loadingView.stopLoading()
                     self.loadingView.noDataView.isHidden = false
                     self.loadingView.isHidden = false
