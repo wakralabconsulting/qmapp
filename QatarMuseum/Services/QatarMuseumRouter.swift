@@ -13,7 +13,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case ExhibitionList()
     case HomeList()
     case HeritageList()
-    
+    case ExhibitionDetail(String)
+
     var method: Alamofire.HTTPMethod {
         switch self {
         case .ExhibitionList:
@@ -21,6 +22,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .HomeList:
             return .get
         case .HeritageList:
+            return .get
+        case .ExhibitionDetail:
             return .get
         }
     }
@@ -33,14 +36,19 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/gethomeList.json"
         case .HeritageList:
             return "/Heritage_List_Page.json"
+        case .ExhibitionDetail(let exhibitionId):
+            return "/Exhibition_detail_Page.json?nid=\(exhibitionId)"
         }
     }
 
-    
     // MARK:- URLRequestConvertible
     public var request: URLRequest {
-        let URL = NSURL(string: Config.baseURL + lang() + Config.mobileApiURL)!
-        var mutableURLRequest = URLRequest(url: URL.appendingPathComponent(path)!)
+        let baseURLString = Config.baseURL + lang() + Config.mobileApiURL
+        let URLString = baseURLString + path
+        let urlwithPercent = URLString.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
+        var mutableURLRequest = URLRequest(url: URL(string: urlwithPercent!)!)
+//        var mutableURLRequest = URLRequest(url: URL.appendingPathComponent(path))
+
         mutableURLRequest.httpMethod = method.rawValue
         if let accessToken = UserDefaults.standard.value(forKey: "accessToken")
             as? String {
@@ -53,6 +61,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .HomeList():
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
         case .HeritageList():
+            return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
+        case .ExhibitionDetail( _):
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
         }
     }

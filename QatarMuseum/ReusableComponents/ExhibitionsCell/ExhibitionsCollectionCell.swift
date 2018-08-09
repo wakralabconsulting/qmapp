@@ -28,7 +28,7 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
     //MARK: HomeExhibitionList data
     func setExhibitionCellValues(exhibition: Exhibition) {
         titleLabel.text = exhibition.name?.uppercased()
-        dateLabel.text = exhibition.date?.uppercased()
+        dateLabel.text = (exhibition.startDate?.uppercased())! + " - " + (exhibition.endDate?.uppercased())!
         addressLabel.text = exhibition.location?.uppercased()
         titleLabel.font = UIFont.heritageTitleFont
         dateLabel.font = UIFont.exhibitionDateLabelFont
