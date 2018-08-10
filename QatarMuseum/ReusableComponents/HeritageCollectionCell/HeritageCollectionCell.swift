@@ -6,6 +6,7 @@
 //  Copyright © 2018 Exalture. All rights reserved.
 //
 
+import Alamofire
 import Kingfisher
 import UIKit
 
@@ -17,14 +18,26 @@ class HeritageCollectionCell: UICollectionViewCell {
     @IBOutlet weak var favouriteButton: UIButton!
     @IBOutlet weak var lineLabelHeight: NSLayoutConstraint!
     @IBOutlet weak var titleBottomConstraint: NSLayoutConstraint!
+
+    let networkReachability = NetworkReachabilityManager()
+
     
     override func layoutSubviews() {
         super.layoutSubviews()
         setGradientLayer()
     }
     //MARK: HeritageList data
-    func setHeritageListCellValues(heritageList: HeritageList) {
+    func setHeritageListCellValues(heritageList: HeritageDetail) {
         titleLabel.text = heritageList.name?.uppercased()
+       // if  (networkReachability?.isReachable == false) {
+           // if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                titleLabel.text = heritageList.name?.uppercased()
+//            }
+//            else {
+//                titleLabel.text = heritageList.listarabicname
+//            }
+        //}
+        
         //subTitle.text = heritageList..uppercased()
         lineLabel.isHidden = true
         //lineLabelHeight.constant = 2

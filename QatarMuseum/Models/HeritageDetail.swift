@@ -17,7 +17,9 @@ struct HeritageDetail: ResponseObjectSerializable, ResponseCollectionSerializabl
     var image: String? = nil
     var shortdescription: String? = nil
     var longdescription: String? = nil
-    
+    //HeritageListList
+    var sortid: String? = nil
+    var isFavourite : Bool = false
     
     
     public init?(response: HTTPURLResponse, representation: AnyObject) {
@@ -29,8 +31,10 @@ struct HeritageDetail: ResponseObjectSerializable, ResponseCollectionSerializabl
             self.longitude = representation["Longitude"] as? String
             self.fielditemid = representation["field_collection_item_field_data_field_body_elements_item_id"] as? String
             self.image = representation["LATEST_IMAGE"] as? String
-            self.shortdescription = representation["Short_description "] as? String
-            self.longdescription = representation["Long description "] as? String
+            self.shortdescription = representation["short_description"] as? String
+            self.longdescription = representation["long_description"] as? String
+            //HeritageListList
+            self.sortid = representation["SORT_ID"] as? String
             
         }
     }

@@ -63,12 +63,12 @@
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="slE-qj-JE4" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="9" id="7aL-yj-O2J"/>
-                <constraint firstItem="lvn-LU-7eH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="slE-qj-JE4" secondAttribute="trailing" constant="10" id="Mo6-Fh-hP0"/>
+                <constraint firstItem="lvn-LU-7eH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="slE-qj-JE4" secondAttribute="trailing" id="Mo6-Fh-hP0"/>
                 <constraint firstAttribute="trailing" secondItem="lvn-LU-7eH" secondAttribute="trailing" constant="7" id="Yh3-Wc-1ZN"/>
                 <constraint firstItem="TUc-rO-ZJQ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="5" id="nU0-Sl-zSp"/>
                 <constraint firstItem="TUc-rO-ZJQ" firstAttribute="centerY" secondItem="slE-qj-JE4" secondAttribute="centerY" id="q7A-TC-4vD"/>
                 <constraint firstItem="lvn-LU-7eH" firstAttribute="centerY" secondItem="slE-qj-JE4" secondAttribute="centerY" id="sIV-t0-NA4"/>
-                <constraint firstItem="slE-qj-JE4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TUc-rO-ZJQ" secondAttribute="trailing" constant="10" id="wBN-Jh-gNE"/>
+                <constraint firstItem="slE-qj-JE4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TUc-rO-ZJQ" secondAttribute="trailing" id="wBN-Jh-gNE"/>
                 <constraint firstItem="slE-qj-JE4" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="yO2-4v-UqB"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

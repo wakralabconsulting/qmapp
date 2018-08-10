@@ -99,7 +99,7 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
         self.discoverButton.backgroundColor = UIColor.viewMycultureBlue
         self.discoverButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         let eventView =  self.storyboard?.instantiateViewController(withIdentifier: "eventPageID") as! EventViewController
-        eventView.fromHome = true
+        eventView.fromHome = false
         eventView.isLoadEventPage = false
         let transition = CATransition()
         transition.duration = 0.3

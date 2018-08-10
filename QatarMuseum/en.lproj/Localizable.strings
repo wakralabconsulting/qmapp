@@ -47,7 +47,7 @@
 "FILTER_LABEL" = "Filter";
 "INSTITUTION_LABEL" = "Institution";
 "AGE_GROUP_LABEL" = "Age Group";
-"PROGRAMME_TYPE_LABEL" = "Programme type";
+"PROGRAMME_TYPE_LABEL" = "Programme Type";
 "CLEAR_LABEL" = "Clear";
 "SETTINGS_LABEL" = "SETTINGS";
 "SETTINGS_REDIRECTION_MSG" = "You will be redirected to home page, after changing the language.Do you want to continue?";
