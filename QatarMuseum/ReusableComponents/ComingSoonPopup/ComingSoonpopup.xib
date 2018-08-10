@@ -22,7 +22,7 @@
             <connections>
                 <outlet property="closeButton" destination="YSf-E0-3gD" id="HvD-jB-xIk"/>
                 <outlet property="comingSoonPopup" destination="iN0-l3-epB" id="j6e-n7-zCh"/>
-                <outlet property="messageLabel" destination="7GQ-Ma-eYl" id="vuS-Ln-aMx"/>
+                <outlet property="messageLabel" destination="vCI-kq-e2D" id="u9T-Qh-wf6"/>
                 <outlet property="popupInnerView" destination="v1z-Zu-cHZ" id="hXL-7p-dRF"/>
                 <outlet property="stayTunedLabel" destination="z5L-O5-wM8" id="2DX-sX-ddm"/>
                 <outlet property="titleLabel" destination="l52-3C-5Dw" id="XqC-op-OXk"/>
@@ -34,19 +34,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v1z-Zu-cHZ">
-                    <rect key="frame" x="52.5" y="207" width="270" height="253.5"/>
+                    <rect key="frame" x="52.5" y="190.5" width="270" height="286.5"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7GQ-Ma-eYl">
-                            <rect key="frame" x="135.5" y="127" width="0.0" height="0.0"/>
-                            <constraints>
-                                <constraint firstAttribute="height" relation="greaterThanOrEqual" id="kw9-dz-Mji"/>
-                            </constraints>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vCI-kq-e2D">
+                            <rect key="frame" x="5" y="109.5" width="260" height="35.5"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="16"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YSf-E0-3gD">
-                            <rect key="frame" x="20.5" y="163" width="230" height="40"/>
+                            <rect key="frame" x="20.5" y="173" width="230" height="40"/>
                             <color key="backgroundColor" red="0.50385850669999999" green="0.65017271040000002" blue="0.84384113549999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="4N4-88-obw"/>
@@ -66,13 +63,13 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z5L-O5-wM8">
-                            <rect key="frame" x="135" y="138" width="0.0" height="0.0"/>
+                            <rect key="frame" x="135.5" y="156" width="0.0" height="0.0"/>
                             <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="16"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l52-3C-5Dw">
-                            <rect key="frame" x="135.5" y="108" width="0.0" height="0.0"/>
+                            <rect key="frame" x="135.5" y="92.5" width="0.0" height="0.0"/>
                             <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="23"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -80,27 +77,27 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="l52-3C-5Dw" firstAttribute="centerX" secondItem="7GQ-Ma-eYl" secondAttribute="centerX" id="86B-Ql-jyy"/>
-                        <constraint firstItem="7GQ-Ma-eYl" firstAttribute="centerX" secondItem="v1z-Zu-cHZ" secondAttribute="centerX" id="BD7-RA-1y1"/>
-                        <constraint firstItem="z5L-O5-wM8" firstAttribute="top" secondItem="7GQ-Ma-eYl" secondAttribute="bottom" constant="11" id="CUD-Cl-nVA"/>
+                        <constraint firstItem="l52-3C-5Dw" firstAttribute="centerX" secondItem="v1z-Zu-cHZ" secondAttribute="centerX" id="0HL-n5-fyQ"/>
+                        <constraint firstItem="z5L-O5-wM8" firstAttribute="top" secondItem="vCI-kq-e2D" secondAttribute="bottom" constant="11" id="2iC-dA-IBU"/>
+                        <constraint firstAttribute="trailing" secondItem="vCI-kq-e2D" secondAttribute="trailing" constant="5" id="ESB-Js-9FG"/>
                         <constraint firstItem="z5L-O5-wM8" firstAttribute="centerX" secondItem="v1z-Zu-cHZ" secondAttribute="centerX" id="OBv-qN-8Ca"/>
                         <constraint firstAttribute="trailing" secondItem="YSf-E0-3gD" secondAttribute="trailing" constant="20" id="Pm3-P0-kTl"/>
-                        <constraint firstItem="7GQ-Ma-eYl" firstAttribute="centerY" secondItem="v1z-Zu-cHZ" secondAttribute="centerY" id="Q8z-aq-3oy"/>
                         <constraint firstItem="z5L-O5-wM8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="v1z-Zu-cHZ" secondAttribute="leading" constant="3" id="SFN-7X-d9E"/>
                         <constraint firstItem="l52-3C-5Dw" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="v1z-Zu-cHZ" secondAttribute="leading" constant="3" id="Vwa-tv-uF8"/>
+                        <constraint firstItem="vCI-kq-e2D" firstAttribute="centerX" secondItem="v1z-Zu-cHZ" secondAttribute="centerX" id="Wn4-PL-WXb"/>
                         <constraint firstItem="YSf-E0-3gD" firstAttribute="leading" secondItem="v1z-Zu-cHZ" secondAttribute="leading" constant="20" id="XsP-i6-if3"/>
-                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="7GQ-Ma-eYl" secondAttribute="trailing" constant="3" id="bU0-nJ-soG"/>
+                        <constraint firstItem="vCI-kq-e2D" firstAttribute="top" secondItem="l52-3C-5Dw" secondAttribute="bottom" constant="17" id="aqx-Tc-sT2"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="l52-3C-5Dw" secondAttribute="trailing" constant="3" id="buM-0E-z0u"/>
+                        <constraint firstItem="vCI-kq-e2D" firstAttribute="centerY" secondItem="v1z-Zu-cHZ" secondAttribute="centerY" constant="-16" id="h7c-Uq-gnf"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="z5L-O5-wM8" secondAttribute="trailing" constant="3" id="hJM-FU-ZMV"/>
-                        <constraint firstItem="YSf-E0-3gD" firstAttribute="top" secondItem="z5L-O5-wM8" secondAttribute="bottom" constant="25" id="l9O-zA-bg2"/>
-                        <constraint firstItem="7GQ-Ma-eYl" firstAttribute="top" secondItem="l52-3C-5Dw" secondAttribute="bottom" constant="19" id="oCC-tF-nfF"/>
-                        <constraint firstItem="7GQ-Ma-eYl" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="v1z-Zu-cHZ" secondAttribute="leading" constant="3" id="s1K-KF-5Nv"/>
+                        <constraint firstItem="YSf-E0-3gD" firstAttribute="top" secondItem="z5L-O5-wM8" secondAttribute="bottom" constant="17" id="l9O-zA-bg2"/>
+                        <constraint firstItem="vCI-kq-e2D" firstAttribute="leading" secondItem="v1z-Zu-cHZ" secondAttribute="leading" constant="5" id="lsZ-bV-J7x"/>
                     </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="v1z-Zu-cHZ" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.38" id="9bY-Rx-Ffi"/>
+                <constraint firstItem="v1z-Zu-cHZ" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.43" id="9bY-Rx-Ffi"/>
                 <constraint firstItem="v1z-Zu-cHZ" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.72" id="eyI-Lx-WKX"/>
                 <constraint firstItem="v1z-Zu-cHZ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="gHU-8J-obO"/>
                 <constraint firstItem="v1z-Zu-cHZ" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="jp3-gb-Nkt"/>

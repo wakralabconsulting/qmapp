@@ -21,7 +21,7 @@ struct PublicArtsDetail: ResponseObjectSerializable, ResponseCollectionSerializa
             self.id = representation["ID"] as? String
             self.name = representation["name"] as? String
             self.description = representation["Description"] as? String
-            self.shortdescription = representation["Short description"] as? String
+            self.shortdescription = representation["short_description"] as? String
             self.image = representation["Teaser_image"] as? String
             
         }

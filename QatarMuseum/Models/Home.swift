@@ -26,7 +26,8 @@ struct Home: ResponseObjectSerializable, ResponseCollectionSerializable {
         }
     }
     
-    init (name: String?, arabicname: String? , image: String?, tourguide_available: String?, sort_id: String?) {
+    init (id:String?, name: String?, arabicname: String? , image: String?, tourguide_available: String?, sort_id: String?) {
+        self.id = id
         self.name = name
         self.arabicname = arabicname
         self.image = image

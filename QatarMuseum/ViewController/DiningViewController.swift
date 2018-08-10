@@ -21,18 +21,19 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
     let networkReachability = NetworkReachabilityManager()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupDiningArtsUi()
-        if  (networkReachability?.isReachable)! {
+        //if  (networkReachability?.isReachable)! {
             getDiningListFromServer()
-        }
-        else {
-            self.loadingView.stopLoading()
-            self.loadingView.noDataView.isHidden = false
-            self.loadingView.isHidden = false
-            self.loadingView.showNoDataView()
-            let checkInternet =  NSLocalizedString("CHECK_INTERNET", comment: "check internet message")
-            self.loadingView.noDataLabel.text = checkInternet
-        }
+//        }
+//        else {
+//            self.loadingView.stopLoading()
+//            self.loadingView.noDataView.isHidden = false
+//            self.loadingView.isHidden = false
+//            self.loadingView.showNoDataView()
+//            let checkInternet =  NSLocalizedString("CHECK_INTERNET", comment: "check internet message")
+//            self.loadingView.noDataLabel.text = checkInternet
+//        }
         registerNib()
         
     }
@@ -123,6 +124,7 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
     {
         
         _ = Alamofire.request(QatarMuseumRouter.DiningList()).responseObject { (response: DataResponse<DiningLists>) -> Void in
+            //URLCache.shared.removeAllCachedResponses()
             switch response.result {
             case .success(let data):
                 self.diningListArray = data.diningLists
@@ -147,6 +149,9 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
             }
         }
     }
+    
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

@@ -24,10 +24,10 @@ struct DiningDetail: ResponseObjectSerializable, ResponseCollectionSerializable 
             self.name = representation["name"] as? String
             self.location = representation["Location"] as? String
             self.description = representation["Description"] as? String
-            self.image = representation["Image "] as? String
+            self.image = representation["image"] as? String
             self.openingtime = representation["opening time"] as? String
             self.closetime = representation["close time"] as? String
-            self.sortid = representation["sort id"] as? String
+            self.sortid = representation["sort_id"] as? String
             
         }
     }

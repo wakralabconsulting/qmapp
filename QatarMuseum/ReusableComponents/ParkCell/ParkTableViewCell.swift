@@ -43,53 +43,58 @@ class ParkTableViewCell: UITableViewCell {
         // Initialization code
     }
     //MARK: Public Arts List Data
-    func setParksCellValues(cellValues: NSDictionary,imageName: String) {
+    func setParksCellValues(parksList: ParksList) {
         
         
-        titleLabel.text = (cellValues.value(forKey: "title") as? String)
-        titleDescriptionLabel.text = (cellValues.value(forKey: "titleDescription") as? String)
-        titleSecondDescriptionLabel.text = (cellValues.value(forKey: "secondDescription") as? String)
+        titleLabel.text = parksList.title?.uppercased()
+        titleDescriptionLabel.text = parksList.description
+       // titleSecondDescriptionLabel.text =
         timeTitleLabel.text = NSLocalizedString("OPENING_TIME_TITLE",
                                                 comment: "OPENING_TIME_TITLE in the Heritage detail")
-        if ((cellValues.value(forKey: "subTitle")  != nil) && (cellValues.value(forKey: "subTitle") as! String != "")) {
-          
-            subTitleTopConstraint.constant = 13
-            subTitleLabel.text = (cellValues.value(forKey: "subTitle") as? String)?.uppercased()
-        }
-        else {
+//        if ((cellValues.value(forKey: "subTitle")  != nil) && (cellValues.value(forKey: "subTitle") as! String != "")) {
+//
+//            subTitleTopConstraint.constant = 13
+//            subTitleLabel.text = (cellValues.value(forKey: "subTitle") as? String)?.uppercased()
+//        }
+//        else {
             subTitleTopConstraint.constant = 0
             subTitleLabel.frame = CGRect(x: self.subTitleLabel.frame.origin.x, y: self.subTitleLabel.frame.origin.x, width: 0, height: 0)
             
-        }
-        if ((cellValues.value(forKey: "openingTimeDes")  != nil) && (cellValues.value(forKey: "openingTimeDes") as! String != ""))  {
-            timeTitleLabel.isHidden = false
-            timeDescriptionLabel.text = (cellValues.value(forKey: "openingTimeDes") as? String)
-            timeLineViewHeight.constant = 2
-        }
-        else {
-            timeTitleLabel.isHidden = true
-            timeDescriptionLabel.isHidden = true
-            timeLineViewHeight.constant = 0
-        }
-        if ((cellValues.value(forKey: "locationDes")  != nil) && (cellValues.value(forKey: "locationDes") as! String != ""))  {
-            locationsTitleLabel.isHidden = false
-            locationButton.isHidden = false
-            locationsTitleLabel.text =  NSLocalizedString("LOCATION_TITLE",
-                                                                                    comment: "LOCATION_TITLE in the Park detail")
-            locationButton.setTitle((cellValues.value(forKey: "locationDes") as? String), for: .normal)
-            locationLineViewHeight.constant = 2
-            
-            locationButtonBottomConstraint.constant = 29
-        }
-        else {
-            locationsTitleLabel.isHidden = true
-            locationButton.isHidden = true
-            locationLineViewHeight.constant = 0
-           
-            locationButtonBottomConstraint.constant = 0
+        //}
+//        if ((cellValues.value(forKey: "openingTimeDes")  != nil) && (cellValues.value(forKey: "openingTimeDes") as! String != ""))  {
+//            timeTitleLabel.isHidden = false
+//            timeDescriptionLabel.text = (cellValues.value(forKey: "openingTimeDes") as? String)
+//            timeLineViewHeight.constant = 2
+//        }
+//        else {
+//            timeTitleLabel.isHidden = true
+//            timeDescriptionLabel.isHidden = true
+//            timeLineViewHeight.constant = 0
+//        }
+//        if ((cellValues.value(forKey: "locationDes")  != nil) && (cellValues.value(forKey: "locationDes") as! String != ""))  {
+//            locationsTitleLabel.isHidden = false
+//            locationButton.isHidden = false
+//            locationsTitleLabel.text =  NSLocalizedString("LOCATION_TITLE",
+//                                                                                    comment: "LOCATION_TITLE in the Park detail")
+//            locationButton.setTitle((cellValues.value(forKey: "locationDes") as? String), for: .normal)
+//            locationLineViewHeight.constant = 2
+//
+//            locationButtonBottomConstraint.constant = 29
+//        }
+//        else {
+//            locationsTitleLabel.isHidden = true
+//            locationButton.isHidden = true
+//            locationLineViewHeight.constant = 0
+//
+//            locationButtonBottomConstraint.constant = 0
+//        }
+        
+        if let imageUrl = parksList.image{
+            parkImageView.kf.setImage(with: URL(string: imageUrl))
         }
         
-        parkImageView.image = UIImage(named: imageName)
+        
+        
         //set font
         titleLabel.font = UIFont.closeButtonFont
         subTitleLabel.font = UIFont.collectionFirstDescriptionFont

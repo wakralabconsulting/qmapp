@@ -36,12 +36,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         registerNib()
         setUpUI()
        
-        if  (networkReachability?.isReachable)! {
+        //if  (networkReachability?.isReachable)! {
             getHomeList()
-        }
-        else {
-            self.fetchHomeInfoFromCoredata()
-        }
+//        }
+//        else {
+//            self.fetchHomeInfoFromCoredata()
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -91,7 +91,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if (indexPath.row == self.homeList.endIndex - 1) {
+        if (homeList[indexPath.row].id == "1") {
             loadExhibitionPage()
         } else if(homeList[indexPath.row].id == "63") {
             loadMuseumsPage()
@@ -142,10 +142,10 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 self.homeList = data.homeList
                 let exhibitionName = NSLocalizedString("EXHIBITIONS_LABEL",
                                                        comment: "EXHIBITIONS_LABEL in exhibition cell")
-                self.homeList.insert(Home(name: exhibitionName , arabicname: exhibitionName,  image: "exhibition",
+                self.homeList.insert(Home(id: "1",name: exhibitionName , arabicname: exhibitionName,  image: "exhibition",
                                           tourguide_available: "false", sort_id: nil),
                                      at: self.homeList.endIndex - 1)
-                self.saveOrUpdateHomeCoredata()
+               // self.saveOrUpdateHomeCoredata()
                 self.homeCollectionView.reloadData()
             case .failure(let error):
                 if let unhandledError = handleError(viewController: self, errorType: error as! BackendError) {
@@ -524,7 +524,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
 //                            print(homeArray[i].image)
 //                            print(homeArray[i].tourguideavailable)
 //                            print(homeArray[i].sortid)
-//                            self.homeList.insert(Home(name: homeArray[i].name, arabicname: homeArray[i].arabicname,image: homeArray[i].image,
+//                            self.homeList.insert(Home(id:homeArray[i].id , name: homeArray[i].name, arabicname: homeArray[i].arabicname,image: homeArray[i].image,
 //                                                      tourguide_available: homeArray[i].tourguideavailable, sort_id: homeArray[i].sortid),
 //                                                 at: i)
 //                        }
@@ -532,7 +532,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
 //                        //need to show english list only when arabic values stored in db
 //                    else {
                     
-                        self.homeList.insert(Home(name: homeArray[i].name, arabicname: homeArray[i].arabicname,image: homeArray[i].image,
+                    self.homeList.insert(Home(id:homeArray[i].id, name: homeArray[i].name, arabicname: homeArray[i].arabicname,image: homeArray[i].image,
                                                   tourguide_available: homeArray[i].tourguideavailable, sort_id: homeArray[i].sortid),
                                              at: i)
                     //}

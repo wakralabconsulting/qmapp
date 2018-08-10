@@ -24,17 +24,15 @@ class HomeCollectionViewCell: UICollectionViewCell {
         
         homeTitleLabel.text = home.name
         homeTitleLabel.font = UIFont.homeTitleFont
-        if  (networkReachability?.isReachable == false) {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+//        if  (networkReachability?.isReachable == false) {
+//            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                 homeTitleLabel.text = home.name
-            }
-            else {
-                homeTitleLabel.text = home.arabicname
-            }
-        }
-        else {
-            
-        }
+//            }
+//            else {
+//                homeTitleLabel.text = home.arabicname
+//            }
+//        }
+        
         if (home.isTourguideAvailable == "true") {
             tourGuideButton.isHidden = false
         }

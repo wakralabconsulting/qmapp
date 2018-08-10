@@ -72,6 +72,9 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         clearButton.titleLabel?.font = UIFont.clearButtonFont
         filterButton.titleLabel?.font = UIFont.clearButtonFont
         
+        institutionText.text = institutionArray[0] as? String
+        ageGroupText.text = ageGroupArray[0] as? String
+        programmeTypeText.text = programmeTypeArray[0] as? String
         addPickerView()
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -143,7 +146,7 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         ageGroupText.inputAccessoryView = pickerToolBar
         programmeTypeText.inputView = picker
         programmeTypeText.inputAccessoryView = pickerToolBar
-
+        
     }
     
     //MARK: header delegate
@@ -157,38 +160,41 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         
     }
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        
-        let myScreenRect: CGRect = UIScreen.main.bounds
-        let pickerHeight : CGFloat = 200
-        UIView.beginAnimations( "animateView", context: nil)
-        var needToMove: CGFloat = 0
-        
-        var frame : CGRect = self.view.frame
-        if (textField.frame.origin.y + textField.frame.size.height+50  > (myScreenRect.size.height - pickerHeight-50)) {
-            needToMove = (textField.frame.origin.y + textField.frame.size.height+50 ) - (myScreenRect.size.height - pickerHeight-100)
-        }
-        
-        frame.origin.y = -needToMove
-        self.view.frame = frame
-        UIView.commitAnimations()
+        var viewForTextField : UIView!
         if (textField == institutionText) {
             picker.tag = 0
             institutionView.backgroundColor = UIColor.filterTextSelectedGray
             ageGroupView.backgroundColor = UIColor.white
             programmeTypeView.backgroundColor = UIColor.white
+            viewForTextField = institutionView
         }
         else if(textField == ageGroupText) {
             picker.tag = 1
             institutionView.backgroundColor = UIColor.white
             ageGroupView.backgroundColor = UIColor.filterTextSelectedGray
             programmeTypeView.backgroundColor = UIColor.white
+            viewForTextField = ageGroupView
         }
         else {
             picker.tag = 2
             institutionView.backgroundColor = UIColor.white
             ageGroupView.backgroundColor = UIColor.white
             programmeTypeView.backgroundColor = UIColor.filterTextSelectedGray
+            viewForTextField = programmeTypeView
         }
+        let myScreenRect: CGRect = UIScreen.main.bounds
+        let pickerHeight : CGFloat = 200
+        UIView.beginAnimations( "animateView", context: nil)
+        var needToMove: CGFloat = 0
+        
+        var frame : CGRect = self.view.frame
+        if (viewForTextField.frame.origin.y + viewForTextField.frame.size.height+50  > (myScreenRect.size.height - (pickerHeight+50))) {
+                needToMove = (viewForTextField.frame.origin.y + viewForTextField.frame.size.height+70 ) - (myScreenRect.size.height - pickerHeight-100)
+            }
+        frame.origin.y = -needToMove
+        self.view.frame = frame
+        UIView.commitAnimations()
+       
         picker.reloadAllComponents()
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -245,6 +251,30 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         }
         
         
+    }
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        let pickerLabel = UITextView()
+        var pickerTitle : String?
+        selectedRow = row
+        if (picker.tag == 0) {
+            pickerTitle = institutionArray[row] as? String
+            selectedInstitution = (institutionArray[row] as? String)!
+            institutionText.text = (institutionArray[row] as? String)!
+        }
+        else if(picker.tag == 1) {
+            pickerTitle = ageGroupArray[row] as? String
+            selectedageGroup = (ageGroupArray[row] as? String)!
+            ageGroupText.text = (ageGroupArray[row] as? String)!
+        }
+        else {
+            pickerTitle = programmeTypeArray[row] as? String
+            selectedProgramme = (programmeTypeArray[row] as? String)!
+            programmeTypeText.text = (programmeTypeArray[row] as? String)!
+        }
+        pickerLabel.text = pickerTitle
+        pickerLabel.font = UIFont.closeButtonFont
+        pickerLabel.textAlignment = NSTextAlignment.center
+        return pickerLabel
     }
     //MARK: Picker ToolBar Actions
     
