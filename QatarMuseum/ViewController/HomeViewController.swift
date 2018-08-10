@@ -91,6 +91,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
         if (homeList[indexPath.row].id == "1") {
             loadExhibitionPage()
         } else if(homeList[indexPath.row].id == "63") {

@@ -14,24 +14,23 @@ enum ExhbitionPageName {
     case museumExhibition
 }
 class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol {
-   
     @IBOutlet weak var exhibitionHeaderView: CommonHeaderView!
     @IBOutlet weak var exhibitionCollectionView: UICollectionView!
-    
     @IBOutlet weak var exbtnLoadingView: LoadingView!
-    var exhibitionArray : NSArray!
-    var exhibition: [Exhibition]! = []
     
+    var exhibition: [Exhibition]! = []
     var museumExhibitionArray : NSArray!
     var museumExhibitionImageArray = NSArray()
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var exhibitionsPageNameString : ExhbitionPageName?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpExhibitionPageUi()
         registerNib()
         getExhibitionDataFromJson()
     }
+    
     func setUpExhibitionPageUi() {
         exbtnLoadingView.isHidden = false
         exbtnLoadingView.showLoading()
@@ -50,13 +49,16 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
         }
       
     }
+    
     func registerNib() {
         let nib = UINib(nibName: "ExhibitionsCellXib", bundle: nil)
         exhibitionCollectionView?.register(nib, forCellWithReuseIdentifier: "exhibitionCellId")
     }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
     //MARK: Service call
     func getExhibitionDataFromJson(){
         if (exhibitionsPageNameString == ExhbitionPageName.homeExhibition) {
@@ -135,8 +137,10 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
        // loadExhibitionDetail()
-        if (indexPath.item == 0) {
-            loadExhibitionDetailAnimation()
+        if exhibitionsPageNameString == ExhbitionPageName.homeExhibition, let exhibitionId = exhibition[indexPath.row].id {
+            loadExhibitionDetailAnimation(exhibitionId: exhibitionId)
+        } else if exhibitionsPageNameString == ExhbitionPageName.museumExhibition && indexPath.row == 0 {
+            loadExhibitionDetailAnimation(exhibitionId: "")
         } else {
             addComingSoonPopup()
         }
@@ -152,10 +156,12 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
         popupView.loadPopup()
         self.view.addSubview(popupView)
     }
-    func loadExhibitionDetailAnimation() {
+    
+    func loadExhibitionDetailAnimation(exhibitionId: String) {
         let exhibitionDtlView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionDtlId") as! ExhibitionDetailViewController
         if (exhibitionsPageNameString == ExhbitionPageName.homeExhibition) {
             exhibitionDtlView.fromHome = true
+            exhibitionDtlView.exhibitionId = exhibitionId
         } else {
             exhibitionDtlView.fromHome = false
         }
@@ -165,8 +171,6 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
         transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(exhibitionDtlView, animated: false, completion: nil)
-        
-        
     }
  
     //MARK: Header delegate
@@ -179,7 +183,6 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
         switch exhibitionsPageNameString {
         case .homeExhibition?:
             let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
-            
             let appDelegate = UIApplication.shared.delegate
             appDelegate?.window??.rootViewController = homeViewController
         case .museumExhibition?:

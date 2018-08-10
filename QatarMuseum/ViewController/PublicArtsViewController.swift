@@ -10,12 +10,10 @@ import Alamofire
 import UIKit
 
 class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol {
-    
-    
     @IBOutlet weak var pulicArtsHeader: CommonHeaderView!
     @IBOutlet weak var publicArtsCollectionView: UICollectionView!
-    
     @IBOutlet weak var loadingView: LoadingView!
+    
     var publicArtsListImageArray = NSArray()
     var popUpView : ComingSoonPopUp = ComingSoonPopUp()
     var publicArtsListArray: [PublicArtsList]! = []
@@ -34,10 +32,8 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
         pulicArtsHeader.headerViewDelegate = self
         pulicArtsHeader.headerTitle.text = NSLocalizedString("PUBLIC_ARTS_TITLE", comment: "PUBLIC_ARTS_TITLE Label in the PublicArts page")
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            
             pulicArtsHeader.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
-        }
-        else {
+        } else {
             pulicArtsHeader.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
 
@@ -50,6 +46,7 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
         let nib = UINib(nibName: "HeritageCell", bundle: nil)
         publicArtsCollectionView?.register(nib, forCellWithReuseIdentifier: "heritageCellId")
     }
+    
     //MARK: collectionView Delegates
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return publicArtsListArray.count

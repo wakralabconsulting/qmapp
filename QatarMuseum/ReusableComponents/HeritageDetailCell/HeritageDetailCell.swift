@@ -11,31 +11,24 @@ import UIKit
 class HeritageDetailCell: UITableViewCell {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
-    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subTitleLabel: UILabel!
     @IBOutlet weak var middleTitleLabel: UILabel!
-    
     @IBOutlet weak var titleDescriptionLabel: UITextView!
     @IBOutlet weak var midTitleDescriptionLabel: UITextView!
     @IBOutlet weak var sundayTimeLabel: UILabel!
     @IBOutlet weak var fridayTimeLabel: UILabel!
     @IBOutlet weak var locationTitleLabel: UILabel!
     @IBOutlet weak var middleLabelLine: UIView!
-    
     @IBOutlet weak var titleBottomOnlyConstraint: NSLayoutConstraint!
     @IBOutlet weak var fridayLabel: UILabel!
-    
-    
     @IBOutlet weak var locationFirstLabelHeight: NSLayoutConstraint!
     @IBOutlet weak var openingTimeTitleLabel: UILabel!
     @IBOutlet weak var openingTimeLine: UIView!
     @IBOutlet weak var contactTitleLabel: UILabel!
     @IBOutlet weak var contactLine: UIView!
     @IBOutlet weak var contactLabel: UILabel!
-
     @IBOutlet weak var locationFirstLabel: UILabel!
-
     @IBOutlet weak var subTitleHeight: NSLayoutConstraint!
     @IBOutlet weak var locationTotalTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var locationTotalBottomConstraint: NSLayoutConstraint!
@@ -44,12 +37,14 @@ class HeritageDetailCell: UITableViewCell {
     var favBtnTapAction : (()->())?
     var shareBtnTapAction : (()->())?
     var locationButtonTapAction : (()->())?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         setUi()
        // setPublicArtsDetailCellData()
         //setHeritageDetailCellData()
     }
+    
     func setUi() {
         titleLabel.font = UIFont.settingsUpdateLabelFont
         titleDescriptionLabel.font = UIFont.englishTitleFont
@@ -64,8 +59,8 @@ class HeritageDetailCell: UITableViewCell {
         locationButton.titleLabel?.font = UIFont.sideMenuLabelFont
         contactTitleLabel.font = UIFont.closeButtonFont
         contactLabel.font = UIFont.sideMenuLabelFont
-        
     }
+    
     func setHeritageDetailData(heritageDetail: HeritageDetail) {
         titleBottomOnlyConstraint.isActive = false
         locationTotalTopConstraint.isActive = false
@@ -82,7 +77,6 @@ class HeritageDetailCell: UITableViewCell {
         contactLabel.isHidden = false
         locationFirstLabelHeight.constant = 0
         titleLabel.text = heritageDetail.name?.uppercased()
-        
         titleDescriptionLabel.text = heritageDetail.shortdescription
         midTitleDescriptionLabel.text = heritageDetail.longdescription
         locationTitleLabel.text = NSLocalizedString("LOCATION_TITLE",
@@ -94,10 +88,8 @@ class HeritageDetailCell: UITableViewCell {
         let mapRedirectionMessage = NSLocalizedString("MAP_REDIRECTION_MESSAGE",
                                                       comment: "MAP_REDIRECTION_MESSAGE in the Dining detail")
         locationButton.setTitle(mapRedirectionMessage, for: .normal)
-        
-        
-        
     }
+    
     func setPublicArtsDetailValues(publicArsDetail: PublicArtsDetail) {
         titleLabel.text = publicArsDetail.name?.uppercased()
         //subTitleLabel.text =
@@ -124,6 +116,7 @@ class HeritageDetailCell: UITableViewCell {
                                                     comment: "LOCATION_TITLE in the Heritage detail")
         //fridayLabel.text = 
     }
+    
     func setMuseumAboutCellData() {
         titleBottomOnlyConstraint.isActive = false
         locationTotalTopConstraint.isActive = false
@@ -163,6 +156,7 @@ class HeritageDetailCell: UITableViewCell {
                             self.favBtnTapAction?()
         })
     }
+    
     @IBAction func didTapShareButton(_ sender: UIButton) {
         UIButton.animate(withDuration: 0.3,
                          animations: {
@@ -181,6 +175,7 @@ class HeritageDetailCell: UITableViewCell {
         self.locationButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         locationButtonTapAction?()
     }
+    
     @IBAction func locationButtonTouchDown(_ sender: UIButton) {
         self.locationButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
