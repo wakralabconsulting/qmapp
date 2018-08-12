@@ -27,7 +27,7 @@ class HeritageCollectionCell: UICollectionViewCell {
         setGradientLayer()
     }
     //MARK: HeritageList data
-    func setHeritageListCellValues(heritageList: HeritageDetail) {
+    func setHeritageListCellValues(heritageList: Heritage) {
         titleLabel.text = heritageList.name?.uppercased()
        // if  (networkReachability?.isReachable == false) {
            // if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
@@ -96,7 +96,7 @@ class HeritageCollectionCell: UICollectionViewCell {
         heritageImageView.image = UIImage(named: imageName)
     }
     //MARK: Dining List Data
-    func setDiningListValues(diningList: DiningList) {
+    func setDiningListValues(diningList: Dining) {
         titleLabel.text = diningList.name?.uppercased()
         lineLabelHeight.constant = 0
         lineLabel.isHidden = true

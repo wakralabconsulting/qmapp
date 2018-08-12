@@ -1,22 +1,67 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17C88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="DiningEntity" representedClassName="DiningEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="closetime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="diningdescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="openingtime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sortid" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="DiningEntityArabic" representedClassName="DiningEntityArabic" syncable="YES" codeGenerationType="class">
+        <attribute name="closetimearabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="descriptionarabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imagearabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="locationarabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="namearabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="openingtimearabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sortidarabic" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="HeritageEntity" representedClassName="HeritageEntity" syncable="YES" codeGenerationType="class">
-        <attribute name="listarabicname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detaillatitude" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detaillocation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detaillongdescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detaillongitude" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detailshortdescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="listid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="listimage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="listname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="listsortid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="HeritageEntityArabic" representedClassName="HeritageEntityArabic" syncable="YES" codeGenerationType="class">
+        <attribute name="detaillatitudearabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detaillocationarabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detaillongdescriptionarabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detaillongitudearabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detailshortdescarabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="listid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="listimagearabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="listnamearabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="listsortidarabic" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="HomeEntity" representedClassName="HomeEntity" syncable="YES" codeGenerationType="class">
-        <attribute name="arabicname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tourguideavailable" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="HomeEntityArabic" representedClassName="HomeEntityArabic" syncable="YES" codeGenerationType="class">
+        <attribute name="arabicimage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="arabicname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="arabicsortid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="arabictourguideavailable" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="HomeEntity" positionX="-63" positionY="-18" width="128" height="135"/>
-        <element name="HeritageEntity" positionX="-63" positionY="27" width="128" height="120"/>
+        <element name="DiningEntity" positionX="-54" positionY="90" width="128" height="165"/>
+        <element name="DiningEntityArabic" positionX="-45" positionY="108" width="128" height="165"/>
+        <element name="HeritageEntity" positionX="-63" positionY="27" width="128" height="180"/>
+        <element name="HeritageEntityArabic" positionX="-54" positionY="63" width="128" height="180"/>
+        <element name="HomeEntity" positionX="-63" positionY="-18" width="128" height="30"/>
+        <element name="HomeEntityArabic" positionX="-54" positionY="63" width="128" height="120"/>
     </elements>
 </model>
