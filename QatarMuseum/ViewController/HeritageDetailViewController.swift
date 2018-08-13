@@ -41,7 +41,13 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             }
         }
         else if ((pageNameString == PageName.publicArtsDetail) && (publicArtsDetailId != nil)) {
-            getPublicArtsDetailsFromServer()
+            if  (networkReachability?.isReachable)! {
+                getPublicArtsDetailsFromServer()
+            }
+            else {
+                self.fetchPublicArtsDetailsFromCoredata()
+            }
+            
         }
     }
     
@@ -244,7 +250,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             case .success(let data):
                 self.publicArtsDetailtArray = data.publicArtsDetail!
                 self.setTopBarImage()
-                self.saveOrUpdateHeritageCoredata()
+                self.saveOrUpdatePublicArtsCoredata()
                 self.heritageDetailTableView.reloadData()
                 self.loadingView.stopLoading()
                 self.loadingView.isHidden = true
@@ -266,11 +272,11 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             }
         }
     }
-    //MARK: Coredata Method
+    //MARK: Heritage Coredata Method
     func saveOrUpdateHeritageCoredata() {
         if (heritageDetailtArray.count > 0) {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            let fetchData = checkAddedToCoredata(entityName: "HeritageEntity", heritageId: heritageDetailtArray[0].id) as! [HeritageEntity]
+            let fetchData = checkAddedToCoredata(entityName: "HeritageEntity", idKey: "listid" , idValue: heritageDetailtArray[0].id) as! [HeritageEntity]
            if (fetchData.count > 0) {
             let managedContext = getContext()
             let heritageDetailDict = heritageDetailtArray[0]
@@ -302,7 +308,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             }
         }
         else {
-            let fetchData = checkAddedToCoredata(entityName: "HeritageEntityArabic", heritageId: heritageDetailtArray[0].id) as! [HeritageEntityArabic]
+            let fetchData = checkAddedToCoredata(entityName: "HeritageEntityArabic", idKey:"listid" , idValue: heritageDetailtArray[0].id) as! [HeritageEntityArabic]
             if (fetchData.count > 0) {
                 let managedContext = getContext()
                 let heritageDetailDict = heritageDetailtArray[0]
@@ -428,6 +434,143 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
+    //MARK: PublicArts Coredata Method
+    func saveOrUpdatePublicArtsCoredata() {
+        if (publicArtsDetailtArray.count > 0) {
+            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                let fetchData = checkAddedToCoredata(entityName: "PublicArtsEntity", idKey: "id" , idValue: publicArtsDetailtArray[0].id) as! [PublicArtsEntity]
+                if (fetchData.count > 0) {
+                    let managedContext = getContext()
+                    let publicArtsDetailDict = publicArtsDetailtArray[0]
+                    
+                    //update
+                    let publicArtsbDict = fetchData[0]
+                    publicArtsbDict.name = publicArtsDetailDict.name
+                    publicArtsbDict.detaildescription = publicArtsDetailDict.description
+                    publicArtsbDict.shortdescription = publicArtsDetailDict.shortdescription
+                    publicArtsbDict.image = publicArtsDetailDict.image
+                    do{
+                        try managedContext.save()
+                    }
+                    catch{
+                        print(error)
+                    }
+                }
+                else {
+                    let managedContext = getContext()
+                    let publicArtsDetailDict : PublicArtsDetail?
+                    publicArtsDetailDict = publicArtsDetailtArray[0]
+                    self.saveToCoreData(publicArtseDetailDict: publicArtsDetailDict!, managedObjContext: managedContext)
+                }
+            }
+            else {
+                let fetchData = checkAddedToCoredata(entityName: "PublicArtsEntityArabic", idKey:"id" , idValue: publicArtsDetailtArray[0].id) as! [PublicArtsEntityArabic]
+                if (fetchData.count > 0) {
+                    let managedContext = getContext()
+                    let publicArtsDetailDict = publicArtsDetailtArray[0]
+                    
+                    //update
+                    
+                    let publicArtsdbDict = fetchData[0]
+                    publicArtsdbDict.namearabic = publicArtsDetailDict.name
+                    publicArtsdbDict.descriptionarabic = publicArtsDetailDict.description
+                    publicArtsdbDict.shortdescriptionarabic = publicArtsDetailDict.shortdescription
+                    publicArtsdbDict.imagearabic = publicArtsDetailDict.image
+                    do{
+                        try managedContext.save()
+                    }
+                    catch{
+                        print(error)
+                    }
+                }
+                else {
+                    let managedContext = getContext()
+                    let publicArtsListDict : PublicArtsDetail?
+                    publicArtsListDict = publicArtsDetailtArray[0]
+                    self.saveToCoreData(publicArtseDetailDict: publicArtsListDict!, managedObjContext: managedContext)
+                }
+            }
+        }
+    }
+    func saveToCoreData(publicArtseDetailDict: PublicArtsDetail, managedObjContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            let publicArtsInfo: PublicArtsEntity = NSEntityDescription.insertNewObject(forEntityName: "PublicArtsEntity", into: managedObjContext) as! PublicArtsEntity
+            publicArtsInfo.id = publicArtseDetailDict.id
+            publicArtsInfo.name = publicArtseDetailDict.name
+            publicArtsInfo.detaildescription = publicArtseDetailDict.description
+            publicArtsInfo.shortdescription = publicArtseDetailDict.shortdescription
+            publicArtsInfo.image = publicArtseDetailDict.image
+            
+        }
+        else {
+            let publicArtsInfo: PublicArtsEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "PublicArtsEntityArabic", into: managedObjContext) as! PublicArtsEntityArabic
+            publicArtsInfo.id = publicArtseDetailDict.id
+            publicArtsInfo.namearabic = publicArtseDetailDict.name
+            publicArtsInfo.descriptionarabic = publicArtseDetailDict.description
+            publicArtsInfo.shortdescriptionarabic = publicArtseDetailDict.shortdescription
+            publicArtsInfo.imagearabic = publicArtseDetailDict.image
+        }
+        do {
+            try managedObjContext.save()
+            
+            
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    func fetchPublicArtsDetailsFromCoredata() {
+        
+        do {
+            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                var publicArtsArray = [PublicArtsEntity]()
+                let managedContext = getContext()
+                let publicArtsFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "PublicArtsEntity")
+                if(publicArtsDetailId != nil) {
+                    publicArtsFetchRequest.predicate = NSPredicate.init(format: "id == \(publicArtsDetailId!)")
+                }
+                publicArtsArray = (try managedContext.fetch(publicArtsFetchRequest) as? [PublicArtsEntity])!
+                let publicArtsDict = publicArtsArray[0]
+                if ((publicArtsArray.count > 0) && (publicArtsDict.detaildescription != nil) && (publicArtsDict.shortdescription != nil) ){
+                    self.publicArtsDetailtArray.insert(PublicArtsDetail(id:publicArtsDict.id , name:publicArtsDict.name, description: publicArtsDict.detaildescription, shortdescription: publicArtsDict.shortdescription, image: publicArtsDict.image), at: 0)
+                    
+                    if(publicArtsDetailtArray.count == 0){
+                        self.showNodata()
+                    }
+                    self.setTopBarImage()
+                    heritageDetailTableView.reloadData()
+                }
+                else{
+                    self.showNodata()
+                }
+            }
+            else {
+                var publicArtsArray = [PublicArtsEntityArabic]()
+                let managedContext = getContext()
+                let publicArtsFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "PublicArtsEntityArabic")
+                if(publicArtsDetailId != nil) {
+                    publicArtsFetchRequest.predicate = NSPredicate.init(format: "id == \(publicArtsDetailId!)")
+                }
+                publicArtsArray = (try managedContext.fetch(publicArtsFetchRequest) as? [PublicArtsEntityArabic])!
+                let publicArtsDict = publicArtsArray[0]
+                if ((publicArtsArray.count > 0) && (publicArtsDict.descriptionarabic != nil) && (publicArtsDict.shortdescriptionarabic != nil)) {
+                    
+                   self.publicArtsDetailtArray.insert(PublicArtsDetail(id:publicArtsDict.id , name:publicArtsDict.namearabic, description: publicArtsDict.descriptionarabic, shortdescription: publicArtsDict.shortdescriptionarabic, image: publicArtsDict.imagearabic), at: 0)
+                    
+                    
+                    if(publicArtsDetailtArray.count == 0){
+                        self.showNodata()
+                    }
+                    self.setTopBarImage()
+                    heritageDetailTableView.reloadData()
+                }
+                else{
+                    self.showNodata()
+                }
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
     func getContext() -> NSManagedObjectContext{
         
         let appDelegate =  UIApplication.shared.delegate as? AppDelegate
@@ -438,15 +581,15 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             return appDelegate!.managedObjectContext
         }
     }
-    func checkAddedToCoredata(entityName: String?,heritageId: String?) -> [NSManagedObject]
+    func checkAddedToCoredata(entityName: String?,idKey:String?, idValue: String?) -> [NSManagedObject]
     {
         let managedContext = getContext()
         var fetchResults : [NSManagedObject] = []
-        let heritageFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
-        if (heritageId != nil) {
-            heritageFetchRequest.predicate = NSPredicate.init(format: "listid == \(heritageId!)")
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
+        if (idValue != nil) {
+            fetchRequest.predicate = NSPredicate.init(format: "\(idKey!) == \(idValue!)")
         }
-        fetchResults = try! managedContext.fetch(heritageFetchRequest)
+        fetchResults = try! managedContext.fetch(fetchRequest)
         return fetchResults
     }
     func showNodata() {
