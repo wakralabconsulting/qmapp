@@ -51,8 +51,6 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
     }
     //MARK: Service call
     func getTourGuideDataFromJson(){
-        
-        
             let url = Bundle.main.url(forResource: "TourGuideJson", withExtension: "json")
             let dataObject = NSData(contentsOf: url!)
             if let jsonObj = try? JSONSerialization.jsonObject(with: dataObject! as Data, options: .allowFragments) as? NSDictionary {
@@ -104,18 +102,19 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(miaView, animated: false, completion: nil)
     }
+    
     func loadComingSoonPopup() {
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
         popupView.loadPopup()
         self.view.addSubview(popupView)
-        
     }
+    
     //MARK: Poup Delegate
     func closeButtonPressed() {
-        
         self.popupView.removeFromSuperview()
     }
+    
     //MARK: Header delegate
     func headerCloseButtonPressed() {
         let transition = CATransition()
