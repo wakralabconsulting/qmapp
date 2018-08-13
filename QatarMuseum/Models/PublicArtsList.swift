@@ -30,6 +30,15 @@ struct PublicArtsList: ResponseObjectSerializable, ResponseCollectionSerializabl
             
         }
     }
+    init(id: String?, name: String?, latitude:String?, longitude:String?,image:String?,sortcoefficient:String?) {
+        self.id = id
+        self.name = name
+        self.longitude = longitude
+        self.latitude = latitude
+        self.image = image
+        self.sortcoefficient = sortcoefficient
+        
+    }
 }
 
 struct PublicArtsLists: ResponseObjectSerializable {

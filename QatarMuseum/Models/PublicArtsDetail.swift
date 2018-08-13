@@ -26,6 +26,13 @@ struct PublicArtsDetail: ResponseObjectSerializable, ResponseCollectionSerializa
             
         }
     }
+    init(id:String?,name:String?,description:String?,shortdescription:String?,image:String?) {
+        self.id = id
+        self.name = name
+        self.description = description
+        self.shortdescription = id
+        self.image = image
+    }
 }
 
 struct PublicArtsDetails: ResponseObjectSerializable {
