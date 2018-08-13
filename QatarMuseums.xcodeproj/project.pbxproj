@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B51B3CE21214820002B84AA /* ObjectPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51B3CD21214820002B84AA /* ObjectPopupView.swift */; };
+		1B51B3D021214853002B84AA /* ObjectPopupXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B51B3CF21214853002B84AA /* ObjectPopupXib.xib */; };
 		1BC909D02108E3C700D6C00B /* QMUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC909CF2108E3C700D6C00B /* QMUtility.swift */; };
 		1BC909D2210B277F00D6C00B /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC909D1210B277F00D6C00B /* Home.swift */; };
 		1BE526D0210739BF00C8CD51 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526CF210739BE00C8CD51 /* Request.swift */; };
@@ -145,6 +147,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1B51B3CD21214820002B84AA /* ObjectPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectPopupView.swift; sourceTree = "<group>"; };
+		1B51B3CF21214853002B84AA /* ObjectPopupXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ObjectPopupXib.xib; sourceTree = "<group>"; };
 		1BC909CF2108E3C700D6C00B /* QMUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QMUtility.swift; sourceTree = "<group>"; };
 		1BC909D1210B277F00D6C00B /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		1BE526CF210739BE00C8CD51 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
@@ -322,6 +326,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B51B3CC212146E7002B84AA /* ObjectPopup */ = {
+			isa = PBXGroup;
+			children = (
+				1B51B3CF21214853002B84AA /* ObjectPopupXib.xib */,
+				1B51B3CD21214820002B84AA /* ObjectPopupView.swift */,
+			);
+			path = ObjectPopup;
+			sourceTree = "<group>";
+		};
 		1BC909CE2108E37900D6C00B /* CommonMethods */ = {
 			isa = PBXGroup;
 			children = (
@@ -480,6 +493,7 @@
 		B80DC08720C7943100E28034 /* ReusableComponents */ = {
 			isa = PBXGroup;
 			children = (
+				1B51B3CC212146E7002B84AA /* ObjectPopup */,
 				1BC909CE2108E37900D6C00B /* CommonMethods */,
 				B8E01BFA21060FBC008D7F33 /* RTLSupportFiles */,
 				B811FBCA210380EF00960246 /* CommonColours */,
@@ -887,6 +901,7 @@
 				B8B54D6C20FF514E00B21348 /* CollectionDetailView.xib in Resources */,
 				B818A8C020E0ABB500095A64 /* MuseumExhibitionJson.json in Resources */,
 				B8B368C020DD4E4600B1CDA4 /* CollectionsJson.json in Resources */,
+				1B51B3D021214853002B84AA /* ObjectPopupXib.xib in Resources */,
 				B8AFA2F120E78E09008838A6 /* DINNextLTPro-Light.otf in Resources */,
 				B8BA80BA20CD8305007E880A /* ExhibitionsCellXib.xib in Resources */,
 				B8EAB7AD20CA41ED00C001B2 /* Info.plist in Resources */,
@@ -1019,6 +1034,8 @@
 				B8294CEC20CBF265002AFF72 /* FSCalendarTransitionCoordinator.m in Sources */,
 				B8CAA93D20DC15FA009A936D /* HeritageDetailCell.swift in Sources */,
 				B80DC05920C792E400E28034 /* AppDelegate.swift in Sources */,
+				1B51B3CE21214820002B84AA /* ObjectPopupView.swift in Sources */,
+				B8C4459C21136CE900CF001A /* DiningDetail.swift in Sources */,
 				B80DC08C20C798BA00E28034 /* HomeViewController.swift in Sources */,
 				B8EAB7BD20CA424300C001B2 /* LunarFormatter.swift in Sources */,
 				B80DC08E20C798E400E28034 /* HomeCollectionViewCell.swift in Sources */,

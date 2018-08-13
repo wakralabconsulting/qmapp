@@ -8,23 +8,20 @@
 
 import UIKit
 
-class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol,comingSoonPopUpProtocol {
-    
-    
-
+class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol, comingSoonPopUpProtocol, ObjectPopUpProtocol {
     @IBOutlet weak var tourGuideDescription: UILabel!
-    
     @IBOutlet weak var startTourButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var headerView: CommonHeaderView!
     
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
-    
+    var objectPopupView : ObjectPopupView = ObjectPopupView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupUI()
     }
+    
     func setupUI() {
         tourGuideDescription.text = "Welcome to Qatar Museum Premises. \n Explore the architrcture and the objects on display. \n Scan the QR codes available on the galleries for more information."
         headerView.headerViewDelegate = self
@@ -42,7 +39,6 @@ class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol,com
         // Dispose of any resources that can be recreated.
     }
     
-
   
     @IBAction func didTapPlayButton(_ sender: UIButton) {
         self.playButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -52,16 +48,17 @@ class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol,com
     @IBAction func playButtonTouchDown(_ sender: UIButton) {
         self.playButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
+    
     @IBAction func didTapStartTour(_ sender: UIButton) {
         self.startTourButton.backgroundColor = UIColor.viewMycultureBlue
         self.startTourButton.setTitleColor(UIColor.white, for: .normal)
         self.startTourButton.transform = CGAffineTransform(scaleX: 1, y: 1)
-        loadComingSoonPopup()
+        loadObjectPopup()
     }
+    
     @IBAction func startTourButtonTouchDown(_ sender: UIButton) {
         self.startTourButton.backgroundColor = UIColor.startTourLightBlue
         self.startTourButton.setTitleColor(UIColor.viewMyculTitleBlue, for: .normal)
-        
         self.startTourButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     func loadComingSoonPopup() {
@@ -69,13 +66,23 @@ class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol,com
         popupView.comingSoonPopupDelegate = self
         popupView.loadPopup()
         self.view.addSubview(popupView)
-        
     }
+    
+    func loadObjectPopup() {
+        objectPopupView = ObjectPopupView(frame: self.view.frame)
+        objectPopupView.objectPopupDelegate = self
+        self.view.addSubview(objectPopupView)
+    }
+    
     //MARK: Poup Delegate
     func closeButtonPressed() {
-        
         self.popupView.removeFromSuperview()
     }
+    
+    func objectPopupCloseButtonPressed() {
+        self.objectPopupView.removeFromSuperview()
+    }
+    
     //MARK: Header delegate
     func headerCloseButtonPressed() {
         let transition = CATransition()
