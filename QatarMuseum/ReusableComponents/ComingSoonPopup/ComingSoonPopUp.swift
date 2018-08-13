@@ -16,7 +16,7 @@ class ComingSoonPopUp: UIView {
     
     @IBOutlet var comingSoonPopup: UIView!
     @IBOutlet weak var popupInnerView: UIView!
-    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var messageLabel: UITextView!
     @IBOutlet weak var stayTunedLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var closeButton: UIButton!
@@ -44,8 +44,8 @@ class ComingSoonPopUp: UIView {
         self.backgroundColor = UIColor.popupBackgroundWhite
         self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         titleLabel.font = UIFont.eventPopupTitleFont
-        messageLabel.font = UIFont.englishTitleFont
-        stayTunedLabel.font = UIFont.englishTitleFont
+        messageLabel.font = UIFont.sideMenuLabelFont
+        stayTunedLabel.font = UIFont.sideMenuLabelFont
         closeButton.titleLabel?.font = UIFont.closeButtonFont
         
         

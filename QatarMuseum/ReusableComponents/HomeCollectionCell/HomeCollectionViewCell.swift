@@ -24,20 +24,14 @@ class HomeCollectionViewCell: UICollectionViewCell {
         
         homeTitleLabel.text = home.name
         homeTitleLabel.font = UIFont.homeTitleFont
-        if  (networkReachability?.isReachable == false) {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-                homeTitleLabel.text = home.name
-            } else {
-                homeTitleLabel.text = home.arabicname
-            }
-        } else {
-            
-        }
+        homeTitleLabel.text = home.name
         if (home.isTourguideAvailable == "true") {
             tourGuideButton.isHidden = false
         }
-        if home.name == "Exhibitions" {
-            homeImageView.image = UIImage(named: (home.image as! String))
+        let exhibitionName = NSLocalizedString("EXHIBITIONS_LABEL",
+                                                                    comment: "EXHIBITIONS_LABEL in exhibition cell")
+        if home.name == exhibitionName {
+            homeImageView.image = UIImage(named: home.image!)
         } else if let imageUrl = home.image {
             //homeImageView.kf.indicatorType = .activity
             homeImageView.kf.setImage(with: URL(string: imageUrl))

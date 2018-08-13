@@ -16,6 +16,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case ExhibitionDetail([String: Any])
     case DiningList()
     case PublicArtsList()
+    case ParksList()
     case GetDiningDetail([String: Any])
     case HeritageDetail([String: Any])
     case GetPublicArtsDetail([String: Any])
@@ -33,6 +34,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .DiningList:
             return .get
         case .PublicArtsList:
+            return .get
+        case .ParksList:
             return .get
         case .GetDiningDetail:
             return .get
@@ -55,6 +58,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/Exhibition_detail_Page.json"
         case .DiningList:
             return "/getDiningList.json"
+        case .ParksList:
+            return "/park_service_combined.json"
         case .PublicArtsList:
             return "/Public_Arts_List_Page.json"
         case .GetDiningDetail( _):
@@ -88,6 +93,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .DiningList():
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
         case .PublicArtsList():
+            return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
+        case .ParksList():
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
         case .GetDiningDetail(let parameters):
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)

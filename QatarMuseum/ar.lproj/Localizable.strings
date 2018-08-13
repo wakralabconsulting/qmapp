@@ -23,7 +23,7 @@
 "EDUCATION_TITLE" = "EDUCATION";
 "NOW_OPEN_TITLE" = "NOW OPEN";
 "CLOSED_TITLE" = "CLOSED";
-"EXHIBITIONS_LABEL" = "Exhibitions ";
+"EXHIBITIONS_LABEL" = "Exhibitions";
 "EVENTS_LABEL" = "Events";
 "EDUCATION_LABEL" = "Education";
 "TOURGUIDE_LABEL" = "Tour Guide";
@@ -47,7 +47,7 @@
 "FILTER_LABEL" = "Filter";
 "INSTITUTION_LABEL" = "Institution";
 "AGE_GROUP_LABEL" = "Age Group";
-"PROGRAMME_TYPE_LABEL" = "Programme type";
+"PROGRAMME_TYPE_LABEL" = "Programme Type";
 "CLEAR_LABEL" = "Clear";
 "SETTINGS_LABEL" = "SETTINGS";
 "SETTINGS_REDIRECTION_MSG" = "سيتم تحويلك إلى الصفحة الرئيسية بعد تغيير اللغة، هل تريد المتابعة؟";

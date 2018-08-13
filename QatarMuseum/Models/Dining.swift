@@ -1,5 +1,5 @@
 //
-//  DiningDetail.swift
+//  DiningList.swift
 //  QatarMuseums
 //
 //  Created by Exalture on 02/08/18.
@@ -7,7 +7,7 @@
 //
 
 import Foundation
-struct DiningDetail: ResponseObjectSerializable, ResponseCollectionSerializable {
+struct Dining: ResponseObjectSerializable, ResponseCollectionSerializable {
     var id: String? = nil
     var name: String? = nil
     var location: String? = nil
@@ -24,21 +24,32 @@ struct DiningDetail: ResponseObjectSerializable, ResponseCollectionSerializable 
             self.name = representation["name"] as? String
             self.location = representation["Location"] as? String
             self.description = representation["Description"] as? String
-            self.image = representation["Image "] as? String
-            self.openingtime = representation["opening time"] as? String
-            self.closetime = representation["close time"] as? String
-            self.sortid = representation["sort id"] as? String
+            self.image = representation["image"] as? String
+            self.openingtime = representation["opening_time"] as? String
+            self.closetime = representation["close_time"] as? String
+            self.sortid = representation["sort_id"] as? String
             
+        }
+    }
+    init(id:String?, name: String?,location:String?,description:String?,image:String?,openingtime:String?,closetime:String?, sortid:String?) {
+        self.id = id
+        self.name = name
+        self.location = location
+        self.description = description
+        self.image = image
+        self.openingtime = openingtime
+        self.closetime = closetime
+        self.sortid = sortid
+    }
+}
+
+struct Dinings: ResponseObjectSerializable {
+    var dinings: [Dining]? = []
+    
+    public init?(response: HTTPURLResponse, representation: AnyObject) {
+        if let data = representation as? [[String: Any]] {
+            self.dinings = Dining.collection(response: response, representation: data as AnyObject)
         }
     }
 }
 
-struct DiningDetails: ResponseObjectSerializable {
-    var diningDetail: [DiningDetail]? = []
-    
-    public init?(response: HTTPURLResponse, representation: AnyObject) {
-        if let data = representation as? [[String: Any]] {
-            self.diningDetail = DiningDetail.collection(response: response, representation: data as AnyObject)
-        }
-    }
-}

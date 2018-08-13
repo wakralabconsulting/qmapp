@@ -11,7 +11,6 @@ import Foundation
 struct Home: ResponseObjectSerializable, ResponseCollectionSerializable {
     var id: String? = nil
     var name: String? = nil
-    var arabicname: String? = nil
     var image: String? = nil
     var isTourguideAvailable: String? = nil
     var sortId: String? = nil
@@ -26,9 +25,9 @@ struct Home: ResponseObjectSerializable, ResponseCollectionSerializable {
         }
     }
     
-    init (name: String?, arabicname: String? , image: String?, tourguide_available: String?, sort_id: String?) {
+    init (id:String?, name: String?, image: String?, tourguide_available: String?, sort_id: String?) {
+        self.id = id
         self.name = name
-        self.arabicname = arabicname
         self.image = image
         self.isTourguideAvailable = tourguide_available
         self.sortId = sort_id

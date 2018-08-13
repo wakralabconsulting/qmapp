@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Alamofire
 
 class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
@@ -16,25 +16,34 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     let imageView = UIImageView()
     let closeButton = UIButton()
     var blurView = UIVisualEffectView()
-    var parksListArray: NSArray!
+    var parksListArray: [ParksList]! = []
     var parkImageArray = NSArray()
-    var collectionListArray: NSArray!
-    var collectionImageArray = NSArray()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUIContents()
-        getParksDataFromJson()
+        //getParksDataFromJson()
+        getParksDataFromServer()
         registerCell()
     }
     func setupUIContents() {
         loadingView.isHidden = false
         loadingView.showLoading()
+        setTopbarImage()
+        
+        
+        
+    }
+    func setTopbarImage() {
         parksTableView.estimatedRowHeight = 50
         parksTableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0)
         
         imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: 300)
-        
-        imageView.image = UIImage.init(named: "mia_park")
+        if parksListArray.count != 0 {
+            if let imageUrl = parksListArray[0].image{
+                imageView.kf.setImage(with: URL(string: imageUrl))
+            }
+        }
         
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -60,32 +69,9 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         closeButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         closeButton.addTarget(self, action: #selector(closeTouchDownAction), for: .touchDown)
         view.addSubview(closeButton)
-        
-        parkImageArray = ["mia_park","park_cafe","family_play"];
-        collectionImageArray = ["mia_park","park_cafe","family_play"];
     }
-    //MARK: Service call
-    func getParksDataFromJson(){
-        let url = Bundle.main.url(forResource: "ParksJson", withExtension: "json")
-        
-        let dataObject = NSData(contentsOf: url!)
-        if let jsonObj = try? JSONSerialization.jsonObject(with: dataObject! as Data, options: .allowFragments) as? NSDictionary {
-            
-            parksListArray = jsonObj!.value(forKey: "items")
-                as! NSArray
-        }
-    }
-    //MARK: Service call
-    func getCollectionDetailDataFromJson(){
-        let url = Bundle.main.url(forResource: "CollectionDetailJson", withExtension: "json")
-        
-        let dataObject = NSData(contentsOf: url!)
-        if let jsonObj = try? JSONSerialization.jsonObject(with: dataObject! as Data, options: .allowFragments) as? NSDictionary {
-            
-            collectionListArray = jsonObj!.value(forKey: "items")
-                as! NSArray
-        }
-    }
+    
+    
     func registerCell() {
         self.parksTableView.register(UINib(nibName: "ParkTableCellXib", bundle: nil), forCellReuseIdentifier: "parkCellId")
         self.parksTableView.register(UINib(nibName: "CollectionDetailView", bundle: nil), forCellReuseIdentifier: "collectionCellId")
@@ -135,9 +121,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             () in
             self.loadLocationInMap()
         }
-            let parkDataDict = parksListArray.object(at: indexPath.row) as! NSDictionary
-        
-            parkCell.setParksCellValues(cellValues: parkDataDict, imageName:parkImageArray.object(at: indexPath.row) as! String )
+        parkCell.setParksCellValues(parksList: parksListArray[indexPath.row])
             loadingView.stopLoading()
             loadingView.isHidden = true
             return parkCell
@@ -216,7 +200,31 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     @objc func closeTouchDownAction(sender: UIButton!) {
         sender.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
-   
+    //MARK: WebServiceCall
+    func getParksDataFromServer()
+    {
+        _ = Alamofire.request(QatarMuseumRouter.ParksList()).responseObject { (response: DataResponse<ParksLists>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.parksListArray = data.parkList
+                self.setTopbarImage()
+                self.parksTableView.reloadData()
+            case .failure(let error):
+                if let unhandledError = handleError(viewController: self, errorType: error as! BackendError) {
+                    var errorMessage: String
+                    var errorTitle: String
+                    switch unhandledError.code {
+                    default: print(unhandledError.code)
+                    errorTitle = String(format: NSLocalizedString("UNKNOWN_ERROR_ALERT_TITLE",
+                                                                  comment: "Setting the title of the alert"))
+                    errorMessage = String(format: NSLocalizedString("ERROR_MESSAGE",
+                                                                    comment: "Setting the content of the alert"))
+                    }
+                    presentAlert(self, title: errorTitle, message: errorMessage)
+                }
+            }
+        }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
