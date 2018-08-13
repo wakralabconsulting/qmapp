@@ -36,14 +36,14 @@ class ObjectPopupView: UIView {
         addSubview(objectPopup)
         objectPopup.frame = self.bounds
         objectPopup.autoresizingMask = [.flexibleHeight,.flexibleWidth]
-//        setUpUI()
+        setUpUI()
     }
+    
     func setUpUI() {
         objectPopUpInnerView.layer.cornerRadius = 5.0
         self.backgroundColor = UIColor.popupBackgroundWhite
         self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         titleLabel.font = UIFont.eventPopupTitleFont
-//        eventDescription.font = UIFont.settingsUpdateLabelFont
         viewDetailButton.titleLabel?.font = UIFont.englishTitleFont
     }
     
