@@ -29,13 +29,16 @@ class DiningDetailTableViewCell: UITableViewCell,UITextViewDelegate {
         
         
     }
-    func setDiningDetailValues(diningDetail: DiningDetail) {
+    func setDiningDetailValues(diningDetail: Dining) {
         titleLabel.text = diningDetail.name?.uppercased()
         titleDescriptionLabel.text = diningDetail.description
         timeTitleLabel.isHidden = false
         let toVariable = NSLocalizedString("TO",
                                            comment: "TO in the Dining detail")
-        timeDescriptionLabel.text = (diningDetail.openingtime)! + " " + toVariable + " " + (diningDetail.closetime)!
+        if ((diningDetail.openingtime != nil) && (diningDetail.closetime != nil)) {
+            timeDescriptionLabel.text = (diningDetail.openingtime)! + " " + toVariable + " " + (diningDetail.closetime)!
+        }
+        
         titleLineView.isHidden = false
         locationsTitleLabel.isHidden = false
         locationButton.isHidden = false

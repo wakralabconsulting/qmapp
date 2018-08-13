@@ -61,7 +61,7 @@ class HeritageDetailCell: UITableViewCell {
         contactLabel.font = UIFont.sideMenuLabelFont
     }
     
-    func setHeritageDetailData(heritageDetail: HeritageDetail) {
+    func setHeritageDetailData(heritageDetail: Heritage) {
         titleBottomOnlyConstraint.isActive = false
         locationTotalTopConstraint.isActive = false
         locationTotalBottomConstraint.isActive = false

@@ -7,6 +7,7 @@
 //
 
 import Alamofire
+import CoreData
 import UIKit
 
 class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
@@ -16,13 +17,19 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     let imageView = UIImageView()
     let closeButton = UIButton()
     var blurView = UIVisualEffectView()
-    var diningDetailtArray: [DiningDetail] = []
+    var diningDetailtArray: [Dining] = []
     var diningDetailId : String? = nil
+    let networkReachability = NetworkReachabilityManager()
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupUIContents()
-        getDiningDetailsFromServer()
+        if  (networkReachability?.isReachable)! {
+            getDiningDetailsFromServer()
+        }
+        else {
+            self.fetchDiningDetailsFromCoredata()
+        }
         setTopBarImage()
         
     }
@@ -176,11 +183,12 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     //MARK: WebServiceCall
     func getDiningDetailsFromServer()
     {
-        _ = Alamofire.request(QatarMuseumRouter.GetDiningDetail(["nid": diningDetailId!])).responseObject { (response: DataResponse<DiningDetails>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.GetDiningDetail(["nid": diningDetailId!])).responseObject { (response: DataResponse<Dinings>) -> Void in
             switch response.result {
             case .success(let data):
-                self.diningDetailtArray = data.diningDetail!
+                self.diningDetailtArray = data.dinings!
                 self.setTopBarImage()
+                self.saveOrUpdateDiningDetailCoredata()
                 self.diningTableView.reloadData()
                 self.loadingView.stopLoading()
                 self.loadingView.isHidden = true
@@ -201,6 +209,194 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                 self.loadingView.noDataLabel.text = errorMessage
             }
         }
+    }
+    //MARK: Coredata Method
+    func saveOrUpdateDiningDetailCoredata() {
+        if (diningDetailtArray.count > 0) {
+            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                let fetchData = checkAddedToCoredata(entityName: "DiningEntity", diningId: diningDetailtArray[0].id) as! [DiningEntity]
+                if (fetchData.count > 0) {
+                    
+                        let managedContext = getContext()
+                        let diningDetailDict = diningDetailtArray[0]
+                    
+                        //update
+                    
+                            let diningdbDict = fetchData[0] as! DiningEntity
+                            diningdbDict.name = diningDetailDict.name
+                            diningdbDict.image = diningDetailDict.image
+                            diningdbDict.diningdescription = diningDetailDict.description
+                            diningdbDict.closetime = diningDetailDict.closetime
+                            diningdbDict.openingtime =  diningDetailDict.openingtime
+                            diningdbDict.sortid =  diningDetailDict.sortid
+                            diningdbDict.location =  diningDetailDict.location
+                            
+                            do{
+                                try managedContext.save()
+                            }
+                            catch{
+                                print(error)
+                            }
+                }
+                else {
+                  
+                        let managedContext = getContext()
+                        let diningListDict : Dining?
+                        diningListDict = diningDetailtArray[0]
+                        self.saveToCoreData(diningDetailDict: diningListDict!, managedObjContext: managedContext)
+                }
+            }
+            else {
+                let fetchData = checkAddedToCoredata(entityName: "DiningEntityArabic", diningId: diningDetailtArray[0].id) as! [DiningEntityArabic]
+                if (fetchData.count > 0) {
+                    let managedContext = getContext()
+                    let diningDetailDict = diningDetailtArray[0]
+                    
+                    //update
+                    let diningdbDict = fetchData[0]
+                    diningdbDict.namearabic = diningDetailDict.name
+                    diningdbDict.imagearabic = diningDetailDict.image
+                    diningdbDict.sortidarabic =  diningDetailDict.sortid
+                    diningdbDict.descriptionarabic = diningDetailDict.description
+                    diningdbDict.closetimearabic = diningDetailDict.closetime
+                    diningdbDict.openingtimearabic =  diningDetailDict.openingtime
+                    diningdbDict.locationarabic =  diningDetailDict.location
+                    
+                    do{
+                        try managedContext.save()
+                    }
+                    catch{
+                        print(error)
+                    }
+                }
+                else {
+                    let managedContext = getContext()
+                    let diningListDict : Dining?
+                    diningListDict = diningDetailtArray[0]
+                    self.saveToCoreData(diningDetailDict: diningListDict!, managedObjContext: managedContext)
+                }
+            }
+        }
+    }
+    func saveToCoreData(diningDetailDict: Dining, managedObjContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            let diningInfo: DiningEntity = NSEntityDescription.insertNewObject(forEntityName: "DiningEntity", into: managedObjContext) as! DiningEntity
+            diningInfo.id = diningDetailDict.id
+            diningInfo.name = diningDetailDict.name
+            diningInfo.image = diningDetailDict.image
+            diningInfo.diningdescription = diningDetailDict.description
+            diningInfo.closetime = diningDetailDict.closetime
+            diningInfo.openingtime =  diningDetailDict.openingtime
+            diningInfo.location =  diningDetailDict.location
+            if(diningDetailDict.sortid != nil) {
+                diningInfo.sortid = diningDetailDict.sortid
+            }
+            
+        }
+        else {
+            let diningInfo: DiningEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "DiningEntityArabic", into: managedObjContext) as! DiningEntityArabic
+            diningInfo.locationarabic = diningDetailDict.id
+            diningInfo.namearabic = diningDetailDict.name
+            
+            diningInfo.imagearabic = diningDetailDict.image
+            diningInfo.descriptionarabic = diningDetailDict.description
+            diningInfo.closetimearabic = diningDetailDict.closetime
+            diningInfo.openingtimearabic =  diningDetailDict.openingtime
+            diningInfo.locationarabic =  diningDetailDict.location
+            if(diningDetailDict.sortid != nil) {
+                diningInfo.sortidarabic = diningDetailDict.sortid
+            }
+        }
+        do {
+            try managedObjContext.save()
+            
+            
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    func fetchDiningDetailsFromCoredata() {
+        
+        do {
+            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                var diningArray = [DiningEntity]()
+                let managedContext = getContext()
+                let diningFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "DiningEntity")
+                if(diningDetailId != nil) {
+                    diningFetchRequest.predicate = NSPredicate.init(format: "id == \(diningDetailId!)")
+                }
+                diningArray = (try managedContext.fetch(diningFetchRequest) as? [DiningEntity])!
+                let diningDict = diningArray[0]
+                if ((diningArray.count > 0) && (diningDict.diningdescription != nil)) {
+                    self.diningDetailtArray.insert(Dining(id: diningDict.id, name: diningDict.name, location: diningDict.location, description: diningDict.diningdescription, image: diningDict.image, openingtime: diningDict.openingtime, closetime: diningDict.closetime, sortid: diningDict.sortid), at: 0)
+                    if(diningDetailtArray.count == 0){
+                        self.showNodata()
+                    }
+                    self.setTopBarImage()
+                    diningTableView.reloadData()
+                }
+                else{
+                    self.showNodata()
+                }
+            }
+            else {
+                var diningArray = [DiningEntityArabic]()
+                let managedContext = getContext()
+                let diningFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "DiningEntityArabic")
+                if(diningDetailId != nil) {
+                    diningFetchRequest.predicate = NSPredicate.init(format: "id == \(diningDetailId!)")
+                }
+                diningArray = (try managedContext.fetch(diningFetchRequest) as? [DiningEntityArabic])!
+                let diningDict = diningArray[0]
+                if ((diningArray.count > 0) && (diningDict.descriptionarabic != nil)) {
+                   
+                        self.diningDetailtArray.insert(Dining(id: diningDict.id, name: diningDict.namearabic, location: diningDict.locationarabic, description: diningDict.descriptionarabic, image: diningDict.imagearabic, openingtime: diningDict.openingtimearabic, closetime: diningDict.closetimearabic, sortid: diningDict.sortidarabic), at: 0)
+                        
+                    
+                    if(diningDetailtArray.count == 0){
+                        self.showNodata()
+                    }
+                    self.setTopBarImage()
+                    diningTableView.reloadData()
+                }
+                else{
+                    self.showNodata()
+                }
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    func getContext() -> NSManagedObjectContext{
+        
+        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+        if #available(iOS 10.0, *) {
+            return
+                appDelegate!.persistentContainer.viewContext
+        } else {
+            return appDelegate!.managedObjectContext
+        }
+    }
+    func checkAddedToCoredata(entityName: String?,diningId: String?) -> [NSManagedObject]
+    {
+        let managedContext = getContext()
+        var fetchResults : [NSManagedObject] = []
+        let diningFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
+        if (diningId != nil) {
+            diningFetchRequest.predicate = NSPredicate.init(format: "id == \(diningId!)")
+        }
+        fetchResults = try! managedContext.fetch(diningFetchRequest)
+        return fetchResults
+    }
+    func showNodata() {
+        var errorMessage: String
+        errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                        comment: "Setting the content of the alert"))
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoDataView()
+        self.loadingView.noDataLabel.text = errorMessage
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
