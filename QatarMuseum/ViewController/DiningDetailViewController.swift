@@ -12,31 +12,32 @@ import UIKit
 
 class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     @IBOutlet weak var diningTableView: UITableView!
-    
     @IBOutlet weak var loadingView: LoadingView!
+    
     let imageView = UIImageView()
     let closeButton = UIButton()
     var blurView = UIVisualEffectView()
     var diningDetailtArray: [Dining] = []
     var diningDetailId : String? = nil
     let networkReachability = NetworkReachabilityManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupUIContents()
         if  (networkReachability?.isReachable)! {
             getDiningDetailsFromServer()
-        }
-        else {
+        } else {
             self.fetchDiningDetailsFromCoredata()
         }
         setTopBarImage()
-        
     }
+    
     func setupUIContents() {
         loadingView.isHidden = false
         loadingView.showLoading()
     }
+    
     func setTopBarImage() {
         diningTableView.estimatedRowHeight = 50
         diningTableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0)
@@ -59,11 +60,9 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         blurView.alpha = 0
         imageView.addSubview(blurView)
         
-        
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
-        }
-        else {
+        } else {
             closeButton.frame = CGRect(x: self.view.frame.width-50, y: 30, width: 40, height: 40)
         }
         closeButton.setImage(UIImage(named: "closeX1"), for: .normal)
@@ -73,6 +72,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         closeButton.addTarget(self, action: #selector(closeTouchDownAction), for: .touchDown)
         view.addSubview(closeButton)
     }
+    
     //MARK: TableView delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             return diningDetailtArray.count
@@ -98,55 +98,44 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         loadingView.isHidden = true
         return diningCell
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
+    
     func setFavouritesAction(cellObj :DiningDetailTableViewCell) {
         if (cellObj.favoriteButton.tag == 0) {
             cellObj.favoriteButton.tag = 1
             cellObj.favoriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
-            
-        }
-        else {
+        } else {
             cellObj.favoriteButton.tag = 0
             cellObj.favoriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
         }
     }
+    
     func setShareAction(cellObj :DiningDetailTableViewCell) {
         
     }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = 300 - (scrollView.contentOffset.y + 300)
         let height = min(max(y, 60), 400)
         imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: height)
-        
-        
         if (imageView.frame.height >= 300 ){
             blurView.alpha  = 0.0
-            
-        }
-        else if (imageView.frame.height >= 250 ){
+        } else if (imageView.frame.height >= 250 ){
             blurView.alpha  = 0.2
-            
-        }
-        else if (imageView.frame.height >= 200 ){
+        } else if (imageView.frame.height >= 200 ){
             blurView.alpha  = 0.4
-            
-        }
-        else if (imageView.frame.height >= 150 ){
+        } else if (imageView.frame.height >= 150 ){
             blurView.alpha  = 0.6
-            
-        }
-        else if (imageView.frame.height >= 100 ){
+        } else if (imageView.frame.height >= 100 ){
             blurView.alpha  = 0.8
-            
-        }
-        else if (imageView.frame.height >= 50 ){
+        } else if (imageView.frame.height >= 50 ){
             blurView.alpha  = 0.9
-            
         }
-        
     }
+    
     func loadLocationOnMap() {
         let latitude = "10.0119266"
         let longitude =  "76.3492956"
@@ -172,17 +161,17 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
         self.view.window!.layer.add(transition, forKey: kCATransition)
         dismiss(animated: false, completion: nil)
-        
     }
+    
     @objc func closeTouchDownAction(sender: UIButton!) {
         sender.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
     //MARK: WebServiceCall
-    func getDiningDetailsFromServer()
-    {
+    func getDiningDetailsFromServer() {
         _ = Alamofire.request(QatarMuseumRouter.GetDiningDetail(["nid": diningDetailId!])).responseObject { (response: DataResponse<Dinings>) -> Void in
             switch response.result {
             case .success(let data):
@@ -198,7 +187,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                     self.loadingView.isHidden = false
                     self.loadingView.showNoDataView()
                 }
-            case .failure(let error):
+            case .failure( _):
                 var errorMessage: String
                 errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
                                                                 comment: "Setting the content of the alert"))
@@ -210,6 +199,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
             }
         }
     }
+    
     //MARK: Coredata Method
     func saveOrUpdateDiningDetailCoredata() {
         if (diningDetailtArray.count > 0) {
