@@ -12,6 +12,7 @@ struct Exhibition: ResponseObjectSerializable, ResponseCollectionSerializable {
     var id: String? = nil
     var name: String? = nil
     var image: String? = nil
+    var detailImage: String? = nil
     var location: String? = nil
     var latitude: String? = nil
     var longitude: String? = nil
@@ -26,15 +27,29 @@ struct Exhibition: ResponseObjectSerializable, ResponseCollectionSerializable {
         if let representation = representation as? [String: Any] {
             self.id = representation["ID"] as? String
             self.name = representation["name"] as? String
-            self.image = representation["LATEST_IMAGE"] as? String
+            self.image = representation["latest_image"] as? String
+            self.detailImage = representation["LATEST_IMAGE"] as? String
             self.location = representation["Location"] as? String
             self.latitude  = representation["Latitude"] as? String
             self.longitude  = representation["Longitude"] as? String
             self.startDate  = representation["start_Date"] as? String
             self.endDate  = representation["end_Date"] as? String
-            self.shortDescription  = representation["Short_description "] as? String
-            self.longDescription  = representation["Long_description "] as? String
+            self.shortDescription  = representation["Short_description"] as? String
+            self.longDescription  = representation["Long_description"] as? String
         }
+    }
+    init(id:String?, name:String?, image:String?,detailImage:String?, startDate:String?, endDate:String?, location:String?, latitude:String?, longitude:String?, shortDescription:String?, longDescription:String?) {
+        self.id = id
+        self.name = name
+        self.image = image
+        self.detailImage = detailImage
+        self.startDate = startDate
+        self.endDate = endDate
+        self.location = location
+        self.latitude = latitude
+        self.longitude = longitude
+        self.shortDescription = shortDescription
+        self.longDescription = longDescription
     }
 }
 
