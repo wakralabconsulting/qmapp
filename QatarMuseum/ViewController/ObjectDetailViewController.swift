@@ -15,7 +15,6 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     let imageView = UIImageView()
     var blurView = UIVisualEffectView()
     let backButton = UIButton()
-//    var objectDetail = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,43 +58,6 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
         view.addSubview(backButton)
     }
     
-//
-//    func setTopImageUI() {
-//        exhibitionDetailTableView.estimatedRowHeight = 50
-//        exhibitionDetailTableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0)
-//
-//        imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: 300)
-//        imageView.image = UIImage.init(named: "powder_and_damask")
-//
-//        imageView.contentMode = .scaleAspectFill
-//        imageView.clipsToBounds = true
-//        view.addSubview(imageView)
-//
-//        let darkBlur = UIBlurEffect(style: UIBlurEffectStyle.light)
-//        blurView = UIVisualEffectView(effect: darkBlur)
-//        blurView.frame = imageView.bounds
-//        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-//        blurView.alpha = 0
-//        imageView.addSubview(blurView)
-//
-//        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-//            closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
-//        } else {
-//            closeButton.frame = CGRect(x: self.view.frame.width-50, y: 30, width: 40, height: 40)
-//        }
-//        closeButton.setImage(UIImage(named: "closeX1"), for: .normal)
-//        closeButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom:12, right: 12)
-//
-//        closeButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-//        closeButton.addTarget(self, action: #selector(closeButtonTouchDownAction), for: .touchDown)
-//
-//        closeButton.layer.shadowColor = UIColor.black.cgColor
-//        closeButton.layer.shadowOffset = CGSize(width: 5, height: 5)
-//        closeButton.layer.shadowRadius = 5
-//        closeButton.layer.shadowOpacity = 1.0
-//        view.addSubview(closeButton)
-//    }
-//
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -103,32 +65,30 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     
     //MARK: TableView delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "objectDetailCellId", for: indexPath) as! ObjectDetailTableViewCell
-        cell.setObjectDetail()
-
-//        diningCell.titleLineView.isHidden = true
-//        diningCell.setDiningDetailValues(diningDetail: diningDetailtArray[indexPath.row])
-//        diningCell.locationButtonAction = {
-//            ()in
-//            self.loadLocationOnMap()
-//        }
-//        diningCell.favBtnTapAction = {
-//            () in
-//            self.setFavouritesAction(cellObj: diningCell)
-//        }
-//        diningCell.shareBtnTapAction = {
-//            () in
-//            self.setShareAction(cellObj: diningCell)
-//        }
+        if (indexPath.row == 0) {
+            cell.setObjectDetail()
+        } else if (indexPath.row == 1) {
+            cell.setObjectHistoryDetail()
+        }
+        
+        cell.favBtnTapAction = {
+            () in
+            self.setFavouritesAction(cellObj: cell)
+        }
+        cell.shareBtnTapAction = {
+            () in
+            self.setShareAction(cellObj: cell)
+        }
+        
         loadingView.stopLoading()
         loadingView.isHidden = true
         return cell
     }
-    
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = 300 - (scrollView.contentOffset.y + 300)
@@ -161,6 +121,20 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
         transition.subtype = kCATransitionFromBottom
         self.view.window!.layer.add(transition, forKey: kCATransition)
         self.dismiss(animated: false, completion: nil)
+    }
+    
+    func setFavouritesAction(cellObj: ObjectDetailTableViewCell) {
+        if (cellObj.favoriteButton.tag == 0) {
+            cellObj.favoriteButton.tag = 1
+            cellObj.favoriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
+        } else {
+            cellObj.favoriteButton.tag = 0
+            cellObj.favoriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
+        }
+    }
+    
+    func setShareAction(cellObj: ObjectDetailTableViewCell) {
+        
     }
 }
 

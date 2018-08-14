@@ -4252,7 +4252,7 @@ Church of Ognissanti, Florence, 1480</string>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nYr-dK-dnh">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="364" height="20.333333333333332"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="364" height="17.333333333333332"/>
                                                                 </imageView>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -4262,7 +4262,7 @@ Church of Ognissanti, Florence, 1480</string>
                                                                 <constraint firstItem="nYr-dK-dnh" firstAttribute="top" secondItem="aTA-It-i5M" secondAttribute="top" id="EuR-dK-QcM"/>
                                                                 <constraint firstAttribute="trailing" secondItem="nYr-dK-dnh" secondAttribute="trailing" id="K1d-Ll-o7D"/>
                                                                 <constraint firstAttribute="trailing" secondItem="rey-2y-s2L" secondAttribute="trailing" id="OY7-SI-xg8"/>
-                                                                <constraint firstItem="rey-2y-s2L" firstAttribute="top" secondItem="nYr-dK-dnh" secondAttribute="bottom" constant="5" id="PeF-26-EMx"/>
+                                                                <constraint firstItem="rey-2y-s2L" firstAttribute="top" secondItem="nYr-dK-dnh" secondAttribute="bottom" constant="8" id="PeF-26-EMx"/>
                                                                 <constraint firstItem="nYr-dK-dnh" firstAttribute="leading" secondItem="aTA-It-i5M" secondAttribute="leading" id="bcg-7q-nZ8"/>
                                                             </constraints>
                                                         </view>
@@ -4277,13 +4277,16 @@ Church of Ognissanti, Florence, 1480</string>
                                                             <rect key="frame" x="0.0" y="509" width="207.33333333333334" height="74"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YeN-5S-5TF">
-                                                                    <rect key="frame" x="141.33333333333334" y="15" width="46" height="44"/>
+                                                                    <rect key="frame" x="141.33333333333334" y="14" width="46" height="46"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="46" id="Nb8-6a-5HA"/>
-                                                                        <constraint firstAttribute="height" constant="44" id="i99-1o-9l7"/>
+                                                                        <constraint firstAttribute="height" constant="46" id="i99-1o-9l7"/>
                                                                     </constraints>
                                                                     <inset key="contentEdgeInsets" minX="11" minY="11" maxX="11" maxY="11"/>
                                                                     <state key="normal" image="shareX1"/>
+                                                                    <connections>
+                                                                        <action selector="didTapShareButton:" destination="mGH-ev-3mx" eventType="touchUpInside" id="Qqz-44-9mN"/>
+                                                                    </connections>
                                                                 </button>
                                                             </subviews>
                                                             <constraints>
@@ -4296,9 +4299,12 @@ Church of Ognissanti, Florence, 1480</string>
                                                             <rect key="frame" x="207.33333333333337" y="509" width="206.66666666666663" height="74"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pyc-09-29F">
-                                                                    <rect key="frame" x="20" y="15" width="46" height="44"/>
+                                                                    <rect key="frame" x="20" y="14" width="46" height="46"/>
                                                                     <inset key="contentEdgeInsets" minX="9" minY="11" maxX="9" maxY="11"/>
                                                                     <state key="normal" image="heart_emptyX1"/>
+                                                                    <connections>
+                                                                        <action selector="didTapFavouriteButton:" destination="mGH-ev-3mx" eventType="touchUpInside" id="Edc-9E-ARy"/>
+                                                                    </connections>
                                                                 </button>
                                                             </subviews>
                                                             <constraints>
@@ -4352,10 +4358,10 @@ Church of Ognissanti, Florence, 1480</string>
                                             <outlet property="centerImageView" destination="nYr-dK-dnh" id="SAt-as-6CQ"/>
                                             <outlet property="descriptionLabel" destination="DJt-aY-wrw" id="4yi-me-iCJ"/>
                                             <outlet property="detailSecondLabel" destination="cdF-ry-HXg" id="dg1-gQ-dlx"/>
-                                            <outlet property="favoriteBtnViewHeight" destination="ocM-6D-41c" id="BIa-T3-j7Q"/>
                                             <outlet property="favoriteButton" destination="Pyc-09-29F" id="A26-Nv-YWT"/>
                                             <outlet property="imageDetailLabel" destination="rey-2y-s2L" id="uVO-EX-VVk"/>
                                             <outlet property="imageViewContainer" destination="aTA-It-i5M" id="cez-8s-gzU"/>
+                                            <outlet property="shareBtnViewHeight" destination="Wam-gC-RMG" id="tk7-05-6CZ"/>
                                             <outlet property="shareButton" destination="YeN-5S-5TF" id="bJi-f3-yFa"/>
                                             <outlet property="titleLabel" destination="d7m-O9-aQg" id="QLh-K9-fna"/>
                                         </connections>
