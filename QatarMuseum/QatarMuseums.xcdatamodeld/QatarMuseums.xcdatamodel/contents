@@ -20,6 +20,40 @@
         <attribute name="openingtimearabic" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortidarabic" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="ExhibitionsEntity" representedClassName="ExhibitionsEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="detailEndDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detailImage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detailLatitude" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detailLocation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detailLongDesc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detailLongitude" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detailName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detailShortDesc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detailStartDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="endDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="ExhibitionsEntityArabic" representedClassName="ExhibitionsEntityArabic" syncable="YES" codeGenerationType="class">
+        <attribute name="detailendDateAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detailImgeAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detailLatituedeAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detailLocationAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detailLongDescAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detailLongitudeAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detailNameAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detailShortDescAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detailStartDateAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="endDateArabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageArabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="locationArabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nameArabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startDateArabic" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="HeritageEntity" representedClassName="HeritageEntity" syncable="YES" codeGenerationType="class">
         <attribute name="detaillatitude" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="detaillocation" optional="YES" attributeType="String" syncable="YES"/>
@@ -85,5 +119,7 @@
         <element name="HomeEntityArabic" positionX="-54" positionY="63" width="128" height="120"/>
         <element name="PublicArtsEntity" positionX="-54" positionY="108" width="128" height="165"/>
         <element name="PublicArtsEntityArabic" positionX="-54" positionY="117" width="128" height="165"/>
+        <element name="ExhibitionsEntity" positionX="-54" positionY="108" width="128" height="30"/>
+        <element name="ExhibitionsEntityArabic" positionX="-45" positionY="126" width="128" height="30"/>
     </elements>
 </model>

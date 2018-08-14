@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 import Alamofire
 
 class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
@@ -19,12 +20,21 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     var fromHome : Bool = false
     var exhibitionId : String!
     var exhibition: [Exhibition] = []
+    let networkReachability = NetworkReachabilityManager()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUi()
+        
         if (fromHome == true) {
-            getExhibitionDetail()
+            if  (networkReachability?.isReachable)! {
+                getExhibitionDetail()
+            }
+            else {
+                self.fetchExhibitionDetailsFromCoredata()
+            }
+            
         }
     }
     
@@ -99,7 +109,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: 300)
         if (fromHome == true) {
             if exhibition.count > 0 {
-                if let imageUrl = exhibition[0].image {
+                if let imageUrl = exhibition[0].detailImage {
                     imageView.kf.setImage(with: URL(string: imageUrl))
                 }
             }
@@ -148,34 +158,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
             UIApplication.shared.openURL(locationUrl)
         }
     }
-    
-    func getExhibitionDetail() {
-        _ = Alamofire.request(QatarMuseumRouter.ExhibitionDetail(["nid": exhibitionId])).responseObject { (response: DataResponse<Exhibitions>) -> Void in
-            switch response.result {
-            case .success(let data):
-                self.exhibition = data.exhibitions!
-                self.setTopImageUI()
-                self.exhibitionDetailTableView.reloadData()
-                self.loadingView.stopLoading()
-                self.loadingView.isHidden = true
-                if (self.exhibition.count == 0) {
-                    self.loadingView.stopLoading()
-                    self.loadingView.noDataView.isHidden = false
-                    self.loadingView.isHidden = false
-                    self.loadingView.showNoDataView()
-                }
-            case .failure( _):
-                var errorMessage: String
-                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
-                                                                comment: "Setting the content of the alert"))
-                self.loadingView.stopLoading()
-                self.loadingView.noDataView.isHidden = false
-                self.loadingView.isHidden = false
-                self.loadingView.showNoDataView()
-                self.loadingView.noDataLabel.text = errorMessage
-            }
-        }
-    }
+   
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = 300 - (scrollView.contentOffset.y + 300)
@@ -210,7 +193,232 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     @objc func closeButtonTouchDownAction(sender: UIButton!) {
         sender.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
-    
+    //MARK: Webservice call
+    func getExhibitionDetail() {
+        
+        _ = Alamofire.request(QatarMuseumRouter.ExhibitionDetail(["nid": exhibitionId!])).responseObject { (response: DataResponse<Exhibitions>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.exhibition = data.exhibitions!
+                self.setTopImageUI()
+                self.saveOrUpdateExhibitionsCoredata()
+                self.exhibitionDetailTableView.reloadData()
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
+                if (self.exhibition.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
+            case .failure( _):
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
+            }
+        }
+    }
+    //MARK: Heritage Coredata Method
+    func saveOrUpdateExhibitionsCoredata() {
+        if (exhibition.count > 0) {
+           let langKey = String(format: NSLocalizedString("LANG_ENGLISH",
+                                                            comment: "en key for language"))
+            if ((LocalizationLanguage.currentAppleLanguage()) == langKey) {
+                let fetchData = checkAddedToCoredata(entityName: "ExhibitionsEntity", idKey: "id" , idValue: exhibition[0].id) as! [ExhibitionsEntity]
+                if (fetchData.count > 0) {
+                    let managedContext = getContext()
+                    let exhibitionDetailDict = exhibition[0]
+                    
+                    //update
+                    let exhibitiondbDict = fetchData[0]
+                    
+                    exhibitiondbDict.detailName = exhibitionDetailDict.name
+                    exhibitiondbDict.detailImage = exhibitionDetailDict.detailImage
+                    exhibitiondbDict.detailStartDate =  exhibitionDetailDict.startDate
+                    exhibitiondbDict.detailEndDate = exhibitionDetailDict.endDate
+                    exhibitiondbDict.detailShortDesc = exhibitionDetailDict.shortDescription
+                    exhibitiondbDict.detailLongDesc =  exhibitionDetailDict.longDescription
+                    exhibitiondbDict.detailLocation =  exhibitionDetailDict.location
+                    exhibitiondbDict.detailLatitude = exhibitionDetailDict.latitude
+                    exhibitiondbDict.detailLongitude = exhibitionDetailDict.longitude
+                    
+                    do{
+                        try managedContext.save()
+                    }
+                    catch{
+                        print(error)
+                    }
+                }
+                else {
+                    let managedContext = getContext()
+                    let exhibitionListDict : Exhibition?
+                    exhibitionListDict = exhibition[0]
+                    self.saveToCoreData(exhibitionDetailDict: exhibitionListDict!, managedObjContext: managedContext)
+                }
+            }
+            else {
+                let fetchData = checkAddedToCoredata(entityName: "ExhibitionsEntityArabic", idKey:"id" , idValue: exhibition[0].id) as! [ExhibitionsEntityArabic]
+                if (fetchData.count > 0) {
+                    let managedContext = getContext()
+                    let exhibitionDetailDict = exhibition[0]
+                    
+                    //update
+                    
+                    let exhibitiondbDict = fetchData[0]
+                    exhibitiondbDict.detailNameAr = exhibitionDetailDict.name
+                    exhibitiondbDict.detailImgeAr = exhibitionDetailDict.detailImage
+                    exhibitiondbDict.detailStartDateAr =  exhibitionDetailDict.startDate
+                    exhibitiondbDict.detailendDateAr = exhibitionDetailDict.endDate
+                    exhibitiondbDict.detailShortDescAr = exhibitionDetailDict.shortDescription
+                    exhibitiondbDict.detailLongDescAr =  exhibitionDetailDict.longDescription
+                    exhibitiondbDict.detailLocationAr =  exhibitionDetailDict.location
+                    exhibitiondbDict.detailLatituedeAr = exhibitionDetailDict.latitude
+                    exhibitiondbDict.detailLongitudeAr = exhibitionDetailDict.longitude
+                    
+                    do{
+                        try managedContext.save()
+                    }
+                    catch{
+                        print(error)
+                    }
+                }
+                else {
+                    let managedContext = getContext()
+                    let exhibitionListDict : Exhibition?
+                    exhibitionListDict = exhibition[0]
+                    self.saveToCoreData(exhibitionDetailDict: exhibitionListDict!, managedObjContext: managedContext)
+                }
+            }
+        }
+    }
+    func saveToCoreData(exhibitionDetailDict: Exhibition, managedObjContext: NSManagedObjectContext) {
+        let langKey = String(format: NSLocalizedString("LANG_ENGLISH",
+                                                       comment: "en key for language"))
+        if ((LocalizationLanguage.currentAppleLanguage()) == langKey) {
+            let exhibitionInfo: ExhibitionsEntity = NSEntityDescription.insertNewObject(forEntityName: "ExhibitionsEntity", into: managedObjContext) as! ExhibitionsEntity
+            exhibitionInfo.id = exhibitionDetailDict.id
+            exhibitionInfo.detailName = exhibitionDetailDict.name
+            exhibitionInfo.detailImage = exhibitionDetailDict.detailImage
+            exhibitionInfo.detailStartDate = exhibitionDetailDict.startDate
+            exhibitionInfo.detailEndDate = exhibitionDetailDict.endDate
+            exhibitionInfo.detailShortDesc =  exhibitionDetailDict.shortDescription
+            exhibitionInfo.detailLongDesc =  exhibitionDetailDict.longDescription
+            exhibitionInfo.detailLocation = exhibitionDetailDict.location
+            exhibitionInfo.detailLatitude =  exhibitionDetailDict.latitude
+            exhibitionInfo.detailLongitude = exhibitionDetailDict.longitude
+            
+        }
+        else {
+            let exhibitionInfo: ExhibitionsEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "ExhibitionsEntityArabic", into: managedObjContext) as! ExhibitionsEntityArabic
+            exhibitionInfo.id = exhibitionDetailDict.id
+            exhibitionInfo.detailNameAr = exhibitionDetailDict.name
+            exhibitionInfo.detailImgeAr = exhibitionDetailDict.detailImage
+            exhibitionInfo.detailStartDateAr = exhibitionDetailDict.startDate
+            exhibitionInfo.detailendDateAr = exhibitionDetailDict.endDate
+            exhibitionInfo.detailShortDescAr =  exhibitionDetailDict.shortDescription
+            exhibitionInfo.detailLongDescAr =  exhibitionDetailDict.longDescription
+            exhibitionInfo.detailLocationAr = exhibitionDetailDict.location
+            exhibitionInfo.detailLatituedeAr =  exhibitionDetailDict.latitude
+            exhibitionInfo.detailLongitudeAr = exhibitionDetailDict.longitude
+        }
+        do {
+            try managedObjContext.save()
+            
+            
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    func fetchExhibitionDetailsFromCoredata() {
+        
+        do {
+            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                var exhibitionArray = [ExhibitionsEntity]()
+                let managedContext = getContext()
+                let exhibitionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ExhibitionsEntity")
+                if(exhibitionId != nil) {
+                    exhibitionFetchRequest.predicate = NSPredicate.init(format: "id == \(exhibitionId!)")
+                }
+                exhibitionArray = (try managedContext.fetch(exhibitionFetchRequest) as? [ExhibitionsEntity])!
+                let exhibitionDict = exhibitionArray[0]
+                if ((exhibitionArray.count > 0) && (exhibitionDict.detailLongDesc != nil) && (exhibitionDict.detailShortDesc != nil) ){
+                   
+                    self.exhibition.insert(Exhibition(id: exhibitionDict.id, name: exhibitionDict.detailName, image: nil,detailImage:exhibitionDict.detailImage, startDate: exhibitionDict.detailStartDate, endDate: exhibitionDict.detailEndDate, location: exhibitionDict.detailLocation, latitude: exhibitionDict.detailLatitude, longitude: exhibitionDict.detailLongitude, shortDescription: exhibitionDict.detailShortDesc, longDescription: exhibitionDict.detailLongDesc), at: 0)
+                    
+                    if(exhibition.count == 0){
+                        self.showNodata()
+                    }
+                    self.self.setTopImageUI()
+                    exhibitionDetailTableView.reloadData()
+                }
+                else{
+                    self.showNodata()
+                }
+            }
+            else {
+                var exhibitionArray = [ExhibitionsEntityArabic]()
+                let managedContext = getContext()
+                let exhibitionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ExhibitionsEntityArabic")
+                if(exhibitionId != nil) {
+                    exhibitionFetchRequest.predicate = NSPredicate.init(format: "id == \(exhibitionId!)")
+                }
+                exhibitionArray = (try managedContext.fetch(exhibitionFetchRequest) as? [ExhibitionsEntityArabic])!
+                let exhibitionDict = exhibitionArray[0]
+                if ((exhibitionArray.count > 0) && (exhibitionDict.detailLongDescAr != nil) && (exhibitionDict.detailShortDescAr != nil)) {
+                    
+                    self.exhibition.insert(Exhibition(id: exhibitionDict.id, name: exhibitionDict.detailNameAr, image: nil,detailImage:exhibitionDict.detailImgeAr, startDate: exhibitionDict.detailStartDateAr, endDate: exhibitionDict.detailendDateAr, location: exhibitionDict.detailLocationAr, latitude: exhibitionDict.detailLatituedeAr, longitude: exhibitionDict.detailLongitudeAr, shortDescription: exhibitionDict.detailShortDescAr, longDescription: exhibitionDict.detailLongDescAr), at: 0)
+                    
+                    
+                    if(exhibition.count == 0){
+                        self.showNodata()
+                    }
+                    self.setTopImageUI()
+                    exhibitionDetailTableView.reloadData()
+                }
+                else{
+                    self.showNodata()
+                }
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    func getContext() -> NSManagedObjectContext{
+        
+        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+        if #available(iOS 10.0, *) {
+            return
+                appDelegate!.persistentContainer.viewContext
+        } else {
+            return appDelegate!.managedObjectContext
+        }
+    }
+    func checkAddedToCoredata(entityName: String?,idKey:String?, idValue: String?) -> [NSManagedObject]
+    {
+        let managedContext = getContext()
+        var fetchResults : [NSManagedObject] = []
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
+        if (idValue != nil) {
+            fetchRequest.predicate = NSPredicate.init(format: "\(idKey!) == \(idValue!)")
+        }
+        fetchResults = try! managedContext.fetch(fetchRequest)
+        return fetchResults
+    }
+    func showNodata() {
+        var errorMessage: String
+        errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                        comment: "Setting the content of the alert"))
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoDataView()
+        self.loadingView.noDataLabel.text = errorMessage
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
