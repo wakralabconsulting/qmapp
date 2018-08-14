@@ -55,6 +55,9 @@ class ObjectPopupView: UIView {
         productionDatesValue.font = UIFont.collectionFirstDescriptionFont
         periodAndStyleValue.font = UIFont.collectionFirstDescriptionFont
         viewDetailButton.titleLabel?.font = UIFont.collectionFirstDescriptionFont
+        let upGesture = UISwipeGestureRecognizer(target : self, action : #selector(didSwipeUp))
+        upGesture.direction = .up
+        objectPopUpInnerView.addGestureRecognizer(upGesture)
     }
     
     func loadPopup() {
@@ -81,5 +84,9 @@ class ObjectPopupView: UIView {
     
     @IBAction func viewDetailButtonTouchDown(_ sender: UIButton) {
         self.viewDetailButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+    }
+    
+    @objc func didSwipeUp() {
+        objectPopupDelegate?.viewDetailButtonTapAction()
     }
 }

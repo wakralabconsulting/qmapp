@@ -486,7 +486,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EVENTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWB-Sh-j4n">
-                                        <rect key="frame" x="167" y="308.66666666666669" width="81.333333333333314" height="29"/>
+                                        <rect key="frame" x="163.66666666666666" y="308.66666666666669" width="87" height="29"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="29" id="guL-0K-jjs"/>
                                         </constraints>
@@ -4240,10 +4240,10 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aTA-It-i5M">
-                                                            <rect key="frame" x="25" y="250.33333333333334" width="364" height="86.333333333333343"/>
+                                                            <rect key="frame" x="25" y="250.33333333333334" width="364" height="101.33333333333334"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rey-2y-s2L">
-                                                                    <rect key="frame" x="0.0" y="25.333333333333343" width="364" height="61"/>
+                                                                    <rect key="frame" x="0.0" y="40.333333333333343" width="364" height="61"/>
                                                                     <string key="text">Saint Jerome in His Study
 Domenico Ghirlandaio (1449-1494)
 Church of Ognissanti, Florence, 1480</string>
@@ -4252,7 +4252,7 @@ Church of Ognissanti, Florence, 1480</string>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nYr-dK-dnh">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="364" height="17.333333333333332"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="364" height="32.333333333333336"/>
                                                                 </imageView>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -4267,16 +4267,16 @@ Church of Ognissanti, Florence, 1480</string>
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cdF-ry-HXg">
-                                                            <rect key="frame" x="25" y="356.66666666666669" width="364" height="142.33333333333331"/>
+                                                            <rect key="frame" x="25" y="371.66666666666669" width="364" height="142.33333333333331"/>
                                                             <string key="text">In the heart of the museum, with spectacular views of the Doha skyline, Idam offers an innovative and flavorsome selection of contemporary French Mediterranean cuisine designed with an Arabic twist. Timeless classics of local and regional cuisine, with most ingredients sourced locally in Qatar. </string>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dZE-Lq-MU6">
-                                                            <rect key="frame" x="0.0" y="509" width="207.33333333333334" height="74"/>
+                                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dZE-Lq-MU6">
+                                                            <rect key="frame" x="0.0" y="524" width="207.33333333333334" height="74"/>
                                                             <subviews>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YeN-5S-5TF">
+                                                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YeN-5S-5TF">
                                                                     <rect key="frame" x="141.33333333333334" y="14" width="46" height="46"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="46" id="Nb8-6a-5HA"/>
@@ -4295,10 +4295,10 @@ Church of Ognissanti, Florence, 1480</string>
                                                                 <constraint firstAttribute="height" constant="74" id="Wam-gC-RMG"/>
                                                             </constraints>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qy3-Zo-0ct">
-                                                            <rect key="frame" x="207.33333333333337" y="509" width="206.66666666666663" height="74"/>
+                                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qy3-Zo-0ct">
+                                                            <rect key="frame" x="207.33333333333337" y="524" width="206.66666666666663" height="74"/>
                                                             <subviews>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pyc-09-29F">
+                                                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pyc-09-29F">
                                                                     <rect key="frame" x="20" y="14" width="46" height="46"/>
                                                                     <inset key="contentEdgeInsets" minX="9" minY="11" maxX="9" maxY="11"/>
                                                                     <state key="normal" image="heart_emptyX1"/>
@@ -4316,7 +4316,7 @@ Church of Ognissanti, Florence, 1480</string>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstItem="d7m-O9-aQg" firstAttribute="top" secondItem="tbd-Sa-JMU" secondAttribute="top" constant="27" id="1Vo-Ht-ffi"/>
-                                                        <constraint firstAttribute="bottom" secondItem="dZE-Lq-MU6" secondAttribute="bottom" constant="40" id="8ge-hR-sPx"/>
+                                                        <constraint firstAttribute="bottom" secondItem="dZE-Lq-MU6" secondAttribute="bottom" constant="25" id="8ge-hR-sPx"/>
                                                         <constraint firstItem="d7m-O9-aQg" firstAttribute="leading" secondItem="tbd-Sa-JMU" secondAttribute="leading" constant="25" id="9No-RL-17a"/>
                                                         <constraint firstItem="YeN-5S-5TF" firstAttribute="width" secondItem="Pyc-09-29F" secondAttribute="width" id="Bgv-cj-mGT"/>
                                                         <constraint firstItem="DJt-aY-wrw" firstAttribute="leading" secondItem="aTA-It-i5M" secondAttribute="leading" id="BoC-cP-b4q"/>
@@ -4355,6 +4355,7 @@ Church of Ognissanti, Florence, 1480</string>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.90196078430000004" green="0.90178054569999999" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
+                                            <outlet property="bottomPadding" destination="8ge-hR-sPx" id="OVB-Ra-BhC"/>
                                             <outlet property="centerImageView" destination="nYr-dK-dnh" id="SAt-as-6CQ"/>
                                             <outlet property="descriptionLabel" destination="DJt-aY-wrw" id="4yi-me-iCJ"/>
                                             <outlet property="detailSecondLabel" destination="cdF-ry-HXg" id="dg1-gQ-dlx"/>

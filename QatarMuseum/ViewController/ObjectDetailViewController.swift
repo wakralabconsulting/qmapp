@@ -108,13 +108,17 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
         } else if (imageView.frame.height >= 50 ){
             blurView.alpha  = 0.9
         }
+        if (scrollView.contentOffset.y < 0) {
+            //reached top
+            self.backButtonPressed()
+        }
     }
     
     @objc func backButtonTouchDownAction(sender: UIButton) {
         sender.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
-    @objc func backButtonPressed(sender: UIButton) {
+    @objc func backButtonPressed() {
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionPush
