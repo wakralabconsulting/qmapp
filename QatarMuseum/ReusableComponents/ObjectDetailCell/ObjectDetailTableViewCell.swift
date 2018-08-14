@@ -9,14 +9,47 @@
 import UIKit
 
 class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate {
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var detailSecondLabel: UILabel!
+    @IBOutlet weak var centerImageView: UIImageView!
+    @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var shareButton: UIButton!
+    @IBOutlet weak var imageViewContainer: UIView!
+    @IBOutlet weak var imageDetailLabel: UILabel!
+    @IBOutlet weak var favoriteBtnViewHeight: NSLayoutConstraint!
     
     override func awakeFromNib() {
-        super.awakeFromNib()        
+        super.awakeFromNib()
+        setupCellUI()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
+    }
+    
+    func setupCellUI() {
+        titleLabel.textAlignment = .left
+        descriptionLabel.textAlignment = .left
+        detailSecondLabel.textAlignment = .left
+        imageDetailLabel.textAlignment = .left
+
+        titleLabel.font = UIFont.diningHeaderFont
+        descriptionLabel.font = UIFont.englishTitleFont
+        detailSecondLabel.font = UIFont.englishTitleFont
+        imageDetailLabel.font = UIFont.sideMenuLabelFont
+    }
+    
+    func setObjectDetail() {
+        titleLabel.text = "Albarello"
+        descriptionLabel?.text = "This example is a rare example of the Mamluk production of albarelli in Damascus, primarily produced for the European market. The albarello (pl. albarelli) was used as a medicinal jar for holding apothecary ointments and dried herbal drugs. Its elongated shape helps us to recognize the nature and function of this typical object. The Italain word albarello has a quite controversial etymology: sometimes said to be derivng from the Latin albaris, meaning \"in wood\" or \"white\", sometimes from the Arabic al-barmil, which designates a barrel. Albarelli have been produced in the Middle East and Central Asia since the 11th-century and later on in 15th-century Spain and Italy, although they are believed to have been first produced in Syria before making their way to Europe through Spain and Italy. Indeed, many European paintings and archives in France, Italy and Spain refer to vessels produced or imported from Syria."
+        detailSecondLabel.text = "This particular albarello might have specifically commissioned for an apothecary in Florence as the floral scrolls, lotus blossoms and rosettes of the overall decoration bears a frieze with three shields cartouches enclosing a fleur-de-lys (lily) coat of arm on a blue background. The fleur-de-lys is one of the oldest heraldic symbols in the world and one of the four most popular patterns because of its value of purity and power in the biblical tradition since the Byzantines. This heraldic sign was widely used in medieval Spain and Italy and here represents the city if Florence. The fleur-de-lys and blazons in general were also featured on Ayyubid and Mamluk potteries, coins or buildings as part of a decorated repertoire that entered with the Crusaders."
+//        imageDetailLabel.text = "Saint Jerome in His Study /n Domenico Ghirlandaio (1449-1494) /n Church of Ognissanti, Florence, 1480"
+        
+//        centerImgHeight.constant = 150
+//        centerImageView.isHidden = false
+        centerImageView.image = UIImage(named: "lusterwar_apothecarry_jar_full")
     }
 }

@@ -8,8 +8,7 @@
 
 import UIKit
 
-class ObjectDetailViewController: UIViewController, HeaderViewProtocol, UITableViewDelegate, UITableViewDataSource {
-    @IBOutlet weak var headerView: CommonHeaderView!
+class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var objectTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
     
@@ -20,18 +19,8 @@ class ObjectDetailViewController: UIViewController, HeaderViewProtocol, UITableV
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
         setupUIContents()
         setTopBarImage()
-    }
-    
-    func setupUI() {
-        headerView.headerViewDelegate = self
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
-        } else {
-            headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
-        }
     }
     
     func setupUIContents() {
@@ -45,8 +34,8 @@ class ObjectDetailViewController: UIViewController, HeaderViewProtocol, UITableV
         
         imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: 300)
         imageView.image = UIImage.init(named: "science_tour_object")
-        
-        imageView.contentMode = .scaleAspectFill
+        imageView.backgroundColor = UIColor.white
+        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         view.addSubview(imageView)
         
@@ -59,15 +48,13 @@ class ObjectDetailViewController: UIViewController, HeaderViewProtocol, UITableV
         
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             backButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
-            backButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
+            backButton.setImage(UIImage(named: "previousImg"), for: .normal)
         } else {
             backButton.frame = CGRect(x: self.view.frame.width-50, y: 30, width: 40, height: 40)
-            backButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+            backButton.setImage(UIImage(named: "nextImg"), for: .normal)
         }
-//        closeButton.setImage(UIImage(named: "closeX1"), for: .normal)
-        backButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom:12, right: 12)
-//
-//        closeButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        backButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
         backButton.addTarget(self, action: #selector(backButtonTouchDownAction), for: .touchDown)
         view.addSubview(backButton)
     }
@@ -120,7 +107,9 @@ class ObjectDetailViewController: UIViewController, HeaderViewProtocol, UITableV
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let objectCell = tableView.dequeueReusableCell(withIdentifier: "objectDetailCellId", for: indexPath) as! ObjectDetailTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "objectDetailCellId", for: indexPath) as! ObjectDetailTableViewCell
+        cell.setObjectDetail()
+
 //        diningCell.titleLineView.isHidden = true
 //        diningCell.setDiningDetailValues(diningDetail: diningDetailtArray[indexPath.row])
 //        diningCell.locationButtonAction = {
@@ -137,7 +126,7 @@ class ObjectDetailViewController: UIViewController, HeaderViewProtocol, UITableV
 //        }
         loadingView.stopLoading()
         loadingView.isHidden = true
-        return objectCell
+        return cell
     }
     
     
@@ -165,8 +154,7 @@ class ObjectDetailViewController: UIViewController, HeaderViewProtocol, UITableV
         sender.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
-    //MARK: Header delegate
-    func headerCloseButtonPressed() {
+    @objc func backButtonPressed(sender: UIButton) {
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionPush
