@@ -132,11 +132,12 @@ class MiaTourDetailViewController: UIViewController,HeaderViewProtocol,comingSoo
     @objc func pageChanged() {
         
     }
+    
     //MARK: Poup Delegate
     func closeButtonPressed() {
-        
         self.popupView.removeFromSuperview()
     }
+    
     //MARK: Header delegate
     func headerCloseButtonPressed() {
         let transition = CATransition()

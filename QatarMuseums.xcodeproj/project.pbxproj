@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1B51B3CE21214820002B84AA /* ObjectPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51B3CD21214820002B84AA /* ObjectPopupView.swift */; };
 		1B51B3D021214853002B84AA /* ObjectPopupXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B51B3CF21214853002B84AA /* ObjectPopupXib.xib */; };
+		1B51B3D221219367002B84AA /* ObjectDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51B3D121219366002B84AA /* ObjectDetailViewController.swift */; };
+		1B51B3D52121B6A9002B84AA /* ObjectDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51B3D42121B6A9002B84AA /* ObjectDetailTableViewCell.swift */; };
 		1BC909D02108E3C700D6C00B /* QMUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC909CF2108E3C700D6C00B /* QMUtility.swift */; };
 		1BC909D2210B277F00D6C00B /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC909D1210B277F00D6C00B /* Home.swift */; };
 		1BE526D0210739BF00C8CD51 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526CF210739BE00C8CD51 /* Request.swift */; };
@@ -149,6 +151,8 @@
 /* Begin PBXFileReference section */
 		1B51B3CD21214820002B84AA /* ObjectPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectPopupView.swift; sourceTree = "<group>"; };
 		1B51B3CF21214853002B84AA /* ObjectPopupXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ObjectPopupXib.xib; sourceTree = "<group>"; };
+		1B51B3D121219366002B84AA /* ObjectDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectDetailViewController.swift; sourceTree = "<group>"; };
+		1B51B3D42121B6A9002B84AA /* ObjectDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectDetailTableViewCell.swift; sourceTree = "<group>"; };
 		1BC909CF2108E3C700D6C00B /* QMUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QMUtility.swift; sourceTree = "<group>"; };
 		1BC909D1210B277F00D6C00B /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		1BE526CF210739BE00C8CD51 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
@@ -335,6 +339,14 @@
 			path = ObjectPopup;
 			sourceTree = "<group>";
 		};
+		1B51B3D32121B658002B84AA /* ObjectDetailCell */ = {
+			isa = PBXGroup;
+			children = (
+				1B51B3D42121B6A9002B84AA /* ObjectDetailTableViewCell.swift */,
+			);
+			path = ObjectDetailCell;
+			sourceTree = "<group>";
+		};
 		1BC909CE2108E37900D6C00B /* CommonMethods */ = {
 			isa = PBXGroup;
 			children = (
@@ -486,6 +498,7 @@
 				B8D4C535210453FB0096912C /* FilterViewController.swift */,
 				B8E01BF82105EDFB008D7F33 /* SettingsViewController.swift */,
 				B8E024EC211042C200CB18E2 /* CollectionDetailViewController.swift */,
+				1B51B3D121219366002B84AA /* ObjectDetailViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -493,6 +506,7 @@
 		B80DC08720C7943100E28034 /* ReusableComponents */ = {
 			isa = PBXGroup;
 			children = (
+				1B51B3D32121B658002B84AA /* ObjectDetailCell */,
 				1B51B3CC212146E7002B84AA /* ObjectPopup */,
 				1BC909CE2108E37900D6C00B /* CommonMethods */,
 				B8E01BFA21060FBC008D7F33 /* RTLSupportFiles */,
@@ -1001,9 +1015,11 @@
 				B85BA4B720D03CE500E7F4D1 /* iOSDevCenters+GIF.swift in Sources */,
 				B8E01BFD21060FDC008D7F33 /* AppLocalizer.swift in Sources */,
 				B8C64C9C20FE380D00D7CD63 /* MiaTourDetailViewController.swift in Sources */,
+				1B51B3D52121B6A9002B84AA /* ObjectDetailTableViewCell.swift in Sources */,
 				B8294CF720CBF265002AFF72 /* FSCalendarDelegationProxy.m in Sources */,
 				B8B368BE20DD4B6200B1CDA4 /* MuseumCollectionsViewController.swift in Sources */,
 				B8D7BF452101A12E0085EF49 /* EducationViewController.swift in Sources */,
+				1B51B3D221219367002B84AA /* ObjectDetailViewController.swift in Sources */,
 				B8D52A3620E638B900E34673 /* DiningViewController.swift in Sources */,
 				B8294CEF20CBF265002AFF72 /* FSCalendarDelegationFactory.m in Sources */,
 				B8294CF020CBF265002AFF72 /* FSCalendarCollectionViewLayout.m in Sources */,
@@ -1035,7 +1051,6 @@
 				B8CAA93D20DC15FA009A936D /* HeritageDetailCell.swift in Sources */,
 				B80DC05920C792E400E28034 /* AppDelegate.swift in Sources */,
 				1B51B3CE21214820002B84AA /* ObjectPopupView.swift in Sources */,
-				B8C4459C21136CE900CF001A /* DiningDetail.swift in Sources */,
 				B80DC08C20C798BA00E28034 /* HomeViewController.swift in Sources */,
 				B8EAB7BD20CA424300C001B2 /* LunarFormatter.swift in Sources */,
 				B80DC08E20C798E400E28034 /* HomeCollectionViewCell.swift in Sources */,

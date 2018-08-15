@@ -11,15 +11,15 @@ import CoreData
 import UIKit
 
 class DiningViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, HeaderViewProtocol,comingSoonPopUpProtocol {
-    
-    
     @IBOutlet weak var diningHeader: CommonHeaderView!
     @IBOutlet weak var diningCollectionView: UICollectionView!
     @IBOutlet weak var loadingView: LoadingView!
+    
     var diningListArray : [Dining]! = []
     var popUpView : ComingSoonPopUp = ComingSoonPopUp()
     var fromHome : Bool = false
     let networkReachability = NetworkReachabilityManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -339,8 +339,5 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-
 
 }

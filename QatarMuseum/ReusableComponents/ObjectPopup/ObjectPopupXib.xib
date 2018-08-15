@@ -23,6 +23,12 @@
                 <outlet property="closeButton" destination="UsT-Ne-bbd" id="N2K-iR-SVP"/>
                 <outlet property="objectPopUpInnerView" destination="j5J-ue-9Nf" id="XNx-O5-s3h"/>
                 <outlet property="objectPopup" destination="3qw-tR-XbL" id="c04-c4-gSI"/>
+                <outlet property="periodAndStyleLabel" destination="u1z-8U-Xli" id="b73-Bj-TAV"/>
+                <outlet property="periodAndStyleValue" destination="Jig-1T-Dab" id="r6i-tm-nig"/>
+                <outlet property="productionDatesLabel" destination="czl-iv-qzi" id="9PX-Zq-qWY"/>
+                <outlet property="productionDatesValue" destination="1rK-Mf-Ff5" id="PoZ-m7-O6l"/>
+                <outlet property="productionLabel" destination="WIa-tz-h8g" id="WWs-6R-tB6"/>
+                <outlet property="productionValue" destination="CAX-81-WOg" id="0DN-4n-bl9"/>
                 <outlet property="titleLabel" destination="ow5-OB-1an" id="uZb-2X-Cop"/>
                 <outlet property="viewDetailButton" destination="yaU-zF-zqW" id="Hhr-fj-5pD"/>
             </connections>
@@ -52,6 +58,10 @@
                             </constraints>
                             <inset key="contentEdgeInsets" minX="6" minY="6" maxX="6" maxY="6"/>
                             <state key="normal" image="popup_closeX1"/>
+                            <connections>
+                                <action selector="didTapObjectCloseButton:" destination="-1" eventType="touchUpInside" id="V8D-Y9-gV3"/>
+                                <action selector="objectCloseTouchDown:" destination="-1" eventType="touchDown" id="66t-FX-rkT"/>
+                            </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SJL-G5-hwV">
                             <rect key="frame" x="10" y="59" width="70" height="100"/>
@@ -122,8 +132,8 @@
                                 </attributedString>
                             </state>
                             <connections>
-                                <action selector="didTapEventCloseButton:" destination="-1" eventType="touchUpInside" id="gmK-dY-Gyh"/>
-                                <action selector="eventCloseTouchDown:" destination="-1" eventType="touchDown" id="ylx-BK-RwL"/>
+                                <action selector="didTapViewDetail:" destination="-1" eventType="touchUpInside" id="fHj-V8-Y6o"/>
+                                <action selector="viewDetailButtonTouchDown:" destination="-1" eventType="touchDown" id="w9Z-4i-vWY"/>
                             </connections>
                         </button>
                     </subviews>
