@@ -12,11 +12,11 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var detailSecondLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UITextView!
+    @IBOutlet weak var detailSecondLabel: UITextView!
     @IBOutlet weak var exbtnDateLabel: UILabel!
-    @IBOutlet weak var exbtnTimeLabel: UILabel!
-    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var exbtnTimeLabel: UITextView!
+    @IBOutlet weak var locationLabel: UITextView!
     @IBOutlet weak var exhibitionTimingTitle: UILabel!
     @IBOutlet weak var locationsTitle: UILabel!
     @IBOutlet weak var contactTitle: UILabel!
@@ -35,16 +35,16 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
     }
 
     func setupCellUI() {
-        titleLabel.textAlignment = .center
-        descriptionLabel.textAlignment = .center
-        detailSecondLabel.textAlignment = .center
-        exhibitionTimingTitle.textAlignment = .center
-        exbtnDateLabel.textAlignment = .center
-        exbtnTimeLabel.textAlignment = .center
-        locationsTitle.textAlignment = .center
-        locationLabel.textAlignment = .center
-        contactTitle.textAlignment = .center
-        contactDescriptionLabel.textAlignment = .center
+//        titleLabel.textAlignment = .center
+//        descriptionLabel.textAlignment = .center
+//        detailSecondLabel.textAlignment = .center
+//        exhibitionTimingTitle.textAlignment = .center
+//        exbtnDateLabel.textAlignment = .center
+//        exbtnTimeLabel.textAlignment = .center
+//        locationsTitle.textAlignment = .center
+//        locationLabel.textAlignment = .center
+//        contactTitle.textAlignment = .center
+//        contactDescriptionLabel.textAlignment = .center
         
         titleLabel.font = UIFont.settingsUpdateLabelFont
         descriptionLabel.font = UIFont.englishTitleFont
@@ -52,6 +52,7 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
         exhibitionTimingTitle.font = UIFont.closeButtonFont
         exbtnDateLabel.font = UIFont.sideMenuLabelFont
         exbtnTimeLabel.font = UIFont.sideMenuLabelFont
+        locationLabel.font = UIFont.sideMenuLabelFont
         locationsTitle.font = UIFont.closeButtonFont
         locationButton.titleLabel?.font = UIFont.sideMenuLabelFont
         contactTitle.font = UIFont.closeButtonFont
@@ -62,8 +63,8 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
         titleLabel.text = exhibition.name?.uppercased()
         descriptionLabel?.text = exhibition.shortDescription
         detailSecondLabel.text = exhibition.longDescription
-        exbtnDateLabel.text = "15 MARCH 2018 - 1 JUNE 2018"
-        exbtnTimeLabel.text = "Saturday to Sunday:9:00AM - 7:00PM\n Fridays: 1:30PM to 7:00PM"
+       // exbtnDateLabel.text = "15 MARCH 2018 - 1 JUNE 2018"
+        //exbtnTimeLabel.text = "Saturday to Sunday:9:00AM - 7:00PM\n Fridays: 1:30PM to 7:00PM"
         locationLabel.text = exhibition.location?.uppercased()
         centerImgHeight.constant = 0
         centerImageView.isHidden = true

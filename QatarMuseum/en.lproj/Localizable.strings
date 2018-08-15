@@ -80,3 +80,6 @@
 "PRODUCTION_LABEL" = "Production:";
 "PRODUCTION_DATES_LABEL" = "Production dates:";
 "PERIOD_STYLE_LABEL" = "Period/Style:";
+"LANG_ENGLISH" = "en";
+"LANG_ARABIC" = "ar";
+

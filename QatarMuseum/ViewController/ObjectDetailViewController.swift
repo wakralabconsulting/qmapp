@@ -108,7 +108,7 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
         } else if (imageView.frame.height >= 50 ){
             blurView.alpha  = 0.9
         }
-        if (scrollView.contentOffset.y < 0) {
+        if (scrollView.contentOffset.y < -300) {
             //reached top
             self.backButtonPressed()
         }
