@@ -12,11 +12,12 @@ protocol ObjectImageViewProtocol {
     func dismissImagePopUpView()
 }
 
-class ObjectImageView: UIView {
+class ObjectImageView: UIView, UIScrollViewDelegate  {
     @IBOutlet var imageViewPopup: UIView!
     @IBOutlet weak var objectImagePopUpInnerView: UIView!
     @IBOutlet weak var objectImageView: UIImageView!
     @IBOutlet weak var imageViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     var objectImageViewDelegate : ObjectImageViewProtocol?
     
@@ -41,6 +42,9 @@ class ObjectImageView: UIView {
     func setUpUI() {
         self.backgroundColor = UIColor.popupBackgroundWhite
         self.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+        self.scrollView.delegate = self
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 6.0
         
         imageViewPopup.isUserInteractionEnabled = true
         let tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(dismissView))
@@ -58,7 +62,6 @@ class ObjectImageView: UIView {
     @objc func zoomToScreenSize() {
         let heightOfSuperview = self.imageViewPopup.bounds.height
         imageViewHeight.constant = heightOfSuperview * 0.65
-//        objectImageView.frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height - 60)
         objectImageView.isUserInteractionEnabled = false
     }
     
