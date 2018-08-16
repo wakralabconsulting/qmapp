@@ -8,13 +8,14 @@
 
 import UIKit
 
-class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ObjectImageViewProtocol {
     @IBOutlet weak var objectTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
     
     let imageView = UIImageView()
     var blurView = UIVisualEffectView()
     let backButton = UIButton()
+    var objectImagePopupView : ObjectImageView = ObjectImageView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +38,10 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         view.addSubview(imageView)
+        
+        imageView.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(loadObjectImagePopup))
+        imageView.addGestureRecognizer(tapGesture)
         
         let darkBlur = UIBlurEffect(style: UIBlurEffectStyle.light)
         blurView = UIVisualEffectView(effect: darkBlur)
@@ -114,13 +119,25 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
+    //MARK: Poup Delegate
+    func dismissImagePopUpView() {
+        self.objectImagePopupView.removeFromSuperview()
+    }
+    
+    @objc func loadObjectImagePopup() {
+        objectImagePopupView = ObjectImageView(frame: self.view.frame)
+        objectImagePopupView.objectImageViewDelegate = self
+        objectImagePopupView.loadPopup(image : "science_tour_object")
+        self.view.addSubview(objectImagePopupView)
+    }
+    
     @objc func backButtonTouchDownAction(sender: UIButton) {
         sender.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
     @objc func backButtonPressed() {
         let transition = CATransition()
-        transition.duration = 0.25
+        transition.duration = 0.35
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromBottom
         self.view.window!.layer.add(transition, forKey: kCATransition)
