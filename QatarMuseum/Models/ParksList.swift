@@ -21,6 +21,12 @@ struct ParksList: ResponseObjectSerializable, ResponseCollectionSerializable {
             self.image = representation["image"] as? String
         }
     }
+    init(title:String?, description:String?, sortId: String?, image: String?) {
+        self.title = title
+        self.description = description
+        self.sortId = sortId
+        self.image = image
+    }
 }
 
 struct ParksLists: ResponseObjectSerializable {

@@ -90,6 +90,18 @@
         <attribute name="arabictourguideavailable" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="ParksEntity" representedClassName="ParksEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parksDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sortId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="ParksEntityArabic" representedClassName="ParksEntityArabic" syncable="YES" codeGenerationType="class">
+        <attribute name="descriptionArabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageArabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sortIdArabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="titleArabic" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="PublicArtsEntity" representedClassName="PublicArtsEntity" syncable="YES" codeGenerationType="class">
         <attribute name="detaildescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
@@ -113,13 +125,15 @@
     <elements>
         <element name="DiningEntity" positionX="-54" positionY="90" width="128" height="165"/>
         <element name="DiningEntityArabic" positionX="-45" positionY="108" width="128" height="165"/>
+        <element name="ExhibitionsEntity" positionX="-54" positionY="108" width="128" height="30"/>
+        <element name="ExhibitionsEntityArabic" positionX="-45" positionY="126" width="128" height="30"/>
         <element name="HeritageEntity" positionX="-63" positionY="27" width="128" height="180"/>
         <element name="HeritageEntityArabic" positionX="-54" positionY="63" width="128" height="180"/>
         <element name="HomeEntity" positionX="-63" positionY="-18" width="128" height="30"/>
         <element name="HomeEntityArabic" positionX="-54" positionY="63" width="128" height="120"/>
         <element name="PublicArtsEntity" positionX="-54" positionY="108" width="128" height="165"/>
         <element name="PublicArtsEntityArabic" positionX="-54" positionY="117" width="128" height="165"/>
-        <element name="ExhibitionsEntity" positionX="-54" positionY="108" width="128" height="30"/>
-        <element name="ExhibitionsEntityArabic" positionX="-45" positionY="126" width="128" height="30"/>
+        <element name="ParksEntity" positionX="-54" positionY="108" width="128" height="105"/>
+        <element name="ParksEntityArabic" positionX="-45" positionY="117" width="128" height="105"/>
     </elements>
 </model>
