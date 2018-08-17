@@ -15,6 +15,27 @@
 		1BE526D22107460F00C8CD51 /* QatarMuseumRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526D12107460F00C8CD51 /* QatarMuseumRouter.swift */; };
 		1BE526D42107470700C8CD51 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526D32107470700C8CD51 /* Config.swift */; };
 		1BE526D72107896600C8CD51 /* Exhibition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526D62107896600C8CD51 /* Exhibition.swift */; };
+		B806B7A5212451B200F9F338 /* FloorMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B806B7A4212451B200F9F338 /* FloorMapViewController.swift */; };
+		B806B7A8212452A200F9F338 /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7A6212452A000F9F338 /* GoogleMapsCore.framework */; };
+		B806B7A9212452A200F9F338 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7A7212452A200F9F338 /* GoogleMaps.framework */; };
+		B806B7AB212452BB00F9F338 /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7AA212452BB00F9F338 /* GoogleMapsBase.framework */; };
+		B806B7AD212452DC00F9F338 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B806B7AC212452DC00F9F338 /* GoogleMaps.bundle */; };
+		B806B7AF2124530800F9F338 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7AE2124530800F9F338 /* UIKit.framework */; };
+		B806B7B12124530F00F9F338 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7B02124530F00F9F338 /* SystemConfiguration.framework */; };
+		B806B7B32124531500F9F338 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7B22124531500F9F338 /* QuartzCore.framework */; };
+		B806B7B52124531B00F9F338 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7B42124531B00F9F338 /* OpenGLES.framework */; };
+		B806B7B72124532300F9F338 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7B62124532300F9F338 /* libz.tbd */; };
+		B806B7B92124532D00F9F338 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7B82124532D00F9F338 /* libc++.tbd */; };
+		B806B7BB2124533300F9F338 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7BA2124533300F9F338 /* ImageIO.framework */; };
+		B806B7BD2124533B00F9F338 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7BC2124533B00F9F338 /* GLKit.framework */; };
+		B806B7BF2124534200F9F338 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7BE2124534200F9F338 /* CoreText.framework */; };
+		B806B7C12124534800F9F338 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7C02124534800F9F338 /* CoreTelephony.framework */; };
+		B806B7C32124534E00F9F338 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7C22124534E00F9F338 /* CoreLocation.framework */; };
+		B806B7C52124535600F9F338 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7C42124535600F9F338 /* CoreImage.framework */; };
+		B806B7C72124535F00F9F338 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7C62124535F00F9F338 /* CoreGraphics.framework */; };
+		B806B7C92124536600F9F338 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7C82124536600F9F338 /* CoreData.framework */; };
+		B806B7CB2124536F00F9F338 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7CA2124536E00F9F338 /* Accelerate.framework */; };
+		B806B7CD21247FB400F9F338 /* MapStyle.json in Resources */ = {isa = PBXBuildFile; fileRef = B806B7CC21247FB400F9F338 /* MapStyle.json */; };
 		B80DC05920C792E400E28034 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80DC05820C792E400E28034 /* AppDelegate.swift */; };
 		B80DC05B20C792E400E28034 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80DC05A20C792E400E28034 /* ViewController.swift */; };
 		B80DC05E20C792E400E28034 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B80DC05C20C792E400E28034 /* Main.storyboard */; };
@@ -157,6 +178,27 @@
 		1BE526D62107896600C8CD51 /* Exhibition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exhibition.swift; sourceTree = "<group>"; };
 		80387D6C7EDA0B5C9B3AB21C /* Pods-QatarMuseums.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QatarMuseums.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QatarMuseums/Pods-QatarMuseums.debug.xcconfig"; sourceTree = "<group>"; };
 		94F5559C89E84E914A76D7A7 /* Pods_QatarMuseums.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QatarMuseums.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B806B7A4212451B200F9F338 /* FloorMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorMapViewController.swift; sourceTree = "<group>"; };
+		B806B7A6212452A000F9F338 /* GoogleMapsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMapsCore.framework; sourceTree = "<group>"; };
+		B806B7A7212452A200F9F338 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
+		B806B7AA212452BB00F9F338 /* GoogleMapsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMapsBase.framework; sourceTree = "<group>"; };
+		B806B7AC212452DC00F9F338 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
+		B806B7AE2124530800F9F338 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B806B7B02124530F00F9F338 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		B806B7B22124531500F9F338 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B806B7B42124531B00F9F338 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		B806B7B62124532300F9F338 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		B806B7B82124532D00F9F338 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		B806B7BA2124533300F9F338 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		B806B7BC2124533B00F9F338 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		B806B7BE2124534200F9F338 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		B806B7C02124534800F9F338 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		B806B7C22124534E00F9F338 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		B806B7C42124535600F9F338 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		B806B7C62124535F00F9F338 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B806B7C82124536600F9F338 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		B806B7CA2124536E00F9F338 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		B806B7CC21247FB400F9F338 /* MapStyle.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MapStyle.json; sourceTree = "<group>"; };
 		B80DC05520C792E400E28034 /* QatarMuseums.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QatarMuseums.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B80DC05820C792E400E28034 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B80DC05A20C792E400E28034 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -305,7 +347,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B806B7CB2124536F00F9F338 /* Accelerate.framework in Frameworks */,
+				B806B7C92124536600F9F338 /* CoreData.framework in Frameworks */,
+				B806B7C72124535F00F9F338 /* CoreGraphics.framework in Frameworks */,
+				B806B7C52124535600F9F338 /* CoreImage.framework in Frameworks */,
+				B806B7C32124534E00F9F338 /* CoreLocation.framework in Frameworks */,
+				B806B7C12124534800F9F338 /* CoreTelephony.framework in Frameworks */,
+				B806B7BF2124534200F9F338 /* CoreText.framework in Frameworks */,
+				B806B7BD2124533B00F9F338 /* GLKit.framework in Frameworks */,
+				B806B7BB2124533300F9F338 /* ImageIO.framework in Frameworks */,
+				B806B7B92124532D00F9F338 /* libc++.tbd in Frameworks */,
+				B806B7B72124532300F9F338 /* libz.tbd in Frameworks */,
+				B806B7B52124531B00F9F338 /* OpenGLES.framework in Frameworks */,
+				B806B7B32124531500F9F338 /* QuartzCore.framework in Frameworks */,
+				B806B7B12124530F00F9F338 /* SystemConfiguration.framework in Frameworks */,
+				B806B7AF2124530800F9F338 /* UIKit.framework in Frameworks */,
+				B806B7A9212452A200F9F338 /* GoogleMaps.framework in Frameworks */,
+				B806B7AB212452BB00F9F338 /* GoogleMapsBase.framework in Frameworks */,
 				DA51D58A8DA63CE54CFF0485 /* Pods_QatarMuseums.framework in Frameworks */,
+				B806B7A8212452A200F9F338 /* GoogleMapsCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,6 +431,25 @@
 		7989B881720353361A2FCB1C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B806B7CA2124536E00F9F338 /* Accelerate.framework */,
+				B806B7C82124536600F9F338 /* CoreData.framework */,
+				B806B7C62124535F00F9F338 /* CoreGraphics.framework */,
+				B806B7C42124535600F9F338 /* CoreImage.framework */,
+				B806B7C22124534E00F9F338 /* CoreLocation.framework */,
+				B806B7C02124534800F9F338 /* CoreTelephony.framework */,
+				B806B7BE2124534200F9F338 /* CoreText.framework */,
+				B806B7BC2124533B00F9F338 /* GLKit.framework */,
+				B806B7BA2124533300F9F338 /* ImageIO.framework */,
+				B806B7B82124532D00F9F338 /* libc++.tbd */,
+				B806B7B62124532300F9F338 /* libz.tbd */,
+				B806B7B42124531B00F9F338 /* OpenGLES.framework */,
+				B806B7B22124531500F9F338 /* QuartzCore.framework */,
+				B806B7B02124530F00F9F338 /* SystemConfiguration.framework */,
+				B806B7AE2124530800F9F338 /* UIKit.framework */,
+				B806B7AC212452DC00F9F338 /* GoogleMaps.bundle */,
+				B806B7AA212452BB00F9F338 /* GoogleMapsBase.framework */,
+				B806B7A7212452A200F9F338 /* GoogleMaps.framework */,
+				B806B7A6212452A000F9F338 /* GoogleMapsCore.framework */,
 				94F5559C89E84E914A76D7A7 /* Pods_QatarMuseums.framework */,
 			);
 			name = Frameworks;
@@ -436,6 +515,7 @@
 				B8E92D1121006F0F005449FC /* CollectionDetailJson.json */,
 				B811FBC82103406100960246 /* Localizable.strings */,
 				B839831821196E68007090C8 /* QatarMuseums.xcdatamodeld */,
+				B806B7CC21247FB400F9F338 /* MapStyle.json */,
 			);
 			path = QatarMuseum;
 			sourceTree = "<group>";
@@ -486,6 +566,7 @@
 				B8D4C535210453FB0096912C /* FilterViewController.swift */,
 				B8E01BF82105EDFB008D7F33 /* SettingsViewController.swift */,
 				B8E024EC211042C200CB18E2 /* CollectionDetailViewController.swift */,
+				B806B7A4212451B200F9F338 /* FloorMapViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -890,7 +971,9 @@
 				B891D06520DBCC5200919F30 /* HeritageCell.xib in Resources */,
 				B8DC40A520C9A3230044134D /* CommonHeader.xib in Resources */,
 				B8DC478720DCF8CE0007B426 /* ParkTableCellXib.xib in Resources */,
+				B806B7AD212452DC00F9F338 /* GoogleMaps.bundle in Resources */,
 				B811FBC62103406100960246 /* Localizable.strings in Resources */,
+				B806B7CD21247FB400F9F338 /* MapStyle.json in Resources */,
 				B8E2C00E20C7E9CA00F3CE41 /* ComingSoonpopup.xib in Resources */,
 				B8AFA2EC20E78BA9008838A6 /* DINNextLTArabic-Light.ttf in Resources */,
 				B8C64D4F20FDDE5900C2D51A /* MiaTourGuideJson.json in Resources */,
@@ -1014,6 +1097,7 @@
 				B85BA4B020D01D1C00E7F4D1 /* SplashViewController.swift in Sources */,
 				B8294CF520CBF265002AFF72 /* FSCalendarStickyHeader.m in Sources */,
 				B8EAB77D20CA3E6100C001B2 /* EventCollectionViewCell.swift in Sources */,
+				B806B7A5212451B200F9F338 /* FloorMapViewController.swift in Sources */,
 				B8DC40A920C9A5760044134D /* EventViewController.swift in Sources */,
 				B8294CEA20CBF265002AFF72 /* FSCalendar+Deprecated.m in Sources */,
 				B82C87F620E69D4100777674 /* DiningDetailTableViewCell.swift in Sources */,
@@ -1035,7 +1119,6 @@
 				B8CAA93D20DC15FA009A936D /* HeritageDetailCell.swift in Sources */,
 				B80DC05920C792E400E28034 /* AppDelegate.swift in Sources */,
 				1B51B3CE21214820002B84AA /* ObjectPopupView.swift in Sources */,
-				B8C4459C21136CE900CF001A /* DiningDetail.swift in Sources */,
 				B80DC08C20C798BA00E28034 /* HomeViewController.swift in Sources */,
 				B8EAB7BD20CA424300C001B2 /* LunarFormatter.swift in Sources */,
 				B80DC08E20C798E400E28034 /* HomeCollectionViewCell.swift in Sources */,
@@ -1267,6 +1350,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DNV2Z9FR68;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = QatarMuseum/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1289,6 +1376,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DNV2Z9FR68;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = QatarMuseum/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

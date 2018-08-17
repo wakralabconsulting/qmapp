@@ -68,5 +68,8 @@ extension UIColor {
     static var settingsSwitchOnTint: UIColor {
         return UIColor(red: 82/255, green: 178/255, blue: 74/255, alpha: 1)
     }
+    static var mapLevelColor: UIColor {
+        return UIColor(red: 205/255, green: 215/255, blue: 224/255, alpha: 1)
+    }
     
 }
