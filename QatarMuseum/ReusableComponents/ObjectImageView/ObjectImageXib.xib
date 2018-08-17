@@ -50,6 +50,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="wgQ-Og-AcE" firstAttribute="leading" secondItem="h3U-qY-6sA" secondAttribute="leading" id="AgW-nS-qTx"/>
+                        <constraint firstItem="H6R-9q-uRR" firstAttribute="height" secondItem="h3U-qY-6sA" secondAttribute="height" id="DQF-ax-hM7"/>
                         <constraint firstAttribute="trailing" secondItem="wgQ-Og-AcE" secondAttribute="trailing" id="FhN-0b-VHv"/>
                         <constraint firstAttribute="bottom" secondItem="wgQ-Og-AcE" secondAttribute="bottom" id="HLT-wz-rrc"/>
                         <constraint firstItem="wgQ-Og-AcE" firstAttribute="top" secondItem="h3U-qY-6sA" secondAttribute="top" id="slU-LB-M9N"/>

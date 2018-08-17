@@ -43,8 +43,13 @@ class ObjectImageView: UIView, UIScrollViewDelegate  {
         self.backgroundColor = UIColor.popupBackgroundWhite
         self.backgroundColor = UIColor.black.withAlphaComponent(0.8)
         self.scrollView.delegate = self
+        scrollView.alwaysBounceVertical = false
+        scrollView.alwaysBounceHorizontal = false
+        scrollView.showsVerticalScrollIndicator = true
+        scrollView.flashScrollIndicators()
+        
         scrollView.minimumZoomScale = 1.0
-        scrollView.maximumZoomScale = 6.0
+        scrollView.maximumZoomScale = 10.0
         
         imageViewPopup.isUserInteractionEnabled = true
         let tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(dismissView))
@@ -53,6 +58,10 @@ class ObjectImageView: UIView, UIScrollViewDelegate  {
         objectImageView.isUserInteractionEnabled = true
         let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(zoomToScreenSize))
         objectImageView.addGestureRecognizer(tapGesture2)
+    }
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return objectImageView
     }
     
     func loadPopup(image : String) {
