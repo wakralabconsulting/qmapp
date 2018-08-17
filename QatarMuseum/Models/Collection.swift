@@ -20,6 +20,11 @@ struct Collection: ResponseObjectSerializable, ResponseCollectionSerializable {
             self.museumsReference = representation["Museums_reference"] as? String
         }
     }
+    init(name:String?,image:String?,museumsReference:String?) {
+        self.name = name
+        self.image = image
+        self.museumsReference = museumsReference
+    }
 }
 
 struct Collections: ResponseObjectSerializable {
