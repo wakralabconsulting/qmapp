@@ -13,6 +13,7 @@
 		1B51B3D52121B6A9002B84AA /* ObjectDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51B3D42121B6A9002B84AA /* ObjectDetailTableViewCell.swift */; };
 		1BAA2FCB2125FCC600D785DD /* ObjectImageXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BAA2FCA2125FCC500D785DD /* ObjectImageXib.xib */; };
 		1BAA2FCD2125FD8200D785DD /* ObjectImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAA2FCC2125FD8200D785DD /* ObjectImageView.swift */; };
+		1BAA2FCF2126D15D00D785DD /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAA2FCE2126D15D00D785DD /* Collection.swift */; };
 		1BC909D02108E3C700D6C00B /* QMUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC909CF2108E3C700D6C00B /* QMUtility.swift */; };
 		1BC909D2210B277F00D6C00B /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC909D1210B277F00D6C00B /* Home.swift */; };
 		1BE526D0210739BF00C8CD51 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526CF210739BE00C8CD51 /* Request.swift */; };
@@ -157,6 +158,7 @@
 		1B51B3D42121B6A9002B84AA /* ObjectDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectDetailTableViewCell.swift; sourceTree = "<group>"; };
 		1BAA2FCA2125FCC500D785DD /* ObjectImageXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ObjectImageXib.xib; sourceTree = "<group>"; };
 		1BAA2FCC2125FD8200D785DD /* ObjectImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectImageView.swift; sourceTree = "<group>"; };
+		1BAA2FCE2126D15D00D785DD /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		1BC909CF2108E3C700D6C00B /* QMUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QMUtility.swift; sourceTree = "<group>"; };
 		1BC909D1210B277F00D6C00B /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		1BE526CF210739BE00C8CD51 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 				B8C1C2BC21160B7300531AB3 /* PublicArtsList.swift */,
 				B8C700842116F833006F3653 /* PublicArtsDetail.swift */,
 				B8BBF458211C1AC000352706 /* ParksList.swift */,
+				1BAA2FCE2126D15D00D785DD /* Collection.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1035,6 +1038,7 @@
 				B8B368BE20DD4B6200B1CDA4 /* MuseumCollectionsViewController.swift in Sources */,
 				B8D7BF452101A12E0085EF49 /* EducationViewController.swift in Sources */,
 				1B51B3D221219367002B84AA /* ObjectDetailViewController.swift in Sources */,
+				1BAA2FCF2126D15D00D785DD /* Collection.swift in Sources */,
 				B8D52A3620E638B900E34673 /* DiningViewController.swift in Sources */,
 				B8294CEF20CBF265002AFF72 /* FSCalendarDelegationFactory.m in Sources */,
 				B8294CF020CBF265002AFF72 /* FSCalendarCollectionViewLayout.m in Sources */,

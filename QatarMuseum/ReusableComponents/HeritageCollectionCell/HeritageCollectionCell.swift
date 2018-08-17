@@ -84,17 +84,18 @@ class HeritageCollectionCell: UICollectionViewCell {
     }
     
     //MARK: Collections List Data
-    func setCollectionsCellValues(cellValues: NSDictionary,imageName: String) {
-        
-        
-        titleLabel.text = (cellValues.value(forKey: "title") as? String)?.uppercased()
+    func setCollectionsCellValues(collectionList: Collection) {
+        titleLabel.text = collectionList.name?.uppercased()
         lineLabelHeight.constant = 0
         lineLabel.isHidden = true
         titleBottomConstraint.constant = 0
        // subLabelHeight.constant = 0
        favouriteButton.isHidden = true
-        heritageImageView.image = UIImage(named: imageName)
+        if let imageUrl = collectionList.image {
+            heritageImageView.kf.setImage(with: URL(string: imageUrl))
+        }
     }
+    
     //MARK: Dining List Data
     func setDiningListValues(diningList: Dining) {
         titleLabel.text = diningList.name?.uppercased()
