@@ -150,6 +150,7 @@
 		B8EAB7C020CA67CD00C001B2 /* EventPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8EAB7BF20CA67CD00C001B2 /* EventPopUp.xib */; };
 		B8EAB7C220CA67E000C001B2 /* EventPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EAB7C120CA67E000C001B2 /* EventPopupView.swift */; };
 		B8EAB7C420CA95E500C001B2 /* EventDetailsJson.json in Resources */ = {isa = PBXBuildFile; fileRef = B8EAB7C320CA95E500C001B2 /* EventDetailsJson.json */; };
+		B8F3A940212728EE005360AD /* CommonStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F3A93F212728EE005360AD /* CommonStrings.swift */; };
 		B8FC190120DE854400D00E6B /* MuseumBottomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FC190020DE854400D00E6B /* MuseumBottomCell.swift */; };
 		B8FEC77C2112E57100648F66 /* Dining.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FEC77B2112E57100648F66 /* Dining.swift */; };
 		DA51D58A8DA63CE54CFF0485 /* Pods_QatarMuseums.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F5559C89E84E914A76D7A7 /* Pods_QatarMuseums.framework */; };
@@ -347,6 +348,7 @@
 		B8EAB7BF20CA67CD00C001B2 /* EventPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventPopUp.xib; sourceTree = "<group>"; };
 		B8EAB7C120CA67E000C001B2 /* EventPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPopupView.swift; sourceTree = "<group>"; };
 		B8EAB7C320CA95E500C001B2 /* EventDetailsJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = EventDetailsJson.json; sourceTree = "<group>"; };
+		B8F3A93F212728EE005360AD /* CommonStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonStrings.swift; sourceTree = "<group>"; };
 		B8FC190020DE854400D00E6B /* MuseumBottomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseumBottomCell.swift; sourceTree = "<group>"; };
 		B8FEC77B2112E57100648F66 /* Dining.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dining.swift; sourceTree = "<group>"; };
 		FF0C898808E8CD16BED3F913 /* Pods-QatarMuseums.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QatarMuseums.release.xcconfig"; path = "Pods/Target Support Files/Pods-QatarMuseums/Pods-QatarMuseums.release.xcconfig"; sourceTree = "<group>"; };
@@ -427,6 +429,7 @@
 			children = (
 				1BC909CF2108E3C700D6C00B /* QMUtility.swift */,
 				B812BA03210AF3540083E0E2 /* QMFont.swift */,
+				B8F3A93F212728EE005360AD /* CommonStrings.swift */,
 			);
 			path = CommonMethods;
 			sourceTree = "<group>";
@@ -1128,6 +1131,7 @@
 				B8BBF459211C1AC000352706 /* ParksList.swift in Sources */,
 				B8294CEE20CBF265002AFF72 /* FSCalendarScopeHandle.m in Sources */,
 				B811FBCC2103811400960246 /* QMColours.swift in Sources */,
+				B8F3A940212728EE005360AD /* CommonStrings.swift in Sources */,
 				1BE526D72107896600C8CD51 /* Exhibition.swift in Sources */,
 				B85BA4B020D01D1C00E7F4D1 /* SplashViewController.swift in Sources */,
 				B8294CF520CBF265002AFF72 /* FSCalendarStickyHeader.m in Sources */,

@@ -6,22 +6,29 @@
 //  Copyright © 2018 Exalture. All rights reserved.
 //
 
-import UIKit
 import Alamofire
+import UIKit
+import CoreData
 
 class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol {
     @IBOutlet weak var museumCollectionView: UICollectionView!
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var collectionsHeader: CommonHeaderView!
-
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var collection: [Collection] = []
-
+    let networkReachability = NetworkReachabilityManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUI()
         registerNib()
-        getCollectionList()
+        if  (networkReachability?.isReachable)! {
+            getCollectionList()
+        }
+        else {
+            self.fetchCollectionListFromCoredata()
+        }
+        
     }
     
     func setUpUI() {
@@ -31,7 +38,7 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
         collectionsHeader.headerViewDelegate = self
         collectionsHeader.headerTitle.text = NSLocalizedString("COLLECTIONS_TITLE", comment: "COLLECTIONS_TITLE Label in the collections page")
 
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             collectionsHeader.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         } else {
             collectionsHeader.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
@@ -48,6 +55,7 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
             switch response.result {
             case .success(let data):
                 self.collection = data.collections!
+                self.saveOrUpdateCollectionCoredata()
                 self.museumCollectionView.reloadData()
                 self.loadingView.stopLoading()
                 self.loadingView.isHidden = true
@@ -132,6 +140,123 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
     //MARK: ComingSoon Delegate
     func closeButtonPressed() {
         self.popupView.removeFromSuperview()
+    }
+    
+    //MARK: Coredata Method
+    func saveOrUpdateCollectionCoredata() {
+        if (collection.count > 0) {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                    for i in 0 ... collection.count-1 {
+                        let managedContext = getContext()
+                        let collectionListDict : Collection?
+                        collectionListDict = collection[i]
+                        self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
+                    }
+                }
+            
+            else {
+                    for i in 0 ... collection.count-1 {
+                        let managedContext = getContext()
+                        let collectionListDict : Collection?
+                        collectionListDict = collection[i]
+                        self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
+                }
+            }
+        }
+    }
+    func saveToCoreData(collectionListDict: Collection, managedObjContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let collectionInfo: CollectionsEntity = NSEntityDescription.insertNewObject(forEntityName: "CollectionsEntity", into: managedObjContext) as! CollectionsEntity
+            collectionInfo.listName = collectionListDict.name
+            collectionInfo.listImage = collectionListDict.image
+            collectionInfo.musmRef = collectionListDict.museumsReference
+            
+        }
+        else {
+            let collectionInfo: CollectionsEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "CollectionsEntityArabic", into: managedObjContext) as! CollectionsEntityArabic
+            collectionInfo.listNameAr = collectionListDict.name
+            collectionInfo.listImageAr = collectionListDict.image
+            collectionInfo.musmRefAr = collectionListDict.museumsReference
+        }
+        do {
+            try managedObjContext.save()
+            
+            
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    func fetchCollectionListFromCoredata() {
+        
+        do {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                var collectionArray = [CollectionsEntity]()
+                let managedContext = getContext()
+                let collectionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "CollectionsEntity")
+                collectionArray = (try managedContext.fetch(collectionFetchRequest) as? [CollectionsEntity])!
+                if (collectionArray.count > 0) {
+                    for i in 0 ... collectionArray.count-1 {
+                        self.collection.insert(Collection(name: collectionArray[i].listName, image: collectionArray[i].listImage, museumsReference: collectionArray[i].musmRef), at: i)
+                    }
+                    if(collection.count == 0){
+                        self.showNodata()
+                    }
+                    museumCollectionView.reloadData()
+                }
+                else{
+                    self.showNodata()
+                }
+            }
+            else {
+                var collectionArray = [CollectionsEntityArabic]()
+                let managedContext = getContext()
+                let collectionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "CollectionsEntityArabic")
+                collectionArray = (try managedContext.fetch(collectionFetchRequest) as? [CollectionsEntityArabic])!
+                if (collectionArray.count > 0) {
+                    for i in 0 ... collectionArray.count-1 {
+                        
+                        self.collection.insert(Collection(name: collectionArray[i].listNameAr, image: collectionArray[i].listImageAr, museumsReference: collectionArray[i].musmRefAr), at: i)
+                    }
+                    if(collection.count == 0){
+                        self.showNodata()
+                    }
+                    museumCollectionView.reloadData()
+                }
+                else{
+                    self.showNodata()
+                }
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    func getContext() -> NSManagedObjectContext{
+        
+        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+        if #available(iOS 10.0, *) {
+            return
+                appDelegate!.persistentContainer.viewContext
+        } else {
+            return appDelegate!.managedObjectContext
+        }
+    }
+    func checkAddedToCoredata(entityName: String?,collectionId: String?) -> [NSManagedObject]
+    {
+        let managedContext = getContext()
+        var fetchResults : [NSManagedObject] = []
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
+        fetchResults = try! managedContext.fetch(fetchRequest)
+        return fetchResults
+    }
+    func showNodata() {
+        var errorMessage: String
+        errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                        comment: "Setting the content of the alert"))
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoDataView()
+        self.loadingView.noDataLabel.text = errorMessage
     }
     
     override func didReceiveMemoryWarning() {

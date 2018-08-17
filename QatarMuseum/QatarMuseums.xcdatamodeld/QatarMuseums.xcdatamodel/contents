@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17C88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CollectionsEntity" representedClassName="CollectionsEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="listImage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="listName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="musmRef" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="CollectionsEntityArabic" representedClassName="CollectionsEntityArabic" syncable="YES" codeGenerationType="class">
+        <attribute name="listImageAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="listNameAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="musmRefAr" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="DiningEntity" representedClassName="DiningEntity" syncable="YES" codeGenerationType="class">
         <attribute name="closetime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="diningdescription" optional="YES" attributeType="String" syncable="YES"/>
@@ -131,9 +141,11 @@
         <element name="HeritageEntityArabic" positionX="-54" positionY="63" width="128" height="180"/>
         <element name="HomeEntity" positionX="-63" positionY="-18" width="128" height="30"/>
         <element name="HomeEntityArabic" positionX="-54" positionY="63" width="128" height="120"/>
-        <element name="PublicArtsEntity" positionX="-54" positionY="108" width="128" height="165"/>
-        <element name="PublicArtsEntityArabic" positionX="-54" positionY="117" width="128" height="165"/>
         <element name="ParksEntity" positionX="-54" positionY="108" width="128" height="105"/>
         <element name="ParksEntityArabic" positionX="-45" positionY="117" width="128" height="105"/>
+        <element name="PublicArtsEntity" positionX="-54" positionY="108" width="128" height="165"/>
+        <element name="PublicArtsEntityArabic" positionX="-54" positionY="117" width="128" height="165"/>
+        <element name="CollectionsEntity" positionX="-36" positionY="126" width="128" height="90"/>
+        <element name="CollectionsEntityArabic" positionX="-18" positionY="162" width="128" height="90"/>
     </elements>
 </model>
