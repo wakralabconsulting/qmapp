@@ -15,6 +15,8 @@ enum levelNumber{
 }
 
 class FloorMapViewController: UIViewController,GMSMapViewDelegate,ObjectPopUpProtocol,HeaderViewProtocol {
+    
+    
    
     
     @IBOutlet weak var viewForMap: GMSMapView!
@@ -294,6 +296,9 @@ class FloorMapViewController: UIViewController,GMSMapViewDelegate,ObjectPopUpPro
         self.view.window!.layer.add(transition, forKey: kCATransition)
         self.dismiss(animated: false, completion: nil)
     }
-    
+    func viewDetailButtonTapAction() {
+        
+    }
+   
 
 }
