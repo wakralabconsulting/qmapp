@@ -13,13 +13,8 @@ import YouTubePlayer
 
 
 class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,HeaderViewProtocol {
-
-    
     @IBOutlet weak var headerView: CommonHeaderView!
-    
     @IBOutlet weak var educationTitle: UILabel!
-    
-    
     @IBOutlet weak var videoView: YouTubePlayerView!
     @IBOutlet weak var firstDescriptionLabel: UILabel!
     @IBOutlet weak var secondDescriptionLabel: UILabel!
@@ -27,12 +22,15 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var videoImage: UIImageView!
     @IBOutlet weak var discoverButton: UIButton!
+    
     var player = AVPlayer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         loadVideo()
     }
+    
     func setupUI() {
         loadingView.isHidden = false
         loadingView.showLoading()

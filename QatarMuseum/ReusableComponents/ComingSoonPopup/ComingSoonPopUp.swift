@@ -30,16 +30,16 @@ class ComingSoonPopUp: UIView {
         super.init(coder: aDecoder)
         commonInit()
     }
-    private func commonInit()
-    {
+    
+    private func commonInit() {
         Bundle.main.loadNibNamed("ComingSoonpopup", owner: self, options: nil)
         addSubview(comingSoonPopup)
         comingSoonPopup.frame = self.bounds
         comingSoonPopup.autoresizingMask = [.flexibleHeight,.flexibleWidth]
         setUpUI()
     }
+    
     func setUpUI() {
-        
         popupInnerView.layer.cornerRadius = 20.0
         self.backgroundColor = UIColor.popupBackgroundWhite
         self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
@@ -47,9 +47,8 @@ class ComingSoonPopUp: UIView {
         messageLabel.font = UIFont.sideMenuLabelFont
         stayTunedLabel.font = UIFont.sideMenuLabelFont
         closeButton.titleLabel?.font = UIFont.closeButtonFont
-        
-        
     }
+    
     func loadPopup() {
         titleLabel.text = NSLocalizedString("COMINGSOON_TITLE", comment: "COMINGSOON_TITLE Label in the Popup")
         messageLabel.text = NSLocalizedString("COMINGSOON_MESSAGE", comment: "COMINGSOON_MESSAGE Label in the Popup")

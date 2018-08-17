@@ -13,14 +13,15 @@ protocol MiaTourProtocol {
 class MiaCollectionReusableView: UICollectionReusableView {
     @IBOutlet weak var miaTourGuideText: UILabel!
     @IBOutlet weak var selfGuidedText: UILabel!
-    
     @IBOutlet weak var exploreButton: UIButton!
     @IBOutlet weak var audioCircleImage: UIImageView!
+    
     var miaTourDelegate : MiaTourProtocol?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        
     }
+    
     @IBAction func didTapExplore(_ sender: UIButton) {
         miaTourDelegate?.exploreButtonTapAction(miaHeader: self)
         self.exploreButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -28,7 +29,7 @@ class MiaCollectionReusableView: UICollectionReusableView {
     }
     
     @IBAction func exploreButtonTouchDown(_ sender: UIButton) {
-         self.exploreButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        self.exploreButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
         self.audioCircleImage.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
 }

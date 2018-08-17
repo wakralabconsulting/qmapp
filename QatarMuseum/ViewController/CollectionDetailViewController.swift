@@ -9,13 +9,10 @@
 import UIKit
 
 class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,HeaderViewProtocol {
-    
-    
-
     @IBOutlet weak var collectionTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
-    
     @IBOutlet weak var headerView: CommonHeaderView!
+    
     var collectionListArray: NSArray!
     var collectionImageArray = NSArray()
     override func viewDidLoad() {

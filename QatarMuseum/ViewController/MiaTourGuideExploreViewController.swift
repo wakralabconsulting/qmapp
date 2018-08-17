@@ -26,7 +26,6 @@ class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol, co
         tourGuideDescription.text = "Welcome to Qatar Museum Premises. \n Explore the architrcture and the objects on display. \n Scan the QR codes available on the galleries for more information."
         headerView.headerViewDelegate = self
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            
             headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         }
         else {
@@ -69,6 +68,7 @@ class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol, co
         self.startTourButton.setTitleColor(UIColor.viewMyculTitleBlue, for: .normal)
         self.startTourButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
+    
     func loadComingSoonPopup() {
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
@@ -79,6 +79,7 @@ class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol, co
     func loadObjectPopup() {
         objectPopupView = ObjectPopupView(frame: self.view.frame)
         objectPopupView.objectPopupDelegate = self
+        objectPopupView.loadPopup()
         self.view.addSubview(objectPopupView)
     }
     
@@ -91,6 +92,16 @@ class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol, co
         self.objectPopupView.removeFromSuperview()
     }
     
+    func viewDetailButtonTapAction() {
+        let objectDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "objectDetailId") as! ObjectDetailViewController
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromTop
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(objectDetailView, animated: false, completion: nil)
+    }
+    
     //MARK: Header delegate
     func headerCloseButtonPressed() {
         let transition = CATransition()
@@ -99,7 +110,5 @@ class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol, co
         transition.subtype = kCATransitionFromLeft
         self.view.window!.layer.add(transition, forKey: kCATransition)
         self.dismiss(animated: false, completion: nil)
-        
     }
-    
 }
