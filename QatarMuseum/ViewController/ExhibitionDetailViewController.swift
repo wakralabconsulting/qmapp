@@ -22,7 +22,6 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     var exhibition: [Exhibition] = []
     let networkReachability = NetworkReachabilityManager()
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setUi()
@@ -30,11 +29,9 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         if (fromHome == true) {
             if  (networkReachability?.isReachable)! {
                 getExhibitionDetail()
-            }
-            else {
+            } else {
                 self.fetchExhibitionDetailsFromCoredata()
             }
-            
         }
     }
     
@@ -193,9 +190,9 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     @objc func closeButtonTouchDownAction(sender: UIButton!) {
         sender.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
+    
     //MARK: Webservice call
     func getExhibitionDetail() {
-        
         _ = Alamofire.request(QatarMuseumRouter.ExhibitionDetail(["nid": exhibitionId!])).responseObject { (response: DataResponse<Exhibitions>) -> Void in
             switch response.result {
             case .success(let data):
@@ -223,6 +220,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
             }
         }
     }
+    
     //MARK: Heritage Coredata Method
     func saveOrUpdateExhibitionsCoredata() {
         if (exhibition.count > 0) {
