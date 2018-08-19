@@ -129,7 +129,7 @@ class FloorMapViewController: UIViewController,GMSMapViewDelegate,ObjectPopUpPro
             marker.position = position
             marker.title = titleString
             marker.snippet = "San Francisco"
-           // marker.icon = self.imageWithImage(image: UIImage(named: imageName)!, scaledToSize: CGSize(width:25.0, height: 25.0))
+            marker.icon = self.imageWithImage(image: UIImage(named: imageName)!, scaledToSize: CGSize(width:21.0, height: 25.0))
             marker.appearAnimation = .pop
             marker.map = viewForMap
         }
@@ -157,12 +157,12 @@ class FloorMapViewController: UIViewController,GMSMapViewDelegate,ObjectPopUpPro
         removeMarkers()
         
         if (zoomValue > 19) {
-            showMarker(marker: l3Marker1, position: l3_atr1, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoomValue)
-            showMarker(marker: l3Marker2, position: l3_atr2, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoomValue)
-            showMarker(marker: l3Marker3, position: l3_atr3, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoomValue)
-            showMarker(marker: l3Marker4, position: l3_atr4, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoomValue)
-            showMarker(marker: l3Marker5, position: l3_atr5, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoomValue)
-            showMarker(marker: l3Marker6, position: l3_atr6, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoomValue)
+            showMarker(marker: l3Marker1, position: l3_atr1, titleString: "HelloWorld", imageName: "001_MIA_MW.146_005", zoomValue: zoomValue)
+            showMarker(marker: l3Marker2, position: l3_atr2, titleString: "HelloWorld", imageName: "GL.322-0564.2000x2000", zoomValue: zoomValue)
+            showMarker(marker: l3Marker3, position: l3_atr3, titleString: "HelloWorld", imageName: "HS.32-1.2000x2000", zoomValue: zoomValue)
+            showMarker(marker: l3Marker4, position: l3_atr4, titleString: "HelloWorld", imageName: "MS.523.1999-1.2000x2000", zoomValue: zoomValue)
+            showMarker(marker: l3Marker5, position: l3_atr5, titleString: "HelloWorld", imageName: "MS.688.2008.Recto-1.2000x2000", zoomValue: zoomValue)
+            showMarker(marker: l3Marker6, position: l3_atr6, titleString: "HelloWorld", imageName: "MS.709.2010-1.2000x2000", zoomValue: zoomValue)
         }
     }
     
@@ -246,12 +246,12 @@ class FloorMapViewController: UIViewController,GMSMapViewDelegate,ObjectPopUpPro
 
         }
         else if(level == levelNumber.three) {
-            showMarker(marker: l3Marker1, position: l3_atr1, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-            showMarker(marker: l3Marker2, position: l3_atr2, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-            showMarker(marker: l3Marker3, position: l3_atr3, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-            showMarker(marker: l3Marker4, position: l3_atr4, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-            showMarker(marker: l3Marker5, position: l3_atr5, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-            showMarker(marker: l3Marker6, position: l3_atr6, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
+            showMarker(marker: l3Marker1, position: l3_atr1, titleString: "HelloWorld", imageName: "001_MIA_MW.146_005", zoomValue: zoom)
+            showMarker(marker: l3Marker2, position: l3_atr2, titleString: "HelloWorld", imageName: "GL.322-0564.2000x2000", zoomValue: zoom)
+            showMarker(marker: l3Marker3, position: l3_atr3, titleString: "HelloWorld", imageName: "HS.32-1.2000x2000", zoomValue: zoom)
+            showMarker(marker: l3Marker4, position: l3_atr4, titleString: "HelloWorld", imageName: "MS.523.1999-1.2000x2000", zoomValue: zoom)
+            showMarker(marker: l3Marker5, position: l3_atr5, titleString: "HelloWorld", imageName: "MS.688.2008.Recto-1.2000x2000", zoomValue: zoom)
+            showMarker(marker: l3Marker6, position: l3_atr6, titleString: "HelloWorld", imageName: "MS.709.2010-1.2000x2000", zoomValue: zoom)
             
         }
         

@@ -8,6 +8,8 @@
 
 import Alamofire
 import CoreData
+import Firebase
+
 import UIKit
 
 class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol {
@@ -30,6 +32,7 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
         else {
             self.fetchPublicArtsListFromCoredata()
         }
+        recordScreenView()
     }
 
     func setupPublicArtsUi() {
@@ -333,7 +336,14 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
         // Dispose of any resources that can be recreated.
     }
     
-
+    func recordScreenView() {
+        title = self.nibName
+        guard let screenName = title else {
+            return
+        }
+        let screenClass = classForCoder.description()
+        Analytics.setScreenName(screenName, screenClass: screenClass)
+    }
 
 
 }

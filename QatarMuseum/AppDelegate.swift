@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import Firebase
 import GoogleMaps
 import UIKit
 
@@ -20,6 +21,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey("AIzaSyBXEzUfmsi5BidKqR1eY999pj0APP2N0k0")
         // GMSPlacesClient.provideAPIKey("YOUR_API_KEY")
         AppLocalizer.DoTheMagic()
+        FirebaseApp.configure()
+//        let title = "Analytics Title"
+//        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+//            AnalyticsParameterItemID: "id-\(title)",
+//            AnalyticsParameterItemName: title,
+//            AnalyticsParameterContentType: "cont"
+//            ])
         return true
     }
 
