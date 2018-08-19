@@ -8,6 +8,8 @@
 
 import Alamofire
 import CoreData
+import Crashlytics
+import Firebase
 import UIKit
 
 class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol {
@@ -28,8 +30,11 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
             self.fetchHeritageListFromCoredata()
         }
         registerNib()
+        recordScreenView()
+        
         
     }
+   
     func setupUI() {
         loadingView.isHidden = false
         loadingView.showLoading()
@@ -331,7 +336,14 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+    func recordScreenView() {
+        title = self.nibName
+        guard let screenName = title else {
+            return
+        }
+        let screenClass = classForCoder.description()
+        Analytics.setScreenName(screenName, screenClass: screenClass)
+    }
 
    
 
