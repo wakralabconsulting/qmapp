@@ -25,7 +25,6 @@ class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UIC
         super.viewDidLoad()        
         setupUI()
         registerNib()
-        disableButtons(collectionView: numberPadCollectionView)
     }
     
     override func didReceiveMemoryWarning() {
@@ -71,6 +70,14 @@ class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UIC
             cell.innerView.backgroundColor = UIColor.profilePink
         } else {
             cell.numLabel.text = String(indexPath.row + 1)
+        }
+        
+        if (artifactValue == "") {
+            if (indexPath.row == 11) {
+                cell.innerView.alpha = 0.3
+            } else if (indexPath.row == 9) {
+                cell.innerView.alpha = 0.3
+            }
         }
         loadingView.stopLoading()
         loadingView.isHidden = true
