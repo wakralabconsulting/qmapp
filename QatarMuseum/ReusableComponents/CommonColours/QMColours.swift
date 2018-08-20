@@ -71,5 +71,7 @@ extension UIColor {
     static var mapLevelColor: UIColor {
         return UIColor(red: 205/255, green: 215/255, blue: 224/255, alpha: 1)
     }
-    
+    static var numberPadColor: UIColor {
+        return UIColor(red: 178/255, green: 193/255, blue: 201/255, alpha: 1)
+    }
 }

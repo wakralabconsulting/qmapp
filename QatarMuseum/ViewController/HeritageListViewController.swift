@@ -11,25 +11,25 @@ import CoreData
 import UIKit
 
 class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol {
-    
     @IBOutlet weak var heritageHeader: CommonHeaderView!
     @IBOutlet weak var heritageCollectionView: UICollectionView!
     @IBOutlet weak var loadingView: LoadingView!
+    
     var popUpView : ComingSoonPopUp = ComingSoonPopUp()
     var heritageListArray: [Heritage]! = []
     let networkReachability = NetworkReachabilityManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         if  (networkReachability?.isReachable)! {
             getHeritageDataFromServer()
-        }
-        else {
+        } else {
             self.fetchHeritageListFromCoredata()
         }
         registerNib()
-        
     }
+    
     func setupUI() {
         loadingView.isHidden = false
         loadingView.showLoading()
@@ -39,12 +39,11 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         heritageHeader.headerTitle.font = UIFont.headerFont
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             heritageHeader.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
-        }
-        else {
+        } else {
             heritageHeader.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
-
     }
+    
     func registerNib() {
         let nib = UINib(nibName: "HeritageCell", bundle: nil)
         heritageCollectionView?.register(nib, forCellWithReuseIdentifier: "heritageCellId")
