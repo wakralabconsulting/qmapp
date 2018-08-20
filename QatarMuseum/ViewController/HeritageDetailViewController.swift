@@ -8,6 +8,7 @@
 
 import Alamofire
 import CoreData
+import Firebase
 import UIKit
 enum PageName{
     case heritageDetail
@@ -49,6 +50,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             }
             
         }
+        recordScreenView()
     }
     
     func setupUIContents() {
@@ -601,6 +603,14 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         self.loadingView.isHidden = false
         self.loadingView.showNoDataView()
         self.loadingView.noDataLabel.text = errorMessage
+    }
+    func recordScreenView() {
+        title = self.nibName
+        guard let screenName = title else {
+            return
+        }
+        let screenClass = classForCoder.description()
+        Analytics.setScreenName(screenName, screenClass: screenClass)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

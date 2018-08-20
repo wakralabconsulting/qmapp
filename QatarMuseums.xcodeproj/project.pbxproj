@@ -84,6 +84,7 @@
 		B85BA4AC20D01BC900E7F4D1 /* ExhibitionDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4AB20D01BC800E7F4D1 /* ExhibitionDetailTableViewCell.swift */; };
 		B85BA4B020D01D1C00E7F4D1 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4AF20D01D1C00E7F4D1 /* SplashViewController.swift */; };
 		B85BA4B720D03CE500E7F4D1 /* iOSDevCenters+GIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4B620D03CE500E7F4D1 /* iOSDevCenters+GIF.swift */; };
+		B8814DAE21281A06004BAB28 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8814DAD21281A06004BAB28 /* GoogleService-Info.plist */; };
 		B891D06020DBC6BA00919F30 /* HeritageListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B891D05F20DBC6BA00919F30 /* HeritageListViewController.swift */; };
 		B891D06320DBCC3900919F30 /* HeritageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B891D06220DBCC3900919F30 /* HeritageCollectionCell.swift */; };
 		B891D06520DBCC5200919F30 /* HeritageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B891D06420DBCC5100919F30 /* HeritageCell.xib */; };
@@ -153,6 +154,7 @@
 		B8EAB7C020CA67CD00C001B2 /* EventPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8EAB7BF20CA67CD00C001B2 /* EventPopUp.xib */; };
 		B8EAB7C220CA67E000C001B2 /* EventPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EAB7C120CA67E000C001B2 /* EventPopupView.swift */; };
 		B8EAB7C420CA95E500C001B2 /* EventDetailsJson.json in Resources */ = {isa = PBXBuildFile; fileRef = B8EAB7C320CA95E500C001B2 /* EventDetailsJson.json */; };
+		B8F3A940212728EE005360AD /* CommonStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F3A93F212728EE005360AD /* CommonStrings.swift */; };
 		B8FC190120DE854400D00E6B /* MuseumBottomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FC190020DE854400D00E6B /* MuseumBottomCell.swift */; };
 		B8FEC77C2112E57100648F66 /* Dining.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FEC77B2112E57100648F66 /* Dining.swift */; };
 		DA51D58A8DA63CE54CFF0485 /* Pods_QatarMuseums.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F5559C89E84E914A76D7A7 /* Pods_QatarMuseums.framework */; };
@@ -282,6 +284,7 @@
 		B85BA4AB20D01BC800E7F4D1 /* ExhibitionDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExhibitionDetailTableViewCell.swift; sourceTree = "<group>"; };
 		B85BA4AF20D01D1C00E7F4D1 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		B85BA4B620D03CE500E7F4D1 /* iOSDevCenters+GIF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "iOSDevCenters+GIF.swift"; sourceTree = "<group>"; };
+		B8814DAD21281A06004BAB28 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B891D05F20DBC6BA00919F30 /* HeritageListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeritageListViewController.swift; sourceTree = "<group>"; };
 		B891D06220DBCC3900919F30 /* HeritageCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeritageCollectionCell.swift; sourceTree = "<group>"; };
 		B891D06420DBCC5100919F30 /* HeritageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeritageCell.xib; sourceTree = "<group>"; };
@@ -353,6 +356,7 @@
 		B8EAB7BF20CA67CD00C001B2 /* EventPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventPopUp.xib; sourceTree = "<group>"; };
 		B8EAB7C120CA67E000C001B2 /* EventPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPopupView.swift; sourceTree = "<group>"; };
 		B8EAB7C320CA95E500C001B2 /* EventDetailsJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = EventDetailsJson.json; sourceTree = "<group>"; };
+		B8F3A93F212728EE005360AD /* CommonStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonStrings.swift; sourceTree = "<group>"; };
 		B8FC190020DE854400D00E6B /* MuseumBottomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseumBottomCell.swift; sourceTree = "<group>"; };
 		B8FEC77B2112E57100648F66 /* Dining.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dining.swift; sourceTree = "<group>"; };
 		FF0C898808E8CD16BED3F913 /* Pods-QatarMuseums.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QatarMuseums.release.xcconfig"; path = "Pods/Target Support Files/Pods-QatarMuseums/Pods-QatarMuseums.release.xcconfig"; sourceTree = "<group>"; };
@@ -442,6 +446,7 @@
 			children = (
 				1BC909CF2108E3C700D6C00B /* QMUtility.swift */,
 				B812BA03210AF3540083E0E2 /* QMFont.swift */,
+				B8F3A93F212728EE005360AD /* CommonStrings.swift */,
 			);
 			path = CommonMethods;
 			sourceTree = "<group>";
@@ -510,6 +515,7 @@
 		B80DC04C20C792E400E28034 = {
 			isa = PBXGroup;
 			children = (
+				B8814DAD21281A06004BAB28 /* GoogleService-Info.plist */,
 				B80DC05720C792E400E28034 /* QatarMuseum */,
 				B80DC06C20C792E600E28034 /* QatarMuseumTests */,
 				B80DC07720C792E600E28034 /* QatarMuseumUITests */,
@@ -909,6 +915,8 @@
 				B80DC05320C792E400E28034 /* Resources */,
 				F4DCECD2DE5ED13A81094976 /* [CP] Embed Pods Frameworks */,
 				2D70AD6FAEAEDD3AB623059D /* [CP] Copy Pods Resources */,
+				B8814DAC21281998004BAB28 /* ShellScript */,
+				B8814DAF21284B81004BAB28 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1037,6 +1045,7 @@
 				B8AFA2F120E78E09008838A6 /* DINNextLTPro-Light.otf in Resources */,
 				B8BA80BA20CD8305007E880A /* ExhibitionsCellXib.xib in Resources */,
 				B8EAB7AD20CA41ED00C001B2 /* Info.plist in Resources */,
+				B8814DAE21281A06004BAB28 /* GoogleService-Info.plist in Resources */,
 				B8E92D1221006F0F005449FC /* CollectionDetailJson.json in Resources */,
 				B8BA80BE20CD9977007E880A /* ExhibitionsJson.json in Resources */,
 				B8EAB77B20CA3E2900C001B2 /* EventCellView.xib in Resources */,
@@ -1078,6 +1087,32 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QatarMuseums/Pods-QatarMuseums-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		B8814DAC21281998004BAB28 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\"\n";
+		};
+		B8814DAF21284B81004BAB28 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/upload-symbols\" -gsp \"${PROJECT_DIR}/GoogleService-Info.plist\" -p ios \"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\"";
+		};
 		E06C510AC40226E9DFC6AE7F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1104,14 +1139,18 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-QatarMuseums/Pods-QatarMuseums-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/YouTubePlayer/YouTubePlayer.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YouTubePlayer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1146,6 +1185,7 @@
 				B8BBF459211C1AC000352706 /* ParksList.swift in Sources */,
 				B8294CEE20CBF265002AFF72 /* FSCalendarScopeHandle.m in Sources */,
 				B811FBCC2103811400960246 /* QMColours.swift in Sources */,
+				B8F3A940212728EE005360AD /* CommonStrings.swift in Sources */,
 				1BE526D72107896600C8CD51 /* Exhibition.swift in Sources */,
 				B85BA4B020D01D1C00E7F4D1 /* SplashViewController.swift in Sources */,
 				B8294CF520CBF265002AFF72 /* FSCalendarStickyHeader.m in Sources */,
@@ -1405,7 +1445,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Manual;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = DNV2Z9FR68;
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1432,6 +1474,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DNV2Z9FR68;
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
