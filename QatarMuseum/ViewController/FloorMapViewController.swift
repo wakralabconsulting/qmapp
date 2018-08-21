@@ -14,11 +14,7 @@ enum levelNumber{
     case three
 }
 
-class FloorMapViewController: UIViewController,GMSMapViewDelegate,ObjectPopUpProtocol,HeaderViewProtocol {
-    
-    
-   
-    
+class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpProtocol, HeaderViewProtocol {
     @IBOutlet weak var viewForMap: GMSMapView!
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var thirdLevelView: UIView!
@@ -27,6 +23,7 @@ class FloorMapViewController: UIViewController,GMSMapViewDelegate,ObjectPopUpPro
     @IBOutlet weak var thirdLevelButton: UIButton!
     @IBOutlet weak var secondLevelButton: UIButton!
     @IBOutlet weak var firstLevelButton: UIButton!
+    
     var overlay = GMSGroundOverlay()
     let l2_atr1 = CLLocationCoordinate2D(latitude: 25.295141, longitude: 51.539185)
     let l2_atr2 = CLLocationCoordinate2D(latitude: 25.295500, longitude: 51.538855)
@@ -69,6 +66,7 @@ class FloorMapViewController: UIViewController,GMSMapViewDelegate,ObjectPopUpPro
     var objectPopupView : ObjectPopupView = ObjectPopupView()
     var level : levelNumber?
     var zoomValue = Float()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -76,6 +74,7 @@ class FloorMapViewController: UIViewController,GMSMapViewDelegate,ObjectPopUpPro
         loadMap()
         initialSetUp()
     }
+    
     func initialSetUp() {
         level = levelNumber.one
         firstLevelView.backgroundColor = UIColor.white
@@ -86,15 +85,12 @@ class FloorMapViewController: UIViewController,GMSMapViewDelegate,ObjectPopUpPro
     }
     
     func loadMap() {
-        
         let camera = GMSCameraPosition.camera(withLatitude: 25.295447, longitude: 51.539195, zoom:19)
-        
         viewForMap.camera = camera
         viewForMap?.animate(to: camera)
         do {
             if let styleURL = Bundle.main.url(forResource: "MapStyle", withExtension: "json") {
                 viewForMap.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
-
             } else {
                 NSLog("Unable to find style.json")
             }
@@ -132,11 +128,11 @@ class FloorMapViewController: UIViewController,GMSMapViewDelegate,ObjectPopUpPro
             marker.icon = self.imageWithImage(image: UIImage(named: imageName)!, scaledToSize: CGSize(width:21.0, height: 25.0))
             marker.appearAnimation = .pop
             marker.map = viewForMap
-        }
-        else {
+        } else {
             marker.map = nil
         }
     }
+    
     func imageWithImage(image:UIImage, scaledToSize newSize:CGSize) -> UIImage{
         UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
         image.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
@@ -144,9 +140,11 @@ class FloorMapViewController: UIViewController,GMSMapViewDelegate,ObjectPopUpPro
         UIGraphicsEndImageContext()
         return newImage
     }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
     //MARK: Floor Levels
     @IBAction func didTapThirdLevel(_ sender: UIButton) {
         level = levelNumber.three
@@ -198,15 +196,18 @@ class FloorMapViewController: UIViewController,GMSMapViewDelegate,ObjectPopUpPro
         overlay.icon = UIImage(named: "qm_level_1")
         removeMarkers()
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        
     }
+    
     func loadObjectPopup() {
         objectPopupView = ObjectPopupView(frame: self.view.frame)
         objectPopupView.objectPopupDelegate = self
+        objectPopupView.loadPopup()
         self.view.addSubview(objectPopupView)
     }
+    
     //MARK: map delegate
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         loadObjectPopup()
@@ -225,8 +226,6 @@ class FloorMapViewController: UIViewController,GMSMapViewDelegate,ObjectPopUpPro
             let camera = GMSCameraPosition.camera(withLatitude: center.latitude, longitude: center.longitude, zoom: mapView.camera.zoom)
             viewForMap.animate(to: camera)
         }
-        
-      
        
         if (level == levelNumber.two) {
             //addMarker(zoomValue: zoom)
@@ -243,20 +242,16 @@ class FloorMapViewController: UIViewController,GMSMapViewDelegate,ObjectPopUpPro
             showMarker(marker: l2Marker11, position: l2_atr11, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
             showMarker(marker: l2Marker12, position: l2_atr12, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
             showMarker(marker: l2Marker13, position: l2_atr13, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-
-        }
-        else if(level == levelNumber.three) {
+        } else if(level == levelNumber.three) {
             showMarker(marker: l3Marker1, position: l3_atr1, titleString: "HelloWorld", imageName: "001_MIA_MW.146_005", zoomValue: zoom)
             showMarker(marker: l3Marker2, position: l3_atr2, titleString: "HelloWorld", imageName: "GL.322-0564.2000x2000", zoomValue: zoom)
             showMarker(marker: l3Marker3, position: l3_atr3, titleString: "HelloWorld", imageName: "HS.32-1.2000x2000", zoomValue: zoom)
             showMarker(marker: l3Marker4, position: l3_atr4, titleString: "HelloWorld", imageName: "MS.523.1999-1.2000x2000", zoomValue: zoom)
             showMarker(marker: l3Marker5, position: l3_atr5, titleString: "HelloWorld", imageName: "MS.688.2008.Recto-1.2000x2000", zoomValue: zoom)
             showMarker(marker: l3Marker6, position: l3_atr6, titleString: "HelloWorld", imageName: "MS.709.2010-1.2000x2000", zoomValue: zoom)
-            
         }
-        
-       
     }
+    
     func removeMarkers() {
         l2Marker2.map = nil
         l2Marker.map = nil
@@ -279,14 +274,35 @@ class FloorMapViewController: UIViewController,GMSMapViewDelegate,ObjectPopUpPro
         l3Marker5.map = nil
         l3Marker6.map = nil
     }
+    
+    //MARK: Poup Delegate
     func objectPopupCloseButtonPressed() {
         self.objectPopupView.removeFromSuperview()
     }
+    
+    func viewDetailButtonTapAction() {
+        let objectDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "objectDetailId") as! ObjectDetailViewController
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromTop
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(objectDetailView, animated: false, completion: nil)
+    }
+    
     @IBAction func didTapQrCode(_ sender: UIButton) {
     }
     
     @IBAction func didTapNumberSearch(_ sender: UIButton) {
+        let numberPadView = self.storyboard?.instantiateViewController(withIdentifier: "artifactNumberPadViewId") as! ArtifactNumberPadViewController
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionFade
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(numberPadView, animated: false, completion: nil)
     }
+    
     //MARK:Header Protocol
     func headerCloseButtonPressed() {
         let transition = CATransition()
@@ -296,9 +312,4 @@ class FloorMapViewController: UIViewController,GMSMapViewDelegate,ObjectPopUpPro
         self.view.window!.layer.add(transition, forKey: kCATransition)
         self.dismiss(animated: false, completion: nil)
     }
-    func viewDetailButtonTapAction() {
-        
-    }
-   
-
 }
