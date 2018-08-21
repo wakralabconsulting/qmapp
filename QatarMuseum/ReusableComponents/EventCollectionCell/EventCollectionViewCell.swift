@@ -14,7 +14,6 @@ class EventCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var titleLineView: UILabel!
     @IBOutlet weak var secondTitleLabel: UILabel!
     @IBOutlet weak var timingLabel: UILabel!
-    @IBOutlet weak var timingSecondLabel: UILabel!
     @IBOutlet weak var cellBackgroundView: UIView!
     @IBOutlet weak var verticalLineView: UIView!
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -23,11 +22,10 @@ class EventCollectionViewCell: UICollectionViewCell {
     
     var viewDetailsBtnAction : (()->())?
     
-    func setEventCellValues() {
+    func setEventCellValues(event:EducationEvent) {
         firstTitle.font = UIFont.eventCellTitleFont
         secondTitleLabel.font = UIFont.eventCellTitleFont
         timingLabel.font = UIFont.exhibitionDateLabelFont
-        secondTitleLabel.font = UIFont.exhibitionDateLabelFont
         descriptionLabel.font = UIFont.exhibitionDateLabelFont
         viewDetails.titleLabel?.font = UIFont.exhibitionDateLabelFont
         
@@ -35,27 +33,40 @@ class EventCollectionViewCell: UICollectionViewCell {
         titleLineView.backgroundColor = UIColor.eventTitlePink
         secondTitleLabel.textColor = UIColor.eventTitlePink
         verticalLineView.backgroundColor = UIColor.eventlisBlue
-        timingLabel.isHidden = true
-        timingSecondLabel.isHidden = false
+        timingLabel.isHidden = false
+       
         groupSizeLabel.isHidden = false
+        
+        firstTitle.text = event.institution
+        secondTitleLabel.text = event.title?.uppercased()
+        descriptionLabel.text = event.shortDesc
+        if ((event.startTime != nil) && (event.endtime != nil)) {
+            let sTime = setTimeFormat(timeString: event.startTime!)
+            let eTime = setTimeFormat(timeString: event.endtime!)
+            timingLabel.text = "Timimgs:" + sTime! + "\n" + eTime!
+        }
     }
-    func setEducationCalendarValues() {
+    func setEducationCalendarValues(educationEvent: EducationEvent) {
         firstTitle.font = UIFont.eventCellTitleFont
         secondTitleLabel.font = UIFont.eventCellTitleFont
         timingLabel.font = UIFont.exhibitionDateLabelFont
-        secondTitleLabel.font = UIFont.exhibitionDateLabelFont
         descriptionLabel.font = UIFont.exhibitionDateLabelFont
         groupSizeLabel.font = UIFont.exhibitionDateLabelFont
         viewDetails.titleLabel?.font = UIFont.exhibitionDateLabelFont
+        
         firstTitle.textColor = UIColor.black
         titleLineView.backgroundColor = UIColor.black
         secondTitleLabel.textColor = UIColor.black
         verticalLineView.backgroundColor = UIColor.darkGray
+        
         timingLabel.isHidden = true
-        timingSecondLabel.isHidden = true
+       
         groupSizeLabel.isHidden = false
-        descriptionLabel.text = "Timimg: 8:30 am - 11:30 am (last entry 10:50)"
-        groupSizeLabel.text = "Max. group size 25"
+       
+        firstTitle.text = educationEvent.institution
+        secondTitleLabel.text = educationEvent.title?.uppercased()
+        descriptionLabel.text = educationEvent.shortDesc
+        //groupSizeLabel.text = "Max. group size 25"
     }
     
     @IBAction func didTapViewDetails(_ sender: UIButton) {
@@ -64,6 +75,21 @@ class EventCollectionViewCell: UICollectionViewCell {
     }
     @IBAction func viewDetailsButtonTouchDown(_ sender: UIButton) {
         self.viewDetails.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+    }
+    func setTimeFormat(timeString : String) -> String? {
+        let inFormatter = DateFormatter()
+        inFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale?
+        inFormatter.dateFormat = "HH:mm"
+        
+        let outFormatter = DateFormatter()
+        outFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale?
+        outFormatter.dateFormat = "hh:mm a"
+        
+        
+        let date = inFormatter.date(from: timeString)!
+        let outStr = outFormatter.string(from: date)
+        print(outStr) // -> outputs 04:50
+        return outStr
     }
     
 }

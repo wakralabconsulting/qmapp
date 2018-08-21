@@ -30,6 +30,70 @@
         <attribute name="openingtimearabic" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortidarabic" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="EducationEventEntity" representedClassName="EducationEventEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="ageGroup" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="eid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="endTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="filter" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="institution" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="longDesc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pgmType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="registration" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shortDesc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="EducationEventEntityAr" representedClassName="EducationEventEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="ageGrpAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="categoryAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dateAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="eidAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="endTimeAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="filterAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="institutionAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="locationAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="longDescAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pgmTypeAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="registrationAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shortDescAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startTimeAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="titleAr" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="EventEntity" representedClassName="EventEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="ageGroup" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="eid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="endTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="filter" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="institution" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="longDesc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pgmType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="registration" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shortDesc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="EventEntityArabic" representedClassName="EventEntityArabic" syncable="YES" codeGenerationType="class">
+        <attribute name="ageGroupAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="categoryAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dateAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="eidAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="endTimeAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="filterAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="institutionAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="locationAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="longDesAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pgmTypeAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="registrationAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shortDescAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startTimeAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="titleAr" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="ExhibitionsEntity" representedClassName="ExhibitionsEntity" syncable="YES" codeGenerationType="class">
         <attribute name="detailEndDate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="detailImage" optional="YES" attributeType="String" syncable="YES"/>
@@ -133,6 +197,8 @@
         <attribute name="sortcoefficientarabic" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
+        <element name="CollectionsEntity" positionX="-36" positionY="126" width="128" height="90"/>
+        <element name="CollectionsEntityArabic" positionX="-18" positionY="162" width="128" height="90"/>
         <element name="DiningEntity" positionX="-54" positionY="90" width="128" height="165"/>
         <element name="DiningEntityArabic" positionX="-45" positionY="108" width="128" height="165"/>
         <element name="ExhibitionsEntity" positionX="-54" positionY="108" width="128" height="30"/>
@@ -145,7 +211,9 @@
         <element name="ParksEntityArabic" positionX="-45" positionY="117" width="128" height="105"/>
         <element name="PublicArtsEntity" positionX="-54" positionY="108" width="128" height="165"/>
         <element name="PublicArtsEntityArabic" positionX="-54" positionY="117" width="128" height="165"/>
-        <element name="CollectionsEntity" positionX="-36" positionY="126" width="128" height="90"/>
-        <element name="CollectionsEntityArabic" positionX="-18" positionY="162" width="128" height="90"/>
+        <element name="EducationEventEntity" positionX="-36" positionY="108" width="128" height="255"/>
+        <element name="EducationEventEntityAr" positionX="-27" positionY="144" width="128" height="255"/>
+        <element name="EventEntity" positionX="-18" positionY="153" width="128" height="255"/>
+        <element name="EventEntityArabic" positionX="-9" positionY="162" width="128" height="255"/>
     </elements>
 </model>

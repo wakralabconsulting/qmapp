@@ -42,7 +42,7 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         heritageHeader.headerViewDelegate = self
         heritageHeader.headerTitle.text = NSLocalizedString("HERITAGE_SITES_TITLE", comment: "HERITAGE_SITES_TITLE  in the Heritage page")
         heritageHeader.headerTitle.font = UIFont.headerFont
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             heritageHeader.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         }
         else {
@@ -145,7 +145,7 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
     //MARK: Coredata Method
     func saveOrUpdateHeritageCoredata() {
         if (heritageListArray.count > 0) {
-         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
         let fetchData = checkAddedToCoredata(entityName: "HeritageEntity", heritageId: nil) as! [HeritageEntity]
         if (fetchData.count > 0) {
             for i in 0 ... heritageListArray.count-1 {
@@ -226,7 +226,7 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         }
     }
     func saveToCoreData(heritageListDict: Heritage, managedObjContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let heritageInfo: HeritageEntity = NSEntityDescription.insertNewObject(forEntityName: "HeritageEntity", into: managedObjContext) as! HeritageEntity
             heritageInfo.listid = heritageListDict.id
             heritageInfo.listname = heritageListDict.name
@@ -257,7 +257,7 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
     func fetchHeritageListFromCoredata() {
         
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var heritageArray = [HeritageEntity]()
                 let managedContext = getContext()
                 let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HeritageEntity")

@@ -15,4 +15,5 @@ struct Config {
     static let baseIP = "www.qm.org.qa/"
     static let baseURL = "http://" + baseIP
     static let mobileApiURL = "/mobile_api"
+    static let educationbaseIp = "http://moushtarayatapp.com"
 }

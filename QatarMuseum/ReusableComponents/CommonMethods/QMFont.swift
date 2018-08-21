@@ -118,10 +118,10 @@ extension UIFont {
     }
     static var eventCellTitleFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            return UIFont.init(name: "DINNextLTPro-Regular", size: 13)!
+            return UIFont.init(name: "DINNextLTPro-Bold", size: 13)!
         }
         else{
-            return UIFont.init(name: "DINNextLTArabic-Regular", size:14)!
+            return UIFont.init(name: "DINNextLTArabic-Bold", size:14)!
         }
     }
     static var clearButtonFont: UIFont {
