@@ -148,4 +148,12 @@ extension UIFont {
             return UIFont.init(name: "DINNextLTArabic-Bold", size: 23)!
         }
     }
+    static var artifactNumberFont: UIFont {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            return UIFont.init(name: "DINNextLTPro-Regular", size: 30)!
+        }
+        else{
+            return UIFont.init(name: "DINNextLTArabic-Regular", size:30)!
+        }
+    }
 }

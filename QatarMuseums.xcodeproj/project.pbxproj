@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B3C505721270F260034E560 /* ArtifactNumberPadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3C505621270F260034E560 /* ArtifactNumberPadViewController.swift */; };
+		1B3C505B212AB3460034E560 /* ArtifactNumberPadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3C5059212AB3460034E560 /* ArtifactNumberPadCell.swift */; };
+		1B3C505C212AB3460034E560 /* ArtifactNumberPadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B3C505A212AB3460034E560 /* ArtifactNumberPadCell.xib */; };
 		1B51B3CE21214820002B84AA /* ObjectPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51B3CD21214820002B84AA /* ObjectPopupView.swift */; };
 		1B51B3D021214853002B84AA /* ObjectPopupXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B51B3CF21214853002B84AA /* ObjectPopupXib.xib */; };
 		1B51B3D221219367002B84AA /* ObjectDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51B3D121219366002B84AA /* ObjectDetailViewController.swift */; };
@@ -175,6 +178,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1B3C505621270F260034E560 /* ArtifactNumberPadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactNumberPadViewController.swift; sourceTree = "<group>"; };
+		1B3C5059212AB3460034E560 /* ArtifactNumberPadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactNumberPadCell.swift; sourceTree = "<group>"; };
+		1B3C505A212AB3460034E560 /* ArtifactNumberPadCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArtifactNumberPadCell.xib; sourceTree = "<group>"; };
 		1B51B3CD21214820002B84AA /* ObjectPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectPopupView.swift; sourceTree = "<group>"; };
 		1B51B3CF21214853002B84AA /* ObjectPopupXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ObjectPopupXib.xib; sourceTree = "<group>"; };
 		1B51B3D121219366002B84AA /* ObjectDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectDetailViewController.swift; sourceTree = "<group>"; };
@@ -400,6 +406,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B3C5058212AB2E30034E560 /* ArtifactNumberPadCell */ = {
+			isa = PBXGroup;
+			children = (
+				1B3C5059212AB3460034E560 /* ArtifactNumberPadCell.swift */,
+				1B3C505A212AB3460034E560 /* ArtifactNumberPadCell.xib */,
+			);
+			path = ArtifactNumberPadCell;
+			sourceTree = "<group>";
+		};
 		1B51B3CC212146E7002B84AA /* ObjectPopup */ = {
 			isa = PBXGroup;
 			children = (
@@ -602,6 +617,7 @@
 				B8E024EC211042C200CB18E2 /* CollectionDetailViewController.swift */,
 				B806B7A4212451B200F9F338 /* FloorMapViewController.swift */,
 				1B51B3D121219366002B84AA /* ObjectDetailViewController.swift */,
+				1B3C505621270F260034E560 /* ArtifactNumberPadViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -609,6 +625,7 @@
 		B80DC08720C7943100E28034 /* ReusableComponents */ = {
 			isa = PBXGroup;
 			children = (
+				1B3C5058212AB2E30034E560 /* ArtifactNumberPadCell */,
 				1B51B3D62125B410002B84AA /* ObjectImageView */,
 				1B51B3D32121B658002B84AA /* ObjectDetailCell */,
 				1B51B3CC212146E7002B84AA /* ObjectPopup */,
@@ -1024,6 +1041,7 @@
 				B818A8C020E0ABB500095A64 /* MuseumExhibitionJson.json in Resources */,
 				B8B368C020DD4E4600B1CDA4 /* CollectionsJson.json in Resources */,
 				1B51B3D021214853002B84AA /* ObjectPopupXib.xib in Resources */,
+				1B3C505C212AB3460034E560 /* ArtifactNumberPadCell.xib in Resources */,
 				B8AFA2F120E78E09008838A6 /* DINNextLTPro-Light.otf in Resources */,
 				B8BA80BA20CD8305007E880A /* ExhibitionsCellXib.xib in Resources */,
 				B8EAB7AD20CA41ED00C001B2 /* Info.plist in Resources */,
@@ -1209,6 +1227,7 @@
 				B8DC40A720C9A33A0044134D /* CommonHeaderView.swift in Sources */,
 				B891D06020DBC6BA00919F30 /* HeritageListViewController.swift in Sources */,
 				1BC909D02108E3C700D6C00B /* QMUtility.swift in Sources */,
+				1B3C505B212AB3460034E560 /* ArtifactNumberPadCell.swift in Sources */,
 				B8C64D4B20FDDB7E00C2D51A /* MiaTourGuideViewController.swift in Sources */,
 				B8B760512100E88E00CEE280 /* NotificationsTableViewCell.swift in Sources */,
 				B85BA4AA20D01B2600E7F4D1 /* ExhibitionDetailViewController.swift in Sources */,
@@ -1227,6 +1246,7 @@
 				1BC909D2210B277F00D6C00B /* Home.swift in Sources */,
 				B8EAB7BB20CA424300C001B2 /* LoadViewExampleViewController.swift in Sources */,
 				B8BA80B520CCDDA3007E880A /* ProfileViewController.swift in Sources */,
+				1B3C505721270F260034E560 /* ArtifactNumberPadViewController.swift in Sources */,
 				B8294CF620CBF265002AFF72 /* FSCalendarHeaderView.m in Sources */,
 				B8E01BF92105EDFB008D7F33 /* SettingsViewController.swift in Sources */,
 				B8D1229220C9095B00772507 /* LoadingView.swift in Sources */,

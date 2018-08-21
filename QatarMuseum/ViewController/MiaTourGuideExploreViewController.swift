@@ -8,14 +8,13 @@
 
 import UIKit
 
-class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol, comingSoonPopUpProtocol, ObjectPopUpProtocol {
+class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol, comingSoonPopUpProtocol {
     @IBOutlet weak var tourGuideDescription: UILabel!
     @IBOutlet weak var startTourButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var headerView: CommonHeaderView!
     
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
-    var objectPopupView : ObjectPopupView = ObjectPopupView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +51,6 @@ class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol, co
         self.startTourButton.backgroundColor = UIColor.viewMycultureBlue
         self.startTourButton.setTitleColor(UIColor.white, for: .normal)
         self.startTourButton.transform = CGAffineTransform(scaleX: 1, y: 1)
-        //loadObjectPopup()
         
         let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as! FloorMapViewController
         let transition = CATransition()
@@ -76,30 +74,9 @@ class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol, co
         self.view.addSubview(popupView)
     }
     
-    func loadObjectPopup() {
-        objectPopupView = ObjectPopupView(frame: self.view.frame)
-        objectPopupView.objectPopupDelegate = self
-        objectPopupView.loadPopup()
-        self.view.addSubview(objectPopupView)
-    }
-    
     //MARK: Poup Delegate
     func closeButtonPressed() {
         self.popupView.removeFromSuperview()
-    }
-    
-    func objectPopupCloseButtonPressed() {
-        self.objectPopupView.removeFromSuperview()
-    }
-    
-    func viewDetailButtonTapAction() {
-        let objectDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "objectDetailId") as! ObjectDetailViewController
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromTop
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(objectDetailView, animated: false, completion: nil)
     }
     
     //MARK: Header delegate

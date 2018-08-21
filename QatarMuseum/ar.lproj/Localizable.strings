@@ -83,3 +83,8 @@
 "LANG_ENGLISH" = "en";
 "LANG_ARABIC" = "ar";
 "FLOOR_MAP_TITLE" = "MIA FLOORS";
+"ARTIFACT_NUMBERPAD_TITLE" = "OBJECT SEARCH";
+"OBJECT_TITLE" = "Enter The Object Number";
+"OBJECT_INFO" = "next to \t  to view the details";
+"OR_LABEL" = "OR";
+
