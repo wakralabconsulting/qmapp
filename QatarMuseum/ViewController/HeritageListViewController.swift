@@ -181,8 +181,7 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
                 
             }
         }
-        }
-         else {
+        } else {
             let fetchData = checkAddedToCoredata(entityName: "HeritageEntityArabic", heritageId: nil) as! [HeritageEntityArabic]
             if (fetchData.count > 0) {
                 for i in 0 ... heritageListArray.count-1 {
@@ -222,6 +221,7 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         }
         }
     }
+    
     func saveToCoreData(heritageListDict: Heritage, managedObjContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             let heritageInfo: HeritageEntity = NSEntityDescription.insertNewObject(forEntityName: "HeritageEntity", into: managedObjContext) as! HeritageEntity
@@ -232,8 +232,7 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
             if(heritageListDict.sortid != nil) {
                 heritageInfo.listsortid = heritageListDict.sortid
             }
-        }
-        else {
+        } else {
             let heritageInfo: HeritageEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "HeritageEntityArabic", into: managedObjContext) as! HeritageEntityArabic
             heritageInfo.listid = heritageListDict.id
             heritageInfo.listnamearabic = heritageListDict.name
@@ -245,14 +244,12 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         }
         do {
             try managedObjContext.save()
-            
-            
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    
     func fetchHeritageListFromCoredata() {
-        
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                 var heritageArray = [HeritageEntity]()
@@ -269,19 +266,16 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
                         self.showNodata()
                     }
                     heritageCollectionView.reloadData()
-                }
-                else{
+                } else {
                     self.showNodata()
                 }
-        }
-            else {
+            } else {
                 var heritageArray = [HeritageEntityArabic]()
                 let managedContext = getContext()
                 let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HeritageEntityArabic")
                 heritageArray = (try managedContext.fetch(homeFetchRequest) as? [HeritageEntityArabic])!
                 if (heritageArray.count > 0) {
                     for i in 0 ... heritageArray.count-1 {
-                        
                         self.heritageListArray.insert(Heritage(id: heritageArray[i].listid, name: heritageArray[i].listnamearabic, location: nil, latitude: nil, longitude: nil, image: heritageArray[i].listimagearabic, shortdescription: nil, longdescription: nil, sortid: heritageArray[i].listsortidarabic), at: i)
                         
                     }
@@ -289,8 +283,7 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
                         self.showNodata()
                     }
                     heritageCollectionView.reloadData()
-                }
-                else{
+                } else {
                     self.showNodata()
                 }
             }
@@ -298,18 +291,17 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-    func getContext() -> NSManagedObjectContext{
-        
+    
+    func getContext() -> NSManagedObjectContext {
         let appDelegate =  UIApplication.shared.delegate as? AppDelegate
         if #available(iOS 10.0, *) {
-            return
-                appDelegate!.persistentContainer.viewContext
+            return appDelegate!.persistentContainer.viewContext
         } else {
             return appDelegate!.managedObjectContext
         }
     }
-    func checkAddedToCoredata(entityName: String?,heritageId: String?) -> [NSManagedObject]
-    {
+    
+    func checkAddedToCoredata(entityName: String?,heritageId: String?) -> [NSManagedObject] {
         let managedContext = getContext()
         var fetchResults : [NSManagedObject] = []
         let homeFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
@@ -319,6 +311,7 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         fetchResults = try! managedContext.fetch(homeFetchRequest)
         return fetchResults
     }
+    
     func showNodata() {
         var errorMessage: String
         errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
@@ -329,10 +322,12 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         self.loadingView.showNoDataView()
         self.loadingView.noDataLabel.text = errorMessage
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     func recordScreenView() {
         title = self.nibName
         guard let screenName = title else {
@@ -341,7 +336,4 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         let screenClass = classForCoder.description()
         Analytics.setScreenName(screenName, screenClass: screenClass)
     }
-
-   
-
 }

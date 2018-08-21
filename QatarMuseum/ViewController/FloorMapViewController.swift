@@ -86,13 +86,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     
     func loadMap() {
         let camera = GMSCameraPosition.camera(withLatitude: 25.295447, longitude: 51.539195, zoom:19)
-        
         viewForMap.camera = camera
         viewForMap?.animate(to: camera)
         do {
             if let styleURL = Bundle.main.url(forResource: "MapStyle", withExtension: "json") {
                 viewForMap.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
-
             } else {
                 NSLog("Unable to find style.json")
             }
@@ -130,11 +128,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             marker.icon = self.imageWithImage(image: UIImage(named: imageName)!, scaledToSize: CGSize(width:21.0, height: 25.0))
             marker.appearAnimation = .pop
             marker.map = viewForMap
-        }
-        else {
+        } else {
             marker.map = nil
         }
     }
+    
     func imageWithImage(image:UIImage, scaledToSize newSize:CGSize) -> UIImage{
         UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
         image.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
@@ -142,9 +140,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         UIGraphicsEndImageContext()
         return newImage
     }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
     //MARK: Floor Levels
     @IBAction func didTapThirdLevel(_ sender: UIButton) {
         level = levelNumber.three
@@ -196,6 +196,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         overlay.icon = UIImage(named: "qm_level_1")
         removeMarkers()
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -242,14 +243,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             showMarker(marker: l2Marker12, position: l2_atr12, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
             showMarker(marker: l2Marker13, position: l2_atr13, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
         } else if(level == levelNumber.three) {
-            showMarker(marker: l3Marker1, position: l3_atr1, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-            showMarker(marker: l3Marker2, position: l3_atr2, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-            showMarker(marker: l3Marker3, position: l3_atr3, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-            showMarker(marker: l3Marker4, position: l3_atr4, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-            showMarker(marker: l3Marker5, position: l3_atr5, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-            showMarker(marker: l3Marker6, position: l3_atr6, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-        }
-        else if(level == levelNumber.three) {
             showMarker(marker: l3Marker1, position: l3_atr1, titleString: "HelloWorld", imageName: "001_MIA_MW.146_005", zoomValue: zoom)
             showMarker(marker: l3Marker2, position: l3_atr2, titleString: "HelloWorld", imageName: "GL.322-0564.2000x2000", zoomValue: zoom)
             showMarker(marker: l3Marker3, position: l3_atr3, titleString: "HelloWorld", imageName: "HS.32-1.2000x2000", zoomValue: zoom)
