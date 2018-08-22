@@ -3268,25 +3268,34 @@
                                     <outlet property="delegate" destination="izA-Uf-h7O" id="9Xx-pg-YyC"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NOA-U6-5cp" customClass="LoadingView" customModule="QatarMuseums" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="85" width="414" height="651"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="NOA-U6-5cp" firstAttribute="leading" secondItem="DzS-hR-37j" secondAttribute="leading" id="9Wm-y4-tIr"/>
                             <constraint firstItem="pIh-Ff-7W8" firstAttribute="top" secondItem="uDa-oe-nHp" secondAttribute="bottom" id="DzR-6b-F1i"/>
+                            <constraint firstItem="NOA-U6-5cp" firstAttribute="top" secondItem="pIh-Ff-7W8" secondAttribute="bottom" id="ENk-Ah-2Jx"/>
                             <constraint firstItem="CHG-Gg-HMy" firstAttribute="leading" secondItem="DzS-hR-37j" secondAttribute="leading" id="Kv8-DX-R56"/>
                             <constraint firstAttribute="trailing" secondItem="CHG-Gg-HMy" secondAttribute="trailing" id="ROd-zf-rlb"/>
                             <constraint firstAttribute="bottom" secondItem="CHG-Gg-HMy" secondAttribute="bottom" id="ga9-xJ-e3z"/>
                             <constraint firstItem="pIh-Ff-7W8" firstAttribute="leading" secondItem="DzS-hR-37j" secondAttribute="leading" id="hbz-Ko-dAF"/>
                             <constraint firstAttribute="trailing" secondItem="pIh-Ff-7W8" secondAttribute="trailing" id="i7G-Me-nXO"/>
+                            <constraint firstAttribute="trailing" secondItem="NOA-U6-5cp" secondAttribute="trailing" id="lEL-rE-oKZ"/>
+                            <constraint firstItem="GpI-tm-XbS" firstAttribute="top" secondItem="NOA-U6-5cp" secondAttribute="bottom" id="oQS-NN-Yw5"/>
                             <constraint firstItem="CHG-Gg-HMy" firstAttribute="top" secondItem="pIh-Ff-7W8" secondAttribute="bottom" id="z3l-Iv-f8s"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="loadingView" destination="NOA-U6-5cp" id="bbM-ac-E4n"/>
                         <outlet property="notificationsHeader" destination="pIh-Ff-7W8" id="2u1-fO-FzU"/>
                         <outlet property="notificationsTableView" destination="CHG-Gg-HMy" id="8xz-id-0hg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xl4-Ro-77x" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="14591" y="90"/>
+            <point key="canvasLocation" x="14589.85507246377" y="89.673913043478265"/>
         </scene>
         <!--Education View Controller-->
         <scene sceneID="8SX-Oe-ZBT">
