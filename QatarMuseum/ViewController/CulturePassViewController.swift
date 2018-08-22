@@ -22,7 +22,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, UITableVi
     
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     let benefitList = ["15% DISCOUNT AT QM CAFE'S ACROSS ALL VENUES",
-                       "10% DISCOUNT ON TEMS IN ALL QM GIFT SHOPS (without minimum purchase)",
+                       "10% DISCOUNT ON ITEMS IN ALL QM GIFT SHOPS (without minimum purchase)",
                        "10% DISCOUNT AT IDAM RESTAURANT AT LUNCH TIME",
                        "RECEIVE OUR MONTHLY NEWSLETTER TO STAY UP TO DATE ON QM AND PARTNER OFFERINGS",
                        "GET PREMIER ACCESS TO MEMBERS ONLY TALKS &WORKSHOPS",
@@ -53,7 +53,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, UITableVi
         secondIntroLabel.textAlignment = .left
         benefitLabel.textAlignment = .center
 
-        benefitLabel.font = UIFont.closeButtonFont
+        benefitLabel.font = UIFont.eventPopupTitleFont
         introLabel.font = UIFont.englishTitleFont
         secondIntroLabel.font = UIFont.englishTitleFont
         notMemberLabel.font = UIFont.englishTitleFont
