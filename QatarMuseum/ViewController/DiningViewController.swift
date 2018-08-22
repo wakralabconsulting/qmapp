@@ -26,13 +26,12 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
         setupDiningArtsUi()
         if  (networkReachability?.isReachable)! {
             getDiningListFromServer()
-        }
-        else {
+        } else {
             fetchDiningListFromCoredata()
         }
         registerNib()
-        
     }
+    
     func setupDiningArtsUi() {
         loadingView.isHidden = false
         loadingView.showLoading()
@@ -41,12 +40,11 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             
             diningHeader.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
-        }
-        else {
+        } else {
             diningHeader.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
-
     }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }

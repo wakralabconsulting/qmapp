@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B373E95212C794700EE8DD1 /* CulturePassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B373E94212C794600EE8DD1 /* CulturePassViewController.swift */; };
 		1B3C505721270F260034E560 /* ArtifactNumberPadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3C505621270F260034E560 /* ArtifactNumberPadViewController.swift */; };
 		1B3C505B212AB3460034E560 /* ArtifactNumberPadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3C5059212AB3460034E560 /* ArtifactNumberPadCell.swift */; };
 		1B3C505C212AB3460034E560 /* ArtifactNumberPadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B3C505A212AB3460034E560 /* ArtifactNumberPadCell.xib */; };
@@ -14,6 +15,7 @@
 		1B51B3D021214853002B84AA /* ObjectPopupXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B51B3CF21214853002B84AA /* ObjectPopupXib.xib */; };
 		1B51B3D221219367002B84AA /* ObjectDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51B3D121219366002B84AA /* ObjectDetailViewController.swift */; };
 		1B51B3D52121B6A9002B84AA /* ObjectDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51B3D42121B6A9002B84AA /* ObjectDetailTableViewCell.swift */; };
+		1B902C00212D56EC00D3055B /* BenefitLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B902BFF212D56EC00D3055B /* BenefitLabelCell.swift */; };
 		1BAA2FCB2125FCC600D785DD /* ObjectImageXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BAA2FCA2125FCC500D785DD /* ObjectImageXib.xib */; };
 		1BAA2FCD2125FD8200D785DD /* ObjectImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAA2FCC2125FD8200D785DD /* ObjectImageView.swift */; };
 		1BAA2FCF2126D15D00D785DD /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAA2FCE2126D15D00D785DD /* Collection.swift */; };
@@ -178,6 +180,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1B373E94212C794600EE8DD1 /* CulturePassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CulturePassViewController.swift; sourceTree = "<group>"; };
 		1B3C505621270F260034E560 /* ArtifactNumberPadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactNumberPadViewController.swift; sourceTree = "<group>"; };
 		1B3C5059212AB3460034E560 /* ArtifactNumberPadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactNumberPadCell.swift; sourceTree = "<group>"; };
 		1B3C505A212AB3460034E560 /* ArtifactNumberPadCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArtifactNumberPadCell.xib; sourceTree = "<group>"; };
@@ -185,6 +188,7 @@
 		1B51B3CF21214853002B84AA /* ObjectPopupXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ObjectPopupXib.xib; sourceTree = "<group>"; };
 		1B51B3D121219366002B84AA /* ObjectDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectDetailViewController.swift; sourceTree = "<group>"; };
 		1B51B3D42121B6A9002B84AA /* ObjectDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectDetailTableViewCell.swift; sourceTree = "<group>"; };
+		1B902BFF212D56EC00D3055B /* BenefitLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitLabelCell.swift; sourceTree = "<group>"; };
 		1BAA2FCA2125FCC500D785DD /* ObjectImageXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ObjectImageXib.xib; sourceTree = "<group>"; };
 		1BAA2FCC2125FD8200D785DD /* ObjectImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectImageView.swift; sourceTree = "<group>"; };
 		1BAA2FCE2126D15D00D785DD /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
@@ -441,6 +445,14 @@
 			path = ObjectImageView;
 			sourceTree = "<group>";
 		};
+		1B902BFE212D56A800D3055B /* LabelViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				1B902BFF212D56EC00D3055B /* BenefitLabelCell.swift */,
+			);
+			path = LabelViewCell;
+			sourceTree = "<group>";
+		};
 		1BC909CE2108E37900D6C00B /* CommonMethods */ = {
 			isa = PBXGroup;
 			children = (
@@ -618,6 +630,7 @@
 				B806B7A4212451B200F9F338 /* FloorMapViewController.swift */,
 				1B51B3D121219366002B84AA /* ObjectDetailViewController.swift */,
 				1B3C505621270F260034E560 /* ArtifactNumberPadViewController.swift */,
+				1B373E94212C794600EE8DD1 /* CulturePassViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -625,6 +638,7 @@
 		B80DC08720C7943100E28034 /* ReusableComponents */ = {
 			isa = PBXGroup;
 			children = (
+				1B902BFE212D56A800D3055B /* LabelViewCell */,
 				1B3C5058212AB2E30034E560 /* ArtifactNumberPadCell */,
 				1B51B3D62125B410002B84AA /* ObjectImageView */,
 				1B51B3D32121B658002B84AA /* ObjectDetailCell */,
@@ -1223,6 +1237,7 @@
 				B8D1228D20C8EE8600772507 /* WebViewController.swift in Sources */,
 				B8294CF220CBF265002AFF72 /* FSCalendarCell.m in Sources */,
 				B85BA4AC20D01BC900E7F4D1 /* ExhibitionDetailTableViewCell.swift in Sources */,
+				1B902C00212D56EC00D3055B /* BenefitLabelCell.swift in Sources */,
 				B8DC478B20DD05BA0007B426 /* ParksViewController.swift in Sources */,
 				B8DC40A720C9A33A0044134D /* CommonHeaderView.swift in Sources */,
 				B891D06020DBC6BA00919F30 /* HeritageListViewController.swift in Sources */,
@@ -1246,6 +1261,7 @@
 				1BC909D2210B277F00D6C00B /* Home.swift in Sources */,
 				B8EAB7BB20CA424300C001B2 /* LoadViewExampleViewController.swift in Sources */,
 				B8BA80B520CCDDA3007E880A /* ProfileViewController.swift in Sources */,
+				1B373E95212C794700EE8DD1 /* CulturePassViewController.swift in Sources */,
 				1B3C505721270F260034E560 /* ArtifactNumberPadViewController.swift in Sources */,
 				B8294CF620CBF265002AFF72 /* FSCalendarHeaderView.m in Sources */,
 				B8E01BF92105EDFB008D7F33 /* SettingsViewController.swift in Sources */,

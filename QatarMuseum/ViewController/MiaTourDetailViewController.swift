@@ -11,15 +11,16 @@ import UIKit
 class MiaTourDetailViewController: UIViewController,HeaderViewProtocol,comingSoonPopUpProtocol,KASlideShowDelegate {
 
     @IBOutlet weak var tourGuideDescription: UILabel!
-    
     @IBOutlet weak var startTourButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var slideshowView: KASlideShow!
+    @IBOutlet weak var pageControl: UIPageControl!
+
     var slideshowImages : NSArray!
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
-    @IBOutlet weak var pageControl: UIPageControl!
     var i = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()

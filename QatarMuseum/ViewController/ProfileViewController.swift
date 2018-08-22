@@ -9,24 +9,18 @@
 import UIKit
 
 class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUpProtocol {
-    
-    
-   
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var profileImageView: UIImageView!
-    
     @IBOutlet weak var dummyImg: UIImageView!
     @IBOutlet weak var viewmyCulturePassButton: UIButton!
     @IBOutlet weak var viewMyFavoriteButton: UIButton!
-    
     @IBOutlet weak var editButton: UIButton!
+    
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var fromHome : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpProfileUI()
-        
-     
         
     }
 
@@ -38,8 +32,7 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             
             headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
-        }
-        else {
+        } else {
             headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
     }
