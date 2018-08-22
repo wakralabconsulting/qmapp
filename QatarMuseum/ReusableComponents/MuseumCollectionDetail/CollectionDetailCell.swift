@@ -9,8 +9,6 @@
 import UIKit
 
 class CollectionDetailCell: UITableViewCell {
-
-    
     @IBOutlet weak var firstTitle: UILabel!
     @IBOutlet weak var firstDescription: UITextView!
     @IBOutlet weak var secondTitle: UILabel!
@@ -30,18 +28,18 @@ class CollectionDetailCell: UITableViewCell {
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var titleview: UIView!
     @IBOutlet weak var descriptionBottomConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var firstLineTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var desctionTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var firstLineHeight: NSLayoutConstraint!
     
-    
     var favouriteButtonAction : (()->())?
     var shareButtonAction : (()->())?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        favouriteHeight.constant = 0
     }
+    
     func setCollectionCellValues(cellValues: NSDictionary,imageName: String,currentRow: Int) {
         firstTitle.font = UIFont.settingsUpdateLabelFont
         firstDescription.font = UIFont.collectionFirstDescriptionFont

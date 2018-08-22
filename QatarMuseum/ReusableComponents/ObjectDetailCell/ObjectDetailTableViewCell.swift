@@ -62,6 +62,8 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate {
         detailSecondLabel.text = "Like his father before him, Piero continued the family's tradition of artistic patronage, extending the collection beyond Italian Renaissance works to include Dutch and Flemish paintings, as well as rare books. This particular vase most probably remained in royal or aristocratic families for generations, before being discovered - along with four other similar vases - in a private Italian collection in 2005. Before this re-discovery, only one other albarello of its kind was recorded in the Musee des arts Decoratifs, Paris."
         imageDetailLabel.text = "Portrait of Piero di Cosimo de' Medici \nBronzino (Agnolo di Cosimo) (1503-1572) \nFlorence, 1550-1570 \nNational Gallery, London"
         centerImageView.image = UIImage(named: "science_tour")
+        shareBtnViewHeight.constant = 0
+        bottomPadding.constant = 0
     }
     
     @IBAction func didTapFavouriteButton(_ sender: UIButton) {

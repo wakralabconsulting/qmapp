@@ -33,7 +33,8 @@ class HeritageDetailCell: UITableViewCell {
     @IBOutlet weak var locationTotalTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var locationTotalBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var locationButton: UIButton!
-    
+    @IBOutlet weak var favoriteBtnViewHeight: NSLayoutConstraint!
+
     var favBtnTapAction : (()->())?
     var shareBtnTapAction : (()->())?
     var locationButtonTapAction : (()->())?
@@ -59,6 +60,7 @@ class HeritageDetailCell: UITableViewCell {
         locationButton.titleLabel?.font = UIFont.sideMenuLabelFont
         contactTitleLabel.font = UIFont.closeButtonFont
         contactLabel.font = UIFont.sideMenuLabelFont
+        favoriteBtnViewHeight.constant = 0
     }
     
     func setHeritageDetailData(heritageDetail: Heritage) {
