@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17C88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AboutEntity" representedClassName="AboutEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="contact" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="filter" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="longDesc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="openingTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shortDesc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="AboutEntityArabic" representedClassName="AboutEntityArabic" syncable="YES" codeGenerationType="class">
+        <attribute name="contactAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="filterAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latitudeAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="longDescAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="longitudeAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="openingTimeAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shortDescAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subTitleAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="titleAr" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="CollectionsEntity" representedClassName="CollectionsEntity" syncable="YES" codeGenerationType="class">
         <attribute name="listImage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="listName" optional="YES" attributeType="String" syncable="YES"/>
@@ -219,5 +245,7 @@
         <element name="ParksEntityArabic" positionX="-45" positionY="117" width="128" height="105"/>
         <element name="PublicArtsEntity" positionX="-54" positionY="108" width="128" height="165"/>
         <element name="PublicArtsEntityArabic" positionX="-54" positionY="117" width="128" height="165"/>
+        <element name="AboutEntity" positionX="-36" positionY="135" width="128" height="210"/>
+        <element name="AboutEntityArabic" positionX="-27" positionY="144" width="128" height="210"/>
     </elements>
 </model>

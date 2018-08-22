@@ -35,7 +35,13 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     func setupUI() {
         slideshowImages = ["museum_of_islamic","second_slider_image","third_slider_image"]
         collectionViewImages = ["MIA_AboutX1","Audio CircleX1","exhibition_blackX1","collectionsX1","park_blackX1","diningX1",]
-        collectionViewNames = ["About","Tour Guide","Exhibitions","Collections","Park","Dining"]
+        let aboutName = NSLocalizedString("ABOUT", comment: "ABOUT  in the Museum")
+        let tourGuideName = NSLocalizedString("TOURGUIDE_LABEL", comment: "TOURGUIDE_LABEL  in the Museum page")
+        let exhibitionsName = NSLocalizedString("EXHIBITIONS_LABEL", comment: "EXHIBITIONS_LABEL  in the Museum page")
+        let collectionsName = NSLocalizedString("COLLECTIONS_TITLE", comment: "COLLECTIONS_TITLE  in the Museum page")
+        let parkName = NSLocalizedString("PARKS_LABEL", comment: "PARKS_LABEL  in the Museum page")
+        let diningName = NSLocalizedString("DINING_LABEL", comment: "DINING_LABEL  in the Museum page")
+        collectionViewNames = [aboutName,tourGuideName,exhibitionsName,collectionsName,parkName,diningName]
        
         museumsTopbar.topbarDelegate = self
         museumsTopbar.menuButton.isHidden = true

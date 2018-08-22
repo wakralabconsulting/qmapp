@@ -70,6 +70,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         headerView.headerViewDelegate = self
         headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         self.view.addGestureRecognizer(self.scopeGesture)
+        listTitleLabel.font = UIFont.diningHeaderFont
     self.eventCollectionView.panGestureRecognizer.require(toFail: self.scopeGesture)
         if (isLoadEventPage == true) {
             listTitleLabel.text = NSLocalizedString("CALENDAR_EVENT_TITLE", comment: "CALENDAR_EVENT_TITLE Label in the Event page")
@@ -105,6 +106,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             calendarView.locale = NSLocale.init(localeIdentifier: "en") as Locale
             calendarView.identifier = NSCalendar.Identifier.gregorian.rawValue
             calendarView.appearance.titleFont = UIFont.init(name: "DINNextLTPro-Bold", size: 19)
+            
             calendarView.appearance.titleWeekendColor = UIColor.profilePink
             calendarLeftConstraint.constant = 45
             calendarRightConstraint.constant = 15
@@ -258,7 +260,6 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
 //            let timeint = (selectedEvent?.date! as? NSString)?.doubleValue
 //            date = NSDate(timeIntervalSince1970: timeint!)
 //        }
-        print(selectedDateForEvent)
         if(needToRegister == "true") {
             self.eventPopup.removeFromSuperview()
             popupView  = ComingSoonPopUp(frame: self.view.frame)
