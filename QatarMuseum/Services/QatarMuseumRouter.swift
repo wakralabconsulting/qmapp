@@ -116,21 +116,21 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .CollectionList(let parameters):
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         case .EducationEvent(let date, let ageGroup, let inst, let prog):
-            let educationURL = NSURL(string: Config.educationbaseIp)!
-            var mutableURLRequestt = URLRequest(url: educationURL.appendingPathComponent(path)!)
-            mutableURLRequestt.httpMethod = method.rawValue
-            mutableURLRequestt.setValue(date as? String, forHTTPHeaderField: "date")
-            mutableURLRequestt.setValue(inst as? String, forHTTPHeaderField: "inst")
-            mutableURLRequestt.setValue(ageGroup as? String, forHTTPHeaderField: "age")
-            mutableURLRequestt.setValue(prog as? String, forHTTPHeaderField: "ptype")
+            let educationURL = NSURL(string: Config.educationBaseIP)!
+            var mutableURLReq = URLRequest(url: educationURL.appendingPathComponent(path)!)
+            mutableURLReq.httpMethod = method.rawValue
+            mutableURLReq.setValue(date as? String, forHTTPHeaderField: "date")
+            mutableURLReq.setValue(inst as? String, forHTTPHeaderField: "inst")
+            mutableURLReq.setValue(ageGroup as? String, forHTTPHeaderField: "age")
+            mutableURLReq.setValue(prog as? String, forHTTPHeaderField: "ptype")
             if let accessToken = UserDefaults.standard.value(forKey: "accessToken")
                 as? String {
-                mutableURLRequestt.setValue("Bearer " + accessToken,
+                mutableURLReq.setValue("Bearer " + accessToken,
                                            forHTTPHeaderField: "Authorization")
             }
             //return try! Alamofire.URLEncoding.default.encode(mutableURLRequestt, with: parameters)
             
-            return try! Alamofire.JSONEncoding.default.encode(mutableURLRequestt)
+            return try! Alamofire.JSONEncoding.default.encode(mutableURLReq)
         }
     }
     

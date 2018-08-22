@@ -66,7 +66,7 @@ class EventCollectionViewCell: UICollectionViewCell {
         firstTitle.text = educationEvent.institution
         secondTitleLabel.text = educationEvent.title?.uppercased()
         descriptionLabel.text = educationEvent.shortDesc
-        //groupSizeLabel.text = "Max. group size 25"
+        groupSizeLabel.text = "Max. group size " + educationEvent.maxGroupSize!
     }
     
     @IBAction func didTapViewDetails(_ sender: UIButton) {

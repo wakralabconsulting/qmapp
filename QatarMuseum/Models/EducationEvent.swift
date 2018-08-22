@@ -23,6 +23,7 @@ struct EducationEvent: ResponseObjectSerializable, ResponseCollectionSerializabl
     var category: String? = nil
     var registration: String? = nil
     var date: String? = nil
+    var maxGroupSize: String? = nil
     
     public init?(response: HTTPURLResponse, representation: AnyObject) {
         if let representation = representation as? [String: Any] {
@@ -40,10 +41,11 @@ struct EducationEvent: ResponseObjectSerializable, ResponseCollectionSerializabl
             self.category = representation["category"] as? String
             self.registration = representation["registration"] as? String
             self.date = representation["date"] as? String
+            self.maxGroupSize = representation["max_group_size"] as? String
         }
     }
     //10
-    init (eid:String?, filter: String?, title: String?, shortDesc: String?, longDesc: String?,location:String?, institution: String?,startTime:String?, endTime: String?, ageGroup: String?,programType: String?, category: String?, registration: String?, date: String?) {
+    init (eid:String?, filter: String?, title: String?, shortDesc: String?, longDesc: String?,location:String?, institution: String?,startTime:String?, endTime: String?, ageGroup: String?,programType: String?, category: String?, registration: String?, date: String?,maxGroupSize:String?) {
         self.eId = eid
         self.filter = filter
         self.title = title
@@ -59,6 +61,7 @@ struct EducationEvent: ResponseObjectSerializable, ResponseCollectionSerializabl
         self.category = category
         self.registration = registration
         self.date = date
+        self.maxGroupSize = maxGroupSize
     }
 }
 

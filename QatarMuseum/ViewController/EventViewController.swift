@@ -39,8 +39,10 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     var isLoadEventPage : Bool = false
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var educationEventArray: [EducationEvent] = []
+    var selectedEvent: EducationEvent?
     var needToRegister : String? = "false"
     let networkReachability = NetworkReachabilityManager()
+    let store = EKEventStore()
 
     fileprivate lazy var scopeGesture: UIPanGestureRecognizer = {
         [unowned self] in
@@ -52,10 +54,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         registerNib()
-        
-        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
@@ -97,17 +96,13 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             else {
                 self.fetchEducationEventFromCoredata()
             }
-            
         }
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             UserDefaults.standard.set(false, forKey: "Arabic")
             headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
             previousButton.setImage(UIImage(named: "previousImg"), for: .normal)
             nextButton.setImage(UIImage(named: "nextImg"), for: .normal)
-            
             calendarView.locale = NSLocale.init(localeIdentifier: "en") as Locale
-            
-        
             calendarView.identifier = NSCalendar.Identifier.gregorian.rawValue
             calendarView.appearance.titleFont = UIFont.init(name: "DINNextLTPro-Bold", size: 19)
             calendarView.appearance.titleWeekendColor = UIColor.profilePink
@@ -121,13 +116,10 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
            
             headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
             //For RTL
-                    //calendarView.locale = NSLocale.init(localeIdentifier: "ar") as Locale
             calendarView?.locale = Locale(identifier: "ar")
             self.calendarView.transform = CGAffineTransform(scaleX: -1, y: 1)
-            //self.calendarView.locale = Locale(identifier: "fa_IR")
             calendarView.setCurrentPage(Date(), animated: false)
             UserDefaults.standard.set(true, forKey: "Arabic")
-            
             calendarView.appearance.titleFont = UIFont.init(name: "DINNextLTArabic-Bold", size: 18)
             calendarView.appearance.weekdayFont =  UIFont.init(name: "DINNextLTArabic-Regular", size: 13)
             previousButton.setImage(UIImage(named: "nextImg"), for: .normal)
@@ -138,17 +130,11 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             previousConstraint.constant = 30
             nextConstraint.constant = 30
         }
-        
-       
-        
-
-        
     }
     //For RTL
     func minimumDate(for calendar: FSCalendar) -> Date {
         return self.formatter.date(from: "2016-07-08")!
     }
-
     fileprivate let formatter: DateFormatter = {
         let formatter = DateFormatter()
         if ((LocalizationLanguage.currentAppleLanguage()) == AR_LANGUAGE) {
@@ -233,26 +219,26 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     func loadEventPopup(currentRow: Int) {
         eventPopup  = EventPopupView(frame: self.view.frame)
         eventPopup.eventPopupDelegate = self
+        selectedEvent = educationEventArray[currentRow]
+        needToRegister = educationEventArray[currentRow].registration
+        if(needToRegister == "true") {
+            let buttonTitle = NSLocalizedString("EDUCATION_POPUP_BUTTON_TITLE", comment: "POPUP_ADD_BUTTON_TITLE  in the popup view")
+            eventPopup.addToCalendarButton.setTitle(buttonTitle, for: .normal)
+        }
+        else {
+            let buttonTitle = NSLocalizedString("POPUP_ADD_BUTTON_TITLE", comment: "POPUP_ADD_BUTTON_TITLE  in the popup view")
+            eventPopup.addToCalendarButton.setTitle(buttonTitle, for: .normal)
+        }
         if (isLoadEventPage == true) {
             
             eventPopup.eventTitle.text = educationEventArray[currentRow].title?.uppercased()
             eventPopup.eventDescription.text = educationEventArray[currentRow].longDesc
-            let buttonTitle = NSLocalizedString("POPUP_ADD_BUTTON_TITLE", comment: "POPUP_ADD_BUTTON_TITLE  in the popup view")
-            eventPopup.addToCalendarButton.setTitle(buttonTitle, for: .normal)
+            //let buttonTitle = NSLocalizedString("POPUP_ADD_BUTTON_TITLE", comment: "POPUP_ADD_BUTTON_TITLE  in the popup view")
+           // eventPopup.addToCalendarButton.setTitle(buttonTitle, for: .normal)
         }
         else {
             eventPopup.eventTitle.text = educationEventArray[currentRow].title?.uppercased()
             eventPopup.eventDescription.text = educationEventArray[currentRow].longDesc
-            needToRegister = educationEventArray[currentRow].registration
-            if(needToRegister == "true") {
-                let buttonTitle = NSLocalizedString("EDUCATION_POPUP_BUTTON_TITLE", comment: "POPUP_ADD_BUTTON_TITLE  in the popup view")
-                eventPopup.addToCalendarButton.setTitle(buttonTitle, for: .normal)
-            }
-            else {
-                let buttonTitle = NSLocalizedString("POPUP_ADD_BUTTON_TITLE", comment: "POPUP_ADD_BUTTON_TITLE  in the popup view")
-                eventPopup.addToCalendarButton.setTitle(buttonTitle, for: .normal)
-            }
-            
             
         }
         self.view.addSubview(eventPopup)
@@ -267,46 +253,57 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
        
     }
     func addToCalendarButtonPressed() {
-        
-        if (isLoadEventPage == true) {
-            self.addEventToCalendar(title: "QM Event", description: "Event", startDate: selectedDateForEvent, endDate: selectedDateForEvent)
+//        var date = NSDate()
+//        if(selectedEvent?.date != nil) {
+//            let timeint = (selectedEvent?.date! as? NSString)?.doubleValue
+//            date = NSDate(timeIntervalSince1970: timeint!)
+//        }
+        print(selectedDateForEvent)
+        if(needToRegister == "true") {
             self.eventPopup.removeFromSuperview()
+            popupView  = ComingSoonPopUp(frame: self.view.frame)
+            popupView.comingSoonPopupDelegate = self
+            popupView.loadPopup()
+            self.view.addSubview(popupView)
         }
         else {
-            if(needToRegister == "true") {
-                self.eventPopup.removeFromSuperview()
-                popupView  = ComingSoonPopUp(frame: self.view.frame)
-                popupView.comingSoonPopupDelegate = self
-                 popupView.loadPopup()
-                self.view.addSubview(popupView)
-            }
-            else {
-                self.addEventToCalendar(title: "QM Event", description: "Event", startDate: selectedDateForEvent, endDate: selectedDateForEvent)
-                self.eventPopup.removeFromSuperview()
-            }
-           
+            var calendar = Calendar.current
+            //calendar.timeZone = TimeZone(identifier: "UTC")!
+            let startDt = calendar.date(bySettingHour:14, minute: 0, second: 0, of: selectedEventDate)!
+            let endDt = calendar.date(bySettingHour: 16, minute: 0, second: 0, of: selectedEventDate)!
+            self.addEventToCalendar(title:  (selectedEvent?.title)!, description: selectedEvent?.longDesc, startDate: startDt, endDate: endDt)
+            self.eventPopup.removeFromSuperview()
         }
+//        if (isLoadEventPage == true) {
+//            self.addEventToCalendar(title: (selectedEvent?.title)!, description: selectedEvent?.longDesc, startDate: date as Date, endDate: date as Date)
+//            self.eventPopup.removeFromSuperview()
+//        }
+//        else {
+//
+//
+//        }
         
     }
+   
     func closeButtonPressed() {
         self.popupView.removeFromSuperview()
     }
-    func addEventToCalendar(title: String, description: String?, startDate: Date, endDate: Date, completion: ((_ success: Bool, _ error: NSError?) -> Void)? = nil) {
+    func addEventToCalendar(title: String, description: String?, startDate: Date?, endDate: Date?, completion: ((_ success: Bool, _ error: NSError?) -> Void)? = nil) {
         let eventStore = EKEventStore()
-       
-        
-        
         eventStore.requestAccess(to: .event, completion: { (granted, error) in
             if (granted) && (error == nil) {
-                let event = EKEvent(eventStore: eventStore)
+                let event = EKEvent.init(eventStore: self.store)
                 event.title = title
+                event.calendar = self.store.defaultCalendarForNewEvents
                 event.startDate = startDate
                 event.endDate = endDate
                 event.notes = description
-                event.calendar = eventStore.defaultCalendarForNewEvents
+               // let alarm = EKAlarm.init(absoluteDate: Date.init(timeInterval: -3600, since: event.startDate))
+               // event.addAlarm(alarm)
+                
                 do {
-                    try eventStore.save(event, span: .thisEvent)
-                   
+                   // try eventStore.save(event, span: .thisEvent)
+                    try self.store.save(event, span: .thisEvent)
                 } catch let e as NSError {
                     completion?(false, e)
                     return
@@ -411,7 +408,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 self.educationEventArray = data.educationEvent!
                let evetPosition = self.findItem(educationArray: self.educationEventArray, fixedStartTime: "14:00")
                 if(self.sundayOrWednesday() == false) {
-                    self.educationEventArray.insert(EducationEvent(eid: "15476", filter: nil, title: "Walk In Gallery Tours", shortDesc: nil, longDesc: nil, location: " Museum of Islamic Art, Atrium", institution: "MIA", startTime: "14:00", endTime: "16:00", ageGroup: "adults", programType: "gallery tour", category: nil, registration: nil, date: "Every Monday, Tuesday, Thursday, Friday and Saturday" ), at: evetPosition!)
+                    self.educationEventArray.insert(EducationEvent(eid: "15476", filter: nil, title: "Walk In Gallery Tours", shortDesc: "Join our Museum Guides for a tour of the Museum of Islamic Art's oustanding collection of objects, spread over 1,400 years and across three continents. No booking is required to be a part of the tour.", longDesc: "Monday - Science Tour\n Tuesday - Techniques Tour (from 1 July onwards)\n Thursday - MIA Architecture Tour\n Friday - Permanent Gallery Tour\nSaturday - Permanent Gallery Tour", location: " Museum of Islamic Art, Atrium", institution: "MIA", startTime: "14:00", endTime: "16:00", ageGroup: "adults", programType: "gallery tour", category: nil, registration: "false", date: "Every Monday, Tuesday, Thursday, Friday and Saturday",maxGroupSize: "40" ), at: evetPosition!)
+                    
                 }
                 if (self.isLoadEventPage == true) {
                     self.saveOrUpdateEventCoredata()
@@ -596,7 +594,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         }
         else {
             let edducationInfo: EducationEventEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EducationEventEntityAr", into: managedObjContext) as! EducationEventEntityAr
-            edducationInfo.eidAr = educationEventDict.eId
+            edducationInfo.eid = educationEventDict.eId
             edducationInfo.filterAr = educationEventDict.filter
             edducationInfo.titleAr = educationEventDict.title
             edducationInfo.shortDescAr =  educationEventDict.shortDesc
@@ -629,7 +627,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 educationArray = (try managedContext.fetch(fetchRequest) as? [EducationEventEntity])!
                 if (educationArray.count > 0) {
                     for i in 0 ... educationArray.count-1 {
-                        self.educationEventArray.insert(EducationEvent(eid: educationArray[i].eid, filter: educationArray[i].filter, title: educationArray[i].title, shortDesc: educationArray[i].shortDesc, longDesc: educationArray[i].longDesc, location: educationArray[i].location, institution: educationArray[i].institution, startTime: educationArray[i].startTime, endTime: educationArray[i].endTime, ageGroup: educationArray[i].ageGroup, programType: educationArray[i].pgmType, category: educationArray[i].category, registration: educationArray[i].registration, date: educationArray[i].date), at: i)
+                        self.educationEventArray.insert(EducationEvent(eid: educationArray[i].eid, filter: educationArray[i].filter, title: educationArray[i].title, shortDesc: educationArray[i].shortDesc, longDesc: educationArray[i].longDesc, location: educationArray[i].location, institution: educationArray[i].institution, startTime: educationArray[i].startTime, endTime: educationArray[i].endTime, ageGroup: educationArray[i].ageGroup, programType: educationArray[i].pgmType, category: educationArray[i].category, registration: educationArray[i].registration, date: educationArray[i].date, maxGroupSize: educationArray[i].maxGrpSize), at: i)
                     }
                     if(educationEventArray.count == 0){
                         self.showNodata()
@@ -648,7 +646,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 if (educationArray.count > 0) {
                     for i in 0 ... educationArray.count-1 {
                         
-                        self.educationEventArray.insert(EducationEvent(eid: educationArray[i].eidAr, filter: educationArray[i].filterAr, title: educationArray[i].filterAr, shortDesc: educationArray[i].shortDescAr, longDesc: educationArray[i].longDescAr, location: educationArray[i].locationAr, institution: educationArray[i].institutionAr, startTime: educationArray[i].startTimeAr, endTime: educationArray[i].endTimeAr, ageGroup: educationArray[i].ageGrpAr, programType: educationArray[i].pgmTypeAr, category: educationArray[i].categoryAr, registration: educationArray[i].registrationAr, date: educationArray[i].dateAr), at: i)
+                        self.educationEventArray.insert(EducationEvent(eid: educationArray[i].eid, filter: educationArray[i].filterAr, title: educationArray[i].filterAr, shortDesc: educationArray[i].shortDescAr, longDesc: educationArray[i].longDescAr, location: educationArray[i].locationAr, institution: educationArray[i].institutionAr, startTime: educationArray[i].startTimeAr, endTime: educationArray[i].endTimeAr, ageGroup: educationArray[i].ageGrpAr, programType: educationArray[i].pgmTypeAr, category: educationArray[i].categoryAr, registration: educationArray[i].registrationAr, date: educationArray[i].dateAr , maxGroupSize: educationArray[i].maxGrpSizeAr), at: i)
                         
                     }
                     if(educationEventArray.count == 0){
@@ -784,7 +782,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         }
         else {
             let edducationInfo: EventEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "EventEntityArabic", into: managedObjContext) as! EventEntityArabic
-            edducationInfo.eidAr = educationEventDict.eId
+            edducationInfo.eid = educationEventDict.eId
             edducationInfo.filterAr = educationEventDict.filter
             edducationInfo.titleAr = educationEventDict.title
             edducationInfo.shortDescAr =  educationEventDict.shortDesc
@@ -817,7 +815,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 educationArray = (try managedContext.fetch(fetchRequest) as? [EventEntity])!
                 if (educationArray.count > 0) {
                     for i in 0 ... educationArray.count-1 {
-                        self.educationEventArray.insert(EducationEvent(eid: educationArray[i].eid, filter: educationArray[i].filter, title: educationArray[i].title, shortDesc: educationArray[i].shortDesc, longDesc: educationArray[i].longDesc, location: educationArray[i].location, institution: educationArray[i].institution, startTime: educationArray[i].startTime, endTime: educationArray[i].endTime, ageGroup: educationArray[i].ageGroup, programType: educationArray[i].pgmType, category: educationArray[i].category, registration: educationArray[i].registration, date: educationArray[i].date), at: i)
+                        self.educationEventArray.insert(EducationEvent(eid: educationArray[i].eid, filter: educationArray[i].filter, title: educationArray[i].title, shortDesc: educationArray[i].shortDesc, longDesc: educationArray[i].longDesc, location: educationArray[i].location, institution: educationArray[i].institution, startTime: educationArray[i].startTime, endTime: educationArray[i].endTime, ageGroup: educationArray[i].ageGroup, programType: educationArray[i].pgmType, category: educationArray[i].category, registration: educationArray[i].registration, date: educationArray[i].date, maxGroupSize: educationArray[i].maxGrpSize), at: i)
                     }
                     if(educationEventArray.count == 0){
                         self.showNodata()
@@ -836,7 +834,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 if (educationArray.count > 0) {
                     for i in 0 ... educationArray.count-1 {
                         
-                        self.educationEventArray.insert(EducationEvent(eid: educationArray[i].eidAr, filter: educationArray[i].filterAr, title: educationArray[i].filterAr, shortDesc: educationArray[i].shortDescAr, longDesc: educationArray[i].longDesAr, location: educationArray[i].locationAr, institution: educationArray[i].institutionAr, startTime: educationArray[i].startTimeAr, endTime: educationArray[i].endTimeAr, ageGroup: educationArray[i].ageGroupAr, programType: educationArray[i].pgmTypeAr, category: educationArray[i].categoryAr, registration: educationArray[i].registrationAr, date: educationArray[i].dateAr), at: i)
+                        self.educationEventArray.insert(EducationEvent(eid: educationArray[i].eid, filter: educationArray[i].filterAr, title: educationArray[i].filterAr, shortDesc: educationArray[i].shortDescAr, longDesc: educationArray[i].longDesAr, location: educationArray[i].locationAr, institution: educationArray[i].institutionAr, startTime: educationArray[i].startTimeAr, endTime: educationArray[i].endTimeAr, ageGroup: educationArray[i].ageGroupAr, programType: educationArray[i].pgmTypeAr, category: educationArray[i].categoryAr, registration: educationArray[i].registrationAr, date: educationArray[i].dateAr, maxGroupSize: educationArray[i].maxGrpSizeAr), at: i)
                         
                     }
                     if(educationEventArray.count == 0){

@@ -110,6 +110,7 @@
 		B8BA80BE20CD9977007E880A /* ExhibitionsJson.json in Resources */ = {isa = PBXBuildFile; fileRef = B8BA80BD20CD9977007E880A /* ExhibitionsJson.json */; };
 		B8BBF459211C1AC000352706 /* ParksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBF458211C1AC000352706 /* ParksList.swift */; };
 		B8BD1DA721298AA500150A01 /* EducationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD1DA621298AA500150A01 /* EducationEvent.swift */; };
+		B8BD3A6D212C77B9006D440A /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8BD3A6C212C77B8006D440A /* EventKit.framework */; };
 		B8C1C2BD21160B7300531AB3 /* PublicArtsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C1C2BC21160B7300531AB3 /* PublicArtsList.swift */; };
 		B8C64C9C20FE380D00D7CD63 /* MiaTourDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C64C9B20FE380D00D7CD63 /* MiaTourDetailViewController.swift */; };
 		B8C64D4720FDC71400C2D51A /* TourGuideCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C64D4620FDC71400C2D51A /* TourGuideCollectionReusableView.swift */; };
@@ -310,6 +311,7 @@
 		B8BA80BD20CD9977007E880A /* ExhibitionsJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ExhibitionsJson.json; sourceTree = "<group>"; };
 		B8BBF458211C1AC000352706 /* ParksList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParksList.swift; sourceTree = "<group>"; };
 		B8BD1DA621298AA500150A01 /* EducationEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationEvent.swift; sourceTree = "<group>"; };
+		B8BD3A6C212C77B8006D440A /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		B8C1C2BC21160B7300531AB3 /* PublicArtsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicArtsList.swift; sourceTree = "<group>"; };
 		B8C64C9B20FE380D00D7CD63 /* MiaTourDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiaTourDetailViewController.swift; sourceTree = "<group>"; };
 		B8C64D4620FDC71400C2D51A /* TourGuideCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourGuideCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8BD3A6D212C77B9006D440A /* EventKit.framework in Frameworks */,
 				B806B7CB2124536F00F9F338 /* Accelerate.framework in Frameworks */,
 				B806B7C92124536600F9F338 /* CoreData.framework in Frameworks */,
 				B806B7C72124535F00F9F338 /* CoreGraphics.framework in Frameworks */,
@@ -478,6 +481,7 @@
 		7989B881720353361A2FCB1C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B8BD3A6C212C77B8006D440A /* EventKit.framework */,
 				B806B7CA2124536E00F9F338 /* Accelerate.framework */,
 				B806B7C82124536600F9F338 /* CoreData.framework */,
 				B806B7C62124535F00F9F338 /* CoreGraphics.framework */,
