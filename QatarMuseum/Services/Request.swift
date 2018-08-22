@@ -65,7 +65,6 @@ extension DataRequest {
             
             let jsonResponseSerializer = DataRequest.jsonResponseSerializer(options: .allowFragments)
             let result = jsonResponseSerializer.serializeResponse(request, response, data, error)
-            
             guard case let .success(jsonObject) = result else {
                 return .failure(BackendError.JSONSerialization(error: result.error! as NSError))
             }

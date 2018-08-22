@@ -35,15 +35,26 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     var institutionArray = NSArray()
     var ageGroupArray = NSArray()
     var programmeTypeArray = NSArray()
+    var institutionPassArray = NSArray()
+    var ageGroupPassArray = NSArray()
+    var programmePassArray = NSArray()
     var selectedInstitution = String()
     var selectedageGroup = String()
     var selectedProgramme = String()
+    
+    var institutionPass = String()
+    var ageGroupPass = String()
+    var programmePass = String()
     var selectedRow = 0
     override func viewDidLoad() {
         super.viewDidLoad()
-        institutionArray = ["Any Education"," Years of Culture Education","Public Art Education","MIA Education"]
-        ageGroupArray = ["Any Age Group","B","C"]
-        programmeTypeArray = ["Any Topic", "Museums", "Qatar"]
+        institutionArray = ["Years of Culture Education","Public Art Education","Cultural Heritage Education","MIA Education","Mathaf Education","National Museum","3-2-1 QOSM Education","Family &amp; Schools Programmes Calendar"]
+        ageGroupArray = ["Teachers","All ages","Nursery/Pre-KG (3-5 Years","Pre-School Ages (0-3 Years","Early Primary (5-7 Years","Primary (8-11 Years)","Preparatory (12-14 Years)","Secondary (15-18 Years)","College &amp; University (17-24 Years)","Youth","Adults","Seniors","Families","Special Needs"]
+        programmeTypeArray = ["Art Workshop","Field Trip","Gallery Tour","Lecture","Photography","Reading Group","Research","Workshop"]
+        
+        institutionPassArray = ["Years","Public","Cultural","MIA","Mathaf","National","321","Family"]
+        ageGroupPassArray = ["Allages","Nursery","Preschool","EarlyPrimary","Primary","Preparatory","Secondary","College","Youth","Adults","Seniors","Families","Special"]
+        programmePassArray = ["Art","Field","Gallery","Lecture","Photography","Reading","Research","Workshop"]
         setupUI()
        
     }
@@ -75,6 +86,9 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         institutionText.text = institutionArray[0] as? String
         ageGroupText.text = ageGroupArray[0] as? String
         programmeTypeText.text = programmeTypeArray[0] as? String
+        institutionPass = institutionPassArray[0] as! String
+        ageGroupPass = ageGroupPassArray[0] as! String
+        programmePass = programmePassArray[0] as! String
         addPickerView()
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -111,6 +125,9 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromLeft
         self.view.window!.layer.add(transition, forKey: kCATransition)
+        institutionType = institutionPass
+        ageGroupType = ageGroupPass
+        programmeType = programmePass
         self.dismiss(animated: false, completion: nil)
     }
     @IBAction func institutionButtonTouchDown(_ sender: UIButton) {
@@ -242,11 +259,13 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         else if(picker.tag == 1) {
             selectedageGroup = (ageGroupArray[row] as? String)!
             ageGroupText.text = (ageGroupArray[row] as? String)!
+            
             return ageGroupArray[row] as? String;
         }
         else {
             selectedProgramme = (programmeTypeArray[row] as? String)!
             programmeTypeText.text = (programmeTypeArray[row] as? String)!
+            
             return programmeTypeArray[row] as? String;
         }
         
@@ -259,16 +278,19 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         if (picker.tag == 0) {
             pickerTitle = institutionArray[row] as? String
             selectedInstitution = (institutionArray[row] as? String)!
+            institutionPass = (institutionPassArray[row] as? String)!
             institutionText.text = (institutionArray[row] as? String)!
         }
         else if(picker.tag == 1) {
             pickerTitle = ageGroupArray[row] as? String
             selectedageGroup = (ageGroupArray[row] as? String)!
+            ageGroupPass = (ageGroupPassArray[row] as? String)!
             ageGroupText.text = (ageGroupArray[row] as? String)!
         }
         else {
             pickerTitle = programmeTypeArray[row] as? String
             selectedProgramme = (programmeTypeArray[row] as? String)!
+            programmePass = (programmePassArray[row] as? String)!
             programmeTypeText.text = (programmeTypeArray[row] as? String)!
         }
         pickerLabel.text = pickerTitle
