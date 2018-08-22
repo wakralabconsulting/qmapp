@@ -20,15 +20,17 @@ class DiningDetailTableViewCell: UITableViewCell,UITextViewDelegate {
     @IBOutlet weak var locationFirstLabel: UILabel!
     @IBOutlet weak var visitMIAText: UITextView!
     @IBOutlet weak var locationButton: UIButton!
- 
+    @IBOutlet weak var favoriteBtnViewHeight: NSLayoutConstraint!
+
     var favBtnTapAction : (()->())?
     var shareBtnTapAction : (()->())?
     var locationButtonAction: (() -> ())?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        
+        favoriteBtnViewHeight.constant = 0
     }
+    
     func setDiningDetailValues(diningDetail: Dining) {
         titleLabel.text = diningDetail.name?.uppercased()
         titleDescriptionLabel.text = diningDetail.description

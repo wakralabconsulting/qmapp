@@ -24,7 +24,8 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var centerImageView: UIImageView!
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var centerImgHeight: NSLayoutConstraint!
-    
+    @IBOutlet weak var favoriteBtnViewHeight: NSLayoutConstraint!
+
     var favBtnTapAction : (()->())?
     var shareBtnTapAction : (()->())?
     var locationButtonAction: (() -> ())?
@@ -57,6 +58,7 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
         locationButton.titleLabel?.font = UIFont.sideMenuLabelFont
         contactTitle.font = UIFont.closeButtonFont
         contactDescriptionLabel.font = UIFont.sideMenuLabelFont
+        favoriteBtnViewHeight.constant = 0
     }
     
     func setHomeExhibitionDetail(exhibition: Exhibition) {
