@@ -35,6 +35,15 @@ extension UIFont {
         }
         
     }
+    static var discoverButtonFont: UIFont {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            return UIFont.init(name: "DINNextLTPro-Bold", size: 17)!
+        }
+        else{
+            return UIFont.init(name: "DINNextLTArabic-Bold", size:17)!
+        }
+        
+    }
     static var settingsUpdateLabelFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             return UIFont.init(name: "DINNextLTPro-Regular", size: 18)!

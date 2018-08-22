@@ -22,6 +22,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case GetPublicArtsDetail([String: Any])
     case CollectionList([String: Any])
     case EducationEvent(String: Any, String: Any, String : Any, String:Any)
+    case MuseumAbout([String: Any])
 
 
     var method: Alamofire.HTTPMethod {
@@ -49,6 +50,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .CollectionList:
             return .get
         case .EducationEvent:
+            return .get
+        case .MuseumAbout:
             return .get
         }
     }
@@ -78,7 +81,9 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .CollectionList( _):
             return "/museum_collection_category.json"
         case .EducationEvent:
-            return "/xmltojson/geturl.php"
+            return "/geturl.php"
+        case .MuseumAbout( _):
+            return "/about.php"
         }
     }
 
@@ -116,7 +121,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .CollectionList(let parameters):
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         case .EducationEvent(let date, let ageGroup, let inst, let prog):
-            let educationURL = NSURL(string: Config.educationBaseIP)!
+            let educationURL = NSURL(string: Config.tempBaseIP + lang())!
             var mutableURLReq = URLRequest(url: educationURL.appendingPathComponent(path)!)
             mutableURLReq.httpMethod = method.rawValue
             mutableURLReq.setValue(date as? String, forHTTPHeaderField: "date")
@@ -128,9 +133,12 @@ enum QatarMuseumRouter: URLRequestConvertible {
                 mutableURLReq.setValue("Bearer " + accessToken,
                                            forHTTPHeaderField: "Authorization")
             }
-            //return try! Alamofire.URLEncoding.default.encode(mutableURLRequestt, with: parameters)
-            
             return try! Alamofire.JSONEncoding.default.encode(mutableURLReq)
+        case .MuseumAbout(let parameters):
+            let aboutURL = NSURL(string: Config.tempBaseIP + lang())!
+            var mutableURLReq = URLRequest(url: aboutURL.appendingPathComponent(path)!)
+            mutableURLReq.httpMethod = method.rawValue
+            return try! Alamofire.URLEncoding.default.encode(mutableURLReq, with: parameters)
         }
     }
     

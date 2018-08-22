@@ -36,7 +36,7 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
         loadingView.showLoading()
         
         collectionsHeader.headerViewDelegate = self
-        collectionsHeader.headerTitle.text = NSLocalizedString("COLLECTIONS_TITLE", comment: "COLLECTIONS_TITLE Label in the collections page")
+        collectionsHeader.headerTitle.text = NSLocalizedString("COLLECTIONS_TITLE", comment: "COLLECTIONS_TITLE Label in the collections page").uppercased()
 
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             collectionsHeader.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)

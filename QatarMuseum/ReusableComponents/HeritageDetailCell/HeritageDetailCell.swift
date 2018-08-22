@@ -88,6 +88,8 @@ class HeritageDetailCell: UITableViewCell {
         let mapRedirectionMessage = NSLocalizedString("MAP_REDIRECTION_MESSAGE",
                                                       comment: "MAP_REDIRECTION_MESSAGE in the Dining detail")
         locationButton.setTitle(mapRedirectionMessage, for: .normal)
+        
+        
     }
     
     func setPublicArtsDetailValues(publicArsDetail: PublicArtsDetail) {
@@ -117,7 +119,7 @@ class HeritageDetailCell: UITableViewCell {
         //fridayLabel.text = 
     }
     
-    func setMuseumAboutCellData() {
+    func setMuseumAboutCellData(aboutData: MuseumAbout) {
         titleBottomOnlyConstraint.isActive = false
         locationTotalTopConstraint.isActive = false
         locationTotalBottomConstraint.isActive = false
@@ -133,16 +135,26 @@ class HeritageDetailCell: UITableViewCell {
         contactLabel.isHidden = false
         subTitleLabel.isHidden = true
         subTitleHeight.constant = 0
-        titleLabel.text = "MUSEUM OF ISLAMIC ART"
-        middleTitleLabel.text = "TRADITIONAL INSPIRATION"
-        openingTimeTitleLabel.text = "MUSEUM TIMINGS"
+        titleLabel.text = aboutData.title?.uppercased()
+        middleTitleLabel.text = aboutData.subTitle?.uppercased()
         fridayLabel.isHidden = true
         locationFirstLabelHeight.constant = 0
-        titleDescriptionLabel.text = "MIA's masterpieces come from diverse societies - both secular and spiritual. \n Pieces in the collection are all connected by Islam, but many are non-religious in nature. \n\nThey are drawn from the treasure-houses of princes and the personal homes of ordinary people. Each object tells a fascinating story about its origins, providing an experience that extends far beyond the physical gallery space. \n\n Discover the beauty of Islamic art and realise its international influence. Plan your visit to MIA."
-        midTitleDescriptionLabel.text = "Designed by world-renowned architect I.M. Pei, the MIA building has become an icon. Standing apart on the waters of the Corniche, it draws influence from traditional Islamic architecture. the buildng is made from limestone, which captures hourly changes in light and shade. \n\n The geometric patterns of the Islamic world adorn the inside space, making for a grand interior. A variety of textures and materials, including wood and stone, have created a unique environment for the museum's stunning collections. With incredible views across the bay, It's the foundation for Doha's burgeoning cultural scene."
-        sundayTimeLabel.text = "Saturday to Sunday: 9:00AM - 7:00PM"
-        fridayTimeLabel.text = "Fridays:1:30PM to 7:00PM"
+        titleDescriptionLabel.text = aboutData.shortDesc
+        midTitleDescriptionLabel.text = aboutData.longDesc
+        sundayTimeLabel.text = aboutData.openingTime
+        contactLabel.text = aboutData.contact
+        titleLabel.font = UIFont.closeButtonFont
+        middleTitleLabel.font = UIFont.closeButtonFont
+        locationTitleLabel.text = NSLocalizedString("LOCATION_TITLE",
+                                                    comment: "LOCATION_TITLE in the Heritage detail")
+        openingTimeTitleLabel.text = NSLocalizedString("MUSEUM_TIMING",
+                                                       comment: "MUSEUM_TIMING in the Heritage detail")
+        contactTitleLabel.text = NSLocalizedString("CONTACT_TITLE",
+                                                   comment: "CONTACT_TITLE in the Heritage detail")
+        
+        
     }
+    
     @IBAction func didTapFavouriteButton(_ sender: UIButton) {
         UIButton.animate(withDuration: 0.3,
                          animations: {
