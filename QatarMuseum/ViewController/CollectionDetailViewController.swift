@@ -53,20 +53,19 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let collectionCell = tableView.dequeueReusableCell(withIdentifier: "collectionCellId", for: indexPath) as! CollectionDetailCell
-        if(indexPath.row == collectionListArray.count-1) {
-            collectionCell.favouriteHeight.constant = 130
-            collectionCell.favouriteView.isHidden = false
-            collectionCell.shareView.isHidden = false
-            collectionCell.favouriteButton.isHidden = false
-            collectionCell.shareButton.isHidden = false
-        }
-        else {
+//        if(indexPath.row == collectionListArray.count-1) {
+//            collectionCell.favouriteHeight.constant = 130
+//            collectionCell.favouriteView.isHidden = false
+//            collectionCell.shareView.isHidden = false
+//            collectionCell.favouriteButton.isHidden = false
+//            collectionCell.shareButton.isHidden = false
+//        } else {
             collectionCell.favouriteHeight.constant = 0
             collectionCell.favouriteView.isHidden = true
             collectionCell.shareView.isHidden = true
             collectionCell.favouriteButton.isHidden = true
             collectionCell.shareButton.isHidden = true
-        }
+//        }
         collectionCell.favouriteButtonAction = {
             () in
             
