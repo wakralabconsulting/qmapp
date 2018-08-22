@@ -57,14 +57,6 @@ class ComingSoonPopUp: UIView {
         closeButton.setTitle(buttonTitle, for: .normal)
     }
     
-    func loadEducationRegSuccessPopup() {
-        titleLabel.text = ""
-        messageLabel.text = NSLocalizedString("REGISTRATION_SUCCESS_MESSAGE", comment: "REGISTRATION_SUCCESS_MESSAGE Label in the Popup")
-        stayTunedLabel.text = ""
-        let buttonTitle = NSLocalizedString("CLOSEBUTTON_TITLE", comment: "CLOSEBUTTON_TITLE Label in the Popup")
-        closeButton.setTitle(buttonTitle, for: .normal)
-    }
-    
     @IBAction func closeButtonTouchDown(_ sender: UIButton) {
         self.closeButton.backgroundColor = UIColor.startTourLightBlue
         self.closeButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)

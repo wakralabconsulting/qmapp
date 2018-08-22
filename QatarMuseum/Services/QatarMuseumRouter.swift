@@ -21,6 +21,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case HeritageDetail([String: Any])
     case GetPublicArtsDetail([String: Any])
     case CollectionList([String: Any])
+    case EducationEvent(String: Any, String: Any, String : Any, String:Any)
+
 
     var method: Alamofire.HTTPMethod {
         switch self {
@@ -45,6 +47,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .GetPublicArtsDetail:
             return .get
         case .CollectionList:
+            return .get
+        case .EducationEvent:
             return .get
         }
     }
@@ -73,6 +77,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/getpublicartdetail.json"
         case .CollectionList( _):
             return "/museum_collection_category.json"
+        case .EducationEvent:
+            return "/xmltojson/geturl.php"
         }
     }
 
@@ -109,6 +115,22 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         case .CollectionList(let parameters):
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
+        case .EducationEvent(let date, let ageGroup, let inst, let prog):
+            let educationURL = NSURL(string: Config.educationBaseIP)!
+            var mutableURLReq = URLRequest(url: educationURL.appendingPathComponent(path)!)
+            mutableURLReq.httpMethod = method.rawValue
+            mutableURLReq.setValue(date as? String, forHTTPHeaderField: "date")
+            mutableURLReq.setValue(inst as? String, forHTTPHeaderField: "inst")
+            mutableURLReq.setValue(ageGroup as? String, forHTTPHeaderField: "age")
+            mutableURLReq.setValue(prog as? String, forHTTPHeaderField: "ptype")
+            if let accessToken = UserDefaults.standard.value(forKey: "accessToken")
+                as? String {
+                mutableURLReq.setValue("Bearer " + accessToken,
+                                           forHTTPHeaderField: "Authorization")
+            }
+            //return try! Alamofire.URLEncoding.default.encode(mutableURLRequestt, with: parameters)
+            
+            return try! Alamofire.JSONEncoding.default.encode(mutableURLReq)
         }
     }
     
