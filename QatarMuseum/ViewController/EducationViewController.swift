@@ -39,13 +39,14 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
         headerView.headerTitle.text = NSLocalizedString("EDUCATION_TITLE", comment: "EDUCATION_TITLE in the education page")
         let buttonLabel = NSLocalizedString("DISCOVER", comment: "DISCOVER in the education page")
         discoverButton.setTitle(buttonLabel, for: .normal)
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             
             headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         }
         else {
             headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
+        discoverButton.titleLabel?.font = UIFont.discoverButtonFont
         loadingView.stopLoading()
         loadingView.isHidden = true
     }

@@ -25,8 +25,10 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     var pageNameString : PageName?
     var heritageDetailtArray: [Heritage] = []
     var publicArtsDetailtArray: [PublicArtsDetail] = []
+    var aboutDetailtArray: [MuseumAbout] = []
     var heritageDetailId : String? = nil
     var publicArtsDetailId : String? = nil
+    var aboutDetailId : String? = nil
     let networkReachability = NetworkReachabilityManager()
     
     override func viewDidLoad() {
@@ -47,6 +49,15 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             }
             else {
                 self.fetchPublicArtsDetailsFromCoredata()
+            }
+            
+        }
+        else if (pageNameString == PageName.museumAbout) {
+            if  (networkReachability?.isReachable)! {
+                getAboutDetailsFromServer()
+            }
+            else {
+                self.fetchAboutDetailsFromCoredata()
             }
             
         }
@@ -76,8 +87,12 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                     imageView.kf.setImage(with: URL(string: imageUrl))
                 }
             }
-        } else {
-            imageView.image = UIImage.init(named: "museum_of_islamic_details")
+        } else if (pageNameString == PageName.museumAbout){
+            if aboutDetailtArray.count != 0 {
+                if let imageUrl = aboutDetailtArray[0].image{
+                    imageView.kf.setImage(with: URL(string: imageUrl))
+                }
+            }
         }
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -90,7 +105,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         blurView.alpha = 0
         imageView.addSubview(blurView)
         
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
         } else {
             closeButton.frame = CGRect(x: self.view.frame.width-50, y: 30, width: 40, height: 40)
@@ -117,6 +132,8 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             return heritageDetailtArray.count
         } else if (pageNameString == PageName.publicArtsDetail){
             return publicArtsDetailtArray.count
+        } else if (pageNameString == PageName.museumAbout){
+            return aboutDetailtArray.count
         }
         return 1
     }
@@ -133,7 +150,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         } else if(pageNameString == PageName.publicArtsDetail){
             heritageCell.setPublicArtsDetailValues(publicArsDetail: publicArtsDetailtArray[indexPath.row])
         } else {
-            heritageCell.setMuseumAboutCellData()
+            heritageCell.setMuseumAboutCellData(aboutData: aboutDetailtArray[indexPath.row])
         }
         heritageCell.favBtnTapAction = {
             () in
@@ -145,7 +162,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         }
         heritageCell.locationButtonTapAction = {
             () in
-            self.loadLocationInMap()
+            self.loadLocationInMap(currentRow: indexPath.row)
         }
         loadingView.stopLoading()
         loadingView.isHidden = true
@@ -166,9 +183,26 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         
     }
     
-    func loadLocationInMap() {
-        let latitude = "10.0119266"
-        let longitude =  "76.3492956"
+    func loadLocationInMap(currentRow: Int) {
+        var latitudeString :String?
+        var longitudeString : String?
+        if ((pageNameString == PageName.museumAbout) && (aboutDetailtArray[currentRow].latitude != nil) && (aboutDetailtArray[currentRow].longitude != nil))
+        {
+            latitudeString = aboutDetailtArray[currentRow].latitude
+            longitudeString = aboutDetailtArray[currentRow].longitude
+        } else if ((pageNameString == PageName.heritageDetail) && (heritageDetailtArray[currentRow].latitude != nil) && (heritageDetailtArray[currentRow].longitude != nil))
+        {
+            latitudeString = heritageDetailtArray[currentRow].latitude
+            longitudeString = heritageDetailtArray[currentRow].longitude
+        }
+            //else if ((pageNameString == PageName.publicArtsDetail) && (publicArtsDetailtArray[currentRow]. != nil) && (publicArtsDetailtArray[currentRow].longitude != nil))
+//        {
+//            latitudeString = publicArtsDetailtArray[currentRow].latitude
+//            longitudeString = publicArtsDetailtArray[currentRow].longitude
+//        }
+        
+        let latitude = convertDMSToDDCoordinate(latLongString: latitudeString!)
+        let longitude = convertDMSToDDCoordinate(latLongString: longitudeString!)
         if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
             if #available(iOS 10.0, *) {
                 UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!, options: [:], completionHandler: nil)
@@ -180,7 +214,29 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             UIApplication.shared.openURL(locationUrl)
         }
     }
-    
+    func convertDMSToDDCoordinate(latLongString : String) -> Double {
+        var latLong = latLongString
+        var delimiter = "°"
+        var latLongArray = latLong.components(separatedBy: delimiter)
+        var degreeString : String?
+        var minString : String?
+        var secString : String?
+        if ((latLongArray.count) > 0) {
+            degreeString = latLongArray[0]
+        }
+        delimiter = "'"
+        latLong = latLongArray[1]
+        latLongArray = latLong.components(separatedBy: delimiter)
+        if ((latLongArray.count) > 1) {
+            minString = latLongArray[0]
+            secString = latLongArray[1]
+        }
+        let degree = (degreeString! as NSString).doubleValue
+        let min = (minString! as NSString).doubleValue
+        let sec = (secString! as NSString).doubleValue
+        let ddCoordinate = degree + (min / 60) + (sec / 3600)
+        return ddCoordinate
+    }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = 300 - (scrollView.contentOffset.y + 300)
         let height = min(max(y, 60), 400)
@@ -277,7 +333,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     //MARK: Heritage Coredata Method
     func saveOrUpdateHeritageCoredata() {
         if (heritageDetailtArray.count > 0) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "HeritageEntity", idKey: "listid" , idValue: heritageDetailtArray[0].id) as! [HeritageEntity]
            if (fetchData.count > 0) {
             let managedContext = getContext()
@@ -344,7 +400,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         }
     }
     func saveToCoreData(heritageDetailDict: Heritage, managedObjContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let heritageInfo: HeritageEntity = NSEntityDescription.insertNewObject(forEntityName: "HeritageEntity", into: managedObjContext) as! HeritageEntity
             heritageInfo.listid = heritageDetailDict.id
             heritageInfo.listname = heritageDetailDict.name
@@ -385,7 +441,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     func fetchHeritageDetailsFromCoredata() {
         
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var heritageArray = [HeritageEntity]()
                 let managedContext = getContext()
                 let heritageFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HeritageEntity")
@@ -439,7 +495,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     //MARK: PublicArts Coredata Method
     func saveOrUpdatePublicArtsCoredata() {
         if (publicArtsDetailtArray.count > 0) {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 let fetchData = checkAddedToCoredata(entityName: "PublicArtsEntity", idKey: "id" , idValue: publicArtsDetailtArray[0].id) as! [PublicArtsEntity]
                 if (fetchData.count > 0) {
                     let managedContext = getContext()
@@ -495,7 +551,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         }
     }
     func saveToCoreData(publicArtseDetailDict: PublicArtsDetail, managedObjContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let publicArtsInfo: PublicArtsEntity = NSEntityDescription.insertNewObject(forEntityName: "PublicArtsEntity", into: managedObjContext) as! PublicArtsEntity
             publicArtsInfo.id = publicArtseDetailDict.id
             publicArtsInfo.name = publicArtseDetailDict.name
@@ -523,7 +579,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     func fetchPublicArtsDetailsFromCoredata() {
         
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var publicArtsArray = [PublicArtsEntity]()
                 let managedContext = getContext()
                 let publicArtsFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "PublicArtsEntity")
@@ -560,6 +616,193 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                     
                     
                     if(publicArtsDetailtArray.count == 0){
+                        self.showNodata()
+                    }
+                    self.setTopBarImage()
+                    heritageDetailTableView.reloadData()
+                }
+                else{
+                    self.showNodata()
+                }
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    //MARK:MUSEUMABOUT
+    func getAboutDetailsFromServer() {
+        _ = Alamofire.request(QatarMuseumRouter.MuseumAbout(["mid": "63"])).responseObject { (response: DataResponse<MuseumAboutDetails>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.aboutDetailtArray = data.museumAbout!
+                self.setTopBarImage()
+                self.saveOrUpdateAboutCoredata()
+                self.heritageDetailTableView.reloadData()
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
+                if (self.aboutDetailtArray.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
+            case .failure( _):
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
+            }
+        }
+    }
+    //MARK: About CoreData
+    func saveOrUpdateAboutCoredata() {
+        if (aboutDetailtArray.count > 0) {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                let fetchData = checkAddedToCoredata(entityName: "AboutEntity", idKey: "mid" , idValue: aboutDetailtArray[0].mid) as! [AboutEntity]
+                if (fetchData.count > 0) {
+                    let managedContext = getContext()
+                    let aboutDetailDict = aboutDetailtArray[0]
+                    
+                    //update
+                    let aboutdbDict = fetchData[0]
+                    aboutdbDict.filter = aboutDetailDict.filter
+                    aboutdbDict.title = aboutDetailDict.title
+                    aboutdbDict.shortDesc = aboutDetailDict.shortDesc
+                    aboutdbDict.image = aboutDetailDict.image
+                    aboutdbDict.subTitle = aboutDetailDict.subTitle
+                    aboutdbDict.longDesc = aboutDetailDict.longDesc
+                    aboutdbDict.openingTime = aboutDetailDict.openingTime
+                    aboutdbDict.latitude = aboutDetailDict.latitude
+                    aboutdbDict.longitude = aboutDetailDict.longitude
+                    aboutdbDict.contact = aboutDetailDict.contact
+                    do{
+                        try managedContext.save()
+                    }
+                    catch{
+                        print(error)
+                    }
+                }
+                else {
+                    let managedContext = getContext()
+                    let aboutDetailDict : MuseumAbout?
+                    aboutDetailDict = aboutDetailtArray[0]
+                    self.saveToCoreData(aboutDetailDict: aboutDetailDict!, managedObjContext: managedContext)
+                }
+            }
+            else {
+                let fetchData = checkAddedToCoredata(entityName: "AboutEntityArabic", idKey:"mid" , idValue: aboutDetailtArray[0].mid) as! [AboutEntityArabic]
+                if (fetchData.count > 0) {
+                    let managedContext = getContext()
+                    let aboutDetailDict = aboutDetailtArray[0]
+                    
+                    //update
+                    
+                    let aboutdbDict = fetchData[0]
+                    aboutdbDict.filterAr = aboutDetailDict.filter
+                    aboutdbDict.titleAr = aboutDetailDict.title
+                    aboutdbDict.shortDescAr = aboutDetailDict.shortDesc
+                    aboutdbDict.imageAr = aboutDetailDict.image
+                    aboutdbDict.subTitleAr = aboutDetailDict.subTitle
+                    aboutdbDict.longDescAr = aboutDetailDict.longDesc
+                    aboutdbDict.openingTimeAr = aboutDetailDict.openingTime
+                    aboutdbDict.latitudeAr = aboutDetailDict.latitude
+                    aboutdbDict.longitudeAr = aboutDetailDict.longitude
+                    aboutdbDict.contactAr = aboutDetailDict.contact
+                    do{
+                        try managedContext.save()
+                    }
+                    catch{
+                        print(error)
+                    }
+                }
+                else {
+                    let managedContext = getContext()
+                    let aboutDetailDict : MuseumAbout?
+                    aboutDetailDict = aboutDetailtArray[0]
+                    self.saveToCoreData(aboutDetailDict: aboutDetailDict!, managedObjContext: managedContext)
+                }
+            }
+        }
+    }
+    func saveToCoreData(aboutDetailDict: MuseumAbout, managedObjContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let aboutdbDict: AboutEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutEntity", into: managedObjContext) as! AboutEntity
+            aboutdbDict.mid = aboutDetailDict.mid
+            aboutdbDict.filter = aboutDetailDict.filter
+            aboutdbDict.title = aboutDetailDict.title
+            aboutdbDict.shortDesc = aboutDetailDict.shortDesc
+            aboutdbDict.image = aboutDetailDict.image
+            aboutdbDict.subTitle = aboutDetailDict.subTitle
+            aboutdbDict.longDesc = aboutDetailDict.longDesc
+            aboutdbDict.openingTime = aboutDetailDict.openingTime
+            aboutdbDict.latitude = aboutDetailDict.latitude
+            aboutdbDict.longitude = aboutDetailDict.longitude
+            aboutdbDict.contact = aboutDetailDict.contact
+            
+        }
+        else {
+            let aboutdbDict: AboutEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "AboutEntityArabic", into: managedObjContext) as! AboutEntityArabic
+            aboutdbDict.mid = aboutDetailDict.mid
+            aboutdbDict.filterAr = aboutDetailDict.filter
+            aboutdbDict.titleAr = aboutDetailDict.title
+            aboutdbDict.shortDescAr = aboutDetailDict.shortDesc
+            aboutdbDict.imageAr = aboutDetailDict.image
+            aboutdbDict.subTitleAr = aboutDetailDict.subTitle
+            aboutdbDict.longDescAr = aboutDetailDict.longDesc
+            aboutdbDict.openingTimeAr = aboutDetailDict.openingTime
+            aboutdbDict.latitudeAr = aboutDetailDict.latitude
+            aboutdbDict.longitudeAr = aboutDetailDict.longitude
+            aboutdbDict.contactAr = aboutDetailDict.contact
+        }
+        do {
+            try managedObjContext.save()
+            
+            
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    func fetchAboutDetailsFromCoredata() {
+        
+        do {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                var aboutArray = [AboutEntity]()
+                let managedContext = getContext()
+                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "AboutEntity")
+                if(aboutDetailId != nil) {
+                    fetchRequest.predicate = NSPredicate.init(format: "mid == \(aboutDetailId!)")
+                }
+                aboutArray = (try managedContext.fetch(fetchRequest) as? [AboutEntity])!
+                let aboutDict = aboutArray[0]
+                if (aboutArray.count > 0 ){
+                    self.aboutDetailtArray.insert(MuseumAbout(mid: aboutDict.mid, filter: aboutDict.filter, title: aboutDict.title, shortDesc: aboutDict.shortDesc, image: aboutDict.image, subTitle: aboutDict.subTitle, longDesc: aboutDict.longDesc, openingTime: aboutDict.openingTime, latitude: aboutDict.latitude, longitude: aboutDict.longitude, contact: aboutDict.contact), at: 0)
+                    
+                    if(aboutDetailtArray.count == 0){
+                        self.showNodata()
+                    }
+                    self.setTopBarImage()
+                    heritageDetailTableView.reloadData()
+                }
+                else{
+                    self.showNodata()
+                }
+            }
+            else {
+                var aboutArray = [AboutEntityArabic]()
+                let managedContext = getContext()
+                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "AboutEntityArabic")
+                if(aboutDetailId != nil) {
+                    fetchRequest.predicate = NSPredicate.init(format: "mid == \(aboutDetailId!)")
+                }
+                aboutArray = (try managedContext.fetch(fetchRequest) as? [AboutEntityArabic])!
+                let aboutDict = aboutArray[0]
+                if (aboutArray.count > 0) {
+                    self.aboutDetailtArray.insert(MuseumAbout(mid: aboutDict.mid, filter: aboutDict.filterAr, title: aboutDict.titleAr, shortDesc: aboutDict.shortDescAr, image: aboutDict.imageAr, subTitle: aboutDict.subTitleAr, longDesc: aboutDict.longDescAr, openingTime: aboutDict.openingTimeAr, latitude: aboutDict.latitudeAr, longitude: aboutDict.longitudeAr, contact: aboutDict.contactAr), at: 0)
+                    if(aboutDetailtArray.count == 0){
                         self.showNodata()
                     }
                     self.setTopBarImage()

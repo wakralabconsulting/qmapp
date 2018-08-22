@@ -82,6 +82,13 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         thirdLevelView.backgroundColor = UIColor.mapLevelColor
         headerView.headerViewDelegate = self
         headerView.headerTitle.text = NSLocalizedString("FLOOR_MAP_TITLE", comment: "FLOOR_MAP_TITLE  in the Floormap page")
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            
+            headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
+        }
+        else {
+            headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+        }
     }
     
     func loadMap() {
