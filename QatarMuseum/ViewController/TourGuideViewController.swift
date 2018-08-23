@@ -39,6 +39,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
             topbarView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
         
+        
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent

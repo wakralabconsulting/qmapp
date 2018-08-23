@@ -55,6 +55,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     override func viewDidLoad() {
         super.viewDidLoad()
         registerNib()
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
@@ -219,6 +220,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         self.present(filterView, animated: false, completion: nil)
     }
     func loadEventPopup(currentRow: Int) {
+        eventPopup.tag = 0
         eventPopup  = EventPopupView(frame: self.view.frame)
         eventPopup.eventPopupDelegate = self
         selectedEvent = educationEventArray[currentRow]
@@ -250,39 +252,49 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
   
     //MARK: Event popup delegate
     func eventCloseButtonPressed() {
-
-            self.eventPopup.removeFromSuperview()
+        
+        self.eventPopup.removeFromSuperview()
+        
        
     }
     func addToCalendarButtonPressed() {
-//        var date = NSDate()
-//        if(selectedEvent?.date != nil) {
-//            let timeint = (selectedEvent?.date! as? NSString)?.doubleValue
-//            date = NSDate(timeIntervalSince1970: timeint!)
-//        }
-        if(needToRegister == "true") {
-            self.eventPopup.removeFromSuperview()
-            popupView  = ComingSoonPopUp(frame: self.view.frame)
-            popupView.comingSoonPopupDelegate = self
-            popupView.loadPopup()
-            self.view.addSubview(popupView)
+        if (eventPopup.tag == 0) {
+            //        var date = NSDate()
+            //        if(selectedEvent?.date != nil) {
+            //            let timeint = (selectedEvent?.date! as? NSString)?.doubleValue
+            //            date = NSDate(timeIntervalSince1970: timeint!)
+            //        }
+            if(needToRegister == "true") {
+                self.eventPopup.removeFromSuperview()
+                popupView  = ComingSoonPopUp(frame: self.view.frame)
+                popupView.comingSoonPopupDelegate = self
+                popupView.loadPopup()
+                self.view.addSubview(popupView)
+            }
+            else {
+                self.eventPopup.removeFromSuperview()
+                var calendar = Calendar.current
+                //calendar.timeZone = TimeZone(identifier: "UTC")!
+                let startDt = calendar.date(bySettingHour:14, minute: 0, second: 0, of: selectedDateForEvent)!
+                let endDt = calendar.date(bySettingHour: 16, minute: 0, second: 0, of: selectedDateForEvent)!
+                self.addEventToCalendar(title:  (selectedEvent?.title)!, description: selectedEvent?.longDesc, startDate: startDt, endDate: endDt)
+                
+            }
+            //        if (isLoadEventPage == true) {
+            //            self.addEventToCalendar(title: (selectedEvent?.title)!, description: selectedEvent?.longDesc, startDate: date as Date, endDate: date as Date)
+            //            self.eventPopup.removeFromSuperview()
+            //        }
+            //        else {
+            //
+            //
+            //        }
         }
         else {
-            var calendar = Calendar.current
-            //calendar.timeZone = TimeZone(identifier: "UTC")!
-            let startDt = calendar.date(bySettingHour:14, minute: 0, second: 0, of: selectedEventDate)!
-            let endDt = calendar.date(bySettingHour: 16, minute: 0, second: 0, of: selectedEventDate)!
-            self.addEventToCalendar(title:  (selectedEvent?.title)!, description: selectedEvent?.longDesc, startDate: startDt, endDate: endDt)
             self.eventPopup.removeFromSuperview()
+            let openSettingsUrl = URL(string: UIApplicationOpenSettingsURLString)
+            UIApplication.shared.openURL(openSettingsUrl!)
         }
-//        if (isLoadEventPage == true) {
-//            self.addEventToCalendar(title: (selectedEvent?.title)!, description: selectedEvent?.longDesc, startDate: date as Date, endDate: date as Date)
-//            self.eventPopup.removeFromSuperview()
-//        }
-//        else {
-//
-//
-//        }
+
         
     }
    
@@ -291,35 +303,62 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     }
     func addEventToCalendar(title: String, description: String?, startDate: Date?, endDate: Date?, completion: ((_ success: Bool, _ error: NSError?) -> Void)? = nil) {
         let eventStore = EKEventStore()
-        eventStore.requestAccess(to: .event, completion: { (granted, error) in
-            if (granted) && (error == nil) {
-                let event = EKEvent.init(eventStore: self.store)
-                event.title = title
-                event.calendar = self.store.defaultCalendarForNewEvents
-                event.startDate = startDate
-                event.endDate = endDate
-                event.notes = description
-               // let alarm = EKAlarm.init(absoluteDate: Date.init(timeInterval: -3600, since: event.startDate))
-               // event.addAlarm(alarm)
-                
-                do {
-                   // try eventStore.save(event, span: .thisEvent)
-                    try self.store.save(event, span: .thisEvent)
-                } catch let e as NSError {
-                    completion?(false, e)
-                    return
+        let status = EKEventStore.authorizationStatus(for: .event)
+        switch (status) {
+        case EKAuthorizationStatus.notDetermined:
+            eventStore.requestAccess(to: .event, completion: { (granted, error) in
+                if (granted) && (error == nil) {
+                    DispatchQueue.main.async {
+                    let event = EKEvent.init(eventStore: self.store)
+                    event.title = title
+                    event.calendar = self.store.defaultCalendarForNewEvents
+                    event.startDate = startDate
+                    event.endDate = endDate
+                    event.notes = description
+                    // let alarm = EKAlarm.init(absoluteDate: Date.init(timeInterval: -3600, since: event.startDate))
+                    // event.addAlarm(alarm)
+                    
+                    do {
+                        // try eventStore.save(event, span: .thisEvent)
+                        try self.store.save(event, span: .thisEvent)
+                        self.view.hideAllToasts()
+                        let eventAddedMessage =  NSLocalizedString("EVENT_ADDED_MESSAGE", comment: "EVENT_ADDED_MESSAGE")
+                        self.view.makeToast(eventAddedMessage)
+                    } catch let e as NSError {
+                        completion?(false, e)
+                        return
+                    }
+                    completion?(true, nil)
                 }
-                completion?(true, nil)
-            } else {
-                let message = NSLocalizedString("CALENDAR_ACCESS_MESSAGE", comment: "CALENDAR_ACCESS_MESSAGE in the Event page")
-                let accessTitle = NSLocalizedString("CALENDAR_ACCESS_MTITLE", comment: "CALENDAR_ACCESS_MTITLE in the Event page")
-                let alert = UIAlertController(title: accessTitle, message: message, preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-                completion?(false, error as NSError?)
+                } else {
+                    completion?(false, error as NSError?)
+                }
+            })
+        case EKAuthorizationStatus.authorized:
+            let event = EKEvent.init(eventStore: self.store)
+            event.title = title
+            event.calendar = self.store.defaultCalendarForNewEvents
+            event.startDate = startDate
+            event.endDate = endDate
+            event.notes = description
+            
+            do {
+                try self.store.save(event, span: .thisEvent)
+                self.view.hideAllToasts()
+                let eventAddedMessage =  NSLocalizedString("EVENT_ADDED_MESSAGE", comment: "EVENT_ADDED_MESSAGE")
+                self.view.makeToast(eventAddedMessage)
+            } catch let e as NSError {
+                return
             }
-        })
+        case EKAuthorizationStatus.denied, EKAuthorizationStatus.restricted:
+            
+            self.loadPermissionPopup()
+        default:
+            break
+        }
+       
     }
+    
     // MARK:- UIGestureRecognizerDelegate
     
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -341,16 +380,36 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         self.view.layoutIfNeeded()
     }
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-       
-      
-       
         if monthPosition == .previous || monthPosition == .next {
             calendar.setCurrentPage(date, animated: true)
             
         }
-        
-        
+        let group = DispatchGroup()
+        group.enter()
+        DispatchQueue.main.async {
+            self.educationEventArray = []
+            self.eventCollectionView.reloadData()
+            group.leave()
+        }
         selectedDateForEvent = date
+        group.notify(queue: .main) {
+            if (self.isLoadEventPage == true) {
+                if  (self.networkReachability?.isReachable)! {
+                    self.getEducationEventFromServer()
+                }
+                else {
+                    self.fetchEventFromCoredata()
+                }
+            }
+            else {
+                if  (self.networkReachability?.isReachable)! {
+                    self.getEducationEventFromServer()
+                }
+                else {
+                    self.fetchEducationEventFromCoredata()
+                }
+            }
+        }
         
         //selected date got is less than one date. so add 1 to date for actual selected date
       //  let dayComponenet = NSDateComponents()
@@ -462,6 +521,20 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             return false
         }
     }
+    func getUniqueDate() -> String? {
+        let calendar = Calendar.current
+        //calendar.timeZone = TimeZone(identifier: "UTC")!
+        let startDt = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: selectedDateForEvent)!
+        let timestamp = startDt.timeIntervalSince1970
+        let dateString = String(timestamp)
+        let delimiter = "."
+        var token = dateString.components(separatedBy: delimiter)
+        if token.count > 0 {
+            return token[0]
+        }
+        
+        return nil
+    }
     func findItem(educationArray: [EducationEvent],fixedStartTime : String) -> Int? {
         var newEventPosition : Int? = 0
         for i in 0...educationArray.count-1 {
@@ -480,135 +553,80 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     func saveOrUpdateEducationEventCoredata() {
         if (educationEventArray.count > 0) {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-                let fetchData = checkAddedToCoredata(entityName: "EducationEventEntity", eventId: nil) as! [EducationEventEntity]
+                let eventID = getUniqueDate()
+                let fetchData = checkAddedToCoredata(entityName: "EducationEventEntity", idKey: "eventId", eventId: eventID) as! [EducationEventEntity]
+                let managedContext = getContext()
                 if (fetchData.count > 0) {
-                    for i in 0 ... educationEventArray.count-1 {
-                        let managedContext = getContext()
-                        let educationEventDict = educationEventArray[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "EducationEventEntity", eventId: educationEventArray[i].eId)
-                        //update
-                        if(fetchResult.count != 0) {
-                            let educationdbDict = fetchResult[0] as! EducationEventEntity
-                            educationdbDict.filter = educationEventDict.filter
-                            educationdbDict.title = educationEventDict.title
-                            educationdbDict.shortDesc =  educationEventDict.shortDesc
-                            educationdbDict.longDesc = educationEventDict.longDesc
-                            educationdbDict.location = educationEventDict.location
-                            educationdbDict.institution =  educationEventDict.institution
-                            educationdbDict.startTime = educationEventDict.startTime
-                            educationdbDict.endTime = educationEventDict.endtime
-                            educationdbDict.ageGroup =  educationEventDict.ageGroup
-                            educationdbDict.pgmType = educationEventDict.programType
-                            educationdbDict.category = educationEventDict.category
-                            educationdbDict.registration =  educationEventDict.registration
-                            educationdbDict.date = educationEventDict.date
-                            do{
-                                try managedContext.save()
-                            }
-                            catch{
-                                print(error)
-                            }
-                        }
-                        else {
-                            //save
-                            self.saveToCoreData(educationEventDict: educationEventDict, managedObjContext: managedContext)
-                            
-                        }
+                    let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "EducationEventEntity")
+                    if(isDeleted == true) {
+                        self.saveToCoreData(educationArray: educationEventArray, eventId: eventID, managedObjContext: managedContext)
                     }
                 }
                 else {
-                    for i in 0 ... educationEventArray.count-1 {
-                        let managedContext = getContext()
-                        let educationEventDict : EducationEvent?
-                        educationEventDict = educationEventArray[i]
-                        self.saveToCoreData(educationEventDict: educationEventDict!, managedObjContext: managedContext)
-                        
-                    }
+                    self.saveToCoreData(educationArray: educationEventArray, eventId: eventID, managedObjContext: managedContext)
                 }
             }
             else {
-                let fetchData = checkAddedToCoredata(entityName: "EducationEventEntityAr", eventId: nil) as! [EducationEventEntityAr]
+                let eventID = getUniqueDate()
+                let fetchData = checkAddedToCoredata(entityName: "EducationEventEntityAr", idKey: "eventId", eventId: eventID) as! [EducationEventEntityAr]
+                let managedContext = getContext()
                 if (fetchData.count > 0) {
-                    for i in 0 ... educationEventArray.count-1 {
-                        let managedContext = getContext()
-                        let educationEventDict = educationEventArray[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "EducationEventEntityAr", eventId: educationEventArray[i].eId)
-                        //update
-                        if(fetchResult.count != 0) {
-                            let educationdbDict = fetchResult[0] as! EducationEventEntityAr
-                            educationdbDict.filterAr = educationEventDict.filter
-                            educationdbDict.titleAr = educationEventDict.title
-                            educationdbDict.shortDescAr =  educationEventDict.shortDesc
-                            educationdbDict.longDescAr = educationEventDict.longDesc
-                            educationdbDict.locationAr = educationEventDict.location
-                            educationdbDict.institutionAr =  educationEventDict.institution
-                            educationdbDict.startTimeAr = educationEventDict.startTime
-                            educationdbDict.endTimeAr = educationEventDict.endtime
-                            educationdbDict.ageGrpAr =  educationEventDict.ageGroup
-                            educationdbDict.pgmTypeAr = educationEventDict.programType
-                            educationdbDict.categoryAr = educationEventDict.category
-                            educationdbDict.registrationAr =  educationEventDict.registration
-                            educationdbDict.dateAr = educationEventDict.date
-                            do{
-                                try managedContext.save()
-                            }
-                            catch{
-                                print(error)
-                            }
-                        }
-                        else {
-                            //save
-                            self.saveToCoreData(educationEventDict: educationEventDict, managedObjContext: managedContext)
-                            
-                        }
+                    let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "EducationEventEntityAr")
+                    if(isDeleted == true) {
+                        self.saveToCoreData(educationArray: educationEventArray, eventId: eventID, managedObjContext: managedContext)
                     }
                 }
                 else {
-                    for i in 0 ... educationEventArray.count-1 {
-                        let managedContext = getContext()
-                        let educationEventDict : EducationEvent?
-                        educationEventDict = educationEventArray[i]
-                        self.saveToCoreData(educationEventDict: educationEventDict!, managedObjContext: managedContext)
-                        
-                    }
+                   
+                    self.saveToCoreData(educationArray: educationEventArray, eventId: eventID, managedObjContext: managedContext)
                 }
             }
         }
     }
-    func saveToCoreData(educationEventDict: EducationEvent, managedObjContext: NSManagedObjectContext) {
+    func saveToCoreData(educationArray: [EducationEvent],eventId: String?, managedObjContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            let edducationInfo: EducationEventEntity = NSEntityDescription.insertNewObject(forEntityName: "EducationEventEntity", into: managedObjContext) as! EducationEventEntity
-            edducationInfo.eid = educationEventDict.eId
-            edducationInfo.filter = educationEventDict.filter
-            edducationInfo.title = educationEventDict.title
-            edducationInfo.shortDesc =  educationEventDict.shortDesc
-            edducationInfo.longDesc = educationEventDict.longDesc
-            edducationInfo.location = educationEventDict.location
-            edducationInfo.institution =  educationEventDict.institution
-            edducationInfo.startTime = educationEventDict.startTime
-            edducationInfo.endTime = educationEventDict.endtime
-            edducationInfo.ageGroup =  educationEventDict.ageGroup
-            edducationInfo.pgmType = educationEventDict.programType
-            edducationInfo.category = educationEventDict.category
-            edducationInfo.registration =  educationEventDict.registration
-            edducationInfo.date = educationEventDict.date
+            for i in 0...educationArray.count-1 {
+                let edducationInfo: EducationEventEntity = NSEntityDescription.insertNewObject(forEntityName: "EducationEventEntity", into: managedObjContext) as! EducationEventEntity
+                let educationEventDict = educationArray[i]
+                edducationInfo.eventId = eventId
+                edducationInfo.eid = educationEventDict.eId
+                edducationInfo.filter = educationEventDict.filter
+                edducationInfo.title = educationEventDict.title
+                edducationInfo.shortDesc =  educationEventDict.shortDesc
+                edducationInfo.longDesc = educationEventDict.longDesc
+                edducationInfo.location = educationEventDict.location
+                edducationInfo.institution =  educationEventDict.institution
+                edducationInfo.startTime = educationEventDict.startTime
+                edducationInfo.endTime = educationEventDict.endtime
+                edducationInfo.ageGroup =  educationEventDict.ageGroup
+                edducationInfo.pgmType = educationEventDict.programType
+                edducationInfo.category = educationEventDict.category
+                edducationInfo.registration =  educationEventDict.registration
+                edducationInfo.date = educationEventDict.date
+                edducationInfo.maxGrpSize = educationEventDict.maxGroupSize
+            }
         }
         else {
-            let edducationInfo: EducationEventEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EducationEventEntityAr", into: managedObjContext) as! EducationEventEntityAr
-            edducationInfo.eid = educationEventDict.eId
-            edducationInfo.filterAr = educationEventDict.filter
-            edducationInfo.titleAr = educationEventDict.title
-            edducationInfo.shortDescAr =  educationEventDict.shortDesc
-            edducationInfo.locationAr = educationEventDict.longDesc
-            edducationInfo.locationAr = educationEventDict.location
-            edducationInfo.institutionAr =  educationEventDict.institution
-            edducationInfo.startTimeAr = educationEventDict.startTime
-            edducationInfo.endTimeAr = educationEventDict.endtime
-            edducationInfo.ageGrpAr =  educationEventDict.ageGroup
-            edducationInfo.pgmTypeAr = educationEventDict.programType
-            edducationInfo.categoryAr = educationEventDict.category
-            edducationInfo.registrationAr =  educationEventDict.registration
-            edducationInfo.dateAr = educationEventDict.date
+            for i in 0...educationArray.count-1 {
+                let edducationInfo: EducationEventEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EducationEventEntityAr", into: managedObjContext) as! EducationEventEntityAr
+                let educationEventDict = educationArray[i]
+                edducationInfo.eventId = eventId
+                edducationInfo.eid = educationEventDict.eId
+                edducationInfo.filterAr = educationEventDict.filter
+                edducationInfo.titleAr = educationEventDict.title
+                edducationInfo.shortDescAr =  educationEventDict.shortDesc
+                edducationInfo.locationAr = educationEventDict.longDesc
+                edducationInfo.locationAr = educationEventDict.location
+                edducationInfo.institutionAr =  educationEventDict.institution
+                edducationInfo.startTimeAr = educationEventDict.startTime
+                edducationInfo.endTimeAr = educationEventDict.endtime
+                edducationInfo.ageGrpAr =  educationEventDict.ageGroup
+                edducationInfo.pgmTypeAr = educationEventDict.programType
+                edducationInfo.categoryAr = educationEventDict.category
+                edducationInfo.registrationAr =  educationEventDict.registration
+                edducationInfo.dateAr = educationEventDict.date
+                edducationInfo.maxGrpSizeAr = educationEventDict.maxGroupSize
+            }
         }
         do {
             try managedObjContext.save()
@@ -623,9 +641,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var educationArray = [EducationEventEntity]()
-                let managedContext = getContext()
-                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "EducationEventEntity")
-                educationArray = (try managedContext.fetch(fetchRequest) as? [EducationEventEntity])!
+                let eventID = getUniqueDate()
+                educationArray = checkAddedToCoredata(entityName: "EducationEventEntity", idKey: "eventId", eventId: eventID) as! [EducationEventEntity]
                 if (educationArray.count > 0) {
                     for i in 0 ... educationArray.count-1 {
                         self.educationEventArray.insert(EducationEvent(eid: educationArray[i].eid, filter: educationArray[i].filter, title: educationArray[i].title, shortDesc: educationArray[i].shortDesc, longDesc: educationArray[i].longDesc, location: educationArray[i].location, institution: educationArray[i].institution, startTime: educationArray[i].startTime, endTime: educationArray[i].endTime, ageGroup: educationArray[i].ageGroup, programType: educationArray[i].pgmType, category: educationArray[i].category, registration: educationArray[i].registration, date: educationArray[i].date, maxGroupSize: educationArray[i].maxGrpSize), at: i)
@@ -633,7 +650,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     if(educationEventArray.count == 0){
                         self.showNodata()
                     }
-                    eventCollectionView.reloadData()
+                        self.eventCollectionView.reloadData()
                 }
                 else{
                     self.showNodata()
@@ -641,9 +658,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             }
             else {
                 var educationArray = [EducationEventEntityAr]()
-                let managedContext = getContext()
-                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "EducationEventEntityAr")
-                educationArray = (try managedContext.fetch(fetchRequest) as? [EducationEventEntityAr])!
+                let eventID = getUniqueDate()
+                educationArray = checkAddedToCoredata(entityName: "EducationEventEntityAr", idKey: "eventId", eventId: eventID) as! [EducationEventEntityAr]
                 if (educationArray.count > 0) {
                     for i in 0 ... educationArray.count-1 {
                         
@@ -668,135 +684,100 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     func saveOrUpdateEventCoredata() {
         if (educationEventArray.count > 0) {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-                let fetchData = checkAddedToCoredata(entityName: "EventEntity", eventId: nil) as! [EventEntity]
+                let eventID = getUniqueDate()
+                let fetchData = checkAddedToCoredata(entityName: "EventEntity", idKey: "eventId", eventId: eventID) as! [EventEntity]
+                let managedContext = getContext()
                 if (fetchData.count > 0) {
-                    for i in 0 ... educationEventArray.count-1 {
-                        let managedContext = getContext()
-                        let educationEventDict = educationEventArray[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "EventEntity", eventId: educationEventArray[i].eId)
-                        //update
-                        if(fetchResult.count != 0) {
-                            let educationdbDict = fetchResult[0] as! EventEntity
-                            educationdbDict.filter = educationEventDict.filter
-                            educationdbDict.title = educationEventDict.title
-                            educationdbDict.shortDesc =  educationEventDict.shortDesc
-                            educationdbDict.longDesc = educationEventDict.longDesc
-                            educationdbDict.location = educationEventDict.location
-                            educationdbDict.institution =  educationEventDict.institution
-                            educationdbDict.startTime = educationEventDict.startTime
-                            educationdbDict.endTime = educationEventDict.endtime
-                            educationdbDict.ageGroup =  educationEventDict.ageGroup
-                            educationdbDict.pgmType = educationEventDict.programType
-                            educationdbDict.category = educationEventDict.category
-                            educationdbDict.registration =  educationEventDict.registration
-                            educationdbDict.date = educationEventDict.date
-                            do{
-                                try managedContext.save()
-                            }
-                            catch{
-                                print(error)
-                            }
-                        }
-                        else {
-                            //save
-                            self.saveEventToCoreData(educationEventDict: educationEventDict, managedObjContext: managedContext)
-                            
-                        }
+                    let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "EventEntity")
+                    if(isDeleted == true) {
+                        self.saveEventToCoreData(educationArray: educationEventArray, eventId: eventID, managedObjContext: managedContext)
                     }
+
                 }
                 else {
-                    for i in 0 ... educationEventArray.count-1 {
-                        let managedContext = getContext()
-                        let educationEventDict : EducationEvent?
-                        educationEventDict = educationEventArray[i]
-                        self.saveEventToCoreData(educationEventDict: educationEventDict!, managedObjContext: managedContext)
-                        
-                    }
+                            let managedContext = getContext()
+                            self.saveEventToCoreData(educationArray: educationEventArray, eventId: eventID, managedObjContext: managedContext)
                 }
             }
             else {
-                let fetchData = checkAddedToCoredata(entityName: "EventEntityArabic", eventId: nil) as! [EventEntityArabic]
+                let eventID = getUniqueDate()
+                let fetchData = checkAddedToCoredata(entityName: "EventEntityArabic", idKey: "eventId", eventId: eventID) as! [EventEntityArabic]
+                
+                let managedContext = getContext()
+                //Anything in Db
                 if (fetchData.count > 0) {
-                    for i in 0 ... educationEventArray.count-1 {
-                        let managedContext = getContext()
-                        let educationEventDict = educationEventArray[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "EventEntityArabic", eventId: educationEventArray[i].eId)
-                        //update
-                        if(fetchResult.count != 0) {
-                            let educationdbDict = fetchResult[0] as! EventEntityArabic
-                            educationdbDict.filterAr = educationEventDict.filter
-                            educationdbDict.titleAr = educationEventDict.title
-                            educationdbDict.shortDescAr =  educationEventDict.shortDesc
-                            educationdbDict.longDesAr = educationEventDict.longDesc
-                            educationdbDict.locationAr = educationEventDict.location
-                            educationdbDict.institutionAr =  educationEventDict.institution
-                            educationdbDict.startTimeAr = educationEventDict.startTime
-                            educationdbDict.endTimeAr = educationEventDict.endtime
-                            educationdbDict.ageGroupAr =  educationEventDict.ageGroup
-                            educationdbDict.pgmTypeAr = educationEventDict.programType
-                            educationdbDict.categoryAr = educationEventDict.category
-                            educationdbDict.registrationAr =  educationEventDict.registration
-                            educationdbDict.dateAr = educationEventDict.date
-                            do{
-                                try managedContext.save()
-                            }
-                            catch{
-                                print(error)
-                            }
-                        }
-                        else {
-                            //save
-                            self.saveEventToCoreData(educationEventDict: educationEventDict, managedObjContext: managedContext)
-                            
-                        }
+                    let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "EventEntityArabic")
+                    if(isDeleted == true) {
+                        self.saveEventToCoreData(educationArray: educationEventArray, eventId: eventID, managedObjContext: managedContext)
                     }
+                }else {
+                    self.saveEventToCoreData(educationArray: educationEventArray, eventId: eventID, managedObjContext: managedContext)
                 }
-                else {
-                    for i in 0 ... educationEventArray.count-1 {
-                        let managedContext = getContext()
-                        let educationEventDict : EducationEvent?
-                        educationEventDict = educationEventArray[i]
-                        self.saveEventToCoreData(educationEventDict: educationEventDict!, managedObjContext: managedContext)
-                        
-                    }
-                }
+
+                }//Anything in Db
+            
             }
-        }
     }
-    func saveEventToCoreData(educationEventDict: EducationEvent, managedObjContext: NSManagedObjectContext) {
+    func deleteExistingEvent(managedContext:NSManagedObjectContext,entityName : String?) ->Bool? {
+        let eventID = getUniqueDate()
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName!)
+        fetchRequest.predicate = NSPredicate.init(format: "\("eventId") == \(eventID!)")
+        let deleteRequest = NSBatchDeleteRequest( fetchRequest: fetchRequest)
+        do{
+            try managedContext.execute(deleteRequest)
+            return true
+        }catch let error as NSError {
+            //handle error here
+            return false
+        }
+     
+    }
+    func saveEventToCoreData(educationArray: [EducationEvent],eventId: String?, managedObjContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            let edducationInfo: EventEntity = NSEntityDescription.insertNewObject(forEntityName: "EventEntity", into: managedObjContext) as! EventEntity
-            edducationInfo.eid = educationEventDict.eId
-            edducationInfo.filter = educationEventDict.filter
-            edducationInfo.title = educationEventDict.title
-            edducationInfo.shortDesc =  educationEventDict.shortDesc
-            edducationInfo.longDesc = educationEventDict.longDesc
-            edducationInfo.location = educationEventDict.location
-            edducationInfo.institution =  educationEventDict.institution
-            edducationInfo.startTime = educationEventDict.startTime
-            edducationInfo.endTime = educationEventDict.endtime
-            edducationInfo.ageGroup =  educationEventDict.ageGroup
-            edducationInfo.pgmType = educationEventDict.programType
-            edducationInfo.category = educationEventDict.category
-            edducationInfo.registration =  educationEventDict.registration
-            edducationInfo.date = educationEventDict.date
+            
+            for i in 0...educationArray.count-1 {
+                let edducationInfo: EventEntity = NSEntityDescription.insertNewObject(forEntityName: "EventEntity", into: managedObjContext) as! EventEntity
+                let educationEventDict = educationArray[i]
+                edducationInfo.eventId = eventId
+                edducationInfo.eid = educationEventDict.eId
+                edducationInfo.filter = educationEventDict.filter
+                edducationInfo.title = educationEventDict.title
+                edducationInfo.shortDesc =  educationEventDict.shortDesc
+                edducationInfo.longDesc = educationEventDict.longDesc
+                edducationInfo.location = educationEventDict.location
+                edducationInfo.institution =  educationEventDict.institution
+                edducationInfo.startTime = educationEventDict.startTime
+                edducationInfo.endTime = educationEventDict.endtime
+                edducationInfo.ageGroup =  educationEventDict.ageGroup
+                edducationInfo.pgmType = educationEventDict.programType
+                edducationInfo.category = educationEventDict.category
+                edducationInfo.registration =  educationEventDict.registration
+                edducationInfo.date = educationEventDict.date
+            }
+            
         }
         else {
-            let edducationInfo: EventEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "EventEntityArabic", into: managedObjContext) as! EventEntityArabic
-            edducationInfo.eid = educationEventDict.eId
-            edducationInfo.filterAr = educationEventDict.filter
-            edducationInfo.titleAr = educationEventDict.title
-            edducationInfo.shortDescAr =  educationEventDict.shortDesc
-            edducationInfo.locationAr = educationEventDict.longDesc
-            edducationInfo.locationAr = educationEventDict.location
-            edducationInfo.institutionAr =  educationEventDict.institution
-            edducationInfo.startTimeAr = educationEventDict.startTime
-            edducationInfo.endTimeAr = educationEventDict.endtime
-            edducationInfo.ageGroupAr =  educationEventDict.ageGroup
-            edducationInfo.pgmTypeAr = educationEventDict.programType
-            edducationInfo.categoryAr = educationEventDict.category
-            edducationInfo.registrationAr =  educationEventDict.registration
-            edducationInfo.dateAr = educationEventDict.date
+            
+            for i in 0...educationArray.count-1 {
+                let edducationInfo: EventEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "EventEntityArabic", into: managedObjContext) as! EventEntityArabic
+                let educationEventDict = educationArray[i]
+                edducationInfo.eventId = eventId
+                edducationInfo.eid = educationEventDict.eId
+                edducationInfo.filterAr = educationEventDict.filter
+                edducationInfo.titleAr = educationEventDict.title
+                edducationInfo.shortDescAr =  educationEventDict.shortDesc
+                edducationInfo.locationAr = educationEventDict.longDesc
+                edducationInfo.locationAr = educationEventDict.location
+                edducationInfo.institutionAr =  educationEventDict.institution
+                edducationInfo.startTimeAr = educationEventDict.startTime
+                edducationInfo.endTimeAr = educationEventDict.endtime
+                edducationInfo.ageGroupAr =  educationEventDict.ageGroup
+                edducationInfo.pgmTypeAr = educationEventDict.programType
+                edducationInfo.categoryAr = educationEventDict.category
+                edducationInfo.registrationAr =  educationEventDict.registration
+                edducationInfo.dateAr = educationEventDict.date
+            }
         }
         do {
             try managedObjContext.save()
@@ -811,9 +792,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var educationArray = [EventEntity]()
-                let managedContext = getContext()
-                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "EventEntity")
-                educationArray = (try managedContext.fetch(fetchRequest) as? [EventEntity])!
+                let eventID = getUniqueDate()
+                educationArray = checkAddedToCoredata(entityName: "EventEntity", idKey: "eventId", eventId: eventID) as! [EventEntity]
                 if (educationArray.count > 0) {
                     for i in 0 ... educationArray.count-1 {
                         self.educationEventArray.insert(EducationEvent(eid: educationArray[i].eid, filter: educationArray[i].filter, title: educationArray[i].title, shortDesc: educationArray[i].shortDesc, longDesc: educationArray[i].longDesc, location: educationArray[i].location, institution: educationArray[i].institution, startTime: educationArray[i].startTime, endTime: educationArray[i].endTime, ageGroup: educationArray[i].ageGroup, programType: educationArray[i].pgmType, category: educationArray[i].category, registration: educationArray[i].registration, date: educationArray[i].date, maxGroupSize: educationArray[i].maxGrpSize), at: i)
@@ -829,9 +809,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             }
             else {
                 var educationArray = [EventEntityArabic]()
-                let managedContext = getContext()
-                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "EventEntityArabic")
-                educationArray = (try managedContext.fetch(fetchRequest) as? [EventEntityArabic])!
+                let eventID = getUniqueDate()
+                educationArray = checkAddedToCoredata(entityName: "EventEntityArabic", idKey: "eventId", eventId: eventID) as! [EventEntityArabic]
                 if (educationArray.count > 0) {
                     for i in 0 ... educationArray.count-1 {
                         
@@ -861,13 +840,13 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             return appDelegate!.managedObjectContext
         }
     }
-    func checkAddedToCoredata(entityName: String?,eventId: String?) -> [NSManagedObject]
+    func checkAddedToCoredata(entityName: String?,idKey:String?,eventId: String?) -> [NSManagedObject]
     {
         let managedContext = getContext()
         var fetchResults : [NSManagedObject] = []
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
         if (eventId != nil) {
-            fetchRequest.predicate = NSPredicate.init(format: "eid == \(eventId!)")
+            fetchRequest.predicate = NSPredicate.init(format: "\(idKey!) == \(eventId!)")
         }
         fetchResults = try! managedContext.fetch(fetchRequest)
         return fetchResults
@@ -881,6 +860,20 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         self.loadingView.isHidden = false
         self.loadingView.showNoDataView()
         self.loadingView.noDataLabel.text = errorMessage
+    }
+    //MARK: Event Popup Delegate
+    func loadPermissionPopup() {
+        eventPopup.eventTitle.isScrollEnabled = false
+        
+        eventPopup  = EventPopupView(frame: self.view.frame)
+        eventPopup.eventPopupHeight.constant = 300
+        eventPopup.eventPopupDelegate = self
+        
+        eventPopup.eventTitle.text = NSLocalizedString("PERMISSION_TITLE", comment: "PERMISSION_TITLE  in the popup view")
+        eventPopup.eventDescription.text = NSLocalizedString("CALENDAR_PERMISSION", comment: "CALENDAR_PERMISSION  in the popup view")
+        eventPopup.addToCalendarButton.setTitle(NSLocalizedString("SIDEMENU_SETTINGS_LABEL", comment: "SIDEMENU_SETTINGS_LABEL  in the popup view"), for: .normal)
+        eventPopup.tag = 1
+        self.view.addSubview(eventPopup)
     }
     
     

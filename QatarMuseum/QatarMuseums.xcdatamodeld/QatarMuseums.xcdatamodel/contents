@@ -62,6 +62,7 @@
         <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="eid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="endTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="eventId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="filter" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="institution" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
@@ -79,6 +80,7 @@
         <attribute name="dateAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="eid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="endTimeAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="eventId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="filterAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="institutionAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="locationAr" optional="YES" attributeType="String" syncable="YES"/>
@@ -96,6 +98,7 @@
         <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="eid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="endTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="eventId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="filter" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="institution" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
@@ -113,6 +116,7 @@
         <attribute name="dateAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="eid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="endTimeAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="eventId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="filterAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="institutionAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="locationAr" optional="YES" attributeType="String" syncable="YES"/>
@@ -227,14 +231,16 @@
         <attribute name="sortcoefficientarabic" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
+        <element name="AboutEntity" positionX="-36" positionY="135" width="128" height="210"/>
+        <element name="AboutEntityArabic" positionX="-27" positionY="144" width="128" height="210"/>
         <element name="CollectionsEntity" positionX="-36" positionY="126" width="128" height="90"/>
         <element name="CollectionsEntityArabic" positionX="-18" positionY="162" width="128" height="90"/>
         <element name="DiningEntity" positionX="-54" positionY="90" width="128" height="165"/>
         <element name="DiningEntityArabic" positionX="-45" positionY="108" width="128" height="165"/>
-        <element name="EducationEventEntity" positionX="-36" positionY="108" width="128" height="270"/>
-        <element name="EducationEventEntityAr" positionX="-27" positionY="144" width="128" height="270"/>
-        <element name="EventEntity" positionX="-18" positionY="153" width="128" height="270"/>
-        <element name="EventEntityArabic" positionX="-9" positionY="162" width="128" height="270"/>
+        <element name="EducationEventEntity" positionX="-36" positionY="108" width="128" height="285"/>
+        <element name="EducationEventEntityAr" positionX="-27" positionY="144" width="128" height="285"/>
+        <element name="EventEntity" positionX="-18" positionY="153" width="128" height="285"/>
+        <element name="EventEntityArabic" positionX="-9" positionY="162" width="128" height="285"/>
         <element name="ExhibitionsEntity" positionX="-54" positionY="108" width="128" height="30"/>
         <element name="ExhibitionsEntityArabic" positionX="-45" positionY="126" width="128" height="30"/>
         <element name="HeritageEntity" positionX="-63" positionY="27" width="128" height="180"/>
@@ -245,7 +251,5 @@
         <element name="ParksEntityArabic" positionX="-45" positionY="117" width="128" height="105"/>
         <element name="PublicArtsEntity" positionX="-54" positionY="108" width="128" height="165"/>
         <element name="PublicArtsEntityArabic" positionX="-54" positionY="117" width="128" height="165"/>
-        <element name="AboutEntity" positionX="-36" positionY="135" width="128" height="210"/>
-        <element name="AboutEntityArabic" positionX="-27" positionY="144" width="128" height="210"/>
     </elements>
 </model>
