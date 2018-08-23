@@ -6,6 +6,9 @@
 //  Copyright © 2018 Exalture. All rights reserved.
 //
 
+import Alamofire
+import Crashlytics
+import Kingfisher
 import UIKit
 
 class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,comingSoonPopUpProtocol {
@@ -24,15 +27,19 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     var collectionViewImages : NSArray!
     var collectionViewNames : NSArray!
     var popUpView : ComingSoonPopUp = ComingSoonPopUp()
+    var museumArray: [Museum] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+     
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     func setupUI() {
+        getMuseumDataFromServer()
+        
         slideshowImages = ["museum_of_islamic","second_slider_image","third_slider_image"]
         collectionViewImages = ["MIA_AboutX1","Audio CircleX1","exhibition_blackX1","collectionsX1","park_blackX1","diningX1",]
         let aboutName = NSLocalizedString("ABOUT", comment: "ABOUT  in the Museum")
@@ -64,33 +71,49 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
 
     }
     override func viewDidAppear(_ animated: Bool) {
-         setSlideShow(imgArray: slideshowImages)
+         //setSlideShow(imgArray: slideshowImages)
         museumsSlideView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         let dot = pageControl.subviews[0]
         dot.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
         
     }
     
-    func setSlideShow(imgArray : NSArray) {
-        
-        //sliderLoading.stopAnimating()
-       // sliderLoading.isHidden = true
-        
+    func setSlideShow() {
         //KASlideshow
         museumsSlideView.delegate = self
         museumsSlideView.delay = 1
         museumsSlideView.transitionDuration = 2.7
         museumsSlideView.transitionType = KASlideShowTransitionType.fade
         museumsSlideView.imagesContentMode = .scaleAspectFill
-        museumsSlideView.addImages(fromResources: imgArray as! [Any])
+       // museumsSlideView.addImages(fromResources: imgArray as! [Any])
     
+        let imageUrlString1 = self.museumArray[0].image1
+        let imageUrlString2 = self.museumArray[0].image2
+        let imageUrlString3 = self.museumArray[0].image3
+        downloadImage(imageUrlString: imageUrlString1)
+        downloadImage(imageUrlString: imageUrlString2)
+        downloadImage(imageUrlString: imageUrlString3)
+        
         museumsSlideView.add(KASlideShowGestureType.swipe)
         museumsSlideView.start()
-        pageControl.numberOfPages = imgArray.count
+        //pageControl.numberOfPages = imgArray.count
         pageControl.currentPage = Int(museumsSlideView.currentIndex)
         pageControl.addTarget(self, action: #selector(MuseumsViewController.pageChanged), for: .valueChanged)
         
        
+        
+    }
+    func downloadImage(imageUrlString : String?) {
+        if (imageUrlString != nil) {
+            let imageUrl = URL(string: imageUrlString!)
+            ImageDownloader.default.downloadImage(with: imageUrl!, options: [], progressBlock: nil) {
+                (image, error, url, data) in
+                print("Downloaded Image: \(image)")
+                self.museumsSlideView.addImage(image)
+                self.museumsSlideView.start()
+                
+            }
+        }
         
     }
     //KASlideShow delegate
@@ -373,6 +396,32 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     
     func menuButtonPressed() {
         
+    }
+    //MARK: WebServiceCall
+    func getMuseumDataFromServer()
+    {
+        _ = Alamofire.request(QatarMuseumRouter.LandingPageMuseums(["mid": "66"])).responseObject { (response: DataResponse<Museums>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.museumArray = data.museum!
+                if(self.museumArray.count > 0) {
+                    self.setSlideShow()
+                }
+            case .failure(let error):
+                if let unhandledError = handleError(viewController: self, errorType: error as! BackendError) {
+                    var errorMessage: String
+                    var errorTitle: String
+                    switch unhandledError.code {
+                    default: print(unhandledError.code)
+                    errorTitle = String(format: NSLocalizedString("UNKNOWN_ERROR_ALERT_TITLE",
+                                                                  comment: "Setting the title of the alert"))
+                    errorMessage = String(format: NSLocalizedString("ERROR_MESSAGE",
+                                                                    comment: "Setting the content of the alert"))
+                    }
+                    presentAlert(self, title: errorTitle, message: errorMessage)
+                }
+            }
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

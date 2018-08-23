@@ -115,77 +115,12 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
         //Change to Arabic
         if (languageSwitch.isOn) {
             languageSwitch.onTintColor = UIColor.settingsSwitchOnTint
-            
-//            let refreshAlert = UIAlertController(title: "", message: "", preferredStyle: .alert)
-//            let titleFont = [NSAttributedStringKey.font: UIFont(name: "DINNextLTPro-Bold", size: 17.0)!]
-//            let redirectionMessage = NSLocalizedString("SETTINGS_REDIRECTION_MSG", comment: "redirection message in settings page")
-//            let titleAttrString = NSMutableAttributedString(string: redirectionMessage, attributes: titleFont)
-//            let yesMessage = NSLocalizedString("YES", comment: "yes message")
-//            let noMessage = NSLocalizedString("NO", comment: "no message")
-//
-//            refreshAlert.setValue(titleAttrString, forKey: "attributedTitle")
-//            let noMessageAction = UIAlertAction(title: noMessage, style: .default) { (action) in
-//                self.languageSwitch.isOn = false
-//                refreshAlert .dismiss(animated: true, completion: nil)
-//            }
-//            let yesAction = UIAlertAction(title: yesMessage, style: .default) { (action) in
-//                LocalizationLanguage.setAppleLAnguageTo(lang: "ar")
-//                languageKey = 2
-//                UserDefaults.standard.set(true, forKey: "Arabic")
-//                if #available(iOS 9.0, *) {
-//                    UIView.appearance().semanticContentAttribute = .forceRightToLeft
-//                    let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
-//
-//                    let appDelegate = UIApplication.shared.delegate
-//                    appDelegate?.window??.rootViewController = homeViewController
-//
-//                } else {
-//                    // Fallback on earlier versions
-//                }
-//            }
-//            refreshAlert.addAction(noMessageAction)
-//            refreshAlert.addAction(yesAction)
-//            present(refreshAlert, animated: true, completion: nil)
             loadConfirmationPopup()
         }
         else {
             languageSwitch.tintColor = offColor
             languageSwitch.layer.cornerRadius = 16
             languageSwitch.backgroundColor = offColor
-            
-            
-//            let refreshAlert = UIAlertController(title: "", message: "", preferredStyle: .alert)
-//            let titleFont = [NSAttributedStringKey.font: UIFont(name: "DINNextLTArabic-Bold", size: 17.0)!]
-//
-//            let redirectionMessage = NSLocalizedString("SETTINGS_REDIRECTION_MSG", comment: "redirection message in settings page")
-//            let titleAttrString = NSMutableAttributedString(string: redirectionMessage, attributes: titleFont)
-//            let yesMessage = NSLocalizedString("YES", comment: "yes message")
-//            let noMessage = NSLocalizedString("NO", comment: "no message")
-//            refreshAlert.setValue(titleAttrString, forKey: "attributedTitle")
-//            let noMessageAction = UIAlertAction(title: noMessage, style: .default) { (action) in
-//                self.languageSwitch.isOn = true
-//                refreshAlert .dismiss(animated: true, completion: nil)
-//            }
-//            let yesAction = UIAlertAction(title: yesMessage, style: .default) { (action) in
-//                LocalizationLanguage.setAppleLAnguageTo(lang: "en")
-//                languageKey = 1
-//                UserDefaults.standard.set(false, forKey: "Arabic")
-//                if #available(iOS 9.0, *) {
-//                    UIView.appearance().semanticContentAttribute = .forceLeftToRight
-//                    let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
-//
-//                    let appDelegate = UIApplication.shared.delegate
-//                    appDelegate?.window??.rootViewController = homeViewController
-//
-//                } else {
-//                    // Fallback on earlier versions
-//
-//                }
-//            }
-//            refreshAlert.addAction(noMessageAction)
-//            refreshAlert.addAction(yesAction)
-//            present(refreshAlert, animated: true, completion: nil)
-            
             loadConfirmationPopup()
         }
     }

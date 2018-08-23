@@ -30,6 +30,7 @@ class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol, co
         else {
             headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
+        startTourButton.setTitle(NSLocalizedString("START_TOUR", comment: "START_TOUR"), for: .normal)
     }
 
     override func didReceiveMemoryWarning() {

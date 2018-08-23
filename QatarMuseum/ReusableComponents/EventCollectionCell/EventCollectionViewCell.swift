@@ -66,7 +66,10 @@ class EventCollectionViewCell: UICollectionViewCell {
         firstTitle.text = educationEvent.institution
         secondTitleLabel.text = educationEvent.title?.uppercased()
         descriptionLabel.text = educationEvent.shortDesc
-        groupSizeLabel.text = "Max. group size " + educationEvent.maxGroupSize!
+        if (educationEvent.maxGroupSize != nil) {
+            groupSizeLabel.text = "Max. group size " + educationEvent.maxGroupSize!
+        }
+        
     }
     
     @IBAction func didTapViewDetails(_ sender: UIButton) {
@@ -88,7 +91,6 @@ class EventCollectionViewCell: UICollectionViewCell {
         
         let date = inFormatter.date(from: timeString)!
         let outStr = outFormatter.string(from: date)
-        print(outStr) // -> outputs 04:50
         return outStr
     }
     

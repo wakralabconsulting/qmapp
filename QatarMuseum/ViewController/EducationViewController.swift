@@ -34,7 +34,7 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
     func setupUI() {
         loadingView.isHidden = false
         loadingView.showLoading()
-        secondDescriptionLabel.text = "All of our education parameters privide interactive opportunities. We hope that they create lasting memories and lead to the development of creative, compassionate and engaged individuals.\n\n For school teachers and educators, we bring custom-made worshops, conferences and trainings to suit their needs. We also focus on working with children to encourage them to explore the world around them, engage with it, and express themselves through creative activities. "
+        secondDescriptionLabel.text = "All of our education parameters privide interactive opportunities. We hope that they create lasting memories and lead to the development of creative, compassionate and engaged individuals.\n\n For school teachers and educators, we bring custom-made worshops, conferences and trainings to suit their needs. We also focus on working with children to encourage them to explore the world around them, engage with it, and express themselves through creative activities.\n\n All of our activities with Qatar Supreme Educational Council Professional Standards for Teachers and National Curriculum Standars."
         headerView.headerViewDelegate = self
         headerView.headerTitle.text = NSLocalizedString("EDUCATION_TITLE", comment: "EDUCATION_TITLE in the education page")
         let buttonLabel = NSLocalizedString("DISCOVER", comment: "DISCOVER in the education page")

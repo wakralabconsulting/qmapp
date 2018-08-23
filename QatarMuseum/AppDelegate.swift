@@ -11,7 +11,7 @@ import Firebase
 import GoogleMaps
 import UIKit
 
-var selectedEventDate : Date = Date()
+//var selectedEventDate : Date = Date()
 var languageKey = 1
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

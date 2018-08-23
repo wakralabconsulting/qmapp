@@ -44,17 +44,50 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        institutionArray = ["Years of Culture Education","Public Art Education","Cultural Heritage Education","MIA Education","Mathaf Education","National Museum","3-2-1 QOSM Education","Family &amp; Schools Programmes Calendar"]
-        ageGroupArray = ["Teachers","All ages","Nursery/Pre-KG (3-5 Years","Pre-School Ages (0-3 Years","Early Primary (5-7 Years","Primary (8-11 Years)","Preparatory (12-14 Years)","Secondary (15-18 Years)","College &amp; University (17-24 Years)","Youth","Adults","Seniors","Families","Special Needs"]
-        programmeTypeArray = ["Art Workshop","Field Trip","Gallery Tour","Lecture","Photography","Reading Group","Research","Workshop"]
-        
-        institutionPassArray = ["Years","Public","Cultural","MIA","Mathaf","National","321","Family"]
-        ageGroupPassArray = ["Allages","Nursery","Preschool","EarlyPrimary","Primary","Preparatory","Secondary","College","Youth","Adults","Seniors","Families","Special"]
-        programmePassArray = ["Art","Field","Gallery","Lecture","Photography","Reading","Research","Workshop"]
+       
         setupUI()
     }
     
     func setupUI() {
+        let inst1 = NSLocalizedString("INSTITUTION_1", comment: "INSTITUTION_1")
+        let inst2 = NSLocalizedString("INSTITUTION_2", comment: "INSTITUTION_2")
+        let inst3 = NSLocalizedString("INSTITUTION_3", comment: "INSTITUTION_3")
+        let inst4 = NSLocalizedString("INSTITUTION_4", comment: "INSTITUTION_4")
+        let inst5 = NSLocalizedString("INSTITUTION_5", comment: "INSTITUTION_5")
+        let inst6 = NSLocalizedString("INSTITUTION_6", comment: "INSTITUTION_6")
+        let inst7 = NSLocalizedString("INSTITUTION_7", comment: "INSTITUTION_7")
+        let inst8 = NSLocalizedString("INSTITUTION_8", comment: "INSTITUTION_8")
+        
+        let ageGrp1 = NSLocalizedString("AGE_GROUP_1", comment: "AGE_GROUP_1")
+        let ageGrp2 = NSLocalizedString("AGE_GROUP_2", comment: "AGE_GROUP_2")
+        let ageGrp3 = NSLocalizedString("AGE_GROUP_3", comment: "AGE_GROUP_3")
+        let ageGrp4 = NSLocalizedString("AGE_GROUP_4", comment: "AGE_GROUP_4")
+        let ageGrp5 = NSLocalizedString("AGE_GROUP_5", comment: "AGE_GROUP_5")
+        let ageGrp6 = NSLocalizedString("AGE_GROUP_6", comment: "AGE_GROUP_6")
+        let ageGrp7 = NSLocalizedString("AGE_GROUP_7", comment: "AGE_GROUP_7")
+        let ageGrp8 = NSLocalizedString("AGE_GROUP_8", comment: "AGE_GROUP_8")
+        let ageGrp9 = NSLocalizedString("AGE_GROUP_9", comment: "AGE_GROUP_9")
+        let ageGrp10 = NSLocalizedString("AGE_GROUP_10", comment: "AGE_GROUP_10")
+        let ageGrp11 = NSLocalizedString("AGE_GROUP_11", comment: "AGE_GROUP_11")
+        let ageGrp12 = NSLocalizedString("AGE_GROUP_12", comment: "AGE_GROUP_12")
+        let ageGrp13 = NSLocalizedString("AGE_GROUP_13", comment: "AGE_GROUP_13")
+        let ageGrp14 = NSLocalizedString("AGE_GROUP_14", comment: "AGE_GROUP_14")
+        
+        let pgmType1 = NSLocalizedString("PGM_TYPE_1", comment: "PGM_TYPE_1")
+        let pgmType2 = NSLocalizedString("PGM_TYPE_2", comment: "PGM_TYPE_2")
+        let pgmType3 = NSLocalizedString("PGM_TYPE_3", comment: "PGM_TYPE_3")
+        let pgmType4 = NSLocalizedString("PGM_TYPE_4", comment: "PGM_TYPE_4")
+        let pgmType5 = NSLocalizedString("PGM_TYPE_5", comment: "PGM_TYPE_5")
+        let pgmType6 = NSLocalizedString("PGM_TYPE_6", comment: "PGM_TYPE_6")
+        let pgmType7 = NSLocalizedString("PGM_TYPE_7", comment: "PGM_TYPE_7")
+        let pgmType8 = NSLocalizedString("PGM_TYPE_7", comment: "PGM_TYPE_8")
+        institutionArray = [inst1,inst2,inst3,inst4,inst5,inst6,inst7,inst8]
+        ageGroupArray = [ageGrp1,ageGrp2,ageGrp3,ageGrp4,ageGrp5,ageGrp6,ageGrp7,ageGrp8,ageGrp9,ageGrp10,ageGrp11,ageGrp12,ageGrp13,ageGrp14]
+        programmeTypeArray = [pgmType1,pgmType2,pgmType3,pgmType4,pgmType5,pgmType6,pgmType7,pgmType8]
+        
+        institutionPassArray = ["Years","Public","Cultural","MIA","Mathaf","National","321","Family"]
+        ageGroupPassArray = ["Allages","Nursery","Preschool","EarlyPrimary","Primary","Preparatory","Secondary","College","Youth","Adults","Seniors","Families","Special"]
+        programmePassArray = ["Art","Field","Gallery","Lecture","Photography","Reading","Research","Workshop"]
         headerView.headerViewDelegate = self
         headerView.headerBackButton.setImage(UIImage(named: "closeX1"), for: .normal)
         headerView.headerBackButton.contentEdgeInsets = UIEdgeInsets(top:14, left:19, bottom: 14, right:19)
@@ -62,6 +95,7 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         institutionTitleLabel.text = NSLocalizedString("INSTITUTION_LABEL", comment: "INSTITUTION_LABEL in the Filter page") 
         ageGroupLabel.text = NSLocalizedString("AGE_GROUP_LABEL", comment: "AGE_GROUP_LABEL in the Filter page")
         programmeTypeLabel.text = NSLocalizedString("PROGRAMME_TYPE_LABEL", comment: "PROGRAMME_TYPE_LABEL in the Filter page")
+        
         let filterButtonTitle = NSLocalizedString("FILTER_LABEL", comment: "FILTER_LABEL in the Filter page")
         filterButton.setTitle(filterButtonTitle, for: .normal)
         let clearButtonTitle = NSLocalizedString("CLEAR_LABEL", comment: "CLEAR_LABEL in the Filter page")
@@ -86,6 +120,8 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         ageGroupPass = ageGroupPassArray[0] as! String
         programmePass = programmePassArray[0] as! String
         addPickerView()
+        
+        
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
