@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import Alamofire
 
-class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol {
     @IBOutlet weak var exhibitionDetailTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
     
@@ -21,7 +21,8 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     var exhibitionId : String!
     var exhibition: [Exhibition] = []
     let networkReachability = NetworkReachabilityManager()
-    
+    var popupView : ComingSoonPopUp = ComingSoonPopUp()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setUi()
@@ -74,16 +75,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         }
         cell.locationButtonAction = {
             () in
-            if (self.exhibition.count > 0 && self.fromHome == true) {
-                let exhibitionDetail = self.exhibition[indexPath.row]
-                if exhibitionDetail.latitude != nil && exhibitionDetail.longitude != nil
-                    && exhibitionDetail.latitude?.range(of:"0°") == nil
-                    && exhibitionDetail.longitude?.range(of:"0°") == nil {
-                self.loadLocationInMap(latitude: exhibitionDetail.latitude!, longitude: exhibitionDetail.longitude!)
-                }
-            } else {
-                self.loadLocationInMap(latitude: "10.0119266", longitude: "76.3492956")
-            }
+            self.loadLocationInMap(currentRow: indexPath.row)
         }
         
         loadingView.stopLoading()
@@ -143,19 +135,44 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         view.addSubview(closeButton)
     }
     
-    func loadLocationInMap(latitude: String, longitude: String) {
-        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!, options: [:], completionHandler: nil)
+    func loadLocationInMap(currentRow: Int) {
+        var latitudeString :String?
+        var longitudeString : String?
+        
+        if (( self.fromHome == true) && (exhibition[currentRow].latitude != nil) && (exhibition[currentRow].longitude != nil)) {
+            latitudeString = exhibition[currentRow].latitude
+            longitudeString = exhibition[currentRow].longitude
+        }
+        
+        if latitudeString != nil && longitudeString != nil {
+            let latitude = convertDMSToDDCoordinate(latLongString: latitudeString!)
+            let longitude = convertDMSToDDCoordinate(latLongString: longitudeString!)
+            if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!)
+                }
             } else {
-                UIApplication.shared.openURL(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!)
+                let locationUrl = URL(string: "https://maps.google.com/?q=@\(latitude),\(longitude)")!
+                UIApplication.shared.openURL(locationUrl)
             }
         } else {
-            let locationUrl = URL(string: "https://maps.google.com/?q=@\(latitude),\(longitude)")!
-            UIApplication.shared.openURL(locationUrl)
+            showLocationErrorPopup()
         }
     }
-   
+    
+    func showLocationErrorPopup() {
+        popupView  = ComingSoonPopUp(frame: self.view.frame)
+        popupView.comingSoonPopupDelegate = self
+        popupView.loadLocationErrorPopup()
+        self.view.addSubview(popupView)
+    }
+    
+    //MARK: Poup Delegate
+    func closeButtonPressed() {
+        self.popupView.removeFromSuperview()
+    }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = 300 - (scrollView.contentOffset.y + 300)

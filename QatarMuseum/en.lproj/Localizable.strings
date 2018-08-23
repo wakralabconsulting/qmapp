@@ -92,3 +92,6 @@
 "CULTURE_PASS_INTRO" = "Qatar Museums Culture Pass gives you discounts, free access and exclusive opportunities  across many cultural venues in Qatar and discounts at a wide range of ever expanding list of partners.Best of all, as a member you're invited to join us in a wide range of exciting creative activities.";
 "CULTURE_PASS_SECONDDESC" = "Get access by activating your membership today.";
 "YET_NO_NOTIFICATION_MESSAGE" = "No notifications yet.";
+"SOMETHING_WENT_WRONG_TITLE" = "Something went wrong";
+"LOCATION_ERROR_MESSAGE" = "Unfortunately we cannot open Google Maps.";
+
