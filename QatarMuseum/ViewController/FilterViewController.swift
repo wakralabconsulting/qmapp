@@ -9,9 +9,6 @@
 import UIKit
 
 class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate {
-   
-    
-
     @IBOutlet weak var institutionTitleLabel: UILabel!
     @IBOutlet weak var ageGroupLabel: UILabel!
     @IBOutlet weak var programmeTypeLabel: UILabel!
@@ -20,7 +17,6 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     @IBOutlet weak var programmeTypeText: UITextField!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var contentView: UIView!
-    
     @IBOutlet var pickerToolBar: UIView!
     @IBOutlet weak var filterButton: UIButton!
     @IBOutlet weak var institutionButton: UIButton!
@@ -41,11 +37,11 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     var selectedInstitution = String()
     var selectedageGroup = String()
     var selectedProgramme = String()
-    
     var institutionPass = String()
     var ageGroupPass = String()
     var programmePass = String()
     var selectedRow = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         institutionArray = ["Years of Culture Education","Public Art Education","Cultural Heritage Education","MIA Education","Mathaf Education","National Museum","3-2-1 QOSM Education","Family &amp; Schools Programmes Calendar"]
@@ -56,8 +52,8 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         ageGroupPassArray = ["Allages","Nursery","Preschool","EarlyPrimary","Primary","Preparatory","Secondary","College","Youth","Adults","Seniors","Families","Special"]
         programmePassArray = ["Art","Field","Gallery","Lecture","Photography","Reading","Research","Workshop"]
         setupUI()
-       
     }
+    
     func setupUI() {
         headerView.headerViewDelegate = self
         headerView.headerBackButton.setImage(UIImage(named: "closeX1"), for: .normal)

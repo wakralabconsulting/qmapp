@@ -74,8 +74,7 @@ class SideMenuView: UIView,TopBarProtocol {
         super.init(coder: aDecoder)
         commonInit()
     }
-    private func commonInit()
-    {
+    private func commonInit() {
         Bundle.main.loadNibNamed("SideMenu", owner: self, options: nil)
         addSubview(sideMenuView)
         sideMenuView.frame = self.bounds
@@ -85,18 +84,20 @@ class SideMenuView: UIView,TopBarProtocol {
         topBarView.menuButton.setImage(UIImage(named: "closeX1"), for: .normal)
         topBarView.backgroundColor = UIColor.clear
         topBarView.backButton.isHidden = true
+        topBarView.eventButton.isHidden = true
+        topBarView.notificationButton.isHidden = true
+        topBarView.profileButton.isHidden = true
         
         exhibitionsLabel.text = NSLocalizedString("EXHIBITIONS_LABEL", comment: "EXHIBITIONS_LABEL Label in the SideMenu page")
-
-         eventsLabel.text = NSLocalizedString("EVENTS_LABEL", comment: "EVENTS_LABEL Label in the SideMenu page")
-         educationLabel.text = NSLocalizedString("EDUCATION_LABEL", comment: "EDUCATION_LABEL Label in the SideMenu page")
-         tourGuideLabel.text = NSLocalizedString("TOURGUIDE_LABEL", comment: "TOURGUIDE_LABEL Label in the SideMenu page")
-         heritageSitesLabel.text = NSLocalizedString("HERITAGESITES_LABEL", comment: "HERITAGESITES_LABEL Label in the SideMenu page")
-         publicArtsLabel.text = NSLocalizedString("PUBLIC_ARTS_LABEL", comment: "PUBLIC_ARTS_LABEL Label in the SideMenu page")
-         diningLabel.text = NSLocalizedString("DINING_LABEL", comment: "DINING_LABEL Label in the SideMenu page")
-         giftShopLabel.text = NSLocalizedString("GIFTSHOP_LABEL", comment: "GIFTSHOP_LABEL Label in the SideMenu page")
-         parksLabel.text = NSLocalizedString("PARKS_LABEL", comment: "PARKS_LABEL Label in the SideMenu page")
-         settingsLabel.text = NSLocalizedString("SIDEMENU_SETTINGS_LABEL", comment: "SIDEMENU_SETTINGS_LABEL Label in the SideMenu page")
+        eventsLabel.text = NSLocalizedString("EVENTS_LABEL", comment: "EVENTS_LABEL Label in the SideMenu page")
+        educationLabel.text = NSLocalizedString("EDUCATION_LABEL", comment: "EDUCATION_LABEL Label in the SideMenu page")
+        tourGuideLabel.text = NSLocalizedString("TOURGUIDE_LABEL", comment: "TOURGUIDE_LABEL Label in the SideMenu page")
+        heritageSitesLabel.text = NSLocalizedString("HERITAGESITES_LABEL", comment: "HERITAGESITES_LABEL Label in the SideMenu page")
+        publicArtsLabel.text = NSLocalizedString("PUBLIC_ARTS_LABEL", comment: "PUBLIC_ARTS_LABEL Label in the SideMenu page")
+        diningLabel.text = NSLocalizedString("DINING_LABEL", comment: "DINING_LABEL Label in the SideMenu page")
+        giftShopLabel.text = NSLocalizedString("GIFTSHOP_LABEL", comment: "GIFTSHOP_LABEL Label in the SideMenu page")
+        parksLabel.text = NSLocalizedString("PARKS_LABEL", comment: "PARKS_LABEL Label in the SideMenu page")
+        settingsLabel.text = NSLocalizedString("SIDEMENU_SETTINGS_LABEL", comment: "SIDEMENU_SETTINGS_LABEL Label in the SideMenu page")
         
         exhibitionsLabel.font = UIFont.sideMenuLabelFont
         eventsLabel.font = UIFont.sideMenuLabelFont
@@ -108,13 +109,12 @@ class SideMenuView: UIView,TopBarProtocol {
         giftShopLabel.font = UIFont.sideMenuLabelFont
         parksLabel.font = UIFont.sideMenuLabelFont
         settingsLabel.font = UIFont.sideMenuLabelFont
-        
-        
-       
     }
-     var preferredStatusBarStyle: UIStatusBarStyle {
+    
+    var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
     @IBAction func didTapExhibition(_ sender: UIButton) {
         UIButton.animate(withDuration: 0.3,
                          animations: {
