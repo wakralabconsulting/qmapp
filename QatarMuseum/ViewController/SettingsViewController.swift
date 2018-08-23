@@ -90,22 +90,29 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
     
     func disableAllSwitches() {
         let disableColor = UIColor.lightGrayColor
-        eventSwitch.backgroundColor = disableColor
-        exhibitionSwitch.backgroundColor = disableColor
-        museumSwitch.backgroundColor = disableColor
-        culturePassSwitch.backgroundColor = disableColor
         eventSwitch.tintColor = disableColor
-
+        eventSwitch.layer.cornerRadius = 16
         eventSwitch.backgroundColor = disableColor
-        exhibitionSwitch.backgroundColor = disableColor
-        museumSwitch.backgroundColor = disableColor
-        culturePassSwitch.backgroundColor = disableColor
-        eventSwitch.backgroundColor = disableColor
-        
         eventSwitch.isEnabled = false
+
+        exhibitionSwitch.tintColor = disableColor
+        exhibitionSwitch.layer.cornerRadius = 16
+        exhibitionSwitch.backgroundColor = disableColor
         exhibitionSwitch.isEnabled = false
+
+        museumSwitch.tintColor = disableColor
+        museumSwitch.layer.cornerRadius = 16
+        museumSwitch.backgroundColor = disableColor
         museumSwitch.isEnabled = false
+
+        culturePassSwitch.tintColor = disableColor
+        culturePassSwitch.layer.cornerRadius = 16
+        culturePassSwitch.backgroundColor = disableColor
         culturePassSwitch.isEnabled = false
+
+        tourGuideSwitch.tintColor = disableColor
+        tourGuideSwitch.layer.cornerRadius = 16
+        tourGuideSwitch.backgroundColor = disableColor
         tourGuideSwitch.isEnabled = false
     }
     
