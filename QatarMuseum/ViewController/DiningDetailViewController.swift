@@ -10,7 +10,7 @@ import Alamofire
 import CoreData
 import UIKit
 
-class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol {
     @IBOutlet weak var diningTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
     
@@ -20,7 +20,8 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     var diningDetailtArray: [Dining] = []
     var diningDetailId : String? = nil
     let networkReachability = NetworkReachabilityManager()
-    
+    var popupView : ComingSoonPopUp = ComingSoonPopUp()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -84,7 +85,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         diningCell.setDiningDetailValues(diningDetail: diningDetailtArray[indexPath.row])
         diningCell.locationButtonAction = {
             ()in
-            self.loadLocationOnMap()
+            self.loadLocationInMap(currentRow: indexPath.row)
         }
         diningCell.favBtnTapAction = {
             () in
@@ -136,24 +137,45 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         }
     }
     
-    func loadLocationOnMap() {
-        let latitude = "10.0119266"
-        let longitude =  "76.3492956"
-        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!, options: [:], completionHandler: nil)
+    func loadLocationInMap(currentRow: Int) {
+        var latitudeString :String?
+        var longitudeString : String?
+        
+        if ((diningDetailtArray[currentRow].latitude != nil) && (diningDetailtArray[currentRow].longitude != nil)) {
+            latitudeString = diningDetailtArray[currentRow].latitude
+            longitudeString = diningDetailtArray[currentRow].longitude
+        }
+        
+        if latitudeString != nil && longitudeString != nil {
+            let latitude = convertDMSToDDCoordinate(latLongString: latitudeString!)
+            let longitude = convertDMSToDDCoordinate(latLongString: longitudeString!)
+            if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!)
+                }
             } else {
-                UIApplication.shared.openURL(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!)
+                let locationUrl = URL(string: "https://maps.google.com/?q=@\(latitude),\(longitude)")!
+                UIApplication.shared.openURL(locationUrl)
             }
         } else {
-            let locationUrl = URL(string: "https://maps.google.com/?q=@\(latitude),\(longitude)")!
-//            let webViewVc:WebViewController = self.storyboard?.instantiateViewController(withIdentifier: "webViewId") as! WebViewController
-//            webViewVc.webViewUrl = locationUrl
-//            webViewVc.titleString = NSLocalizedString("WEBVIEW_TITLE", comment: "WEBVIEW_TITLE title Label in the webview page")
-//            self.present(webViewVc, animated: false, completion: nil)
-            UIApplication.shared.openURL(locationUrl)
+            showLocationErrorPopup()
         }
     }
+    
+    func showLocationErrorPopup() {
+        popupView  = ComingSoonPopUp(frame: self.view.frame)
+        popupView.comingSoonPopupDelegate = self
+        popupView.loadLocationErrorPopup()
+        self.view.addSubview(popupView)
+    }
+    
+    //MARK: Poup Delegate
+    func closeButtonPressed() {
+        self.popupView.removeFromSuperview()
+    }
+    
     @objc func buttonAction(sender: UIButton!) {
         let transition = CATransition()
         transition.duration = 0.3

@@ -83,3 +83,28 @@ func handleAFError(viewController: UIViewController, error: AFError) {
         print("Unknown error")
     }
 }
+
+func convertDMSToDDCoordinate(latLongString : String) -> Double {
+    var latLong = latLongString
+    var delimiter = "°"
+    var latLongArray = latLong.components(separatedBy: delimiter)
+    var degreeString : String?
+    var minString : String?
+    var secString : String?
+    if ((latLongArray.count) > 0) {
+        degreeString = latLongArray[0]
+    }
+    delimiter = "'"
+    latLong = latLongArray[1]
+    latLongArray = latLong.components(separatedBy: delimiter)
+    if ((latLongArray.count) > 1) {
+        minString = latLongArray[0]
+        secString = latLongArray[1]
+    }
+    let degree = (degreeString! as NSString).doubleValue
+    let min = (minString! as NSString).doubleValue
+    let sec = (secString! as NSString).doubleValue
+    let ddCoordinate = degree + (min / 60) + (sec / 3600)
+    return ddCoordinate
+}
+
