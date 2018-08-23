@@ -186,12 +186,10 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     func loadLocationInMap(currentRow: Int) {
         var latitudeString :String?
         var longitudeString : String?
-        if ((pageNameString == PageName.museumAbout) && (aboutDetailtArray[currentRow].latitude != nil) && (aboutDetailtArray[currentRow].longitude != nil))
-        {
+        if ((pageNameString == PageName.museumAbout) && (aboutDetailtArray[currentRow].latitude != nil) && (aboutDetailtArray[currentRow].longitude != nil)) {
             latitudeString = aboutDetailtArray[currentRow].latitude
             longitudeString = aboutDetailtArray[currentRow].longitude
-        } else if ((pageNameString == PageName.heritageDetail) && (heritageDetailtArray[currentRow].latitude != nil) && (heritageDetailtArray[currentRow].longitude != nil))
-        {
+        } else if ((pageNameString == PageName.heritageDetail) && (heritageDetailtArray[currentRow].latitude != nil) && (heritageDetailtArray[currentRow].longitude != nil)) {
             latitudeString = heritageDetailtArray[currentRow].latitude
             longitudeString = heritageDetailtArray[currentRow].longitude
         }
@@ -201,17 +199,19 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
 //            longitudeString = publicArtsDetailtArray[currentRow].longitude
 //        }
         
-        let latitude = convertDMSToDDCoordinate(latLongString: latitudeString!)
-        let longitude = convertDMSToDDCoordinate(latLongString: longitudeString!)
-        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!, options: [:], completionHandler: nil)
+        if latitudeString != nil && longitudeString != nil {
+            let latitude = convertDMSToDDCoordinate(latLongString: latitudeString!)
+            let longitude = convertDMSToDDCoordinate(latLongString: longitudeString!)
+            if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!)
+                }
             } else {
-                UIApplication.shared.openURL(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!)
+                let locationUrl = URL(string: "https://maps.google.com/?q=@\(latitude),\(longitude)")!
+                UIApplication.shared.openURL(locationUrl)
             }
-        } else {
-            let locationUrl = URL(string: "https://maps.google.com/?q=@\(latitude),\(longitude)")!
-            UIApplication.shared.openURL(locationUrl)
         }
     }
     func convertDMSToDDCoordinate(latLongString : String) -> Double {
