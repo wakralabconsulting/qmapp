@@ -88,6 +88,7 @@
 "MUSEUM_TITLE" = "متحف الفن الإسلامي";
 "NO_RESULT_MESSAGE" = "لم يتم العثور على أي نتائج";
 "CHANGE_LANGUAGE_TITLE" = "تغيير اللغة";
+<<<<<<< HEAD
 "ABOUT" = "عن";
 "PERMISSION_TITLE" = "تغيير إذن التقويم";
 "CALENDAR_PERMISSION" = "لا يمتلك تطبيق متاحف قطر الإذن للولوج للتقويم.. اضغط على الإعدادات وقم بتفعيل التقويم";
@@ -130,4 +131,9 @@
 "TOUR_GUIDES" = "المرشد";
 "TOUR_GUIDE_TEXT" = "Welcome to Qatar Museum Premises. \n Select the museums to explore the floors and objects on display. \n Immerse yourself into the object details curated specially for you by our experts.";
 "EVENT_ADDED_MESSAGE" = "تم إضافة الفعالية للتقويم";
-
+"ABOUT" = "About";
+"CULTUREPASS_TITLE" = "CULTURE PASS";
+"BENEFIT_TITLE" = "BENEFITS";
+"CULTURE_PASS_INTRO" = "Qatar Museums Culture Pass gives you discounts, free access and exclusive opportunities  across many cultural venues in Qatar and discounts at a wide range of ever expanding list of partners.Best of all, as a member you're invited to join us in a wide range of exciting creative activities.";
+"CULTURE_PASS_SECONDDESC" = "Get access by activating your membership today.";
+"YET_NO_NOTIFICATION_MESSAGE" = "No notifications yet.";

@@ -241,54 +241,50 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     func loadBottomCellPages(cellObj: MuseumBottomCell, selectedIndex: Int) {
        if (selectedIndex == 0) {
-            let heritageDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
-            heritageDtlView.pageNameString = PageName.museumAbout
-            let transition = CATransition()
-            transition.duration = 0.3
-            transition.type = kCATransitionFade
-            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-            view.window!.layer.add(transition, forKey: kCATransition)
-            self.present(heritageDtlView, animated: false, completion: nil)
-        }
-        else if (selectedIndex == 1) {
-            let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "miaTourGuideId") as! MiaTourGuideViewController
-           // tourGuideView.fromHome = false
-            let transition = CATransition()
-            transition.duration = 0.3
-            transition.type = kCATransitionPush
-            transition.subtype = kCATransitionFromRight
-            view.window!.layer.add(transition, forKey: kCATransition)
-            self.present(tourGuideView, animated: false, completion: nil)
-        }
-        else if (selectedIndex == 2){
-            let exhibitionView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
-            let transition = CATransition()
-            transition.duration = 0.3
-            transition.type = kCATransitionPush
-            transition.subtype = kCATransitionFromRight
-            view.window!.layer.add(transition, forKey: kCATransition)
-            exhibitionView.exhibitionsPageNameString = ExhbitionPageName.museumExhibition
-            self.present(exhibitionView, animated: false, completion: nil)
-        }
-        else if (selectedIndex == 3){
-            let musmCollectionnView = self.storyboard?.instantiateViewController(withIdentifier: "musmCollectionViewId") as! MuseumCollectionsViewController
-            let transition = CATransition()
-            transition.duration = 0.3
-            transition.type = kCATransitionPush
-            transition.subtype = kCATransitionFromRight
-            view.window!.layer.add(transition, forKey: kCATransition)
-            self.present(musmCollectionnView, animated: false, completion: nil)
-        }
-        else if (selectedIndex == 4){
-            let parkView = self.storyboard?.instantiateViewController(withIdentifier: "parkViewId") as! ParksViewController
-            let transition = CATransition()
-            transition.duration = 0.3
-            transition.type = kCATransitionFade
-            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-            view.window!.layer.add(transition, forKey: kCATransition)
-            self.present(parkView, animated: false, completion: nil)
-        }
-       else if(selectedIndex == 5) {
+        let heritageDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
+        heritageDtlView.pageNameString = PageName.museumAbout
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionFade
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(heritageDtlView, animated: false, completion: nil)
+       } else if (selectedIndex == 1) {
+        let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "miaTourGuideId") as! MiaTourGuideViewController
+       // tourGuideView.fromHome = false
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(tourGuideView, animated: false, completion: nil)
+       } else if (selectedIndex == 2){
+        let exhibitionView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+//        exhibitionView.exhibitionsPageNameString = ExhbitionPageName.museumExhibition
+        exhibitionView.exhibitionsPageNameString = ExhbitionPageName.homeExhibition // For now changing to homeExhibition
+        self.present(exhibitionView, animated: false, completion: nil)
+       } else if (selectedIndex == 3){
+        let musmCollectionnView = self.storyboard?.instantiateViewController(withIdentifier: "musmCollectionViewId") as! MuseumCollectionsViewController
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(musmCollectionnView, animated: false, completion: nil)
+       } else if (selectedIndex == 4){
+        let parkView = self.storyboard?.instantiateViewController(withIdentifier: "parkViewId") as! ParksViewController
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionFade
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(parkView, animated: false, completion: nil)
+       } else if(selectedIndex == 5) {
         let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "diningViewId") as! DiningViewController
         diningView.fromHome = false
         let transition = CATransition()
@@ -297,12 +293,11 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(diningView, animated: false, completion: nil)
+       } else {
+        loadComingSoonPopup()
        }
-        else {
-            loadComingSoonPopup()
-        }
-        
     }
+    
     @IBAction func didTapPrevious(_ sender: UIButton) {
         
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {

@@ -312,6 +312,16 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         self.present(diningView, animated: false, completion: nil)
     }
     
+    func culturePassButtonPressed() {
+        let culturePassView =  self.storyboard?.instantiateViewController(withIdentifier: "culturePassViewId") as! CulturePassViewController
+        let transition = CATransition()
+        transition.duration = 0.25
+        transition.type = kCATransitionFade
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(culturePassView, animated: false, completion: nil)
+    }
+    
     func giftShopButtonPressed() {
         let aboutUrlString = "https://inq-online.com/?SID=k36n3od6ovtc5jn5hlf8o54g64"
         if let aboutUrl = URL(string: aboutUrlString) {
@@ -395,7 +405,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     @IBAction func didTapCulturePass(_ sender: UIButton) {
-        loadComingSoonPopup()
+        culturePassButtonPressed()
         self.culturePassButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
     

@@ -9,9 +9,6 @@
 import UIKit
 
 class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate {
-   
-    
-
     @IBOutlet weak var institutionTitleLabel: UILabel!
     @IBOutlet weak var ageGroupLabel: UILabel!
     @IBOutlet weak var programmeTypeLabel: UILabel!
@@ -20,7 +17,6 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     @IBOutlet weak var programmeTypeText: UITextField!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var contentView: UIView!
-    
     @IBOutlet var pickerToolBar: UIView!
     @IBOutlet weak var filterButton: UIButton!
     @IBOutlet weak var institutionButton: UIButton!
@@ -41,17 +37,17 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     var selectedInstitution = String()
     var selectedageGroup = String()
     var selectedProgramme = String()
-    
     var institutionPass = String()
     var ageGroupPass = String()
     var programmePass = String()
     var selectedRow = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
         setupUI()
-       
     }
+    
     func setupUI() {
         let inst1 = NSLocalizedString("INSTITUTION_1", comment: "INSTITUTION_1")
         let inst2 = NSLocalizedString("INSTITUTION_2", comment: "INSTITUTION_2")

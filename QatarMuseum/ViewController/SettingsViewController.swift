@@ -37,8 +37,9 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
         super.viewDidLoad()
 
         setupUI()
-        
+        disableAllSwitches()
     }
+    
     func setupUI() {
         headerView.headerViewDelegate = self
         headerView.headerTitle.text = NSLocalizedString("SETTINGS_LABEL", comment: "SETTINGS_LABEL in the Settings page")
@@ -80,13 +81,31 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
             languageSwitch.layer.cornerRadius = 16
             languageSwitch.backgroundColor = offColor
             headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
-        }
-        else {
+        } else {
             languageSwitch.isOn = true
              headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
         
     }
+    
+    func disableAllSwitches() {
+        let disableColor = UIColor.lightGrayColor
+        eventSwitch.onTintColor = disableColor
+        eventSwitch.isEnabled = false
+
+        exhibitionSwitch.onTintColor = disableColor
+        exhibitionSwitch.isEnabled = false
+
+        museumSwitch.onTintColor = disableColor
+        museumSwitch.isEnabled = false
+
+        culturePassSwitch.onTintColor = disableColor
+        culturePassSwitch.isEnabled = false
+
+        tourGuideSwitch.onTintColor = disableColor
+        tourGuideSwitch.isEnabled = false
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }

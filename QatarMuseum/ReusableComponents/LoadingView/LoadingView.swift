@@ -43,10 +43,9 @@ class LoadingView: UIView {
         loadingView.translatesAutoresizingMaskIntoConstraints = false
         noDataLabel.font = UIFont.closeButtonFont
     }
-    fileprivate func loadView()
-    {
-        if loadingView == nil
-        {
+    
+    fileprivate func loadView() {
+        if loadingView == nil {
             loadingView = Bundle.main.loadNibNamed("LoadingXib", owner: self, options: nil)![0] as! UIView
             loadingView.frame = self.bounds
             loadingView.translatesAutoresizingMaskIntoConstraints = false
@@ -57,38 +56,31 @@ class LoadingView: UIView {
             self.addConstraints(constrants.1)
         }
         //self.userInteractionEnabled = false
-        
     }
-    fileprivate func wk_getLayouts()->(Array<NSLayoutConstraint>,Array<NSLayoutConstraint>)
-    {
+    
+    fileprivate func wk_getLayouts()->(Array<NSLayoutConstraint>,Array<NSLayoutConstraint>) {
         let hConstaints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["view" : loadingView])
         let vConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["view" : loadingView])
         return (hConstaints,vConstraints)
     }
-    func showLoading()
-    {
+    
+    func showLoading() {
         // self.isHidden = false
         self.noDataLabel.isHidden = true
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         // self.isHidden = false
-        
     }
     
-    func stopLoading()
-    {
+    func stopLoading() {
         self.isNoDataDisplayed = true
         activityIndicator.stopAnimating()
         activityIndicator.isHidden = true
-        
-        
     }
     
-    func showNoDataView(){
+    func showNoDataView() {
         self.isNoDataDisplayed = true
         //self.isHidden = false
-        
-       
         let noDataText = NSLocalizedString("NO_RESULT_MESSAGE", comment: "No result message")
         self.noDataLabel.text = noDataText
         self.noDataView.isHidden = false
@@ -97,13 +89,24 @@ class LoadingView: UIView {
         self.activityIndicator.isHidden = true
         self.noDataLabel.isHidden = false
     }
-    func hideNoDataView(){
+    
+    func showYetNoNotificationDataView() {
+        self.isNoDataDisplayed = true
+        //self.isHidden = false
+        let noDataText = NSLocalizedString("YET_NO_NOTIFICATION_MESSAGE", comment: "Yet no notification message")
+        self.noDataLabel.text = noDataText
+        self.noDataView.isHidden = false
+        self.noDataView.backgroundColor = UIColor.noDataViewGray
+        self.activityIndicator.stopAnimating()
+        self.activityIndicator.isHidden = true
+        self.noDataLabel.isHidden = false
+    }
+    
+    func hideNoDataView() {
         self.isNoDataDisplayed = false
         //self.isHidden = true
         self.noDataView.isHidden = true
         //self.activityIndicatorControl.stopAnimating()
         self.noDataLabel.isHidden = true
     }
-
-
 }
