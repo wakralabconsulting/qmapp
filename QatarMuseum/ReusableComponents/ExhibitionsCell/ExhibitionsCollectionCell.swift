@@ -54,16 +54,19 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
     }
     
     //MARK: MuseumExhibitionList data
-    func setMuseumExhibitionCellValues(cellValues: NSDictionary,imageName: String) {
-        titleLabel.text = (cellValues.value(forKey: "title") as? String)?.uppercased()
-        dateLabel.text = (cellValues.value(forKey: "dateTitle") as? String)?.uppercased()
-        addressLabel.text = (cellValues.value(forKey: "addressTitle") as? String)?.uppercased()
-        if ((cellValues.value(forKey: "favourite") as! Bool) == true) {
+    func setMuseumExhibitionCellValues(exhibition: Exhibition) {
+        titleLabel.text = exhibition.name?.uppercased()
+        dateLabel.text = (exhibition.startDate?.uppercased())! + " - " + (exhibition.endDate?.uppercased())!
+        addressLabel.text = exhibition.location?.uppercased()
+        titleLabel.font = UIFont.heritageTitleFont
+        dateLabel.font = UIFont.exhibitionDateLabelFont
+        addressLabel.font = UIFont.exhibitionDateLabelFont
+        if (exhibition.isFavourite == true) {
             favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
         } else {
             favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
         }
-        if ((cellValues.value(forKey: "open")as! Bool) == true) {
+        if (exhibition.isOpen == true) {
             openCloseView.backgroundColor = UIColor.yellow
             openCloseLabel.text = NSLocalizedString("NOW_OPEN_TITLE", comment: "NOW_OPEN_TITLE in the exhibition page")
             openCloseLabel.textColor = UIColor.black
@@ -72,12 +75,10 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
             openCloseLabel.text = NSLocalizedString("CLOSED_TITLE", comment: "CLOSED_TITLE in the exhibition page")
             openCloseLabel.textColor = UIColor.white
         }
-//        if let imageUrl = cellValues.value(forKey: "image") as? String{
-//           // exhibitionImageView.kf.indicatorType = .activity
-//            exhibitionImageView.kf.setImage(with: URL(string: imageUrl))
-//
-//        }
-        exhibitionImageView.image = UIImage(named: imageName)
+        if let imageUrl = exhibition.image {
+            // exhibitionImageView.kf.indicatorType = .activity
+            exhibitionImageView.kf.setImage(with: URL(string: imageUrl))
+        }
     }
     
     func setGradientLayer() {
