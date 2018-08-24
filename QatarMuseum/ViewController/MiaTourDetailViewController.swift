@@ -10,13 +10,14 @@ import UIKit
 
 class MiaTourDetailViewController: UIViewController,HeaderViewProtocol,comingSoonPopUpProtocol,KASlideShowDelegate {
 
-    @IBOutlet weak var tourGuideDescription: UILabel!
+    @IBOutlet weak var tourGuideDescription: UITextView!
     @IBOutlet weak var startTourButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var slideshowView: KASlideShow!
     @IBOutlet weak var pageControl: UIPageControl!
-
+    @IBOutlet weak var scienceTourTitle: UILabel!
+    
     var slideshowImages : NSArray!
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var i = 0
@@ -28,7 +29,13 @@ class MiaTourDetailViewController: UIViewController,HeaderViewProtocol,comingSoo
     }
 
     func setupUI() {
-        tourGuideDescription.text = "In this tour, you will see and learn about the achievements and contributions of Muslim scientists through history. The eight objects have an obvious scientific purpose or show how science has influenced artistic methods."
+        scienceTourTitle.font = UIFont.miatourGuideFont
+        tourGuideDescription.font = UIFont.englishTitleFont
+        startTourButton.titleLabel?.font = UIFont.startTourFont
+        scienceTourTitle.text = NSLocalizedString("SCIENCE_TOUR_TITLE", comment: "SCIENCE_TOUR_TITLE in science tour page")
+        tourGuideDescription.text = NSLocalizedString("SCIENCE_TOUR_TEXT", comment: "SCIENCE_TOUR_TEXT in science tour page")
+        startTourButton.setTitle(NSLocalizedString("START_TOUR"
+, comment: "START_TOUR in science tour page"), for: .normal)
         headerView.headerViewDelegate = self
          slideshowImages = ["science_tour_object"]
         headerView.headerTitle.text = NSLocalizedString("MIA_TOUR_GUIDES_TITLE", comment: "MIA_TOUR_GUIDES_TITLE in the Mia tour guide page")
@@ -115,11 +122,17 @@ class MiaTourDetailViewController: UIViewController,HeaderViewProtocol,comingSoo
         self.startTourButton.backgroundColor = UIColor.viewMycultureBlue
         //self.startTourButton.setTitleColor(UIColor.white, for: .normal)
         self.startTourButton.transform = CGAffineTransform(scaleX: 1, y: 1)
-        loadComingSoonPopup()
+        let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as! FloorMapViewController
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(floorMapView, animated: false, completion: nil)
     }
     @IBAction func startTourButtonTouchDown(_ sender: UIButton) {
         self.startTourButton.backgroundColor = UIColor.startTourLightBlue
-        self.startTourButton.setTitleColor(UIColor.viewMyculTitleBlue, for: .normal)
+       // self.startTourButton.setTitleColor(UIColor.viewMyculTitleBlue, for: .normal)
         
         self.startTourButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }

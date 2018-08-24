@@ -147,6 +147,9 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         self.clearButton.backgroundColor = UIColor.profilePink
         self.clearButton.setTitleColor(UIColor.whiteColor, for: .normal)
          self.clearButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        institutionText.text = ""
+        ageGroupText.text = ""
+        programmeTypeText.text = ""
     }
     @IBAction func didTapFilter(_ sender: UIButton) {
         self.filterButton.backgroundColor = UIColor.viewMycultureBlue

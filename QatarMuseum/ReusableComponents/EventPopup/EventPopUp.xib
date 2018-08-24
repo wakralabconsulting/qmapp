@@ -69,7 +69,7 @@
                             <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="23"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" pagingEnabled="YES" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EBT-IM-SzZ">
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" alwaysBounceVertical="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EBT-IM-SzZ">
                             <rect key="frame" x="17" y="75" width="262.5" height="246.5"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="18"/>
@@ -114,7 +114,7 @@
                         <constraint firstAttribute="width" constant="50" id="xz0-aT-PAq"/>
                     </constraints>
                     <inset key="contentEdgeInsets" minX="6" minY="6" maxX="6" maxY="6"/>
-                    <state key="normal" image="popup_closeX1"/>
+                    <state key="normal" image="pink_closeX2"/>
                     <connections>
                         <action selector="didTapEventCloseButton:" destination="-1" eventType="touchUpInside" id="NkR-Mj-gOh"/>
                         <action selector="eventCloseTouchDown:" destination="-1" eventType="touchDown" id="Ch1-Wp-B4F"/>
@@ -133,6 +133,6 @@
         </view>
     </objects>
     <resources>
-        <image name="popup_closeX1" width="93" height="93"/>
+        <image name="pink_closeX2" width="93" height="93"/>
     </resources>
 </document>

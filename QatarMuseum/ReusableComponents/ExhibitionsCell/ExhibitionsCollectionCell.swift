@@ -51,6 +51,9 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
            // exhibitionImageView.kf.indicatorType = .activity
             exhibitionImageView.kf.setImage(with: URL(string: imageUrl))
         }
+        if (exhibitionImageView.image == nil) {
+            exhibitionImageView.image = UIImage(named: "default_imageX2")
+        }
     }
     
     //MARK: MuseumExhibitionList data
@@ -78,6 +81,9 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
         if let imageUrl = exhibition.image {
             // exhibitionImageView.kf.indicatorType = .activity
             exhibitionImageView.kf.setImage(with: URL(string: imageUrl))
+        }
+        if (exhibitionImageView.image == nil) {
+            exhibitionImageView.image = UIImage(named: "default_imageX2")
         }
     }
     

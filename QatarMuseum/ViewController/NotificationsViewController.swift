@@ -21,8 +21,12 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
     }
 
     func setUI() {
-        loadingView.isHidden = false
-        loadingView.showLoading()
+        //loadingView.isHidden = false
+        //loadingView.showLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoDataView()
+        //self.loadingView.noDataLabel.text = errorMessage
         notificationsHeader.headerTitle.text = NSLocalizedString("NOTIFICATIONS_TITLE", comment: "NOTIFICATIONS_TITLE in the Notification page")
         notificationsHeader.headerViewDelegate = self
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
@@ -46,7 +50,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
     
     //MARK:- TableView Delegate Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 0
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

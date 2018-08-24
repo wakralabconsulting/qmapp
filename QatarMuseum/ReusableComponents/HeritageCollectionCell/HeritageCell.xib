@@ -26,7 +26,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="318" height="178"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HPJ-U2-xaz">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_imageX2" translatesAutoresizingMaskIntoConstraints="NO" id="HPJ-U2-xaz">
                         <rect key="frame" x="0.0" y="0.0" width="318" height="178"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fga-0A-PUm">
@@ -92,6 +92,7 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="default_imageX2" width="235" height="120"/>
         <image name="heart_fillX1" width="101" height="93"/>
     </resources>
 </document>

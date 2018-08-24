@@ -45,7 +45,8 @@ class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UIC
         artifactHeader.headerTitle.text = NSLocalizedString("ARTIFACT_NUMBERPAD_TITLE", comment: "ARTIFACT_NUMBERPAD_TITLE  in the Artifact Number Pad page")
         artifactHeader.headerTitle.font = UIFont.headerFont
         artifactHeader.headerBackButton.setImage(UIImage(named: "closeX1"), for: .normal)
-        artifactHeader.headerBackButton.contentMode = .scaleAspectFill
+        artifactHeader.headerBackButton.contentEdgeInsets = UIEdgeInsets(top:14, left:19, bottom: 14, right:19)
+        //artifactHeader.headerBackButton.contentMode = .scaleAspectFill
         
         objectTitleLabel.text = NSLocalizedString("OBJECT_TITLE", comment: "OBJECT_TITLE  in the Artifact Number Pad page")
         objectInfoLabel.text = NSLocalizedString("OBJECT_INFO", comment: "OBJECT_INFO  in the Artifact Number Pad page")

@@ -23,7 +23,13 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     @IBOutlet weak var thirdLevelButton: UIButton!
     @IBOutlet weak var secondLevelButton: UIButton!
     @IBOutlet weak var firstLevelButton: UIButton!
+    @IBOutlet weak var secondLevelLabel: UILabel!
+    @IBOutlet weak var numberTwo: UILabel!
+    @IBOutlet weak var numberOne: UILabel!
     
+    @IBOutlet weak var numberThree: UILabel!
+    @IBOutlet weak var firstLevelLabel: UILabel!
+    @IBOutlet weak var thirdLevelLabel: UILabel!
     var overlay = GMSGroundOverlay()
     let l2_atr1 = CLLocationCoordinate2D(latitude: 25.295141, longitude: 51.539185)
     let l2_atr2 = CLLocationCoordinate2D(latitude: 25.295500, longitude: 51.538855)
@@ -80,6 +86,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         firstLevelView.backgroundColor = UIColor.white
         secondLevelView.backgroundColor = UIColor.mapLevelColor
         thirdLevelView.backgroundColor = UIColor.mapLevelColor
+        
+        thirdLevelLabel.text = NSLocalizedString("LEVEL_STRING", comment: "LEVEL_STRING in floor map")
+        secondLevelLabel.text = NSLocalizedString("LEVEL_STRING", comment: "LEVEL_STRING in floor map")
+        firstLevelLabel.text = NSLocalizedString("LEVEL_STRING", comment: "LEVEL_STRING in floor map")
         headerView.headerViewDelegate = self
         headerView.headerTitle.text = NSLocalizedString("FLOOR_MAP_TITLE", comment: "FLOOR_MAP_TITLE  in the Floormap page")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {

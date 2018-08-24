@@ -86,7 +86,6 @@
 "OR_LABEL" = "OR";
 "MUSEUM_TIMING" = "MUSEUM TIMINGS";
 "ABOUT" = "About";
-<<<<<<< HEAD
 "PERMISSION_TITLE" = "Change Calendar Permission";
 "CALENDAR_PERMISSION" = "Qatar Museums app does not have  permission to access your calendar. Tap Settings and enable Calendars to provide permission.";
 
@@ -125,7 +124,6 @@
 
 "KNOWLEDGE_ACTION_TITLE" = "KNOWLEDGE IN ACTION";
 "EDUCATION_TEXT" = "All of our education parameters privide interactive opportunities. We hope that they create lasting memories and lead to the development of creative, compassionate and engaged individuals.\n\n For school teachers and educators, we bring custom-made worshops, conferences and trainings to suit their needs. We also focus on working with children to encourage them to explore the world around them, engage with it, and express themselves through creative activities.\n\n All of our activities with Qatar Supreme Educational Council Professional Standards for Teachers and National Curriculum Standars.";
-"NO_NOTIFICATIONS" = "No Notifications Yet";
 "TOUR_GUIDES" = "TOUR GUIDES";
 "TOUR_GUIDE_TEXT" = "Welcome to Qatar Museum Premises. \n Select the museums to explore the floors and objects on display. \n Immerse yourself into the object details curated specially for you by our experts.";
 "EVENT_ADDED_MESSAGE" = "Event added to Calendar";
@@ -133,4 +131,19 @@
 "BENEFIT_TITLE" = "BENEFITS";
 "CULTURE_PASS_INTRO" = "Qatar Museums Culture Pass gives you discounts, free access and exclusive opportunities  across many cultural venues in Qatar and discounts at a wide range of ever expanding list of partners.Best of all, as a member you're invited to join us in a wide range of exciting creative activities.";
 "CULTURE_PASS_SECONDDESC" = "Get access by activating your membership today.";
-"YET_NO_NOTIFICATION_MESSAGE" = "No notifications yet.";
+"YET_NO_NOTIFICATION_MESSAGE" = "No Notifications Yet";
+
+"TOUR_GUIDE_IMG_NAME_2" = "Mathaf - Arab Museum of Modern Art";
+"TOUR_GUIDE_IMG_NAME_3" = "Firestation - Artists In Residence ";
+"TOUR_GUIDE_IMG_NAME_4" = "Qatar Olympic And Sports Museum";
+"TOUR_GUIDE_IMG_NAME_5" = "National Museum Of Qatar";
+
+"MIA_TOUR_GUIDE_TITLE" = "MIA TOUR GUIDE";
+"SELF_GUIDED_TOUR_TITLE" = "Self Guided Tours";
+"SELF_GUIDED_TEXT1" = "You may also try our self guided tours.";
+"SELF_GUIDED_TEXT2" = "Immerse yourself into the journeys curated specially for you by our experts.";
+"MIA_TOUR_GUIDE_DESC1" = "Welcome to Qatar Museum Premises. Explore the architecture and the objects on display.";
+"MIA_TOUR_GUIDE_DESC2" = "Scan the QR codes available on the galleries for more information.";
+"SCIENCE_TOUR_TEXT" = "In this tour, you will see and learn about the achievements and contributions of Muslim scientists through history. The eight objects have an obvious scientific purpose or show how science has influenced artistic methods.";
+"SCIENCE_TOUR_TITLE" = "SCIENCE TOUR";
+"LEVEL_STRING" = "Level";

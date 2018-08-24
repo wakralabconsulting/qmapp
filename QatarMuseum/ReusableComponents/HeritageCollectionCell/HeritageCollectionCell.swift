@@ -53,6 +53,9 @@ class HeritageCollectionCell: UICollectionViewCell {
         if let imageUrl = heritageList.image{
             heritageImageView.kf.setImage(with: URL(string: imageUrl))
         }
+        if (heritageImageView.image == nil) {
+            heritageImageView.image = UIImage(named: "default_imageX2")
+        }
         titleLabel.font = UIFont.heritageTitleFont
         subTitle.font = UIFont.heritageTitleFont
     }
@@ -79,6 +82,9 @@ class HeritageCollectionCell: UICollectionViewCell {
         if let imageUrl = publicArtsList.image {
             heritageImageView.kf.setImage(with: URL(string: imageUrl))
         }
+        if (heritageImageView.image == nil) {
+            heritageImageView.image = UIImage(named: "default_imageX2")
+        }
         titleLabel.font = UIFont.heritageTitleFont
         subTitle.font = UIFont.heritageTitleFont
     }
@@ -94,6 +100,9 @@ class HeritageCollectionCell: UICollectionViewCell {
         if let imageUrl = collectionList.image {
             heritageImageView.kf.setImage(with: URL(string: imageUrl))
         }
+        if (heritageImageView.image == nil) {
+            heritageImageView.image = UIImage(named: "default_imageX2")
+        }
     }
     
     //MARK: Dining List Data
@@ -105,6 +114,9 @@ class HeritageCollectionCell: UICollectionViewCell {
         subTitle.isHidden = true
         if let imageUrl = diningList.image{
             heritageImageView.kf.setImage(with: URL(string: imageUrl))
+        }
+        if (heritageImageView.image == nil) {
+            heritageImageView.image = UIImage(named: "default_imageX2")
         }
         titleLabel.font = UIFont.heritageTitleFont
     }

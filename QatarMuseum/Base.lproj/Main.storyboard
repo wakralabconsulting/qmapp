@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ru4-0J-FCz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ru4-0J-FCz">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment version="2048" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -486,7 +486,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EVENTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWB-Sh-j4n">
-                                        <rect key="frame" x="166.66666666666666" y="308.66666666666669" width="81.333333333333343" height="29"/>
+                                        <rect key="frame" x="164" y="308.66666666666669" width="87" height="29"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="29" id="guL-0K-jjs"/>
                                         </constraints>
@@ -1605,11 +1605,8 @@
                                                                         <constraint firstAttribute="width" constant="29" id="MeF-TZ-naY"/>
                                                                     </constraints>
                                                                 </view>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r8w-NC-8vm">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r8w-NC-8vm">
                                                                     <rect key="frame" x="192" y="90" width="0.0" height="19"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" constant="19" id="j60-xc-F2S"/>
-                                                                    </constraints>
                                                                     <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="15"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -1862,6 +1859,11 @@
                             <constraint firstItem="jW1-8y-8rs" firstAttribute="top" secondItem="3Pl-U3-7fX" secondAttribute="bottom" id="gmJ-Ra-kbv"/>
                             <constraint firstAttribute="trailing" secondItem="jW1-8y-8rs" secondAttribute="trailing" id="oJ4-hb-GZs"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="tT4-cO-H8p"/>
+                            </mask>
+                        </variation>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="414" height="770"/>
@@ -2626,13 +2628,13 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="NQk-IZ-teF">
                                     <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="50" height="180"/>
+                                    <size key="headerReferenceSize" width="50" height="190"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="USJ-1s-Ufi">
-                                        <rect key="frame" x="0.0" y="180" width="50" height="50"/>
+                                        <rect key="frame" x="0.0" y="190" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -2641,11 +2643,11 @@
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="tourHeader" id="n2D-I5-Hhu" customClass="TourGuideCollectionReusableView" customModule="QatarMuseums" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="180"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="190"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fLs-aV-Rgq">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="180"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="190"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TOUR GUIDES" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wvM-rU-LBj">
                                                     <rect key="frame" x="105.33333333333333" y="20" width="204.66666666666669" height="34"/>
@@ -2653,21 +2655,21 @@
                                                     <color key="textColor" red="0.51105445623397827" green="0.65384590625762939" blue="0.84410649538040161" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Welcome to Qatar Museum Premises. \n Select the " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3xe-ke-sNS">
-                                                    <rect key="frame" x="12" y="54" width="390" height="112"/>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M5m-HF-9dd">
+                                                    <rect key="frame" x="12" y="54" width="390" height="132"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="18"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstItem="3xe-ke-sNS" firstAttribute="top" secondItem="wvM-rU-LBj" secondAttribute="bottom" id="1kP-UJ-MeJ"/>
-                                                <constraint firstAttribute="trailing" secondItem="3xe-ke-sNS" secondAttribute="trailing" constant="12" id="Afb-hd-tHJ"/>
-                                                <constraint firstAttribute="bottom" secondItem="3xe-ke-sNS" secondAttribute="bottom" constant="14" id="Bow-bI-1p4"/>
+                                                <constraint firstAttribute="trailing" secondItem="M5m-HF-9dd" secondAttribute="trailing" constant="12" id="Lly-or-Czh"/>
                                                 <constraint firstItem="wvM-rU-LBj" firstAttribute="top" secondItem="fLs-aV-Rgq" secondAttribute="top" constant="20" id="NHr-Yw-r6r"/>
                                                 <constraint firstItem="wvM-rU-LBj" firstAttribute="centerX" secondItem="fLs-aV-Rgq" secondAttribute="centerX" id="P2B-hK-NJz"/>
-                                                <constraint firstItem="3xe-ke-sNS" firstAttribute="leading" secondItem="fLs-aV-Rgq" secondAttribute="leading" constant="12" id="vqB-2O-QhT"/>
+                                                <constraint firstAttribute="bottom" secondItem="M5m-HF-9dd" secondAttribute="bottom" constant="4" id="UNq-Ag-6aG"/>
+                                                <constraint firstItem="M5m-HF-9dd" firstAttribute="top" secondItem="wvM-rU-LBj" secondAttribute="bottom" id="qzj-IL-sAL"/>
+                                                <constraint firstItem="M5m-HF-9dd" firstAttribute="leading" secondItem="fLs-aV-Rgq" secondAttribute="leading" constant="12" id="xjr-xy-T2X"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -2678,7 +2680,8 @@
                                         <constraint firstAttribute="trailing" secondItem="fLs-aV-Rgq" secondAttribute="trailing" id="yAN-2s-qQ8"/>
                                     </constraints>
                                     <connections>
-                                        <outlet property="tourGuideText" destination="3xe-ke-sNS" id="Y7C-Zi-gQJ"/>
+                                        <outlet property="tourGuideText" destination="M5m-HF-9dd" id="gbB-xF-ppk"/>
+                                        <outlet property="tourGuideTitle" destination="wvM-rU-LBj" id="DHP-Bw-6hX"/>
                                     </connections>
                                 </collectionReusableView>
                                 <connections>
@@ -2731,13 +2734,13 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="lWr-VJ-ieF">
                                     <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="50" height="380"/>
+                                    <size key="headerReferenceSize" width="50" height="400"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="pvE-iS-hBn">
-                                        <rect key="frame" x="0.0" y="380" width="50" height="50"/>
+                                        <rect key="frame" x="0.0" y="400" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -2746,11 +2749,11 @@
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="miaTourHeader" id="MRh-xH-luv" customClass="MiaCollectionReusableView" customModule="QatarMuseums" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="380"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="400"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gEh-NP-pHh">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="380"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="400"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MIA TOUR GUIDE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fdf-gs-z3i">
                                                     <rect key="frame" x="83.000000000000014" y="20" width="249.33333333333337" height="34"/>
@@ -2758,14 +2761,14 @@
                                                     <color key="textColor" red="0.51105445620000001" green="0.65384590629999995" blue="0.84410649540000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Welcome to Qatar Museum Premises. \n Select the " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nLY-bn-Q0y">
-                                                    <rect key="frame" x="12" y="54" width="390" height="126"/>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XT2-K6-knf">
+                                                    <rect key="frame" x="12" y="54" width="390" height="37.666666666666657"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="18"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ucg-Hq-Op9">
-                                                    <rect key="frame" x="60" y="188" width="294" height="46"/>
+                                                    <rect key="frame" x="60" y="99.666666666666671" width="294" height="46.000000000000014"/>
                                                     <color key="backgroundColor" red="0.50700187683105469" green="0.65027910470962524" blue="0.84390383958816528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="46" id="BuN-UH-b1Y"/>
@@ -2785,44 +2788,45 @@
                                                     </connections>
                                                 </button>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="explore_icon" translatesAutoresizingMaskIntoConstraints="NO" id="iVW-1V-6GS">
-                                                    <rect key="frame" x="144.33333333333334" y="196.66666666666666" width="22" height="23"/>
+                                                    <rect key="frame" x="144.33333333333334" y="108.33333333333333" width="22" height="22.999999999999986"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="23" id="Dzj-2W-EMt"/>
                                                         <constraint firstAttribute="width" constant="22" id="MIx-PI-VgW"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Self Guided Tours" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V9O-xL-MBQ">
-                                                    <rect key="frame" x="6" y="258" width="402" height="26"/>
+                                                    <rect key="frame" x="105.66666666666667" y="169.66666666666666" width="202.66666666666663" height="26"/>
                                                     <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="26"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You may also try our self guided tours. \n Immerse yourself into the journeys curated specially for you by our experts." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RG3-2Y-9l8">
-                                                    <rect key="frame" x="24" y="301" width="378" height="54"/>
-                                                    <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="18"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="249" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WW3-h2-vrM">
+                                                    <rect key="frame" x="24" y="212.66666666666663" width="378" height="172.33333333333337"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstItem="RG3-2Y-9l8" firstAttribute="trailing" secondItem="nLY-bn-Q0y" secondAttribute="trailing" id="1yY-EU-eze"/>
                                                 <constraint firstAttribute="trailing" secondItem="Ucg-Hq-Op9" secondAttribute="trailing" constant="60" id="7uQ-FH-N3S"/>
-                                                <constraint firstAttribute="trailing" secondItem="nLY-bn-Q0y" secondAttribute="trailing" constant="12" id="8nu-R3-B1q"/>
-                                                <constraint firstItem="V9O-xL-MBQ" firstAttribute="leading" secondItem="gEh-NP-pHh" secondAttribute="leading" constant="6" id="BG2-q2-3mP"/>
+                                                <constraint firstItem="V9O-xL-MBQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gEh-NP-pHh" secondAttribute="leading" constant="6" id="BG2-q2-3mP"/>
                                                 <constraint firstItem="fdf-gs-z3i" firstAttribute="centerX" secondItem="gEh-NP-pHh" secondAttribute="centerX" id="Fip-KJ-Qiq"/>
-                                                <constraint firstItem="Ucg-Hq-Op9" firstAttribute="top" secondItem="nLY-bn-Q0y" secondAttribute="bottom" constant="8" id="GVs-Xt-eHk"/>
-                                                <constraint firstItem="RG3-2Y-9l8" firstAttribute="leading" secondItem="nLY-bn-Q0y" secondAttribute="leading" constant="12" id="Nnz-lZ-0Au"/>
+                                                <constraint firstAttribute="bottom" secondItem="WW3-h2-vrM" secondAttribute="bottom" constant="15" id="Fuo-aC-bdc"/>
+                                                <constraint firstItem="V9O-xL-MBQ" firstAttribute="centerX" secondItem="gEh-NP-pHh" secondAttribute="centerX" id="Ij3-nG-50y"/>
                                                 <constraint firstItem="fdf-gs-z3i" firstAttribute="top" secondItem="gEh-NP-pHh" secondAttribute="top" constant="20" id="PXS-LI-3hv"/>
+                                                <constraint firstAttribute="trailing" secondItem="XT2-K6-knf" secondAttribute="trailing" constant="12" id="SB6-PL-HtN"/>
+                                                <constraint firstItem="WW3-h2-vrM" firstAttribute="top" secondItem="V9O-xL-MBQ" secondAttribute="bottom" constant="17" id="SHW-nk-cnc"/>
                                                 <constraint firstItem="Ucg-Hq-Op9" firstAttribute="leading" secondItem="gEh-NP-pHh" secondAttribute="leading" constant="60" id="XwG-pP-2ou"/>
-                                                <constraint firstAttribute="trailing" secondItem="V9O-xL-MBQ" secondAttribute="trailing" constant="6" id="dYz-Sn-BQ1"/>
-                                                <constraint firstItem="nLY-bn-Q0y" firstAttribute="top" secondItem="fdf-gs-z3i" secondAttribute="bottom" id="esg-Ws-uMj"/>
-                                                <constraint firstItem="RG3-2Y-9l8" firstAttribute="top" secondItem="V9O-xL-MBQ" secondAttribute="bottom" constant="17" id="hla-9a-cMS"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="V9O-xL-MBQ" secondAttribute="trailing" constant="6" id="dYz-Sn-BQ1"/>
+                                                <constraint firstItem="XT2-K6-knf" firstAttribute="leading" secondItem="gEh-NP-pHh" secondAttribute="leading" constant="12" id="eNl-Ux-ltn"/>
+                                                <constraint firstItem="WW3-h2-vrM" firstAttribute="leading" secondItem="gEh-NP-pHh" secondAttribute="leading" constant="24" id="fzm-AZ-6f7"/>
+                                                <constraint firstItem="Ucg-Hq-Op9" firstAttribute="top" secondItem="XT2-K6-knf" secondAttribute="bottom" constant="8" id="jzF-aV-ZTu"/>
                                                 <constraint firstItem="V9O-xL-MBQ" firstAttribute="top" secondItem="Ucg-Hq-Op9" secondAttribute="bottom" constant="24" id="lVf-oh-M4m"/>
+                                                <constraint firstAttribute="trailing" secondItem="WW3-h2-vrM" secondAttribute="trailing" constant="12" id="oFA-0q-MC8"/>
                                                 <constraint firstItem="iVW-1V-6GS" firstAttribute="centerX" secondItem="Ucg-Hq-Op9" secondAttribute="centerX" constant="-52" id="pCC-4f-TkP"/>
-                                                <constraint firstAttribute="bottom" secondItem="RG3-2Y-9l8" secondAttribute="bottom" constant="25" id="qri-RB-jjB"/>
-                                                <constraint firstItem="nLY-bn-Q0y" firstAttribute="leading" secondItem="gEh-NP-pHh" secondAttribute="leading" constant="12" id="tRG-dl-FYQ"/>
                                                 <constraint firstItem="iVW-1V-6GS" firstAttribute="centerY" secondItem="Ucg-Hq-Op9" secondAttribute="centerY" constant="-3" id="tkQ-wL-vhm"/>
+                                                <constraint firstItem="XT2-K6-knf" firstAttribute="top" secondItem="fdf-gs-z3i" secondAttribute="bottom" id="ytf-Pw-FTm"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -2835,8 +2839,10 @@
                                     <connections>
                                         <outlet property="audioCircleImage" destination="iVW-1V-6GS" id="dAf-XX-Pbe"/>
                                         <outlet property="exploreButton" destination="Ucg-Hq-Op9" id="vhl-sw-YW9"/>
-                                        <outlet property="miaTourGuideText" destination="nLY-bn-Q0y" id="Z2q-7W-EUt"/>
-                                        <outlet property="selfGuidedText" destination="RG3-2Y-9l8" id="kcP-pc-B4V"/>
+                                        <outlet property="miaTitle" destination="fdf-gs-z3i" id="oOn-AU-PYm"/>
+                                        <outlet property="miaTourGuideText" destination="XT2-K6-knf" id="7Za-wF-VZJ"/>
+                                        <outlet property="selfGuidedText" destination="WW3-h2-vrM" id="LJJ-Ug-dqb"/>
+                                        <outlet property="selfGuidedTitle" destination="V9O-xL-MBQ" id="kM7-0b-AjQ"/>
                                     </connections>
                                 </collectionReusableView>
                                 <connections>
@@ -2899,19 +2905,19 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MIA TOUR GUIDE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="BrH-h2-Ubb">
-                                <rect key="frame" x="6" y="525" width="402" height="38"/>
+                                <rect key="frame" x="67.666666666666657" y="505.66666666666674" width="278.66666666666674" height="38"/>
                                 <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="38"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="367-eT-uhI">
-                                <rect key="frame" x="30" y="586" width="354" height="17"/>
-                                <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="17"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zqA-Ww-L2X">
+                                <rect key="frame" x="30" y="566.66666666666663" width="354" height="36.333333333333371"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6wp-F8-p8q">
-                                <rect key="frame" x="161.66666666666666" y="410" width="90" height="90"/>
+                                <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6wp-F8-p8q">
+                                <rect key="frame" x="161.66666666666666" y="390.66666666666669" width="90" height="90"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="90" id="KYR-op-aUJ"/>
                                     <constraint firstAttribute="width" constant="90" id="prq-Tx-n0c"/>
@@ -2944,35 +2950,37 @@
                             </button>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="BrH-h2-Ubb" firstAttribute="centerX" secondItem="eQi-bY-SCY" secondAttribute="centerX" id="6p6-dA-BdG"/>
+                            <constraint firstItem="QXG-N5-Ns3" firstAttribute="top" secondItem="zqA-Ww-L2X" secondAttribute="bottom" constant="23" id="7HF-PW-XPx"/>
                             <constraint firstItem="6wp-F8-p8q" firstAttribute="centerX" secondItem="eQi-bY-SCY" secondAttribute="centerX" id="952-8M-1iP"/>
-                            <constraint firstItem="367-eT-uhI" firstAttribute="leading" secondItem="eQi-bY-SCY" secondAttribute="leading" constant="30" id="9dE-po-0f1"/>
                             <constraint firstItem="FJk-jI-3fc" firstAttribute="leading" secondItem="eQi-bY-SCY" secondAttribute="leading" id="GgK-kG-C5b"/>
-                            <constraint firstItem="BrH-h2-Ubb" firstAttribute="leading" secondItem="eQi-bY-SCY" secondAttribute="leading" constant="6" id="IRt-LF-TE4"/>
+                            <constraint firstItem="BrH-h2-Ubb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eQi-bY-SCY" secondAttribute="leading" constant="6" id="IRt-LF-TE4"/>
                             <constraint firstItem="wFM-oa-Gc4" firstAttribute="leading" secondItem="eQi-bY-SCY" secondAttribute="leading" id="IvV-Jl-KL0"/>
                             <constraint firstItem="BrH-h2-Ubb" firstAttribute="top" secondItem="6wp-F8-p8q" secondAttribute="bottom" constant="25" id="Ixz-uH-7pa"/>
                             <constraint firstItem="bku-li-CTw" firstAttribute="top" secondItem="QXG-N5-Ns3" secondAttribute="bottom" constant="60" id="Kvn-vH-yHD"/>
+                            <constraint firstItem="zqA-Ww-L2X" firstAttribute="top" secondItem="BrH-h2-Ubb" secondAttribute="bottom" constant="23" id="Tu8-xX-d98"/>
                             <constraint firstAttribute="trailing" secondItem="wFM-oa-Gc4" secondAttribute="trailing" id="Uf5-32-FAo"/>
                             <constraint firstItem="mKA-PJ-D6L" firstAttribute="top" secondItem="wFM-oa-Gc4" secondAttribute="bottom" id="V3p-Tp-PWa"/>
-                            <constraint firstAttribute="trailing" secondItem="BrH-h2-Ubb" secondAttribute="trailing" constant="6" id="W1X-2R-XWg"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="BrH-h2-Ubb" secondAttribute="trailing" constant="6" id="W1X-2R-XWg"/>
+                            <constraint firstAttribute="trailing" secondItem="zqA-Ww-L2X" secondAttribute="trailing" constant="30" id="Xtg-Vu-YIq"/>
                             <constraint firstItem="mKA-PJ-D6L" firstAttribute="leading" secondItem="eQi-bY-SCY" secondAttribute="leading" id="e9l-rF-aC2"/>
-                            <constraint firstAttribute="trailing" secondItem="367-eT-uhI" secondAttribute="trailing" constant="30" id="gR9-Be-Qcb"/>
+                            <constraint firstItem="zqA-Ww-L2X" firstAttribute="leading" secondItem="eQi-bY-SCY" secondAttribute="leading" constant="30" id="fbV-bM-LHv"/>
                             <constraint firstItem="FJk-jI-3fc" firstAttribute="top" secondItem="wFM-oa-Gc4" secondAttribute="bottom" id="ihk-ta-Bp5"/>
-                            <constraint firstItem="367-eT-uhI" firstAttribute="top" secondItem="BrH-h2-Ubb" secondAttribute="bottom" constant="23" id="jbl-2Y-8hg"/>
                             <constraint firstItem="wFM-oa-Gc4" firstAttribute="top" secondItem="Duo-v0-lqH" secondAttribute="bottom" id="juC-W8-uVD"/>
                             <constraint firstAttribute="trailing" secondItem="mKA-PJ-D6L" secondAttribute="trailing" id="n0w-T0-7Ba"/>
                             <constraint firstItem="QXG-N5-Ns3" firstAttribute="leading" secondItem="eQi-bY-SCY" secondAttribute="leading" constant="50" id="oJt-I8-GrR"/>
                             <constraint firstAttribute="bottom" secondItem="FJk-jI-3fc" secondAttribute="bottom" id="oKW-ez-xfk"/>
                             <constraint firstAttribute="trailing" secondItem="QXG-N5-Ns3" secondAttribute="trailing" constant="50" id="rGC-6Q-ect"/>
                             <constraint firstAttribute="bottom" secondItem="mKA-PJ-D6L" secondAttribute="bottom" id="uCJ-w9-t3j"/>
-                            <constraint firstItem="QXG-N5-Ns3" firstAttribute="top" secondItem="367-eT-uhI" secondAttribute="bottom" constant="23" id="vhb-yK-pWa"/>
                             <constraint firstAttribute="trailing" secondItem="FJk-jI-3fc" secondAttribute="trailing" id="xwC-MF-rwk"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="headerView" destination="wFM-oa-Gc4" id="561-6H-R1C"/>
+                        <outlet property="miaTitle" destination="BrH-h2-Ubb" id="a6s-rK-2Ge"/>
                         <outlet property="playButton" destination="6wp-F8-p8q" id="AhZ-Bv-lya"/>
                         <outlet property="startTourButton" destination="QXG-N5-Ns3" id="jcm-1u-RyB"/>
-                        <outlet property="tourGuideDescription" destination="367-eT-uhI" id="c0v-eq-6yJ"/>
+                        <outlet property="tourGuideDescription" destination="zqA-Ww-L2X" id="G88-RU-dyP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y2o-iT-PIY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3006,25 +3014,26 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rba-ms-1Or" customClass="KASlideShow">
-                                <rect key="frame" x="0.0" y="85" width="414" height="471"/>
+                                <rect key="frame" x="0.0" y="85.000000000000028" width="414" height="451.66666666666674"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view alpha="0.65000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jkw-LB-Uz1">
-                                <rect key="frame" x="0.0" y="85" width="414" height="471"/>
+                                <rect key="frame" x="0.0" y="85.000000000000028" width="414" height="451.66666666666674"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SCIENCE TOUR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Exd-pk-CxP">
-                                <rect key="frame" x="6" y="518" width="402" height="38"/>
+                                <rect key="frame" x="84" y="498.66666666666674" width="246" height="38"/>
                                 <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="38"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U3U-jL-9Fy">
-                                <rect key="frame" x="30" y="574" width="354" height="17"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1LY-Vb-Tiq">
+                                <rect key="frame" x="30" y="554.66666666666663" width="354" height="36.333333333333371"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="17"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NpL-VI-HM0">
-                                <rect key="frame" x="161.66666666666666" y="410" width="90" height="90"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NpL-VI-HM0">
+                                <rect key="frame" x="161.66666666666666" y="390.66666666666669" width="90" height="90"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="90" id="QAg-3I-4lo"/>
                                     <constraint firstAttribute="width" constant="90" id="TlM-Ty-hhh"/>
@@ -3055,7 +3064,7 @@
                                     <action selector="startTourButtonTouchDown:" destination="g9r-ut-SZZ" eventType="touchDown" id="R7w-Bh-Pp2"/>
                                 </connections>
                             </button>
-                            <pageControl opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="kpw-MP-Oyn">
+                            <pageControl hidden="YES" opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="kpw-MP-Oyn">
                                 <rect key="frame" x="49.666666666666657" y="679" width="315" height="37"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="37" id="PYC-JB-1KD"/>
@@ -3067,21 +3076,22 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="Exd-pk-CxP" firstAttribute="centerX" secondItem="J7l-FS-07m" secondAttribute="centerX" id="2oA-SD-8fe"/>
                             <constraint firstAttribute="trailing" secondItem="CE9-eb-zH5" secondAttribute="trailing" constant="50" id="3Kf-5a-kg9"/>
+                            <constraint firstItem="1LY-Vb-Tiq" firstAttribute="leading" secondItem="J7l-FS-07m" secondAttribute="leading" constant="30" id="49q-Tc-c3s"/>
                             <constraint firstItem="wa7-YK-iHP" firstAttribute="top" secondItem="hqu-mt-iIE" secondAttribute="bottom" id="5Vk-u9-lkB"/>
-                            <constraint firstAttribute="trailing" secondItem="U3U-jL-9Fy" secondAttribute="trailing" constant="30" id="8sm-DW-TBG"/>
                             <constraint firstAttribute="trailing" secondItem="hqu-mt-iIE" secondAttribute="trailing" id="BE0-DF-0Kt"/>
+                            <constraint firstItem="1LY-Vb-Tiq" firstAttribute="top" secondItem="Exd-pk-CxP" secondAttribute="bottom" constant="18" id="Bod-Ku-fE5"/>
                             <constraint firstAttribute="trailing" secondItem="Rba-ms-1Or" secondAttribute="trailing" id="Brq-va-ft8"/>
                             <constraint firstItem="Cc5-NE-r8L" firstAttribute="top" secondItem="kpw-MP-Oyn" secondAttribute="bottom" constant="20" id="C5M-Ox-TMs"/>
-                            <constraint firstItem="U3U-jL-9Fy" firstAttribute="leading" secondItem="J7l-FS-07m" secondAttribute="leading" constant="30" id="GeI-L2-FKQ"/>
-                            <constraint firstItem="CE9-eb-zH5" firstAttribute="top" secondItem="U3U-jL-9Fy" secondAttribute="bottom" constant="18" id="HcO-at-ahq"/>
                             <constraint firstItem="jkw-LB-Uz1" firstAttribute="top" secondItem="wa7-YK-iHP" secondAttribute="bottom" id="MhS-Ah-BdU"/>
                             <constraint firstItem="hqu-mt-iIE" firstAttribute="leading" secondItem="J7l-FS-07m" secondAttribute="leading" id="N92-ug-K6d"/>
                             <constraint firstAttribute="trailing" secondItem="jkw-LB-Uz1" secondAttribute="trailing" id="P34-oQ-vJR"/>
                             <constraint firstItem="jkw-LB-Uz1" firstAttribute="leading" secondItem="J7l-FS-07m" secondAttribute="leading" id="RDq-Z4-28O"/>
                             <constraint firstItem="CE9-eb-zH5" firstAttribute="leading" secondItem="J7l-FS-07m" secondAttribute="leading" constant="50" id="SVe-8b-JQx"/>
-                            <constraint firstItem="U3U-jL-9Fy" firstAttribute="top" secondItem="Rba-ms-1Or" secondAttribute="bottom" constant="18" id="Vr1-Qf-3vx"/>
-                            <constraint firstItem="Exd-pk-CxP" firstAttribute="leading" secondItem="J7l-FS-07m" secondAttribute="leading" constant="6" id="aN9-j9-nuw"/>
+                            <constraint firstItem="1LY-Vb-Tiq" firstAttribute="top" secondItem="Rba-ms-1Or" secondAttribute="bottom" constant="17.999999999999886" id="XGG-ic-5aM"/>
+                            <constraint firstItem="Exd-pk-CxP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="J7l-FS-07m" secondAttribute="leading" constant="6" id="aN9-j9-nuw"/>
+                            <constraint firstAttribute="trailing" secondItem="1LY-Vb-Tiq" secondAttribute="trailing" constant="30" id="aQk-cV-OZo"/>
                             <constraint firstItem="wa7-YK-iHP" firstAttribute="leading" secondItem="J7l-FS-07m" secondAttribute="leading" id="aua-fm-7Tb"/>
                             <constraint firstItem="NpL-VI-HM0" firstAttribute="centerX" secondItem="J7l-FS-07m" secondAttribute="centerX" id="bhn-bl-e0l"/>
                             <constraint firstItem="Rba-ms-1Or" firstAttribute="top" secondItem="wa7-YK-iHP" secondAttribute="bottom" id="dAf-M0-7FE"/>
@@ -3090,8 +3100,8 @@
                             <constraint firstItem="Exd-pk-CxP" firstAttribute="top" secondItem="NpL-VI-HM0" secondAttribute="bottom" constant="18" id="hJ4-S2-2IH"/>
                             <constraint firstItem="jkw-LB-Uz1" firstAttribute="bottom" secondItem="Rba-ms-1Or" secondAttribute="bottom" id="maq-z4-bdr"/>
                             <constraint firstItem="hqu-mt-iIE" firstAttribute="top" secondItem="J7l-FS-07m" secondAttribute="top" id="mrG-x9-ukL"/>
-                            <constraint firstAttribute="trailing" secondItem="Exd-pk-CxP" secondAttribute="trailing" constant="6" id="pfG-dV-bb9"/>
-                            <constraint firstItem="U3U-jL-9Fy" firstAttribute="top" secondItem="Exd-pk-CxP" secondAttribute="bottom" constant="18" id="rDk-Vi-Tb2"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Exd-pk-CxP" secondAttribute="trailing" constant="6" id="pfG-dV-bb9"/>
+                            <constraint firstItem="CE9-eb-zH5" firstAttribute="top" secondItem="1LY-Vb-Tiq" secondAttribute="bottom" constant="18" id="vdh-0G-v7K"/>
                             <constraint firstItem="kpw-MP-Oyn" firstAttribute="top" secondItem="CE9-eb-zH5" secondAttribute="bottom" constant="20" id="wT8-yf-bdJ"/>
                             <constraint firstAttribute="trailing" secondItem="wa7-YK-iHP" secondAttribute="trailing" id="zt0-N7-RQf"/>
                         </constraints>
@@ -3100,9 +3110,10 @@
                         <outlet property="headerView" destination="wa7-YK-iHP" id="bhb-Dn-8k7"/>
                         <outlet property="pageControl" destination="kpw-MP-Oyn" id="pFw-48-JaS"/>
                         <outlet property="playButton" destination="NpL-VI-HM0" id="loJ-pF-jnc"/>
+                        <outlet property="scienceTourTitle" destination="Exd-pk-CxP" id="hHa-So-R6G"/>
                         <outlet property="slideshowView" destination="Rba-ms-1Or" id="Ykw-UZ-Cm6"/>
                         <outlet property="startTourButton" destination="CE9-eb-zH5" id="nvJ-WY-d6D"/>
-                        <outlet property="tourGuideDescription" destination="U3U-jL-9Fy" id="PG8-Qw-rYC"/>
+                        <outlet property="tourGuideDescription" destination="1LY-Vb-Tiq" id="doW-wg-q48"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Y7-7U-DOm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3205,8 +3216,8 @@
                                                                 <constraint firstAttribute="width" constant="20" id="tQ6-wL-xqb"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check the new event at MIA!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9l-PM-ATY">
-                                                            <rect key="frame" x="65" y="39.666666666666664" width="295" height="18"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9l-PM-ATY">
+                                                            <rect key="frame" x="65" y="48.666666666666664" width="295" height="0.0"/>
                                                             <fontDescription key="fontDescription" name="DINNextLTPro-Light" family="DIN Next LT Pro" pointSize="18"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -3370,7 +3381,7 @@
                                                     <constraint firstAttribute="bottom" secondItem="GPI-hU-IQZ" secondAttribute="bottom" id="vOt-wk-5AB"/>
                                                 </constraints>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6tA-jH-6If">
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6tA-jH-6If">
                                                 <rect key="frame" x="172" y="198" width="70" height="70"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="70" id="GOc-tX-fmv"/>
@@ -3540,8 +3551,8 @@
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="46" id="Khj-8d-aKn"/>
                                                         </constraints>
-                                                        <inset key="contentEdgeInsets" minX="6" minY="4" maxX="6" maxY="4"/>
-                                                        <state key="normal" image="downArrow"/>
+                                                        <inset key="contentEdgeInsets" minX="14" minY="15" maxX="13" maxY="15"/>
+                                                        <state key="normal" image="down_arrowX2"/>
                                                         <connections>
                                                             <action selector="didTapInstitutionButton:" destination="cN3-T0-NzE" eventType="touchUpInside" id="zrg-YA-lap"/>
                                                             <action selector="institutionButtonTouchDown:" destination="cN3-T0-NzE" eventType="touchDown" id="oca-aa-33R"/>
@@ -3591,8 +3602,8 @@
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="46" id="QVJ-7j-xBb"/>
                                                         </constraints>
-                                                        <inset key="contentEdgeInsets" minX="6" minY="4" maxX="6" maxY="4"/>
-                                                        <state key="normal" image="downArrow"/>
+                                                        <inset key="contentEdgeInsets" minX="14" minY="15" maxX="13" maxY="15"/>
+                                                        <state key="normal" image="down_arrowX2"/>
                                                         <connections>
                                                             <action selector="ageGroupButtonTouchDown:" destination="cN3-T0-NzE" eventType="touchDown" id="ycJ-K1-Y4Q"/>
                                                             <action selector="didTapageGroupButton:" destination="cN3-T0-NzE" eventType="touchUpInside" id="gFG-sF-CbA"/>
@@ -3636,8 +3647,8 @@
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="46" id="HmR-8P-MsU"/>
                                                         </constraints>
-                                                        <inset key="contentEdgeInsets" minX="6" minY="4" maxX="6" maxY="4"/>
-                                                        <state key="normal" image="downArrow"/>
+                                                        <inset key="contentEdgeInsets" minX="14" minY="15" maxX="13" maxY="15"/>
+                                                        <state key="normal" image="down_arrowX2"/>
                                                         <connections>
                                                             <action selector="didTapProgrammeTypeButton:" destination="cN3-T0-NzE" eventType="touchUpInside" id="T1D-x8-THm"/>
                                                             <action selector="programmeTypeButtonTouchDown:" destination="cN3-T0-NzE" eventType="touchDown" id="lfn-sU-O9H"/>
@@ -3821,8 +3832,8 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="42" id="DqS-s6-YQ9"/>
                             </constraints>
-                            <inset key="contentEdgeInsets" minX="14" minY="19" maxX="14" maxY="19"/>
-                            <state key="normal" image="closeX1"/>
+                            <inset key="contentEdgeInsets" minX="14" minY="18" maxX="14" maxY="18"/>
+                            <state key="normal" image="close_greyX1"/>
                             <connections>
                                 <action selector="didTapPickerClose:" destination="cN3-T0-NzE" eventType="touchUpInside" id="trT-Vg-SxN"/>
                             </connections>
@@ -3832,8 +3843,8 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="42" id="Oe7-C2-Bfk"/>
                             </constraints>
-                            <inset key="contentEdgeInsets" minX="11" minY="12" maxX="11" maxY="12"/>
-                            <state key="normal" title="Button" image="downArrow"/>
+                            <inset key="contentEdgeInsets" minX="12" minY="19" maxX="12" maxY="19"/>
+                            <state key="normal" title="Button" image="down_arrowX2"/>
                             <connections>
                                 <action selector="didTapNext:" destination="cN3-T0-NzE" eventType="touchUpInside" id="Hq7-RC-ysH"/>
                             </connections>
@@ -3843,8 +3854,8 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="42" id="ZY1-36-rGI"/>
                             </constraints>
-                            <inset key="contentEdgeInsets" minX="11" minY="12" maxX="11" maxY="12"/>
-                            <state key="normal" title="Button" image="downArrow"/>
+                            <inset key="contentEdgeInsets" minX="12" minY="19" maxX="12" maxY="19"/>
+                            <state key="normal" title="Button" image="up_arrowX2"/>
                             <connections>
                                 <action selector="didTapPrevious:" destination="cN3-T0-NzE" eventType="touchUpInside" id="Q6V-Id-9B8"/>
                             </connections>
@@ -4046,9 +4057,9 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="di0-le-ao3">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="di0-le-ao3">
                                         <rect key="frame" x="27" y="571" width="170" height="40"/>
-                                        <color key="backgroundColor" red="0.92683249711990356" green="0.25668323040008545" blue="0.53822809457778931" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.83129924535751343" green="0.83141952753067017" blue="0.83127301931381226" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="P9Q-ln-7Yz"/>
                                         </constraints>
@@ -4066,9 +4077,9 @@
                                             <action selector="resetButtonTouchDown:" destination="GHA-qU-agt" eventType="touchDown" id="Pww-ag-5iK"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VDq-Zg-rYj">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VDq-Zg-rYj">
                                         <rect key="frame" x="217" y="571" width="170" height="40"/>
-                                        <color key="backgroundColor" red="0.50700187683105469" green="0.65027910470962524" blue="0.84390383958816528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.83129924535751343" green="0.83141952753067017" blue="0.83127301931381226" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="15"/>
                                         <state key="normal" title="Apply">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -4523,7 +4534,7 @@ Church of Ognissanti, Florence, 1480</string>
                                     <action selector="didTapFirstButton:" destination="avg-al-ab5" eventType="touchUpInside" id="FQV-GX-DV0"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w9A-t9-cCC">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w9A-t9-cCC">
                                 <rect key="frame" x="15" y="100" width="46" height="37"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="37" id="hth-s7-ERY"/>
@@ -4534,13 +4545,14 @@ Church of Ognissanti, Florence, 1480</string>
                                     <action selector="didTapQrCode:" destination="avg-al-ab5" eventType="touchUpInside" id="BXz-RF-dch"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eW7-6Q-nVu">
-                                <rect key="frame" x="353" y="100" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eW7-6Q-nVu">
+                                <rect key="frame" x="359" y="100" width="40" height="45"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="46" id="3dM-zf-flM"/>
-                                    <constraint firstAttribute="height" constant="30" id="8IA-xw-H93"/>
+                                    <constraint firstAttribute="width" constant="40" id="3dM-zf-flM"/>
+                                    <constraint firstAttribute="height" constant="45" id="8IA-xw-H93"/>
                                 </constraints>
-                                <state key="normal" title="Number"/>
+                                <inset key="imageEdgeInsets" minX="4" minY="2" maxX="4" maxY="2"/>
+                                <state key="normal" title="Number" image="number_padX1"/>
                                 <connections>
                                     <action selector="didTapNumberSearch:" destination="avg-al-ab5" eventType="touchUpInside" id="aEp-Rz-HmT"/>
                                 </connections>
@@ -4584,11 +4596,17 @@ Church of Ognissanti, Florence, 1480</string>
                     </view>
                     <connections>
                         <outlet property="firstLevelButton" destination="Cu6-Mb-OBz" id="ddS-wy-zbf"/>
+                        <outlet property="firstLevelLabel" destination="hpW-FZ-Wdt" id="Oe7-Rd-dXl"/>
                         <outlet property="firstLevelView" destination="3WC-ee-vqD" id="Enc-U3-VIr"/>
                         <outlet property="headerView" destination="jf5-dA-4V6" id="hPo-or-feo"/>
+                        <outlet property="numberOne" destination="ndq-AJ-RXR" id="kCn-JN-Wdb"/>
+                        <outlet property="numberThree" destination="kAh-rL-WfI" id="4aH-Bq-JYG"/>
+                        <outlet property="numberTwo" destination="i7b-kQ-doc" id="Pru-B3-sJ0"/>
                         <outlet property="secondLevelButton" destination="KRS-aJ-jMj" id="333-Ld-3Xe"/>
+                        <outlet property="secondLevelLabel" destination="H69-QE-UGV" id="oqO-gI-gs1"/>
                         <outlet property="secondLevelView" destination="714-6w-IhP" id="v1h-wZ-8tU"/>
                         <outlet property="thirdLevelButton" destination="fA4-la-x8q" id="IX1-jP-PuY"/>
+                        <outlet property="thirdLevelLabel" destination="qcl-PB-AM4" id="zma-Ov-FSA"/>
                         <outlet property="thirdLevelView" destination="SlL-Jd-3Bl" id="Htf-Lo-9cc"/>
                         <outlet property="viewForMap" destination="9pI-Wu-eS8" id="xtx-yp-n7k"/>
                     </connections>
@@ -4624,16 +4642,16 @@ Church of Ognissanti, Florence, 1480</string>
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="715"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XEB-jv-bbx">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="724"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="724.33333333333337"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter The Object Number" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S11-qt-4kU">
-                                                        <rect key="frame" x="109" y="15" width="196" height="20"/>
+                                                        <rect key="frame" x="109.33333333333333" y="14.999999999999998" width="195.66666666666669" height="20.333333333333329"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="next to         to view the details" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pKB-gs-QTV">
-                                                        <rect key="frame" x="92.333333333333329" y="40" width="230.66666666666669" height="30"/>
+                                                        <rect key="frame" x="92.333333333333329" y="40.333333333333329" width="230.66666666666669" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="h2Z-wZ-pwy"/>
                                                         </constraints>
@@ -4642,13 +4660,13 @@ Church of Ognissanti, Florence, 1480</string>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Audio CircleX1" translatesAutoresizingMaskIntoConstraints="NO" id="twm-b6-EDW">
-                                                        <rect key="frame" x="150" y="40" width="30" height="30"/>
+                                                        <rect key="frame" x="150" y="40.333333333333329" width="30" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="30" id="8Cc-ZQ-skl"/>
                                                         </constraints>
                                                     </imageView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GGA-r2-QDm">
-                                                        <rect key="frame" x="20" y="80" width="374" height="70"/>
+                                                        <rect key="frame" x="20" y="80.333333333333343" width="374" height="70"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="70" id="oco-uV-3f0"/>
                                                         </constraints>
@@ -4657,7 +4675,7 @@ Church of Ognissanti, Florence, 1480</string>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="EQH-7d-hCv">
-                                                        <rect key="frame" x="20" y="170" width="374" height="430"/>
+                                                        <rect key="frame" x="20" y="170.33333333333337" width="374" height="430"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="430" id="kng-n8-NNw"/>
@@ -4689,7 +4707,7 @@ Church of Ognissanti, Florence, 1480</string>
                                                         </connections>
                                                     </collectionView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kcb-dg-Bja">
-                                                        <rect key="frame" x="130" y="635" width="155" height="20"/>
+                                                        <rect key="frame" x="130" y="635.33333333333337" width="155" height="20"/>
                                                         <attributedString key="attributedText">
                                                             <fragment content="Use the QR Scanner">
                                                                 <attributes>
@@ -4701,12 +4719,12 @@ Church of Ognissanti, Florence, 1480</string>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nKN-4A-AJr">
-                                                        <rect key="frame" x="192" y="670" width="30" height="34"/>
+                                                        <rect key="frame" x="192" y="670.33333333333337" width="30" height="34"/>
                                                         <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="22"/>
                                                         <state key="normal" title="QR"/>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p99-sJ-02q">
-                                                        <rect key="frame" x="195" y="610" width="24" height="20"/>
+                                                        <rect key="frame" x="195" y="610.33333333333337" width="24" height="20"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -4809,23 +4827,23 @@ Church of Ognissanti, Florence, 1480</string>
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="651"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Jw-yT-KO9">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="654"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="776.33333333333337"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9t0-aM-XAs">
-                                                        <rect key="frame" x="20" y="20" width="374" height="20"/>
+                                                        <rect key="frame" x="20" y="20" width="374" height="142.33333333333334"/>
                                                         <string key="text">Qatar Museums Culture Pass gives you discounts, free access and exclusive opportunities  across many cultural venues in Qatar and discounts at a wide range of ever expanding list of partners.Best of all, as a member you're invited to join us in a wide range of exciting creative activities. </string>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get access by activating your membership today." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hbB-mQ-n0t">
-                                                        <rect key="frame" x="20" y="55" width="374" height="17"/>
+                                                        <rect key="frame" x="20" y="177.33333333333331" width="374" height="17"/>
                                                         <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BENEFITS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ymA-if-Utl">
-                                                        <rect key="frame" x="164" y="97" width="87" height="20"/>
+                                                        <rect key="frame" x="164" y="219.33333333333331" width="87" height="20"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="20" id="EqU-Mh-iPH"/>
                                                         </constraints>
@@ -4834,7 +4852,7 @@ Church of Ognissanti, Florence, 1480</string>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="boj-EF-PVN">
-                                                        <rect key="frame" x="193" y="125" width="29" height="3"/>
+                                                        <rect key="frame" x="193" y="247.33333333333331" width="29" height="3"/>
                                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="29" id="mJ3-qk-LVF"/>
@@ -4842,7 +4860,7 @@ Church of Ognissanti, Florence, 1480</string>
                                                         </constraints>
                                                     </view>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ahg-48-nxb">
-                                                        <rect key="frame" x="20" y="138" width="374" height="300"/>
+                                                        <rect key="frame" x="20" y="260.33333333333331" width="374" height="299.99999999999994"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="300" id="Klj-hS-q61"/>
@@ -4893,7 +4911,7 @@ Church of Ognissanti, Florence, 1480</string>
                                                         </connections>
                                                     </tableView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qse-aS-GWU">
-                                                        <rect key="frame" x="137" y="458" width="140" height="20"/>
+                                                        <rect key="frame" x="137" y="580.33333333333337" width="140" height="20"/>
                                                         <attributedString key="attributedText">
                                                             <fragment content="Not A Member Yet">
                                                                 <attributes>
@@ -4906,7 +4924,7 @@ Church of Ognissanti, Florence, 1480</string>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ocB-Rz-SlZ">
-                                                        <rect key="frame" x="25" y="486" width="364" height="50"/>
+                                                        <rect key="frame" x="25" y="608.33333333333337" width="364" height="50"/>
                                                         <color key="backgroundColor" red="0.92549019607843142" green="0.25490196078431371" blue="0.53725490196078429" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="chj-da-VSH"/>
@@ -4926,7 +4944,7 @@ Church of Ognissanti, Florence, 1480</string>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NCR-cz-o6v">
-                                                        <rect key="frame" x="132" y="556" width="150" height="20"/>
+                                                        <rect key="frame" x="132" y="678.33333333333337" width="150" height="20"/>
                                                         <attributedString key="attributedText">
                                                             <fragment content="Already A Member?">
                                                                 <attributes>
@@ -4939,7 +4957,7 @@ Church of Ognissanti, Florence, 1480</string>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e6w-5b-QuN">
-                                                        <rect key="frame" x="25" y="584" width="364" height="50"/>
+                                                        <rect key="frame" x="25" y="706.33333333333337" width="364" height="50"/>
                                                         <color key="backgroundColor" red="0.50588235290000005" green="0.65027910470000005" blue="0.84390383960000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="17"/>
                                                         <state key="normal" title="LOG IN">
@@ -5009,7 +5027,6 @@ Church of Ognissanti, Florence, 1480</string>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Zl7-wN-jsF" firstAttribute="top" secondItem="H9t-XG-BRU" secondAttribute="bottom" id="2I7-Q9-ujJ"/>
                             <constraint firstItem="N6B-gG-Zf7" firstAttribute="top" secondItem="XeE-ST-8IN" secondAttribute="bottom" id="5b7-jK-TZi"/>
@@ -5046,8 +5063,9 @@ Church of Ognissanti, Florence, 1480</string>
         <image name="Audio CircleX1" width="93" height="93"/>
         <image name="MIA_AboutX1" width="81" height="93"/>
         <image name="closeX1" width="93" height="93"/>
+        <image name="close_greyX1" width="93" height="93"/>
         <image name="culture_passX1" width="117" height="93"/>
-        <image name="downArrow" width="2000" height="2000"/>
+        <image name="down_arrowX2" width="139" height="81"/>
         <image name="explore_icon" width="90" height="93"/>
         <image name="gift_shopX1" width="102" height="93"/>
         <image name="heart_emptyX1" width="101" height="93"/>
@@ -5055,6 +5073,7 @@ Church of Ognissanti, Florence, 1480</string>
         <image name="museum_of_islamic" width="472" height="777"/>
         <image name="nextImg" width="2000" height="2000"/>
         <image name="notificationX1" width="81" height="93"/>
+        <image name="number_padX1" width="68" height="93"/>
         <image name="play_button" width="93" height="93"/>
         <image name="play_button_white" width="93" height="93"/>
         <image name="powder_and_damask_2" width="401" height="143"/>
@@ -5063,5 +5082,6 @@ Church of Ognissanti, Florence, 1480</string>
         <image name="profile_pic_round" width="112" height="112"/>
         <image name="restaurantX1" width="120" height="93"/>
         <image name="shareX1" width="82" height="93"/>
+        <image name="up_arrowX2" width="93" height="54"/>
     </resources>
 </document>

@@ -214,7 +214,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func profileButtonPressed() {
-       topBarProfileButtonPressed()
+       //topBarProfileButtonPressed()
+        culturePassButtonPressed()
     }
     
     func menuButtonPressed() {
@@ -314,6 +315,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     func culturePassButtonPressed() {
         let culturePassView =  self.storyboard?.instantiateViewController(withIdentifier: "culturePassViewId") as! CulturePassViewController
+        culturePassView.fromHome = true
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionFade

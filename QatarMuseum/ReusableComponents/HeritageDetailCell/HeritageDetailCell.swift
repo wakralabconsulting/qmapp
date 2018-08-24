@@ -69,7 +69,7 @@ class HeritageDetailCell: UITableViewCell {
         locationTotalBottomConstraint.isActive = false
         middleTitleLabel.isHidden = false
         midTitleDescriptionLabel.isHidden = false
-        middleLabelLine.isHidden = false
+        middleLabelLine.isHidden = true
         openingTimeTitleLabel.isHidden = false
         openingTimeLine.isHidden = false
         sundayTimeLabel.isHidden = false

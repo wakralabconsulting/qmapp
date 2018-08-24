@@ -36,13 +36,16 @@ class HomeCollectionViewCell: UICollectionViewCell {
             //homeImageView.kf.indicatorType = .activity
             homeImageView.kf.setImage(with: URL(string: imageUrl))
         }
+        if (homeImageView.image == nil) {
+            homeImageView.image = UIImage(named: "default_imageX2")
+        }
     }
     
     func setTourGuideCellData(homeCellData: NSDictionary, imageName: String) {
         homeTitleLabel.text = homeCellData.value(forKey: "title") as? String
-        if ((homeCellData.value(forKey: "tourguide") as! Bool) == true) {
-            tourGuideButton.isHidden = false
-        }
+        //if ((homeCellData.value(forKey: "tourguide") as! Bool) == true) {
+            tourGuideButton.isHidden = true
+       // }
         
 //        if let imageUrl = homeCellData.value(forKey: "image") as? String{
 //            //homeImageView.kf.indicatorType = .activity

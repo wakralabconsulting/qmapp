@@ -27,7 +27,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
         miaTourImageArray = ["science_tour","museum_of_islamic_art","coming_soon_1","coming_soon_2"];
         topbarView.headerViewDelegate = self
         topbarView.headerTitle.isHidden = true
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             topbarView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         } else {
             topbarView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
@@ -80,8 +80,8 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let miaTourHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "miaTourHeader", for: indexPath) as! MiaCollectionReusableView
         miaTourHeaderView.miaTourDelegate = self
-        miaTourHeaderView.miaTourGuideText.text = "Welcome to Qatar Museum Premises. \n Explore the architrcture and the objects on display. \n Scan the QR codes available on the galleries for more information."
-        miaTourHeaderView.selfGuidedText.text = "You may also try our self guided tours. \n Immerse yourself into the journeys curated specially for you by our experts."
+        //miaTourHeaderView.miaTourGuideText.text = "Welcome to Qatar Museum Premises. \n Explore the architrcture and the objects on display. \n Scan the QR codes available on the galleries for more information."
+        //miaTourHeaderView.selfGuidedText.text = "You may also try our self guided tours. \n Immerse yourself into the journeys curated specially for you by our experts."
         
         return miaTourHeaderView
     }
