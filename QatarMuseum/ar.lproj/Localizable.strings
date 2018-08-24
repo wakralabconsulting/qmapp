@@ -139,4 +139,7 @@
 "TOUR_GUIDE_IMG_NAME_3" = "Firestation - Artists In Residence ";
 "TOUR_GUIDE_IMG_NAME_4" = "Qatar Olympic And Sports Museum";
 "TOUR_GUIDE_IMG_NAME_5" = "National Museum Of Qatar";
+"YET_NO_NOTIFICATION_MESSAGE" = "No notifications yet.";
+"SOMETHING_WENT_WRONG_TITLE" = "Something went wrong";
+"LOCATION_ERROR_MESSAGE" = "Unfortunately we cannot open Google Maps.";
 

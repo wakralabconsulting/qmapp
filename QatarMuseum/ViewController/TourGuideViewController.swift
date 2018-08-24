@@ -9,16 +9,14 @@
 import UIKit
 
 class TourGuideViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,HeaderViewProtocol,comingSoonPopUpProtocol,UICollectionViewDelegateFlowLayout {
-    
-    
     @IBOutlet weak var tourCollectionView: UICollectionView!
     @IBOutlet weak var topbarView: CommonHeaderView!
     
- 
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var tourImageArray = NSArray()
     var tourDataFullArray : NSArray!
     var fromHome : Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -39,8 +37,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             
             topbarView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
-        }
-        else {
+        } else {
             topbarView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
         

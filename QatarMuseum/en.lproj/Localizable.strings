@@ -147,3 +147,6 @@
 "SCIENCE_TOUR_TEXT" = "In this tour, you will see and learn about the achievements and contributions of Muslim scientists through history. The eight objects have an obvious scientific purpose or show how science has influenced artistic methods.";
 "SCIENCE_TOUR_TITLE" = "SCIENCE TOUR";
 "LEVEL_STRING" = "Level";
+"YET_NO_NOTIFICATION_MESSAGE" = "No notifications yet.";
+"SOMETHING_WENT_WRONG_TITLE" = "Something went wrong";
+"LOCATION_ERROR_MESSAGE" = "Unfortunately we cannot open Google Maps.";

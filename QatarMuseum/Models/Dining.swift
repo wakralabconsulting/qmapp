@@ -11,24 +11,26 @@ struct Dining: ResponseObjectSerializable, ResponseCollectionSerializable {
     var id: String? = nil
     var name: String? = nil
     var location: String? = nil
+    var latitude: String? = nil
+    var longitude: String? = nil
     var description: String? = nil
     var image: String? = nil
     var openingtime: String? = nil
     var closetime: String? = nil
     var sortid: String? = nil
     
-    
     public init?(response: HTTPURLResponse, representation: AnyObject) {
         if let representation = representation as? [String: Any] {
             self.id = representation["ID"] as? String
             self.name = representation["name"] as? String
             self.location = representation["Location"] as? String
+            self.latitude = representation["Latitude"] as? String
+            self.longitude = representation["Longitude"] as? String
             self.description = representation["Description"] as? String
             self.image = representation["image"] as? String
             self.openingtime = representation["opening_time"] as? String
             self.closetime = representation["close_time"] as? String
             self.sortid = representation["sort_id"] as? String
-            
         }
     }
     init(id:String?, name: String?,location:String?,description:String?,image:String?,openingtime:String?,closetime:String?, sortid:String?) {

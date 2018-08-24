@@ -15,7 +15,7 @@ enum PageName{
     case publicArtsDetail
     case museumAbout
 }
-class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol {
     @IBOutlet weak var heritageDetailTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
     
@@ -30,7 +30,8 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     var publicArtsDetailId : String? = nil
     var aboutDetailId : String? = nil
     let networkReachability = NetworkReachabilityManager()
-    
+    var popupView : ComingSoonPopUp = ComingSoonPopUp()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -38,28 +39,22 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         if ((pageNameString == PageName.heritageDetail) && (heritageDetailId != nil)) {
             if  (networkReachability?.isReachable)! {
                 getHeritageDetailsFromServer()
-            }
-            else {
+            } else {
                 self.fetchHeritageDetailsFromCoredata()
             }
-        }
-        else if ((pageNameString == PageName.publicArtsDetail) && (publicArtsDetailId != nil)) {
+        } else if ((pageNameString == PageName.publicArtsDetail) && (publicArtsDetailId != nil)) {
             if  (networkReachability?.isReachable)! {
                 getPublicArtsDetailsFromServer()
-            }
-            else {
+            } else {
                 self.fetchPublicArtsDetailsFromCoredata()
             }
             
-        }
-        else if (pageNameString == PageName.museumAbout) {
+        } else if (pageNameString == PageName.museumAbout) {
             if  (networkReachability?.isReachable)! {
                 getAboutDetailsFromServer()
-            }
-            else {
+            } else {
                 self.fetchAboutDetailsFromCoredata()
             }
-            
         }
         recordScreenView()
     }
@@ -195,12 +190,10 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     func loadLocationInMap(currentRow: Int) {
         var latitudeString :String?
         var longitudeString : String?
-        if ((pageNameString == PageName.museumAbout) && (aboutDetailtArray[currentRow].latitude != nil) && (aboutDetailtArray[currentRow].longitude != nil))
-        {
+        if ((pageNameString == PageName.museumAbout) && (aboutDetailtArray[currentRow].latitude != nil) && (aboutDetailtArray[currentRow].longitude != nil)) {
             latitudeString = aboutDetailtArray[currentRow].latitude
             longitudeString = aboutDetailtArray[currentRow].longitude
-        } else if ((pageNameString == PageName.heritageDetail) && (heritageDetailtArray[currentRow].latitude != nil) && (heritageDetailtArray[currentRow].longitude != nil))
-        {
+        } else if ((pageNameString == PageName.heritageDetail) && (heritageDetailtArray[currentRow].latitude != nil) && (heritageDetailtArray[currentRow].longitude != nil)) {
             latitudeString = heritageDetailtArray[currentRow].latitude
             longitudeString = heritageDetailtArray[currentRow].longitude
         }
@@ -210,42 +203,36 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
 //            longitudeString = publicArtsDetailtArray[currentRow].longitude
 //        }
         
-        let latitude = convertDMSToDDCoordinate(latLongString: latitudeString!)
-        let longitude = convertDMSToDDCoordinate(latLongString: longitudeString!)
-        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!, options: [:], completionHandler: nil)
+        if latitudeString != nil && longitudeString != nil {
+            let latitude = convertDMSToDDCoordinate(latLongString: latitudeString!)
+            let longitude = convertDMSToDDCoordinate(latLongString: longitudeString!)
+            if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!)
+                }
             } else {
-                UIApplication.shared.openURL(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!)
+                let locationUrl = URL(string: "https://maps.google.com/?q=@\(latitude),\(longitude)")!
+                UIApplication.shared.openURL(locationUrl)
             }
         } else {
-            let locationUrl = URL(string: "https://maps.google.com/?q=@\(latitude),\(longitude)")!
-            UIApplication.shared.openURL(locationUrl)
+            showLocationErrorPopup()
         }
     }
-    func convertDMSToDDCoordinate(latLongString : String) -> Double {
-        var latLong = latLongString
-        var delimiter = "°"
-        var latLongArray = latLong.components(separatedBy: delimiter)
-        var degreeString : String?
-        var minString : String?
-        var secString : String?
-        if ((latLongArray.count) > 0) {
-            degreeString = latLongArray[0]
-        }
-        delimiter = "'"
-        latLong = latLongArray[1]
-        latLongArray = latLong.components(separatedBy: delimiter)
-        if ((latLongArray.count) > 1) {
-            minString = latLongArray[0]
-            secString = latLongArray[1]
-        }
-        let degree = (degreeString! as NSString).doubleValue
-        let min = (minString! as NSString).doubleValue
-        let sec = (secString! as NSString).doubleValue
-        let ddCoordinate = degree + (min / 60) + (sec / 3600)
-        return ddCoordinate
+    
+    func showLocationErrorPopup() {
+        popupView  = ComingSoonPopUp(frame: self.view.frame)
+        popupView.comingSoonPopupDelegate = self
+        popupView.loadLocationErrorPopup()
+        self.view.addSubview(popupView)
     }
+    
+    //MARK: Poup Delegate
+    func closeButtonPressed() {
+        self.popupView.removeFromSuperview()
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = 300 - (scrollView.contentOffset.y + 300)
         let height = min(max(y, 60), 400)
