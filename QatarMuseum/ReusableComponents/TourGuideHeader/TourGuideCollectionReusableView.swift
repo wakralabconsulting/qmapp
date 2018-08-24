@@ -9,5 +9,12 @@
 import UIKit
 
 class TourGuideCollectionReusableView: UICollectionReusableView {
-           @IBOutlet weak var tourGuideText: UILabel!
+    @IBOutlet weak var tourGuideText: UITextView!
+    @IBOutlet weak var tourGuideTitle: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        tourGuideTitle.font = UIFont.tourGuidesFont
+        tourGuideText.font = UIFont.englishTitleFont
+    }
 }

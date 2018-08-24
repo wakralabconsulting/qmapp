@@ -9,11 +9,12 @@
 import UIKit
 
 class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol, comingSoonPopUpProtocol {
-    @IBOutlet weak var tourGuideDescription: UILabel!
+    @IBOutlet weak var tourGuideDescription: UITextView!
     @IBOutlet weak var startTourButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var headerView: CommonHeaderView!
     
+    @IBOutlet weak var miaTitle: UILabel!
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
 
     override func viewDidLoad() {
@@ -22,7 +23,11 @@ class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol, co
     }
     
     func setupUI() {
-        tourGuideDescription.text = "Welcome to Qatar Museum Premises. \n Explore the architrcture and the objects on display. \n Scan the QR codes available on the galleries for more information."
+        miaTitle.font = UIFont.miatourGuideFont
+        tourGuideDescription.font = UIFont.englishTitleFont
+        startTourButton.titleLabel?.font = UIFont.startTourFont
+        tourGuideDescription.text = NSLocalizedString("MIA_TOUR_GUIDE_DESC1", comment: "MIA_TOUR_GUIDE_DESC1 in tour guide") + "\n" + NSLocalizedString("MIA_TOUR_GUIDE_DESC2", comment: "MIA_TOUR_GUIDE_DESC2 in tour guide")
+       
         headerView.headerViewDelegate = self
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)

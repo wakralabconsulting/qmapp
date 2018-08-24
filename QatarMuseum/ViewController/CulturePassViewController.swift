@@ -19,7 +19,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, UITableVi
     @IBOutlet weak var notMemberLabel: UILabel!
     @IBOutlet weak var alreadyMemberLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    
+    var fromHome: Bool = false
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     let benefitList = ["15% DISCOUNT AT QM CAFE'S ACROSS ALL VENUES",
                        "10% DISCOUNT ON ITEMS IN ALL QM GIFT SHOPS (without minimum purchase)",
@@ -32,7 +32,9 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, UITableVi
         super.viewDidLoad()   
         setupUI()
     }
-    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -120,13 +122,19 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, UITableVi
     
     //MARK: Header delegates
     func headerCloseButtonPressed() {
-        let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromLeft
         self.view.window!.layer.add(transition, forKey: kCATransition)
-        let appDelegate = UIApplication.shared.delegate
-        appDelegate?.window??.rootViewController = homeViewController
+        if (fromHome == true) {
+            let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
+            let appDelegate = UIApplication.shared.delegate
+            appDelegate?.window??.rootViewController = homeViewController
+        }
+        else {
+            self.dismiss(animated: false, completion: nil)
+        }
+        
     }
 }

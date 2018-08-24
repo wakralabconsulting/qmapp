@@ -26,7 +26,12 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
     }
 
     func setUpUI() {
-        tourImageArray = ["museum_of_islamic_art","mathaf_arab_museum","firestation","qatar_olypic_&_sports_museum","national_museum_of_qatar"];
+        let imagName1 = NSLocalizedString("MUSEUM_TITLE", comment: "MUSEUM_TITLE  in the Tour Guide page")
+        let imagName2 = NSLocalizedString("TOUR_GUIDE_IMG_NAME_2", comment: "TOUR_GUIDE_IMG_NAME_2  in the Tour Guide page")
+        let imagName3 = NSLocalizedString("TOUR_GUIDE_IMG_NAME_3", comment: "TOUR_GUIDE_IMG_NAME_3  in the Tour Guide page")
+        let imagName4 = NSLocalizedString("TOUR_GUIDE_IMG_NAME_4", comment: "TOUR_GUIDE_IMG_NAME_4  in the Tour Guide page")
+        let imagName5 = NSLocalizedString("TOUR_GUIDE_IMG_NAME_5", comment: "TOUR_GUIDE_IMG_NAME_5  in the Tour Guide page")
+        tourImageArray = ["museum_of_islamic_art","mathaf_arab_museum","firestation","coming_soon_1","national_museum_of_qatar"];
         topbarView.headerViewDelegate = self
         topbarView.headerTitle.isHidden = true
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
@@ -85,8 +90,10 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
     }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let tourHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "tourHeader", for: indexPath) as! TourGuideCollectionReusableView
+        tourHeaderView.tourGuideTitle.text = NSLocalizedString("TOUR_GUIDES", comment: "TOUR_GUIDES  in the Tour Guide page")
+        tourHeaderView.tourGuideText.text = NSLocalizedString("TOUR_GUIDE_TEXT", comment: "TOUR_GUIDE_TEXT  in the Tour Guide page")
         
-        tourHeaderView.tourGuideText.text = "Welcome to Qatar Museum Premises. \n Select the museums to explore the floors and objects on display. \n Immerse yourself into the object details curated specially for you by our experts."
+        
         
         return tourHeaderView
     }

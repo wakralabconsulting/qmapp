@@ -13,7 +13,7 @@ extension UIFont {
             return UIFont.init(name: "DINNextLTPro-Bold", size: 20)!
         }
         else {
-            return UIFont.init(name: "DINNextLTArabic-Bold", size: 24)!
+            return UIFont.init(name: "DINNextLTArabic-Bold", size: 22)!
         }
     }
     static var heritageTitleFont: UIFont {
@@ -164,5 +164,38 @@ extension UIFont {
         else{
             return UIFont.init(name: "DINNextLTArabic-Regular", size:30)!
         }
+    }
+    static var tourGuidesFont: UIFont {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            return UIFont.init(name: "DINNextLTPro-Bold", size: 34)!
+        }
+        else{
+            return UIFont.init(name: "DINNextLTArabic-Bold", size:34)!
+        }
+    }
+    static var selfGuidedFont: UIFont {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            return UIFont.init(name: "DINNextLTPro-Bold", size: 26)!
+        }
+        else{
+            return UIFont.init(name: "DINNextLTArabic-Bold", size:26)!
+        }
+    }
+    static var miatourGuideFont: UIFont {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            return UIFont.init(name: "DINNextLTPro-Bold", size: 38)!
+        }
+        else{
+            return UIFont.init(name: "DINNextLTArabic-Bold", size:38)!
+        }
+    }
+    static var startTourFont: UIFont {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            return UIFont.init(name: "DINNextLTPro-Bold", size: 19)!
+        }
+        else{
+            return UIFont.init(name: "DINNextLTArabic-Bold", size:19)!
+        }
+        
     }
 }

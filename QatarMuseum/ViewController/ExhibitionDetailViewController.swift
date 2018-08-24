@@ -101,9 +101,12 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
                 if let imageUrl = exhibition[0].detailImage {
                     imageView.kf.setImage(with: URL(string: imageUrl))
                 }
+                else {
+                    imageView.image = UIImage(named: "default_imageX2")
+                }
             }
         } else {
-            imageView.image = UIImage.init(named: "powder_and_damask")
+            imageView.image = UIImage.init(named: "default_imageX2")
         }
         
         imageView.contentMode = .scaleAspectFill
@@ -117,7 +120,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         blurView.alpha = 0
         imageView.addSubview(blurView)
         
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
         } else {
             closeButton.frame = CGRect(x: self.view.frame.width-50, y: 30, width: 40, height: 40)
@@ -241,9 +244,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     //MARK: Heritage Coredata Method
     func saveOrUpdateExhibitionsCoredata() {
         if (exhibition.count > 0) {
-           let langKey = String(format: NSLocalizedString("LANG_ENGLISH",
-                                                            comment: "en key for language"))
-            if ((LocalizationLanguage.currentAppleLanguage()) == langKey) {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 let fetchData = checkAddedToCoredata(entityName: "ExhibitionsEntity", idKey: "id" , idValue: exhibition[0].id) as! [ExhibitionsEntity]
                 if (fetchData.count > 0) {
                     let managedContext = getContext()
@@ -312,9 +313,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         }
     }
     func saveToCoreData(exhibitionDetailDict: Exhibition, managedObjContext: NSManagedObjectContext) {
-        let langKey = String(format: NSLocalizedString("LANG_ENGLISH",
-                                                       comment: "en key for language"))
-        if ((LocalizationLanguage.currentAppleLanguage()) == langKey) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let exhibitionInfo: ExhibitionsEntity = NSEntityDescription.insertNewObject(forEntityName: "ExhibitionsEntity", into: managedObjContext) as! ExhibitionsEntity
             exhibitionInfo.id = exhibitionDetailDict.id
             exhibitionInfo.detailName = exhibitionDetailDict.name
@@ -352,7 +351,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     func fetchExhibitionDetailsFromCoredata() {
         
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var exhibitionArray = [ExhibitionsEntity]()
                 let managedContext = getContext()
                 let exhibitionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ExhibitionsEntity")

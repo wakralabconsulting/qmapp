@@ -88,7 +88,6 @@
 "MUSEUM_TITLE" = "متحف الفن الإسلامي";
 "NO_RESULT_MESSAGE" = "لم يتم العثور على أي نتائج";
 "CHANGE_LANGUAGE_TITLE" = "تغيير اللغة";
-<<<<<<< HEAD
 "ABOUT" = "عن";
 "PERMISSION_TITLE" = "تغيير إذن التقويم";
 "CALENDAR_PERMISSION" = "لا يمتلك تطبيق متاحف قطر الإذن للولوج للتقويم.. اضغط على الإعدادات وقم بتفعيل التقويم";
@@ -127,7 +126,6 @@
 
 "KNOWLEDGE_ACTION_TITLE" = "KNOWLEDGE IN ACTION";
 "EDUCATION_TEXT" = "All of our education parameters privide interactive opportunities. We hope that they create lasting memories and lead to the development of creative, compassionate and engaged individuals.\n\n For school teachers and educators, we bring custom-made worshops, conferences and trainings to suit their needs. We also focus on working with children to encourage them to explore the world around them, engage with it, and express themselves through creative activities.\n\n All of our activities with Qatar Supreme Educational Council Professional Standards for Teachers and National Curriculum Standars.";
-"NO_NOTIFICATIONS" = "لا توجد إشعارات بعد";
 "TOUR_GUIDES" = "المرشد";
 "TOUR_GUIDE_TEXT" = "Welcome to Qatar Museum Premises. \n Select the museums to explore the floors and objects on display. \n Immerse yourself into the object details curated specially for you by our experts.";
 "EVENT_ADDED_MESSAGE" = "تم إضافة الفعالية للتقويم";
@@ -136,6 +134,11 @@
 "BENEFIT_TITLE" = "BENEFITS";
 "CULTURE_PASS_INTRO" = "Qatar Museums Culture Pass gives you discounts, free access and exclusive opportunities  across many cultural venues in Qatar and discounts at a wide range of ever expanding list of partners.Best of all, as a member you're invited to join us in a wide range of exciting creative activities.";
 "CULTURE_PASS_SECONDDESC" = "Get access by activating your membership today.";
+"YET_NO_NOTIFICATION_MESSAGE" = "لا توجد إشعارات بعد";
+"TOUR_GUIDE_IMG_NAME_2" = "Mathaf - Arab Museum of Modern Art";
+"TOUR_GUIDE_IMG_NAME_3" = "Firestation - Artists In Residence ";
+"TOUR_GUIDE_IMG_NAME_4" = "Qatar Olympic And Sports Museum";
+"TOUR_GUIDE_IMG_NAME_5" = "National Museum Of Qatar";
 "YET_NO_NOTIFICATION_MESSAGE" = "No notifications yet.";
 "SOMETHING_WENT_WRONG_TITLE" = "Something went wrong";
 "LOCATION_ERROR_MESSAGE" = "Unfortunately we cannot open Google Maps.";

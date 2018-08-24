@@ -384,14 +384,23 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     
     func profileButtonPressed() {
-        let profileView =  self.storyboard?.instantiateViewController(withIdentifier: "profileViewId") as! ProfileViewController
-        profileView.fromHome = false
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromRight
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(profileView, animated: false, completion: nil)
+//        let profileView =  self.storyboard?.instantiateViewController(withIdentifier: "profileViewId") as! ProfileViewController
+//        profileView.fromHome = false
+//        let transition = CATransition()
+//        transition.duration = 0.3
+//        transition.type = kCATransitionPush
+//        transition.subtype = kCATransitionFromRight
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        self.present(profileView, animated: false, completion: nil)
+
+            let culturePassView =  self.storyboard?.instantiateViewController(withIdentifier: "culturePassViewId") as! CulturePassViewController
+            culturePassView.fromHome = false
+            let transition = CATransition()
+            transition.duration = 0.25
+            transition.type = kCATransitionFade
+            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+            view.window!.layer.add(transition, forKey: kCATransition)
+            self.present(culturePassView, animated: false, completion: nil)
     }
     
     func menuButtonPressed() {

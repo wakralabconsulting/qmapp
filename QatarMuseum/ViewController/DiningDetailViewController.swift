@@ -48,6 +48,9 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
             if let imageUrl = diningDetailtArray[0].image{
                 imageView.kf.setImage(with: URL(string: imageUrl))
             }
+            else {
+                imageView.image = UIImage(named: "default_imageX2")
+            }
         }
         
         imageView.contentMode = .scaleAspectFill
