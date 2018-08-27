@@ -65,6 +65,7 @@ class HeritageDetailCell: UITableViewCell {
     
     func setHeritageDetailData(heritageDetail: Heritage) {
         titleBottomOnlyConstraint.isActive = false
+        //titleBottomOnlyConstraint.constant = 45
         locationTotalTopConstraint.isActive = false
         locationTotalBottomConstraint.isActive = false
         middleTitleLabel.isHidden = false
@@ -108,8 +109,8 @@ class HeritageDetailCell: UITableViewCell {
         contactLine.isHidden = true
         contactLabel.isHidden = true
 
-        titleBottomOnlyConstraint.isActive = true
-        titleBottomOnlyConstraint.constant = 45
+        titleBottomOnlyConstraint.isActive = true//
+        titleBottomOnlyConstraint.constant = 45//
         locationTotalTopConstraint.isActive = true
         locationTotalTopConstraint.constant = 35
          locationTotalBottomConstraint.isActive = true
