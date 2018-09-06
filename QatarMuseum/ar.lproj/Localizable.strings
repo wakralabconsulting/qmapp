@@ -139,6 +139,14 @@
 "TOUR_GUIDE_IMG_NAME_3" = "Firestation - Artists In Residence ";
 "TOUR_GUIDE_IMG_NAME_4" = "Qatar Olympic And Sports Museum";
 "TOUR_GUIDE_IMG_NAME_5" = "National Museum Of Qatar";
+"MIA_TOUR_GUIDE_TITLE" = "MIA TOUR GUIDE";
+"SELF_GUIDED_TOUR_TITLE" = "Self Guided Tours";
+"SELF_GUIDED_TEXT1" = "You may also try our self guided tours.";
+"SELF_GUIDED_TEXT2" = "Immerse yourself into the journeys curated specially for you by our experts.";
+"MIA_TOUR_GUIDE_DESC1" = "Welcome to Qatar Museum Premises. Explore the architecture and the objects on display.";
+"MIA_TOUR_GUIDE_DESC2" = "Scan the QR codes available on the galleries for more information.";
+"SCIENCE_TOUR_TEXT" = "In this tour, you will see and learn about the achievements and contributions of Muslim scientists through history. The eight objects have an obvious scientific purpose or show how science has influenced artistic methods.";
+"SCIENCE_TOUR_TITLE" = "SCIENCE TOUR";
 "YET_NO_NOTIFICATION_MESSAGE" = "No notifications yet.";
 "SOMETHING_WENT_WRONG_TITLE" = "Something went wrong";
 "LOCATION_ERROR_MESSAGE" = "Unfortunately we cannot open Google Maps.";

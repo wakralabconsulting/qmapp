@@ -44,6 +44,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         diningTableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0)
         
         imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: 300)
+        imageView.image = UIImage(named: "default_imageX2")
         if diningDetailtArray.count != 0 {
             if let imageUrl = diningDetailtArray[0].image{
                 imageView.kf.setImage(with: URL(string: imageUrl))
@@ -343,7 +344,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                 diningArray = (try managedContext.fetch(diningFetchRequest) as? [DiningEntity])!
                 let diningDict = diningArray[0]
                 if ((diningArray.count > 0) && (diningDict.diningdescription != nil)) {
-                    self.diningDetailtArray.insert(Dining(id: diningDict.id, name: diningDict.name, location: diningDict.location, description: diningDict.diningdescription, image: diningDict.image, openingtime: diningDict.openingtime, closetime: diningDict.closetime, sortid: diningDict.sortid), at: 0)
+                    self.diningDetailtArray.insert(Dining(id: diningDict.id, name: diningDict.name, location: diningDict.location, description: diningDict.diningdescription, image: diningDict.image, openingtime: diningDict.openingtime, closetime: diningDict.closetime, sortid: diningDict.sortid,museumId: nil), at: 0)
                     if(diningDetailtArray.count == 0){
                         self.showNodata()
                     }
@@ -365,7 +366,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                 let diningDict = diningArray[0]
                 if ((diningArray.count > 0) && (diningDict.descriptionarabic != nil)) {
                    
-                        self.diningDetailtArray.insert(Dining(id: diningDict.id, name: diningDict.namearabic, location: diningDict.locationarabic, description: diningDict.descriptionarabic, image: diningDict.imagearabic, openingtime: diningDict.openingtimearabic, closetime: diningDict.closetimearabic, sortid: diningDict.sortidarabic), at: 0)
+                    self.diningDetailtArray.insert(Dining(id: diningDict.id, name: diningDict.namearabic, location: diningDict.locationarabic, description: diningDict.descriptionarabic, image: diningDict.imagearabic, openingtime: diningDict.openingtimearabic, closetime: diningDict.closetimearabic, sortid: diningDict.sortidarabic, museumId:nil), at: 0)
                         
                     
                     if(diningDetailtArray.count == 0){

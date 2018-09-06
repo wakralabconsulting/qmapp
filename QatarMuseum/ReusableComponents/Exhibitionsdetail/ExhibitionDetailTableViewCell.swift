@@ -11,7 +11,7 @@ import UIKit
 class ExhibitionDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var titleLabel: UITextView!
     @IBOutlet weak var descriptionLabel: UITextView!
     @IBOutlet weak var detailSecondLabel: UITextView!
     @IBOutlet weak var exbtnDateLabel: UILabel!
@@ -63,10 +63,10 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
     
     func setHomeExhibitionDetail(exhibition: Exhibition) {
         titleLabel.text = exhibition.name?.uppercased()
-        descriptionLabel?.text = exhibition.shortDescription
-        detailSecondLabel.text = exhibition.longDescription
-       // exbtnDateLabel.text = "15 MARCH 2018 - 1 JUNE 2018"
-        //exbtnTimeLabel.text = "Saturday to Sunday:9:00AM - 7:00PM\n Fridays: 1:30PM to 7:00PM"
+        descriptionLabel?.text = exhibition.shortDescription?.replacingOccurrences(of: "&nbsp;", with: " ", options: .regularExpression, range: nil)
+        detailSecondLabel.text = exhibition.longDescription?.replacingOccurrences(of: "&nbsp;", with: " ", options: .regularExpression, range: nil)
+        exbtnDateLabel.text = ""
+        exbtnTimeLabel.text = exhibition.startDate!.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil) + "-" + exhibition.endDate!.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
         locationLabel.text = exhibition.location?.uppercased()
         centerImgHeight.constant = 0
         centerImageView.isHidden = true

@@ -17,6 +17,7 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var collection: [Collection] = []
     let networkReachability = NetworkReachabilityManager()
+    var museumId: String? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,12 +52,10 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
     
     //MARK: Webservice call
     func getCollectionList() {
-        _ = Alamofire.request(QatarMuseumRouter.CollectionList(["museum_id": 63])).responseObject { (response: DataResponse<Collections>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.CollectionList(["museum_id": "63"])).responseObject { (response: DataResponse<Collections>) -> Void in
             switch response.result {
             case .success(let data):
                 self.collection = data.collections!
-                self.saveOrUpdateCollectionCoredata()
-                self.museumCollectionView.reloadData()
                 self.loadingView.stopLoading()
                 self.loadingView.isHidden = true
                 if (self.collection.count == 0) {
@@ -64,6 +63,10 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
                     self.loadingView.noDataView.isHidden = false
                     self.loadingView.isHidden = false
                     self.loadingView.showNoDataView()
+                }
+                else {
+                    self.saveOrUpdateCollectionCoredata()
+                    self.museumCollectionView.reloadData()
                 }
             case .failure( _):
                 var errorMessage: String
@@ -85,7 +88,7 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
     
     //MARK: CollectionView Delegates
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-       return collection.count
+        return collection.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

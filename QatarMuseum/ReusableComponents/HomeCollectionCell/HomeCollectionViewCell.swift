@@ -21,18 +21,18 @@ class HomeCollectionViewCell: UICollectionViewCell {
     }
     
     func setHomeCellData(home: Home) {
-        
-        homeTitleLabel.text = home.name
+        let titleString = home.name
+        homeTitleLabel.text = titleString?.capitalized
         homeTitleLabel.font = UIFont.homeTitleFont
-        homeTitleLabel.text = home.name
         if (home.isTourguideAvailable == "true") {
             tourGuideButton.isHidden = false
         }
-        let exhibitionName = NSLocalizedString("EXHIBITIONS_LABEL",
-                                                                    comment: "EXHIBITIONS_LABEL in exhibition cell")
-        if home.name == exhibitionName {
-            homeImageView.image = UIImage(named: home.image!)
-        } else if let imageUrl = home.image {
+//        let exhibitionName = NSLocalizedString("EXHIBITIONS_LABEL",
+//                                                                    comment: "EXHIBITIONS_LABEL in exhibition cell")
+//        if home.name == exhibitionName {
+//            homeImageView.image = UIImage(named: home.image!)
+//        } else
+            if let imageUrl = home.image {
             //homeImageView.kf.indicatorType = .activity
             homeImageView.kf.setImage(with: URL(string: imageUrl))
         }
@@ -73,4 +73,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
         bottomImageGradient.colors = [UIColor.clear.cgColor, shadow]
         homeImageView.layer.insertSublayer(bottomImageGradient, at: 0)
     }
+//    func capitalizingFirstLetter() -> String {
+//        return prefix(1).uppercased()
+//    }
 }

@@ -11,12 +11,12 @@ import UIKit
 class HeritageDetailCell: UITableViewCell {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var titleLabel: UITextView!
     @IBOutlet weak var subTitleLabel: UILabel!
     @IBOutlet weak var middleTitleLabel: UILabel!
     @IBOutlet weak var titleDescriptionLabel: UITextView!
     @IBOutlet weak var midTitleDescriptionLabel: UITextView!
-    @IBOutlet weak var sundayTimeLabel: UILabel!
+    @IBOutlet weak var sundayTimeLabel: UITextView!
     @IBOutlet weak var fridayTimeLabel: UILabel!
     @IBOutlet weak var locationTitleLabel: UILabel!
     @IBOutlet weak var middleLabelLine: UIView!
@@ -80,8 +80,15 @@ class HeritageDetailCell: UITableViewCell {
         contactLabel.isHidden = false
         locationFirstLabelHeight.constant = 0
         titleLabel.text = heritageDetail.name?.uppercased()
-        titleDescriptionLabel.text = heritageDetail.shortdescription
-        midTitleDescriptionLabel.text = heritageDetail.longdescription
+        if (heritageDetail.shortdescription != nil) {
+            let shortDesc = replaceString(originalString: heritageDetail.shortdescription!, expression: "<[^>]+>|&nbsp;")
+            titleDescriptionLabel.text = shortDesc
+        }
+        if (heritageDetail.longdescription != nil) {
+            let longDesc = replaceString(originalString: heritageDetail.longdescription!, expression: "<[^>]+>|&nbsp;")
+            midTitleDescriptionLabel.text = longDesc
+        }
+        
         locationTitleLabel.text = NSLocalizedString("LOCATION_TITLE",
                                                     comment: "LOCATION_TITLE in the Heritage detail")
         openingTimeTitleLabel.text = NSLocalizedString("OPENING_TIME_TITLE",
@@ -108,15 +115,16 @@ class HeritageDetailCell: UITableViewCell {
         contactTitleLabel.isHidden = true
         contactLine.isHidden = true
         contactLabel.isHidden = true
-
+        
         titleBottomOnlyConstraint.isActive = true//
         titleBottomOnlyConstraint.constant = 45//
         locationTotalTopConstraint.isActive = true
         locationTotalTopConstraint.constant = 35
          locationTotalBottomConstraint.isActive = true
         locationTotalBottomConstraint.constant = 50
-        titleDescriptionLabel.text = publicArsDetail.description
-        midTitleDescriptionLabel.text = publicArsDetail.shortdescription
+        
+        titleDescriptionLabel.text = publicArsDetail.description?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        midTitleDescriptionLabel.text = publicArsDetail.shortdescription?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         locationTitleLabel.text = NSLocalizedString("LOCATION_TITLE",
                                                     comment: "LOCATION_TITLE in the Heritage detail")
         //fridayLabel.text = 
@@ -199,6 +207,10 @@ class HeritageDetailCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    func replaceString(originalString : String, expression: String)->String? {
+       let result = originalString.replacingOccurrences(of: expression, with: "", options: .regularExpression, range: nil)
+        return result
     }
 
 }

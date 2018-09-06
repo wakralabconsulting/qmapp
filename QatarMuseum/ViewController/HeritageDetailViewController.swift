@@ -28,9 +28,9 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     var aboutDetailtArray: [MuseumAbout] = []
     var heritageDetailId : String? = nil
     var publicArtsDetailId : String? = nil
-    var aboutDetailId : String? = nil
     let networkReachability = NetworkReachabilityManager()
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
+    var museumId : String? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +70,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         heritageDetailTableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0)
         
         imageView.frame = CGRect(x: 0, y:20, width: UIScreen.main.bounds.size.width, height: 300)
+        imageView.image = UIImage(named: "default_imageX2")
         if (pageNameString == PageName.heritageDetail) {
             if heritageDetailtArray.count != 0 {
                 if let imageUrl = heritageDetailtArray[0].image{
@@ -443,22 +444,27 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 let heritageFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HeritageEntity")
                 if(heritageDetailId != nil) {
                     heritageFetchRequest.predicate = NSPredicate.init(format: "listid == \(heritageDetailId!)")
-                }
-                heritageArray = (try managedContext.fetch(heritageFetchRequest) as? [HeritageEntity])!
-                let heritageDict = heritageArray[0]
-                if ((heritageArray.count > 0) && (heritageDict.detailshortdescription != nil) && (heritageDict.detaillongdescription != nil) ){
-                        self.heritageDetailtArray.insert(Heritage(id: heritageDict.listid, name: heritageDict.listname, location: heritageDict.detaillocation, latitude: heritageDict.detaillatitude, longitude: heritageDict.detaillongitude, image: heritageDict.listimage, shortdescription: heritageDict.detailshortdescription, longdescription: heritageDict.detaillongdescription, sortid: heritageDict.listsortid), at: 0)
-                        
+                    heritageArray = (try managedContext.fetch(heritageFetchRequest) as? [HeritageEntity])!
                     
-                    if(heritageDetailtArray.count == 0){
+                    if (heritageArray.count > 0) {
+                        let heritageDict = heritageArray[0]
+                        if((heritageDict.detailshortdescription != nil) && (heritageDict.detaillongdescription != nil) ) {
+                            self.heritageDetailtArray.insert(Heritage(id: heritageDict.listid, name: heritageDict.listname, location: heritageDict.detaillocation, latitude: heritageDict.detaillatitude, longitude: heritageDict.detaillongitude, image: heritageDict.listimage, shortdescription: heritageDict.detailshortdescription, longdescription: heritageDict.detaillongdescription, sortid: heritageDict.listsortid), at: 0)
+                            
+                            
+                            if(heritageDetailtArray.count == 0){
+                                self.showNodata()
+                            }
+                            self.setTopBarImage()
+                            heritageDetailTableView.reloadData()
+                        }else{
+                            self.showNodata()
+                        }
+                    }else{
                         self.showNodata()
                     }
-                    self.setTopBarImage()
-                    heritageDetailTableView.reloadData()
                 }
-                else{
-                    self.showNodata()
-                }
+
             }
             else {
                 var heritageArray = [HeritageEntityArabic]()
@@ -466,23 +472,29 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 let heritageFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HeritageEntityArabic")
                 if(heritageDetailId != nil) {
                     heritageFetchRequest.predicate = NSPredicate.init(format: "listid == \(heritageDetailId!)")
-                }
-                heritageArray = (try managedContext.fetch(heritageFetchRequest) as? [HeritageEntityArabic])!
-                let heritageDict = heritageArray[0]
-                if ((heritageArray.count > 0) && (heritageDict.detailshortdescarabic != nil) && (heritageDict.detaillongdescriptionarabic != nil)) {
+                    heritageArray = (try managedContext.fetch(heritageFetchRequest) as? [HeritageEntityArabic])!
                     
-                        self.heritageDetailtArray.insert(Heritage(id: heritageDict.listid, name: heritageDict.listnamearabic, location: heritageDict.detaillocationarabic, latitude: heritageDict.detaillatitudearabic, longitude: heritageDict.detaillongitudearabic, image: heritageDict.listimagearabic, shortdescription: heritageDict.detailshortdescarabic, longdescription: heritageDict.detaillongdescriptionarabic, sortid: heritageDict.listsortidarabic), at: 0)
-                        
-                    
-                    if(heritageDetailtArray.count == 0){
+                    if (heritageArray.count > 0) {
+                        let heritageDict = heritageArray[0]
+                        if( (heritageDict.detailshortdescarabic != nil) && (heritageDict.detaillongdescriptionarabic != nil)) {
+                            self.heritageDetailtArray.insert(Heritage(id: heritageDict.listid, name: heritageDict.listnamearabic, location: heritageDict.detaillocationarabic, latitude: heritageDict.detaillatitudearabic, longitude: heritageDict.detaillongitudearabic, image: heritageDict.listimagearabic, shortdescription: heritageDict.detailshortdescarabic, longdescription: heritageDict.detaillongdescriptionarabic, sortid: heritageDict.listsortidarabic), at: 0)
+                            
+                            
+                            if(heritageDetailtArray.count == 0){
+                                self.showNodata()
+                            }
+                            self.setTopBarImage()
+                            heritageDetailTableView.reloadData()
+                            
+                        }else{
+                            self.showNodata()
+                        }
+                    }
+                    else{
                         self.showNodata()
                     }
-                    self.setTopBarImage()
-                    heritageDetailTableView.reloadData()
                 }
-                else{
-                    self.showNodata()
-                }
+
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
@@ -581,21 +593,27 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 let publicArtsFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "PublicArtsEntity")
                 if(publicArtsDetailId != nil) {
                     publicArtsFetchRequest.predicate = NSPredicate.init(format: "id == \(publicArtsDetailId!)")
-                }
-                publicArtsArray = (try managedContext.fetch(publicArtsFetchRequest) as? [PublicArtsEntity])!
-                let publicArtsDict = publicArtsArray[0]
-                if ((publicArtsArray.count > 0) && (publicArtsDict.detaildescription != nil) && (publicArtsDict.shortdescription != nil) ){
-                    self.publicArtsDetailtArray.insert(PublicArtsDetail(id:publicArtsDict.id , name:publicArtsDict.name, description: publicArtsDict.detaildescription, shortdescription: publicArtsDict.shortdescription, image: publicArtsDict.image), at: 0)
+                    publicArtsArray = (try managedContext.fetch(publicArtsFetchRequest) as? [PublicArtsEntity])!
                     
-                    if(publicArtsDetailtArray.count == 0){
+                    if (publicArtsArray.count > 0) {
+                        let publicArtsDict = publicArtsArray[0]
+                        if((publicArtsDict.detaildescription != nil) && (publicArtsDict.shortdescription != nil) ) {
+                            self.publicArtsDetailtArray.insert(PublicArtsDetail(id:publicArtsDict.id , name:publicArtsDict.name, description: publicArtsDict.detaildescription, shortdescription: publicArtsDict.shortdescription, image: publicArtsDict.image), at: 0)
+                            
+                            if(publicArtsDetailtArray.count == 0){
+                                self.showNodata()
+                            }
+                            self.setTopBarImage()
+                            heritageDetailTableView.reloadData()
+                        }else {
+                            self.showNodata()
+                        }
+                    }
+                    else{
                         self.showNodata()
                     }
-                    self.setTopBarImage()
-                    heritageDetailTableView.reloadData()
                 }
-                else{
-                    self.showNodata()
-                }
+
             }
             else {
                 var publicArtsArray = [PublicArtsEntityArabic]()
@@ -603,23 +621,29 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 let publicArtsFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "PublicArtsEntityArabic")
                 if(publicArtsDetailId != nil) {
                     publicArtsFetchRequest.predicate = NSPredicate.init(format: "id == \(publicArtsDetailId!)")
-                }
-                publicArtsArray = (try managedContext.fetch(publicArtsFetchRequest) as? [PublicArtsEntityArabic])!
-                let publicArtsDict = publicArtsArray[0]
-                if ((publicArtsArray.count > 0) && (publicArtsDict.descriptionarabic != nil) && (publicArtsDict.shortdescriptionarabic != nil)) {
+                    publicArtsArray = (try managedContext.fetch(publicArtsFetchRequest) as? [PublicArtsEntityArabic])!
                     
-                   self.publicArtsDetailtArray.insert(PublicArtsDetail(id:publicArtsDict.id , name:publicArtsDict.namearabic, description: publicArtsDict.descriptionarabic, shortdescription: publicArtsDict.shortdescriptionarabic, image: publicArtsDict.imagearabic), at: 0)
-                    
-                    
-                    if(publicArtsDetailtArray.count == 0){
+                    if (publicArtsArray.count > 0)  {
+                        let publicArtsDict = publicArtsArray[0]
+                        if((publicArtsDict.descriptionarabic != nil) && (publicArtsDict.shortdescriptionarabic != nil)) {
+                            self.publicArtsDetailtArray.insert(PublicArtsDetail(id:publicArtsDict.id , name:publicArtsDict.namearabic, description: publicArtsDict.descriptionarabic, shortdescription: publicArtsDict.shortdescriptionarabic, image: publicArtsDict.imagearabic), at: 0)
+                            
+                            
+                            if(publicArtsDetailtArray.count == 0){
+                                self.showNodata()
+                            }
+                            self.setTopBarImage()
+                            heritageDetailTableView.reloadData()
+                        }
+                        else{
+                            self.showNodata()
+                        }
+                    }
+                    else{
                         self.showNodata()
                     }
-                    self.setTopBarImage()
-                    heritageDetailTableView.reloadData()
                 }
-                else{
-                    self.showNodata()
-                }
+
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
@@ -627,7 +651,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     }
     //MARK:MUSEUMABOUT
     func getAboutDetailsFromServer() {
-        _ = Alamofire.request(QatarMuseumRouter.MuseumAbout(["mid": "63"])).responseObject { (response: DataResponse<MuseumAboutDetails>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.MuseumAbout(["mid": museumId ?? "0"])).responseObject { (response: DataResponse<MuseumAboutDetails>) -> Void in
             switch response.result {
             case .success(let data):
                 self.aboutDetailtArray = data.museumAbout!
@@ -659,6 +683,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         if (aboutDetailtArray.count > 0) {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 let fetchData = checkAddedToCoredata(entityName: "AboutEntity", idKey: "mid" , idValue: aboutDetailtArray[0].mid) as! [AboutEntity]
+                print(aboutDetailtArray[0].mid)
                 if (fetchData.count > 0) {
                     let managedContext = getContext()
                     let aboutDetailDict = aboutDetailtArray[0]
@@ -769,44 +794,48 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 var aboutArray = [AboutEntity]()
                 let managedContext = getContext()
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "AboutEntity")
-                if(aboutDetailId != nil) {
-                    fetchRequest.predicate = NSPredicate.init(format: "mid == \(aboutDetailId!)")
-                }
-                aboutArray = (try managedContext.fetch(fetchRequest) as? [AboutEntity])!
-                let aboutDict = aboutArray[0]
-                if (aboutArray.count > 0 ){
-                    self.aboutDetailtArray.insert(MuseumAbout(mid: aboutDict.mid, filter: aboutDict.filter, title: aboutDict.title, shortDesc: aboutDict.shortDesc, image: aboutDict.image, subTitle: aboutDict.subTitle, longDesc: aboutDict.longDesc, openingTime: aboutDict.openingTime, latitude: aboutDict.latitude, longitude: aboutDict.longitude, contact: aboutDict.contact), at: 0)
+                if(museumId != nil) {
+                    fetchRequest.predicate = NSPredicate.init(format: "mid == \(museumId!)")
+                    aboutArray = (try managedContext.fetch(fetchRequest) as? [AboutEntity])!
                     
-                    if(aboutDetailtArray.count == 0){
+                    if (aboutArray.count > 0 ){
+                        let aboutDict = aboutArray[0]
+                        self.aboutDetailtArray.insert(MuseumAbout(mid: aboutDict.mid, filter: aboutDict.filter, title: aboutDict.title, shortDesc: aboutDict.shortDesc, image: aboutDict.image, subTitle: aboutDict.subTitle, longDesc: aboutDict.longDesc, openingTime: aboutDict.openingTime, latitude: aboutDict.latitude, longitude: aboutDict.longitude, contact: aboutDict.contact), at: 0)
+                        
+                        if(aboutDetailtArray.count == 0){
+                            self.showNodata()
+                        }
+                        self.setTopBarImage()
+                        heritageDetailTableView.reloadData()
+                    }
+                    else{
                         self.showNodata()
                     }
-                    self.setTopBarImage()
-                    heritageDetailTableView.reloadData()
                 }
-                else{
-                    self.showNodata()
-                }
+
             }
             else {
                 var aboutArray = [AboutEntityArabic]()
                 let managedContext = getContext()
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "AboutEntityArabic")
-                if(aboutDetailId != nil) {
-                    fetchRequest.predicate = NSPredicate.init(format: "mid == \(aboutDetailId!)")
-                }
-                aboutArray = (try managedContext.fetch(fetchRequest) as? [AboutEntityArabic])!
-                let aboutDict = aboutArray[0]
-                if (aboutArray.count > 0) {
-                    self.aboutDetailtArray.insert(MuseumAbout(mid: aboutDict.mid, filter: aboutDict.filterAr, title: aboutDict.titleAr, shortDesc: aboutDict.shortDescAr, image: aboutDict.imageAr, subTitle: aboutDict.subTitleAr, longDesc: aboutDict.longDescAr, openingTime: aboutDict.openingTimeAr, latitude: aboutDict.latitudeAr, longitude: aboutDict.longitudeAr, contact: aboutDict.contactAr), at: 0)
-                    if(aboutDetailtArray.count == 0){
+                if(museumId != nil) {
+                    fetchRequest.predicate = NSPredicate.init(format: "mid == \(museumId!)")
+                    aboutArray = (try managedContext.fetch(fetchRequest) as? [AboutEntityArabic])!
+                    
+                    if (aboutArray.count > 0) {
+                        let aboutDict = aboutArray[0]
+                        self.aboutDetailtArray.insert(MuseumAbout(mid: aboutDict.mid, filter: aboutDict.filterAr, title: aboutDict.titleAr, shortDesc: aboutDict.shortDescAr, image: aboutDict.imageAr, subTitle: aboutDict.subTitleAr, longDesc: aboutDict.longDescAr, openingTime: aboutDict.openingTimeAr, latitude: aboutDict.latitudeAr, longitude: aboutDict.longitudeAr, contact: aboutDict.contactAr), at: 0)
+                        if(aboutDetailtArray.count == 0){
+                            self.showNodata()
+                        }
+                        self.setTopBarImage()
+                        heritageDetailTableView.reloadData()
+                    }
+                    else{
                         self.showNodata()
                     }
-                    self.setTopBarImage()
-                    heritageDetailTableView.reloadData()
                 }
-                else{
-                    self.showNodata()
-                }
+ 
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")

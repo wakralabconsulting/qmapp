@@ -18,6 +18,7 @@ struct Dining: ResponseObjectSerializable, ResponseCollectionSerializable {
     var openingtime: String? = nil
     var closetime: String? = nil
     var sortid: String? = nil
+    var museumId: String? = nil
     
     public init?(response: HTTPURLResponse, representation: AnyObject) {
         if let representation = representation as? [String: Any] {
@@ -31,9 +32,10 @@ struct Dining: ResponseObjectSerializable, ResponseCollectionSerializable {
             self.openingtime = representation["opening_time"] as? String
             self.closetime = representation["close_time"] as? String
             self.sortid = representation["sort_id"] as? String
+            self.museumId = representation["museum_id"] as? String
         }
     }
-    init(id:String?, name: String?,location:String?,description:String?,image:String?,openingtime:String?,closetime:String?, sortid:String?) {
+    init(id:String?, name: String?,location:String?,description:String?,image:String?,openingtime:String?,closetime:String?, sortid:String?, museumId:String?) {
         self.id = id
         self.name = name
         self.location = location
@@ -42,6 +44,7 @@ struct Dining: ResponseObjectSerializable, ResponseCollectionSerializable {
         self.openingtime = openingtime
         self.closetime = closetime
         self.sortid = sortid
+        self.museumId = museumId
     }
 }
 

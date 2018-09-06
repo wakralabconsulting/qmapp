@@ -124,6 +124,14 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
                 self.publicArtsListArray = data.publicArtsList
                 self.saveOrUpdatePublicArtsCoredata()
                 self.publicArtsCollectionView.reloadData()
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
+                if (self.publicArtsListArray.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
             case .failure(let error):
                 if let unhandledError = handleError(viewController: self, errorType: error as! BackendError) {
                     var errorMessage: String

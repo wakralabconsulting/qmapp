@@ -87,7 +87,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
          let cell : HomeCollectionViewCell = homeCollectionView.dequeueReusableCell(withReuseIdentifier: "homeCellId", for: indexPath) as! HomeCollectionViewCell
        
-            cell.setHomeCellData(home: homeList[indexPath.row])
+        cell.setHomeCellData(home: homeList[indexPath.row])
         loadingView.stopLoading()
         loadingView.isHidden = true
         return cell
@@ -96,30 +96,28 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            if (homeList[indexPath.row].id == "1") {
+            if (homeList[indexPath.row].id == "12181") {
                 loadExhibitionPage()
-            } else if(homeList[indexPath.row].id == "63"){
-                loadMuseumsPage()
-            } else {
-                loadComingSoonPopup()
+            }
+//            else if(homeList[indexPath.row].id == "63"){
+//                loadMuseumsPage(curretRow: indexPath.row)
+//            }
+            else {
+                loadMuseumsPage(curretRow: indexPath.row)
             }
         }
         else {
-            if (homeList[indexPath.row].id == "01") {
+            if (homeList[indexPath.row].id == "12186") {
                 loadExhibitionPage()
-            } else if(homeList[indexPath.row].id == "96") {
-                loadMuseumsPage()
-            } else {
-                loadComingSoonPopup()
+            }
+//            else if(homeList[indexPath.row].id == "96") {
+//                loadMuseumsPage(curretRow: indexPath.row)
+//            }
+            else {
+                loadMuseumsPage(curretRow: indexPath.row)
             }
         }
-//        if ((homeList[indexPath.row].id == "1") || (homeList[indexPath.row].id == "01")) {
-//            loadExhibitionPage()
-//        } else if((homeList[indexPath.row].id == "63") || (homeList[indexPath.row].id == "96")) {
-//            loadMuseumsPage()
-//        } else {
-//            loadComingSoonPopup()
-//        }
+
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -127,8 +125,10 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         return CGSize(width: homeCollectionView.frame.width, height: heightValue*27)
     }
     
-    func loadMuseumsPage() {
+    func loadMuseumsPage(curretRow:Int) {
         let museumsView =  self.storyboard?.instantiateViewController(withIdentifier: "museumViewId") as! MuseumsViewController
+        museumsView.museumId = homeList[curretRow].id
+        museumsView.museumTitleString = homeList[curretRow].name
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionPush
@@ -162,18 +162,18 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             switch response.result {
             case .success(let data):
                 self.homeList = data.homeList
-                let exhibitionName = NSLocalizedString("EXHIBITIONS_LABEL",
-                                                       comment: "EXHIBITIONS_LABEL in exhibition cell")
-                if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-                    self.homeList.insert(Home(id: "1",name: exhibitionName ,  image: "exhibition",
-                                          tourguide_available: "false", sort_id: nil),
-                                     at: self.homeList.endIndex - 1)
-                }
-                else {
-                    self.homeList.insert(Home(id: "01",name: exhibitionName ,  image: "exhibition",
-                                              tourguide_available: "false", sort_id: nil),
-                                         at: self.homeList.endIndex - 1)
-                }
+//                let exhibitionName = NSLocalizedString("EXHIBITIONS_LABEL",
+//                                                       comment: "EXHIBITIONS_LABEL in exhibition cell")
+//                if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+//                    self.homeList.insert(Home(id: "1",name: exhibitionName ,  image: "exhibition",
+//                                          tourguide_available: "false", sort_id: nil),
+//                                     at: self.homeList.endIndex - 1)
+//                }
+//                else {
+//                    self.homeList.insert(Home(id: "01",name: exhibitionName ,  image: "exhibition",
+//                                              tourguide_available: "false", sort_id: nil),
+//                                         at: self.homeList.endIndex - 1)
+//                }
                 self.saveOrUpdateHomeCoredata()
                 self.homeCollectionView.reloadData()
             case .failure(let error):
