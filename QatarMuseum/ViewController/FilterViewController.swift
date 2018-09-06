@@ -40,8 +40,10 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     var institutionPass = String()
     var ageGroupPass = String()
     var programmePass = String()
-    var selectedRow = 0
-    
+    var selectedInstitutionRow = 0
+    var selectedAgeGroupRow = 0
+    var selectedProgrammeRow = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -86,7 +88,7 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         programmeTypeArray = [pgmType1,pgmType2,pgmType3,pgmType4,pgmType5,pgmType6,pgmType7,pgmType8]
         
         institutionPassArray = ["Years","Public","Cultural","MIA","Mathaf","National","321","Family"]
-        ageGroupPassArray = ["Allages","Nursery","Preschool","EarlyPrimary","Primary","Preparatory","Secondary","College","Youth","Adults","Seniors","Families","Special"]
+        ageGroupPassArray = ["Any","Allages","Nursery","Preschool","EarlyPrimary","Primary","Preparatory","Secondary","College","Youth","Adults","Seniors","Families","Special"]
         programmePassArray = ["Art","Field","Gallery","Lecture","Photography","Reading","Research","Workshop"]
         headerView.headerViewDelegate = self
         headerView.headerBackButton.setImage(UIImage(named: "closeX1"), for: .normal)
@@ -133,28 +135,32 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     
     @IBAction func didTapInstitutionButton(_ sender: UIButton) {
         institutionText.becomeFirstResponder()
-         self.institutionButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        self.institutionButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
+    
     @IBAction func didTapageGroupButton(_ sender: UIButton) {
         ageGroupText.becomeFirstResponder()
-         self.ageGroupButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        self.ageGroupButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
+    
     @IBAction func didTapProgrammeTypeButton(_ sender: UIButton) {
         programmeTypeText.becomeFirstResponder()
-         self.programmeButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        self.programmeButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
+    
     @IBAction func didTapClear(_ sender: UIButton) {
         self.clearButton.backgroundColor = UIColor.profilePink
         self.clearButton.setTitleColor(UIColor.whiteColor, for: .normal)
-         self.clearButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        self.clearButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         institutionText.text = ""
         ageGroupText.text = ""
         programmeTypeText.text = ""
     }
+    
     @IBAction func didTapFilter(_ sender: UIButton) {
         self.filterButton.backgroundColor = UIColor.viewMycultureBlue
         self.filterButton.setTitleColor(UIColor.white, for: .normal)
-         self.filterButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        self.filterButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionPush
@@ -165,29 +171,34 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         programmeType = programmePass
         self.dismiss(animated: false, completion: nil)
     }
+    
     @IBAction func institutionButtonTouchDown(_ sender: UIButton) {
         self.institutionButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
+    
     @IBAction func ageGroupButtonTouchDown(_ sender: UIButton) {
         self.ageGroupButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
+    
     @IBAction func programmeTypeButtonTouchDown(_ sender: UIButton) {
-        
         self.programmeButton.transform = CGAffineTransform(scaleX: 0.7, y:0.7)
     }
+    
     @IBAction func clearButtonTouchDown(_ sender: UIButton) {
         self.clearButton.backgroundColor = UIColor.profileLightPink
         self.clearButton.setTitleColor(UIColor.viewMyFavDarkPink, for: .normal)
         self.clearButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
+    
     @IBAction func filterButtonTouchDown(_ sender: UIButton) {
         self.filterButton.backgroundColor = UIColor.viewMycultureLightBlue
         self.filterButton.setTitleColor(UIColor.viewMyculTitleBlue, for: .normal)
         self.filterButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
+    
     func addPickerView() {
         picker.translatesAutoresizingMaskIntoConstraints = false
-        picker.frame = CGRect(x: 0, y: UIScreen.main.bounds.height-200, width: self.view.frame.width, height: 200)
+        picker.frame = CGRect(x: 20, y: UIScreen.main.bounds.height-200, width: self.view.frame.width - 40, height: 200)
         picker.backgroundColor = UIColor.whiteColor
         picker.showsSelectionIndicator = true
         picker.delegate = self
@@ -198,7 +209,6 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         ageGroupText.inputAccessoryView = pickerToolBar
         programmeTypeText.inputView = picker
         programmeTypeText.inputAccessoryView = pickerToolBar
-        
     }
     
     //MARK: header delegate
@@ -215,20 +225,21 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         var viewForTextField : UIView!
         if (textField == institutionText) {
             picker.tag = 0
+            picker.selectRow(selectedInstitutionRow, inComponent: 0, animated: true)
             institutionView.backgroundColor = UIColor.filterTextSelectedGray
             ageGroupView.backgroundColor = UIColor.white
             programmeTypeView.backgroundColor = UIColor.white
             viewForTextField = institutionView
-        }
-        else if(textField == ageGroupText) {
+        } else if(textField == ageGroupText) {
             picker.tag = 1
+            picker.selectRow(selectedAgeGroupRow, inComponent: 0, animated: true)
             institutionView.backgroundColor = UIColor.white
             ageGroupView.backgroundColor = UIColor.filterTextSelectedGray
             programmeTypeView.backgroundColor = UIColor.white
             viewForTextField = ageGroupView
-        }
-        else {
+        } else {
             picker.tag = 2
+            picker.selectRow(selectedProgrammeRow, inComponent: 0, animated: true)
             institutionView.backgroundColor = UIColor.white
             ageGroupView.backgroundColor = UIColor.white
             programmeTypeView.backgroundColor = UIColor.filterTextSelectedGray
@@ -249,6 +260,7 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
        
         picker.reloadAllComponents()
     }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
         UIView.beginAnimations( "animateView", context: nil)
         var frame : CGRect = self.view.frame
@@ -256,9 +268,11 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         self.view.frame = frame
         UIView.commitAnimations()
     }
+    
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         return true
     }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         institutionText.resignFirstResponder()
         ageGroupText.resignFirstResponder()
@@ -275,89 +289,107 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if(picker.tag == 0) {
             return institutionArray.count
-        }
-        else if(picker.tag == 1) {
+        } else if(picker.tag == 1) {
             return ageGroupArray.count
-        }
-        else {
+        } else {
             return programmeTypeArray.count
         }
-        
     }
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        selectedRow = row
-        if(picker.tag == 0) {
-            selectedInstitution = (institutionArray[row] as? String)!
-            institutionText.text = (institutionArray[row] as? String)!
-            return institutionArray[row] as? String;
-        }
-        else if(picker.tag == 1) {
-            selectedageGroup = (ageGroupArray[row] as? String)!
-            ageGroupText.text = (ageGroupArray[row] as? String)!
-            
-            return ageGroupArray[row] as? String;
-        }
-        else {
-            selectedProgramme = (programmeTypeArray[row] as? String)!
-            programmeTypeText.text = (programmeTypeArray[row] as? String)!
-            
-            return programmeTypeArray[row] as? String;
-        }
-        
-        
-    }
+
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         let pickerLabel = UITextView()
         var pickerTitle : String?
-        selectedRow = row
         if (picker.tag == 0) {
             pickerTitle = institutionArray[row] as? String
             selectedInstitution = (institutionArray[row] as? String)!
-            institutionPass = (institutionPassArray[row] as? String)!
-            institutionText.text = (institutionArray[row] as? String)!
-        }
-        else if(picker.tag == 1) {
+        } else if(picker.tag == 1) {
             pickerTitle = ageGroupArray[row] as? String
             selectedageGroup = (ageGroupArray[row] as? String)!
-            ageGroupPass = (ageGroupPassArray[row] as? String)!
-            ageGroupText.text = (ageGroupArray[row] as? String)!
-        }
-        else {
+        } else {
             pickerTitle = programmeTypeArray[row] as? String
             selectedProgramme = (programmeTypeArray[row] as? String)!
-            programmePass = (programmePassArray[row] as? String)!
-            programmeTypeText.text = (programmeTypeArray[row] as? String)!
         }
         pickerLabel.text = pickerTitle
         pickerLabel.font = UIFont.closeButtonFont
         pickerLabel.textAlignment = NSTextAlignment.center
         return pickerLabel
     }
-    //MARK: Picker ToolBar Actions
     
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        print(row)
+        if (picker.tag == 0) {
+            selectedInstitutionRow = row
+            selectedInstitution = (institutionArray[row] as? String)!
+            institutionText.text = (institutionArray[row] as? String)!
+            institutionPass = (institutionPassArray[row] as? String)!
+        } else if(picker.tag == 1) {
+            selectedAgeGroupRow = row
+            selectedageGroup = (ageGroupArray[row] as? String)!
+            ageGroupText.text = (ageGroupArray[row] as? String)!
+            ageGroupPass = (ageGroupPassArray[row] as? String)!
+        } else {
+            selectedProgrammeRow = row
+            selectedProgramme = (programmeTypeArray[row] as? String)!
+            programmeTypeText.text = (programmeTypeArray[row] as? String)!
+            programmePass = (programmePassArray[row] as? String)!
+        }
+    }
+    
+    //MARK: Picker ToolBar Actions
     @IBAction func didTapPrevious(_ sender: UIButton) {
-       
-        picker.selectRow(selectedRow-1, inComponent: 0, animated: true)
+        if (picker.tag == 0 && selectedInstitutionRow != 0) {
+            selectedInstitutionRow = selectedInstitutionRow-1
+            picker.selectRow(selectedInstitutionRow, inComponent: 0, animated: true)
+            selectedInstitution = (institutionArray[selectedInstitutionRow] as? String)!
+            institutionPass = (institutionPassArray[selectedInstitutionRow] as? String)!
+            institutionText.text = (institutionArray[selectedInstitutionRow] as? String)!
+        } else if(picker.tag == 1 && selectedAgeGroupRow != 0) {
+            selectedAgeGroupRow = selectedAgeGroupRow-1
+            picker.selectRow(selectedAgeGroupRow, inComponent: 0, animated: true)
+            selectedageGroup = (ageGroupArray[selectedAgeGroupRow] as? String)!
+            ageGroupPass = (ageGroupPassArray[selectedAgeGroupRow] as? String)!
+            ageGroupText.text = (ageGroupArray[selectedAgeGroupRow] as? String)!
+        } else if(picker.tag == 2 && selectedProgrammeRow != 0) {
+            selectedProgrammeRow = selectedProgrammeRow - 1
+            picker.selectRow(selectedProgrammeRow, inComponent: 0, animated: true)
+            selectedProgramme = (programmeTypeArray[selectedProgrammeRow] as? String)!
+            programmePass = (programmePassArray[selectedProgrammeRow] as? String)!
+            programmeTypeText.text = (programmeTypeArray[selectedProgrammeRow] as? String)!
+        }
     }
     
     @IBAction func didTapNext(_ sender: UIButton) {
-        picker.selectRow(selectedRow+1, inComponent: 0, animated: true)
+        if (picker.tag == 0 && selectedInstitutionRow != institutionArray.count-1) {
+            selectedInstitutionRow = selectedInstitutionRow+1
+            picker.selectRow(selectedInstitutionRow, inComponent: 0, animated: true)
+            selectedInstitution = (institutionArray[selectedInstitutionRow] as? String)!
+            institutionPass = (institutionPassArray[selectedInstitutionRow] as? String)!
+            institutionText.text = (institutionArray[selectedInstitutionRow] as? String)!
+        } else if(picker.tag == 1 && selectedAgeGroupRow != ageGroupArray.count-1) {
+            selectedAgeGroupRow = selectedAgeGroupRow+1
+            picker.selectRow(selectedAgeGroupRow, inComponent: 0, animated: true)
+            selectedageGroup = (ageGroupArray[selectedAgeGroupRow] as? String)!
+            ageGroupPass = (ageGroupPassArray[selectedAgeGroupRow] as? String)!
+            ageGroupText.text = (ageGroupArray[selectedAgeGroupRow] as? String)!
+        } else if(picker.tag == 2 && selectedProgrammeRow != programmeTypeArray.count-1) {
+            selectedProgrammeRow = selectedProgrammeRow+1
+            picker.selectRow(selectedProgrammeRow, inComponent: 0, animated: true)
+            selectedProgramme = (programmeTypeArray[selectedProgrammeRow] as? String)!
+            programmePass = (programmePassArray[selectedProgrammeRow] as? String)!
+            programmeTypeText.text = (programmeTypeArray[selectedProgrammeRow] as? String)!
+        }
     }
+    
     @IBAction func didTapPickerClose(_ sender: UIButton) {
         if (picker.tag == 0) {
             institutionText.text = selectedInstitution
-        }
-        else if(picker.tag == 1) {
+        } else if(picker.tag == 1) {
             ageGroupText.text = selectedageGroup
-        }
-        else {
+        } else {
             programmeTypeText.text = selectedProgramme
         }
         institutionText.resignFirstResponder()
         ageGroupText.resignFirstResponder()
         programmeTypeText.resignFirstResponder()
     }
-    
-    
-
 }
