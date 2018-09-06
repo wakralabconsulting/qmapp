@@ -26,6 +26,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case MuseumAbout([String: Any])
     case LandingPageMuseums([String: Any])
     case MuseumDiningList([String: Any])
+    case CollectionDetail([String: Any])
 
 
     var method: Alamofire.HTTPMethod {
@@ -62,13 +63,15 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return .get
         case .MuseumExhibitionList:
             return .get
+        case .CollectionDetail:
+            return .get
         }
     }
     
     var path: String {
         switch self {
         case .ExhibitionList:
-            return "/Exhibition_List_Page.php"
+            return "Exhibition_List_Page.json"
         case .HomeList:
             return "/gethomeList.json"
         case .HeritageList:
@@ -98,7 +101,9 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .MuseumDiningList( _):
             return "/getDiningList.php"
         case .MuseumExhibitionList( _):
-            return "Exhibition_List_Page.php"
+            return "Exhibition_List_Page.json"
+        case .CollectionDetail( _):
+            return "/Exhibition_detail_Page.json"
         }
     }
 
@@ -113,8 +118,10 @@ enum QatarMuseumRouter: URLRequestConvertible {
                                        forHTTPHeaderField: "Authorization")
         }
         switch self {
-//        case .ExhibitionList(let parameters):
-//            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
+        case .ExhibitionList():
+            return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
+        case .MuseumExhibitionList(let parameters):
+            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         case .HomeList():
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
         case .HeritageList():
@@ -132,6 +139,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .GetPublicArtsDetail(let parameters):
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         case .CollectionList(let parameters):
+            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
+        case .CollectionDetail(let parameters):
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         case .EducationEvent(let date, let ageGroup, let inst, let prog):
             let educationURL = NSURL(string: Config.tempBaseIP + lang())!
@@ -168,16 +177,16 @@ enum QatarMuseumRouter: URLRequestConvertible {
             var diningMutableURLReq = URLRequest(url: diningURL.appendingPathComponent(path)!)
             diningMutableURLReq.httpMethod = method.rawValue
             return try! Alamofire.URLEncoding.default.encode(diningMutableURLReq, with: parameters)
-        case .ExhibitionList():
-            let exhibitionURL = NSURL(string: Config.tempBaseIP + lang() + Config.mobileApiURL)!
-            var exhibitionMutableURLReq = URLRequest(url: exhibitionURL.appendingPathComponent(path)!)
-            exhibitionMutableURLReq.httpMethod = method.rawValue
-            return try! Alamofire.JSONEncoding.default.encode(exhibitionMutableURLReq)
-        case .MuseumExhibitionList(let parameters):
-            let exhibitionURL = NSURL(string: Config.tempBaseIP + lang() + Config.mobileApiURL)!
-            var exhibitionMutableURLReq = URLRequest(url: exhibitionURL.appendingPathComponent(path)!)
-            exhibitionMutableURLReq.httpMethod = method.rawValue
-            return try! Alamofire.URLEncoding.default.encode(exhibitionMutableURLReq, with: parameters)
+//        case .ExhibitionList():
+//            let exhibitionURL = NSURL(string: Config.tempBaseIP + lang() + Config.mobileApiURL)!
+//            var exhibitionMutableURLReq = URLRequest(url: exhibitionURL.appendingPathComponent(path)!)
+//            exhibitionMutableURLReq.httpMethod = method.rawValue
+//            return try! Alamofire.JSONEncoding.default.encode(exhibitionMutableURLReq)
+//        case .MuseumExhibitionList(let parameters):
+//            let exhibitionURL = NSURL(string: Config.tempBaseIP + lang() + Config.mobileApiURL)!
+//            var exhibitionMutableURLReq = URLRequest(url: exhibitionURL.appendingPathComponent(path)!)
+//            exhibitionMutableURLReq.httpMethod = method.rawValue
+//            return try! Alamofire.URLEncoding.default.encode(exhibitionMutableURLReq, with: parameters)
         
         }
     }

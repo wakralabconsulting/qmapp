@@ -82,6 +82,7 @@ class LoadingView: UIView {
         self.isNoDataDisplayed = true
         //self.isHidden = false
         let noDataText = NSLocalizedString("NO_RESULT_MESSAGE", comment: "No result message")
+        self.noDataLabel.font = UIFont.closeButtonFont
         self.noDataLabel.text = noDataText
         self.noDataView.isHidden = false
         self.noDataView.backgroundColor = UIColor.noDataViewGray
@@ -94,6 +95,7 @@ class LoadingView: UIView {
         self.isNoDataDisplayed = true
         //self.isHidden = false
         let noDataText = NSLocalizedString("YET_NO_NOTIFICATION_MESSAGE", comment: "Yet no notification message")
+        self.noDataLabel.font = UIFont.closeButtonFont
         self.noDataLabel.text = noDataText
         self.noDataView.isHidden = false
         self.noDataView.backgroundColor = UIColor.noDataViewGray

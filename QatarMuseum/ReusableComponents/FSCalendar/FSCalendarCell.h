@@ -21,7 +21,6 @@ typedef NS_ENUM(NSUInteger, FSCalendarMonthPosition);
  */
 @property (weak, nonatomic) UILabel  *titleLabel;
 
-
 /**
  The subtitle label of the cell
  */

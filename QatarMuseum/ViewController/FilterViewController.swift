@@ -115,12 +115,18 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         clearButton.titleLabel?.font = UIFont.clearButtonFont
         filterButton.titleLabel?.font = UIFont.clearButtonFont
         
-        institutionText.text = institutionArray[0] as? String
-        ageGroupText.text = ageGroupArray[0] as? String
-        programmeTypeText.text = programmeTypeArray[0] as? String
-        institutionPass = institutionPassArray[0] as! String
-        ageGroupPass = ageGroupPassArray[0] as! String
-        programmePass = programmePassArray[0] as! String
+//        institutionText.text = institutionArray[0] as? String
+//        ageGroupText.text = ageGroupArray[0] as? String
+//        programmeTypeText.text = programmeTypeArray[0] as? String
+//        institutionPass = institutionPassArray[0] as! String
+//        ageGroupPass = ageGroupPassArray[0] as! String
+//        programmePass = programmePassArray[0] as! String
+        institutionText.text = "any"
+        ageGroupText.text = "any"
+        programmeTypeText.text = "any"
+        institutionPass = "any"
+        ageGroupPass = "any"
+        programmePass = "any"
         addPickerView()
         
         

@@ -58,13 +58,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         registerNib()
         
     }
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(false)
-//        institutionType = "any"
-//        ageGroupType = "any"
-//        programmeType = "any"
-        
-    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         setUpUiContent()
@@ -81,7 +75,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         self.view.addGestureRecognizer(self.scopeGesture)
         listTitleLabel.font = UIFont.diningHeaderFont
-    self.eventCollectionView.panGestureRecognizer.require(toFail: self.scopeGesture)
+        self.eventCollectionView.panGestureRecognizer.require(toFail: self.scopeGesture)
         if (isLoadEventPage == true) {
             listTitleLabel.text = NSLocalizedString("CALENDAR_EVENT_TITLE", comment: "CALENDAR_EVENT_TITLE Label in the Event page")
             headerView.headerTitle.text = NSLocalizedString("CALENDAR_TITLE", comment: "CALENDAR_TITLE Label in the Event page")
@@ -118,8 +112,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             calendarView.appearance.titleFont = UIFont.init(name: "DINNextLTPro-Bold", size: 19)
             
             calendarView.appearance.titleWeekendColor = UIColor.profilePink
-            calendarLeftConstraint.constant = 45
-            calendarRightConstraint.constant = 15
+            //calendarLeftConstraint.constant = 45
+            //calendarRightConstraint.constant = 15
             previousConstraint.constant = 30
             nextConstraint.constant = 30
             
@@ -137,8 +131,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             previousButton.setImage(UIImage(named: "nextImg"), for: .normal)
             nextButton.setImage(UIImage(named: "previousImg"), for: .normal)
             calendarView.appearance.titleWeekendColor = UIColor.profilePink
-            calendarLeftConstraint.constant = 45
-            calendarRightConstraint.constant = 15
+            //calendarLeftConstraint.constant = 45
+            //calendarRightConstraint.constant = 15
             previousConstraint.constant = 30
             nextConstraint.constant = 30
         }
