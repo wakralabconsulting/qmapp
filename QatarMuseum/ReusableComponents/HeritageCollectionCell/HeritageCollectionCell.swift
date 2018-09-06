@@ -91,7 +91,7 @@ class HeritageCollectionCell: UICollectionViewCell {
     
     //MARK: Collections List Data
     func setCollectionsCellValues(collectionList: Collection) {
-        titleLabel.text = collectionList.name?.uppercased()
+        titleLabel.text = collectionList.name?.uppercased().replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         lineLabelHeight.constant = 0
         lineLabel.isHidden = true
         titleBottomConstraint.constant = 0

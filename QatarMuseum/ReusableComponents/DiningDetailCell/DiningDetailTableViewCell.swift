@@ -33,7 +33,7 @@ class DiningDetailTableViewCell: UITableViewCell,UITextViewDelegate {
     
     func setDiningDetailValues(diningDetail: Dining) {
         titleLabel.text = diningDetail.name?.uppercased()
-        titleDescriptionLabel.text = diningDetail.description
+        titleDescriptionLabel.text = diningDetail.description?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         timeTitleLabel.isHidden = false
         let toVariable = NSLocalizedString("TO",
                                            comment: "TO in the Dining detail")

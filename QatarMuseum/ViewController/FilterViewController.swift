@@ -82,7 +82,7 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         let pgmType5 = NSLocalizedString("PGM_TYPE_5", comment: "PGM_TYPE_5")
         let pgmType6 = NSLocalizedString("PGM_TYPE_6", comment: "PGM_TYPE_6")
         let pgmType7 = NSLocalizedString("PGM_TYPE_7", comment: "PGM_TYPE_7")
-        let pgmType8 = NSLocalizedString("PGM_TYPE_7", comment: "PGM_TYPE_8")
+        let pgmType8 = NSLocalizedString("PGM_TYPE_8", comment: "PGM_TYPE_8")
         institutionArray = [inst1,inst2,inst3,inst4,inst5,inst6,inst7,inst8]
         ageGroupArray = [ageGrp1,ageGrp2,ageGrp3,ageGrp4,ageGrp5,ageGrp6,ageGrp7,ageGrp8,ageGrp9,ageGrp10,ageGrp11,ageGrp12,ageGrp13,ageGrp14]
         programmeTypeArray = [pgmType1,pgmType2,pgmType3,pgmType4,pgmType5,pgmType6,pgmType7,pgmType8]
@@ -166,9 +166,11 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromLeft
         self.view.window!.layer.add(transition, forKey: kCATransition)
-        institutionType = institutionPass
-        ageGroupType = ageGroupPass
-        programmeType = programmePass
+        if let presenter = presentingViewController as? EventViewController {
+            presenter.institutionType = institutionPass
+            presenter.ageGroupType = ageGroupPass
+            presenter.programmeType = programmePass
+        }
         self.dismiss(animated: false, completion: nil)
     }
     

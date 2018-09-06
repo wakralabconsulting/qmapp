@@ -42,6 +42,7 @@
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="museumId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="openingtime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortid" optional="YES" attributeType="String" syncable="YES"/>
@@ -52,6 +53,7 @@
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="imagearabic" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="locationarabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="museumId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="namearabic" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="openingtimearabic" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortidarabic" optional="YES" attributeType="String" syncable="YES"/>
@@ -142,6 +144,7 @@
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="museumId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="startDate" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -159,6 +162,7 @@
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="imageArabic" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="locationArabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="museumId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nameArabic" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="startDateArabic" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -235,14 +239,14 @@
         <element name="AboutEntityArabic" positionX="-27" positionY="144" width="128" height="210"/>
         <element name="CollectionsEntity" positionX="-36" positionY="126" width="128" height="90"/>
         <element name="CollectionsEntityArabic" positionX="-18" positionY="162" width="128" height="90"/>
-        <element name="DiningEntity" positionX="-54" positionY="90" width="128" height="165"/>
-        <element name="DiningEntityArabic" positionX="-45" positionY="108" width="128" height="165"/>
+        <element name="DiningEntity" positionX="-54" positionY="90" width="128" height="180"/>
+        <element name="DiningEntityArabic" positionX="-45" positionY="108" width="128" height="180"/>
         <element name="EducationEventEntity" positionX="-36" positionY="108" width="128" height="285"/>
         <element name="EducationEventEntityAr" positionX="-27" positionY="144" width="128" height="285"/>
         <element name="EventEntity" positionX="-18" positionY="153" width="128" height="285"/>
         <element name="EventEntityArabic" positionX="-9" positionY="162" width="128" height="285"/>
-        <element name="ExhibitionsEntity" positionX="-54" positionY="108" width="128" height="30"/>
-        <element name="ExhibitionsEntityArabic" positionX="-45" positionY="126" width="128" height="30"/>
+        <element name="ExhibitionsEntity" positionX="-54" positionY="108" width="128" height="285"/>
+        <element name="ExhibitionsEntityArabic" positionX="-45" positionY="126" width="128" height="285"/>
         <element name="HeritageEntity" positionX="-63" positionY="27" width="128" height="180"/>
         <element name="HeritageEntityArabic" positionX="-54" positionY="63" width="128" height="180"/>
         <element name="HomeEntity" positionX="-63" positionY="-18" width="128" height="30"/>

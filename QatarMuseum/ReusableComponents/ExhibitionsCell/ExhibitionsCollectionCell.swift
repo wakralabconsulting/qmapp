@@ -28,7 +28,7 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
     //MARK: HomeExhibitionList data
     func setExhibitionCellValues(exhibition: Exhibition) {
         titleLabel.text = exhibition.name?.uppercased()
-        dateLabel.text = (exhibition.startDate?.uppercased())! + " - " + (exhibition.endDate?.uppercased())!
+        dateLabel.text = ((exhibition.startDate?.uppercased())!).replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil) + " - " + ((exhibition.endDate?.uppercased())!).replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
         addressLabel.text = exhibition.location?.uppercased()
         titleLabel.font = UIFont.heritageTitleFont
         dateLabel.font = UIFont.exhibitionDateLabelFont
@@ -116,5 +116,6 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
             isFavourite = true
         }
     }
+    
     
 }

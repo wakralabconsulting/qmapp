@@ -10,7 +10,9 @@ import Alamofire
 import UIKit
 import CoreData
 
-class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,comingSoonPopUpProtocol {
+    
+    
     
     @IBOutlet weak var parksTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
@@ -19,7 +21,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     var blurView = UIVisualEffectView()
     var parksListArray: [ParksList]! = []
     let networkReachability = NetworkReachabilityManager()
-    
+    var popupView : ComingSoonPopUp = ComingSoonPopUp()
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUIContents()
@@ -44,6 +46,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         parksTableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0)
         
         imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: 300)
+        imageView.image = UIImage(named: "default_imageX2")
         if parksListArray.count != 0 {
             if let imageUrl = parksListArray[0].image{
                 imageView.kf.setImage(with: URL(string: imageUrl))
@@ -127,7 +130,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         }
         parkCell.locationButtonTapAction = {
             () in
-            self.loadLocationInMap()
+            self.loadLocationInMap(currentRow: indexPath.row)
         }
         parkCell.setParksCellValues(parksList: parksListArray[indexPath.row])
             loadingView.stopLoading()
@@ -181,19 +184,37 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         }
         
     }
-    func loadLocationInMap() {
-        let latitude = "10.0119266"
-        let longitude =  "76.3492956"
-        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!, options: [:], completionHandler: nil)
+    func loadLocationInMap(currentRow: Int) {
+        /*
+        var latitudeString :String?
+        var longitudeString : String?
+        if ((parksListArray[currentRow].latitude != nil) && (parksListArray[currentRow].longitude != nil)) {
+            latitudeString = parksListArray[currentRow].latitude
+            longitudeString = parksListArray[currentRow].longitude
+        }
+        if latitudeString != nil && longitudeString != nil {
+            let latitude = convertDMSToDDCoordinate(latLongString: latitudeString!)
+            let longitude = convertDMSToDDCoordinate(latLongString: longitudeString!)
+            if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!)
+                }
             } else {
-                UIApplication.shared.openURL(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!)
+                let locationUrl = URL(string: "https://maps.google.com/?q=@\(latitude),\(longitude)")!
+                UIApplication.shared.openURL(locationUrl)
             }
         } else {
-            let locationUrl = URL(string: "https://maps.google.com/?q=@\(latitude),\(longitude)")!
-            UIApplication.shared.openURL(locationUrl)
-        }
+            showLocationErrorPopup()
+        }*/
+        showLocationErrorPopup()
+    }
+    func showLocationErrorPopup() {
+        popupView  = ComingSoonPopUp(frame: self.view.frame)
+        popupView.comingSoonPopupDelegate = self
+        popupView.loadLocationErrorPopup()
+        self.view.addSubview(popupView)
     }
     @objc func buttonAction(sender: UIButton!) {
         sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -218,6 +239,14 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 self.setTopbarImage()
                 self.saveOrUpdateParksCoredata()
                 self.parksTableView.reloadData()
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
+                if (self.parksListArray.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
             case .failure(let error):
                 if let unhandledError = handleError(viewController: self, errorType: error as! BackendError) {
                     var errorMessage: String
@@ -417,6 +446,10 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         self.loadingView.isHidden = false
         self.loadingView.showNoDataView()
         self.loadingView.noDataLabel.text = errorMessage
+    }
+     //MARK: Poup Delegate
+    func closeButtonPressed() {
+        self.popupView.removeFromSuperview()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

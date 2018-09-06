@@ -47,7 +47,9 @@ class ParkTableViewCell: UITableViewCell {
         
         
         titleLabel.text = parksList.title?.uppercased()
-        titleDescriptionLabel.text = parksList.description
+        let parkDesc = parksList.description?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        titleDescriptionLabel.text = parkDesc?.replacingOccurrences(of: "&amp;", with: "&", options: .regularExpression, range: nil)
+        
        // titleSecondDescriptionLabel.text =
         timeTitleLabel.text = NSLocalizedString("OPENING_TIME_TITLE",
                                                 comment: "OPENING_TIME_TITLE in the Heritage detail")

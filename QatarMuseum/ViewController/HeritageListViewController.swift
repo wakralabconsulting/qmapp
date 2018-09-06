@@ -122,6 +122,14 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
                     self.heritageListArray = data.heritage
                     self.saveOrUpdateHeritageCoredata()
                     self.heritageCollectionView.reloadData()
+                    self.loadingView.stopLoading()
+                    self.loadingView.isHidden = true
+                    if (self.heritageListArray.count == 0) {
+                        self.loadingView.stopLoading()
+                        self.loadingView.noDataView.isHidden = false
+                        self.loadingView.isHidden = false
+                        self.loadingView.showNoDataView()
+                    }
                 case .failure(let error):
                     if let unhandledError = handleError(viewController: self, errorType: error as! BackendError) {
                         var errorMessage: String

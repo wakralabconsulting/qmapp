@@ -122,12 +122,13 @@ class MiaTourDetailViewController: UIViewController,HeaderViewProtocol,comingSoo
         self.startTourButton.backgroundColor = UIColor.viewMycultureBlue
         //self.startTourButton.setTitleColor(UIColor.white, for: .normal)
         self.startTourButton.transform = CGAffineTransform(scaleX: 1, y: 1)
-        let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as! FloorMapViewController
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
+        let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as! FloorMapViewController
+        floorMapView.fromScienceTour = true
         self.present(floorMapView, animated: false, completion: nil)
     }
     @IBAction func startTourButtonTouchDown(_ sender: UIButton) {

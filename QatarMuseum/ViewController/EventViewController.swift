@@ -11,9 +11,7 @@ import CoreData
 import EventKit
 import UIKit
 
-var institutionType : String? = "any"
-var ageGroupType: String? = "any"
-var programmeType:String? = "any"
+
 class EventViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource, HeaderViewProtocol,FSCalendarDelegate,FSCalendarDataSource,UICollectionViewDelegateFlowLayout,EventPopUpProtocol,UIViewControllerTransitioningDelegate,UIGestureRecognizerDelegate,comingSoonPopUpProtocol {
     
     @IBOutlet weak var eventCollectionView: UICollectionView!
@@ -43,6 +41,9 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     var needToRegister : String? = "false"
     let networkReachability = NetworkReachabilityManager()
     let store = EKEventStore()
+    var institutionType : String? = "any"
+    var ageGroupType: String? = "any"
+    var programmeType:String? = "any"
 
     fileprivate lazy var scopeGesture: UIPanGestureRecognizer = {
         [unowned self] in
@@ -57,6 +58,13 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         registerNib()
         
     }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(false)
+//        institutionType = "any"
+//        ageGroupType = "any"
+//        programmeType = "any"
+        
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         setUpUiContent()
@@ -68,6 +76,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     func setUpUiContent() {
         loadingView.isHidden = false
         loadingView.showLoading()
+        self.educationEventArray = [EducationEvent]()
         headerView.headerViewDelegate = self
         headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         self.view.addGestureRecognizer(self.scopeGesture)
@@ -228,6 +237,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         if(needToRegister == "true") {
             let buttonTitle = NSLocalizedString("EDUCATION_POPUP_BUTTON_TITLE", comment: "POPUP_ADD_BUTTON_TITLE  in the popup view")
             eventPopup.addToCalendarButton.setTitle(buttonTitle, for: .normal)
+            eventPopup.addToCalendarButton.backgroundColor = UIColor.lightGrayColor
+            eventPopup.addToCalendarButton.isEnabled = false
         }
         else {
             let buttonTitle = NSLocalizedString("POPUP_ADD_BUTTON_TITLE", comment: "POPUP_ADD_BUTTON_TITLE  in the popup view")
@@ -469,7 +480,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                let evetPosition = self.findItem(educationArray: self.educationEventArray, fixedStartTime: "14:00")
                 if(self.sundayOrWednesday() == false) {
                     self.educationEventArray.insert(EducationEvent(eid: "15476", filter: nil, title: "Walk In Gallery Tours", shortDesc: "Join our Museum Guides for a tour of the Museum of Islamic Art's oustanding collection of objects, spread over 1,400 years and across three continents. No booking is required to be a part of the tour.", longDesc: "Monday - Science Tour\n Tuesday - Techniques Tour (from 1 July onwards)\n Thursday - MIA Architecture Tour\n Friday - Permanent Gallery Tour\nSaturday - Permanent Gallery Tour", location: " Museum of Islamic Art, Atrium", institution: "MIA", startTime: "14:00", endTime: "16:00", ageGroup: "adults", programType: "gallery tour", category: nil, registration: "false", date: "Every Monday, Tuesday, Thursday, Friday and Saturday",maxGroupSize: "40" ), at: evetPosition!)
-                    
+
                 }
                 if (self.isLoadEventPage == true) {
                     self.saveOrUpdateEventCoredata()
@@ -501,6 +512,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             }
         }
     }
+   
     func toMillis() ->String?  {
         let timestamp = selectedDateForEvent.timeIntervalSince1970
         let dateString = String(timestamp)
