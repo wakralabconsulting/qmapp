@@ -52,7 +52,7 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
     
     //MARK: Webservice call
     func getCollectionList() {
-        _ = Alamofire.request(QatarMuseumRouter.CollectionList(["museum_id": "63"])).responseObject { (response: DataResponse<Collections>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.CollectionList(["museum_id": museumId ?? 0])).responseObject { (response: DataResponse<Collections>) -> Void in
             switch response.result {
             case .success(let data):
                 self.collection = data.collections!
@@ -105,15 +105,12 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if (indexPath.row == 0) {
-            loadCollectionDetail()
-        } else {
-            addComingSoonPopup()
-        }
+        loadCollectionDetail(currentRow: indexPath.row)
     }
     
-    func loadCollectionDetail() {
+    func loadCollectionDetail(currentRow: Int?) {
         let collectionDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "collectionDetailId") as! CollectionDetailViewController
+        collectionDetailView.collectionId = collection[currentRow!].category
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionFade
@@ -149,6 +146,32 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
     func saveOrUpdateCollectionCoredata() {
         if (collection.count > 0) {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                let fetchData = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "categoryId", idValue: nil) as! [CollectionsEntity]
+                if (fetchData.count > 0) {
+                    for i in 0 ... collection.count-1 {
+                        let managedContext = getContext()
+                        let collectionListDict : Collection?
+                        collectionListDict = collection[i]
+                        let fetchResult = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "categoryId", idValue: collection[i].category)
+                        //update
+                        if(fetchResult.count != 0) {
+                            let collectionsdbDict = fetchResult[0] as! CollectionsEntity
+                            collectionsdbDict.listName = collectionListDict?.name
+                            collectionsdbDict.listImage = collectionListDict?.image
+                            collectionsdbDict.collectionDesc = collectionListDict?.collectionDescription
+                            collectionsdbDict.museumId = collectionListDict?.museumId
+                            do {
+                                try managedContext.save()
+                            }
+                            catch {
+                                print(error)
+                            }
+                        } else {
+                        self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
+                        }
+                    }
+                }
+                else {
                     for i in 0 ... collection.count-1 {
                         let managedContext = getContext()
                         let collectionListDict : Collection?
@@ -156,13 +179,39 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
                         self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
                     }
                 }
-            
-            else {
+            } else { // For Arabic Database
+                let fetchData = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "categoryId", idValue: nil) as! [CollectionsEntityArabic]
+                if (fetchData.count > 0) {
+                    for i in 0 ... collection.count-1 {
+                        let managedContext = getContext()
+                        let collectionListDict : Collection?
+                        collectionListDict = collection[i]
+                        let fetchResult = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "categoryId", idValue: collection[i].category)
+                        //update
+                        if(fetchResult.count != 0) {
+                            let collectionsdbDict = fetchResult[0] as! CollectionsEntityArabic
+                            collectionsdbDict.listNameAr = collectionListDict?.name
+                            collectionsdbDict.listImageAr = collectionListDict?.image
+                            collectionsdbDict.collectionDescAr = collectionListDict?.collectionDescription
+                            collectionsdbDict.museumId = collectionListDict?.museumId
+                            do {
+                                try managedContext.save()
+                            }
+                            catch {
+                                print(error)
+                            }
+                        } else {
+                            self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
+                        }
+                    }
+                }
+                else {
                     for i in 0 ... collection.count-1 {
                         let managedContext = getContext()
                         let collectionListDict : Collection?
                         collectionListDict = collection[i]
                         self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
+                    }
                 }
             }
         }
@@ -172,14 +221,18 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
             let collectionInfo: CollectionsEntity = NSEntityDescription.insertNewObject(forEntityName: "CollectionsEntity", into: managedObjContext) as! CollectionsEntity
             collectionInfo.listName = collectionListDict.name
             collectionInfo.listImage = collectionListDict.image
-            collectionInfo.musmRef = collectionListDict.museumsReference
+            collectionInfo.categoryId = collectionListDict.category
+            collectionInfo.collectionDesc = collectionListDict.collectionDescription
+            collectionInfo.museumId = collectionListDict.museumId
             
         }
         else {
             let collectionInfo: CollectionsEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "CollectionsEntityArabic", into: managedObjContext) as! CollectionsEntityArabic
             collectionInfo.listNameAr = collectionListDict.name
             collectionInfo.listImageAr = collectionListDict.image
-            collectionInfo.musmRefAr = collectionListDict.museumsReference
+            collectionInfo.categoryId = collectionListDict.category
+            collectionInfo.collectionDescAr = collectionListDict.collectionDescription
+            collectionInfo.museumId = collectionListDict.museumId
         }
         do {
             try managedObjContext.save()
@@ -194,12 +247,11 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var collectionArray = [CollectionsEntity]()
-                let managedContext = getContext()
-                let collectionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "CollectionsEntity")
-                collectionArray = (try managedContext.fetch(collectionFetchRequest) as? [CollectionsEntity])!
+                collectionArray = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: museumId) as! [CollectionsEntity]
                 if (collectionArray.count > 0) {
                     for i in 0 ... collectionArray.count-1 {
-                        self.collection.insert(Collection(name: collectionArray[i].listName, image: collectionArray[i].listImage, museumsReference: collectionArray[i].musmRef), at: i)
+                        self.collection.insert(Collection(name: collectionArray[i].listName, image: collectionArray[i].listImage, category: collectionArray[i].categoryId,collectionDescription:collectionArray[i].collectionDesc,museumId:collectionArray[i].museumId, title: nil, about: nil, imgHighlight: nil, imageMain: nil, shortDesc: nil, highlightDesc: nil, longDesc: nil), at: i)
+                        
                     }
                     if(collection.count == 0){
                         self.showNodata()
@@ -212,13 +264,11 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
             }
             else {
                 var collectionArray = [CollectionsEntityArabic]()
-                let managedContext = getContext()
-                let collectionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "CollectionsEntityArabic")
-                collectionArray = (try managedContext.fetch(collectionFetchRequest) as? [CollectionsEntityArabic])!
+                collectionArray = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "museumId", idValue: museumId) as! [CollectionsEntityArabic]
                 if (collectionArray.count > 0) {
                     for i in 0 ... collectionArray.count-1 {
                         
-                        self.collection.insert(Collection(name: collectionArray[i].listNameAr, image: collectionArray[i].listImageAr, museumsReference: collectionArray[i].musmRefAr), at: i)
+                        self.collection.insert(Collection(name: collectionArray[i].listNameAr, image: collectionArray[i].listImageAr, category: collectionArray[i].categoryId,collectionDescription:collectionArray[i].collectionDescAr,museumId:collectionArray[i].museumId, title: nil, about: nil, imgHighlight: nil, imageMain: nil, shortDesc: nil, highlightDesc: nil, longDesc: nil), at: i)
                     }
                     if(collection.count == 0){
                         self.showNodata()
@@ -243,11 +293,14 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
             return appDelegate!.managedObjectContext
         }
     }
-    func checkAddedToCoredata(entityName: String?,collectionId: String?) -> [NSManagedObject]
+    func checkAddedToCoredata(entityName: String?,idKey:String?, idValue: String?) -> [NSManagedObject]
     {
         let managedContext = getContext()
         var fetchResults : [NSManagedObject] = []
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
+        if (idValue != nil) {
+            fetchRequest.predicate = NSPredicate.init(format: "\(idKey!) == \(idValue!)")
+        }
         fetchResults = try! managedContext.fetch(fetchRequest)
         return fetchResults
     }

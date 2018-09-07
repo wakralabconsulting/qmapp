@@ -53,6 +53,9 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                 imageView.image = UIImage(named: "default_imageX2")
             }
         }
+        else {
+            imageView.image = UIImage(named: "")
+        }
         
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
