@@ -121,12 +121,13 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
 //        institutionPass = institutionPassArray[0] as! String
 //        ageGroupPass = ageGroupPassArray[0] as! String
 //        programmePass = programmePassArray[0] as! String
-        institutionText.text = "any"
-        ageGroupText.text = "any"
-        programmeTypeText.text = "any"
-        institutionPass = "any"
-        ageGroupPass = "any"
-        programmePass = "any"
+        let anyString = NSLocalizedString("ANYSTRING", comment: "ANYSTRING in the Filter page")
+        institutionText.text = anyString
+        ageGroupText.text = anyString
+        programmeTypeText.text = anyString
+        institutionPass = anyString
+        ageGroupPass = anyString
+        programmePass = anyString
         addPickerView()
         
         
@@ -324,7 +325,6 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print(row)
         if (picker.tag == 0) {
             selectedInstitutionRow = row
             selectedInstitution = (institutionArray[row] as? String)!

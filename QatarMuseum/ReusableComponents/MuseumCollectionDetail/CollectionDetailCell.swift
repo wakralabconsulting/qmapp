@@ -40,7 +40,7 @@ class CollectionDetailCell: UITableViewCell {
         favouriteHeight.constant = 0
     }
     
-    func setCollectionCellValues(cellValues: NSDictionary,imageName: String,currentRow: Int) {
+    func setCollectionCellValues(collectionValues : Collection,currentRow: Int) {
         firstTitle.font = UIFont.settingsUpdateLabelFont
         firstDescription.font = UIFont.collectionFirstDescriptionFont
         secondTitle.font = UIFont.closeButtonFont
@@ -48,15 +48,26 @@ class CollectionDetailCell: UITableViewCell {
         secondDescription.font = UIFont.englishTitleFont
         thirdDescription.font = UIFont.englishTitleFont
         fourthDescription.font = UIFont.englishTitleFont
-        firstTitle.text = "CERAMIC COLLECTION"
-        firstDescription.text = "As well as being objects of great age and beauty, the ceramics in the museum were also meant to be used. \n\n From humble kitchen wares to elaborate tile panels, ceramics were a vital part of everyday life in the Islamic world. \n\n They exemplify the externam influences and internal creativity that inspired this flourishing of ceramic design over 2 centuries. "
-        secondTitle.text = "LUSTERWARE APOTHECARY JAR"
-        secondSubTitle.text = "Mamluk, Syria, 14th century"
-        secondDescription.text = "This jar was probably produced for the celebrated Damascene hospital of Nural-Din Mahmud ibnZangi."
-        thirdDescription.text = "The inscription around the neck says it was made for the hospital 'of Nuri' and the 'fleur de lis' design was the motif of Nur al-Din."
-        fourthDescription.text = "The other inscriptions read 'water lily', suggesting what was contained within the jar, undoubtedly a pharmaceutical compound or preparation of the plant."
-        firstImageView.image = UIImage(named: imageName)
-        secondImageView.image = UIImage(named: imageName)
+        
+        firstTitle.text = collectionValues.title?.uppercased().replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        firstDescription.text = collectionValues.collectionDescription?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        secondTitle.text = collectionValues.title?.uppercased().replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        secondSubTitle.text = collectionValues.about?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        secondDescription.text = collectionValues.highlightDesc?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        thirdDescription.text = collectionValues.shortDesc?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        fourthDescription.text = collectionValues.longDesc?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        if let imageUrl = collectionValues.imgHighlight {
+            firstImageView.kf.setImage(with: URL(string: imageUrl))
+        }
+        if (firstImageView.image == nil) {
+            firstImageView.image = UIImage(named: "default_imageX2")
+        }
+        if let imageUrl = collectionValues.imageMain {
+            secondImageView.kf.setImage(with: URL(string: imageUrl))
+        }
+        if (firstImageView.image == nil) {
+            secondImageView.image = UIImage(named: "default_imageX2")
+        }
         
         if (currentRow == 0) {
             firstTitle.isHidden = false
