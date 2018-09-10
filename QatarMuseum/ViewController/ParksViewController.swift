@@ -54,6 +54,8 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             else {
                 imageView.image = UIImage(named: "default_imageX2")
             }
+        }else {
+            imageView.image = nil
         }
         
         imageView.contentMode = .scaleAspectFill
