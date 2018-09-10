@@ -19,8 +19,8 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUIContents()
-        setTopBarImage()
+        objectTableView.register(UITableViewCell.self, forCellReuseIdentifier: "imageCell")
+//        setupUIContents()
     }
     
     func setupUIContents() {
@@ -70,53 +70,76 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     
     //MARK: TableView delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return 300
+        }
+        return UITableViewAutomaticDimension
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "objectDetailCellId", for: indexPath) as! ObjectDetailTableViewCell
         if (indexPath.row == 0) {
-            cell.setObjectDetail()
-        } else if (indexPath.row == 1) {
-            cell.setObjectHistoryDetail()
+            let cell = tableView.dequeueReusableCell(withIdentifier: "imageCell", for: indexPath)
+            let objectImageView = UIImageView()
+            objectImageView.frame = CGRect(x: 0, y: 20, width: tableView.frame.width, height: 300)
+            objectImageView.image = UIImage.init(named: "science_tour_object")
+            objectImageView.backgroundColor = UIColor.white
+            objectImageView.contentMode = .scaleAspectFit
+            objectImageView.clipsToBounds = true
+            cell.addSubview(objectImageView)
+            
+            objectImageView.isUserInteractionEnabled = true
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(loadObjectImagePopup))
+            objectImageView.addGestureRecognizer(tapGesture)
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "objectDetailCellId", for: indexPath) as! ObjectDetailTableViewCell
+            if (indexPath.row == 1) {
+                cell.setObjectDetail()
+            } else if (indexPath.row == 2) {
+                cell.setObjectHistoryDetail()
+            }
+            
+            cell.favBtnTapAction = {
+                () in
+                self.setFavouritesAction(cellObj: cell)
+            }
+            cell.shareBtnTapAction = {
+                () in
+                self.setShareAction(cellObj: cell)
+            }
+            
+            loadingView.stopLoading()
+            loadingView.isHidden = true
+            return cell
         }
-        
-        cell.favBtnTapAction = {
-            () in
-            self.setFavouritesAction(cellObj: cell)
-        }
-        cell.shareBtnTapAction = {
-            () in
-            self.setShareAction(cellObj: cell)
-        }
-        
-        loadingView.stopLoading()
-        loadingView.isHidden = true
-        return cell
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let y = 300 - (scrollView.contentOffset.y + 300)
-        let height = min(max(y, 60), 400)
-        imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: height)
-        
-        if (imageView.frame.height >= 300 ){
-            blurView.alpha  = 0.0
-        } else if (imageView.frame.height >= 250 ){
-            blurView.alpha  = 0.2
-        } else if (imageView.frame.height >= 200 ){
-            blurView.alpha  = 0.4
-        } else if (imageView.frame.height >= 150 ){
-            blurView.alpha  = 0.6
-        } else if (imageView.frame.height >= 100 ){
-            blurView.alpha  = 0.8
-        } else if (imageView.frame.height >= 50 ){
-            blurView.alpha  = 0.9
-        }
-        if (scrollView.contentOffset.y < -300) {
-            //reached top
-            self.backButtonPressed()
-        }
+//        let y = 300 - (scrollView.contentOffset.y + 300)
+//        let height = min(max(y, 60), 400)
+//        imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: height)
+//        
+//        if (imageView.frame.height >= 300 ){
+//            blurView.alpha  = 0.0
+//        } else if (imageView.frame.height >= 250 ){
+//            blurView.alpha  = 0.2
+//        } else if (imageView.frame.height >= 200 ){
+//            blurView.alpha  = 0.4
+//        } else if (imageView.frame.height >= 150 ){
+//            blurView.alpha  = 0.6
+//        } else if (imageView.frame.height >= 100 ){
+//            blurView.alpha  = 0.8
+//        } else if (imageView.frame.height >= 50 ){
+//            blurView.alpha  = 0.9
+//        }
+//        if (scrollView.contentOffset.y < -300) {
+//            //reached top
+//            self.backButtonPressed()
+//        }
     }
     
     //MARK: Poup Delegate

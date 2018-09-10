@@ -8,5 +8,8 @@ target 'QatarMuseums' do
  pod 'Firebase/Core'
  pod 'Fabric'
  pod 'Crashlytics'
+ pod 'Pulley'
+ pod 'MaterialComponents/BottomSheet'
+ pod 'MaterialComponents/Buttons'
 
 end

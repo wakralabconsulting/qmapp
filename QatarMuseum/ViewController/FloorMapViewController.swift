@@ -8,6 +8,8 @@
 
 import GoogleMaps
 import UIKit
+import MaterialComponents.MaterialBottomSheet
+
 enum levelNumber{
     case one
     case two
@@ -251,6 +253,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         objectPopupView.objectPopupDelegate = self
         objectPopupView.loadPopup()
         self.view.addSubview(objectPopupView)
+        
+
     }
     
     //MARK: map delegate
@@ -329,12 +333,27 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     
     func viewDetailButtonTapAction() {
         let objectDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "objectDetailId") as! ObjectDetailViewController
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromTop
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(objectDetailView, animated: false, completion: nil)
+//        let transition = CATransition()
+//        transition.duration = 0.3
+//        transition.type = kCATransitionPush
+//        transition.subtype = kCATransitionFromTop
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        self.present(objectDetailView, animated: false, completion: nil)
+        
+        
+        //        let menu = BottomSheetTableViewMenu(style: .plain)
+        //        let bottomSheet = MDCBottomSheetController(contentViewController: viewController)
+        //
+        //        // Present the bottom sheet
+        //        present(bottomSheet, animated: true, completion: nil)
+        
+        let bottomSheet = MDCBottomSheetController(contentViewController: objectDetailView)
+        //        bottomSheet.isScrimAccessibilityElement = true
+        //        bottomSheet.scrimAccessibilityLabel = "Close"
+                bottomSheet.trackingScrollView = objectDetailView.objectTableView
+        bottomSheet.preferredContentSize = CGSize(width: self.view.frame.size.width, height: self.view.frame.size.height)
+
+        present(bottomSheet, animated: true)
     }
     
     @IBAction func didTapQrCode(_ sender: UIButton) {
