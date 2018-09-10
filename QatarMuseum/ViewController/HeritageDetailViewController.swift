@@ -81,7 +81,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 }
             }
             else {
-                imageView.image = UIImage(named: "")
+                imageView.image = nil
             }
         } else if (pageNameString == PageName.publicArtsDetail){
             if publicArtsDetailtArray.count != 0 {
@@ -93,7 +93,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 }
             }
             else {
-                imageView.image = UIImage(named: "")
+                imageView.image = nil
             }
         } else if (pageNameString == PageName.museumAbout){
             if aboutDetailtArray.count != 0 {
@@ -105,7 +105,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 }
             }
             else {
-                imageView.image = UIImage(named: "")
+                imageView.image = nil
             }
         }
         imageView.contentMode = .scaleAspectFill

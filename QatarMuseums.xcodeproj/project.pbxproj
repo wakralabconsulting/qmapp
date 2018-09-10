@@ -147,7 +147,6 @@
 		B8E2C01020C7E9E900F3CE41 /* ComingSoonPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E2C00F20C7E9E900F3CE41 /* ComingSoonPopUp.swift */; };
 		B8E2C01320C7FD0000F3CE41 /* SideMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8E2C01220C7FD0000F3CE41 /* SideMenu.xib */; };
 		B8E2C01520C7FD6800F3CE41 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E2C01420C7FD6800F3CE41 /* SideMenuView.swift */; };
-		B8E92D1221006F0F005449FC /* CollectionDetailJson.json in Resources */ = {isa = PBXBuildFile; fileRef = B8E92D1121006F0F005449FC /* CollectionDetailJson.json */; };
 		B8EAB77B20CA3E2900C001B2 /* EventCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8EAB77A20CA3E2900C001B2 /* EventCellView.xib */; };
 		B8EAB77D20CA3E6100C001B2 /* EventCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EAB77C20CA3E6100C001B2 /* EventCollectionViewCell.swift */; };
 		B8EAB7AD20CA41ED00C001B2 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8EAB79420CA41EB00C001B2 /* Info.plist */; };
@@ -351,7 +350,6 @@
 		B8E2C00F20C7E9E900F3CE41 /* ComingSoonPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComingSoonPopUp.swift; sourceTree = "<group>"; };
 		B8E2C01220C7FD0000F3CE41 /* SideMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideMenu.xib; sourceTree = "<group>"; };
 		B8E2C01420C7FD6800F3CE41 /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
-		B8E92D1121006F0F005449FC /* CollectionDetailJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CollectionDetailJson.json; sourceTree = "<group>"; };
 		B8EAB77A20CA3E2900C001B2 /* EventCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventCellView.xib; sourceTree = "<group>"; };
 		B8EAB77C20CA3E6100C001B2 /* EventCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCollectionViewCell.swift; sourceTree = "<group>"; };
 		B8EAB77F20CA41E900C001B2 /* QatarMuseum-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QatarMuseum-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -576,7 +574,6 @@
 				B80DC06420C792E600E28034 /* Info.plist */,
 				B8C64D4820FDCA8A00C2D51A /* TourGuideJson.json */,
 				B8C64D4E20FDDE5900C2D51A /* MiaTourGuideJson.json */,
-				B8E92D1121006F0F005449FC /* CollectionDetailJson.json */,
 				B811FBC82103406100960246 /* Localizable.strings */,
 				B839831821196E68007090C8 /* QatarMuseums.xcdatamodeld */,
 				B806B7CC21247FB400F9F338 /* MapStyle.json */,
@@ -1069,7 +1066,6 @@
 				B8BA80BA20CD8305007E880A /* ExhibitionsCellXib.xib in Resources */,
 				B8B49563212DD81A006F509B /* GoogleService-Info.plist in Resources */,
 				B8EAB7AD20CA41ED00C001B2 /* Info.plist in Resources */,
-				B8E92D1221006F0F005449FC /* CollectionDetailJson.json in Resources */,
 				B8EAB77B20CA3E2900C001B2 /* EventCellView.xib in Resources */,
 				1BAA2FCB2125FCC600D785DD /* ObjectImageXib.xib in Resources */,
 				B8E2C01320C7FD0000F3CE41 /* SideMenu.xib in Resources */,
@@ -1472,7 +1468,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = DNV2Z9FR68;
@@ -1486,8 +1482,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.qatarmuseums.qatarmuseumsapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1153976d-22c2-4cc3-ae28-1c3333bba516";
-				PROVISIONING_PROFILE_SPECIFIER = QatarMuseumsDistributionProfile;
+				PROVISIONING_PROFILE = "dd41b607-eb03-4040-9a5a-ad0fe55b2d74";
+				PROVISIONING_PROFILE_SPECIFIER = QMDevelopmentProfile;
 				SWIFT_OBJC_BRIDGING_HEADER = "QatarMuseum/ReusableComponents/FSCalendar/QatarMuseum-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
@@ -1501,7 +1497,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DNV2Z9FR68;
 				ENABLE_BITCODE = YES;
@@ -1514,8 +1510,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.qatarmuseums.qatarmuseumsapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1153976d-22c2-4cc3-ae28-1c3333bba516";
-				PROVISIONING_PROFILE_SPECIFIER = QatarMuseumsDistributionProfile;
+				PROVISIONING_PROFILE = "dd41b607-eb03-4040-9a5a-ad0fe55b2d74";
+				PROVISIONING_PROFILE_SPECIFIER = QMDevelopmentProfile;
 				SWIFT_OBJC_BRIDGING_HEADER = "QatarMuseum/ReusableComponents/FSCalendar/QatarMuseum-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;

@@ -54,7 +54,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
             }
         }
         else {
-            imageView.image = UIImage(named: "")
+            imageView.image = nil
         }
         
         imageView.contentMode = .scaleAspectFill

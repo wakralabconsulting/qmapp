@@ -113,7 +113,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
                 }
             }
             else {
-                imageView.image = UIImage(named: "")
+                imageView.image = nil
             }
             
         } else {
@@ -131,7 +131,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
                     imageView.image = UIImage(named: "default_imageX2")
                 }
             } else {
-                imageView.image = UIImage(named: "")
+                imageView.image = nil
             }
         }
         
