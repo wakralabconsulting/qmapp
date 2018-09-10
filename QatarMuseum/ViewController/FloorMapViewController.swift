@@ -340,17 +340,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
 //        view.window!.layer.add(transition, forKey: kCATransition)
 //        self.present(objectDetailView, animated: false, completion: nil)
         
-        
-        //        let menu = BottomSheetTableViewMenu(style: .plain)
-        //        let bottomSheet = MDCBottomSheetController(contentViewController: viewController)
-        //
-        //        // Present the bottom sheet
-        //        present(bottomSheet, animated: true, completion: nil)
-        
         let bottomSheet = MDCBottomSheetController(contentViewController: objectDetailView)
         //        bottomSheet.isScrimAccessibilityElement = true
         //        bottomSheet.scrimAccessibilityLabel = "Close"
-                bottomSheet.trackingScrollView = objectDetailView.objectTableView
+        bottomSheet.trackingScrollView = objectDetailView.objectTableView
         bottomSheet.preferredContentSize = CGSize(width: self.view.frame.size.width, height: self.view.frame.size.height)
 
         present(bottomSheet, animated: true)

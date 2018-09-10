@@ -5037,24 +5037,6 @@ Church of Ognissanti, Florence, 1480</string>
             </objects>
             <point key="canvasLocation" x="19711.594202898552" y="98.233695652173921"/>
         </scene>
-        <!--Bottom Sheet Table View Example-->
-        <scene sceneID="c5N-ht-56Z">
-            <objects>
-                <viewController storyboardIdentifier="bottomSheetVeiwId" id="axO-QD-XNe" customClass="BottomSheetTableViewExample" customModule="QatarMuseums" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="IUC-e7-8sE"/>
-                        <viewControllerLayoutGuide type="bottom" id="HRN-J0-bbo"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="myd-dE-lNl">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="doK-xk-RSL" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="20575" y="99"/>
-        </scene>
     </scenes>
     <resources>
         <image name="Audio CircleX1" width="93" height="93"/>
