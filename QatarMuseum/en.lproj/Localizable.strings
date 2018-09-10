@@ -43,9 +43,9 @@
 "EDUCATION_POPUP_BUTTON_TITLE" = "Register Now";
 "REGISTRATION_SUCCESS_MESSAGE" = "Thank you for registering. Further Details will be sent to you on your email";
 "FILTER_LABEL" = "Filter";
-"INSTITUTION_LABEL" = "Institution";
-"AGE_GROUP_LABEL" = "Age Group";
-"PROGRAMME_TYPE_LABEL" = "Programme Type";
+"INSTITUTION_LABEL" = "Institution -";
+"AGE_GROUP_LABEL" = "Age Group -";
+"PROGRAMME_TYPE_LABEL" = "Programme Type -";
 "CLEAR_LABEL" = "Clear";
 "SETTINGS_LABEL" = "SETTINGS";
 "SETTINGS_REDIRECTION_MSG" = "You will be redirected to home page, after changing the language.Do you want to continue?";
@@ -150,3 +150,4 @@
 "YET_NO_NOTIFICATION_MESSAGE" = "No notifications yet.";
 "SOMETHING_WENT_WRONG_TITLE" = "Something went wrong";
 "LOCATION_ERROR_MESSAGE" = "Unfortunately we cannot open Google Maps.";
+"ANYSTRING" = "any";

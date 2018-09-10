@@ -80,6 +80,9 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                     imageView.image = UIImage(named: "default_imageX2")
                 }
             }
+            else {
+                imageView.image = nil
+            }
         } else if (pageNameString == PageName.publicArtsDetail){
             if publicArtsDetailtArray.count != 0 {
                 if let imageUrl = publicArtsDetailtArray[0].image{
@@ -89,6 +92,9 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                     imageView.image = UIImage(named: "default_imageX2")
                 }
             }
+            else {
+                imageView.image = nil
+            }
         } else if (pageNameString == PageName.museumAbout){
             if aboutDetailtArray.count != 0 {
                 if let imageUrl = aboutDetailtArray[0].image{
@@ -97,6 +103,9 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 else {
                     imageView.image = UIImage(named: "default_imageX2")
                 }
+            }
+            else {
+                imageView.image = nil
             }
         }
         imageView.contentMode = .scaleAspectFill

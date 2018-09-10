@@ -103,6 +103,8 @@ class HeritageCollectionCell: UICollectionViewCell {
         if (heritageImageView.image == nil) {
             heritageImageView.image = UIImage(named: "default_imageX2")
         }
+        titleLabel.font = UIFont.heritageTitleFont
+        
     }
     
     //MARK: Dining List Data

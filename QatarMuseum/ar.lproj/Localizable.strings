@@ -129,7 +129,6 @@
 "TOUR_GUIDES" = "المرشد";
 "TOUR_GUIDE_TEXT" = "Welcome to Qatar Museum Premises. \n Select the museums to explore the floors and objects on display. \n Immerse yourself into the object details curated specially for you by our experts.";
 "EVENT_ADDED_MESSAGE" = "تم إضافة الفعالية للتقويم";
-"ABOUT" = "About";
 "CULTUREPASS_TITLE" = "CULTURE PASS";
 "BENEFIT_TITLE" = "BENEFITS";
 "CULTURE_PASS_INTRO" = "Qatar Museums Culture Pass gives you discounts, free access and exclusive opportunities  across many cultural venues in Qatar and discounts at a wide range of ever expanding list of partners.Best of all, as a member you're invited to join us in a wide range of exciting creative activities.";
@@ -147,7 +146,8 @@
 "MIA_TOUR_GUIDE_DESC2" = "Scan the QR codes available on the galleries for more information.";
 "SCIENCE_TOUR_TEXT" = "In this tour, you will see and learn about the achievements and contributions of Muslim scientists through history. The eight objects have an obvious scientific purpose or show how science has influenced artistic methods.";
 "SCIENCE_TOUR_TITLE" = "SCIENCE TOUR";
-"YET_NO_NOTIFICATION_MESSAGE" = "No notifications yet.";
+"YET_NO_NOTIFICATION_MESSAGE" = "لا توجد إشعارات بعد.";
 "SOMETHING_WENT_WRONG_TITLE" = "Something went wrong";
 "LOCATION_ERROR_MESSAGE" = "Unfortunately we cannot open Google Maps.";
+"ANYSTRING" = "any";
 

@@ -41,6 +41,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     var needToRegister : String? = "false"
     let networkReachability = NetworkReachabilityManager()
     let store = EKEventStore()
+    let anyString = NSLocalizedString("ANYSTRING", comment: "ANYSTRING in the Filter page")
     var institutionType : String? = "any"
     var ageGroupType: String? = "any"
     var programmeType:String? = "any"
@@ -56,6 +57,9 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     override func viewDidLoad() {
         super.viewDidLoad()
         registerNib()
+        institutionType = anyString
+        ageGroupType = anyString
+        programmeType = anyString
         
     }
 
@@ -80,9 +84,9 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             listTitleLabel.text = NSLocalizedString("CALENDAR_EVENT_TITLE", comment: "CALENDAR_EVENT_TITLE Label in the Event page")
             headerView.headerTitle.text = NSLocalizedString("CALENDAR_TITLE", comment: "CALENDAR_TITLE Label in the Event page")
             listTitleLabel.textColor = UIColor.eventlisBlue
-            institutionType = "any"
-            ageGroupType = "any"
-            programmeType = "any"
+            institutionType = anyString
+            ageGroupType = anyString
+            programmeType = anyString
             if  (networkReachability?.isReachable)! {
                 self.getEducationEventFromServer()
             }
@@ -112,8 +116,6 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             calendarView.appearance.titleFont = UIFont.init(name: "DINNextLTPro-Bold", size: 19)
             
             calendarView.appearance.titleWeekendColor = UIColor.profilePink
-            //calendarLeftConstraint.constant = 45
-            //calendarRightConstraint.constant = 15
             previousConstraint.constant = 30
             nextConstraint.constant = 30
             
@@ -131,8 +133,6 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             previousButton.setImage(UIImage(named: "nextImg"), for: .normal)
             nextButton.setImage(UIImage(named: "previousImg"), for: .normal)
             calendarView.appearance.titleWeekendColor = UIColor.profilePink
-            //calendarLeftConstraint.constant = 45
-            //calendarRightConstraint.constant = 15
             previousConstraint.constant = 30
             nextConstraint.constant = 30
         }
@@ -232,6 +232,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             let buttonTitle = NSLocalizedString("EDUCATION_POPUP_BUTTON_TITLE", comment: "POPUP_ADD_BUTTON_TITLE  in the popup view")
             eventPopup.addToCalendarButton.setTitle(buttonTitle, for: .normal)
             eventPopup.addToCalendarButton.backgroundColor = UIColor.lightGrayColor
+            eventPopup.addToCalendarButton.setTitleColor(UIColor.whiteColor, for: .normal)
             eventPopup.addToCalendarButton.isEnabled = false
         }
         else {

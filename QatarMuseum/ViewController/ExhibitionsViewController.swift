@@ -239,7 +239,7 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
     //MARK: Coredata Method
     func saveOrUpdateExhibitionsCoredata() {
         if (exhibition.count > 0) {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 let fetchData = checkAddedToCoredata(entityName: "ExhibitionsEntity", idKey: "id", idValue: nil) as! [ExhibitionsEntity]
                 if (fetchData.count > 0) {
                     for i in 0 ... exhibition.count-1 {
@@ -397,12 +397,9 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
     func fetchMuseumExhibitionsListFromCoredata() {
         
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var exhibitionArray = [ExhibitionsEntity]()
                 
-                //var exhibitionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ExhibitionsEntity")
-               
-                //exhibitionArray = (try managedContext.fetch(exhibitionFetchRequest) as? [ExhibitionsEntity])!
                 exhibitionArray = checkAddedToCoredata(entityName: "ExhibitionsEntity", idKey: "museumId", idValue: museumId) as! [ExhibitionsEntity]
                 if (exhibitionArray.count > 0) {
                     for i in 0 ... exhibitionArray.count-1 {
@@ -420,9 +417,6 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
             }
             else {
                 var exhibitionArray = [ExhibitionsEntityArabic]()
-                //let managedContext = getContext()
-                //let exhibitionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ExhibitionsEntityArabic")
-               // exhibitionArray = (try managedContext.fetch(exhibitionFetchRequest) as? [ExhibitionsEntityArabic])!
                 exhibitionArray = checkAddedToCoredata(entityName: "ExhibitionsEntityArabic", idKey: "museumId", idValue: museumId) as! [ExhibitionsEntityArabic]
                 if (exhibitionArray.count > 0) {
                     for i in 0 ... exhibitionArray.count-1 {

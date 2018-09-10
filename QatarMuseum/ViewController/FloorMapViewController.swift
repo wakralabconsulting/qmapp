@@ -112,7 +112,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         //let camera = GMSCameraPosition.camera(withLatitude: 25.295447, longitude: 51.539195, zoom:19)
          let camera = GMSCameraPosition.camera(withLatitude: 25.296059, longitude: 51.538703, zoom:19)
         viewForMap.camera = camera
-        viewForMap?.animate(to: camera)
+        //viewForMap?.animate(to: camera)
         do {
             if let styleURL = Bundle.main.url(forResource: "MapStyle", withExtension: "json") {
                 viewForMap.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
@@ -152,6 +152,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         
         circ.strokeColor = UIColor.clear
         circ.map = viewForMap
+        viewForMap?.animate(to: camera)
         if (fromScienceTour == true) {
             viewForMap.animate(toZoom: 19.4)
         }
@@ -304,7 +305,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     
     func removeMarkers() {
-        l2Marker2.map = nil
         l2Marker.map = nil
         l2Marker2.map = nil
         l2Marker3.map = nil

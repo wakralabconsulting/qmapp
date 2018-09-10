@@ -58,6 +58,7 @@ class DiningDetailTableViewCell: UITableViewCell,UITextViewDelegate {
         locationButton.setTitle(mapRedirectionMessage, for: .normal)
         locationFirstLabel.text = diningDetail.location
         //For HyperLink in textview
+        /*
         let yourAttributes = [kCTForegroundColorAttributeName: UIColor.black, kCTFontAttributeName: UIFont.englishTitleFont]
         let moreInformationMessage = NSLocalizedString("MORE_INFORMATION_MESSAGE",
                                                        comment: "MORE_INFORMATION_MESSAGE in the Dining detail")
@@ -71,7 +72,7 @@ class DiningDetailTableViewCell: UITableViewCell,UITextViewDelegate {
         combination.append(parttwo)
         
          let linkAttributes: [NSAttributedStringKey: Any] = [
-                    .link: NSURL(string: "https://www.apple.com")!,
+                    .link: NSURL(string: "http://www.mia.org.qa/en/visiting/idam")!,
                     NSAttributedStringKey.foregroundColor: UIColor.profilePink,
                     NSAttributedStringKey.underlineStyle: NSNumber.init(value: Int8(NSUnderlineStyle.styleSingle.rawValue)),
                     NSAttributedStringKey.font : UIFont.englishTitleFont
@@ -85,6 +86,7 @@ class DiningDetailTableViewCell: UITableViewCell,UITextViewDelegate {
         self.visitMIAText.isEditable = false
         visitMIAText.tintColor = UIColor.viewMyFavDarkPink
         self.visitMIAText.textAlignment = .center
+ */
         titleDescriptionLabel.textAlignment = .center
        
 
