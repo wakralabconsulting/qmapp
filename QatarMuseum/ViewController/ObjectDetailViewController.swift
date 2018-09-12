@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ObjectImageViewProtocol {
+class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ObjectImageViewProtocol,UIGestureRecognizerDelegate {
     @IBOutlet weak var objectTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
     
@@ -16,16 +16,61 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     var blurView = UIVisualEffectView()
     let backButton = UIButton()
     var objectImagePopupView : ObjectImageView = ObjectImageView()
-
+    let fullView: CGFloat = 100
+    let closeButton = UIButton()
+//    var partialView: CGFloat {
+//        return UIScreen.main.bounds.height - 200
+//    }
+    
+//    fileprivate lazy var scopeGesture: UIPanGestureRecognizer = {
+//        [unowned self] in
+//        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.panGesture))
+//
+//        // let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handleScopeGesture(_:)))
+//        panGesture.delegate = self
+//        panGesture.minimumNumberOfTouches = 1
+//        panGesture.maximumNumberOfTouches = 2
+//        return panGesture
+//        }()
     override func viewDidLoad() {
         super.viewDidLoad()
         objectTableView.register(UITableViewCell.self, forCellReuseIdentifier: "imageCell")
-//        setupUIContents()
+        setupUIContents()
+        //self.view.addGestureRecognizer(self.scopeGesture)
+        //self.objectTableView.panGestureRecognizer.require(toFail: self.scopeGesture)
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+//        UIView.animate(withDuration: 0.6, animations: { [weak self] in
+//            let frame = self?.view.frame
+//            let yComponent = self?.partialView
+//            self?.view.frame = CGRect(x: 0, y: yComponent!, width: frame!.width, height: frame!.height - 100)
+//           // self?.view.frame = CGRect(x: 0, y: 0, width: frame!.width, height: frame!.height)
+//        })
     }
     
     func setupUIContents() {
-        loadingView.isHidden = false
-        loadingView.showLoading()
+       // loadingView.isHidden = false
+       // loadingView.showLoading()
+        
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
+        } else {
+            closeButton.frame = CGRect(x: self.view.frame.width-50, y: 30, width: 40, height: 40)
+        }
+        closeButton.setImage(UIImage(named: "closeX1"), for: .normal)
+        closeButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom:12, right: 12)
+        
+        closeButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(closeButtonTouchDownAction), for: .touchDown)
+        
+        closeButton.layer.shadowColor = UIColor.black.cgColor
+        closeButton.layer.shadowOffset = CGSize(width: 5, height: 5)
+        closeButton.layer.shadowRadius = 5
+        closeButton.layer.shadowOpacity = 1.0
+        view.addSubview(closeButton)
+        
     }
     
     func setTopBarImage() {
@@ -145,6 +190,7 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     //MARK: Poup Delegate
     func dismissImagePopUpView() {
         self.objectImagePopupView.removeFromSuperview()
+        self.dismiss(animated: false, completion: nil)
     }
     
     @objc func loadObjectImagePopup() {
@@ -179,6 +225,76 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     
     func setShareAction(cellObj: ObjectDetailTableViewCell) {
         
+    }
+    @objc func panGesture(_ recognizer: UIPanGestureRecognizer) {
+//        let translation = recognizer.translation(in: self.view)
+//        let velocity = recognizer.velocity(in: self.view)
+//
+//        let y = self.view.frame.minY
+//        if (y + translation.y >= fullView) && (y + translation.y <= partialView) {
+//            self.view.frame = CGRect(x: 0, y: y + translation.y, width: view.frame.width, height: view.frame.height)
+//            recognizer.setTranslation(CGPoint.zero, in: self.view)
+//            self.objectImagePopupView.removeFromSuperview()
+//        }
+//
+//        if recognizer.state == .ended {
+//            var duration =  velocity.y < 0 ? Double((y - fullView) / -velocity.y) : Double((partialView - y) / velocity.y )
+//
+//            duration = duration > 1.3 ? 1 : duration
+//
+//            UIView.animate(withDuration: duration, delay: 0.0, options: [.allowUserInteraction], animations: {
+//                if  velocity.y >= 0 {
+//                    self.view.frame = CGRect(x: 0, y: self.partialView, width: self.view.frame.width, height: self.view.frame.height)
+//
+//                } else {
+//                    self.view.frame = CGRect(x: 0, y: self.fullView, width: self.view.frame.width, height: self.view.frame.height)
+//
+//                }
+//
+//            }, completion: { [weak self] _ in
+//                if ( velocity.y < 0 ) {
+//                    self?.objectTableView.isScrollEnabled = true
+//                }
+//            })
+//        }
+    }
+    // MARK:- UIGestureRecognizerDelegate
+    
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+//        let gesture = (gestureRecognizer as! UIPanGestureRecognizer)
+//        let direction = gesture.velocity(in: view).y
+//
+//        let y = view.frame.minY
+//        print(fullView)
+//        print(objectTableView.contentOffset.y)
+//        print(direction)
+//        print(partialView)
+//
+//        if (y == fullView && objectTableView.contentOffset.y == 0 && direction > 0)  {
+//            objectTableView.isScrollEnabled = false
+//
+//        } else {
+//            objectTableView.isScrollEnabled = true
+//
+//
+//
+//        }
+//
+//        return false
+//    }
+    
+    @objc func buttonAction(sender: UIButton!) {
+        sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        let transition = CATransition()
+        transition.duration = 0.25
+        transition.type = kCATransitionFade
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        self.view.window!.layer.add(transition, forKey: kCATransition)
+        dismiss(animated: false, completion: nil)
+    }
+    
+    @objc func closeButtonTouchDownAction(sender: UIButton!) {
+        sender.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
 }
 

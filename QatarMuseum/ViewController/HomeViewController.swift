@@ -88,6 +88,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
          let cell : HomeCollectionViewCell = homeCollectionView.dequeueReusableCell(withReuseIdentifier: "homeCellId", for: indexPath) as! HomeCollectionViewCell
        
         cell.setHomeCellData(home: homeList[indexPath.row])
+        
         loadingView.stopLoading()
         loadingView.isHidden = true
         return cell
