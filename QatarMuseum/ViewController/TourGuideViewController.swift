@@ -71,7 +71,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell : HomeCollectionViewCell = tourCollectionView.dequeueReusableCell(withReuseIdentifier: "homeCellId", for: indexPath) as! HomeCollectionViewCell
         let homeDataDict = tourDataFullArray.object(at: indexPath.row) as! NSDictionary
-        cell.tourGuideButton.setImage(UIImage(named: "location"), for: .normal)
+        cell.tourGuideImage.image = UIImage(named: "location")
         cell.setTourGuideCellData(homeCellData: homeDataDict, imageName: tourImageArray.object(at: indexPath.row) as! String)
         return cell
     }

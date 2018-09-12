@@ -8,6 +8,8 @@
 
 import GoogleMaps
 import UIKit
+import MaterialComponents.MaterialBottomSheet
+
 enum levelNumber{
     case one
     case two
@@ -30,6 +32,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     @IBOutlet weak var numberThree: UILabel!
     @IBOutlet weak var firstLevelLabel: UILabel!
     @IBOutlet weak var thirdLevelLabel: UILabel!
+    @IBOutlet weak var levelView: UIView!
     var overlay = GMSGroundOverlay()
     let l2_atr1 = CLLocationCoordinate2D(latitude: 25.295141, longitude: 51.539185)
     let l2_atr2 = CLLocationCoordinate2D(latitude: 25.295500, longitude: 51.538855)
@@ -82,6 +85,25 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     
     func initialSetUp() {
+        levelView.layer.shadowColor = UIColor.black.cgColor
+        levelView.layer.shadowOpacity = 0.6
+        levelView.layer.shadowOffset = CGSize.zero
+        levelView.layer.shadowRadius = 10
+        
+        firstLevelView.layer.shadowColor = UIColor.black.cgColor
+        firstLevelView.layer.shadowOpacity = 0.5
+        firstLevelView.layer.shadowOffset = CGSize.zero
+        firstLevelView.layer.shadowRadius = 1
+        
+        secondLevelView.layer.shadowColor = UIColor.black.cgColor
+        secondLevelView.layer.shadowOpacity = 0.5
+        secondLevelView.layer.shadowOffset = CGSize.zero
+        secondLevelView.layer.shadowRadius = 1
+        
+        thirdLevelView.layer.shadowColor = UIColor.black.cgColor
+        thirdLevelView.layer.shadowOpacity = 0.5
+        thirdLevelView.layer.shadowOffset = CGSize.zero
+        thirdLevelView.layer.shadowRadius = 1
         if (fromScienceTour == true) {
             firstLevelView.backgroundColor = UIColor.mapLevelColor
             secondLevelView.backgroundColor = UIColor.mapLevelColor
@@ -107,10 +129,15 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     
     func loadMap() {
-        //let camera = GMSCameraPosition.camera(withLatitude: 25.295447, longitude: 51.539195, zoom:19)
-         let camera = GMSCameraPosition.camera(withLatitude: 25.296059, longitude: 51.538703, zoom:19)
-        viewForMap.camera = camera
-        //viewForMap?.animate(to: camera)
+        var camera = GMSCameraPosition()
+        //Device Condition check for moving map to center of device screen
+        if (UIScreen.main.bounds.height > 700) {
+            camera = GMSCameraPosition.camera(withLatitude: 25.295447, longitude: 51.539195, zoom:19)
+        }
+        else {
+            camera = GMSCameraPosition.camera(withLatitude: 25.296059, longitude: 51.538703, zoom:19)
+        }
+        viewForMap.animate(to: camera)
         do {
             if let styleURL = Bundle.main.url(forResource: "MapStyle", withExtension: "json") {
                 viewForMap.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
@@ -130,19 +157,17 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             level = levelNumber.one
             icon = UIImage(named: "qm_level_1")!
         }
-        
         let southWest = CLLocationCoordinate2D(latitude: 25.294730, longitude: 51.539021)
         let northEast = CLLocationCoordinate2D(latitude: 25.295685, longitude: 51.539945)
-       
         let overlayBounds = GMSCoordinateBounds(coordinate: southWest, coordinate: northEast)
         overlay = GMSGroundOverlay.init(bounds: overlayBounds, icon: icon)
-        
+        //let camera2 = GMSCameraPosition.camera(withLatitude: 25.295447, longitude: 51.539195, zoom:19)
         overlay.anchor = CGPoint(x: 0, y: 1)
         overlay.map = self.viewForMap
         viewForMap?.camera = camera
         
         overlay.bearing = -22
-        viewForMap.setMinZoom(19, maxZoom: 25)
+        viewForMap.setMinZoom(19, maxZoom: 28)
         
         //let circleCenter = CLLocationCoordinate2DMake(25.294730,51.539021)
         let circleCenter = CLLocationCoordinate2DMake(25.296059,51.538703)
@@ -150,12 +175,190 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         
         circ.strokeColor = UIColor.clear
         circ.map = viewForMap
-        viewForMap?.animate(to: camera)
+        
         if (fromScienceTour == true) {
-            viewForMap.animate(toZoom: 19.4)
+            if (UIScreen.main.bounds.height > 700) {
+                camera = GMSCameraPosition.camera(withLatitude: 25.295447, longitude: 51.539195, zoom:19)
+            }
+            else {
+                camera = GMSCameraPosition.camera(withLatitude: 25.295980, longitude: 51.538779, zoom:19)
+            }
+            
+            viewForMap.animate(to: camera)
+            viewForMap.animate(toZoom: 19.3)
+        }
+        
+        
+    }
+    //Function for show level 2 marker
+    func showLevelTwoMarker() {
+        if (zoomValue > 19) {
+            l2Marker.position = l2_atr1
+            l2Marker.title = ""
+            l2Marker.snippet = ""
+            l2Marker.icon = UIImage(named: "SI.5.1999.Front.2000x2000")
+            l2Marker.icon = self.imageWithImage(image: UIImage(named: "SI.5.1999.Front.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
+            l2Marker.appearAnimation = .pop
+            l2Marker.map = viewForMap
+            
+            l2Marker2.position = l2_atr2
+            l2Marker2.title = ""
+            l2Marker2.snippet = ""
+            //l2Marker2.icon = UIImage(named: "MS.523.1999-1.2000x2000")
+            l2Marker2.icon = self.imageWithImage(image: UIImage(named: "MS.523.1999-1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
+            l2Marker2.appearAnimation = .pop
+            l2Marker2.map = viewForMap
+            
+            l2Marker3.position = l2_atr3
+            l2Marker3.title = ""
+            l2Marker3.snippet = ""
+            l2Marker3.icon = self.imageWithImage(image: UIImage(named: "MW_548")!, scaledToSize: CGSize(width:38, height: 44))
+            l2Marker3.appearAnimation = .pop
+            l2Marker3.map = viewForMap
+            
+            l2Marker4.position = l2_atr4
+            l2Marker4.title = ""
+            l2Marker4.snippet = ""
+            l2Marker4.icon = self.imageWithImage(image: UIImage(named: "MS.709.2010-1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
+            l2Marker4.appearAnimation = .pop
+            l2Marker4.map = viewForMap
+            
+            l2Marker5.position = l2_atr5
+            l2Marker5.title = ""
+            l2Marker5.snippet = ""
+            l2Marker5.icon = self.imageWithImage(image: UIImage(named: "MS.709.2010-2")!, scaledToSize: CGSize(width:38, height: 44))
+            l2Marker5.appearAnimation = .pop
+            l2Marker5.map = viewForMap
+            
+            l2Marker6.position = l2_atr6
+            l2Marker6.title = ""
+            l2Marker6.snippet = ""
+            l2Marker6.icon = self.imageWithImage(image: UIImage(named: "MW.361.2007.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
+            l2Marker6.appearAnimation = .pop
+            l2Marker6.map = viewForMap
+            
+            l2Marker7.position = l2_atr7
+            l2Marker7.title = ""
+            l2Marker7.snippet = ""
+            l2Marker7.icon = self.imageWithImage(image: UIImage(named: "MS.688.2008.Recto-1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
+            l2Marker7.appearAnimation = .pop
+            l2Marker7.map = viewForMap
+            
+            l2Marker8.position = l2_atr8
+            l2Marker8.title = ""
+            l2Marker8.snippet = ""
+            l2Marker8.icon = self.imageWithImage(image: UIImage(named: "MS.650 .1 recto-1")!, scaledToSize: CGSize(width:38, height: 44))
+            l2Marker8.appearAnimation = .pop
+            l2Marker8.map = viewForMap
+            
+            l2Marker9.position = l2_atr9
+            l2Marker9.title = ""
+            l2Marker9.snippet = ""
+            l2Marker9.icon = self.imageWithImage(image: UIImage(named: "001_MIA_MW.146_005")!, scaledToSize: CGSize(width:38, height: 44))
+            l2Marker9.appearAnimation = .pop
+            l2Marker9.map = viewForMap
+            
+            l2Marker10.position = l2_atr10
+            l2Marker10.title = ""
+            l2Marker10.snippet = ""
+            l2Marker10.icon = self.imageWithImage(image: UIImage(named: "MW.340.Front.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
+            l2Marker10.appearAnimation = .pop
+            l2Marker10.map = viewForMap
+            
+            l2Marker11.position = l2_atr11
+            l2Marker11.title = ""
+            l2Marker11.snippet = ""
+            l2Marker11.icon = self.imageWithImage(image: UIImage(named: "MS.794-1")!, scaledToSize: CGSize(width:38, height: 44))
+            l2Marker11.appearAnimation = .pop
+            l2Marker11.map = viewForMap
+            
+            l2Marker12.position = l2_atr12
+            l2Marker12.title = ""
+            l2Marker12.snippet = ""
+            l2Marker12.icon = self.imageWithImage(image: UIImage(named: "MW_56")!, scaledToSize: CGSize(width:38, height: 44))
+            l2Marker12.appearAnimation = .pop
+            l2Marker12.map = viewForMap
+            
+            l2Marker13.position = l2_atr13
+            l2Marker13.title = ""
+            l2Marker13.snippet = ""
+            l2Marker13.icon = self.imageWithImage(image: UIImage(named: "MW.634-EMu.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
+            l2Marker13.appearAnimation = .pop
+            l2Marker13.map = viewForMap
+            
+            
+        } else {
+            l2Marker.map = nil
+            l2Marker2.map = nil
+            l2Marker3.map = nil
+            l2Marker4.map = nil
+            l2Marker5.map = nil
+            l2Marker6.map = nil
+            l2Marker7.map = nil
+            l2Marker8.map = nil
+            l2Marker9.map = nil
+            l2Marker10.map = nil
+            l2Marker11.map = nil
+            l2Marker12.map = nil
+            l2Marker13.map = nil
         }
     }
-   
+    //Function for show level 3 marker
+    func showLevelThreeMarker() {
+        if (zoomValue > 19) {
+            l3Marker1.position = l3_atr1
+            l3Marker1.title = ""
+            l3Marker1.snippet = ""
+            l3Marker1.icon = self.imageWithImage(image: UIImage(named: "PO.297.2006.1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
+            l3Marker1.appearAnimation = .pop
+            l3Marker1.map = viewForMap
+            
+            l3Marker2.position = l3_atr2
+            l3Marker2.title = ""
+            l3Marker2.snippet = ""
+            l3Marker2.icon = self.imageWithImage(image: UIImage(named: "PO.308")!, scaledToSize: CGSize(width:38, height: 44))
+            l3Marker2.appearAnimation = .pop
+            l3Marker2.map = viewForMap
+            
+            l3Marker3.position = l3_atr3
+            l3Marker3.title = ""
+            l3Marker3.snippet = ""
+            l3Marker3.icon = self.imageWithImage(image: UIImage(named: "MS.647.A-59")!, scaledToSize: CGSize(width:38, height: 44))
+            l3Marker3.appearAnimation = .pop
+            l3Marker3.map = viewForMap
+            
+            l3Marker4.position = l3_atr4
+            l3Marker4.title = ""
+            l3Marker4.snippet = ""
+            l3Marker4.icon = self.imageWithImage(image: UIImage(named: "HS.32-1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
+            l3Marker4.appearAnimation = .pop
+            l3Marker4.map = viewForMap
+            
+            l3Marker5.position = l3_atr5
+            l3Marker5.title = ""
+            l3Marker5.snippet = ""
+            l3Marker5.icon = self.imageWithImage(image: UIImage(named: "GL.322-0564.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
+            l3Marker5.appearAnimation = .pop
+            l3Marker5.map = viewForMap
+            
+            l3Marker6.position = l2_atr6
+            l3Marker6.title = ""
+            l3Marker6.snippet = ""
+            l3Marker6.icon = self.imageWithImage(image: UIImage(named: "IV_61")!, scaledToSize: CGSize(width:38, height: 44))
+            l3Marker6.appearAnimation = .pop
+            l3Marker6.map = viewForMap
+            
+            
+            
+        } else {
+            l3Marker1.map = nil
+            l3Marker2.map = nil
+            l3Marker3.map = nil
+            l3Marker4.map = nil
+            l3Marker5.map = nil
+            l3Marker6.map = nil
+        }
+    }
     func showMarker(marker:GMSMarker,position: CLLocationCoordinate2D,titleString: String,imageName:String, zoomValue : Float){
         if (zoomValue > 19) {
             marker.position = position
@@ -192,21 +395,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         removeMarkers()
         
         if (zoomValue > 19) {
-            let markerWidth = 22 + (zoomValue-19)
-            let markerHeight = 26 + (zoomValue-19)
-//            showMarker(marker: l3Marker1, position: l3_atr1, titleString: "HelloWorld", imageName: "001_MIA_MW.146_005", imgWidth: Double(markerWidth), imgHeight: Double(markerHeight), zoomValue: zoomValue)
-//            showMarker(marker: l3Marker2, position: l3_atr2, titleString: "HelloWorld", imageName: "GL.322-0564.2000x2000", imgWidth: Double(markerWidth), imgHeight: Double(markerHeight), zoomValue: zoomValue)
-//            showMarker(marker: l3Marker3, position: l3_atr3, titleString: "HelloWorld", imageName: "HS.32-1.2000x2000", imgWidth: Double(markerWidth), imgHeight: Double(markerHeight), zoomValue: zoomValue)
-//            showMarker(marker: l3Marker4, position: l3_atr4, titleString: "HelloWorld", imageName: "MS.523.1999-1.2000x2000", imgWidth: Double(markerWidth), imgHeight: Double(markerHeight), zoomValue: zoomValue)
-//            showMarker(marker: l3Marker5, position: l3_atr5, titleString: "HelloWorld", imageName: "MS.688.2008.Recto-1.2000x2000", imgWidth: Double(markerWidth), imgHeight: Double(markerHeight), zoomValue: zoomValue)
-//            showMarker(marker: l3Marker6, position: l3_atr6, titleString: "HelloWorld", imageName: "MS.709.2010-1.2000x2000", imgWidth: Double(markerWidth), imgHeight: Double(markerHeight), zoomValue: zoomValue)
-            
-            showMarker(marker: l3Marker1, position: l3_atr1, titleString: "HelloWorld", imageName: "001_MIA_MW.146_005", zoomValue: zoomValue)
-            showMarker(marker: l3Marker2, position: l3_atr2, titleString: "HelloWorld", imageName: "GL.322-0564.2000x2000", zoomValue: zoomValue)
-            showMarker(marker: l3Marker3, position: l3_atr3, titleString: "HelloWorld", imageName: "HS.32-1.2000x2000",zoomValue: zoomValue)
-            showMarker(marker: l3Marker4, position: l3_atr4, titleString: "HelloWorld", imageName: "MS.523.1999-1.2000x2000", zoomValue: zoomValue)
-            showMarker(marker: l3Marker5, position: l3_atr5, titleString: "HelloWorld", imageName: "MS.688.2008.Recto-1.2000x2000", zoomValue: zoomValue)
-            showMarker(marker: l3Marker6, position: l3_atr6, titleString: "HelloWorld", imageName: "MS.709.2010-1.2000x2000", zoomValue: zoomValue)
+            showLevelThreeMarker()
         }
     }
     
@@ -218,19 +407,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         overlay.icon = UIImage(named: "qm_level_2")
         removeMarkers()
         if (zoomValue > 19) {
-            showMarker(marker: l2Marker, position: l2_atr1, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoomValue)
-            showMarker(marker: l2Marker2, position: l2_atr2, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoomValue)
-            showMarker(marker: l2Marker3, position: l2_atr3, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoomValue)
-            showMarker(marker: l2Marker4, position: l2_atr4, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoomValue)
-            showMarker(marker: l2Marker5, position: l2_atr5, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoomValue)
-            showMarker(marker: l2Marker6, position: l2_atr6, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoomValue)
-            showMarker(marker: l2Marker7, position: l2_atr7, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoomValue)
-            showMarker(marker: l2Marker8, position: l2_atr8, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoomValue)
-            showMarker(marker: l2Marker9, position: l2_atr9, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoomValue)
-            showMarker(marker: l2Marker10, position: l2_atr10, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoomValue)
-            showMarker(marker: l2Marker11, position: l2_atr11, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoomValue)
-            showMarker(marker: l2Marker12, position: l2_atr12, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoomValue)
-            showMarker(marker: l2Marker13, position: l2_atr13, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoomValue)
+            showLevelTwoMarker()
         }
     }
     
@@ -252,21 +429,30 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         objectPopupView.objectPopupDelegate = self
         objectPopupView.loadPopup()
         self.view.addSubview(objectPopupView)
+        
+
     }
     
     //MARK: map delegate
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        marker.icon = self.imageWithImage(image: UIImage(named: "MS.709.2010-1.2000x2000")!, scaledToSize: CGSize(width:34, height: 40))
+        let markerIcon = marker.icon
+        if (level == levelNumber.two) {
+            showLevelTwoMarker()
+        }
+        else if (level == levelNumber.three){
+            showLevelThreeMarker()
+        }
+        marker.icon = self.imageWithImage(image: markerIcon!, scaledToSize: CGSize(width:52, height: 62))
         loadObjectPopup()
         return true
     }
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
-         let zoom = mapView.camera.zoom
+        let zoom = mapView.camera.zoom
         zoomValue = zoom
         //let center = CLLocationCoordinate2DMake(25.294730,51.539021)
         let center = CLLocationCoordinate2DMake(25.296059,51.538703)
         let radius = CLLocationDistance(250)
-
+        
         let targetLoc = CLLocation.init(latitude: position.target.latitude, longitude: position.target.longitude)
         let centerLoc = CLLocation.init(latitude: center.latitude, longitude: center.longitude)
         
@@ -274,29 +460,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             let camera = GMSCameraPosition.camera(withLatitude: center.latitude, longitude: center.longitude, zoom: mapView.camera.zoom)
             viewForMap.animate(to: camera)
         }
-       
+        
         if (level == levelNumber.two) {
-            //addMarker(zoomValue: zoom)
-            showMarker(marker: l2Marker, position: l2_atr1, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-            showMarker(marker: l2Marker2, position: l2_atr2, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-            showMarker(marker: l2Marker3, position: l2_atr3, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-            showMarker(marker: l2Marker4, position: l2_atr4, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-            showMarker(marker: l2Marker5, position: l2_atr5, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-            showMarker(marker: l2Marker6, position: l2_atr6, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-            showMarker(marker: l2Marker7, position: l2_atr7, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-            showMarker(marker: l2Marker8, position: l2_atr8, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-            showMarker(marker: l2Marker9, position: l2_atr9, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-            showMarker(marker: l2Marker10, position: l2_atr10, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-            showMarker(marker: l2Marker11, position: l2_atr11, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-            showMarker(marker: l2Marker12, position: l2_atr12, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
-            showMarker(marker: l2Marker13, position: l2_atr13, titleString: "HelloWorld", imageName: "artifactimg", zoomValue: zoom)
+            showLevelTwoMarker()
+            
         } else if(level == levelNumber.three) {
-            showMarker(marker: l3Marker1, position: l3_atr1, titleString: "HelloWorld", imageName: "001_MIA_MW.146_005", zoomValue: zoom)
-            showMarker(marker: l3Marker2, position: l3_atr2, titleString: "HelloWorld", imageName: "GL.322-0564.2000x2000", zoomValue: zoom)
-            showMarker(marker: l3Marker3, position: l3_atr3, titleString: "HelloWorld", imageName: "HS.32-1.2000x2000", zoomValue: zoom)
-            showMarker(marker: l3Marker4, position: l3_atr4, titleString: "HelloWorld", imageName: "MS.523.1999-1.2000x2000", zoomValue: zoom)
-            showMarker(marker: l3Marker5, position: l3_atr5, titleString: "HelloWorld", imageName: "MS.688.2008.Recto-1.2000x2000", zoomValue: zoom)
-            showMarker(marker: l3Marker6, position: l3_atr6, titleString: "HelloWorld", imageName: "MS.709.2010-1.2000x2000", zoomValue: zoom)
+            showLevelThreeMarker()
         }
     }
     
@@ -325,18 +494,24 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     //MARK: Poup Delegate
     func objectPopupCloseButtonPressed() {
         self.objectPopupView.removeFromSuperview()
+        if (level == levelNumber.two) {
+            self.showLevelTwoMarker()
+        } else {
+            self.showLevelThreeMarker()
+        }
     }
-    
+    //Present detail popup using Bottomsheet
     func viewDetailButtonTapAction() {
         let objectDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "objectDetailId") as! ObjectDetailViewController
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromTop
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(objectDetailView, animated: false, completion: nil)
+
+        let bottomSheet = MDCBottomSheetController(contentViewController: objectDetailView)
+               bottomSheet.isScrimAccessibilityElement = true
+            bottomSheet.scrimAccessibilityLabel = "Close"
+      //  bottomSheet.trackingScrollView = objectDetailView.objectTableView
+        bottomSheet.preferredContentSize = CGSize(width: self.view.frame.size.width, height: self.view.frame.size.height)
+
+        present(bottomSheet, animated: true)
     }
-    
     @IBAction func didTapQrCode(_ sender: UIButton) {
     }
     
@@ -358,5 +533,17 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         transition.subtype = kCATransitionFromLeft
         self.view.window!.layer.add(transition, forKey: kCATransition)
         self.dismiss(animated: false, completion: nil)
+    }
+    //Added BottomSheet for showing popup when we clicked in marker
+    func addBottomSheetView(scrollable: Bool? = true) {
+        let bottomSheetVC = scrollable! ? MapDetailView() : BottomSheetViewController()
+        
+        self.addChildViewController(bottomSheetVC)
+        self.view.addSubview(bottomSheetVC.view)
+        bottomSheetVC.didMove(toParentViewController: self)
+        
+        let height = view.frame.height
+        let width  = view.frame.width
+        bottomSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height)
     }
 }
