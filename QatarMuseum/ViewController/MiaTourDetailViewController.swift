@@ -127,9 +127,14 @@ class MiaTourDetailViewController: UIViewController,HeaderViewProtocol,comingSoo
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
-        let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as! FloorMapViewController
-        floorMapView.fromScienceTour = true
-        self.present(floorMapView, animated: false, completion: nil)
+//        let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as! FloorMapViewController
+//        floorMapView.fromScienceTour = true
+//        self.present(floorMapView, animated: false, completion: nil)
+        
+        //Open PageViewcontroller with short details
+        let shortDetailsView =  self.storyboard?.instantiateViewController(withIdentifier: "previewPageId") as! PreviewPageViewController
+        
+        self.present(shortDetailsView, animated: false, completion: nil)
     }
     @IBAction func startTourButtonTouchDown(_ sender: UIButton) {
         self.startTourButton.backgroundColor = UIColor.startTourLightBlue

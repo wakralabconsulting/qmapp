@@ -8,14 +8,23 @@
 
 import UIKit
 
-class MapDetailView: UIViewController {
+protocol MapDetailProtocol
+{
+    func dismissOvelay()
+}
+class MapDetailView: UIViewController,ObjectImageViewProtocol {
+    
+    
 
     @IBOutlet weak var tableView: UITableView!
     var viewMoveUp : Bool = false
-    let fullView: CGFloat = 100
+    let fullView: CGFloat = 20
     var partialView: CGFloat {
-        return UIScreen.main.bounds.height - 150
+        return UIScreen.main.bounds.height - 190
     }
+    var mapdetailDelegate : MapDetailProtocol?
+    let closeButton = UIButton()
+    var objectImagePopupView : ObjectImageView = ObjectImageView()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -23,10 +32,18 @@ class MapDetailView: UIViewController {
         tableView.dataSource = self
         tableView.register(UINib(nibName: "MapDetailCell", bundle: nil), forCellReuseIdentifier: "objectDetailID")
         tableView.register(UINib(nibName: "ObjectPopupView", bundle: nil), forCellReuseIdentifier: "objectPopupId")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "imageCell")
         
         let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(MapDetailView.panGesture))
         gesture.delegate = self
         view.addGestureRecognizer(gesture)
+        
+//        let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(MapDetailView.tapGestureAction))
+//        tapGesture.delegate = self
+//        
+//        view.addGestureRecognizer(tapGesture)
+        
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -40,8 +57,30 @@ class MapDetailView: UIViewController {
         UIView.animate(withDuration: 0.6, animations: { [weak self] in
             let frame = self?.view.frame
             let yComponent = self?.partialView
-            self?.view.frame = CGRect(x: 0, y: yComponent!, width: frame!.width, height: frame!.height - 100)
+            self?.view.frame = CGRect(x: 0, y: yComponent!, width: frame!.width, height: frame!.height-20 )
         })
+    }
+    func setupUIContents() {
+        // loadingView.isHidden = false
+        // loadingView.showLoading()
+        
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
+        } else {
+            closeButton.frame = CGRect(x: self.view.frame.width-50, y: 30, width: 40, height: 40)
+        }
+        closeButton.setImage(UIImage(named: "closeX1"), for: .normal)
+        closeButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom:12, right: 12)
+        
+        closeButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(closeButtonTouchDownAction), for: .touchDown)
+        
+        closeButton.layer.shadowColor = UIColor.black.cgColor
+        closeButton.layer.shadowOffset = CGSize(width: 5, height: 5)
+        closeButton.layer.shadowRadius = 5
+        closeButton.layer.shadowOpacity = 1.0
+        view.addSubview(closeButton)
+        
     }
     @objc func panGesture(_ recognizer: UIPanGestureRecognizer) {
         
@@ -49,6 +88,21 @@ class MapDetailView: UIViewController {
         let velocity = recognizer.velocity(in: self.view)
         
         let y = self.view.frame.minY
+        print(translation)
+      
+        print(y)
+        print(y+translation.y)
+      
+     // fixed
+        if (y+4 < partialView) {
+            viewMoveUp = true
+            tableView.reloadData()
+        }
+        else if (y+translation.y > partialView){
+            viewMoveUp = false
+            tableView.reloadData()
+        }
+        
         if (y + translation.y >= fullView) && (y + translation.y <= partialView) {
             self.view.frame = CGRect(x: 0, y: y + translation.y, width: view.frame.width, height: view.frame.height)
             recognizer.setTranslation(CGPoint.zero, in: self.view)
@@ -62,18 +116,26 @@ class MapDetailView: UIViewController {
             UIView.animate(withDuration: duration, delay: 0.0, options: [.allowUserInteraction], animations: {
                 if  velocity.y >= 0 {
                     self.view.frame = CGRect(x: 0, y: self.partialView, width: self.view.frame.width, height: self.view.frame.height)
+                    self.viewMoveUp = false
+                    self.tableView.reloadData()
                 } else {
                     self.view.frame = CGRect(x: 0, y: self.fullView, width: self.view.frame.width, height: self.view.frame.height)
+                    self.setupUIContents()
+                    
                 }
                 
             }, completion: { [weak self] _ in
                 if ( velocity.y < 0 ) {
                     self?.tableView.isScrollEnabled = true
+                    self?.viewMoveUp = true
                 }
             })
         }
     }
-    
+//    @objc func tapGestureAction(_ sender: UITapGestureRecognizer) {
+//       // viewTapDelegate?.viewTapAction(sender: sender)
+//
+//    }
     
     func prepareBackgroundView(){
         let blurEffect = UIBlurEffect.init(style: .dark)
@@ -94,7 +156,7 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 4
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -102,21 +164,83 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
             if( viewMoveUp == true) {
                 return 0
             } else {
-                return self.view.bounds.height
+                return 200
             }
             
+        }else if (indexPath.row == 1) {
+            return 300
         } else {
-           return 736
+           return UITableViewAutomaticDimension
         }
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (indexPath.row == 0) {
-            return tableView.dequeueReusableCell(withIdentifier: "objectPopupId")!
+            let cell = tableView.dequeueReusableCell(withIdentifier: "objectPopupId", for: indexPath)
+            cell.selectionStyle = .none
+           // return tableView.dequeueReusableCell(withIdentifier: "objectPopupId")!
+            return cell
+        }else if (indexPath.row == 1) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "imageCell", for: indexPath)
+            let objectImageView = UIImageView()
+            objectImageView.frame = CGRect(x: 0, y: 20, width: tableView.frame.width, height: 300)
+            objectImageView.image = UIImage.init(named: "science_tour_object")
+            objectImageView.backgroundColor = UIColor.white
+            objectImageView.contentMode = .scaleAspectFit
+            objectImageView.clipsToBounds = true
+            cell.addSubview(objectImageView)
+            
+            objectImageView.isUserInteractionEnabled = true
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(loadObjectImagePopup))
+            objectImageView.addGestureRecognizer(tapGesture)
+            return cell
         } else {
-            return tableView.dequeueReusableCell(withIdentifier: "objectDetailID")!
+             let cell = tableView.dequeueReusableCell(withIdentifier: "objectDetailID", for: indexPath) as! ObjectDetailTableViewCell
+            if (indexPath.row == 2){
+                cell.setObjectDetail()
+                return cell
+                //return tableView.dequeueReusableCell(withIdentifier: "objectDetailID")!
+            } else {
+                cell.setObjectHistoryDetail()
+                return cell
+            }
+            cell.favBtnTapAction = {
+                () in
+                self.setFavouritesAction(cellObj: cell)
+            }
+            cell.shareBtnTapAction = {
+                () in
+                self.setShareAction(cellObj: cell)
+            }
+            
+           // loadingView.stopLoading()
+          //  loadingView.isHidden = true
         }
+    }
+   
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if(indexPath.row == 0) {
+            UIView.animate(withDuration: 0.6, animations: { [weak self] in
+                self?.view.frame = CGRect(x: 0, y: (self?.fullView)!, width: (self?.view.frame.width)!, height: (self?.view.frame.height)!)
+                self?.viewMoveUp = true
+                self?.tableView.reloadData()
+            })
+
+        }
+    }
+    func setFavouritesAction(cellObj: ObjectDetailTableViewCell) {
+        if (cellObj.favoriteButton.tag == 0) {
+            cellObj.favoriteButton.tag = 1
+            cellObj.favoriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
+        } else {
+            cellObj.favoriteButton.tag = 0
+            cellObj.favoriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
+        }
+    }
+    
+    func setShareAction(cellObj: ObjectDetailTableViewCell) {
         
     }
 }
@@ -125,25 +249,42 @@ extension MapDetailView: UIGestureRecognizerDelegate {
     
     // Solution
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        let gesture = (gestureRecognizer as! UIPanGestureRecognizer)
-        let direction = gesture.velocity(in: view).y
-//        if (direction ) {
-//            viewMoveUp = true
-//        } else {
-//            viewMoveUp = false
-//        }
-        let y = view.frame.minY
-        if (y == fullView && tableView.contentOffset.y == 0 && direction > 0) || (y == partialView) {
-            tableView.isScrollEnabled = false
-            //viewMoveUp = false
-        } else {
-            tableView.isScrollEnabled = true
-           // viewMoveUp = true
+        
+        if (gestureRecognizer is UIPanGestureRecognizer) {
+        let gesture = (gestureRecognizer) as! UIPanGestureRecognizer
+            let direction = gesture.velocity(in: view).y
             
+            let y = view.frame.minY
+            if (y == fullView && tableView.contentOffset.y == 0 && direction > 0) || (y == partialView) {
+                tableView.isScrollEnabled = false
+                viewMoveUp = false
+            } else {
+                tableView.isScrollEnabled = true
+                viewMoveUp = true
+                
+                
+            }
             
         }
-        
         return false
+    }
+    @objc func loadObjectImagePopup() {
+        objectImagePopupView = ObjectImageView(frame: self.view.frame)
+        objectImagePopupView.objectImageViewDelegate = self
+        objectImagePopupView.loadPopup(image : "science_tour_object")
+        self.view.addSubview(objectImagePopupView)
+    }
+    @objc func closeButtonTouchDownAction(sender: UIButton!) {
+        sender.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+    }
+    func dismissImagePopUpView() {
+        self.dismiss(animated: false, completion: nil)
+    }
+    @objc func buttonAction(sender: UIButton!) {
+        mapdetailDelegate?.dismissOvelay()
+        self.removeFromParentViewController()
+        self.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: 0, height: 0)
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

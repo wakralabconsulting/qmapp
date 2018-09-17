@@ -284,12 +284,12 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
 //    }
     
     @objc func buttonAction(sender: UIButton!) {
-        sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        let transition = CATransition()
-        transition.duration = 0.25
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        self.view.window!.layer.add(transition, forKey: kCATransition)
+       // sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+//        let transition = CATransition()
+//        transition.duration = 0.25
+//        transition.type = kCATransitionFade
+//        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//        self.view.window!.layer.add(transition, forKey: kCATransition)
         dismiss(animated: false, completion: nil)
     }
     

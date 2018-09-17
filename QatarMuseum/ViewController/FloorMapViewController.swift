@@ -16,7 +16,9 @@ enum levelNumber{
     case three
 }
 
-class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpProtocol, HeaderViewProtocol {
+class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpProtocol, HeaderViewProtocol,UIGestureRecognizerDelegate,MapDetailProtocol {
+    
+    
     @IBOutlet weak var viewForMap: GMSMapView!
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var thirdLevelView: UIView!
@@ -33,6 +35,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     @IBOutlet weak var firstLevelLabel: UILabel!
     @IBOutlet weak var thirdLevelLabel: UILabel!
     @IBOutlet weak var levelView: UIView!
+    @IBOutlet weak var numberSerchBtn: UIButton!
+    
+    var bottomSheetVC:MapDetailView = MapDetailView()
+    @IBOutlet weak var overlayView: UIView!
     var overlay = GMSGroundOverlay()
     let l2_atr1 = CLLocationCoordinate2D(latitude: 25.295141, longitude: 51.539185)
     let l2_atr2 = CLLocationCoordinate2D(latitude: 25.295500, longitude: 51.538855)
@@ -85,6 +91,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     
     func initialSetUp() {
+        overlayView.isHidden = true
+        bottomSheetVC.mapdetailDelegate = self
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
+        tap.delegate = self // This is not required
+        overlayView.addGestureRecognizer(tap)
         levelView.layer.shadowColor = UIColor.black.cgColor
         levelView.layer.shadowOpacity = 0.6
         levelView.layer.shadowOffset = CGSize.zero
@@ -108,10 +119,23 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             firstLevelView.backgroundColor = UIColor.mapLevelColor
             secondLevelView.backgroundColor = UIColor.mapLevelColor
             thirdLevelView.backgroundColor = UIColor.white
+            numberSerchBtn.setImage(UIImage(named: "side_menu_blackX1"), for: .normal)
+            self.numberSerchBtn.contentEdgeInsets = UIEdgeInsets(top: 11, left: 5, bottom: 11, right: 5)
+            headerView.headerBackButton.isHidden = true
+            
         } else {
             firstLevelView.backgroundColor = UIColor.white
             secondLevelView.backgroundColor = UIColor.mapLevelColor
             thirdLevelView.backgroundColor = UIColor.mapLevelColor
+            numberSerchBtn.setImage(UIImage(named: "number_padX1"), for: .normal)
+            headerView.headerBackButton.isHidden = false
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                
+                headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
+            }
+            else {
+                headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+            }
         }
         
         thirdLevelLabel.text = NSLocalizedString("LEVEL_STRING", comment: "LEVEL_STRING in floor map")
@@ -119,13 +143,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         firstLevelLabel.text = NSLocalizedString("LEVEL_STRING", comment: "LEVEL_STRING in floor map")
         headerView.headerViewDelegate = self
         headerView.headerTitle.text = NSLocalizedString("FLOOR_MAP_TITLE", comment: "FLOOR_MAP_TITLE  in the Floormap page")
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            
-            headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
-        }
-        else {
-            headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
-        }
+        
     }
     
     func loadMap() {
@@ -307,8 +325,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     func showLevelThreeMarker() {
         if (zoomValue > 19) {
             l3Marker1.position = l3_atr1
-            l3Marker1.title = ""
-            l3Marker1.snippet = ""
+            l3Marker1.title = "PO.297"
+            l3Marker1.snippet = "PO.297"
             l3Marker1.icon = self.imageWithImage(image: UIImage(named: "PO.297.2006.1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
             l3Marker1.appearAnimation = .pop
             l3Marker1.map = viewForMap
@@ -443,7 +461,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             showLevelThreeMarker()
         }
         marker.icon = self.imageWithImage(image: markerIcon!, scaledToSize: CGSize(width:52, height: 62))
-        loadObjectPopup()
+        //loadObjectPopup()
+        addBottomSheetView()
         return true
     }
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
@@ -516,13 +535,23 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     
     @IBAction func didTapNumberSearch(_ sender: UIButton) {
-        let numberPadView = self.storyboard?.instantiateViewController(withIdentifier: "artifactNumberPadViewId") as! ArtifactNumberPadViewController
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(numberPadView, animated: false, completion: nil)
+        if(fromScienceTour) {
+            let transition = CATransition()
+            transition.duration = 0.3
+            transition.type = kCATransitionPush
+            transition.subtype = kCATransitionFromLeft
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            self.dismiss(animated: false, completion: nil)
+        } else {
+            let numberPadView = self.storyboard?.instantiateViewController(withIdentifier: "artifactNumberPadViewId") as! ArtifactNumberPadViewController
+            let transition = CATransition()
+            transition.duration = 0.3
+            transition.type = kCATransitionFade
+            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+            view.window!.layer.add(transition, forKey: kCATransition)
+            self.present(numberPadView, animated: false, completion: nil)
+        }
+        
     }
     
     //MARK:Header Protocol
@@ -536,14 +565,50 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     //Added BottomSheet for showing popup when we clicked in marker
     func addBottomSheetView(scrollable: Bool? = true) {
-        let bottomSheetVC = scrollable! ? MapDetailView() : BottomSheetViewController()
-        
+        overlayView.isHidden = false
+        bottomSheetVC = MapDetailView()
+        bottomSheetVC.mapdetailDelegate = self
         self.addChildViewController(bottomSheetVC)
         self.view.addSubview(bottomSheetVC.view)
         bottomSheetVC.didMove(toParentViewController: self)
-        
         let height = view.frame.height
         let width  = view.frame.width
         bottomSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height)
+    }
+    func viewTapAction(sender: UITapGestureRecognizer) {
+        if (sender.state == .began) {
+            
+            UIView.animate(withDuration: 1, delay: 0.0, options: [.allowUserInteraction], animations: {
+                //                if  velocity.y >= 0 {
+                self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+                //                } else {
+                //                    self.view.frame = CGRect(x: 0, y: self.fullView, width: self.view.frame.width, height: self.view.frame.height)
+                //                }
+                
+            }, completion: { [weak self] _ in
+                
+            })
+        }
+    }
+    @objc func handleTap(sender: UITapGestureRecognizer? = nil) {
+        bottomSheetVC.removeFromParentViewController()
+        bottomSheetVC.dismiss(animated: false, completion: nil)
+        bottomSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: 0, height: 0)
+        overlayView.isHidden = true
+        if (level == levelNumber.two) {
+            showLevelTwoMarker()
+            
+        } else if(level == levelNumber.three) {
+            showLevelThreeMarker()
+        }
+    }
+    func dismissOvelay() {
+        overlayView.isHidden = true
+        if (level == levelNumber.two) {
+            showLevelTwoMarker()
+            
+        } else if(level == levelNumber.three) {
+            showLevelThreeMarker()
+        }
     }
 }
