@@ -29,7 +29,7 @@
                         <rect key="frame" x="0.0" y="-0.5" width="345" height="200"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Albarello" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yl5-mB-uaq">
-                                <rect key="frame" x="20" y="12" width="94.5" height="27"/>
+                                <rect key="frame" x="20" y="7" width="94.5" height="27"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="27" id="3J4-Dh-2Pr"/>
                                 </constraints>
@@ -38,7 +38,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mMZ-D1-NNh">
-                                <rect key="frame" x="10" y="59" width="70" height="100"/>
+                                <rect key="frame" x="10" y="47" width="70" height="100"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="science_tour_object" translatesAutoresizingMaskIntoConstraints="NO" id="xRI-LK-efb">
                                         <rect key="frame" x="0.0" y="0.0" width="65" height="100"/>
@@ -55,7 +55,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Production:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3J-Mc-SvW">
-                                <rect key="frame" x="80" y="69" width="125" height="16"/>
+                                <rect key="frame" x="80" y="57" width="125" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="125" id="kj2-yt-xk3"/>
                                 </constraints>
@@ -64,38 +64,58 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Syria (Damascus)" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iuc-Fs-MhJ">
-                                <rect key="frame" x="210" y="69" width="125" height="16"/>
+                                <rect key="frame" x="210" y="57" width="125" height="16"/>
                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" verticalCompressionResistancePriority="755" text="Production dates:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rpx-sd-T7S">
-                                <rect key="frame" x="80" y="100" width="125" height="16"/>
+                                <rect key="frame" x="80" y="88" width="125" height="16"/>
                                 <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="753" text="1400 - 1425 CE" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rDb-f4-Nvp">
-                                <rect key="frame" x="210" y="100" width="125" height="16"/>
+                                <rect key="frame" x="210" y="88" width="125" height="16"/>
                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Period/Style:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8uJ-x8-l0t">
-                                <rect key="frame" x="80" y="131" width="125" height="18"/>
+                                <rect key="frame" x="80" y="119" width="125" height="18"/>
                                 <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Mamluk" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0mn-mk-5hw">
-                                <rect key="frame" x="210" y="132" width="125" height="16"/>
+                                <rect key="frame" x="210" y="120" width="125" height="16"/>
                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="View Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KqM-qd-xSA">
+                                <rect key="frame" x="248" y="141" width="86" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="86" id="xSX-Ia-Mnb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ein-Zh-72o">
+                                <rect key="frame" x="248" y="157" width="86" height="1"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="lhn-7Y-fvB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="KqM-qd-xSA" secondAttribute="trailing" constant="11" id="0pu-gd-Azl"/>
                             <constraint firstItem="Iuc-Fs-MhJ" firstAttribute="leading" secondItem="0mn-mk-5hw" secondAttribute="leading" id="4kT-Q0-fee"/>
                             <constraint firstItem="h3J-Mc-SvW" firstAttribute="centerY" secondItem="Iuc-Fs-MhJ" secondAttribute="centerY" id="644-wn-qiE"/>
                             <constraint firstItem="8uJ-x8-l0t" firstAttribute="bottom" secondItem="xRI-LK-efb" secondAttribute="bottom" constant="-10" id="BHw-Sz-Pfe"/>
@@ -103,19 +123,23 @@
                             <constraint firstItem="Iuc-Fs-MhJ" firstAttribute="trailing" secondItem="rDb-f4-Nvp" secondAttribute="trailing" id="GQh-OA-sSE"/>
                             <constraint firstItem="h3J-Mc-SvW" firstAttribute="leading" secondItem="Rpx-sd-T7S" secondAttribute="leading" id="K2Y-Qw-tnH"/>
                             <constraint firstAttribute="height" constant="200" id="Kfn-Yd-jqk"/>
+                            <constraint firstItem="ein-Zh-72o" firstAttribute="trailing" secondItem="KqM-qd-xSA" secondAttribute="trailing" id="LtW-OZ-Ypp"/>
                             <constraint firstItem="mMZ-D1-NNh" firstAttribute="top" secondItem="h3J-Mc-SvW" secondAttribute="top" constant="-10" id="NHg-NL-BSo"/>
                             <constraint firstAttribute="trailing" secondItem="Iuc-Fs-MhJ" secondAttribute="trailing" constant="10" id="Q9g-TS-GIo"/>
-                            <constraint firstItem="mMZ-D1-NNh" firstAttribute="top" secondItem="Yl5-mB-uaq" secondAttribute="bottom" constant="20" id="QPe-Gg-tMo"/>
+                            <constraint firstItem="mMZ-D1-NNh" firstAttribute="top" secondItem="Yl5-mB-uaq" secondAttribute="bottom" constant="13" id="QPe-Gg-tMo"/>
                             <constraint firstItem="8uJ-x8-l0t" firstAttribute="top" secondItem="Rpx-sd-T7S" secondAttribute="bottom" constant="15" id="WBx-4K-rZn"/>
                             <constraint firstItem="h3J-Mc-SvW" firstAttribute="leading" secondItem="mMZ-D1-NNh" secondAttribute="trailing" id="Z8c-3w-gto"/>
+                            <constraint firstItem="KqM-qd-xSA" firstAttribute="top" secondItem="0mn-mk-5hw" secondAttribute="bottom" constant="5" id="a6r-aq-vhe"/>
                             <constraint firstItem="h3J-Mc-SvW" firstAttribute="width" secondItem="8uJ-x8-l0t" secondAttribute="width" id="bKT-qv-4Cm"/>
                             <constraint firstItem="h3J-Mc-SvW" firstAttribute="leading" secondItem="8uJ-x8-l0t" secondAttribute="leading" id="dtO-25-OaU"/>
-                            <constraint firstItem="Yl5-mB-uaq" firstAttribute="top" secondItem="9Px-ui-lf0" secondAttribute="top" constant="12" id="fVg-2h-dMm"/>
+                            <constraint firstItem="Yl5-mB-uaq" firstAttribute="top" secondItem="9Px-ui-lf0" secondAttribute="top" constant="7" id="fVg-2h-dMm"/>
                             <constraint firstItem="h3J-Mc-SvW" firstAttribute="width" secondItem="Rpx-sd-T7S" secondAttribute="width" id="gOB-7B-dAY"/>
                             <constraint firstItem="Iuc-Fs-MhJ" firstAttribute="leading" secondItem="h3J-Mc-SvW" secondAttribute="trailing" constant="5" id="htH-yd-qdV"/>
                             <constraint firstItem="Rpx-sd-T7S" firstAttribute="top" secondItem="h3J-Mc-SvW" secondAttribute="bottom" constant="15" id="iuO-59-ge1"/>
                             <constraint firstItem="Rpx-sd-T7S" firstAttribute="centerY" secondItem="rDb-f4-Nvp" secondAttribute="centerY" id="jjr-hq-gg2"/>
+                            <constraint firstItem="ein-Zh-72o" firstAttribute="top" secondItem="KqM-qd-xSA" secondAttribute="bottom" id="kms-pF-dIP"/>
                             <constraint firstItem="Yl5-mB-uaq" firstAttribute="leading" secondItem="9Px-ui-lf0" secondAttribute="leading" constant="20" id="kop-Q2-Gha"/>
+                            <constraint firstItem="ein-Zh-72o" firstAttribute="leading" secondItem="KqM-qd-xSA" secondAttribute="leading" id="tUb-8a-EId"/>
                             <constraint firstItem="Iuc-Fs-MhJ" firstAttribute="leading" secondItem="rDb-f4-Nvp" secondAttribute="leading" id="tUd-1l-eZk"/>
                             <constraint firstItem="8uJ-x8-l0t" firstAttribute="centerY" secondItem="0mn-mk-5hw" secondAttribute="centerY" id="xjT-fc-7zi"/>
                             <constraint firstItem="mMZ-D1-NNh" firstAttribute="leading" secondItem="9Px-ui-lf0" secondAttribute="leading" constant="10" id="zqn-ay-ve9"/>
@@ -136,6 +160,7 @@
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <point key="canvasLocation" x="33.5" y="92"/>
         </tableViewCell>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
     </objects>

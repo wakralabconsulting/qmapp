@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ObjectImageViewProtocol,UIGestureRecognizerDelegate {
+class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
     @IBOutlet weak var objectTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
     
@@ -195,7 +195,7 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     
     @objc func loadObjectImagePopup() {
         objectImagePopupView = ObjectImageView(frame: self.view.frame)
-        objectImagePopupView.objectImageViewDelegate = self
+        //objectImagePopupView.objectImageViewDelegate = self
         objectImagePopupView.loadPopup(image : "science_tour_object")
         self.view.addSubview(objectImagePopupView)
     }
