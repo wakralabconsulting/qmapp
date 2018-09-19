@@ -30,7 +30,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     var museumArray: [Museum] = []
     var museumId:String? = nil
     var museumTitleString:String? = nil
-    var totalImgCount : Int? = 0
+    var totalImgCount = Int()
     var sliderImgCount : Int? = 0
     var sliderImgArray = NSMutableArray()
     
@@ -117,16 +117,24 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         
     }
     func setImageArray() {
-        totalImgCount = 3
         self.sliderImgArray[0] = UIImage(named: "sliderPlaceholder")!
         self.sliderImgArray[1] = UIImage(named: "sliderPlaceholder")!
         self.sliderImgArray[2] = UIImage(named: "sliderPlaceholder")!
-        let imageUrlString1 = museumArray[0].image1
-        let imageUrlString2 = museumArray[0].image2
-        let imageUrlString3 = museumArray[0].image3
-        downloadImage(imageUrlString: imageUrlString1)
-        downloadImage(imageUrlString: imageUrlString2)
-        downloadImage(imageUrlString: imageUrlString3)
+    
+        if ((museumArray[0].multimediaFile?.count)! >= 4) {
+            totalImgCount = 3
+        } else if ((museumArray[0].multimediaFile?.count)! > 1){
+            totalImgCount = (museumArray[0].multimediaFile?.count)!-1
+        } else {
+            totalImgCount = 0
+        }
+        if (totalImgCount > 0) {
+            for  var i in 1 ... totalImgCount {
+                let imageUrlString = museumArray[0].multimediaFile![i]
+                downloadImage(imageUrlString: imageUrlString)
+            }
+        }
+        
         
     }
     func downloadImage(imageUrlString : String?)  {
@@ -275,6 +283,9 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
        if ((selectedItem == "About") || (selectedItem == "عن")) {
             let heritageDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
             heritageDtlView.pageNameString = PageName.museumAbout
+            if(museumArray.count > 0) {
+                 heritageDtlView.aboutDetailtArray = museumArray[0]
+            }
             heritageDtlView.museumId = museumId
             let transition = CATransition()
             transition.duration = 0.3
@@ -420,6 +431,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     
     func profileButtonPressed() {
+        //commented bcz now its not needed
 //        let profileView =  self.storyboard?.instantiateViewController(withIdentifier: "profileViewId") as! ProfileViewController
 //        profileView.fromHome = false
 //        let transition = CATransition()
@@ -445,7 +457,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     //MARK: WebServiceCall
     func getMuseumDataFromServer()
     {
-        _ = Alamofire.request(QatarMuseumRouter.LandingPageMuseums(["mid": museumId ?? 0])).responseObject { (response: DataResponse<Museums>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.LandingPageMuseums(["nid": museumId ?? 0])).responseObject { (response: DataResponse<Museums>) -> Void in
             switch response.result {
             case .success(let data):
                 self.museumArray = data.museum!
@@ -455,19 +467,6 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 
             case .failure(let error):
                 print(error)
-//                if let unhandledError = handleError(viewController: self, errorType: error as! BackendError) {
-//                    var errorMessage: String
-//                    var errorTitle: String
-//                    switch unhandledError.code {
-//                    default: print(unhandledError.code)
-//                    self.museumsSlideView.addImage(UIImage(named: "sliderPlaceholder"))
-//                    //errorTitle = String(format: NSLocalizedString("UNKNOWN_ERROR_ALERT_TITLE",
-//                                                                 // comment: "Setting the title of the alert"))
-//                    //errorMessage = String(format: NSLocalizedString("ERROR_MESSAGE",
-//                                                                   // comment: "Setting the content of the alert"))
-//                    }
-//                    //presentAlert(self, title: errorTitle, message: errorMessage)
-//                }
             }
         }
     }
