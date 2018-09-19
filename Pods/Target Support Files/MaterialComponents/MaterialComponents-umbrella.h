@@ -27,6 +27,7 @@
 #import "MaterialMath.h"
 #import "MDCMath.h"
 #import "MaterialShapeLibrary.h"
+#import "MDCCornerTreatment+CornerTypeInitalizer.h"
 #import "MDCCurvedCornerTreatment.h"
 #import "MDCCurvedRectShapeGenerator.h"
 #import "MDCCutCornerTreatment.h"
