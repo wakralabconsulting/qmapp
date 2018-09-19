@@ -16,7 +16,7 @@ class ObjectImageView: UIView, UIScrollViewDelegate  {
     @IBOutlet var imageViewPopup: UIView!
     @IBOutlet weak var objectImagePopUpInnerView: UIView!
     @IBOutlet weak var objectImageView: UIImageView!
-    @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var imageViewHeight: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
     
     var objectImageViewDelegate : ObjectImageViewProtocol?
@@ -40,11 +40,6 @@ class ObjectImageView: UIView, UIScrollViewDelegate  {
     }
     
     func setUpUI() {
-        
-        closeButton.layer.shadowColor = UIColor.black.cgColor
-        closeButton.layer.shadowOffset = CGSize(width: 5, height: 5)
-        closeButton.layer.shadowRadius = 5
-        closeButton.layer.shadowOpacity = 1.0
         self.backgroundColor = UIColor.popupBackgroundWhite
         self.backgroundColor = UIColor.black.withAlphaComponent(0.8)
         self.scrollView.delegate = self
@@ -54,15 +49,15 @@ class ObjectImageView: UIView, UIScrollViewDelegate  {
         scrollView.flashScrollIndicators()
         
         scrollView.minimumZoomScale = 1.0
-        scrollView.maximumZoomScale = 8.0
+        scrollView.maximumZoomScale = 10.0
         
         imageViewPopup.isUserInteractionEnabled = true
+        let tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(dismissView))
+        imageViewPopup.addGestureRecognizer(tapGesture1)
         
         objectImageView.isUserInteractionEnabled = true
-        let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(zoomOnDoubleTap))
-        tapGesture2.numberOfTapsRequired = 2
-        scrollView.addGestureRecognizer(tapGesture2)
-        
+        let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(zoomToScreenSize))
+        objectImageView.addGestureRecognizer(tapGesture2)
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
@@ -73,26 +68,15 @@ class ObjectImageView: UIView, UIScrollViewDelegate  {
         objectImageView.image = UIImage(named: image)
     }
     
-    @objc func zoomOnDoubleTap() {
-        if (self.scrollView.zoomScale == self.scrollView.maximumZoomScale) {
-            self.scrollView.setZoomScale(self.scrollView.minimumZoomScale, animated: true)
-        } else if(self.scrollView.zoomScale >= 3) {
-            self.scrollView.setZoomScale(self.scrollView.maximumZoomScale, animated: true)
-        } else {
-            self.scrollView.setZoomScale(3, animated: true)
-        }
+    @objc func zoomToScreenSize() {
+        let heightOfSuperview = self.imageViewPopup.bounds.height
+        imageViewHeight.constant = heightOfSuperview * 0.65
         objectImageView.isUserInteractionEnabled = false
     }
     
     @objc func dismissView() {
-        
-    }
-    @IBAction func didTapCloseButton(_ sender: UIButton) {
         objectImageViewDelegate?.dismissImagePopUpView()
-        self.removeFromSuperview()
     }
-    
-    
     
 }
 

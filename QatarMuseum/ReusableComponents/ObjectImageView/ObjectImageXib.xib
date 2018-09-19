@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ObjectImageView" customModule="QatarMuseums" customModuleProvider="target">
             <connections>
-                <outlet property="closeButton" destination="L4G-wS-rgt" id="Cyk-ch-Xbn"/>
+                <outlet property="imageViewHeight" destination="CWm-NH-6bc" id="vHs-50-UQ3"/>
                 <outlet property="imageViewPopup" destination="hgh-O5-t4X" id="EpX-0f-6ry"/>
                 <outlet property="objectImagePopUpInnerView" destination="h3U-qY-6sA" id="Twv-Ap-7O1"/>
                 <outlet property="objectImageView" destination="H6R-9q-uRR" id="xlX-N3-IDf"/>
@@ -24,19 +26,22 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h3U-qY-6sA">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="692"/>
+                    <rect key="frame" x="0.0" y="174" width="375" height="320"/>
                     <subviews>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wgQ-Og-AcE">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="692"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="320"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_imageX2" translatesAutoresizingMaskIntoConstraints="NO" id="H6R-9q-uRR">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="320"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="320" id="Xwa-ic-j01"/>
+                                    </constraints>
                                 </imageView>
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="H6R-9q-uRR" secondAttribute="trailing" id="EYP-pF-8nX"/>
                                 <constraint firstItem="H6R-9q-uRR" firstAttribute="centerX" secondItem="wgQ-Og-AcE" secondAttribute="centerX" id="Pcq-eP-QIC"/>
-                                <constraint firstAttribute="bottom" secondItem="H6R-9q-uRR" secondAttribute="bottom" constant="25" id="Yt4-aj-6Ak"/>
+                                <constraint firstAttribute="bottom" secondItem="H6R-9q-uRR" secondAttribute="bottom" id="Yt4-aj-6Ak"/>
                                 <constraint firstItem="H6R-9q-uRR" firstAttribute="leading" secondItem="wgQ-Og-AcE" secondAttribute="leading" id="eFV-rC-Zt4"/>
                                 <constraint firstItem="H6R-9q-uRR" firstAttribute="top" secondItem="wgQ-Og-AcE" secondAttribute="top" id="q5d-wV-hpI"/>
                             </constraints>
@@ -45,40 +50,26 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="wgQ-Og-AcE" firstAttribute="leading" secondItem="h3U-qY-6sA" secondAttribute="leading" id="AgW-nS-qTx"/>
-                        <constraint firstItem="H6R-9q-uRR" firstAttribute="height" secondItem="h3U-qY-6sA" secondAttribute="height" constant="-25" id="DQF-ax-hM7"/>
+                        <constraint firstItem="H6R-9q-uRR" firstAttribute="height" secondItem="h3U-qY-6sA" secondAttribute="height" id="DQF-ax-hM7"/>
                         <constraint firstAttribute="trailing" secondItem="wgQ-Og-AcE" secondAttribute="trailing" id="FhN-0b-VHv"/>
                         <constraint firstAttribute="bottom" secondItem="wgQ-Og-AcE" secondAttribute="bottom" id="HLT-wz-rrc"/>
                         <constraint firstItem="wgQ-Og-AcE" firstAttribute="top" secondItem="h3U-qY-6sA" secondAttribute="top" id="slU-LB-M9N"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L4G-wS-rgt">
-                    <rect key="frame" x="10" y="10" width="40" height="40"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="40" id="ywi-BD-LFe"/>
-                        <constraint firstAttribute="width" constant="40" id="zIA-2d-X2O"/>
-                    </constraints>
-                    <inset key="contentEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
-                    <state key="normal" image="closeX1"/>
-                    <connections>
-                        <action selector="didTapCloseButton:" destination="-1" eventType="touchUpInside" id="sAK-TS-vzn"/>
-                    </connections>
-                </button>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="h3U-qY-6sA" firstAttribute="centerX" secondItem="hgh-O5-t4X" secondAttribute="centerX" id="3ns-1w-xUw"/>
-                <constraint firstItem="h3U-qY-6sA" firstAttribute="top" secondItem="hgh-O5-t4X" secondAttribute="top" id="9Nd-c4-vdO"/>
-                <constraint firstAttribute="trailing" secondItem="h3U-qY-6sA" secondAttribute="trailing" id="Dm9-Go-TIx"/>
-                <constraint firstItem="L4G-wS-rgt" firstAttribute="leading" secondItem="hgh-O5-t4X" secondAttribute="leading" constant="10" id="JMn-Ye-eud"/>
-                <constraint firstItem="L4G-wS-rgt" firstAttribute="top" secondItem="hgh-O5-t4X" secondAttribute="top" constant="10" id="PY2-Q0-Qak"/>
-                <constraint firstItem="h3U-qY-6sA" firstAttribute="centerY" secondItem="hgh-O5-t4X" secondAttribute="centerY" constant="12.5" id="p2r-0y-wiy"/>
-                <constraint firstItem="h3U-qY-6sA" firstAttribute="leading" secondItem="hgh-O5-t4X" secondAttribute="leading" id="zUV-bv-4z8"/>
+                <constraint firstItem="h3U-qY-6sA" firstAttribute="height" secondItem="hgh-O5-t4X" secondAttribute="height" multiplier="0.48" id="CWm-NH-6bc"/>
+                <constraint firstItem="y29-eN-vbr" firstAttribute="trailing" secondItem="h3U-qY-6sA" secondAttribute="trailing" id="Dm9-Go-TIx"/>
+                <constraint firstItem="h3U-qY-6sA" firstAttribute="centerY" secondItem="hgh-O5-t4X" secondAttribute="centerY" id="p2r-0y-wiy"/>
+                <constraint firstItem="h3U-qY-6sA" firstAttribute="leading" secondItem="y29-eN-vbr" secondAttribute="leading" id="zUV-bv-4z8"/>
             </constraints>
+            <viewLayoutGuide key="safeArea" id="y29-eN-vbr"/>
             <point key="canvasLocation" x="71.5" y="58.5"/>
         </view>
     </objects>
     <resources>
-        <image name="closeX1" width="93" height="93"/>
         <image name="default_imageX2" width="235" height="120"/>
     </resources>
 </document>

@@ -130,7 +130,7 @@ class HeritageDetailCell: UITableViewCell {
         //fridayLabel.text = 
     }
     
-    func setMuseumAboutCellData(aboutData: Museum) {
+    func setMuseumAboutCellData(aboutData: MuseumAbout) {
         titleBottomOnlyConstraint.isActive = false
         locationTotalTopConstraint.isActive = false
         locationTotalBottomConstraint.isActive = false
@@ -146,19 +146,14 @@ class HeritageDetailCell: UITableViewCell {
         contactLabel.isHidden = false
         subTitleLabel.isHidden = true
         subTitleHeight.constant = 0
-        titleLabel.text = aboutData.name?.uppercased()
-        middleTitleLabel.text = aboutData.subtitle?.uppercased()
+        titleLabel.text = aboutData.title?.uppercased()
+        middleTitleLabel.text = aboutData.subTitle?.uppercased()
         fridayLabel.isHidden = true
         locationFirstLabelHeight.constant = 0
-        let descriptionArray = aboutData.mobileDescription
-        if ((descriptionArray?.count)! > 1) {
-            titleDescriptionLabel.text = aboutData.mobileDescription![0]
-            midTitleDescriptionLabel.text = aboutData.mobileDescription![1]
-        }
-        
-        
+        titleDescriptionLabel.text = aboutData.shortDesc
+        midTitleDescriptionLabel.text = aboutData.longDesc
         sundayTimeLabel.text = aboutData.openingTime
-        contactLabel.text = aboutData.contactEmail
+        contactLabel.text = aboutData.contact
         titleLabel.font = UIFont.closeButtonFont
         middleTitleLabel.font = UIFont.closeButtonFont
         locationTitleLabel.text = NSLocalizedString("LOCATION_TITLE",

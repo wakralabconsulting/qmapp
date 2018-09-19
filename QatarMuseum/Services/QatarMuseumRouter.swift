@@ -98,10 +98,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/geturl.php"
         case .MuseumAbout( _):
             return "/about.php"
-//        case .LandingPageMuseums( _):
-//            return "/museum_landing.php"
         case .LandingPageMuseums( _):
-            return "/museum-detail.json"
+            return "/museum_landing.php"
         case .MuseumDiningList( _):
             return "/getDiningList.php"
         case .MuseumExhibitionList( _):
@@ -147,8 +145,6 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         case .GetPublicArtsDetail(let parameters):
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
-        case .LandingPageMuseums(let parameters):
-            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
 //        case .CollectionList(let parameters):
 //            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
 //        case .CollectionDetail(let parameters):
@@ -172,11 +168,11 @@ enum QatarMuseumRouter: URLRequestConvertible {
             var mutableURLReq = URLRequest(url: aboutURL.appendingPathComponent(path)!)
             mutableURLReq.httpMethod = method.rawValue
             return try! Alamofire.URLEncoding.default.encode(mutableURLReq, with: parameters)
-//        case .LandingPageMuseums(let parameters):
-//            let museumURL = NSURL(string: Config.tempBaseIP + lang())!
-//            var mutableURLReq = URLRequest(url: museumURL.appendingPathComponent(path)!)
-//            mutableURLReq.httpMethod = method.rawValue
-//            return try! Alamofire.URLEncoding.default.encode(mutableURLReq, with: parameters)
+        case .LandingPageMuseums(let parameters):
+            let museumURL = NSURL(string: Config.tempBaseIP + lang())!
+            var mutableURLReq = URLRequest(url: museumURL.appendingPathComponent(path)!)
+            mutableURLReq.httpMethod = method.rawValue
+            return try! Alamofire.URLEncoding.default.encode(mutableURLReq, with: parameters)
         case .DiningList():
             let diningURL = NSURL(string: Config.tempBaseIP + lang())!
             var diningMutableURLReq = URLRequest(url: diningURL.appendingPathComponent(path)!)
