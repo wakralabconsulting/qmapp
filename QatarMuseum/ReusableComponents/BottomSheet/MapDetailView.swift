@@ -84,10 +84,6 @@ class MapDetailView: UIViewController,ObjectImageViewProtocol {
         let velocity = recognizer.velocity(in: self.view)
         
         let y = self.view.frame.minY
-        print(translation)
-      
-        print(y)
-        print(y+translation.y)
       
      // fixed
         if (y+4 < partialView) {

@@ -460,7 +460,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         else if (level == levelNumber.three){
             showLevelThreeMarker()
         }
-        marker.icon = self.imageWithImage(image: markerIcon!, scaledToSize: CGSize(width:52, height: 62))
+        marker.appearAnimation = .pop
+        UIView.animate(withDuration: 0.6, animations: { [weak self] in
+            marker.icon = self?.imageWithImage(image: markerIcon!, scaledToSize: CGSize(width:52, height: 62))
+            })
         //loadObjectPopup()
         addBottomSheetView()
         return true
