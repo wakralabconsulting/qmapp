@@ -69,6 +69,7 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - YouTubePlayer (0.4.0)
+  - ZKCarousel (0.1.5)
 
 DEPENDENCIES:
   - Alamofire (~> 4.5)
@@ -78,6 +79,7 @@ DEPENDENCIES:
   - Kingfisher
   - MaterialComponents/BottomSheet
   - YouTubePlayer
+  - ZKCarousel
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -94,6 +96,7 @@ SPEC REPOS:
     - MaterialComponents
     - nanopb
     - YouTubePlayer
+    - ZKCarousel
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
@@ -109,7 +112,8 @@ SPEC CHECKSUMS:
   MaterialComponents: 4e0c0ee000e0dcbf5214b0054767ef9f8f812264
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   YouTubePlayer: 028451f6772f372d4759866db99824c676ac1473
+  ZKCarousel: e05ed07901a4732949fae62b84ef0e4a58cf74cb
 
-PODFILE CHECKSUM: 4a38a75442e7bc2b81ed8f5fe9171948bc4febe1
+PODFILE CHECKSUM: fb017402a90e069884b93baef22b202093c0d129
 
 COCOAPODS: 1.5.3

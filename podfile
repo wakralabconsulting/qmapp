@@ -9,5 +9,6 @@ target 'QatarMuseums' do
  pod 'Fabric'
  pod 'Crashlytics'
  pod 'MaterialComponents/BottomSheet'
+ pod 'ZKCarousel'
 
 end
