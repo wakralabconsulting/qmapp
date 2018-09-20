@@ -9,7 +9,6 @@
 import Alamofire
 import CoreData
 import UIKit
-import ZKCarousel
 
 class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol {
     @IBOutlet weak var diningTableView: UITableView!
@@ -22,8 +21,6 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     var diningDetailId : String? = nil
     let networkReachability = NetworkReachabilityManager()
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
-    
-    let carousel : ZKCarousel! = ZKCarousel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,17 +43,11 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         diningTableView.estimatedRowHeight = 50
         diningTableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0)
         
-        self.carousel.frame = CGRect(x: 0, y:20, width: UIScreen.main.bounds.size.width, height: 300)
-        self.carousel.pageControl.isHidden = true
-
-        
-//        imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: 300)
+        imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: 300)
         imageView.image = UIImage(named: "default_imageX2")
         if diningDetailtArray.count != 0 {
             if let imageUrl = diningDetailtArray[0].image{
-//                imageView.kf.setImage(with: URL(string: imageUrl))
-                
-                setupCarousel(imageUrlString: imageUrl)
+                imageView.kf.setImage(with: URL(string: imageUrl))
             }
             else {
                 imageView.image = UIImage(named: "default_imageX2")
@@ -66,20 +57,16 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
             imageView.image = nil
         }
         
-//        imageView.contentMode = .scaleAspectFill
-//        imageView.clipsToBounds = true
-//        view.addSubview(imageView)
-        
-        carousel.contentMode = .scaleAspectFill
-        carousel.clipsToBounds = true
-        self.view.addSubview(carousel)
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        view.addSubview(imageView)
         
         let darkBlur = UIBlurEffect(style: UIBlurEffectStyle.light)
         blurView = UIVisualEffectView(effect: darkBlur)
-        blurView.frame = carousel.bounds
+        blurView.frame = imageView.bounds
         blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         blurView.alpha = 0
-        carousel.addSubview(blurView)
+        imageView.addSubview(blurView)
         
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
@@ -92,67 +79,6 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         closeButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         closeButton.addTarget(self, action: #selector(closeTouchDownAction), for: .touchDown)
         view.addSubview(closeButton)
-    }
-    
-    private func setupCarousel(imageUrlString: String) {
-        
-        var imageurllink = imageUrlString
-        
-        if imageurllink == ""{
-            imageurllink = "https://cdn.rawgit.com/mushi-007/pmcsexe-text-repo/2d75fc54/default_imageX3.png"
-        }else{
-            imageurllink = imageUrlString
-        }
-        
-        let pictureURL = URL(string: imageurllink)! // We can force unwrap because we are 100% certain the constructor will not return nil in this case.
-        // Creating a session object with the default configuration.
-        // You can read more about it here https://developer.apple.com/reference/foundation/urlsessionconfiguration
-        let session = URLSession(configuration: .default)
-        
-        // Define a download task. The download task will download the contents of the URL as a Data object and then you can do what you wish with that data.
-        let downloadPicTask = session.dataTask(with: pictureURL) { (data, response, error) in
-            // The download has finished.
-            if let e = error {
-                print("Error downloading cat picture: \(e)")
-            } else {
-                // No errors found.
-                // It would be weird if we didn't have a response, so check for that too.
-                if let res = response as? HTTPURLResponse {
-                    print("Downloaded cat picture with response code \(res.statusCode)")
-                    if let imageData = data {
-                        // Finally convert that Data into an image and do what you wish with it.
-                        let imagepub = UIImage(data: imageData)
-                        // Do something with your image.
-                        // Create as many slides as you'd like to show in the carousel
-                        let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
-                        let slide1 = ZKCarouselSlide(image: UIImage(named: "mia2")!, title: "", description: "")
-                        let slide2 = ZKCarouselSlide(image: UIImage(named: "mia3")!, title: "", description: "")
-                        let slide3 = ZKCarouselSlide(image: UIImage(named: "mia4")!, title: "", description: "")
-                        let slide4 = ZKCarouselSlide(image: UIImage(named: "mia5")!, title: "", description: "")
-                        
-                        // Add the slides to the carousel
-                        self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
-                        
-                        // You can optionally use the 'interval' property to set the timing for automatic slide changes. The default is 1 second.
-                        self.carousel.interval = 1.5
-                        
-                        // Optional - automatic switching between slides.
-                        self.carousel.start()
-                        
-                    } else {
-                        print("Couldn't get image: Image is nil")
-                    }
-                } else {
-                    print("Couldn't get response code for some reason")
-                }
-            }
-        }
-        
-        downloadPicTask.resume()
-        self.carousel.pageControl.isHidden = false
-        //Mk here array of image will go
-        imageView.kf.setImage(with: URL(string: imageUrlString))
-        
     }
     
     //MARK: TableView delegate
@@ -202,18 +128,18 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = 300 - (scrollView.contentOffset.y + 300)
         let height = min(max(y, 60), 400)
-        carousel.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: height)
-        if (carousel.frame.height >= 300 ){
+        imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: height)
+        if (imageView.frame.height >= 300 ){
             blurView.alpha  = 0.0
-        } else if (carousel.frame.height >= 250 ){
+        } else if (imageView.frame.height >= 250 ){
             blurView.alpha  = 0.2
-        } else if (carousel.frame.height >= 200 ){
+        } else if (imageView.frame.height >= 200 ){
             blurView.alpha  = 0.4
-        } else if (carousel.frame.height >= 150 ){
+        } else if (imageView.frame.height >= 150 ){
             blurView.alpha  = 0.6
-        } else if (carousel.frame.height >= 100 ){
+        } else if (imageView.frame.height >= 100 ){
             blurView.alpha  = 0.8
-        } else if (carousel.frame.height >= 50 ){
+        } else if (imageView.frame.height >= 50 ){
             blurView.alpha  = 0.9
         }
     }

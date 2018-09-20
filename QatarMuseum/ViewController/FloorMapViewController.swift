@@ -460,7 +460,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         else if (level == levelNumber.three){
             showLevelThreeMarker()
         }
-        marker.icon = self.imageWithImage(image: markerIcon!, scaledToSize: CGSize(width:52, height: 62))
+        marker.appearAnimation = .pop
+        UIView.animate(withDuration: 0.6, animations: { [weak self] in
+            marker.icon = self?.imageWithImage(image: markerIcon!, scaledToSize: CGSize(width:52, height: 62))
+            })
         //loadObjectPopup()
         addBottomSheetView()
         return true
@@ -521,15 +524,15 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     //Present detail popup using Bottomsheet
     func viewDetailButtonTapAction() {
-        let objectDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "objectDetailId") as! ObjectDetailViewController
-
-        let bottomSheet = MDCBottomSheetController(contentViewController: objectDetailView)
-               bottomSheet.isScrimAccessibilityElement = true
-            bottomSheet.scrimAccessibilityLabel = "Close"
-      //  bottomSheet.trackingScrollView = objectDetailView.objectTableView
-        bottomSheet.preferredContentSize = CGSize(width: self.view.frame.size.width, height: self.view.frame.size.height)
-
-        present(bottomSheet, animated: true)
+//        let objectDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "objectDetailId") as! ObjectDetailViewController
+//
+//        let bottomSheet = MDCBottomSheetController(contentViewController: objectDetailView)
+//               bottomSheet.isScrimAccessibilityElement = true
+//            bottomSheet.scrimAccessibilityLabel = "Close"
+//      //  bottomSheet.trackingScrollView = objectDetailView.objectTableView
+//        bottomSheet.preferredContentSize = CGSize(width: self.view.frame.size.width, height: self.view.frame.size.height)
+//
+//        present(bottomSheet, animated: true)
     }
     @IBAction func didTapQrCode(_ sender: UIButton) {
     }

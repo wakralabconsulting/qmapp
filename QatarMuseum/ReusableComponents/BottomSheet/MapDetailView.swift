@@ -25,6 +25,7 @@ class MapDetailView: UIViewController,ObjectImageViewProtocol {
     var mapdetailDelegate : MapDetailProtocol?
     let closeButton = UIButton()
     var objectImagePopupView : ObjectImageView = ObjectImageView()
+    var gesture = UIPanGestureRecognizer()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -34,16 +35,10 @@ class MapDetailView: UIViewController,ObjectImageViewProtocol {
         tableView.register(UINib(nibName: "ObjectPopupView", bundle: nil), forCellReuseIdentifier: "objectPopupId")
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "imageCell")
         
-        let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(MapDetailView.panGesture))
+         gesture = UIPanGestureRecognizer.init(target: self, action: #selector(MapDetailView.panGesture))
         gesture.delegate = self
         view.addGestureRecognizer(gesture)
-        
-//        let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(MapDetailView.tapGestureAction))
-//        tapGesture.delegate = self
-//        
-//        view.addGestureRecognizer(tapGesture)
-        
-
+        objectImagePopupView.objectImageViewDelegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -60,14 +55,14 @@ class MapDetailView: UIViewController,ObjectImageViewProtocol {
             self?.view.frame = CGRect(x: 0, y: yComponent!, width: frame!.width, height: frame!.height-20 )
         })
     }
-    func setupUIContents() {
+    func addCloseButton(cell : UITableViewCell) {
         // loadingView.isHidden = false
         // loadingView.showLoading()
         
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
+            closeButton.frame = CGRect(x: 10, y: 10, width: 40, height: 40)
         } else {
-            closeButton.frame = CGRect(x: self.view.frame.width-50, y: 30, width: 40, height: 40)
+            closeButton.frame = CGRect(x: self.view.frame.width-40, y: 10, width: 40, height: 40)
         }
         closeButton.setImage(UIImage(named: "closeX1"), for: .normal)
         closeButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom:12, right: 12)
@@ -79,7 +74,8 @@ class MapDetailView: UIViewController,ObjectImageViewProtocol {
         closeButton.layer.shadowOffset = CGSize(width: 5, height: 5)
         closeButton.layer.shadowRadius = 5
         closeButton.layer.shadowOpacity = 1.0
-        view.addSubview(closeButton)
+        cell.addSubview(closeButton)
+        //view.addSubview(closeButton)
         
     }
     @objc func panGesture(_ recognizer: UIPanGestureRecognizer) {
@@ -88,10 +84,6 @@ class MapDetailView: UIViewController,ObjectImageViewProtocol {
         let velocity = recognizer.velocity(in: self.view)
         
         let y = self.view.frame.minY
-        print(translation)
-      
-        print(y)
-        print(y+translation.y)
       
      // fixed
         if (y+4 < partialView) {
@@ -120,7 +112,7 @@ class MapDetailView: UIViewController,ObjectImageViewProtocol {
                     self.tableView.reloadData()
                 } else {
                     self.view.frame = CGRect(x: 0, y: self.fullView, width: self.view.frame.width, height: self.view.frame.height)
-                    self.setupUIContents()
+                   
                     
                 }
                 
@@ -183,6 +175,7 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
             return cell
         }else if (indexPath.row == 1) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "imageCell", for: indexPath)
+            cell.selectionStyle = .none
             let objectImageView = UIImageView()
             objectImageView.frame = CGRect(x: 0, y: 20, width: tableView.frame.width, height: 300)
             objectImageView.image = UIImage.init(named: "science_tour_object")
@@ -190,20 +183,18 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
             objectImageView.contentMode = .scaleAspectFit
             objectImageView.clipsToBounds = true
             cell.addSubview(objectImageView)
-            
+            addCloseButton(cell: cell)
             objectImageView.isUserInteractionEnabled = true
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(loadObjectImagePopup))
-            objectImageView.addGestureRecognizer(tapGesture)
             return cell
         } else {
              let cell = tableView.dequeueReusableCell(withIdentifier: "objectDetailID", for: indexPath) as! ObjectDetailTableViewCell
+            cell.selectionStyle = .none
             if (indexPath.row == 2){
                 cell.setObjectDetail()
-                return cell
                 //return tableView.dequeueReusableCell(withIdentifier: "objectDetailID")!
             } else {
                 cell.setObjectHistoryDetail()
-                return cell
+                
             }
             cell.favBtnTapAction = {
                 () in
@@ -213,6 +204,7 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
                 () in
                 self.setShareAction(cellObj: cell)
             }
+            return cell
             
            // loadingView.stopLoading()
           //  loadingView.isHidden = true
@@ -228,6 +220,8 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
                 self?.tableView.reloadData()
             })
 
+        } else if(indexPath.row == 1) {
+            self.loadObjectImagePopup()
         }
     }
     func setFavouritesAction(cellObj: ObjectDetailTableViewCell) {
@@ -269,16 +263,25 @@ extension MapDetailView: UIGestureRecognizerDelegate {
         return false
     }
     @objc func loadObjectImagePopup() {
-        objectImagePopupView = ObjectImageView(frame: self.view.frame)
+        let frameRect = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+        objectImagePopupView = ObjectImageView(frame: frameRect)
         objectImagePopupView.objectImageViewDelegate = self
         objectImagePopupView.loadPopup(image : "science_tour_object")
+        self.view.removeGestureRecognizer(gesture)
         self.view.addSubview(objectImagePopupView)
+        
+        
+//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "objectImageId") as! ObjectImageViewController
+//        self.present(vc, animated: true, completion: nil)
     }
     @objc func closeButtonTouchDownAction(sender: UIButton!) {
         sender.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     func dismissImagePopUpView() {
-        self.dismiss(animated: false, completion: nil)
+        //self.dismiss(animated: false, completion: nil)
+        gesture = UIPanGestureRecognizer.init(target: self, action: #selector(MapDetailView.panGesture))
+        gesture.delegate = self
+        view.addGestureRecognizer(gesture)
     }
     @objc func buttonAction(sender: UIButton!) {
         mapdetailDelegate?.dismissOvelay()
