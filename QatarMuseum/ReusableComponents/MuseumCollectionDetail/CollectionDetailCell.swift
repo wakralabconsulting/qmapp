@@ -11,14 +11,13 @@ import UIKit
 class CollectionDetailCell: UITableViewCell {
     @IBOutlet weak var firstTitle: UILabel!
     @IBOutlet weak var firstDescription: UITextView!
-    @IBOutlet weak var secondTitle: UILabel!
+    @IBOutlet weak var secondTitle: UITextView!
     @IBOutlet weak var secondSubTitle: UITextView!
     @IBOutlet weak var secondDescription: UITextView!
     @IBOutlet weak var thirdDescription: UITextView!
     @IBOutlet weak var fourthDescription: UITextView!
     @IBOutlet weak var firstImageView: UIImageView!
     @IBOutlet weak var secondImageView: UIImageView!
-    @IBOutlet weak var firstImageHeight: NSLayoutConstraint!
     @IBOutlet weak var favouriteHeight: NSLayoutConstraint!
     @IBOutlet weak var favouriteView: UIView!
     @IBOutlet weak var shareView: UIView!
@@ -31,6 +30,8 @@ class CollectionDetailCell: UITableViewCell {
     @IBOutlet weak var firstLineTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var desctionTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var firstLineHeight: NSLayoutConstraint!
+    @IBOutlet weak var firstViewHeight: NSLayoutConstraint!
+    
     
     var favouriteButtonAction : (()->())?
     var shareButtonAction : (()->())?
@@ -40,7 +41,7 @@ class CollectionDetailCell: UITableViewCell {
         favouriteHeight.constant = 0
     }
     
-    func setCollectionCellValues(collectionValues : Collection,currentRow: Int) {
+    func setCollectionCellValues(collectionValues : CollectionDetail,currentRow: Int) {
         firstTitle.font = UIFont.settingsUpdateLabelFont
         firstDescription.font = UIFont.collectionFirstDescriptionFont
         secondTitle.font = UIFont.closeButtonFont
@@ -49,25 +50,25 @@ class CollectionDetailCell: UITableViewCell {
         thirdDescription.font = UIFont.englishTitleFont
         fourthDescription.font = UIFont.englishTitleFont
         
-        firstTitle.text = collectionValues.title?.uppercased().replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
-        firstDescription.text = collectionValues.collectionDescription?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        firstTitle.text = collectionValues.categoryCollection?.uppercased().replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        //firstDescription.text = collectionValues.collectionDescription?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         secondTitle.text = collectionValues.title?.uppercased().replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
-        secondSubTitle.text = collectionValues.about?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
-        secondDescription.text = collectionValues.highlightDesc?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
-        thirdDescription.text = collectionValues.shortDesc?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
-        fourthDescription.text = collectionValues.longDesc?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
-        if let imageUrl = collectionValues.imgHighlight {
+        //secondSubTitle.text = collectionValues.about?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        secondDescription.text = collectionValues.body?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        //thirdDescription.text = collectionValues.shortDesc?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        //fourthDescription.text = collectionValues.longDesc?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        if let imageUrl = collectionValues.image {
             firstImageView.kf.setImage(with: URL(string: imageUrl))
         }
         if (firstImageView.image == nil) {
             firstImageView.image = UIImage(named: "default_imageX2")
         }
-        if let imageUrl = collectionValues.imageMain {
-            secondImageView.kf.setImage(with: URL(string: imageUrl))
-        }
-        if (firstImageView.image == nil) {
-            secondImageView.image = UIImage(named: "default_imageX2")
-        }
+//        if let imageUrl = collectionValues.imageMain {
+//            secondImageView.kf.setImage(with: URL(string: imageUrl))
+//        }
+//        if (firstImageView.image == nil) {
+//            secondImageView.image = UIImage(named: "default_imageX2")
+//        }
         
         if (currentRow == 0) {
             firstTitle.isHidden = false
@@ -80,10 +81,11 @@ class CollectionDetailCell: UITableViewCell {
             firstTitle.isHidden = false
             firstTitleLine.isHidden = false
             firstDescription.isHidden = false
-            descriptionBottomConstraint.constant = 10
-            desctionTopConstraint.constant = 13
+            //descriptionBottomConstraint.constant = 10
+            //desctionTopConstraint.constant = 13
             firstLineTopConstraint.constant = 8
             firstLineHeight.constant = 3
+            firstViewHeight.constant = 82
         }
         else {
             firstTitle.isHidden = true
@@ -101,6 +103,7 @@ class CollectionDetailCell: UITableViewCell {
             firstTitle.isHidden = true
             firstTitleLine.isHidden = true
             firstDescription.isHidden = true
+            firstViewHeight.constant = 10
         }
         
     }

@@ -28,33 +28,29 @@
         <attribute name="tourguideAvailableAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tourGuideAvlblyAr" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="CollectionsEntity" representedClassName="CollectionsEntity" syncable="YES" codeGenerationType="class">
-        <attribute name="about" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="categoryId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="collectionDesc" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="highlightDesc" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="imageMain" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="imgHighlight" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="listImage" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="listName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="longDesc" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="museumId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="shortDesc" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="CollectionDetailsEntity" representedClassName="CollectionDetailsEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="categoryCollection" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="CollectionsEntityArabic" representedClassName="CollectionsEntityArabic" syncable="YES" codeGenerationType="class">
-        <attribute name="aboutAr" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="categoryId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="collectionDescAr" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="highlightDescAr" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="imageMainAr" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="imgHighlightAr" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="listImageAr" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="listNameAr" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="longDescAr" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="museumId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="shortDescAr" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="CollectionDetailsEntityAr" representedClassName="CollectionDetailsEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="bodyAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="categoryCollection" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="titleAr" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="CollectionsEntity" representedClassName="CollectionsEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="listImage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="listName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="museumId" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="CollectionsEntityArabic" representedClassName="CollectionsEntityArabic" syncable="YES" codeGenerationType="class">
+        <attribute name="listImageAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="listName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="museumId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="DiningEntity" representedClassName="DiningEntity" syncable="YES" codeGenerationType="class">
         <attribute name="closetime" optional="YES" attributeType="String" syncable="YES"/>
@@ -257,8 +253,10 @@
     <elements>
         <element name="AboutEntity" positionX="-36" positionY="135" width="128" height="225"/>
         <element name="AboutEntityArabic" positionX="-27" positionY="144" width="128" height="225"/>
-        <element name="CollectionsEntity" positionX="-36" positionY="126" width="128" height="225"/>
-        <element name="CollectionsEntityArabic" positionX="-18" positionY="162" width="128" height="225"/>
+        <element name="CollectionDetailsEntity" positionX="-36" positionY="135" width="128" height="120"/>
+        <element name="CollectionDetailsEntityAr" positionX="-27" positionY="144" width="128" height="120"/>
+        <element name="CollectionsEntity" positionX="-36" positionY="126" width="128" height="90"/>
+        <element name="CollectionsEntityArabic" positionX="-18" positionY="162" width="128" height="90"/>
         <element name="DiningEntity" positionX="-54" positionY="90" width="128" height="180"/>
         <element name="DiningEntityArabic" positionX="-45" positionY="108" width="128" height="180"/>
         <element name="EducationEventEntity" positionX="-36" positionY="108" width="128" height="285"/>
