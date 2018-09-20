@@ -10,6 +10,7 @@ import Alamofire
 import CoreData
 import Firebase
 import UIKit
+import ZKCarousel
 enum PageName{
     case heritageDetail
     case publicArtsDetail
@@ -32,6 +33,10 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     let networkReachability = NetworkReachabilityManager()
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var museumId : String? = nil
+    
+    //musheer
+    let imageName = UIImage()
+    let carousel : ZKCarousel! = ZKCarousel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,12 +75,17 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         heritageDetailTableView.estimatedRowHeight = 50
         heritageDetailTableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0)
         
-        imageView.frame = CGRect(x: 0, y:20, width: UIScreen.main.bounds.size.width, height: 300)
-        imageView.image = UIImage(named: "default_imageX2")
+//        imageView.frame = CGRect(x: 0, y:20, width: UIScreen.main.bounds.size.width, height: 300)
+//        imageView.image = UIImage(named: "default_imageX2")
+        
+        self.carousel.frame = CGRect(x: 0, y:20, width: UIScreen.main.bounds.size.width, height: 300)
+        self.carousel.pageControl.isHidden = true
+        
         if (pageNameString == PageName.heritageDetail) {
             if heritageDetailtArray.count != 0 {
                 if let imageUrl = heritageDetailtArray[0].image{
-                    imageView.kf.setImage(with: URL(string: imageUrl))
+//                    imageView.kf.setImage(with: URL(string: imageUrl))
+                    setupCarousel(imageUrlString: imageUrl)
                 }
                 else {
                     imageView.image = UIImage(named: "default_imageX2")
@@ -87,7 +97,8 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         } else if (pageNameString == PageName.publicArtsDetail){
             if publicArtsDetailtArray.count != 0 {
                 if let imageUrl = publicArtsDetailtArray[0].image{
-                    imageView.kf.setImage(with: URL(string: imageUrl))
+//                    imageView.kf.setImage(with: URL(string: imageUrl))
+                    setupCarousel(imageUrlString: imageUrl)
                 }
                 else {
                     imageView.image = UIImage(named: "default_imageX2")
@@ -101,6 +112,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             if ((aboutDetailtArray != nil) && ((aboutDetailtArray?.multimediaFile?.count)! > 0)) {
                 if let imageUrl = aboutDetailtArray?.multimediaFile![0]{
                     imageView.kf.setImage(with: URL(string: imageUrl))
+                    setupCarousel(imageUrlString: imageUrl)
                 }
                 else {
                     imageView.image = UIImage(named: "default_imageX2")
@@ -111,13 +123,24 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             }
  
         }
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        view.addSubview(imageView)
+//        imageView.contentMode = .scaleAspectFill
+//        imageView.clipsToBounds = true
+//        view.addSubview(imageView)
+        
+        carousel.contentMode = .scaleAspectFill
+        carousel.clipsToBounds = true
+        self.view.addSubview(carousel)
+        
+//        let darkBlur = UIBlurEffect(style: UIBlurEffectStyle.light)
+//        blurView = UIVisualEffectView(effect: darkBlur)
+//        blurView.frame = imageView.bounds
+//        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        blurView.alpha = 0
+//        imageView.addSubview(blurView)
         
         let darkBlur = UIBlurEffect(style: UIBlurEffectStyle.light)
         blurView = UIVisualEffectView(effect: darkBlur)
-        blurView.frame = imageView.bounds
+        blurView.frame = carousel.bounds
         blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         blurView.alpha = 0
         imageView.addSubview(blurView)
@@ -142,6 +165,249 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    private func setupCarousel(imageUrlString: String) {
+        
+        
+        var imageurllink = imageUrlString
+        
+        if imageurllink == ""{
+            imageurllink = "https://cdn.rawgit.com/mushi-007/pmcsexe-text-repo/2d75fc54/default_imageX3.png"
+        }else{
+            imageurllink = imageUrlString
+        }
+        
+        let pictureURL = URL(string: imageurllink) // We can force unwrap because we are 100% certain the constructor will not return nil in this case.
+        // Creating a session object with the default configuration.
+        // You can read more about it here https://developer.apple.com/reference/foundation/urlsessionconfiguration
+        let session = URLSession(configuration: .default)
+        
+        
+        
+        
+        if (self.pageNameString == PageName.heritageDetail) {
+            if self.heritageDetailtArray.count != 0 {
+                // Define a download task. The download task will download the contents of the URL as a Data object and then you can do what you wish with that data.
+                let downloadPicTask = session.dataTask(with: pictureURL!) { (data, response, error) in
+                    // The download has finished.
+                    if let e = error {
+                        print("Error downloading cat picture: \(e)")
+                    } else {
+                        // No errors found.
+                        // It would be weird if we didn't have a response, so check for that too.
+                        if let res = response as? HTTPURLResponse {
+                            print("Downloaded cat picture with response code \(res.statusCode)")
+                            if let imageData = data {
+                                // Finally convert that Data into an image and do what you wish with it.
+                                let imagepub = UIImage(data: imageData)
+                                // Do something with your image.
+                                
+                                //                                let museumName:String = heritageDetailtArray[0].name!
+                                
+                                let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                let slide1 = ZKCarouselSlide(image: UIImage(named: "mia2")!, title: "", description: "")
+                                let slide2 = ZKCarouselSlide(image: UIImage(named: "mia3")!, title: "", description: "")
+                                let slide3 = ZKCarouselSlide(image: UIImage(named: "mia4")!, title: "", description: "")
+                                let slide4 = ZKCarouselSlide(image: UIImage(named: "mia5")!, title: "", description: "")
+                                
+                                // Add the slides to the carousel
+                                self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                
+                                
+                                // You can optionally use the 'interval' property to set the timing for automatic slide changes. The default is 1 second.
+                                self.carousel.interval = 1.5
+                                
+                                // Optional - automatic switching between slides.
+                                self.carousel.start()
+                                
+                            } else {
+                                print("Couldn't get image: Image is nil")
+                            }
+                        } else {
+                            print("Couldn't get response code for some reason")
+                        }
+                    }
+                }
+                
+                downloadPicTask.resume()
+                
+            }
+            else {
+                self.imageView.image = nil
+            }
+        } else if (self.pageNameString == PageName.publicArtsDetail){
+            if self.publicArtsDetailtArray.count != 0 {
+                
+                // Define a download task. The download task will download the contents of the URL as a Data object and then you can do what you wish with that data.
+                let downloadPicTask = session.dataTask(with: pictureURL!) { (data, response, error) in
+                    // The download has finished.
+                    if let e = error {
+                        print("Error downloading cat picture: \(e)")
+                    } else {
+                        // No errors found.
+                        // It would be weird if we didn't have a response, so check for that too.
+                        if let res = response as? HTTPURLResponse {
+                            print("Downloaded picture with response code \(res.statusCode)")
+                            if let imageData = data {
+                                // Finally convert that Data into an image and do what you wish with it.
+                                let imagepub = UIImage(data: imageData)
+                                // Do something with your image.
+                                
+//                                let museumName:String = self.publicArtsDetailtArray[0].name!
+                                
+                                let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                let slide1 = ZKCarouselSlide(image: UIImage(named: "mia2")!, title: "", description: "")
+                                let slide2 = ZKCarouselSlide(image: UIImage(named: "mia3")!, title: "", description: "")
+                                let slide3 = ZKCarouselSlide(image: UIImage(named: "mia4")!, title: "", description: "")
+                                let slide4 = ZKCarouselSlide(image: UIImage(named: "mia5")!, title: "", description: "")
+                                
+                                // Add the slides to the carousel
+                                self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                            
+                                
+                                // You can optionally use the 'interval' property to set the timing for automatic slide changes. The default is 1 second.
+                                self.carousel.interval = 1.5
+                                
+                                // Optional - automatic switching between slides.
+                                self.carousel.start()
+                                
+                            } else {
+                                print("Couldn't get image: Image is nil")
+                            }
+                        } else {
+                            print("Couldn't get response code for some reason")
+                        }
+                    }
+                }
+                
+                downloadPicTask.resume()
+                
+                
+                
+            }
+            else {
+                self.imageView.image = nil
+            }
+        } else if (self.pageNameString == PageName.museumAbout){
+            if ((aboutDetailtArray != nil) && ((aboutDetailtArray?.multimediaFile?.count)! > 0)){
+                // Define a download task. The download task will download the contents of the URL as a Data object and then you can do what you wish with that data.
+                let downloadPicTask = session.dataTask(with: pictureURL!) { (data, response, error) in
+                    // The download has finished.
+                    if let e = error {
+                        print("Error downloading cat picture: \(e)")
+                    } else {
+                        // No errors found.
+                        // It would be weird if we didn't have a response, so check for that too.
+                        if let res = response as? HTTPURLResponse {
+                            print("Downloaded cat picture with response code \(res.statusCode)")
+                            if let imageData = data {
+                                // Finally convert that Data into an image and do what you wish with it.
+                                let imagepub = UIImage(data: imageData)
+                                // Do something with your image.
+                                
+//                                let museumName:String = self.aboutDetailtArray![0].title!
+                                let museumName:String = (self.aboutDetailtArray?.name)!
+                                
+                                //                        var desc = "Going to be clear and bright tomorrow"
+                                
+                                switch museumName{
+                                case let str where str.contains("MIA"):
+                                    print("MIA")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "mia2")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "mia3")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "mia4")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "mia5")!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                case let str where str.contains("Mathaf"):
+                                    print("Mathaf")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "mathaf1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "mathaf3")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "mathaf4")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "mathaf5")!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                case let str where str.contains("National"):
+                                    print("National")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "national2")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "national3")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "national4")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "national5")!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                case let str where str.contains("Olympic"):
+                                    print("Olympic")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "olympic1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "olympic2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "olympic3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "olympic4")!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                case let str where str.contains("Orientalist"):
+                                    print("Orientalist")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "oriental1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "oriental2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "oriental3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "oriental4")!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                case let str where str.contains("Fire Station"):
+                                    print("Fire Station")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "fire1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "fire2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "fire3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "fire4")!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                default:
+                                    break
+                                }
+                                
+                                // You can optionally use the 'interval' property to set the timing for automatic slide changes. The default is 1 second.
+                                self.carousel.interval = 1.5
+                                
+                                // Optional - automatic switching between slides.
+                                self.carousel.start()
+                                
+                            } else {
+                                print("Couldn't get image: Image is nil")
+                            }
+                        } else {
+                            print("Couldn't get response code for some reason")
+                        }
+                    }
+                }
+                
+                downloadPicTask.resume()
+                
+            }
+            else {
+                self.imageView.image = nil
+            }
+        }
+        
+        //Mk here array of image will go
+        imageView.kf.setImage(with: URL(string: imageUrlString))
+        self.carousel.pageControl.isHidden = false
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -268,19 +534,19 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = 300 - (scrollView.contentOffset.y + 300)
         let height = min(max(y, 60), 400)
-        imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: height)
+        carousel.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: height)
         
-        if (imageView.frame.height >= 300 ){
+        if (carousel.frame.height >= 300 ){
             blurView.alpha  = 0.0
         } else if (imageView.frame.height >= 250 ){
             blurView.alpha  = 0.2
-        } else if (imageView.frame.height >= 200 ){
+        } else if (carousel.frame.height >= 200 ){
             blurView.alpha  = 0.4
-        } else if (imageView.frame.height >= 150 ){
+        } else if (carousel.frame.height >= 150 ){
             blurView.alpha  = 0.6
-        } else if (imageView.frame.height >= 100 ){
+        } else if (carousel.frame.height >= 100 ){
             blurView.alpha  = 0.8
-        } else if (imageView.frame.height >= 50 ){
+        } else if (carousel.frame.height >= 50 ){
             blurView.alpha  = 0.9
         }
     }

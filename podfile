@@ -10,4 +10,8 @@ target 'QatarMuseums' do
  pod 'Crashlytics'
  pod 'MaterialComponents/BottomSheet'
  pod 'ZKCarousel'
+<<<<<<< HEAD
+=======
+
+>>>>>>> localUpdationBranch
 end
