@@ -110,7 +110,7 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
     
     func loadCollectionDetail(currentRow: Int?) {
         let collectionDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "collectionDetailId") as! CollectionDetailViewController
-        collectionDetailView.collectionId = collection[currentRow!].category
+        collectionDetailView.collectionName = collection[currentRow!].name?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionFade
@@ -146,19 +146,18 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
     func saveOrUpdateCollectionCoredata() {
         if (collection.count > 0) {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-                let fetchData = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "categoryId", idValue: nil) as! [CollectionsEntity]
+                let fetchData = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: nil) as! [CollectionsEntity]
                 if (fetchData.count > 0) {
                     for i in 0 ... collection.count-1 {
                         let managedContext = getContext()
                         let collectionListDict : Collection?
                         collectionListDict = collection[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "categoryId", idValue: collection[i].category)
+                        let fetchResult = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: museumId)
                         //update
                         if(fetchResult.count != 0) {
                             let collectionsdbDict = fetchResult[0] as! CollectionsEntity
-                            collectionsdbDict.listName = collectionListDict?.name
+                            collectionsdbDict.listName = collectionListDict?.name?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
                             collectionsdbDict.listImage = collectionListDict?.image
-                            collectionsdbDict.collectionDesc = collectionListDict?.collectionDescription
                             collectionsdbDict.museumId = collectionListDict?.museumId
                             do {
                                 try managedContext.save()
@@ -180,19 +179,18 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
                     }
                 }
             } else { // For Arabic Database
-                let fetchData = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "categoryId", idValue: nil) as! [CollectionsEntityArabic]
+                let fetchData = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "museumId", idValue: nil) as! [CollectionsEntityArabic]
                 if (fetchData.count > 0) {
                     for i in 0 ... collection.count-1 {
                         let managedContext = getContext()
                         let collectionListDict : Collection?
                         collectionListDict = collection[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "categoryId", idValue: collection[i].category)
+                        let fetchResult = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "museumId", idValue: museumId)
                         //update
                         if(fetchResult.count != 0) {
                             let collectionsdbDict = fetchResult[0] as! CollectionsEntityArabic
-                            collectionsdbDict.listNameAr = collectionListDict?.name
+                            //collectionsdbDict.listNameAr = collectionListDict?.name
                             collectionsdbDict.listImageAr = collectionListDict?.image
-                            collectionsdbDict.collectionDescAr = collectionListDict?.collectionDescription
                             collectionsdbDict.museumId = collectionListDict?.museumId
                             do {
                                 try managedContext.save()
@@ -219,19 +217,15 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
     func saveToCoreData(collectionListDict: Collection, managedObjContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let collectionInfo: CollectionsEntity = NSEntityDescription.insertNewObject(forEntityName: "CollectionsEntity", into: managedObjContext) as! CollectionsEntity
-            collectionInfo.listName = collectionListDict.name
+            collectionInfo.listName = collectionListDict.name?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
             collectionInfo.listImage = collectionListDict.image
-            collectionInfo.categoryId = collectionListDict.category
-            collectionInfo.collectionDesc = collectionListDict.collectionDescription
             collectionInfo.museumId = collectionListDict.museumId
             
         }
         else {
             let collectionInfo: CollectionsEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "CollectionsEntityArabic", into: managedObjContext) as! CollectionsEntityArabic
-            collectionInfo.listNameAr = collectionListDict.name
+            collectionInfo.listName = collectionListDict.name?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
             collectionInfo.listImageAr = collectionListDict.image
-            collectionInfo.categoryId = collectionListDict.category
-            collectionInfo.collectionDescAr = collectionListDict.collectionDescription
             collectionInfo.museumId = collectionListDict.museumId
         }
         do {
@@ -250,7 +244,10 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
                 collectionArray = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: museumId) as! [CollectionsEntity]
                 if (collectionArray.count > 0) {
                     for i in 0 ... collectionArray.count-1 {
-                        self.collection.insert(Collection(name: collectionArray[i].listName, image: collectionArray[i].listImage, category: collectionArray[i].categoryId,collectionDescription:collectionArray[i].collectionDesc,museumId:collectionArray[i].museumId, title: nil, about: nil, imgHighlight: nil, imageMain: nil, shortDesc: nil, highlightDesc: nil, longDesc: nil), at: i)
+                        
+//                        self.collection.insert(Collection(name: collectionArray[i].listName?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil), image: collectionArray[i].listImage, museumId: collectionArray[i].museumId, title: nil, body: nil, nid: nil, categoryCollection: nil), at: i)
+                        
+                        self.collection.insert(Collection(name: collectionArray[i].listName?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil), image: collectionArray[i].listImage, museumId: collectionArray[i].museumId), at: i)
                         
                     }
                     if(collection.count == 0){
@@ -268,7 +265,9 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
                 if (collectionArray.count > 0) {
                     for i in 0 ... collectionArray.count-1 {
                         
-                        self.collection.insert(Collection(name: collectionArray[i].listNameAr, image: collectionArray[i].listImageAr, category: collectionArray[i].categoryId,collectionDescription:collectionArray[i].collectionDescAr,museumId:collectionArray[i].museumId, title: nil, about: nil, imgHighlight: nil, imageMain: nil, shortDesc: nil, highlightDesc: nil, longDesc: nil), at: i)
+//                        self.collection.insert(Collection(name: collectionArray[i].listName?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil), image: collectionArray[i].listImageAr, museumId: collectionArray[i].museumId, title: nil, body: nil, nid: nil, categoryCollection: nil), at: i)
+                        
+                        self.collection.insert(Collection(name: collectionArray[i].listName?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil), image: collectionArray[i].listImageAr, museumId: collectionArray[i].museumId), at: i)
                     }
                     if(collection.count == 0){
                         self.showNodata()
