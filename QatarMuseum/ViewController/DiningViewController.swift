@@ -304,7 +304,7 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
                 
                 if (diningArray.count > 0) {
                     for i in 0 ... diningArray.count-1 {
-                        self.diningListArray.insert(Dining(id: diningArray[i].id, name: diningArray[i].name, location: diningArray[i].location, description: diningArray[i].description, image: diningArray[i].image, openingtime: diningArray[i].openingtime, closetime: diningArray[i].closetime, sortid: diningArray[i].sortid,museumId: diningArray[i].museumId), at: i)
+                        self.diningListArray.insert(Dining(id: diningArray[i].id, name: diningArray[i].name, location: diningArray[i].location, description: diningArray[i].diningdescription, image: diningArray[i].image, openingtime: diningArray[i].openingtime, closetime: diningArray[i].closetime, sortid: diningArray[i].sortid,museumId: diningArray[i].museumId), at: i)
                     }
                     if(diningListArray.count == 0){
                         self.showNodata()
@@ -348,7 +348,7 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
                 diningArray = (try managedContext.fetch(homeFetchRequest) as? [DiningEntity])!
                 if (diningArray.count > 0) {
                     for i in 0 ... diningArray.count-1 {
-                        self.diningListArray.insert(Dining(id: diningArray[i].id, name: diningArray[i].name, location: diningArray[i].location, description: diningArray[i].description, image: diningArray[i].image, openingtime: diningArray[i].openingtime, closetime: diningArray[i].closetime, sortid: diningArray[i].sortid,museumId: diningArray[i].museumId), at: i)
+                        self.diningListArray.insert(Dining(id: diningArray[i].id, name: diningArray[i].name, location: diningArray[i].location, description: diningArray[i].diningdescription, image: diningArray[i].image, openingtime: diningArray[i].openingtime, closetime: diningArray[i].closetime, sortid: diningArray[i].sortid,museumId: diningArray[i].museumId), at: i)
 
                     }
                     if(diningListArray.count == 0){
