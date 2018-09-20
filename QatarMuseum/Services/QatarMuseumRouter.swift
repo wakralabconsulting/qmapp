@@ -79,7 +79,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .ExhibitionDetail( _):
             return "/Exhibition_detail_Page.json"
         case .DiningList:
-            return "/getDiningList.php"
+            return "/getDiningList.json"
         case .ParksList:
             return "/park_service_combined.json"
         case .PublicArtsList:
@@ -90,10 +90,10 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/heritage_detail_Page.json"
         case .GetPublicArtsDetail( _):
             return "/getpublicartdetail.json"
-//        case .CollectionList( _):
-//            return "/museum_collection_category.json"
-//        case .CollectionDetail( _):
-//            return "/Exhibition_detail_Page.json"
+        case .CollectionList( _):
+            return "/museum_collection_category.json"
+        case .CollectionDetail( _):
+            return "/collection_ws.json"
         case .EducationEvent( _):
             return "/geturl.php"
         case .MuseumAbout( _):
@@ -103,15 +103,15 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .LandingPageMuseums( _):
             return "/museum-detail.json"
         case .MuseumDiningList( _):
-            return "/getDiningList.php"
+            return "/getDiningList.json"
         case .MuseumExhibitionList( _):
             return "Exhibition_List_Page.json"
         
             //Used for Temporary API
-        case .CollectionList( _):
-            return "/museum_collection_category.php"
-        case .CollectionDetail( _):
-            return "/collection_by_category.php"
+//        case .CollectionList( _):
+//            return "/museum_collection_category.php"
+//        case .CollectionDetail( _):
+//            return "/collection_by_category.php"
 
         }
     }
@@ -137,6 +137,10 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
         case .ExhibitionDetail(let parameters):
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
+        case .DiningList():
+            return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
+        case .MuseumDiningList(let parameters):
+            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         case .PublicArtsList():
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
         case .ParksList():
@@ -149,10 +153,10 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         case .LandingPageMuseums(let parameters):
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
-//        case .CollectionList(let parameters):
-//            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
-//        case .CollectionDetail(let parameters):
-//            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
+        case .CollectionList(let parameters):
+            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
+        case .CollectionDetail(let parameters):
+            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         case .EducationEvent(let date, let ageGroup, let inst, let prog):
             let educationURL = NSURL(string: Config.tempBaseIP + lang())!
             var mutableURLReq = URLRequest(url: educationURL.appendingPathComponent(path)!)
@@ -177,27 +181,27 @@ enum QatarMuseumRouter: URLRequestConvertible {
 //            var mutableURLReq = URLRequest(url: museumURL.appendingPathComponent(path)!)
 //            mutableURLReq.httpMethod = method.rawValue
 //            return try! Alamofire.URLEncoding.default.encode(mutableURLReq, with: parameters)
-        case .DiningList():
-            let diningURL = NSURL(string: Config.tempBaseIP + lang())!
-            var diningMutableURLReq = URLRequest(url: diningURL.appendingPathComponent(path)!)
-            diningMutableURLReq.httpMethod = method.rawValue
-            return try! Alamofire.JSONEncoding.default.encode(diningMutableURLReq)
-        case .MuseumDiningList(let parameters):
-            let diningURL = NSURL(string: Config.tempBaseIP + lang())!
-            var diningMutableURLReq = URLRequest(url: diningURL.appendingPathComponent(path)!)
-            diningMutableURLReq.httpMethod = method.rawValue
-            return try! Alamofire.URLEncoding.default.encode(diningMutableURLReq, with: parameters)
-            //Temporary API
-        case .CollectionList(let parameters):
-            let collectionURL = NSURL(string: Config.tempBaseIP + lang() + Config.mobileApiURL)!
-            var collectionMutableURLReq = URLRequest(url: collectionURL.appendingPathComponent(path)!)
-            collectionMutableURLReq.httpMethod = method.rawValue
-            return try! Alamofire.URLEncoding.default.encode(collectionMutableURLReq, with: parameters)
-        case .CollectionDetail(let parameters):
-            let collectionURL = NSURL(string: Config.tempBaseIP + lang() + Config.mobileApiURL)!
-            var collectionMutableURLReq = URLRequest(url: collectionURL.appendingPathComponent(path)!)
-            collectionMutableURLReq.httpMethod = method.rawValue
-            return try! Alamofire.URLEncoding.default.encode(collectionMutableURLReq, with: parameters)
+//        case .DiningList():
+//            let diningURL = NSURL(string: Config.tempBaseIP + lang())!
+//            var diningMutableURLReq = URLRequest(url: diningURL.appendingPathComponent(path)!)
+//            diningMutableURLReq.httpMethod = method.rawValue
+//            return try! Alamofire.JSONEncoding.default.encode(diningMutableURLReq)
+//        case .MuseumDiningList(let parameters):
+//            let diningURL = NSURL(string: Config.tempBaseIP + lang())!
+//            var diningMutableURLReq = URLRequest(url: diningURL.appendingPathComponent(path)!)
+//            diningMutableURLReq.httpMethod = method.rawValue
+//            return try! Alamofire.URLEncoding.default.encode(diningMutableURLReq, with: parameters)
+//            //Temporary API
+//        case .CollectionList(let parameters):
+//            let collectionURL = NSURL(string: Config.tempBaseIP + lang() + Config.mobileApiURL)!
+//            var collectionMutableURLReq = URLRequest(url: collectionURL.appendingPathComponent(path)!)
+//            collectionMutableURLReq.httpMethod = method.rawValue
+//            return try! Alamofire.URLEncoding.default.encode(collectionMutableURLReq, with: parameters)
+//        case .CollectionDetail(let parameters):
+//            let collectionURL = NSURL(string: Config.tempBaseIP + lang() + Config.mobileApiURL)!
+//            var collectionMutableURLReq = URLRequest(url: collectionURL.appendingPathComponent(path)!)
+//            collectionMutableURLReq.httpMethod = method.rawValue
+//            return try! Alamofire.URLEncoding.default.encode(collectionMutableURLReq, with: parameters)
         
         }
     }

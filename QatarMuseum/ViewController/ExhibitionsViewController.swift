@@ -266,7 +266,7 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
                             //save
                             self.saveToCoreData(exhibitionDict: exhibitionsListDict, managedObjContext: managedContext)
                         }
-                    }
+                    }//for
                 } else {
                     for i in 0 ... exhibition.count-1 {
                         let managedContext = getContext()

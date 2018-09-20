@@ -46,6 +46,7 @@
 		B806B7C92124536600F9F338 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7C82124536600F9F338 /* CoreData.framework */; };
 		B806B7CB2124536F00F9F338 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7CA2124536E00F9F338 /* Accelerate.framework */; };
 		B806B7CD21247FB400F9F338 /* MapStyle.json in Resources */ = {isa = PBXBuildFile; fileRef = B806B7CC21247FB400F9F338 /* MapStyle.json */; };
+		B806B7D72152BE6A00F9534F /* CollectionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B806B7D62152BE6A00F9534F /* CollectionDetail.swift */; };
 		B80DC05920C792E400E28034 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80DC05820C792E400E28034 /* AppDelegate.swift */; };
 		B80DC05B20C792E400E28034 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80DC05A20C792E400E28034 /* ViewController.swift */; };
 		B80DC05E20C792E400E28034 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B80DC05C20C792E400E28034 /* Main.storyboard */; };
@@ -233,6 +234,7 @@
 		B806B7C82124536600F9F338 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		B806B7CA2124536E00F9F338 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		B806B7CC21247FB400F9F338 /* MapStyle.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MapStyle.json; sourceTree = "<group>"; };
+		B806B7D62152BE6A00F9534F /* CollectionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionDetail.swift; sourceTree = "<group>"; };
 		B80DC05520C792E400E28034 /* QatarMuseums.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QatarMuseums.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B80DC05820C792E400E28034 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B80DC05A20C792E400E28034 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -512,6 +514,7 @@
 				B8BD1DA621298AA500150A01 /* EducationEvent.swift */,
 				B8B79CF7212D2FB8008B10D7 /* MuseumAbout.swift */,
 				B8B49560212DBAD8006F509B /* Museum.swift */,
+				B806B7D62152BE6A00F9534F /* CollectionDetail.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1330,6 +1333,7 @@
 				B8A1479B20FCA2AB00833B7B /* TourGuideViewController.swift in Sources */,
 				B8E024ED211042C200CB18E2 /* CollectionDetailViewController.swift in Sources */,
 				B812BA04210AF3540083E0E2 /* QMFont.swift in Sources */,
+				B806B7D72152BE6A00F9534F /* CollectionDetail.swift in Sources */,
 				B8CA08DF2146D38400783642 /* ObjectPopupTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
