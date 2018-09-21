@@ -52,9 +52,9 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             
         } else if (pageNameString == PageName.museumAbout) {
             if  (networkReachability?.isReachable)! {
-               // getAboutDetailsFromServer()
+                getAboutDetailsFromServer()
             
-                saveOrUpdateAboutCoredata()
+                //saveOrUpdateAboutCoredata()
             } else {
                 self.fetchAboutDetailsFromCoredata()
             }
@@ -180,8 +180,8 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         } else if(pageNameString == PageName.publicArtsDetail){
             heritageCell.setPublicArtsDetailValues(publicArsDetail: publicArtsDetailtArray[indexPath.row])
         } else {
-//            heritageCell.setMuseumAboutCellData(aboutData: aboutDetailtArray[indexPath.row])
-            heritageCell.setMuseumAboutCellData(aboutData: aboutDetailtArray[0])
+            heritageCell.setMuseumAboutCellData(aboutData: aboutDetailtArray[indexPath.row])
+           // heritageCell.setMuseumAboutCellData(aboutData: aboutDetailtArray[0])
         }
         heritageCell.favBtnTapAction = {
             () in
@@ -687,8 +687,9 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-    /*
     //MARK:MUSEUMABOUT
+    /*
+    
     func getAboutDetailsFromServer() {
         _ = Alamofire.request(QatarMuseumRouter.MuseumAbout(["mid": museumId ?? "0"])).responseObject { (response: DataResponse<MuseumAboutDetails>) -> Void in
             switch response.result {
@@ -718,6 +719,36 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         }
     }
  */
+    
+    func getAboutDetailsFromServer()
+    {
+        _ = Alamofire.request(QatarMuseumRouter.LandingPageMuseums(["nid": museumId ?? 0])).responseObject { (response: DataResponse<Museums>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.aboutDetailtArray = data.museum!
+                self.setTopBarImage()
+                self.saveOrUpdateAboutCoredata()
+                self.heritageDetailTableView.reloadData()
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
+                if (self.aboutDetailtArray.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
+            case .failure( _):
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
+            }
+        }
+    }
     //MARK: About CoreData
     func saveOrUpdateAboutCoredata() {
         if (aboutDetailtArray.count > 0) {
@@ -730,21 +761,12 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                     
                     //update
                     let aboutdbDict = fetchData[0]
-                    /*
-                    aboutdbDict.filter = aboutDetailDict.filter
-                    aboutdbDict.title = aboutDetailDict.title
-                    aboutdbDict.shortDesc = aboutDetailDict.shortDesc
-                    aboutdbDict.image = aboutDetailDict.image
-                    aboutdbDict.subTitle = aboutDetailDict.subTitle
-                    aboutdbDict.longDesc = aboutDetailDict.longDesc
-                    aboutdbDict.openingTime = aboutDetailDict.openingTime
-                    aboutdbDict.latitude = aboutDetailDict.latitude
-                    aboutdbDict.longitude = aboutDetailDict.longitude
-                    aboutdbDict.contact = aboutDetailDict.contact
- */
-                    
-                    
-                    
+                    if(aboutDetailDict.multimediaFile != nil) {
+                        if ((aboutDetailtArray[0].multimediaFile?.count)! > 0) {
+                            let url = aboutDetailDict.multimediaFile![0]
+                            aboutdbDict.image = url
+                        }
+                    }
                     
                     aboutdbDict.name = aboutDetailDict.name
                     aboutdbDict.id = aboutDetailDict.id
@@ -761,10 +783,33 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                         let titleDescription = aboutDetailDict.mobileDescription![0]
                         aboutdbDict.titleDesc = titleDescription
                         let subTitleDescription = aboutDetailDict.mobileDescription![1]
-                        aboutdbDict.subTitleDesc = subTitleDescription
+                        aboutdbDict.subTitleDesc = subTitleDescription.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
                     }
                     aboutdbDict.mobileLatitude = aboutDetailDict.mobileLatitude
                     aboutdbDict.tourGuideAvailability = aboutDetailDict.tourGuideAvailability
+                    
+                    
+                    if((aboutDetailDict.mobileDescription?.count)! > 0) {
+                        for i in 0 ... (aboutDetailDict.mobileDescription?.count)!-1 {
+                            var aboutDescEntity: AboutDescriptionEntity!
+                            let aboutDesc: AboutDescriptionEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutDescriptionEntity", into: managedContext) as! AboutDescriptionEntity
+                            aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                            
+                            aboutDescEntity = aboutDesc
+                            aboutdbDict.addToMobileDescRelation(aboutDescEntity)
+
+                            do {
+                                try managedContext.save()
+                                
+                                
+                            } catch let error as NSError {
+                                print("Could not save. \(error), \(error.userInfo)")
+                            }
+                            
+                        }
+                    }
+                    
+                    
                     do{
                         try managedContext.save()
                     }
@@ -788,20 +833,13 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                     //update
                     
                     let aboutdbDict = fetchData[0]
-                    /*
-                    aboutdbDict.filterAr = aboutDetailDict.filter
-                    aboutdbDict.titleAr = aboutDetailDict.title
-                    aboutdbDict.shortDescAr = aboutDetailDict.shortDesc
-                    aboutdbDict.imageAr = aboutDetailDict.image
-                    aboutdbDict.subTitleAr = aboutDetailDict.subTitle
-                    aboutdbDict.longDescAr = aboutDetailDict.longDesc
-                    aboutdbDict.openingTimeAr = aboutDetailDict.openingTime
-                    aboutdbDict.latitudeAr = aboutDetailDict.latitude
-                    aboutdbDict.longitudeAr = aboutDetailDict.longitude
-                    aboutdbDict.contactAr = aboutDetailDict.contact
- 
- */
                     
+                    if(aboutDetailDict.multimediaFile != nil) {
+                        if ((aboutDetailtArray[0].multimediaFile?.count)! > 0) {
+                            let url = aboutDetailDict.multimediaFile![0]
+                            aboutdbDict.image = url
+                        }
+                    }
                     
                     aboutdbDict.nameAr = aboutDetailDict.name
                     aboutdbDict.id = aboutDetailDict.id
@@ -822,6 +860,29 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                     }
                     aboutdbDict.mobileLatitudear = aboutDetailDict.mobileLatitude
                     aboutdbDict.tourGuideAvlblyAr = aboutDetailDict.tourGuideAvailability
+                    
+                    
+                    if((aboutDetailDict.mobileDescription?.count)! > 0) {
+                        for i in 0 ... (aboutDetailDict.mobileDescription?.count)!-1 {
+                            var aboutDescEntity: AboutDescriptionEntityAr!
+                            let aboutDesc: AboutDescriptionEntityAr = NSEntityDescription.insertNewObject(forEntityName: "AboutDescriptionEntityAr", into: managedContext) as! AboutDescriptionEntityAr
+                            aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                            
+                            aboutDescEntity = aboutDesc
+                            aboutdbDict.addToMobileDescRelation(aboutDescEntity)
+                            
+                            do {
+                                try managedContext.save()
+                                
+                                
+                            } catch let error as NSError {
+                                print("Could not save. \(error), \(error.userInfo)")
+                            }
+                            
+                        }
+                    }
+                    
+                    
                     do{
                         try managedContext.save()
                     }
@@ -842,21 +903,14 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let aboutdbDict: AboutEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutEntity", into: managedObjContext) as! AboutEntity
             
-            /*
-            aboutdbDict.mid = aboutDetailDict.mid
-            aboutdbDict.filter = aboutDetailDict.filter
-            aboutdbDict.title = aboutDetailDict.title
-            aboutdbDict.shortDesc = aboutDetailDict.shortDesc
-            aboutdbDict.image = aboutDetailDict.image
-            aboutdbDict.subTitle = aboutDetailDict.subTitle
-            aboutdbDict.longDesc = aboutDetailDict.longDesc
-            aboutdbDict.openingTime = aboutDetailDict.openingTime
-            aboutdbDict.latitude = aboutDetailDict.latitude
-            aboutdbDict.longitude = aboutDetailDict.longitude
-            aboutdbDict.contact = aboutDetailDict.contact
- 
- */
             
+            
+            if(aboutDetailDict.multimediaFile != nil) {
+                if ((aboutDetailtArray[0].multimediaFile?.count)! > 0) {
+                    let url = aboutDetailDict.multimediaFile![0]
+                    aboutdbDict.image = url
+                }
+            }
             
             aboutdbDict.name = aboutDetailDict.name
             aboutdbDict.id = aboutDetailDict.id
@@ -878,24 +932,36 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             aboutdbDict.mobileLatitude = aboutDetailDict.mobileLatitude
             aboutdbDict.tourGuideAvailability = aboutDetailDict.tourGuideAvailability
             
+            if((aboutDetailDict.mobileDescription?.count)! > 0) {
+                for i in 0 ... (aboutDetailDict.mobileDescription?.count)!-1 {
+                    var aboutDescEntity: AboutDescriptionEntity!
+                    let aboutDesc: AboutDescriptionEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutDescriptionEntity", into: managedObjContext) as! AboutDescriptionEntity
+                    aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    
+                    aboutDescEntity = aboutDesc
+                    aboutdbDict.addToMobileDescRelation(aboutDescEntity)
+                    
+                    do {
+                        try managedObjContext.save()
+                        
+                        
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                    
+                }
+            }
+            
         }
         else {
             let aboutdbDict: AboutEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "AboutEntityArabic", into: managedObjContext) as! AboutEntityArabic
-            /*
-            aboutdbDict.mid = aboutDetailDict.mid
-            aboutdbDict.filterAr = aboutDetailDict.filter
-            aboutdbDict.titleAr = aboutDetailDict.title
-            aboutdbDict.shortDescAr = aboutDetailDict.shortDesc
-            aboutdbDict.imageAr = aboutDetailDict.image
-            aboutdbDict.subTitleAr = aboutDetailDict.subTitle
-            aboutdbDict.longDescAr = aboutDetailDict.longDesc
-            aboutdbDict.openingTimeAr = aboutDetailDict.openingTime
-            aboutdbDict.latitudeAr = aboutDetailDict.latitude
-            aboutdbDict.longitudeAr = aboutDetailDict.longitude
-            aboutdbDict.contactAr = aboutDetailDict.contact
- 
- */
             
+            if(aboutDetailDict.multimediaFile != nil) {
+                if ((aboutDetailtArray[0].multimediaFile?.count)! > 0) {
+                    let url = aboutDetailDict.multimediaFile![0]
+                    aboutdbDict.image = url
+                }
+            }
             aboutdbDict.nameAr = aboutDetailDict.name
             aboutdbDict.id = aboutDetailDict.id
             aboutdbDict.tourguideAvailableAr = aboutDetailDict.tourguideAvailable
@@ -915,6 +981,27 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             }
             aboutdbDict.mobileLatitudear = aboutDetailDict.mobileLatitude
             aboutdbDict.tourGuideAvlblyAr = aboutDetailDict.tourGuideAvailability
+            
+            if((aboutDetailDict.mobileDescription?.count)! > 0) {
+                for i in 0 ... (aboutDetailDict.mobileDescription?.count)!-1 {
+                    var aboutDescEntity: AboutDescriptionEntityAr!
+                    let aboutDesc: AboutDescriptionEntityAr = NSEntityDescription.insertNewObject(forEntityName: "AboutDescriptionEntityAr", into: managedObjContext) as! AboutDescriptionEntityAr
+                    aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    
+                    aboutDescEntity = aboutDesc
+                    aboutdbDict.addToMobileDescRelation(aboutDescEntity)
+                    
+                    do {
+                        try managedObjContext.save()
+                        
+                        
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                    
+                }
+            }
+            
         }
         do {
             try managedObjContext.save()
@@ -939,15 +1026,30 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                     
                     if (aboutArray.count > 0 ){
                         let aboutDict = aboutArray[0]
-                        /*
-                        self.aboutDetailtArray.insert(MuseumAbout(mid: aboutDict.mid, filter: aboutDict.filter, title: aboutDict.title, shortDesc: aboutDict.shortDesc, image: aboutDict.image, subTitle: aboutDict.subTitle, longDesc: aboutDict.longDesc, openingTime: aboutDict.openingTime, latitude: aboutDict.latitude, longitude: aboutDict.longitude, contact: aboutDict.contact), at: 0)
-                        */
+                        
+                        
+                       // descriptionArray.append(aboutDict.titleDesc!)
+                       // descriptionArray.append(aboutDict.subTitleDesc!)
+    
+                        var imageArray : [String] = []
+                        if(aboutDict.image != nil) {
+                            imageArray.append(aboutDict.image!)
+                        }
+                        
+                        
+                        
+                        
+                        
+                        
                         var descriptionArray : [String] = []
-                        descriptionArray.append(aboutDict.titleDesc!)
-                        descriptionArray.append(aboutDict.subTitleDesc!)
-                        //descriptionArray[0] = aboutDict.titleDesc!
-                        //descriptionArray[1] = aboutDict.subTitleDesc!
-                        self.aboutDetailtArray.insert(Museum(name: aboutDict.name, id: aboutDict.id, tourguideAvailable: aboutDict.tourguideAvailable, contactNumber: aboutDict.contactNumber, contactEmail: aboutDict.contactEmail, mobileLongtitude: aboutDict.mobileLongtitude, subtitle: aboutDict.subtitle, openingTime: aboutDict.openingTime, mobileDescription: nil, multimediaFile: nil, mobileLatitude: aboutDict.mobileLatitude, tourGuideAvailability: aboutDict.tourGuideAvailability),at: 0)
+                        let aboutInfoArray = (aboutDict.mobileDescRelation?.allObjects) as! [AboutDescriptionEntity]
+                        
+                        for i in 0 ... aboutInfoArray.count-1 {
+                            descriptionArray.append(aboutInfoArray[i].mobileDesc!)
+                        }
+                        
+                        
+                        self.aboutDetailtArray.insert(Museum(name: aboutDict.name, id: aboutDict.id, tourguideAvailable: aboutDict.tourguideAvailable, contactNumber: aboutDict.contactNumber, contactEmail: aboutDict.contactEmail, mobileLongtitude: aboutDict.mobileLongtitude, subtitle: aboutDict.subtitle, openingTime: aboutDict.openingTime, mobileDescription: descriptionArray, multimediaFile: imageArray, mobileLatitude: aboutDict.mobileLatitude, tourGuideAvailability: aboutDict.tourGuideAvailability),at: 0)
                        
                         
                         if(aboutDetailtArray.count == 0){
@@ -972,10 +1074,18 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                     
                     if (aboutArray.count > 0) {
                         let aboutDict = aboutArray[0]
-//                        self.aboutDetailtArray.insert(MuseumAbout(mid: aboutDict.mid, filter: aboutDict.filterAr, title: aboutDict.titleAr, shortDesc: aboutDict.shortDescAr, image: aboutDict.imageAr, subTitle: aboutDict.subTitleAr, longDesc: aboutDict.longDescAr, openingTime: aboutDict.openingTimeAr, latitude: aboutDict.latitudeAr, longitude: aboutDict.longitudeAr, contact: aboutDict.contactAr), at: 0)
-                        //self.aboutDetailtArray.id = aboutDict.id
-                        self.aboutDetailtArray.insert(Museum(name: aboutDict.nameAr, id: aboutDict.id, tourguideAvailable: aboutDict.tourguideAvailableAr, contactNumber: aboutDict.contactNumberAr, contactEmail: aboutDict.contactEmailAr, mobileLongtitude: aboutDict.mobileLongtitudeAr, subtitle: aboutDict.subtitleAr, openingTime: aboutDict.openingTimeAr, mobileDescription: nil, multimediaFile: nil, mobileLatitude: aboutDict.mobileLatitudear, tourGuideAvailability: aboutDict.tourGuideAvlblyAr),at: 0)
-                        if(aboutDetailtArray == nil){
+                        var imageArray : [String] = []
+                        if(aboutDict.image != nil) {
+                            imageArray.append(aboutDict.image!)
+                        }
+                        var descriptionArray : [String] = []
+                        let aboutInfoArray = (aboutDict.mobileDescRelation?.allObjects) as! [AboutDescriptionEntityAr]
+                        
+                        for i in 0 ... aboutInfoArray.count-1 {
+                            descriptionArray.append(aboutInfoArray[i].mobileDesc!)
+                        }
+                        self.aboutDetailtArray.insert(Museum(name: aboutDict.nameAr, id: aboutDict.id, tourguideAvailable: aboutDict.tourguideAvailableAr, contactNumber: aboutDict.contactNumberAr, contactEmail: aboutDict.contactEmailAr, mobileLongtitude: aboutDict.mobileLongtitudeAr, subtitle: aboutDict.subtitleAr, openingTime: aboutDict.openingTimeAr, mobileDescription: descriptionArray, multimediaFile: imageArray, mobileLatitude: aboutDict.mobileLatitudear, tourGuideAvailability: aboutDict.tourGuideAvlblyAr),at: 0)
+                        if(aboutDetailtArray.count == 0){
                             self.showNodata()
                         }
                         self.setTopBarImage()

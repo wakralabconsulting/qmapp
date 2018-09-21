@@ -567,9 +567,6 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         let selectedDay: String = dateFormatter.string(from: date)
         dateFormatter.dateFormat = "yyyy"
         let selectedYear: String = dateFormatter.string(from: date)
-        print(selectedDay)
-        print(selectedMonth)
-        print(selectedYear)
         return(selectedDay,selectedMonth,selectedYear)
     }
     func toMillis() ->String?  {
@@ -683,10 +680,10 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             //for i in 0...educationArray.count-1 {
                 let edducationInfo: EducationEventEntity = NSEntityDescription.insertNewObject(forEntityName: "EducationEventEntity", into: managedObjContext) as! EducationEventEntity
             
-            if((educationEventDict.fieldRepeatDate?.count)! > 0) {
-                let fieldRepeatId = educationEventDict.fieldRepeatDate![0]
-                edducationInfo.fieldRepeatDate =  fieldRepeatId
-            }
+//            if((educationEventDict.fieldRepeatDate?.count)! > 0) {
+//                let fieldRepeatId = educationEventDict.fieldRepeatDate![0]
+//                edducationInfo.fieldRepeatDate =  fieldRepeatId
+//            }
               //  let educationEventDict = educationArray[i]
                 edducationInfo.dateId = dateId
                 edducationInfo.itemId = educationEventDict.itemId
@@ -695,25 +692,63 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 //edducationInfo.field =  educationEventDict.shortDesc
                 edducationInfo.title = educationEventDict.title
                 edducationInfo.pgmType = educationEventDict.programType
+            
+            if((educationEventDict.fieldRepeatDate?.count)! > 0) {
+                for i in 0 ... (educationEventDict.fieldRepeatDate?.count)!-1 {
+                    var eventDateEntity: EdEventDateEntity!
+                    let edEventDate: EdEventDateEntity = NSEntityDescription.insertNewObject(forEntityName: "EdEventDateEntity", into: managedObjContext) as! EdEventDateEntity
+                    edEventDate.fieldRepeatDate = educationEventDict.fieldRepeatDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    
+                    eventDateEntity = edEventDate
+                    edducationInfo.addToFieldRepeatDates(eventDateEntity)
+                    
+                    do {
+                        try managedObjContext.save()
+                        
+                        
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                    
+                }
+            }
                 
-           // }
+          
         }
         else {
-            //for i in 0...educationArray.count-1 {
+        
                 let edducationInfo: EducationEventEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EducationEventEntityAr", into: managedObjContext) as! EducationEventEntityAr
             
                 if((educationEventDict.fieldRepeatDate?.count)! > 0) {
                     let fieldRepeatId = educationEventDict.fieldRepeatDate![0]
                     edducationInfo.fieldRepeatDate =  fieldRepeatId
                 }
-                //let educationEventDict = educationArray[i]
-                 edducationInfo.dateId = dateId
+            
+                edducationInfo.dateId = dateId
                 edducationInfo.itemId = educationEventDict.itemId
                 edducationInfo.fieldRepeatId = educationEventDict.fieldRepeatId
                 edducationInfo.registerAr = educationEventDict.register
-                //edducationInfo.field =  educationEventDict.shortDesc
                 edducationInfo.titleAr = educationEventDict.title
                 edducationInfo.pgmTypeAr = educationEventDict.programType
+            
+            if((educationEventDict.fieldRepeatDate?.count)! > 0) {
+                for i in 0 ... (educationEventDict.fieldRepeatDate?.count)!-1 {
+                    var eventDateEntity: EdEventDateEntityAr!
+                    let edEventDate: EdEventDateEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EdEventDateEntityAr", into: managedObjContext) as! EdEventDateEntityAr
+                    edEventDate.fieldRepeatDate = educationEventDict.fieldRepeatDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    
+                    eventDateEntity = edEventDate
+                    edducationInfo.addToFieldRepeatDates(eventDateEntity)
+                    
+                    do {
+                        try managedObjContext.save()
+                        
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                    
+                }
+            }
             //}
         }
         do {
@@ -733,9 +768,12 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 educationArray = checkAddedToCoredata(entityName: "EducationEventEntity", idKey: "dateId", idValue: dateID) as! [EducationEventEntity]
                 if (educationArray.count > 0) {
                     for i in 0 ... educationArray.count-1 {
-                        let repeatDate = educationArray[i].fieldRepeatDate
                         var dateArray : [String] = []
-                        dateArray.append(repeatDate!)
+                        let educationInfo = educationArray[i]
+                        let educationInfoArray = (educationInfo.fieldRepeatDates?.allObjects) as! [EdEventDateEntity]
+                        for i in 0 ... educationInfoArray.count-1 {
+                            dateArray.append(educationInfoArray[i].fieldRepeatDate!)
+                        }
                         self.educationEventArray.insert(EducationEvent(itemId: educationArray[i].itemId, fieldRepeatId: educationArray[i].fieldRepeatId, register: educationArray[i].register, fieldRepeatDate: dateArray, title: educationArray[i].title
                             , programType: educationArray[i].pgmType), at: i)
                     }
@@ -754,9 +792,13 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 educationArray = checkAddedToCoredata(entityName: "EducationEventEntityAr", idKey: "dateId", idValue: dateID) as! [EducationEventEntityAr]
                 if (educationArray.count > 0) {
                     for i in 0 ... educationArray.count-1 {
-                        let repeatDate = educationArray[i].fieldRepeatDate
                         var dateArray : [String] = []
-                        dateArray.append(repeatDate!)
+                        let educationInfo = educationArray[i]
+                        let educationInfoArray = (educationInfo.fieldRepeatDates?.allObjects) as! [EdEventDateEntityAr]
+                        for i in 0 ... educationInfoArray.count-1 {
+                            dateArray.append(educationInfoArray[i].fieldRepeatDate!)
+                        }
+
                         self.educationEventArray.insert(EducationEvent(itemId: educationArray[i].itemId, fieldRepeatId: educationArray[i].fieldRepeatId, register: educationArray[i].registerAr, fieldRepeatDate: dateArray, title: educationArray[i].titleAr
                             , programType: educationArray[i].pgmTypeAr), at: i)
                         
@@ -856,10 +898,10 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
           //  for i in 0...educationArray.count-1 {
                 let edducationInfo: EventEntity = NSEntityDescription.insertNewObject(forEntityName: "EventEntity", into: managedObjContext) as! EventEntity
                 //let educationEventDict = educationArray[i]
-            if((educationEventDict.fieldRepeatDate?.count)! > 0) {
-                let fieldRepeatId = educationEventDict.fieldRepeatDate![0]
-                edducationInfo.fieldRepeatDate =  fieldRepeatId
-            }
+//            if((educationEventDict.fieldRepeatDate?.count)! > 0) {
+//                let fieldRepeatId = educationEventDict.fieldRepeatDate![0]
+//                edducationInfo.fieldRepeatDate =  fieldRepeatId
+//            }
             
             
                  edducationInfo.dateId = dateId
@@ -868,18 +910,32 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 edducationInfo.register = educationEventDict.register
                 edducationInfo.title = educationEventDict.title
                 edducationInfo.pgmType = educationEventDict.programType
-          //  }
+            
+            
+            if((educationEventDict.fieldRepeatDate?.count)! > 0) {
+                for i in 0 ... (educationEventDict.fieldRepeatDate?.count)!-1 {
+                    var eventDateEntity: EventDateEntity!
+                    let edEventDate: EventDateEntity = NSEntityDescription.insertNewObject(forEntityName: "EventDateEntity", into: managedObjContext) as! EventDateEntity
+                    edEventDate.fieldRepeatDate = educationEventDict.fieldRepeatDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    
+                    eventDateEntity = edEventDate
+                    edducationInfo.addToFieldRepeatDates(eventDateEntity)
+                    do {
+                        try managedObjContext.save()
+                        
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                    
+                }
+            }
+          
             
         }
         else {
             
-            //for i in 0...educationArray.count-1 {
+           
                 let edducationInfo: EventEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "EventEntityArabic", into: managedObjContext) as! EventEntityArabic
-                //let educationEventDict = educationArray[i]
-            if((educationEventDict.fieldRepeatDate?.count)! > 0) {
-                let fieldRepeatId = educationEventDict.fieldRepeatDate![0]
-                edducationInfo.fieldRepeatDate =  fieldRepeatId
-            }
                  edducationInfo.dateId = dateId
                 edducationInfo.itemId = educationEventDict.itemId
                 edducationInfo.fieldRepeatId = educationEventDict.fieldRepeatId
@@ -887,6 +943,27 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 //edducationInfo.field =  educationEventDict.shortDesc
                 edducationInfo.titleAr = educationEventDict.title
                 edducationInfo.pgmTypeAr = educationEventDict.programType
+            
+            if((educationEventDict.fieldRepeatDate?.count)! > 0) {
+                for i in 0 ... (educationEventDict.fieldRepeatDate?.count)!-1 {
+                    var eventDateEntity: EventDateEntityAr!
+                    let edEventDate: EventDateEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EventDateEntityAr", into: managedObjContext) as! EventDateEntityAr
+                    edEventDate.fieldRepeatDate = educationEventDict.fieldRepeatDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    
+                    eventDateEntity = edEventDate
+                    edducationInfo.addToFieldRepeatDates(eventDateEntity)
+                    
+                    do {
+                        try managedObjContext.save()
+                        
+                        
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                    
+                }
+            }
+            
             //}
         }
         do {
@@ -906,9 +983,12 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 educationArray = checkAddedToCoredata(entityName: "EventEntity", idKey: "dateId", idValue: dateID) as! [EventEntity]
                 if (educationArray.count > 0) {
                     for i in 0 ... educationArray.count-1 {
-                        let repeatDate = educationArray[i].fieldRepeatDate
                         var dateArray : [String] = []
-                        dateArray.append(repeatDate!)
+                        let educationInfo = educationArray[i]
+                        let educationInfoArray = (educationInfo.fieldRepeatDates?.allObjects) as! [EventDateEntity]
+                        for i in 0 ... educationInfoArray.count-1 {
+                            dateArray.append(educationInfoArray[i].fieldRepeatDate!)
+                        }
                         self.educationEventArray.insert(EducationEvent(itemId: educationArray[i].itemId, fieldRepeatId: educationArray[i].fieldRepeatId, register: educationArray[i].register, fieldRepeatDate: dateArray, title: educationArray[i].title
                             , programType: educationArray[i].pgmType), at: i)
                     }
@@ -927,9 +1007,12 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 educationArray = checkAddedToCoredata(entityName: "EventEntityArabic", idKey: "dateId", idValue: dateID) as! [EventEntityArabic]
                 if (educationArray.count > 0) {
                     for i in 0 ... educationArray.count-1 {
-                        let repeatDate = educationArray[i].fieldRepeatDate
                         var dateArray : [String] = []
-                        dateArray.append(repeatDate!)
+                        let educationInfo = educationArray[i]
+                        let educationInfoArray = (educationInfo.fieldRepeatDates?.allObjects) as! [EventDateEntityAr]
+                        for i in 0 ... educationInfoArray.count-1 {
+                            dateArray.append(educationInfoArray[i].fieldRepeatDate!)
+                        }
                         self.educationEventArray.insert(EducationEvent(itemId: educationArray[i].itemId, fieldRepeatId: educationArray[i].fieldRepeatId, register: educationArray[i].registerAr, fieldRepeatDate: dateArray, title: educationArray[i].titleAr
                             , programType: educationArray[i].pgmTypeAr), at: i)
                         
