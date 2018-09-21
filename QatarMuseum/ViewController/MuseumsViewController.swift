@@ -284,7 +284,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             let heritageDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
             heritageDtlView.pageNameString = PageName.museumAbout
             if(museumArray.count > 0) {
-                 heritageDtlView.aboutDetailtArray = museumArray[0]
+                 heritageDtlView.aboutDetailtArray = museumArray
             }
             heritageDtlView.museumId = museumId
             let transition = CATransition()

@@ -23,7 +23,7 @@ struct CollectionDetail: ResponseObjectSerializable, ResponseCollectionSerializa
             self.image = representation["image"] as? String
             self.body = representation["Body"] as? String
             self.nid = representation["nid"] as? String
-            self.categoryCollection = representation["Category collection"] as? String
+            self.categoryCollection = representation["Category_collection"] as? String
             
         }
     }

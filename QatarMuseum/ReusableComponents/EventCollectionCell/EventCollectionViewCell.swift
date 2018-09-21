@@ -34,17 +34,21 @@ class EventCollectionViewCell: UICollectionViewCell {
         secondTitleLabel.textColor = UIColor.eventTitlePink
         verticalLineView.backgroundColor = UIColor.eventlisBlue
         timingLabel.isHidden = false
-       
+        titleLineView.isHidden = true
         groupSizeLabel.isHidden = false
         
-        firstTitle.text = event.institution
-        secondTitleLabel.text = event.title?.uppercased()
-        descriptionLabel.text = event.shortDesc
-        if ((event.startTime != nil) && (event.endtime != nil)) {
-            let sTime = setTimeFormat(timeString: event.startTime!)
-            let eTime = setTimeFormat(timeString: event.endtime!)
-            timingLabel.text = "Timimgs:" + sTime! + "\n" + eTime!
+        firstTitle.text = event.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
+        let dateValue = event.fieldRepeatDate
+        if((dateValue?.count)! > 0) {
+            timingLabel.text = event.fieldRepeatDate?[0].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         }
+        //secondTitleLabel.text = event.title?.uppercased()
+       // descriptionLabel.text = event.shortDesc
+//        if ((event.startTime != nil) && (event.endtime != nil)) {
+//            let sTime = setTimeFormat(timeString: event.startTime!)
+//            let eTime = setTimeFormat(timeString: event.endtime!)
+//            timingLabel.text = "Timimgs:" + sTime! + "\n" + eTime!
+//        }
     }
     func setEducationCalendarValues(educationEvent: EducationEvent) {
         firstTitle.font = UIFont.eventCellTitleFont
@@ -53,7 +57,7 @@ class EventCollectionViewCell: UICollectionViewCell {
         descriptionLabel.font = UIFont.exhibitionDateLabelFont
         groupSizeLabel.font = UIFont.exhibitionDateLabelFont
         viewDetails.titleLabel?.font = UIFont.exhibitionDateLabelFont
-        
+        titleLineView.isHidden = true
         firstTitle.textColor = UIColor.black
         titleLineView.backgroundColor = UIColor.black
         secondTitleLabel.textColor = UIColor.black
@@ -63,11 +67,16 @@ class EventCollectionViewCell: UICollectionViewCell {
        
         groupSizeLabel.isHidden = false
        
-        firstTitle.text = educationEvent.institution
-        secondTitleLabel.text = educationEvent.title?.uppercased()
-        descriptionLabel.text = educationEvent.shortDesc
-        if (educationEvent.maxGroupSize != nil) {
-            groupSizeLabel.text = "Max. group size " + educationEvent.maxGroupSize!
+//        firstTitle.text = educationEvent.institution
+//        secondTitleLabel.text = educationEvent.title?.uppercased()
+//        descriptionLabel.text = educationEvent.shortDesc
+//        if (educationEvent.maxGroupSize != nil) {
+//            groupSizeLabel.text = "Max. group size " + educationEvent.maxGroupSize!
+//        }
+        firstTitle.text = educationEvent.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
+        let dateValue = educationEvent.fieldRepeatDate
+        if((dateValue?.count)! > 0) {
+            descriptionLabel.text = educationEvent.fieldRepeatDate?[0].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         }
         
     }
