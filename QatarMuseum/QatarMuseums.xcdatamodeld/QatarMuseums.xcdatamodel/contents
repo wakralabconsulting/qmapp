@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17C88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AboutDescriptionEntity" representedClassName="AboutDescriptionEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="mobileDesc" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="mobileDescRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AboutEntity" syncable="YES"/>
+    </entity>
+    <entity name="AboutDescriptionEntityAr" representedClassName="AboutDescriptionEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="mobileDesc" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="mobileDescRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AboutEntityArabic" syncable="YES"/>
+    </entity>
     <entity name="AboutEntity" representedClassName="AboutEntity" syncable="YES" codeGenerationType="class">
         <attribute name="contactEmail" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="contactNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mobileLatitude" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mobileLongtitude" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -13,11 +22,13 @@
         <attribute name="titleDesc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tourGuideAvailability" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tourguideAvailable" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="mobileDescRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AboutDescriptionEntity" syncable="YES"/>
     </entity>
     <entity name="AboutEntityArabic" representedClassName="AboutEntityArabic" syncable="YES" codeGenerationType="class">
         <attribute name="contactEmailAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="contactNumberAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mobileLatitudear" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mobileLongtitudeAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nameAr" optional="YES" attributeType="String" syncable="YES"/>
@@ -27,6 +38,7 @@
         <attribute name="titleDescAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tourguideAvailableAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tourGuideAvlblyAr" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="mobileDescRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AboutDescriptionEntityAr" syncable="YES"/>
     </entity>
     <entity name="CollectionDetailsEntity" representedClassName="CollectionDetailsEntity" syncable="YES" codeGenerationType="class">
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
@@ -74,6 +86,14 @@
         <attribute name="openingtimearabic" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortidarabic" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="EdEventDateEntity" representedClassName="EdEventDateEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="fieldRepeatDate" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="fieldRepeatDates" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntity" syncable="YES"/>
+    </entity>
+    <entity name="EdEventDateEntityAr" representedClassName="EdEventDateEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="fieldRepeatDate" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="fieldRepeatDates" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntityAr" syncable="YES"/>
+    </entity>
     <entity name="EducationEventEntity" representedClassName="EducationEventEntity" syncable="YES" codeGenerationType="class">
         <attribute name="dateId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="fieldRepeatDate" optional="YES" attributeType="String" syncable="YES"/>
@@ -82,6 +102,7 @@
         <attribute name="pgmType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="register" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="fieldRepeatDates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdEventDateEntity" syncable="YES"/>
     </entity>
     <entity name="EducationEventEntityAr" representedClassName="EducationEventEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="dateId" optional="YES" attributeType="String" syncable="YES"/>
@@ -91,6 +112,15 @@
         <attribute name="pgmTypeAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="registerAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="titleAr" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="fieldRepeatDates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdEventDateEntityAr" syncable="YES"/>
+    </entity>
+    <entity name="EventDateEntity" representedClassName="EventDateEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="fieldRepeatDate" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntity" syncable="YES"/>
+    </entity>
+    <entity name="EventDateEntityAr" representedClassName="EventDateEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="fieldRepeatDate" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="fieldRepeatDates" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntityArabic" syncable="YES"/>
     </entity>
     <entity name="EventEntity" representedClassName="EventEntity" syncable="YES" codeGenerationType="class">
         <attribute name="dateId" optional="YES" attributeType="String" syncable="YES"/>
@@ -100,6 +130,7 @@
         <attribute name="pgmType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="register" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="fieldRepeatDates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventDateEntity" syncable="YES"/>
     </entity>
     <entity name="EventEntityArabic" representedClassName="EventEntityArabic" syncable="YES" codeGenerationType="class">
         <attribute name="dateId" optional="YES" attributeType="String" syncable="YES"/>
@@ -109,6 +140,7 @@
         <attribute name="pgmTypeAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="registerAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="titleAr" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="fieldRepeatDates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventDateEntityAr" syncable="YES"/>
     </entity>
     <entity name="ExhibitionsEntity" representedClassName="ExhibitionsEntity" syncable="YES" codeGenerationType="class">
         <attribute name="detailEndDate" optional="YES" attributeType="String" syncable="YES"/>
@@ -215,18 +247,22 @@
         <attribute name="sortcoefficientarabic" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AboutEntity" positionX="-36" positionY="135" width="128" height="225"/>
-        <element name="AboutEntityArabic" positionX="-27" positionY="144" width="128" height="225"/>
+        <element name="AboutEntity" positionX="-36" positionY="135" width="128" height="255"/>
+        <element name="AboutEntityArabic" positionX="-27" positionY="144" width="128" height="255"/>
         <element name="CollectionDetailsEntity" positionX="-36" positionY="135" width="128" height="120"/>
         <element name="CollectionDetailsEntityAr" positionX="-27" positionY="144" width="128" height="120"/>
         <element name="CollectionsEntity" positionX="-36" positionY="126" width="128" height="90"/>
         <element name="CollectionsEntityArabic" positionX="-18" positionY="162" width="128" height="90"/>
         <element name="DiningEntity" positionX="-54" positionY="90" width="128" height="180"/>
         <element name="DiningEntityArabic" positionX="-45" positionY="108" width="128" height="180"/>
-        <element name="EducationEventEntity" positionX="-36" positionY="108" width="128" height="150"/>
-        <element name="EducationEventEntityAr" positionX="-27" positionY="144" width="128" height="150"/>
-        <element name="EventEntity" positionX="-18" positionY="153" width="128" height="150"/>
-        <element name="EventEntityArabic" positionX="-9" positionY="162" width="128" height="150"/>
+        <element name="EdEventDateEntity" positionX="-18" positionY="153" width="128" height="75"/>
+        <element name="EdEventDateEntityAr" positionX="-9" positionY="162" width="128" height="75"/>
+        <element name="EducationEventEntity" positionX="-36" positionY="108" width="128" height="165"/>
+        <element name="EducationEventEntityAr" positionX="-27" positionY="144" width="128" height="165"/>
+        <element name="EventDateEntity" positionX="-27" positionY="144" width="128" height="75"/>
+        <element name="EventDateEntityAr" positionX="0" positionY="171" width="128" height="75"/>
+        <element name="EventEntity" positionX="-18" positionY="153" width="128" height="165"/>
+        <element name="EventEntityArabic" positionX="-9" positionY="162" width="128" height="165"/>
         <element name="ExhibitionsEntity" positionX="-54" positionY="108" width="128" height="285"/>
         <element name="ExhibitionsEntityArabic" positionX="-45" positionY="126" width="128" height="285"/>
         <element name="HeritageEntity" positionX="-63" positionY="27" width="128" height="180"/>
@@ -237,5 +273,7 @@
         <element name="ParksEntityArabic" positionX="-45" positionY="117" width="128" height="105"/>
         <element name="PublicArtsEntity" positionX="-54" positionY="108" width="128" height="165"/>
         <element name="PublicArtsEntityArabic" positionX="-54" positionY="117" width="128" height="165"/>
+        <element name="AboutDescriptionEntity" positionX="-27" positionY="135" width="128" height="75"/>
+        <element name="AboutDescriptionEntityAr" positionX="-18" positionY="144" width="128" height="75"/>
     </elements>
 </model>
