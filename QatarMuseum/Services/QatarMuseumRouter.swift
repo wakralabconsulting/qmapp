@@ -22,7 +22,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case HeritageDetail([String: Any])
     case GetPublicArtsDetail([String: Any])
     case CollectionList([String: Any])
-    case EducationEvent(String: Any, String: Any, String : Any, String:Any)
+    //case EducationEvent(String: Any, String: Any, String : Any, String:Any)
+    case EducationEvent([String: Any])
     case MuseumAbout([String: Any])
     case LandingPageMuseums([String: Any])
     case MuseumDiningList([String: Any])
@@ -94,8 +95,10 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/museum_collection_category.json"
         case .CollectionDetail( _):
             return "/collection_ws.json"
+//        case .EducationEvent( _):
+//            return "/geturl.php"
         case .EducationEvent( _):
-            return "/geturl.php"
+            return "/ws_education.json"
         case .MuseumAbout( _):
             return "/about.php"
 //        case .LandingPageMuseums( _):
@@ -157,20 +160,22 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         case .CollectionDetail(let parameters):
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
-        case .EducationEvent(let date, let ageGroup, let inst, let prog):
-            let educationURL = NSURL(string: Config.tempBaseIP + lang())!
-            var mutableURLReq = URLRequest(url: educationURL.appendingPathComponent(path)!)
-            mutableURLReq.httpMethod = method.rawValue
-            mutableURLReq.setValue(date as? String, forHTTPHeaderField: "date")
-            mutableURLReq.setValue(inst as? String, forHTTPHeaderField: "inst")
-            mutableURLReq.setValue(ageGroup as? String, forHTTPHeaderField: "age")
-            mutableURLReq.setValue(prog as? String, forHTTPHeaderField: "ptype")
-            if let accessToken = UserDefaults.standard.value(forKey: "accessToken")
-                as? String {
-                mutableURLReq.setValue("Bearer " + accessToken,
-                                           forHTTPHeaderField: "Authorization")
-            }
-            return try! Alamofire.JSONEncoding.default.encode(mutableURLReq)
+        case .EducationEvent(let parameters):
+            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
+//        case .EducationEvent(let date, let ageGroup, let inst, let prog):
+//            let educationURL = NSURL(string: Config.tempBaseIP + lang())!
+//            var mutableURLReq = URLRequest(url: educationURL.appendingPathComponent(path)!)
+//            mutableURLReq.httpMethod = method.rawValue
+//            mutableURLReq.setValue(date as? String, forHTTPHeaderField: "date")
+//            mutableURLReq.setValue(inst as? String, forHTTPHeaderField: "inst")
+//            mutableURLReq.setValue(ageGroup as? String, forHTTPHeaderField: "age")
+//            mutableURLReq.setValue(prog as? String, forHTTPHeaderField: "ptype")
+//            if let accessToken = UserDefaults.standard.value(forKey: "accessToken")
+//                as? String {
+//                mutableURLReq.setValue("Bearer " + accessToken,
+//                                           forHTTPHeaderField: "Authorization")
+//            }
+//            return try! Alamofire.JSONEncoding.default.encode(mutableURLReq)
         case .MuseumAbout(let parameters):
             let aboutURL = NSURL(string: Config.tempBaseIP + lang())!
             var mutableURLReq = URLRequest(url: aboutURL.appendingPathComponent(path)!)

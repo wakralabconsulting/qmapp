@@ -48,8 +48,8 @@ struct Museum: ResponseObjectSerializable, ResponseCollectionSerializable {
             
             self.subtitle = representation["Subtitle"] as? String
             self.openingTime = representation["opening_time"] as? String
-            self.mobileDescription = representation["Mobile_descriptif "] as? [String]
-            self.multimediaFile = representation["Multimedia_file "] as? [String]
+            self.mobileDescription = representation["Mobile_descriptif"] as? [String]
+            self.multimediaFile = representation["Multimedia_file"] as? [String]
             self.mobileLatitude = representation["mobile_latitude"] as? String
             self.tourGuideAvailability = representation["tour_guide_availability"] as? String
             

@@ -57,6 +57,7 @@ extension DataRequest {
         queue: DispatchQueue? = nil,
         completionHandler: @escaping (DataResponse<T>) -> Void) -> Self {
         let responseSerializer = DataResponseSerializer<T> { request, response, data, error in
+            print(request)
             guard error == nil || !(error is AFError) else {
                 return .failure(BackendError.AlamofireError(error: error as! AFError)) }
             
