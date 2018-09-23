@@ -150,11 +150,21 @@ class HeritageDetailCell: UITableViewCell {
         middleTitleLabel.text = aboutData.subtitle?.uppercased()
         fridayLabel.isHidden = true
         locationFirstLabelHeight.constant = 0
-        let descriptionArray = aboutData.mobileDescription
-        if ((descriptionArray?.count)! > 1) {
-            titleDescriptionLabel.text = aboutData.mobileDescription![0]
-            midTitleDescriptionLabel.text = aboutData.mobileDescription![1]
+        var subDesc : String? = ""
+        if let descriptionArray = aboutData.mobileDescription  {
+            if ((descriptionArray.count) > 0) {
+                for i in 0 ... (aboutData.mobileDescription?.count)!-1 {
+                    if(i == 0) {
+                        titleDescriptionLabel.text = aboutData.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
+                    } else {
+                        subDesc = subDesc! + aboutData.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
+                        midTitleDescriptionLabel.text = subDesc
+                    }
+                }
+            }
         }
+        
+        
         
         
         sundayTimeLabel.text = aboutData.openingTime

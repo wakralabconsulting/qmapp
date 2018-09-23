@@ -26,33 +26,36 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Te5-jC-pHj">
                         <rect key="frame" x="0.0" y="0.0" width="400" height="100"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timimg: 8:30 am" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ICe-ec-O9m">
-                                <rect key="frame" x="15" y="50" width="138.5" height="12"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ICe-ec-O9m">
+                                <rect key="frame" x="15" y="38" width="138.5" height="52"/>
                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SCHOOL GUIDED VISITS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="enr-gf-94c">
-                                <rect key="frame" x="15" y="31" width="138.5" height="13"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="enr-gf-94c">
+                                <rect key="frame" x="15" y="32" width="138.5" height="0.0"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="8Dn-xy-v85"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="13"/>
                                 <color key="textColor" red="0.92683249711990356" green="0.25668323040008545" blue="0.53822809457778931" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oFG-iA-zIj">
-                                <rect key="frame" x="15" y="25" width="8" height="2"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oFG-iA-zIj">
+                                <rect key="frame" x="15" y="32" width="8" height="0.0"/>
                                 <color key="backgroundColor" red="0.92683249711990356" green="0.25668323040008545" blue="0.53822809457778931" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="8" id="M6B-wd-KSb"/>
-                                    <constraint firstAttribute="height" constant="2" id="tQJ-pf-ENa"/>
+                                    <constraint firstAttribute="height" id="tQJ-pf-ENa"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MIA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q7b-uS-wR3">
-                                <rect key="frame" x="15" y="8" width="138.5" height="13"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q7b-uS-wR3">
+                                <rect key="frame" x="15" y="12" width="138.5" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="13" id="kKt-kE-LrP"/>
+                                    <constraint firstAttribute="height" constant="20" id="Emw-53-x6U"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="13"/>
                                 <color key="textColor" red="0.92683249711990356" green="0.25668323040008545" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -66,7 +69,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="252" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3om-vv-ART">
-                                <rect key="frame" x="179" y="64" width="205" height="0.0"/>
+                                <rect key="frame" x="179" y="70" width="205" height="0.0"/>
                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -99,9 +102,8 @@
                                     <constraint firstAttribute="height" constant="1" id="bqI-at-nvv"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czc-Kh-k6x">
-                                <rect key="frame" x="179" y="11" width="205" height="48"/>
-                                <string key="text">Nestled in the heart of the MIA is Alain Ducasse's first restaurant in the Middle East. 'Idam' means 'generosity' and each dish is a</string>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czc-Kh-k6x">
+                                <rect key="frame" x="179" y="11" width="205" height="54"/>
                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -109,28 +111,28 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="oFG-iA-zIj" firstAttribute="top" secondItem="Q7b-uS-wR3" secondAttribute="bottom" constant="4" id="2Jk-Jc-Meq"/>
+                            <constraint firstItem="oFG-iA-zIj" firstAttribute="top" secondItem="Q7b-uS-wR3" secondAttribute="bottom" id="2Jk-Jc-Meq"/>
                             <constraint firstItem="dRF-RK-8Dz" firstAttribute="top" secondItem="86L-W2-5Xg" secondAttribute="bottom" constant="-7" id="2va-Ov-v0j"/>
                             <constraint firstItem="rvT-BX-xxz" firstAttribute="top" secondItem="Te5-jC-pHj" secondAttribute="top" constant="8" id="4BH-YO-vSH"/>
                             <constraint firstAttribute="trailing" secondItem="LWA-4N-Z9r" secondAttribute="trailing" constant="4" id="6Lk-bf-kRI"/>
                             <constraint firstItem="dRF-RK-8Dz" firstAttribute="leading" secondItem="86L-W2-5Xg" secondAttribute="leading" id="6e8-nJ-MGL"/>
-                            <constraint firstItem="Q7b-uS-wR3" firstAttribute="top" secondItem="Te5-jC-pHj" secondAttribute="top" constant="8" id="6yw-rP-9HV"/>
+                            <constraint firstItem="Q7b-uS-wR3" firstAttribute="top" secondItem="Te5-jC-pHj" secondAttribute="top" constant="12" id="6yw-rP-9HV"/>
                             <constraint firstItem="enr-gf-94c" firstAttribute="trailing" secondItem="Q7b-uS-wR3" secondAttribute="trailing" id="7S4-27-LGB"/>
                             <constraint firstItem="Q7b-uS-wR3" firstAttribute="leading" secondItem="Te5-jC-pHj" secondAttribute="leading" constant="15" id="8hf-yb-cfX"/>
                             <constraint firstItem="rvT-BX-xxz" firstAttribute="leading" secondItem="enr-gf-94c" secondAttribute="trailing" constant="10" id="8iw-Jx-Ex8"/>
                             <constraint firstAttribute="bottom" secondItem="rvT-BX-xxz" secondAttribute="bottom" constant="8" id="C8z-0b-oq8"/>
                             <constraint firstItem="czc-Kh-k6x" firstAttribute="leading" secondItem="3om-vv-ART" secondAttribute="leading" id="DBx-ME-kHR"/>
                             <constraint firstItem="rvT-BX-xxz" firstAttribute="leading" secondItem="Te5-jC-pHj" secondAttribute="leading" constant="163.5" id="DEx-Mr-Cxr"/>
-                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ICe-ec-O9m" secondAttribute="bottom" constant="7" id="FHE-XT-blE"/>
+                            <constraint firstAttribute="bottom" secondItem="ICe-ec-O9m" secondAttribute="bottom" constant="10" id="FHE-XT-blE"/>
                             <constraint firstAttribute="trailing" secondItem="czc-Kh-k6x" secondAttribute="trailing" constant="16" id="Gvb-Rc-U7T"/>
-                            <constraint firstItem="enr-gf-94c" firstAttribute="top" secondItem="oFG-iA-zIj" secondAttribute="bottom" constant="4" id="LXd-1k-X2c"/>
+                            <constraint firstItem="enr-gf-94c" firstAttribute="top" secondItem="oFG-iA-zIj" secondAttribute="bottom" id="LXd-1k-X2c"/>
                             <constraint firstItem="enr-gf-94c" firstAttribute="leading" secondItem="ICe-ec-O9m" secondAttribute="leading" id="LtU-W1-5mm"/>
                             <constraint firstItem="LWA-4N-Z9r" firstAttribute="top" secondItem="dRF-RK-8Dz" secondAttribute="bottom" constant="8" id="NFH-Ew-nSw"/>
                             <constraint firstItem="LWA-4N-Z9r" firstAttribute="leading" secondItem="Te5-jC-pHj" secondAttribute="leading" constant="4" id="POA-Gi-xo4"/>
                             <constraint firstItem="czc-Kh-k6x" firstAttribute="leading" secondItem="rvT-BX-xxz" secondAttribute="trailing" constant="13.5" id="PrC-mY-Fba"/>
                             <constraint firstItem="enr-gf-94c" firstAttribute="leading" secondItem="oFG-iA-zIj" secondAttribute="leading" id="Sab-2v-4Lg"/>
                             <constraint firstAttribute="trailing" secondItem="86L-W2-5Xg" secondAttribute="trailing" constant="15" id="T2h-DB-f2B"/>
-                            <constraint firstItem="86L-W2-5Xg" firstAttribute="top" relation="greaterThanOrEqual" secondItem="3om-vv-ART" secondAttribute="bottom" constant="1" id="V7t-4v-scp"/>
+                            <constraint firstItem="86L-W2-5Xg" firstAttribute="top" secondItem="3om-vv-ART" secondAttribute="bottom" constant="1" id="V7t-4v-scp"/>
                             <constraint firstItem="3om-vv-ART" firstAttribute="trailing" secondItem="czc-Kh-k6x" secondAttribute="trailing" id="WdQ-Ng-bDX"/>
                             <constraint firstItem="Q7b-uS-wR3" firstAttribute="leading" secondItem="oFG-iA-zIj" secondAttribute="leading" id="bFg-yj-K79"/>
                             <constraint firstItem="LWA-4N-Z9r" firstAttribute="top" secondItem="86L-W2-5Xg" secondAttribute="bottom" constant="2" id="dV6-df-EzV"/>
