@@ -117,6 +117,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 let url = aboutDetailtArray[0].multimediaFile
                 if( url![0] != nil) {
                     imageView.kf.setImage(with: URL(string: url![0]))
+                    setupCarousel(imageUrlString: url![0])
                 }
                 else {
                     imageView.image = UIImage(named: "default_imageX2")
@@ -296,7 +297,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 self.imageView.image = nil
             }
         } else if (self.pageNameString == PageName.museumAbout){
-            if ((aboutDetailtArray != nil) && ((aboutDetailtArray?.multimediaFile?.count)! > 0)){
+            if ((aboutDetailtArray != nil) && ((aboutDetailtArray[0].multimediaFile?.count)! > 0)){
                 // Define a download task. The download task will download the contents of the URL as a Data object and then you can do what you wish with that data.
                 let downloadPicTask = session.dataTask(with: pictureURL!) { (data, response, error) in
                     // The download has finished.
@@ -313,7 +314,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                 // Do something with your image.
                                 
 //                                let museumName:String = self.aboutDetailtArray![0].title!
-                                let museumName:String = (self.aboutDetailtArray?.name)!
+                                let museumName:String = (self.aboutDetailtArray[0].name)!
                                 
                                 //                        var desc = "Going to be clear and bright tomorrow"
                                 
