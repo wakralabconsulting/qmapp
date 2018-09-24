@@ -119,9 +119,14 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             firstLevelView.backgroundColor = UIColor.mapLevelColor
             secondLevelView.backgroundColor = UIColor.mapLevelColor
             thirdLevelView.backgroundColor = UIColor.white
-            numberSerchBtn.setImage(UIImage(named: "side_menu_blackX1"), for: .normal)
-            self.numberSerchBtn.contentEdgeInsets = UIEdgeInsets(top: 11, left: 5, bottom: 11, right: 5)
+            //numberSerchBtn.setImage(UIImage(named: "side_menu_blackX1"), for: .normal)
+           // self.numberSerchBtn.contentEdgeInsets = UIEdgeInsets(top: 11, left: 5, bottom: 11, right: 5)
+            numberSerchBtn.isHidden = true
             headerView.headerBackButton.isHidden = true
+            headerView.settingsButton.isHidden = false
+            headerView.settingsButton.setImage(UIImage(named: "side_menu_iconX1"), for: .normal)
+            
+            headerView.settingsButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 10, bottom:11, right: 8)
             
         } else {
             firstLevelView.backgroundColor = UIColor.white
@@ -538,14 +543,14 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     
     @IBAction func didTapNumberSearch(_ sender: UIButton) {
-        if(fromScienceTour) {
-            let transition = CATransition()
-            transition.duration = 0.3
-            transition.type = kCATransitionPush
-            transition.subtype = kCATransitionFromLeft
-            self.view.window!.layer.add(transition, forKey: kCATransition)
-            self.dismiss(animated: false, completion: nil)
-        } else {
+//        if(fromScienceTour) {
+//            let transition = CATransition()
+//            transition.duration = 0.3
+//            transition.type = kCATransitionPush
+//            transition.subtype = kCATransitionFromLeft
+//            self.view.window!.layer.add(transition, forKey: kCATransition)
+//            self.dismiss(animated: false, completion: nil)
+//        } else {
             let numberPadView = self.storyboard?.instantiateViewController(withIdentifier: "artifactNumberPadViewId") as! ArtifactNumberPadViewController
             let transition = CATransition()
             transition.duration = 0.3
@@ -553,7 +558,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
             view.window!.layer.add(transition, forKey: kCATransition)
             self.present(numberPadView, animated: false, completion: nil)
-        }
+//        }
         
     }
     
@@ -565,6 +570,14 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         transition.subtype = kCATransitionFromLeft
         self.view.window!.layer.add(transition, forKey: kCATransition)
         self.dismiss(animated: false, completion: nil)
+    }
+    func filterButtonPressed() {
+            let transition = CATransition()
+            transition.duration = 0.3
+            transition.type = kCATransitionPush
+            transition.subtype = kCATransitionFromLeft
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            self.dismiss(animated: false, completion: nil)
     }
     //Added BottomSheet for showing popup when we clicked in marker
     func addBottomSheetView(scrollable: Bool? = true) {
@@ -614,4 +627,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             showLevelThreeMarker()
         }
     }
+    
+    
+    
 }
