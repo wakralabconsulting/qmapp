@@ -21,6 +21,7 @@
 #import "FSCalendarTransitionCoordinator.h"
 #import "FSCalendarCalculator.h"
 #import "FSCalendarDelegationFactory.h"
+#import "QatarMuseums-Swift.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -161,7 +162,7 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
     _locale = [NSLocale currentLocale];
     //changed
     _timeZone = [NSTimeZone localTimeZone];
-    //_timeZone = [NSTimeZone timeZoneWithName:@"AST"];
+    //_timeZone = [NSTimeZone timeZoneWithName:@"ar"];
     _firstWeekday = 1;
     [self invalidateDateTools];
     
@@ -289,6 +290,7 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
         //changed
         NSString *setter = [NSString stringWithFormat:@"set%@%@:",[key substringToIndex:1].uppercaseString,[key substringFromIndex:1]];
         SEL selector = NSSelectorFromString(setter);
+        
         if ([self.appearance respondsToSelector:selector]) {
             return [self.appearance setValue:value forKey:key];
         } else if ([self.collectionViewLayout respondsToSelector:selector]) {
@@ -1511,6 +1513,32 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
     cell.image = [self.dataSourceProxy calendar:self imageForDate:date];
     cell.numberOfEvents = [self.dataSourceProxy calendar:self numberOfEventsForDate:date];
     cell.titleLabel.text = [self.dataSourceProxy calendar:self titleForDate:date] ?: @([self.gregorian component:NSCalendarUnitDay fromDate:date]).stringValue;
+    
+    
+    
+    if([[NSUserDefaults standardUserDefaults] boolForKey:@"Arabic"]) {
+        NSString *dateValue = [self.dataSourceProxy calendar:self titleForDate:date] ?: @([self.gregorian component:NSCalendarUnitDay fromDate:date]).stringValue;
+      
+        
+        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+        f.numberStyle = NSNumberFormatterDecimalStyle;
+        NSNumber *myNumber = [f numberFromString:dateValue];
+        
+        NSNumberFormatter *k = [[NSNumberFormatter alloc] init];
+        
+        k.locale = [NSLocale localeWithLocaleIdentifier:@"fa_IR"];
+        NSString * kk = [k stringFromNumber:myNumber];
+        
+        cell.titleLabel.text = kk;
+        cell.titleLabel.textAlignment =  NSTextAlignmentCenter;
+        
+        cell.titleLabel.transform =  CGAffineTransformMakeScale(-1, 1);
+        
+    }
+    
+   
+    
+    
     cell.subtitle  = [self.dataSourceProxy calendar:self subtitleForDate:date];
     cell.selected = [_selectedDates containsObject:date];
     cell.dateIsToday = self.today?[self.gregorian isDate:date inSameDayAsDate:self.today]:NO;

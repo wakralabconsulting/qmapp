@@ -51,7 +51,7 @@
     CAShapeLayer *shapeLayer;
     UIImageView *imageView;
     FSCalendarEventIndicator *eventIndicator;
-    
+    //changed
     label = [[UILabel alloc] initWithFrame:CGRectZero];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor blackColor];
@@ -70,6 +70,7 @@
     shapeLayer.borderColor = [UIColor clearColor].CGColor;
     shapeLayer.opacity = 0;
     [self.contentView.layer insertSublayer:shapeLayer below:_titleLabel.layer];
+   
     self.shapeLayer = shapeLayer;
     
     eventIndicator = [[FSCalendarEventIndicator alloc] initWithFrame:CGRectZero];
@@ -121,12 +122,13 @@
                                           subtitleHeight
                                           );
     } else {
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
         _titleLabel.frame = CGRectMake(
-                                       self.preferredTitleOffset.x,
+                                       self.preferredTitleOffset.x+15,
                                        self.preferredTitleOffset.y,
                                        self.contentView.fs_width,
                                        floor(self.contentView.fs_height*5.0/6.0)
-                                       );
+                                       ); //changed
     }
     
     _imageView.frame = CGRectMake(self.preferredImageOffset.x, self.preferredImageOffset.y, self.contentView.fs_width, self.contentView.fs_height);
@@ -134,10 +136,28 @@
     CGFloat titleHeight = self.bounds.size.height*5.0/6.0;
     CGFloat diameter = MIN(self.bounds.size.height*5.0/6.0,self.bounds.size.width);
     diameter = diameter > FSCalendarStandardCellDiameter ? (diameter - (diameter-FSCalendarStandardCellDiameter)*0.5) : diameter;
-    _shapeLayer.frame = CGRectMake((self.bounds.size.width-diameter)/2,
-                                   (titleHeight-diameter)/2,
-                                   diameter,
-                                   diameter);
+    //original
+//    _shapeLayer.frame = CGRectMake((self.bounds.size.width-diameter)/2,
+//                                   (titleHeight-diameter)/2,
+//                                   diameter,
+//                                   diameter);
+    //changed
+    if([[NSUserDefaults standardUserDefaults] boolForKey:@"Arabic"]) {
+        _shapeLayer.frame = CGRectMake((_titleLabel.bounds.size.width-diameter+5)/2,
+                                       (_titleLabel.bounds.size.height-diameter+5)/2,
+                                       diameter+1,
+                                       diameter+1);
+    }
+    else {
+        _shapeLayer.frame = CGRectMake((_titleLabel.bounds.size.width-diameter+5)/2,
+                                       (_titleLabel.bounds.size.height-diameter-2)/2,
+                                       diameter,
+                                       diameter);
+    }
+    
+
+    
+    
     
     CGPathRef path = [UIBezierPath bezierPathWithRoundedRect:_shapeLayer.bounds
                                                 cornerRadius:CGRectGetWidth(_shapeLayer.bounds)*0.5*self.borderRadius].CGPath;

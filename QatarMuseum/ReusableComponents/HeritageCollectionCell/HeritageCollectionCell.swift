@@ -6,89 +6,123 @@
 //  Copyright © 2018 Exalture. All rights reserved.
 //
 
+import Alamofire
+import Kingfisher
 import UIKit
 
 class HeritageCollectionCell: UICollectionViewCell {
     @IBOutlet weak var heritageImageView: UIImageView!
-    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var lineLabel: UILabel!
     @IBOutlet weak var subTitle: UILabel!
     @IBOutlet weak var favouriteButton: UIButton!
     @IBOutlet weak var lineLabelHeight: NSLayoutConstraint!
-   // @IBOutlet weak var subLabelHeight: NSLayoutConstraint!
     @IBOutlet weak var titleBottomConstraint: NSLayoutConstraint!
-    
+
+    let networkReachability = NetworkReachabilityManager()
+
     
     override func layoutSubviews() {
         super.layoutSubviews()
         setGradientLayer()
     }
     //MARK: HeritageList data
-    func setHeritageListCellValues(cellValues: NSDictionary,imageName: String) {
+    func setHeritageListCellValues(heritageList: Heritage) {
+        titleLabel.text = heritageList.name?.uppercased()
+       // if  (networkReachability?.isReachable == false) {
+           // if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                titleLabel.text = heritageList.name?.uppercased()
+//            }
+//            else {
+//                titleLabel.text = heritageList.listarabicname
+//            }
+        //}
         
-        titleLabel.text = (cellValues.value(forKey: "title") as? String)?.uppercased()
-        
-        subTitle.text = (cellValues.value(forKey: "subTitle") as? String)?.uppercased()
-        lineLabelHeight.constant = 2
-       // subLabelHeight.constant = 12
-        titleBottomConstraint.constant = 7
-        lineLabel.isHidden = false
-        if ((cellValues.value(forKey: "favourite") as! Bool) == true) {
+        //subTitle.text = heritageList..uppercased()
+        lineLabel.isHidden = true
+        //lineLabelHeight.constant = 2
+        titleBottomConstraint.constant = 2
+       
+        if (heritageList.isFavourite == true)  {
             favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
         }
         else {
             favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
         }
         
-        //        if let imageUrl = cellValues.value(forKey: "image") as? String{
-        //           // exhibitionImageView.kf.indicatorType = .activity
-        //            exhibitionImageView.kf.setImage(with: URL(string: imageUrl))
-        //
-        //        }
-        heritageImageView.image = UIImage(named: imageName)
+        if let imageUrl = heritageList.image{
+            heritageImageView.kf.setImage(with: URL(string: imageUrl))
+        }
+        if (heritageImageView.image == nil) {
+            heritageImageView.image = UIImage(named: "default_imageX2")
+        }
+        titleLabel.font = UIFont.heritageTitleFont
+        subTitle.font = UIFont.heritageTitleFont
     }
+    
     //MARK: Public Arts List Data
-    func setPublicArtsListCellValues(cellValues: NSDictionary,imageName: String) {
-        
-        
-        titleLabel.text = (cellValues.value(forKey: "title") as? String)?.uppercased()
+    func setPublicArtsListCellValues(publicArtsList: PublicArtsList) {
+        titleLabel.text = publicArtsList.name?.uppercased()
         lineLabelHeight.constant = 0
         lineLabel.isHidden = true
         titleBottomConstraint.constant = 0
-        if ((cellValues.value(forKey: "subTitle")  != nil) && (cellValues.value(forKey: "subTitle") as! String != "")) {
-           // subLabelHeight.constant = 12
-            
-            subTitle.text = (cellValues.value(forKey: "subTitle") as? String)?.uppercased()
-        }
-        else {
+        
+     
             //subTitle.text = (cellValues.value(forKey: "title") as? String)?.uppercased()
             //titleLabel.isHidden = true
            // subLabelHeight.constant = 0
-        }
         
-        if ((cellValues.value(forKey: "favourite") as! Bool) == true) {
+        
+        if (publicArtsList.isFavourite == true) {
             favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
         }
         else {
             favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
         }
-        heritageImageView.image = UIImage(named: imageName)
+        if let imageUrl = publicArtsList.image {
+            heritageImageView.kf.setImage(with: URL(string: imageUrl))
+        }
+        if (heritageImageView.image == nil) {
+            heritageImageView.image = UIImage(named: "default_imageX2")
+        }
+        titleLabel.font = UIFont.heritageTitleFont
+        subTitle.font = UIFont.heritageTitleFont
     }
+    
     //MARK: Collections List Data
-    func setCollectionsCellValues(cellValues: NSDictionary,imageName: String) {
-        
-        
-        titleLabel.text = (cellValues.value(forKey: "title") as? String)?.uppercased()
+    func setCollectionsCellValues(collectionList: Collection) {
+        titleLabel.text = collectionList.name?.uppercased().replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         lineLabelHeight.constant = 0
         lineLabel.isHidden = true
         titleBottomConstraint.constant = 0
        // subLabelHeight.constant = 0
-        
-        
        favouriteButton.isHidden = true
-        heritageImageView.image = UIImage(named: imageName)
+        if let imageUrl = collectionList.image {
+            heritageImageView.kf.setImage(with: URL(string: imageUrl))
+        }
+        if (heritageImageView.image == nil) {
+            heritageImageView.image = UIImage(named: "default_imageX2")
+        }
+        titleLabel.font = UIFont.heritageTitleFont
+        
     }
+    
+    //MARK: Dining List Data
+    func setDiningListValues(diningList: Dining) {
+        titleLabel.text = diningList.name?.uppercased()
+        lineLabelHeight.constant = 0
+        lineLabel.isHidden = true
+        titleBottomConstraint.constant = 0
+        subTitle.isHidden = true
+        if let imageUrl = diningList.image{
+            heritageImageView.kf.setImage(with: URL(string: imageUrl))
+        }
+        if (heritageImageView.image == nil) {
+            heritageImageView.image = UIImage(named: "default_imageX2")
+        }
+        titleLabel.font = UIFont.heritageTitleFont
+    }
+   
     func setGradientLayer() {
         self.heritageImageView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
         
@@ -96,13 +130,6 @@ class HeritageCollectionCell: UICollectionViewCell {
         let height = self.bounds.height
         let sHeight:CGFloat = 60.0
         let shadow = UIColor.black.withAlphaComponent(0.8).cgColor
-        
-        // Add gradient bar for image on top
-        //        let topImageGradient = CAGradientLayer()
-        //        topImageGradient.frame = CGRect(x: 0, y: 0, width: width, height: sHeight)
-        //        topImageGradient.colors = [shadow, UIColor.clear.cgColor]
-        //        exhibitionImageView.layer.insertSublayer(topImageGradient, at: 0)
-        
         let bottomImageGradient = CAGradientLayer()
         bottomImageGradient.frame = CGRect(x: 0, y: height - sHeight, width: width, height: sHeight)
         bottomImageGradient.colors = [UIColor.clear.cgColor, shadow]

@@ -6,46 +6,57 @@
 //  Copyright © 2018 Exalture. All rights reserved.
 //
 
+import Alamofire
 import UIKit
+import CoreData
 
-
-class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,comingSoonPopUpProtocol {
+    
+    
     
     @IBOutlet weak var parksTableView: UITableView!
-    @IBOutlet weak var favoriteButton: UIButton!
-    @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var loadingView: LoadingView!
     let imageView = UIImageView()
     let closeButton = UIButton()
     var blurView = UIVisualEffectView()
-    var parksListArray: NSArray!
-    var parkImageArray = NSArray()
-    var collectionListArray: NSArray!
-    var collectionImageArray = NSArray()
-    var isParkViewPage : Bool = false
+    var parksListArray: [ParksList]! = []
+    let networkReachability = NetworkReachabilityManager()
+    var popupView : ComingSoonPopUp = ComingSoonPopUp()
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupUIContents()
-        if (isParkViewPage == true) {
-            getParksDataFromJson()
+        if  (networkReachability?.isReachable)! {
+            getParksDataFromServer()
         }
-        else  {
-            getCollectionDetailDataFromJson()
+        else {
+            self.fetchParksFromCoredata()
         }
-        
         registerCell()
-        
     }
     func setupUIContents() {
         loadingView.isHidden = false
         loadingView.showLoading()
+        setTopbarImage()
+        
+        
+        
+    }
+    func setTopbarImage() {
         parksTableView.estimatedRowHeight = 50
         parksTableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0)
         
         imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: 300)
-        
-        imageView.image = UIImage.init(named: "mia_park")
+        imageView.image = UIImage(named: "default_imageX2")
+        if parksListArray.count != 0 {
+            if let imageUrl = parksListArray[0].image{
+                imageView.kf.setImage(with: URL(string: imageUrl))
+            }
+            else {
+                imageView.image = UIImage(named: "default_imageX2")
+            }
+        }else {
+            imageView.image = nil
+        }
         
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -59,39 +70,21 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         imageView.addSubview(blurView)
         
         
-        closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
+        }
+        else {
+            closeButton.frame = CGRect(x: self.view.frame.width-50, y: 30, width: 40, height: 40)
+        }
         closeButton.setImage(UIImage(named: "closeX1"), for: .normal)
         closeButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom:12, right: 12)
         
         closeButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         closeButton.addTarget(self, action: #selector(closeTouchDownAction), for: .touchDown)
         view.addSubview(closeButton)
-        
-        parkImageArray = ["mia_park","park_cafe","family_play"];
-        collectionImageArray = ["mia_park","park_cafe","family_play"];
     }
-    //MARK: Service call
-    func getParksDataFromJson(){
-        let url = Bundle.main.url(forResource: "ParksJson", withExtension: "json")
-        
-        let dataObject = NSData(contentsOf: url!)
-        if let jsonObj = try? JSONSerialization.jsonObject(with: dataObject! as Data, options: .allowFragments) as? NSDictionary {
-            
-            parksListArray = jsonObj!.value(forKey: "items")
-                as! NSArray
-        }
-    }
-    //MARK: Service call
-    func getCollectionDetailDataFromJson(){
-        let url = Bundle.main.url(forResource: "CollectionDetailJson", withExtension: "json")
-        
-        let dataObject = NSData(contentsOf: url!)
-        if let jsonObj = try? JSONSerialization.jsonObject(with: dataObject! as Data, options: .allowFragments) as? NSDictionary {
-            
-            collectionListArray = jsonObj!.value(forKey: "items")
-                as! NSArray
-        }
-    }
+    
+    
     func registerCell() {
         self.parksTableView.register(UINib(nibName: "ParkTableCellXib", bundle: nil), forCellReuseIdentifier: "parkCellId")
         self.parksTableView.register(UINib(nibName: "CollectionDetailView", bundle: nil), forCellReuseIdentifier: "collectionCellId")
@@ -101,50 +94,65 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     //MARK: TableView delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(isParkViewPage == true) {
             return parksListArray.count
-        }
-        else {
-             return collectionListArray.count
-        }
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       if(isParkViewPage == true) {
             let parkCell = tableView.dequeueReusableCell(withIdentifier: "parkCellId", for: indexPath) as! ParkTableViewCell
             if (indexPath.row != 0) {
                 parkCell.titleLineView.isHidden = true
                 parkCell.imageViewHeight.constant = 200
+                
             }
             else {
                 parkCell.titleLineView.isHidden = false
                 parkCell.imageViewHeight.constant = 0
             }
-            let parkDataDict = parksListArray.object(at: indexPath.row) as! NSDictionary
-            parkCell.setParksCellValues(cellValues: parkDataDict, imageName: parkImageArray.object(at: indexPath.row) as! String)
+            if(indexPath.row == parksListArray.count-1) {
+                parkCell.favouriteViewHeight.constant = 130
+                parkCell.favouriteView.isHidden = false
+                parkCell.shareView.isHidden = false
+                parkCell.favouriteButton.isHidden = false
+                parkCell.shareButton.isHidden = false
+            }
+            else {
+                parkCell.favouriteViewHeight.constant = 0
+                parkCell.favouriteView.isHidden = true
+                parkCell.shareView.isHidden = true
+                parkCell.favouriteButton.isHidden = true
+                parkCell.shareButton.isHidden = true
+            }
+        parkCell.favouriteButtonAction = {
+            ()in
+            self.setFavouritesAction(cellObj: parkCell)
+        }
+        parkCell.shareButtonAction = {
+            () in
+        }
+        parkCell.locationButtonTapAction = {
+            () in
+            self.loadLocationInMap(currentRow: indexPath.row)
+        }
+        parkCell.setParksCellValues(parksList: parksListArray[indexPath.row])
             loadingView.stopLoading()
             loadingView.isHidden = true
             return parkCell
-       }
-        else {
-            let collectionCell = tableView.dequeueReusableCell(withIdentifier: "collectionCellId", for: indexPath) as! CollectionDetailCell
-            if(indexPath.row == 0) {
-                collectionCell.firstImageHeight.constant = 0
-            }
-            else {
-                collectionCell.firstImageHeight.constant = 180
-        }
-            let collectionDataDict = collectionListArray.object(at: indexPath.row) as! NSDictionary
-            collectionCell.setCollectionCellValues(cellValues: collectionDataDict, imageName: collectionImageArray.object(at: indexPath.row) as! String)
-            loadingView.stopLoading()
-            loadingView.isHidden = true
-            return collectionCell
-        }
         
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
+    }
+    func setFavouritesAction(cellObj :ParkTableViewCell) {
+        if (cellObj.favouriteButton.tag == 0) {
+            cellObj.favouriteButton.tag = 1
+            cellObj.favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
+            
+        }
+        else {
+            cellObj.favouriteButton.tag = 0
+            cellObj.favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
+        }
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = 300 - (scrollView.contentOffset.y + 300)
@@ -178,6 +186,38 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         }
         
     }
+    func loadLocationInMap(currentRow: Int) {
+        /*
+        var latitudeString :String?
+        var longitudeString : String?
+        if ((parksListArray[currentRow].latitude != nil) && (parksListArray[currentRow].longitude != nil)) {
+            latitudeString = parksListArray[currentRow].latitude
+            longitudeString = parksListArray[currentRow].longitude
+        }
+        if latitudeString != nil && longitudeString != nil {
+            let latitude = convertDMSToDDCoordinate(latLongString: latitudeString!)
+            let longitude = convertDMSToDDCoordinate(latLongString: longitudeString!)
+            if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!)
+                }
+            } else {
+                let locationUrl = URL(string: "https://maps.google.com/?q=@\(latitude),\(longitude)")!
+                UIApplication.shared.openURL(locationUrl)
+            }
+        } else {
+            showLocationErrorPopup()
+        }*/
+        showLocationErrorPopup()
+    }
+    func showLocationErrorPopup() {
+        popupView  = ComingSoonPopUp(frame: self.view.frame)
+        popupView.comingSoonPopupDelegate = self
+        popupView.loadLocationErrorPopup()
+        self.view.addSubview(popupView)
+    }
     @objc func buttonAction(sender: UIButton!) {
         sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         let transition = CATransition()
@@ -191,19 +231,227 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     @objc func closeTouchDownAction(sender: UIButton!) {
         sender.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
-    @IBAction func didTapFavouriteButton(_ sender: UIButton) {
-        self.favoriteButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        
+    //MARK: WebServiceCall
+    func getParksDataFromServer()
+    {
+        _ = Alamofire.request(QatarMuseumRouter.ParksList()).responseObject { (response: DataResponse<ParksLists>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.parksListArray = data.parkList
+                self.setTopbarImage()
+                self.saveOrUpdateParksCoredata()
+                self.parksTableView.reloadData()
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
+                if (self.parksListArray.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
+            case .failure(let error):
+                if let unhandledError = handleError(viewController: self, errorType: error as! BackendError) {
+                    var errorMessage: String
+                    var errorTitle: String
+                    switch unhandledError.code {
+                    default: print(unhandledError.code)
+                    errorTitle = String(format: NSLocalizedString("UNKNOWN_ERROR_ALERT_TITLE",
+                                                                  comment: "Setting the title of the alert"))
+                    errorMessage = String(format: NSLocalizedString("ERROR_MESSAGE",
+                                                                    comment: "Setting the content of the alert"))
+                    }
+                    presentAlert(self, title: errorTitle, message: errorMessage)
+                }
+            }
+        }
     }
-    @IBAction func didTapShareButton(_ sender: UIButton) {
-        self.shareButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        
+//    //MARK: Coredata Method
+    func saveOrUpdateParksCoredata() {
+        if (parksListArray.count > 0) {
+            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                let fetchData = checkAddedToCoredata(entityName: "ParksEntity", parksId: nil) as! [ParksEntity]
+                if (fetchData.count > 0) {
+                    for i in 0 ... parksListArray.count-1 {
+                        let managedContext = getContext()
+                        let parksDict = parksListArray[i]
+                        let fetchResult = checkAddedToCoredata(entityName: "ParksEntity", parksId: nil)
+                        //update
+                        if(fetchResult.count != 0) {
+                            let parksdbDict = fetchResult[0] as! ParksEntity
+                            parksdbDict.title = parksDict.title
+                            parksdbDict.parksDescription = parksDict.description
+                            parksdbDict.sortId =  parksDict.sortId
+                            parksdbDict.image =  parksDict.image
+
+                            do{
+                                try managedContext.save()
+                            }
+                            catch{
+                                print(error)
+                            }
+                        }
+                        else {
+                            //save
+                            self.saveToCoreData(parksDict: parksDict, managedObjContext: managedContext)
+
+                        }
+                    }
+                }
+                else {
+                    for i in 0 ... parksListArray.count-1 {
+                        let managedContext = getContext()
+                        let parksDict : ParksList?
+                        parksDict = parksListArray[i]
+                        self.saveToCoreData(parksDict: parksDict!, managedObjContext: managedContext)
+
+                    }
+                }
+            }
+            else {
+                let fetchData = checkAddedToCoredata(entityName: "ParksEntityArabic", parksId: nil) as! [ParksEntityArabic]
+                if (fetchData.count > 0) {
+                    for i in 0 ... parksListArray.count-1 {
+                        let managedContext = getContext()
+                        let parksDict = parksListArray[i]
+                        let fetchResult = checkAddedToCoredata(entityName: "ParksEntityArabic", parksId: nil)
+                        //update
+                        if(fetchResult.count != 0) {
+                            let parksdbDict = fetchResult[0] as! ParksEntityArabic
+                            parksdbDict.titleArabic = parksDict.title
+                            parksdbDict.descriptionArabic = parksDict.description
+                            parksdbDict.sortIdArabic =  parksDict.sortId
+                            parksdbDict.imageArabic =  parksDict.image
+                            do{
+                                try managedContext.save()
+                            }
+                            catch{
+                                print(error)
+                            }
+                        }
+                        else {
+                            //save
+                            self.saveToCoreData(parksDict: parksDict, managedObjContext: managedContext)
+
+                        }
+                    }
+                }
+                else {
+                    for i in 0 ... parksListArray.count-1 {
+                        let managedContext = getContext()
+                        let parksDict : ParksList?
+                        parksDict = parksListArray[i]
+                        self.saveToCoreData(parksDict: parksDict!, managedObjContext: managedContext)
+
+                    }
+                }
+            }
+        }
     }
-    @IBAction func favouriteTouchDown(_ sender: UIButton) {
-        self.favoriteButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+    func saveToCoreData(parksDict: ParksList, managedObjContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            let parksInfo: ParksEntity = NSEntityDescription.insertNewObject(forEntityName: "ParksEntity", into: managedObjContext) as! ParksEntity
+            parksInfo.title = parksDict.title
+            parksInfo.parksDescription = parksDict.description
+            parksInfo.image = parksDict.image
+            if(parksDict.sortId != nil) {
+                parksInfo.sortId = parksDict.sortId
+            }
+        }
+        else {
+            let parksInfo: ParksEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "ParksEntityArabic", into: managedObjContext) as! ParksEntityArabic
+            parksInfo.titleArabic = parksDict.title
+            parksInfo.descriptionArabic = parksDict.description
+            parksInfo.imageArabic = parksDict.image
+            if(parksDict.sortId != nil) {
+                parksInfo.sortIdArabic = parksDict.sortId
+            }
+        }
+        do {
+            try managedObjContext.save()
+
+
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
     }
-    @IBAction func shareTouchDown(_ sender: UIButton) {
-        self.shareButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+    func fetchParksFromCoredata() {
+
+        do {
+            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                var parksArray = [ParksEntity]()
+                let managedContext = getContext()
+                let parksFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ParksEntity")
+                parksArray = (try managedContext.fetch(parksFetchRequest) as? [ParksEntity])!
+                
+                if (parksArray.count > 0) {
+                    for i in 0 ... parksArray.count-1 {
+                        self.parksListArray.insert(ParksList(title: parksArray[i].title, description: parksArray[i].parksDescription, sortId: parksArray[i].sortId, image: parksArray[i].image), at: i)
+
+                    }
+                    if(parksListArray.count == 0){
+                        self.showNodata()
+                    }
+                    self.setTopbarImage()
+                    parksTableView.reloadData()
+                }
+                else{
+                    self.showNodata()
+                }
+            }
+            else {
+                var parksArray = [ParksEntityArabic]()
+                let managedContext = getContext()
+                let parksFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ParksEntityArabic")
+                parksArray = (try managedContext.fetch(parksFetchRequest) as? [ParksEntityArabic])!
+                if (parksArray.count > 0) {
+                    for i in 0 ... parksArray.count-1 {
+                        self.parksListArray.insert(ParksList(title: parksArray[i].titleArabic, description: parksArray[i].descriptionArabic, sortId: parksArray[i].sortIdArabic, image: parksArray[i].imageArabic), at: i)
+                    }
+                    if(parksArray.count == 0){
+                        self.showNodata()
+                    }
+                    self.setTopbarImage()
+                    parksTableView.reloadData()
+                }
+                else{
+                    self.showNodata()
+                }
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    func getContext() -> NSManagedObjectContext{
+
+        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+        if #available(iOS 10.0, *) {
+            return
+                appDelegate!.persistentContainer.viewContext
+        } else {
+            return appDelegate!.managedObjectContext
+        }
+    }
+    func checkAddedToCoredata(entityName: String?,parksId: String?) -> [NSManagedObject]
+    {
+        let managedContext = getContext()
+        var fetchResults : [NSManagedObject] = []
+        let homeFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
+        fetchResults = try! managedContext.fetch(homeFetchRequest)
+        return fetchResults
+    }
+    func showNodata() {
+        var errorMessage: String
+        errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                        comment: "Setting the content of the alert"))
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoDataView()
+        self.loadingView.noDataLabel.text = errorMessage
+    }
+     //MARK: Poup Delegate
+    func closeButtonPressed() {
+        self.popupView.removeFromSuperview()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

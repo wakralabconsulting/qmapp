@@ -19,9 +19,10 @@ class EventPopupView: UIView {
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var eventPopupInnerView: UIView!
     @IBOutlet weak var addToCalendarButton: UIButton!
-    @IBOutlet weak var eventTitle: UILabel!
+    @IBOutlet weak var eventTitle: UITextView!
+    @IBOutlet weak var eventPopupHeight: NSLayoutConstraint!
     
-    @IBOutlet weak var eventDescription: UILabel!
+    @IBOutlet weak var eventDescription: UITextView!
     var eventPopupDelegate : EventPopUpProtocol?
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,6 +46,10 @@ class EventPopupView: UIView {
         eventPopupInnerView.layer.cornerRadius = 20.0
         self.backgroundColor = UIColor.popupBackgroundWhite
         self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        eventTitle.font = UIFont.eventPopupTitleFont
+        eventDescription.font = UIFont.settingsUpdateLabelFont
+        addToCalendarButton.titleLabel?.font = UIFont.closeButtonFont
+        
         
     }
     @IBAction func didTapEventCloseButton(_ sender: UIButton) {

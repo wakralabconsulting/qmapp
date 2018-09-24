@@ -17,86 +17,6 @@
             endingLineNumber = "181"
             landmarkName = "eventbuttonPressed()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "QatarMuseums.HomeViewController.eventbuttonPressed() -&gt; ()"
-                  moduleName = "QatarMuseums"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/exalturemacair/Documents/Projects/Swift/QatarMuseumProj/QatarMuseum/QatarMuseum/ViewController/HomeViewController.swift"
-                  timestampString = "553710386.999106"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "181"
-                  endingLineNumber = "181"
-                  offsetFromSymbolStart = "18">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "QatarMuseums.HomeViewController.eventbuttonPressed() -&gt; ()"
-                  moduleName = "QatarMuseums"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/exalturemacair/Documents/Projects/Swift/QatarMuseumProj/QatarMuseum/QatarMuseum/ViewController/HomeViewController.swift"
-                  timestampString = "553710387.001688"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "181"
-                  endingLineNumber = "181"
-                  offsetFromSymbolStart = "2161">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QatarMuseum/ViewController/MuseumsViewController.swift"
-            timestampString = "553710386.64474"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "275"
-            endingLineNumber = "275"
-            landmarkName = "eventButtonPressed()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "QatarMuseums.MuseumsViewController.eventButtonPressed() -&gt; ()"
-                  moduleName = "QatarMuseums"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/exalturemacair/Documents/Projects/Swift/QatarMuseumProj/QatarMuseum/QatarMuseum/ViewController/MuseumsViewController.swift"
-                  timestampString = "553710387.010198"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "275"
-                  endingLineNumber = "275"
-                  offsetFromSymbolStart = "18">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "QatarMuseums.MuseumsViewController.eventButtonPressed() -&gt; ()"
-                  moduleName = "QatarMuseums"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/exalturemacair/Documents/Projects/Swift/QatarMuseumProj/QatarMuseum/QatarMuseum/ViewController/MuseumsViewController.swift"
-                  timestampString = "553710387.013876"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "275"
-                  endingLineNumber = "275"
-                  offsetFromSymbolStart = "2117">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -106,28 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QatarMuseum/ReusableComponents/DiningDetailCell/DiningDetailTableViewCell.swift"
-            timestampString = "553065451.386921"
+            timestampString = "557994388.9819961"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "41"
             endingLineNumber = "41"
-            landmarkName = "setDiningCellValues()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QatarMuseum/ViewController/EventViewController.swift"
-            timestampString = "553709165.285264"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129"
-            landmarkName = "eventCloseButtonPressed()"
+            landmarkName = "setDiningDetailValues(diningDetail:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -138,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QatarMuseum/ViewController/MuseumsViewController.swift"
-            timestampString = "553710386.644866"
+            timestampString = "558009612.1650569"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "316"
             endingLineNumber = "316"
-            landmarkName = "setGradientLayer()"
+            landmarkName = "loadBottomCellPages(cellObj:selectedItem:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -154,12 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QatarMuseum/ViewController/EventViewController.swift"
-            timestampString = "553709165.285392"
+            timestampString = "558011734.412939"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "168"
             endingLineNumber = "168"
-            landmarkName = "gestureRecognizerShouldBegin(_:)"
+            landmarkName = "collectionView(_:numberOfItemsInSection:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -202,13 +106,77 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QatarMuseum/ReusableComponents/MuseumCollectionDetail/CollectionDetailCell.swift"
-            timestampString = "553709391.76626"
+            timestampString = "558011734.413164"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "7"
             endingLineNumber = "7"
             landmarkName = "unknown"
             landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QatarMuseum/ViewController/CollectionDetailViewController.swift"
+            timestampString = "558011734.413271"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
+            landmarkName = "getCollectioDetailsFromServer()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;QatarMuseums.Collections&gt;) -&gt; () in QatarMuseums.CollectionDetailViewController.getCollectioDetailsFromServer() -&gt; ()"
+                  moduleName = "QatarMuseums"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/exalturemacair/Documents/Projects/Swift/QatarMuseumProj/QatarMuseum/QatarMuseum/ViewController/CollectionDetailViewController.swift"
+                  timestampString = "558007168.741526"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "84">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;QatarMuseums.Collections&gt;) -&gt; () in QatarMuseums.CollectionDetailViewController.getCollectioDetailsFromServer() -&gt; ()"
+                  moduleName = "QatarMuseums"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/exalturemacair/Documents/Projects/Swift/QatarMuseumProj/QatarMuseum/QatarMuseum/ViewController/CollectionDetailViewController.swift"
+                  timestampString = "558007168.745988"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "113">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QatarMuseum/ViewController/EventViewController.swift"
+            timestampString = "558011734.413334"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

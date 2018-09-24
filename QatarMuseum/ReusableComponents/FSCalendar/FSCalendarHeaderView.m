@@ -112,6 +112,13 @@
     if ([self.calendar.identifier isRTLCalendar]) {
         [cell setTransform:CGAffineTransformMakeScale(-1, 1)];
     }
+    //changed
+    if([[NSUserDefaults standardUserDefaults] boolForKey:@"Arabic"]) {
+       [cell setTransform:CGAffineTransformMakeScale(-1, 1)];
+    }
+    else {
+       [cell setTransform:CGAffineTransformMakeScale(1, 1)];
+    }
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
@@ -187,7 +194,9 @@
 {
     FSCalendarAppearance *appearance = self.calendar.appearance;
     cell.titleLabel.font = appearance.headerTitleFont;
-    cell.titleLabel.textColor = appearance.headerTitleColor;
+    //changed
+   
+    
     _calendar.formatter.dateFormat = appearance.headerDateFormat;
     BOOL usesUpperCase = (appearance.caseOptions & 15) == FSCalendarCaseOptionsHeaderUsesUpperCase;
     NSString *text = nil;

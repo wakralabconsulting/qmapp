@@ -17,70 +17,77 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
     @IBOutlet weak var favouriteButton: UIButton!
     @IBOutlet weak var openCloseView: UIView!
     @IBOutlet weak var openCloseLabel: UILabel!
-    var isFvourite : Bool = false
+    var isFavourite : Bool = false
     var exhibitionCellItemBtnTapAction : (()->())?
     
     override func layoutSubviews() {
         super.layoutSubviews()
         setGradientLayer()
     }
-    func setExhibitionCellValues(cellValues: NSDictionary,imageName: String) {
-        titleLabel.text = (cellValues.value(forKey: "title") as? String)?.uppercased()
-        dateLabel.text = (cellValues.value(forKey: "dateTitle") as? String)?.uppercased()
-        addressLabel.text = (cellValues.value(forKey: "addressTitle") as? String)?.uppercased()
-        if ((cellValues.value(forKey: "favourite") as! Bool) == true) {
+    
+    //MARK: HomeExhibitionList data
+    func setExhibitionCellValues(exhibition: Exhibition) {
+        titleLabel.text = exhibition.name?.uppercased()
+        //Hide Date and Location from Exhibition List page.
+        //dateLabel.text = ((exhibition.startDate?.uppercased())!).replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil) + " - " + ((exhibition.endDate?.uppercased())!).replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+        //addressLabel.text = exhibition.location?.uppercased()
+        titleLabel.font = UIFont.heritageTitleFont
+        dateLabel.font = UIFont.exhibitionDateLabelFont
+        addressLabel.font = UIFont.exhibitionDateLabelFont
+        if (exhibition.isFavourite == true) {
             favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
-        }
-        else {
+        } else {
             favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
         }
-        if ((cellValues.value(forKey: "open")as! Bool) == true) {
+        if (exhibition.isOpen == true) {
             openCloseView.backgroundColor = UIColor.yellow
             openCloseLabel.text = NSLocalizedString("NOW_OPEN_TITLE", comment: "NOW_OPEN_TITLE in the exhibition page")
-
             openCloseLabel.textColor = UIColor.black
-        }
-        else {
+        } else {
             openCloseView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.45)
             openCloseLabel.text = NSLocalizedString("CLOSED_TITLE", comment: "CLOSED_TITLE in the exhibition page")
             openCloseLabel.textColor = UIColor.white
         }
-//        if let imageUrl = cellValues.value(forKey: "image") as? String{
-//           // exhibitionImageView.kf.indicatorType = .activity
-//            exhibitionImageView.kf.setImage(with: URL(string: imageUrl))
-//
-//        }
-        exhibitionImageView.image = UIImage(named: imageName)
-    }
-    //MARK: HeritageList data
-    func setHeritageListCellValues(cellValues: NSDictionary,imageName: String) {
-        
-        titleLabel.text = (cellValues.value(forKey: "title") as? String)?.uppercased()
-        dateLabel.text = (cellValues.value(forKey: "dateTitle") as? String)?.uppercased()
-        addressLabel.text = (cellValues.value(forKey: "addressTitle") as? String)?.uppercased()
-        if ((cellValues.value(forKey: "favourite") as! Bool) == true) {
-            favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
+        if let imageUrl = exhibition.image {
+           // exhibitionImageView.kf.indicatorType = .activity
+            exhibitionImageView.kf.setImage(with: URL(string: imageUrl))
         }
-        else {
+        if (exhibitionImageView.image == nil) {
+            exhibitionImageView.image = UIImage(named: "default_imageX2")
+        }
+    }
+    
+    //MARK: MuseumExhibitionList data
+    func setMuseumExhibitionCellValues(exhibition: Exhibition) {
+        titleLabel.text = exhibition.name?.uppercased()
+        dateLabel.text = (exhibition.startDate?.uppercased())! + " - " + (exhibition.endDate?.uppercased())!
+        addressLabel.text = exhibition.location?.uppercased()
+        titleLabel.font = UIFont.heritageTitleFont
+        dateLabel.font = UIFont.exhibitionDateLabelFont
+        addressLabel.font = UIFont.exhibitionDateLabelFont
+        if (exhibition.isFavourite == true) {
+            favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
+        } else {
             favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
         }
-        if ((cellValues.value(forKey: "open")as! Bool) == true) {
+        if (exhibition.isOpen == true) {
             openCloseView.backgroundColor = UIColor.yellow
             openCloseLabel.text = NSLocalizedString("NOW_OPEN_TITLE", comment: "NOW_OPEN_TITLE in the exhibition page")
             openCloseLabel.textColor = UIColor.black
-        }
-        else {
+        } else {
             openCloseView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.45)
             openCloseLabel.text = NSLocalizedString("CLOSED_TITLE", comment: "CLOSED_TITLE in the exhibition page")
             openCloseLabel.textColor = UIColor.white
         }
-        //        if let imageUrl = cellValues.value(forKey: "image") as? String{
-        //           // exhibitionImageView.kf.indicatorType = .activity
-        //            exhibitionImageView.kf.setImage(with: URL(string: imageUrl))
-        //
-        //        }
-        exhibitionImageView.image = UIImage(named: imageName)
+        if let imageUrl = exhibition.image {
+            // exhibitionImageView.kf.indicatorType = .activity
+            exhibitionImageView.kf.setImage(with: URL(string: imageUrl))
+        }
+        if (exhibitionImageView.image == nil) {
+            exhibitionImageView.image = UIImage(named: "default_imageX2")
+        }
     }
+    
     func setGradientLayer() {
         self.exhibitionImageView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
         
@@ -94,23 +101,22 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
         bottomImageGradient.colors = [UIColor.clear.cgColor, shadow]
         exhibitionImageView.layer.insertSublayer(bottomImageGradient, at: 0)
     }
+    
     @IBAction func didTapExhibitionCellButton(_ sender: UIButton) {
         exhibitionCellItemBtnTapAction?()
         self.favouriteButton.transform = CGAffineTransform(scaleX:1, y: 1)
-
     }
+    
     @IBAction func favoriteTouchDownPressed(_ sender: UIButton) {
-        
         self.favouriteButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-        if (isFvourite) {
+        if (isFavourite) {
             favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
-            isFvourite = false
-        }
-        else {
+            isFavourite = false
+        } else {
             favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
-            isFvourite = true
+            isFavourite = true
         }
-        
     }
+    
     
 }

@@ -22,9 +22,7 @@ class WebViewController: UIViewController,UIWebViewDelegate {
         if ((titleString != nil) && (titleString != "")) {
             self.titleLabel.text = titleString
         }
-
-
-       
+        titleLabel.font = UIFont.headerFont
         let requestObj = URLRequest(url: webViewUrl!)
         self.webView.loadRequest(requestObj)
         webView.delegate = self

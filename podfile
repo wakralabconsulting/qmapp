@@ -3,6 +3,11 @@ use_frameworks!
 target 'QatarMuseums' do
  pod 'Alamofire', '~> 4.5'
  pod 'Kingfisher'
+ pod 'YouTubePlayer'
  #pod 'SwiftGifOrigin', '~> 1.6.1' 
+ pod 'Firebase/Core'
+ pod 'Fabric'
+ pod 'Crashlytics'
+ pod 'MaterialComponents/BottomSheet'
 
 end

@@ -62,4 +62,16 @@ extension UIColor {
     static var noDataViewGray: UIColor {
         return UIColor(red: 243/255, green: 241/255, blue: 238/255, alpha: 1)
     }
+    static var filterTextSelectedGray: UIColor {
+        return UIColor(red: 230/255, green: 230/255, blue: 229/255, alpha: 1)
+    }
+    static var settingsSwitchOnTint: UIColor {
+        return UIColor(red: 82/255, green: 178/255, blue: 74/255, alpha: 1)
+    }
+    static var mapLevelColor: UIColor {
+        return UIColor(red: 205/255, green: 215/255, blue: 224/255, alpha: 1)
+    }
+    static var numberPadColor: UIColor {
+        return UIColor(red: 178/255, green: 193/255, blue: 201/255, alpha: 1)
+    }
 }

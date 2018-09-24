@@ -23,37 +23,34 @@
                 <rect key="frame" x="0.0" y="0.0" width="318" height="178"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Laundromat" translatesAutoresizingMaskIntoConstraints="NO" id="QPG-VD-3S2">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_imageX2" translatesAutoresizingMaskIntoConstraints="NO" id="QPG-VD-3S2">
                         <rect key="frame" x="0.0" y="0.0" width="318" height="178"/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LAUNDROMAT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BfQ-Vk-GdY">
-                        <rect key="frame" x="12" y="118" width="294" height="17"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="17" id="VbH-fU-Whn"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BfQ-Vk-GdY">
+                        <rect key="frame" x="12" y="165" width="294" height="0.0"/>
+                        <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="17"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15 MARCH 2018 - 1 JUNE 2018" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LBm-nz-pc1">
-                        <rect key="frame" x="12" y="139" width="294" height="12"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LBm-nz-pc1">
+                        <rect key="frame" x="12" y="165" width="294" height="0.0"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="12" id="sf3-Z7-aIH"/>
+                            <constraint firstAttribute="height" id="sf3-Z7-aIH"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FIRE STATION ARTIST IN RESIDENCE, GARAGE GALLERY" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vRd-Da-zA7">
-                        <rect key="frame" x="12" y="153" width="294" height="12"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vRd-Da-zA7">
+                        <rect key="frame" x="12" y="165" width="294" height="0.0"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="12" id="KIu-J1-sq3"/>
+                            <constraint firstAttribute="height" id="KIu-J1-sq3"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vks-Hk-NVF">
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vks-Hk-NVF">
                         <rect key="frame" x="283" y="10" width="25" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="25" id="rOA-OZ-LMr"/>
@@ -66,10 +63,10 @@
                             <action selector="favoriteTouchDownPressed:" destination="Iu8-Pj-h2i" eventType="touchDown" id="HUQ-FT-Ovq"/>
                         </connections>
                     </button>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LUd-38-3DW">
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LUd-38-3DW">
                         <rect key="frame" x="200.5" y="10.5" width="82.5" height="19"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOW OPEN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j0W-ZI-avy">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOW OPEN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j0W-ZI-avy">
                                 <rect key="frame" x="5" y="2" width="72.5" height="15"/>
                                 <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="15"/>
                                 <nil key="textColor"/>
@@ -99,7 +96,7 @@
                 <constraint firstItem="vRd-Da-zA7" firstAttribute="leading" secondItem="LBm-nz-pc1" secondAttribute="leading" id="C4g-9N-e4o"/>
                 <constraint firstAttribute="bottom" secondItem="QPG-VD-3S2" secondAttribute="bottom" id="I1O-1K-mnb"/>
                 <constraint firstAttribute="trailing" secondItem="QPG-VD-3S2" secondAttribute="trailing" id="Ihq-Br-9dK"/>
-                <constraint firstItem="vRd-Da-zA7" firstAttribute="top" secondItem="LBm-nz-pc1" secondAttribute="bottom" constant="2" id="Qpu-BM-RoY"/>
+                <constraint firstItem="vRd-Da-zA7" firstAttribute="top" secondItem="LBm-nz-pc1" secondAttribute="bottom" id="Qpu-BM-RoY"/>
                 <constraint firstItem="QPG-VD-3S2" firstAttribute="leading" secondItem="Iu8-Pj-h2i" secondAttribute="leading" id="TzO-Dq-DT1"/>
                 <constraint firstItem="QPG-VD-3S2" firstAttribute="top" secondItem="Iu8-Pj-h2i" secondAttribute="top" id="Z5D-6k-RB1"/>
                 <constraint firstAttribute="trailing" secondItem="Vks-Hk-NVF" secondAttribute="trailing" constant="10" id="ZVW-yB-Brb"/>
@@ -109,7 +106,7 @@
                 <constraint firstItem="vRd-Da-zA7" firstAttribute="trailing" secondItem="LBm-nz-pc1" secondAttribute="trailing" id="obf-Of-3c8"/>
                 <constraint firstAttribute="bottom" secondItem="vRd-Da-zA7" secondAttribute="bottom" constant="13" id="sdq-bU-GfF"/>
                 <constraint firstItem="LBm-nz-pc1" firstAttribute="trailing" secondItem="BfQ-Vk-GdY" secondAttribute="trailing" id="tD3-Ml-iCb"/>
-                <constraint firstItem="LBm-nz-pc1" firstAttribute="top" secondItem="BfQ-Vk-GdY" secondAttribute="bottom" constant="4" id="tTt-5Q-VKG"/>
+                <constraint firstItem="LBm-nz-pc1" firstAttribute="top" secondItem="BfQ-Vk-GdY" secondAttribute="bottom" id="tTt-5Q-VKG"/>
             </constraints>
             <connections>
                 <outlet property="addressLabel" destination="vRd-Da-zA7" id="NfO-Sp-93K"/>
@@ -124,7 +121,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="Laundromat" width="770" height="513"/>
+        <image name="default_imageX2" width="235" height="120"/>
         <image name="heart_fillX1" width="101" height="93"/>
     </resources>
 </document>
