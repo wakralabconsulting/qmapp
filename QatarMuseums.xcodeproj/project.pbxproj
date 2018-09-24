@@ -103,7 +103,6 @@
 		B8B368BE20DD4B6200B1CDA4 /* MuseumCollectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B368BD20DD4B6200B1CDA4 /* MuseumCollectionsViewController.swift */; };
 		B8B4943A212EDDE300203C7F /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B49439212EDDE300203C7F /* ToastView.swift */; };
 		B8B49561212DBAD8006F509B /* Museum.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B49560212DBAD8006F509B /* Museum.swift */; };
-		B8B49563212DD81A006F509B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8B49562212DD81A006F509B /* GoogleService-Info.plist */; };
 		B8B54D6C20FF514E00B21348 /* CollectionDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8B54D6B20FF514E00B21348 /* CollectionDetailView.xib */; };
 		B8B54D6E20FF516B00B21348 /* CollectionDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B54D6D20FF516B00B21348 /* CollectionDetailCell.swift */; };
 		B8B7604C2100E7FC00CEE280 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B7604B2100E7FC00CEE280 /* NotificationsViewController.swift */; };
@@ -160,6 +159,7 @@
 		B8E2C01520C7FD6800F3CE41 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E2C01420C7FD6800F3CE41 /* SideMenuView.swift */; };
 		B8E8CAE7214B6625003CCA7F /* PageControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E8CAE6214B6625003CCA7F /* PageControlCell.swift */; };
 		B8E8CAE9214B6EC8003CCA7F /* PageControlCellXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8E8CAE8214B6EC8003CCA7F /* PageControlCellXib.xib */; };
+		B8EAA3592158D4520060D168 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8EAA3582158D4520060D168 /* GoogleService-Info.plist */; };
 		B8EAB77B20CA3E2900C001B2 /* EventCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8EAB77A20CA3E2900C001B2 /* EventCellView.xib */; };
 		B8EAB77D20CA3E6100C001B2 /* EventCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EAB77C20CA3E6100C001B2 /* EventCollectionViewCell.swift */; };
 		B8EAB7AD20CA41ED00C001B2 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8EAB79420CA41EB00C001B2 /* Info.plist */; };
@@ -318,7 +318,6 @@
 		B8B368BD20DD4B6200B1CDA4 /* MuseumCollectionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseumCollectionsViewController.swift; sourceTree = "<group>"; };
 		B8B49439212EDDE300203C7F /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		B8B49560212DBAD8006F509B /* Museum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Museum.swift; sourceTree = "<group>"; };
-		B8B49562212DD81A006F509B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B8B54D6B20FF514E00B21348 /* CollectionDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionDetailView.xib; sourceTree = "<group>"; };
 		B8B54D6D20FF516B00B21348 /* CollectionDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionDetailCell.swift; sourceTree = "<group>"; };
 		B8B7604B2100E7FC00CEE280 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
@@ -376,6 +375,7 @@
 		B8E2C01420C7FD6800F3CE41 /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		B8E8CAE6214B6625003CCA7F /* PageControlCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControlCell.swift; sourceTree = "<group>"; };
 		B8E8CAE8214B6EC8003CCA7F /* PageControlCellXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PageControlCellXib.xib; sourceTree = "<group>"; };
+		B8EAA3582158D4520060D168 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B8EAB77A20CA3E2900C001B2 /* EventCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventCellView.xib; sourceTree = "<group>"; };
 		B8EAB77C20CA3E6100C001B2 /* EventCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCollectionViewCell.swift; sourceTree = "<group>"; };
 		B8EAB77F20CA41E900C001B2 /* QatarMuseum-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QatarMuseum-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -559,7 +559,7 @@
 		B80DC04C20C792E400E28034 = {
 			isa = PBXGroup;
 			children = (
-				B8B49562212DD81A006F509B /* GoogleService-Info.plist */,
+				B8EAA3582158D4520060D168 /* GoogleService-Info.plist */,
 				B80DC05720C792E400E28034 /* QatarMuseum */,
 				B80DC06C20C792E600E28034 /* QatarMuseumTests */,
 				B80DC07720C792E600E28034 /* QatarMuseumUITests */,
@@ -1103,6 +1103,7 @@
 				B80DC06320C792E600E28034 /* LaunchScreen.storyboard in Resources */,
 				B8EAB7C020CA67CD00C001B2 /* EventPopUp.xib in Resources */,
 				B891D06520DBCC5200919F30 /* HeritageCell.xib in Resources */,
+				B8EAA3592158D4520060D168 /* GoogleService-Info.plist in Resources */,
 				B8DC40A520C9A3230044134D /* CommonHeader.xib in Resources */,
 				B8DC478720DCF8CE0007B426 /* ParkTableCellXib.xib in Resources */,
 				B806B7AD212452DC00F9F338 /* GoogleMaps.bundle in Resources */,
@@ -1124,7 +1125,6 @@
 				1B3C505C212AB3460034E560 /* ArtifactNumberPadCell.xib in Resources */,
 				B8AFA2F120E78E09008838A6 /* DINNextLTPro-Light.otf in Resources */,
 				B8BA80BA20CD8305007E880A /* ExhibitionsCellXib.xib in Resources */,
-				B8B49563212DD81A006F509B /* GoogleService-Info.plist in Resources */,
 				B8EAB7AD20CA41ED00C001B2 /* Info.plist in Resources */,
 				B8EAB77B20CA3E2900C001B2 /* EventCellView.xib in Resources */,
 				1BAA2FCB2125FCC600D785DD /* ObjectImageXib.xib in Resources */,
