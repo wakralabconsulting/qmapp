@@ -26,10 +26,10 @@ struct EducationEvent: ResponseObjectSerializable, ResponseCollectionSerializabl
 //    var maxGroupSize: String? = nil
     
     var itemId: String? = nil
-    var fieldRepeatId: String? = nil
+    var introductionText: String? = nil
     var register: String? = nil
     var fieldRepeatDate: [String]? = []
-    var longDesc: String? = nil
+    var mainDescription: [String]? = []
     var title: String? = nil
     var programType: String? = nil
     
@@ -54,11 +54,12 @@ struct EducationEvent: ResponseObjectSerializable, ResponseCollectionSerializabl
 //            self.maxGroupSize = representation["max_group_size"] as? String
             
             self.itemId = representation["item_id"] as? String
-            self.fieldRepeatId = representation["field_eduprog_repeat_date_field_collection_item_nid"] as? String
+            self.introductionText = representation["Introduction_Text"] as? String
             self.register = representation["Register"] as? String
             self.fieldRepeatDate = representation["field_eduprog_repeat_field_date"] as? [String]
             self.title = representation["title"] as? String
             self.programType = representation["Programme_type"] as? String
+            self.mainDescription = representation["main_description"] as? [String]
             
         }
     }
@@ -82,13 +83,14 @@ struct EducationEvent: ResponseObjectSerializable, ResponseCollectionSerializabl
 //        self.maxGroupSize = maxGroupSize
 //    }
     
-    init (itemId:String?, fieldRepeatId: String?, register: String?, fieldRepeatDate: [String]?, title: String?,programType:String?) {
+    init (itemId:String?, introductionText: String?, register: String?, fieldRepeatDate: [String]?, title: String?,programType:String?,mainDescription:[String]?) {
         self.itemId = itemId
-        self.fieldRepeatId = fieldRepeatId
+        self.introductionText = introductionText
         self.register = register
         self.fieldRepeatDate = fieldRepeatDate
         self.title = title
         self.programType = programType
+        self.mainDescription = mainDescription
         
     }
 }

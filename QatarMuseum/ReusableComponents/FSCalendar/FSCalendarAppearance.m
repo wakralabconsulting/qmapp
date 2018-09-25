@@ -34,13 +34,13 @@
             _titleFont = [UIFont fontWithName:@"DINNextLTArabic-Bold" size:18];
             _subtitleFont = [UIFont systemFontOfSize:FSCalendarStandardSubtitleTextSize];
             _weekdayFont = [UIFont fontWithName:@"DINNextLTArabic-Regular" size:13];
-            _headerTitleFont = [UIFont fontWithName:@"DINNextLTArabic-Bold" size:19];
+            _headerTitleFont = [UIFont fontWithName:@"DINNextLTArabic-Bold" size:16];
         }
         else {
             _titleFont = [UIFont fontWithName:@"DINNextLTPro-Bold" size:18];
             _subtitleFont = [UIFont systemFontOfSize:FSCalendarStandardSubtitleTextSize];
             _weekdayFont = [UIFont fontWithName:@"DINNextLTPro-Regular" size:13];
-            _headerTitleFont = [UIFont fontWithName:@"DINNextLTPro-Bold" size:19];
+            _headerTitleFont = [UIFont fontWithName:@"DINNextLTPro-Bold" size:16];
         }
         _headerTitleColor = FSCalendarStandardTitleTextColor;
         _headerDateFormat = @"MMMM - yyyy";
