@@ -9,6 +9,7 @@
 import Alamofire
 import CoreData
 import UIKit
+import Firebase
 
 class HomeViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,TopBarProtocol,comingSoonPopUpProtocol,SideMenuProtocol,UIViewControllerTransitioningDelegate {
 
@@ -45,8 +46,19 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             self.fetchHomeInfoFromCoredata()
            
         }
+//        let button = UIButton(type: .roundedRect)
+//        button.frame = CGRect(x: 20, y: 50, width: 100, height: 30)
+//        button.setTitle("Crash", for: [])
+//        button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), for: .touchUpInside)
+//        view.addSubview(button)
+       
+
     }
-    
+//    @IBAction func crashButtonTapped(_ sender: AnyObject) {
+//        Crashlytics.sharedInstance().crash()
+
+//    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
     }

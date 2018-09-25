@@ -40,7 +40,7 @@ class EventCollectionViewCell: UICollectionViewCell {
         firstTitle.text = event.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
         let dateValue = event.fieldRepeatDate
         if((dateValue?.count)! > 0) {
-            timingLabel.text = event.fieldRepeatDate?[0].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+            descriptionLabel.text = event.fieldRepeatDate?[0].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         }
         //secondTitleLabel.text = event.title?.uppercased()
        // descriptionLabel.text = event.shortDesc

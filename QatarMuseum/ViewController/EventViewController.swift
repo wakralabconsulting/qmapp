@@ -42,9 +42,9 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     let networkReachability = NetworkReachabilityManager()
     let store = EKEventStore()
     let anyString = NSLocalizedString("ANYSTRING", comment: "ANYSTRING in the Filter page")
-    var institutionType : String? = "any"
-    var ageGroupType: String? = "any"
-    var programmeType:String? = "any"
+    var institutionType : String? = "All"
+    var ageGroupType: String? = "All"
+    var programmeType:String? = "All"
 
     fileprivate lazy var scopeGesture: UIPanGestureRecognizer = {
         [unowned self] in
@@ -99,7 +99,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             listTitleLabel.text = NSLocalizedString("EDUCATION_EVENT_TITLE", comment: "EDUCATION_EVENT_TITLE Label in the Event page")
             headerView.headerTitle.text = NSLocalizedString("EDUCATIONCALENDAR_TITILE", comment: "EDUCATIONCALENDAR_TITILE Label in the Event page")
             listTitleLabel.textColor = UIColor.blackColor
-            headerView.settingsButton.isHidden = true
+            headerView.settingsButton.isHidden = false
             if  (networkReachability?.isReachable)! {
                 self.getEducationEventFromServer()
             }
@@ -161,7 +161,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let heightValue = UIScreen.main.bounds.height/100
         
-        return CGSize(width: eventCollectionView.frame.width, height: heightValue*15)
+        return CGSize(width: eventCollectionView.frame.width, height: heightValue*17)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
             return educationEventArray.count
@@ -243,13 +243,33 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         if (isLoadEventPage == true) {
             
             eventPopup.eventTitle.text = educationEventArray[currentRow].title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
-            eventPopup.eventDescription.text = educationEventArray[currentRow].longDesc
+           // eventPopup.eventDescription.text = educationEventArray[currentRow].longDesc
+            var mainDesc : String? = ""
+            if let maindescr = educationEventArray[currentRow].mainDescription {
+                if ((maindescr.count) > 0) {
+                    for i in 0 ... (educationEventArray.count ) - 1 {
+                        mainDesc = mainDesc! + educationEventArray[currentRow].mainDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
+                         eventPopup.eventDescription.text = mainDesc
+                    }
+                    
+                }
+            }
             //let buttonTitle = NSLocalizedString("POPUP_ADD_BUTTON_TITLE", comment: "POPUP_ADD_BUTTON_TITLE  in the popup view")
            // eventPopup.addToCalendarButton.setTitle(buttonTitle, for: .normal)
         }
         else {
             eventPopup.eventTitle.text = educationEventArray[currentRow].title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
-            eventPopup.eventDescription.text = educationEventArray[currentRow].longDesc
+            //eventPopup.eventDescription.text = educationEventArray[currentRow].longDesc
+            var mainDesc : String? = ""
+            if let maindescr = educationEventArray[currentRow].mainDescription {
+                if ((maindescr.count) > 0) {
+                    for i in 0 ... (educationEventArray.count ) - 1 {
+                        mainDesc = mainDesc! + educationEventArray[currentRow].mainDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
+                        eventPopup.eventDescription.text = mainDesc
+                    }
+                    
+                }
+            }
             
         }
         self.view.addSubview(eventPopup)
@@ -284,7 +304,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 //calendar.timeZone = TimeZone(identifier: "UTC")!
                 let startDt = calendar.date(bySettingHour:14, minute: 0, second: 0, of: selectedDateForEvent)!
                 let endDt = calendar.date(bySettingHour: 16, minute: 0, second: 0, of: selectedDateForEvent)!
-                self.addEventToCalendar(title:  (selectedEvent?.title)!, description: selectedEvent?.longDesc, startDate: startDt, endDate: endDt)
+                self.addEventToCalendar(title:  (selectedEvent?.title)!, description: selectedEvent?.title, startDate: startDt, endDate: endDt)
                 
             }
             //        if (isLoadEventPage == true) {
@@ -402,6 +422,9 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         group.notify(queue: .main) {
             if (self.isLoadEventPage == true) {
                 if  (self.networkReachability?.isReachable)! {
+                    self.institutionType = "All"
+                    self.ageGroupType = "All"
+                    self.programmeType = "All"
                     self.getEducationEventFromServer()
                 }
                 else {
@@ -515,7 +538,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
        // let dateString = toMillis()
         let getDate = toDayMonthYear()
         if ((getDate.day != nil) && (getDate.month != nil) && (getDate.year != nil)) {
-            _ = Alamofire.request(QatarMuseumRouter.EducationEvent(["institution" : "All","age" : "All", "programe" : "All","date_filter[value][month]" : getDate.month!, "date_filter[value][day]" : getDate.day!,"date_filter[value][year]" : getDate.year!,"cck_multiple_field_remove_fields" : "All"] )).responseObject { (response: DataResponse<EducationEventList>) -> Void in
+            _ = Alamofire.request(QatarMuseumRouter.EducationEvent(["institution" : institutionType ?? "All","age" : ageGroupType ?? "All", "programe" : programmeType ?? "All","date_filter[value][month]" : getDate.month!, "date_filter[value][day]" : getDate.day!,"date_filter[value][year]" : getDate.year!,"cck_multiple_field_remove_fields" : "All"] )).responseObject { (response: DataResponse<EducationEventList>) -> Void in
                 switch response.result {
                 case .success(let data):
                     self.educationEventArray = data.educationEvent!
@@ -687,7 +710,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
               //  let educationEventDict = educationArray[i]
                 edducationInfo.dateId = dateId
                 edducationInfo.itemId = educationEventDict.itemId
-                edducationInfo.fieldRepeatId = educationEventDict.fieldRepeatId
+                edducationInfo.introductionText = educationEventDict.introductionText
                 edducationInfo.register = educationEventDict.register
                 //edducationInfo.field =  educationEventDict.shortDesc
                 edducationInfo.title = educationEventDict.title
@@ -701,6 +724,26 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     
                     eventDateEntity = edEventDate
                     edducationInfo.addToFieldRepeatDates(eventDateEntity)
+                    
+                    do {
+                        try managedObjContext.save()
+                        
+                        
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                    
+                }
+            }
+            //Main desc
+            if((educationEventDict.mainDescription?.count)! > 0) {
+                for i in 0 ... (educationEventDict.mainDescription?.count)!-1 {
+                    var eventDescEntity: EdEventDescEntity!
+                    let edEventDesc: EdEventDescEntity = NSEntityDescription.insertNewObject(forEntityName: "EdEventDescEntity", into: managedObjContext) as! EdEventDescEntity
+                    edEventDesc.mainDesc = educationEventDict.mainDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    
+                    eventDescEntity = edEventDesc
+                    edducationInfo.addToMainDescription(eventDescEntity)
                     
                     do {
                         try managedObjContext.save()
@@ -726,7 +769,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             
                 edducationInfo.dateId = dateId
                 edducationInfo.itemId = educationEventDict.itemId
-                edducationInfo.fieldRepeatId = educationEventDict.fieldRepeatId
+                edducationInfo.introductionText = educationEventDict.introductionText
                 edducationInfo.registerAr = educationEventDict.register
                 edducationInfo.titleAr = educationEventDict.title
                 edducationInfo.pgmTypeAr = educationEventDict.programType
@@ -742,6 +785,27 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     
                     do {
                         try managedObjContext.save()
+                        
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                    
+                }
+            }
+            
+            //Main desc
+            if((educationEventDict.mainDescription?.count)! > 0) {
+                for i in 0 ... (educationEventDict.mainDescription?.count)!-1 {
+                    var eventDescEntity: EdEventDescEntityAr!
+                    let edEventDesc: EdEventDescEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EdEventDescEntityAr", into: managedObjContext) as! EdEventDescEntityAr
+                    edEventDesc.mainDesc = educationEventDict.mainDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    
+                    eventDescEntity = edEventDesc
+                    edducationInfo.addToMainDescription(eventDescEntity)
+                    
+                    do {
+                        try managedObjContext.save()
+                        
                         
                     } catch let error as NSError {
                         print("Could not save. \(error), \(error.userInfo)")
@@ -774,8 +838,13 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                         for i in 0 ... educationInfoArray.count-1 {
                             dateArray.append(educationInfoArray[i].fieldRepeatDate!)
                         }
-                        self.educationEventArray.insert(EducationEvent(itemId: educationArray[i].itemId, fieldRepeatId: educationArray[i].fieldRepeatId, register: educationArray[i].register, fieldRepeatDate: dateArray, title: educationArray[i].title
-                            , programType: educationArray[i].pgmType), at: i)
+                        var descArray : [String] = []
+                        let educationDescArray = (educationInfo.mainDescription?.allObjects) as! [EdEventDescEntity]
+                        for i in 0 ... educationDescArray.count-1 {
+                            descArray.append(educationDescArray[i].mainDesc!)
+                        }
+                        self.educationEventArray.insert(EducationEvent(itemId: educationArray[i].itemId, introductionText: educationArray[i].introductionText, register: educationArray[i].register, fieldRepeatDate: dateArray, title: educationArray[i].title
+                            , programType: educationArray[i].pgmType,mainDescription:descArray), at: i)
                     }
                     if(educationEventArray.count == 0){
                         self.showNodata()
@@ -798,9 +867,16 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                         for i in 0 ... educationInfoArray.count-1 {
                             dateArray.append(educationInfoArray[i].fieldRepeatDate!)
                         }
+                        var descArray : [String] = []
+                        
+                        let educationDescArray = (educationInfo.mainDescription?.allObjects) as! [EdEventDescEntityAr]
+                        for i in 0 ... educationDescArray.count-1 {
+                            descArray.append(educationDescArray[i].mainDesc!)
+                        }
 
-                        self.educationEventArray.insert(EducationEvent(itemId: educationArray[i].itemId, fieldRepeatId: educationArray[i].fieldRepeatId, register: educationArray[i].registerAr, fieldRepeatDate: dateArray, title: educationArray[i].titleAr
-                            , programType: educationArray[i].pgmTypeAr), at: i)
+                        self.educationEventArray.insert(EducationEvent(itemId: educationArray[i].itemId, introductionText: educationArray[i].introductionText, register: educationArray[i].registerAr, fieldRepeatDate: dateArray, title: educationArray[i].titleAr
+                            , programType: educationArray[i].pgmTypeAr,mainDescription:descArray), at: i)
+                        
                         
                     }
                     if(educationEventArray.count == 0){
@@ -906,7 +982,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             
                  edducationInfo.dateId = dateId
                 edducationInfo.itemId = educationEventDict.itemId
-                edducationInfo.fieldRepeatId = educationEventDict.fieldRepeatId
+                edducationInfo.introductionText = educationEventDict.introductionText
                 edducationInfo.register = educationEventDict.register
                 edducationInfo.title = educationEventDict.title
                 edducationInfo.pgmType = educationEventDict.programType
@@ -929,6 +1005,28 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     
                 }
             }
+            
+            //Main desc
+            if((educationEventDict.mainDescription?.count)! > 0) {
+                for i in 0 ... (educationEventDict.mainDescription?.count)!-1 {
+                    var eventDescEntity: EventDescEntity!
+                    let edEventDesc: EventDescEntity = NSEntityDescription.insertNewObject(forEntityName: "EventDescEntity", into: managedObjContext) as! EventDescEntity
+                    edEventDesc.mainDesc = educationEventDict.mainDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    
+                    eventDescEntity = edEventDesc
+                    edducationInfo.addToMainDescription(eventDescEntity)
+                    
+                    do {
+                        try managedObjContext.save()
+                        
+                        
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                    
+                }
+            }
+            
           
             
         }
@@ -938,7 +1036,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 let edducationInfo: EventEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "EventEntityArabic", into: managedObjContext) as! EventEntityArabic
                  edducationInfo.dateId = dateId
                 edducationInfo.itemId = educationEventDict.itemId
-                edducationInfo.fieldRepeatId = educationEventDict.fieldRepeatId
+                edducationInfo.introductionText = educationEventDict.introductionText
                 edducationInfo.registerAr = educationEventDict.register
                 //edducationInfo.field =  educationEventDict.shortDesc
                 edducationInfo.titleAr = educationEventDict.title
@@ -952,6 +1050,27 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     
                     eventDateEntity = edEventDate
                     edducationInfo.addToFieldRepeatDates(eventDateEntity)
+                    
+                    do {
+                        try managedObjContext.save()
+                        
+                        
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                    
+                }
+            }
+            
+            //Main desc
+            if((educationEventDict.mainDescription?.count)! > 0) {
+                for i in 0 ... (educationEventDict.mainDescription?.count)!-1 {
+                    var eventDescEntity: EventDescEntityAr!
+                    let edEventDesc: EventDescEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EventDescEntityAr", into: managedObjContext) as! EventDescEntityAr
+                    edEventDesc.mainDesc = educationEventDict.mainDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    
+                    eventDescEntity = edEventDesc
+                    edducationInfo.addToMainDescription(eventDescEntity)
                     
                     do {
                         try managedObjContext.save()
@@ -989,8 +1108,19 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                         for i in 0 ... educationInfoArray.count-1 {
                             dateArray.append(educationInfoArray[i].fieldRepeatDate!)
                         }
-                        self.educationEventArray.insert(EducationEvent(itemId: educationArray[i].itemId, fieldRepeatId: educationArray[i].fieldRepeatId, register: educationArray[i].register, fieldRepeatDate: dateArray, title: educationArray[i].title
-                            , programType: educationArray[i].pgmType), at: i)
+                        
+                        var descArray : [String] = []
+                        
+                        let educationDescArray = (educationInfo.mainDescription?.allObjects) as! [EventDescEntity]
+                        for i in 0 ... educationDescArray.count-1 {
+                            descArray.append(educationDescArray[i].mainDesc!)
+                        }
+                        self.educationEventArray.insert(EducationEvent(itemId: educationArray[i].itemId, introductionText: educationArray[i].introductionText, register: educationArray[i].register, fieldRepeatDate: dateArray, title: educationArray[i].title
+                            , programType: educationArray[i].pgmType,mainDescription: descArray), at: i)
+                        
+                       
+                        
+                       
                     }
                     if(educationEventArray.count == 0){
                         self.showNodata()
@@ -1013,9 +1143,17 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                         for i in 0 ... educationInfoArray.count-1 {
                             dateArray.append(educationInfoArray[i].fieldRepeatDate!)
                         }
-                        self.educationEventArray.insert(EducationEvent(itemId: educationArray[i].itemId, fieldRepeatId: educationArray[i].fieldRepeatId, register: educationArray[i].registerAr, fieldRepeatDate: dateArray, title: educationArray[i].titleAr
-                            , programType: educationArray[i].pgmTypeAr), at: i)
+                        var descArray : [String] = []
                         
+                        let educationDescArray = (educationInfo.mainDescription?.allObjects) as! [EventDescEntityAr]
+                        for i in 0 ... educationDescArray.count-1 {
+                            descArray.append(educationDescArray[i].mainDesc!)
+                        }
+                        self.educationEventArray.insert(EducationEvent(itemId: educationArray[i].itemId, introductionText: educationArray[i].introductionText, register: educationArray[i].registerAr, fieldRepeatDate: dateArray, title: educationArray[i].titleAr
+                            , programType: educationArray[i].pgmTypeAr,mainDescription:descArray), at: i)
+                        
+                        
+                       
                     }
                     if(educationEventArray.count == 0){
                         self.showNodata()
