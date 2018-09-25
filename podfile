@@ -6,6 +6,7 @@ target 'QatarMuseums' do
  pod 'YouTubePlayer'
  #pod 'SwiftGifOrigin', '~> 1.6.1' 
  pod 'Firebase/Core'
+ pod 'Firebase/Crash'
  pod 'Fabric'
  pod 'Crashlytics'
  pod 'MaterialComponents/BottomSheet'
