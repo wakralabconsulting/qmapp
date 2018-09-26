@@ -276,7 +276,20 @@
                 <constraint firstItem="sJg-wB-upn" firstAttribute="centerX" secondItem="QNG-Nv-5Lu" secondAttribute="centerX" id="xSu-xf-bDL"/>
             </constraints>
             <connections>
+                <outlet property="accessNumberLabel" destination="sJg-wB-upn" id="dH8-OL-byO"/>
+                <outlet property="dimensionsText" destination="TEY-GA-N6L" id="ZB7-kP-Lae"/>
+                <outlet property="dimensionsTitle" destination="t01-08-DW4" id="Mvx-zT-Lgc"/>
+                <outlet property="periodText" destination="8wC-Th-laX" id="0FJ-l0-7W0"/>
+                <outlet property="periodTitle" destination="y6c-8L-nNm" id="Dn2-LG-d7z"/>
                 <outlet property="previewContentView" destination="9nf-xR-ol9" id="k8b-pY-i6t"/>
+                <outlet property="productionDateText" destination="HmD-Rd-W9B" id="MP0-ZD-KTY"/>
+                <outlet property="productionDateTitle" destination="c0w-zH-BrF" id="aoD-YQ-292"/>
+                <outlet property="productionText" destination="a43-gW-qqj" id="mHQ-cE-L7c"/>
+                <outlet property="productionTitle" destination="jwd-vV-06f" id="Rvy-lF-szq"/>
+                <outlet property="techniqueText" destination="23M-XQ-84Z" id="Ofq-BR-tSj"/>
+                <outlet property="techniqueTitle" destination="d7G-Hs-8RE" id="gwc-Ib-f9P"/>
+                <outlet property="titleLabel" destination="tHa-dl-Ru6" id="K41-IF-Njo"/>
+                <outlet property="tourGuideImage" destination="Kpg-0J-P0Z" id="dM8-28-F1S"/>
             </connections>
             <point key="canvasLocation" x="4.5" y="90"/>
         </collectionViewCell>

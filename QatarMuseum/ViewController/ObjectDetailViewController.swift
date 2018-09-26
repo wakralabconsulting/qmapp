@@ -18,6 +18,7 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     var objectImagePopupView : ObjectImageView = ObjectImageView()
     let fullView: CGFloat = 100
     let closeButton = UIButton()
+    var detailArray : [TourGuideFloorMap]! = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,8 +66,8 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
         view.addSubview(imageView)
         
         imageView.isUserInteractionEnabled = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(loadObjectImagePopup))
-        imageView.addGestureRecognizer(tapGesture)
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(loadObjectImagePopup))
+//        imageView.addGestureRecognizer(tapGesture)
         
         let darkBlur = UIBlurEffect(style: UIBlurEffectStyle.light)
         blurView = UIVisualEffectView(effect: darkBlur)
@@ -95,7 +96,10 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     
     //MARK: TableView delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        if (detailArray.count > 0) {
+            return 3
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -110,22 +114,25 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
             let cell = tableView.dequeueReusableCell(withIdentifier: "imageCell", for: indexPath)
             let objectImageView = UIImageView()
             objectImageView.frame = CGRect(x: 0, y: 20, width: tableView.frame.width, height: 300)
-            objectImageView.image = UIImage.init(named: "science_tour_object")
+            if let imageUrl = detailArray[0].image {
+                objectImageView.kf.setImage(with: URL(string: imageUrl))
+            }
+            //objectImageView.image = UIImage.init(named: "science_tour_object")
             objectImageView.backgroundColor = UIColor.white
             objectImageView.contentMode = .scaleAspectFit
             objectImageView.clipsToBounds = true
             cell.addSubview(objectImageView)
             
             objectImageView.isUserInteractionEnabled = true
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(loadObjectImagePopup))
-            objectImageView.addGestureRecognizer(tapGesture)
+//            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(loadObjectImagePopup))
+//            objectImageView.addGestureRecognizer(tapGesture)
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "objectDetailCellId", for: indexPath) as! ObjectDetailTableViewCell
             if (indexPath.row == 1) {
-                cell.setObjectDetail()
+                cell.setObjectDetail(objectDetail: detailArray[0])
             } else if (indexPath.row == 2) {
-                cell.setObjectHistoryDetail()
+                cell.setObjectHistoryDetail(historyDetail: detailArray[0])
             }
             
             cell.favBtnTapAction = {
@@ -142,7 +149,14 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
             return cell
         }
     }
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if(indexPath.row == 0) {
+            if let imageUrl = detailArray[0].image {
+                self.loadObjectImagePopup(imgName: imageUrl )
+            }
+        }
+    }
     
     
     //MARK: Poup Delegate
@@ -151,10 +165,10 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
         self.dismiss(animated: false, completion: nil)
     }
     
-    @objc func loadObjectImagePopup() {
+    @objc func loadObjectImagePopup(imgName: String?) {
         objectImagePopupView = ObjectImageView(frame: self.view.frame)
-        //objectImagePopupView.objectImageViewDelegate = self
-        objectImagePopupView.loadPopup(image : "science_tour_object")
+        //objectImagePopupView.objectImageViewDelegate = self as! ObjectImageViewProtocol
+        objectImagePopupView.loadPopup(image : imgName!)
         self.view.addSubview(objectImagePopupView)
     }
     
