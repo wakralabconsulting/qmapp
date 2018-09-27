@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Crashlytics
 class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUpProtocol {
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var profileImageView: UIImageView!

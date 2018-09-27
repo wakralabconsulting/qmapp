@@ -8,6 +8,7 @@
 
 import Alamofire
 import CoreData
+import Crashlytics
 import UIKit
 
 class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol {

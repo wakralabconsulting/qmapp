@@ -9,6 +9,7 @@
 import Alamofire
 import UIKit
 import CoreData
+import Crashlytics
 
 class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol {
     @IBOutlet weak var museumCollectionView: UICollectionView!

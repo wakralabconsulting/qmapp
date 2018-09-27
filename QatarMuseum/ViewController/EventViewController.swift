@@ -8,6 +8,7 @@
 
 import Alamofire
 import CoreData
+import Crashlytics
 import EventKit
 import UIKit
 
@@ -244,11 +245,11 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             
             eventPopup.eventTitle.text = educationEventArray[currentRow].title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
            // eventPopup.eventDescription.text = educationEventArray[currentRow].longDesc
-            var mainDesc : String? = ""
+            var mainDesc = String()
             if let maindescr = educationEventArray[currentRow].mainDescription {
                 if ((maindescr.count) > 0) {
-                    for i in 0 ... (educationEventArray.count ) - 1 {
-                        mainDesc = mainDesc! + educationEventArray[currentRow].mainDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
+                    for i in 0 ... (maindescr.count ) - 1 {
+                        mainDesc = mainDesc + educationEventArray[currentRow].mainDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
                          eventPopup.eventDescription.text = mainDesc
                     }
                     
@@ -260,11 +261,11 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         else {
             eventPopup.eventTitle.text = educationEventArray[currentRow].title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
             //eventPopup.eventDescription.text = educationEventArray[currentRow].longDesc
-            var mainDesc : String? = ""
+            var mainDesc = String()
             if let maindescr = educationEventArray[currentRow].mainDescription {
                 if ((maindescr.count) > 0) {
-                    for i in 0 ... (educationEventArray.count ) - 1 {
-                        mainDesc = mainDesc! + educationEventArray[currentRow].mainDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
+                    for i in 0 ... (maindescr.count ) - 1 {
+                        mainDesc = mainDesc + educationEventArray[currentRow].mainDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
                         eventPopup.eventDescription.text = mainDesc
                     }
                     
@@ -407,6 +408,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         self.view.layoutIfNeeded()
     }
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        loadingView.isHidden = false
+        loadingView.showLoading()
         if monthPosition == .previous || monthPosition == .next {
             calendar.setCurrentPage(date, animated: true)
             

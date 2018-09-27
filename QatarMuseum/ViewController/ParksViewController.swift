@@ -7,8 +7,9 @@
 //
 
 import Alamofire
-import UIKit
 import CoreData
+import Crashlytics
+import UIKit
 
 class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,comingSoonPopUpProtocol {
     

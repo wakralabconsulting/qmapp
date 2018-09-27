@@ -6,6 +6,7 @@
 //  Copyright © 2018 Exalture. All rights reserved.
 //
 
+import Crashlytics
 import UIKit
 
 class MiaTourDetailViewController: UIViewController,HeaderViewProtocol,comingSoonPopUpProtocol,KASlideShowDelegate {
