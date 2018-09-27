@@ -6,6 +6,7 @@
 //  Copyright © 2018 Exalture. All rights reserved.
 //
 
+import Alamofire
 import GoogleMaps
 import UIKit
 import MaterialComponents.MaterialBottomSheet
@@ -38,6 +39,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     @IBOutlet weak var numberSerchBtn: UIButton!
     
     var bottomSheetVC:MapDetailView = MapDetailView()
+    var floorMapArray: [TourGuideFloorMap]! = []
     @IBOutlet weak var overlayView: UIView!
     var overlay = GMSGroundOverlay()
     let l2_atr1 = CLLocationCoordinate2D(latitude: 25.295141, longitude: 51.539185)
@@ -88,6 +90,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         viewForMap.delegate = self
         loadMap()
         initialSetUp()
+        getFloorMapDataFromServer()
     }
     
     func initialSetUp() {
@@ -584,6 +587,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         overlayView.isHidden = false
         bottomSheetVC = MapDetailView()
         bottomSheetVC.mapdetailDelegate = self
+        bottomSheetVC.popUpArray = floorMapArray
         self.addChildViewController(bottomSheetVC)
         self.view.addSubview(bottomSheetVC.view)
         bottomSheetVC.didMove(toParentViewController: self)
@@ -627,6 +631,41 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             showLevelThreeMarker()
         }
     }
+    //MARK: WebServiceCall
+    func getFloorMapDataFromServer()
+    {
+        
+        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": "12216"])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.floorMapArray = data.tourGuideFloorMap
+                //self.saveOrUpdateHeritageCoredata()
+                //self.heritageCollectionView.reloadData()
+                //self.loadingView.stopLoading()
+                //self.loadingView.isHidden = true
+                if (self.floorMapArray.count == 0) {
+                    //self.loadingView.stopLoading()
+                    //self.loadingView.noDataView.isHidden = false
+                    //self.loadingView.isHidden = false
+                    //self.loadingView.showNoDataView()
+                }
+            case .failure(let error):
+                if let unhandledError = handleError(viewController: self, errorType: error as! BackendError) {
+                    var errorMessage: String
+                    var errorTitle: String
+                    switch unhandledError.code {
+                    default: print(unhandledError.code)
+                    errorTitle = String(format: NSLocalizedString("UNKNOWN_ERROR_ALERT_TITLE",
+                                                                  comment: "Setting the title of the alert"))
+                    errorMessage = String(format: NSLocalizedString("ERROR_MESSAGE",
+                                                                    comment: "Setting the content of the alert"))
+                    }
+                    presentAlert(self, title: errorTitle, message: errorMessage)
+                }
+            }
+        }
+    }
+    
     
     
     

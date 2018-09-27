@@ -62,6 +62,7 @@
 		B811FBC62103406100960246 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B811FBC82103406100960246 /* Localizable.strings */; };
 		B811FBCC2103811400960246 /* QMColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = B811FBCB2103811400960246 /* QMColours.swift */; };
 		B812BA04210AF3540083E0E2 /* QMFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = B812BA03210AF3540083E0E2 /* QMFont.swift */; };
+		B816029E215A239900786F94 /* TourGuideFloorMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B816029D215A239900786F94 /* TourGuideFloorMap.swift */; };
 		B8294CE720CBF265002AFF72 /* FSCalendarCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = B8294CC820CBF262002AFF72 /* FSCalendarCalculator.m */; };
 		B8294CE820CBF265002AFF72 /* FSCalendarConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B8294CC920CBF262002AFF72 /* FSCalendarConstants.m */; };
 		B8294CE920CBF265002AFF72 /* FSCalendarAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = B8294CCA20CBF262002AFF72 /* FSCalendarAppearance.m */; };
@@ -131,7 +132,6 @@
 		B8CA08E22146D38400783642 /* MapDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CA08D92146D38400783642 /* MapDetailTableViewCell.swift */; };
 		B8CA08E42146D38400783642 /* ObjectPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8CA08DB2146D38400783642 /* ObjectPopupView.xib */; };
 		B8CA08E52146D38400783642 /* MapDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8CA08DC2146D38400783642 /* MapDetailCell.xib */; };
-		B8CA08E62146D38400783642 /* MapDetailView.temp_caseinsensitive_rename.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8CA08DD2146D38400783642 /* MapDetailView.temp_caseinsensitive_rename.xib */; };
 		B8CA08E72146D38400783642 /* MapDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8CA08DE2146D38400783642 /* MapDetailView.xib */; };
 		B8CAA93D20DC15FA009A936D /* HeritageDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CAA93C20DC15FA009A936D /* HeritageDetailCell.swift */; };
 		B8CAA93F20DC186E009A936D /* HeritageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CAA93E20DC186E009A936D /* HeritageDetailViewController.swift */; };
@@ -260,6 +260,7 @@
 		B811FBCB2103811400960246 /* QMColours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QMColours.swift; sourceTree = "<group>"; };
 		B812BA03210AF3540083E0E2 /* QMFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QMFont.swift; sourceTree = "<group>"; };
 		B812BA06210B2FE20083E0E2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		B816029D215A239900786F94 /* TourGuideFloorMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourGuideFloorMap.swift; sourceTree = "<group>"; };
 		B8294CC520CBF262002AFF72 /* FSCalendarCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarCollectionViewLayout.h; sourceTree = "<group>"; };
 		B8294CC620CBF262002AFF72 /* FSCalendarCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarCollectionView.h; sourceTree = "<group>"; };
 		B8294CC720CBF262002AFF72 /* FSCalendarCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarCalculator.h; sourceTree = "<group>"; };
@@ -347,7 +348,6 @@
 		B8CA08D92146D38400783642 /* MapDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapDetailTableViewCell.swift; sourceTree = "<group>"; };
 		B8CA08DB2146D38400783642 /* ObjectPopupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ObjectPopupView.xib; sourceTree = "<group>"; };
 		B8CA08DC2146D38400783642 /* MapDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapDetailCell.xib; sourceTree = "<group>"; };
-		B8CA08DD2146D38400783642 /* MapDetailView.temp_caseinsensitive_rename.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapDetailView.temp_caseinsensitive_rename.xib; sourceTree = "<group>"; };
 		B8CA08DE2146D38400783642 /* MapDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapDetailView.xib; sourceTree = "<group>"; };
 		B8CAA93C20DC15FA009A936D /* HeritageDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeritageDetailCell.swift; sourceTree = "<group>"; };
 		B8CAA93E20DC186E009A936D /* HeritageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeritageDetailViewController.swift; sourceTree = "<group>"; };
@@ -515,6 +515,7 @@
 				B8B79CF7212D2FB8008B10D7 /* MuseumAbout.swift */,
 				B8B49560212DBAD8006F509B /* Museum.swift */,
 				B806B7D62152BE6A00F9534F /* CollectionDetail.swift */,
+				B816029D215A239900786F94 /* TourGuideFloorMap.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -824,7 +825,6 @@
 				B8CA08D92146D38400783642 /* MapDetailTableViewCell.swift */,
 				B8CA08DB2146D38400783642 /* ObjectPopupView.xib */,
 				B8CA08DC2146D38400783642 /* MapDetailCell.xib */,
-				B8CA08DD2146D38400783642 /* MapDetailView.temp_caseinsensitive_rename.xib */,
 				B8CA08DE2146D38400783642 /* MapDetailView.xib */,
 			);
 			path = BottomSheet;
@@ -1093,7 +1093,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8AFA2EB20E78BA9008838A6 /* DINNextLTArabic-Bold.ttf in Resources */,
-				B8CA08E62146D38400783642 /* MapDetailView.temp_caseinsensitive_rename.xib in Resources */,
 				B85285DF214A721300F5D1FF /* PreviewCellXib.xib in Resources */,
 				B80DC09220C7A9CE00E28034 /* TopBarView.xib in Resources */,
 				B80DC08A20C794E100E28034 /* HomeCollectionCell.xib in Resources */,
@@ -1325,6 +1324,7 @@
 				1B3C505721270F260034E560 /* ArtifactNumberPadViewController.swift in Sources */,
 				B8294CF620CBF265002AFF72 /* FSCalendarHeaderView.m in Sources */,
 				B8E01BF92105EDFB008D7F33 /* SettingsViewController.swift in Sources */,
+				B816029E215A239900786F94 /* TourGuideFloorMap.swift in Sources */,
 				B8D1229220C9095B00772507 /* LoadingView.swift in Sources */,
 				B8C700852116F833006F3653 /* PublicArtsDetail.swift in Sources */,
 				B8D4C536210453FB0096912C /* FilterViewController.swift in Sources */,
