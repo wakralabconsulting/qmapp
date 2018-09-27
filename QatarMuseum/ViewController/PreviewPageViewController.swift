@@ -6,6 +6,7 @@
 //  Copyright © 2018 Wakralab. All rights reserved.
 //
 
+import Alamofire
 import UIKit
 
 class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol {
@@ -19,25 +20,16 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
     @IBOutlet weak var previewCllectionView: UICollectionView!
     @IBOutlet weak var pageControlCollectionView: UICollectionView!
 
-//    @IBOutlet weak var pageViewOne: UIView!
-//    @IBOutlet weak var pageViewTwo: UIView!
-//    @IBOutlet weak var pageViewThree: UIView!
-//    @IBOutlet weak var pageViewFour: UIView!
-//    @IBOutlet weak var pageImageViewOne: UIImageView!
-//    @IBOutlet weak var pageImageViewTwo: UIImageView!
-//    @IBOutlet weak var pageImageViewThree: UIImageView!
-//    @IBOutlet weak var pageImageViewFour: UIImageView!
-//    @IBOutlet weak var lineViewOne: UIView!
-//    @IBOutlet weak var lineViewTwo: UIView!
-//    @IBOutlet weak var lineViewThree: UIView!
-//    @IBOutlet weak var lineViewFour: UIView!
+
     var currentPreviewItem = IndexPath()
     let pageCount: Int? = 6
     var reloaded: Bool = false
+    var tourGuideArray: [TourGuideFloorMap]! = []
     override func viewDidLoad() {
         super.viewDidLoad()
         loadUI()
         registerNib()
+        getTourGuideDataFromServer()
         
     }
     func loadUI() {
@@ -149,9 +141,9 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if (collectionView == previewCllectionView) {
-            return pageCount!
+            return tourGuideArray.count
         } else {
-            return pageCount!
+            return tourGuideArray.count
         }
         
     }
@@ -160,6 +152,7 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
         
         if (collectionView == previewCllectionView) {
             let cell : PreviewCollectionViewCell = previewCllectionView.dequeueReusableCell(withReuseIdentifier: "previewCellId", for: indexPath) as! PreviewCollectionViewCell
+            cell.setPreviewData(tourGuideData: tourGuideArray[indexPath.row])
            pageControlCollectionView.scrollToItem(at: indexPath, at: .right, animated: false)
            currentPreviewItem = indexPath
             
@@ -190,6 +183,7 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let objectDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "objectDetailId") as! ObjectDetailViewController
+        objectDetailView.detailArray.append(tourGuideArray[indexPath.row])
 //        let transition = CATransition()
 //        transition.duration = 0.3
 //        transition.type = kCATransitionFade
@@ -202,7 +196,7 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
         if (collectionView == previewCllectionView) {
             return CGSize(width: previewCllectionView.frame.width, height: previewCllectionView.frame.height)
         } else {
-            return CGSize(width: pageControlCollectionView.frame.width/CGFloat(pageCount!), height: 60
+            return CGSize(width: pageControlCollectionView.frame.width/CGFloat(tourGuideArray.count), height: 60
                 
             )
         }
@@ -220,8 +214,8 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
         var cellToSwipe:Double = Double(Float((scrollView.contentOffset.x))/Float((pageWidth+minSpace))) + Double(0.5)
         if cellToSwipe < 0 {
             cellToSwipe = 0
-        } else if cellToSwipe >= Double(pageCount!) {
-            cellToSwipe = Double(pageCount!) - Double(1)
+        } else if cellToSwipe >= Double(tourGuideArray.count) {
+            cellToSwipe = Double(tourGuideArray.count) - Double(1)
         }
         let indexPath:IndexPath = IndexPath(row: Int(cellToSwipe), section:0)
         self.previewCllectionView.scrollToItem(at:indexPath, at: UICollectionViewScrollPosition.left, animated: true)
@@ -302,6 +296,41 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
         let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as! FloorMapViewController
         floorMapView.fromScienceTour = true
         self.present(floorMapView, animated: false, completion: nil)
+    }
+    //MARK: WebServiceCall
+    func getTourGuideDataFromServer()
+    {
+        
+        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": "12216"])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.tourGuideArray = data.tourGuideFloorMap
+                //self.saveOrUpdateHeritageCoredata()
+                self.previewCllectionView.reloadData()
+                self.pageControlCollectionView.reloadData()
+                //self.loadingView.stopLoading()
+                //self.loadingView.isHidden = true
+                if (self.tourGuideArray.count == 0) {
+                    //self.loadingView.stopLoading()
+                    //self.loadingView.noDataView.isHidden = false
+                    //self.loadingView.isHidden = false
+                    //self.loadingView.showNoDataView()
+                }
+            case .failure(let error):
+                if let unhandledError = handleError(viewController: self, errorType: error as! BackendError) {
+                    var errorMessage: String
+                    var errorTitle: String
+                    switch unhandledError.code {
+                    default: print(unhandledError.code)
+                    errorTitle = String(format: NSLocalizedString("UNKNOWN_ERROR_ALERT_TITLE",
+                                                                  comment: "Setting the title of the alert"))
+                    errorMessage = String(format: NSLocalizedString("ERROR_MESSAGE",
+                                                                    comment: "Setting the content of the alert"))
+                    }
+                    presentAlert(self, title: errorTitle, message: errorMessage)
+                }
+            }
+        }
     }
     
 

@@ -75,9 +75,9 @@
 "CONTACT_TITLE" = "الاتصال";
 "EXHIBITION_TIME_TITLE" = "أوقات المعرض";
 "VIEW_DETAIL_BUTTON_TITLE" = "عرض التفاصيل";
-"PRODUCTION_LABEL" = "Production:";
-"PRODUCTION_DATES_LABEL" = "Production dates:";
-"PERIOD_STYLE_LABEL" = "Period/Style:";
+"PRODUCTION_LABEL" = "الانتاج:";
+"PRODUCTION_DATES_LABEL" = "تاريخ الإنتاج:";
+"PERIOD_STYLE_LABEL" = "الفترة/النمط:";
 "FLOOR_MAP_TITLE" = "طوابق متحف الفن الإسلامي";
 "NO_EVENTS" = "لا توجد فعاليات";
 "ARTIFACT_NUMBERPAD_TITLE" = "بحث الكائن";
@@ -150,4 +150,5 @@
 "SOMETHING_WENT_WRONG_TITLE" = "Something went wrong";
 "LOCATION_ERROR_MESSAGE" = "Unfortunately we cannot open Google Maps.";
 "ANYSTRING" = "All";
+"LEVEL_STRING" = "Level";
 
