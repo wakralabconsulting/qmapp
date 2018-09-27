@@ -5,10 +5,10 @@
 //  Created by Developer on 21/08/18.
 //  Copyright © 2018 Exalture. All rights reserved.
 //
-
+import Crashlytics
 import UIKit
 
-class CulturePassViewController: UIViewController, HeaderViewProtocol, UITableViewDelegate, UITableViewDataSource, comingSoonPopUpProtocol {
+class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoonPopUpProtocol {
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var introLabel: UILabel!
@@ -18,7 +18,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, UITableVi
     @IBOutlet weak var logInButton: UIButton!
     @IBOutlet weak var notMemberLabel: UILabel!
     @IBOutlet weak var alreadyMemberLabel: UILabel!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var benefitsDiscountLabel: UILabel!
     var fromHome: Bool = false
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     let benefitList = ["15% DISCOUNT AT QM CAFE'S ACROSS ALL VENUES",
@@ -64,24 +64,16 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, UITableVi
         benefitLabel.text = NSLocalizedString("BENEFIT_TITLE", comment: "BENEFIT_TITLE in the Culture Pass page")
         introLabel.text = NSLocalizedString("CULTURE_PASS_INTRO", comment: "CULTURE_PASS_INTRO in the Culture Pass page")
         secondIntroLabel.text = NSLocalizedString("CULTURE_PASS_SECONDDESC", comment: "CULTURE_PASS_SECONDDESC in the Culture Pass page")
+        var benefitString = String()
+        for i in 0 ... benefitList.count-1 {
+            benefitString = benefitString + "\n\n" + "-" + benefitList[i]
+            benefitsDiscountLabel.text = benefitString
+            benefitsDiscountLabel.font = UIFont.englishTitleFont
+        }
+        
     }
     
-    //MARK: TableView delegate
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return benefitList.count
-    }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "benefitLabelCellId", for: indexPath) as! BenefitLabelCell
-        cell.benefitLabel.text = "- " + benefitList[indexPath.row]
-        loadingView.stopLoading()
-        loadingView.isHidden = true
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
-    }
 
     func loadComingSoonPopup() {
         popupView  = ComingSoonPopUp(frame: self.view.frame)
@@ -104,7 +96,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, UITableVi
     @IBAction func registerButtonTouchDown(_ sender: UIButton) {
         self.registerButton.backgroundColor = UIColor.profileLightPink
         self.registerButton.setTitleColor(UIColor.viewMyFavDarkPink, for: .normal)
-        self.registerButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        self.registerButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
     }
     
     @IBAction func didTapLogInButton(_ sender: UIButton) {
@@ -117,7 +109,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, UITableVi
     @IBAction func logInButtonTouchDown(_ sender: UIButton) {
         self.logInButton.backgroundColor = UIColor.viewMycultureLightBlue
         self.logInButton.setTitleColor(UIColor.viewMyculTitleBlue, for: .normal)
-        self.logInButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        self.logInButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
     }
     
     //MARK: Header delegates
