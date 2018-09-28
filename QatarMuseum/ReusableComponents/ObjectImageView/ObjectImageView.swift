@@ -70,7 +70,10 @@ class ObjectImageView: UIView, UIScrollViewDelegate  {
     }
     
     func loadPopup(image : String) {
-        objectImageView.image = UIImage(named: image)
+        //objectImageView.image = UIImage(named: image)
+        if  image != nil {
+            objectImageView.kf.setImage(with: URL(string: image))
+        }
     }
     
     @objc func zoomOnDoubleTap() {

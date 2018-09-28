@@ -43,19 +43,16 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6hy-Q4-BR9">
-                                <rect key="frame" x="25" y="250.5" width="364" height="101"/>
+                                <rect key="frame" x="25" y="250.5" width="364" height="71"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yC8-2W-iut">
-                                        <rect key="frame" x="0.0" y="40" width="364" height="61"/>
-                                        <string key="text">Saint Jerome in His Study
-Domenico Ghirlandaio (1449-1494)
-Church of Ognissanti, Florence, 1480</string>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yC8-2W-iut">
+                                        <rect key="frame" x="0.0" y="71" width="364" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hl8-wT-k1P">
-                                        <rect key="frame" x="0.0" y="0.0" width="364" height="32"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="364" height="63"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -70,7 +67,7 @@ Church of Ognissanti, Florence, 1480</string>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gud-rz-Wjq">
-                                <rect key="frame" x="25" y="371.5" width="364" height="142.5"/>
+                                <rect key="frame" x="25" y="341.5" width="364" height="142.5"/>
                                 <string key="text">In the heart of the museum, with spectacular views of the Doha skyline, Idam offers an innovative and flavorsome selection of contemporary French Mediterranean cuisine designed with an Arabic twist. Timeless classics of local and regional cuisine, with most ingredients sourced locally in Qatar. </string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -118,7 +115,6 @@ Church of Ognissanti, Florence, 1480</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="SVT-qA-CDh" firstAttribute="top" secondItem="Gud-rz-Wjq" secondAttribute="bottom" constant="10" id="2Pd-O5-Ao0"/>
                             <constraint firstItem="VRd-aa-gdf" firstAttribute="leading" secondItem="Gud-rz-Wjq" secondAttribute="leading" id="2sd-fd-ADs"/>
                             <constraint firstItem="SVT-qA-CDh" firstAttribute="width" secondItem="jzw-OW-L65" secondAttribute="width" id="Dh4-Bf-DAb"/>
                             <constraint firstAttribute="trailing" secondItem="jzw-OW-L65" secondAttribute="trailing" id="Ico-LW-QsW"/>
@@ -129,6 +125,7 @@ Church of Ognissanti, Florence, 1480</string>
                             <constraint firstItem="6hy-Q4-BR9" firstAttribute="top" secondItem="VRd-aa-gdf" secondAttribute="bottom" constant="20" id="OGF-Uo-J2b"/>
                             <constraint firstItem="TnQ-Ha-1Y9" firstAttribute="height" secondItem="6Nx-KU-xOf" secondAttribute="height" id="R7t-59-NRk"/>
                             <constraint firstAttribute="trailing" secondItem="VRd-aa-gdf" secondAttribute="trailing" constant="25" id="SBb-WJ-YKP"/>
+                            <constraint firstItem="SVT-qA-CDh" firstAttribute="top" secondItem="Gud-rz-Wjq" secondAttribute="bottom" constant="40" id="XvL-kO-Nfc"/>
                             <constraint firstItem="jzw-OW-L65" firstAttribute="centerY" secondItem="SVT-qA-CDh" secondAttribute="centerY" id="aps-Fp-BgI"/>
                             <constraint firstItem="VRd-aa-gdf" firstAttribute="leading" secondItem="6hy-Q4-BR9" secondAttribute="leading" id="fg2-hO-JU6"/>
                             <constraint firstItem="VRd-aa-gdf" firstAttribute="trailing" secondItem="6hy-Q4-BR9" secondAttribute="trailing" id="grK-Sb-Z3N"/>

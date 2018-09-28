@@ -29,6 +29,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case MuseumDiningList([String: Any])
     case CollectionDetail([String: Any])
     case MuseumTourGuide([String: Any])
+    case CollectionByTourGuide([String: Any])
 
     var method: Alamofire.HTTPMethod {
         switch self {
@@ -68,6 +69,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return .get
         case .MuseumTourGuide:
             return .get
+        case .CollectionByTourGuide:
+            return .get
         }
     }
     
@@ -97,14 +100,10 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/museum_collection_category.json"
         case .CollectionDetail( _):
             return "/collection_ws.json"
-//        case .EducationEvent( _):
-//            return "/geturl.php"
         case .EducationEvent( _):
             return "/ws_education.json"
         case .MuseumAbout( _):
             return "/about.php"
-//        case .LandingPageMuseums( _):
-//            return "/museum_landing.php"
         case .LandingPageMuseums( _):
             return "/museum-detail.json"
         case .MuseumDiningList( _):
@@ -113,12 +112,14 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "Exhibition_List_Page.json"
         case .MuseumTourGuide( _):
             return "tour_guide_list_museums.json"
+        case .CollectionByTourGuide( _):
+            return "collection_by_tour_guide.json"
             //Used for Temporary API
 //        case .CollectionList( _):
 //            return "/museum_collection_category.php"
 //        case .CollectionDetail( _):
 //            return "/collection_by_category.php"
-
+        
         }
     }
 
@@ -164,6 +165,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .CollectionDetail(let parameters):
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         case .EducationEvent(let parameters):
+            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
+        case .CollectionByTourGuide(let parameters):
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
 //        case .EducationEvent(let date, let ageGroup, let inst, let prog):
 //            let educationURL = NSURL(string: Config.tempBaseIP + lang())!
