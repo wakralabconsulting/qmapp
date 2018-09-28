@@ -28,7 +28,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case LandingPageMuseums([String: Any])
     case MuseumDiningList([String: Any])
     case CollectionDetail([String: Any])
-
+    case MuseumTourGuide([String: Any])
 
     var method: Alamofire.HTTPMethod {
         switch self {
@@ -65,6 +65,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .MuseumExhibitionList:
             return .get
         case .CollectionDetail:
+            return .get
+        case .MuseumTourGuide:
             return .get
         }
     }
@@ -109,7 +111,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/getDiningList.json"
         case .MuseumExhibitionList( _):
             return "Exhibition_List_Page.json"
-        
+        case .MuseumTourGuide( _):
+            return "tour_guide_list_museums.json"
             //Used for Temporary API
 //        case .CollectionList( _):
 //            return "/museum_collection_category.php"
@@ -207,7 +210,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
 //            var collectionMutableURLReq = URLRequest(url: collectionURL.appendingPathComponent(path)!)
 //            collectionMutableURLReq.httpMethod = method.rawValue
 //            return try! Alamofire.URLEncoding.default.encode(collectionMutableURLReq, with: parameters)
-        
+        case .MuseumTourGuide(let parameters):
+            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         }
     }
     
