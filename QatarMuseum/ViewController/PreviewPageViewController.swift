@@ -41,8 +41,19 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
     @IBOutlet weak var viewFiveLineOne: UIView!
     @IBOutlet weak var viewFiveLineTwo: UIView!
 
+    @IBOutlet weak var pageImageOneHeight: NSLayoutConstraint!
+    @IBOutlet weak var pageImageOneWidth: NSLayoutConstraint!
+    @IBOutlet weak var pageImageTwoHeight: NSLayoutConstraint!
+    @IBOutlet weak var pageImageTwoWidth: NSLayoutConstraint!
+    @IBOutlet weak var pageImageThreeHeight: NSLayoutConstraint!
+    @IBOutlet weak var pageImageThreeWidth: NSLayoutConstraint!
+    @IBOutlet weak var pageImageFourHeight: NSLayoutConstraint!
+    @IBOutlet weak var pageImageFourWidth: NSLayoutConstraint!
+    @IBOutlet weak var pageImageFiveHeight: NSLayoutConstraint!
+    @IBOutlet weak var pageImageFiveWidth: NSLayoutConstraint!
+ 
     var currentPreviewItem = IndexPath()
-    let pageCount: Int? = 24
+    let pageCount: Int? = 14
     var reloaded: Bool = false
     var tourGuideArray: [TourGuideFloorMap]! = []
     override func viewDidLoad() {
@@ -64,12 +75,16 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
         
         pageImageViewOne.image = UIImage(named: "selectedControl")
         //For TimelineView
+//        if (pageCount! >= 5) {
+//            showOrHidePageControlView(countValue: 5, scrolling: true)
+//        } else {
+            showOrHidePageControlView(countValue: pageCount, scrolling: false)
+        //}
         
-       // showOrHidePageControlView(countValue: 0)
         
     }
     
-    func showOrHidePageControlView(countValue: Int?) {
+    func showOrHidePageControlView(countValue: Int?,scrolling:Bool?) {
         if countValue == 0 {
             pageViewOne.isHidden = true
             pageViewTwo.isHidden = true
@@ -106,11 +121,19 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
             pageImageViewFour.isHidden = true
             pageImageViewFive.isHidden = true
             
-            
+           
             viewOneLineOne.isHidden = false
-            viewOneLineTwo.isHidden = false
+            if(scrolling)! {
+                viewOneLineTwo.isHidden = true
+                pageImageOneWidth.constant = 15
+                pageImageOneHeight.constant = 15
+                pageImageViewOne.image = UIImage(named: "stripper_inactive_end")
+            } else {
+                viewOneLineTwo.isHidden = false
+            }
+            
             viewTwoLineOne.isHidden = true
-            viewTwoLineTwo.isHidden = true
+            //viewTwoLineTwo.isHidden = true
             viewThreeLineOne.isHidden = true
             viewThreeLineTwo.isHidden = true
             viewFourLineOne.isHidden = true
@@ -130,10 +153,18 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
             pageImageViewFour.isHidden = true
             pageImageViewFive.isHidden = true
             
+            if(scrolling)! {
+                viewTwoLineTwo.isHidden = true
+                pageImageTwoWidth.constant = 15
+                pageImageTwoHeight.constant = 15
+                pageImageViewTwo.image = UIImage(named: "stripper_inactive_end")
+            } else {
+                viewTwoLineTwo.isHidden = false
+            }
             viewOneLineOne.isHidden = false
             viewOneLineTwo.isHidden = false
             viewTwoLineOne.isHidden = false
-            viewTwoLineTwo.isHidden = false
+            //viewTwoLineTwo.isHidden = false
             viewThreeLineOne.isHidden = true
             viewThreeLineTwo.isHidden = true
             viewFourLineOne.isHidden = true
@@ -155,14 +186,20 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
             pageImageViewFour.isHidden = true
             pageImageViewFive.isHidden = true
             
-            
-            
+            if(scrolling)! {
+                viewThreeLineTwo.isHidden = true
+                pageImageThreeWidth.constant = 15
+                pageImageThreeHeight.constant = 15
+                pageImageViewThree.image = UIImage(named: "stripper_inactive_end")
+            } else {
+                viewThreeLineTwo.isHidden = false
+            }
             viewOneLineOne.isHidden = false
             viewOneLineTwo.isHidden = false
             viewTwoLineOne.isHidden = false
             viewTwoLineTwo.isHidden = false
             viewThreeLineOne.isHidden = false
-            viewThreeLineTwo.isHidden = false
+           // viewThreeLineTwo.isHidden = false
             viewFourLineOne.isHidden = true
             viewFourLineTwo.isHidden = true
             viewFiveLineOne.isHidden = true
@@ -181,7 +218,14 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
             pageImageViewFour.isHidden = false
             pageImageViewFive.isHidden = true
             
-            
+            if(scrolling)! {
+                viewFourLineTwo.isHidden = true
+                pageImageFourWidth.constant = 15
+                pageImageFourHeight.constant = 15
+                pageImageViewFour.image = UIImage(named: "stripper_inactive_end")
+            } else {
+                viewFourLineTwo.isHidden = false
+            }
             viewOneLineOne.isHidden = false
             viewOneLineTwo.isHidden = false
             viewTwoLineOne.isHidden = false
@@ -189,7 +233,7 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
             viewThreeLineOne.isHidden = false
             viewThreeLineTwo.isHidden = false
             viewFourLineOne.isHidden = false
-            viewFourLineTwo.isHidden = false
+            //viewFourLineTwo.isHidden = false
             viewFiveLineOne.isHidden = true
             viewFiveLineTwo.isHidden = true
         }else{
@@ -205,7 +249,14 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
             pageImageViewFour.isHidden = false
             pageImageViewFive.isHidden = false
             
-            
+            if(scrolling)! {
+                viewFiveLineTwo.isHidden = true
+                pageImageFiveWidth.constant = 15
+                pageImageFiveHeight.constant = 15
+                pageImageViewFive.image = UIImage(named: "stripper_inactive_end")
+            } else {
+                viewFiveLineTwo.isHidden = false
+            }
             viewOneLineOne.isHidden = false
             viewOneLineTwo.isHidden = false
             viewTwoLineOne.isHidden = false
@@ -215,7 +266,7 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
             viewFourLineOne.isHidden = false
             viewFourLineTwo.isHidden = false
             viewFiveLineOne.isHidden = false
-            viewFiveLineTwo.isHidden = false
+           // viewFiveLineTwo.isHidden = false
         }
     }
  
@@ -235,9 +286,11 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if (collectionView == previewCllectionView) {
-            return tourGuideArray.count
+            //return tourGuideArray.count
+            return pageCount!
         } else {
-            return tourGuideArray.count
+            return pageCount!
+            //return tourGuideArray.count
         }
         
     }
@@ -246,16 +299,38 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
         
         if (collectionView == previewCllectionView) {
             let cell : PreviewCollectionViewCell = previewCllectionView.dequeueReusableCell(withReuseIdentifier: "previewCellId", for: indexPath) as! PreviewCollectionViewCell
-            cell.setPreviewData(tourGuideData: tourGuideArray[indexPath.row])
+          //  cell.setPreviewData(tourGuideData: tourGuideArray[indexPath.row])
            pageControlCollectionView.scrollToItem(at: indexPath, at: .right, animated: false)
            currentPreviewItem = indexPath
-            
+            if(indexPath.row == 0) {
+                viewOneLineOne.isHidden = true
+                if (pageCount! <= 5) {
+                    if(pageCount == 4) {
+                        viewFourLineTwo.isHidden = true
+                    } else if (pageCount == 3) {
+                        viewThreeLineTwo.isHidden = true
+                    } else if(pageCount == 2) {
+                        viewTwoLineTwo.isHidden = true
+                    }
+                    else if(pageCount == 1) {
+                        viewOneLineTwo.isHidden = true
+                        pageViewOne.isHidden = true
+                    }
+                    if(pageCount == 5) {
+                        pageImageViewFive.image = UIImage(named: "stripper_inactive_end")
+                        pageImageFiveHeight.constant = 15
+                        pageImageFiveWidth.constant = 15
+                    }
+                    viewFiveLineTwo.isHidden = true
+                }
+            }
             
             return cell
         } else {
             let cell : PageControlCell = pageControlCollectionView.dequeueReusableCell(withReuseIdentifier: "pageControlCellId", for: indexPath) as! PageControlCell
             if(indexPath.row == 0) {
                 cell.dotImageView.image = UIImage(named: "selectedControl")
+                
             }
             if(reloaded) {
                 if((currentPreviewItem != nil) && (currentPreviewItem.row == indexPath.row)) {
@@ -308,66 +383,142 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
         var cellToSwipe:Double = Double(Float((scrollView.contentOffset.x))/Float((pageWidth+minSpace))) + Double(0.5)
         if cellToSwipe < 0 {
             cellToSwipe = 0
-        } else if cellToSwipe >= Double(tourGuideArray.count) {
-            cellToSwipe = Double(tourGuideArray.count) - Double(1)
+        } else if cellToSwipe >= Double(pageCount!) {
+            cellToSwipe = Double(pageCount!) - Double(1)
         }
         let indexPath:IndexPath = IndexPath(row: Int(cellToSwipe), section:0)
         self.previewCllectionView.scrollToItem(at:indexPath, at: UICollectionViewScrollPosition.left, animated: true)
         currentPreviewItem = indexPath
         pageControlCollectionView.reloadData()
         reloaded = true
-       
+       var remainingCount = Int()
         if(indexPath.row%5 == 0) {
             //setPageViewVisible()
-            let remainingCount = pageCount! - ( indexPath.row+1)
-            if (remainingCount < 4) {
-                showOrHidePageControlView(countValue: remainingCount+1)
-            }
             
             pageImageViewOne.image = UIImage(named: "selectedControl")
             pageImageViewTwo.image = UIImage(named: "unselected")
             pageImageViewThree.image = UIImage(named: "unselected")
             pageImageViewFour.image = UIImage(named: "unselected")
             pageImageViewFive.image = UIImage(named: "unselected")
+            remainingCount = pageCount! - ( indexPath.row+1)
+            if(velocity.x >= 0) {
+                
+                if (remainingCount < 5) {
+                    showOrHidePageControlView(countValue: remainingCount+1, scrolling: true)
+                    if(remainingCount+1 == 2) {
+                        pageImageViewTwo.image = UIImage(named: "stripper_inactive_end")
+                    } else if(remainingCount+1 == 3) {
+                        pageImageViewThree.image = UIImage(named: "stripper_inactive_end")
+                    } else if(remainingCount+1 == 4) {
+                        pageImageViewFour.image = UIImage(named: "stripper_inactive_end")
+                    } else if(remainingCount+1 == 5) {
+                        pageImageViewFive.image = UIImage(named: "stripper_inactive_end")
+                    }
+                }
+                
+            }else  {
+                //remainingCount = pageCount! - ( indexPath.row+1)
+                if(remainingCount+1 == 2) {
+                    pageImageViewTwo.image = UIImage(named: "stripper_inactive_end")
+                    pageImageTwoHeight.constant = 15
+                    pageImageTwoWidth.constant = 15
+                } else if(remainingCount+1 == 3) {
+                    pageImageViewThree.image = UIImage(named: "stripper_inactive_end")
+                    pageImageThreeHeight.constant = 15
+                    pageImageThreeWidth.constant = 15
+                } else if(remainingCount+1 == 4) {
+                    pageImageViewFour.image = UIImage(named: "stripper_inactive_end")
+                    pageImageFourHeight.constant = 15
+                    pageImageFourWidth.constant = 15
+                } else if(remainingCount+1 == 5) {
+                    pageImageViewFive.image = UIImage(named: "stripper_inactive_end")
+                    pageImageFiveHeight.constant = 15
+                    pageImageFiveWidth.constant = 15
+                }
+                
+                }
+            if(indexPath.row == 0) {
+                viewOneLineOne.isHidden = true
+            } else {
+                viewOneLineOne.isHidden = false
+                pageImageOneHeight.constant = 20
+                pageImageOneWidth.constant = 20
+                
+            }
+            
+            
         } else if(indexPath.row%5 == 1) {
-            setPageViewVisible()
-            pageImageViewOne.image = UIImage(named: "unselected")
+        
+            if(indexPath.row == 1) {
+                pageImageOneHeight.constant = 15
+                pageImageOneWidth.constant = 15
+                pageImageViewOne.image = UIImage(named: "stripper_inactive_end")
+            } else {
+                pageImageOneHeight.constant = 20
+                pageImageOneWidth.constant = 20
+                pageImageViewOne.image = UIImage(named: "unselected")
+            }
+            pageImageTwoHeight.constant = 20
+            pageImageTwoWidth.constant = 20
             pageImageViewTwo.image = UIImage(named: "selectedControl")
             pageImageViewThree.image = UIImage(named: "unselected")
             pageImageViewFour.image = UIImage(named: "unselected")
             pageImageViewFive.image = UIImage(named: "unselected")
         } else if(indexPath.row%5 == 2) {
-            setPageViewVisible()
-            pageImageViewOne.image = UIImage(named: "unselected")
+            pageImageThreeHeight.constant = 20
+            pageImageThreeWidth.constant = 20
+            //pageImageViewOne.image = UIImage(named: "stripper_inactive_end")
             pageImageViewTwo.image = UIImage(named: "unselected")
             pageImageViewThree.image = UIImage(named: "selectedControl")
             pageImageViewFour.image = UIImage(named: "unselected")
             pageImageViewFive.image = UIImage(named: "unselected")
         } else if(indexPath.row%5 == 3) {
-            setPageViewVisible()
-            pageImageViewOne.image = UIImage(named: "unselected")
+            pageImageFourHeight.constant = 20
+            pageImageFourWidth.constant = 20
+            //setPageViewVisible()
+           // pageImageViewOne.image = UIImage(named: "stripper_inactive_end")
             pageImageViewTwo.image = UIImage(named: "unselected")
             pageImageViewThree.image = UIImage(named: "unselected")
             pageImageViewFour.image = UIImage(named: "selectedControl")
             pageImageViewFive.image = UIImage(named: "unselected")
         }
         else if(indexPath.row%5 == 4) {
-            setPageViewVisible()
-            pageImageViewOne.image = UIImage(named: "unselected")
+            if(velocity.x >= 0) {
+               let remnCount = pageCount! - ( indexPath.row+1)
+                if(remnCount <= 0) {
+                    viewFiveLineTwo.isHidden = true
+                }
+            } else {
+                setPageViewVisible()
+                if(indexPath.row == 4) {
+                    viewOneLineOne.isHidden = true
+                    pageImageOneHeight.constant = 15
+                    pageImageOneWidth.constant = 15
+                    pageImageViewOne.image = UIImage(named: "stripper_inactive_end")
+                    
+                    pageImageTwoHeight.constant = 20
+                    pageImageTwoWidth.constant = 20
+                    pageImageThreeHeight.constant = 20
+                    pageImageThreeWidth.constant = 20
+                    pageImageFourHeight.constant = 20
+                    pageImageFourWidth.constant = 20
+                    pageImageFiveHeight.constant = 20
+                    pageImageFiveWidth.constant = 20
+                }
+            }
+            //setPageViewVisible()
+           // pageImageViewOne.image = UIImage(named: "stripper_inactive_end")
             pageImageViewTwo.image = UIImage(named: "unselected")
             pageImageViewThree.image = UIImage(named: "unselected")
             pageImageViewFour.image = UIImage(named: "unselected")
             pageImageViewFive.image = UIImage(named: "selectedControl")
         }
-//        if (indexPath.row == pageCount!-1) {
-//
-//            showOrHidePageControlView(countValue: (indexPath.row%5)+1)
-//        }
-        let remainingCount = pageCount! - ( indexPath.row+1)
-        if (remainingCount < 4) {
-            showOrHidePageControlView(countValue: remainingCount+1)
-        }
  
+        if(indexPath.row == 0) {
+            viewOneLineOne.isHidden = true
+            pageImageOneHeight.constant = 20
+            pageImageOneWidth.constant = 20
+        }
         
     }
     
@@ -442,18 +593,7 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
                     self.loadingView.isHidden = false
                     self.loadingView.showNoDataView()
                 
-//                if let unhandledError = handleError(viewController: self, errorType: error as! BackendError) {
-//                    var errorMessage: String
-//                    var errorTitle: String
-//                    switch unhandledError.code {
-//                    default: print(unhandledError.code)
-//                    errorTitle = String(format: NSLocalizedString("UNKNOWN_ERROR_ALERT_TITLE",
-//                                                                  comment: "Setting the title of the alert"))
-//                    errorMessage = String(format: NSLocalizedString("ERROR_MESSAGE",
-//                                                                    comment: "Setting the content of the alert"))
-//                    }
-//                    presentAlert(self, title: errorTitle, message: errorMessage)
-//                }
+
             }
         }
     }
