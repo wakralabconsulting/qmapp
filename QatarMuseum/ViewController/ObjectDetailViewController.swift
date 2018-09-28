@@ -106,6 +106,7 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
         if indexPath.row == 0 {
             return 300
         }
+        
         return UITableViewAutomaticDimension
     }
     
@@ -133,6 +134,7 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
                 cell.setObjectDetail(objectDetail: detailArray[0])
             } else if (indexPath.row == 2) {
                 cell.setObjectHistoryDetail(historyDetail: detailArray[0])
+                
             }
             
             cell.favBtnTapAction = {
