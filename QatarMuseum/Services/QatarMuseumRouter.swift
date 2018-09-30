@@ -114,11 +114,6 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "tour_guide_list_museums.json"
         case .CollectionByTourGuide( _):
             return "collection_by_tour_guide.json"
-            //Used for Temporary API
-//        case .CollectionList( _):
-//            return "/museum_collection_category.php"
-//        case .CollectionDetail( _):
-//            return "/collection_by_category.php"
         
         }
     }
