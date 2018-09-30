@@ -8,6 +8,7 @@
 
 import Alamofire
 import GoogleMaps
+import Crashlytics
 import UIKit
 import MaterialComponents.MaterialBottomSheet
 

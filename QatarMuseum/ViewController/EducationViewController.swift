@@ -8,6 +8,7 @@
 
 import AVKit
 import AVFoundation
+import Crashlytics
 import UIKit
 import YouTubePlayer
 

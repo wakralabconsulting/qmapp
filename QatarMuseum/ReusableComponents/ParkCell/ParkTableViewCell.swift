@@ -41,9 +41,10 @@ class ParkTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
     }
     //MARK: Public Arts List Data
-    func setParksCellValues(parksList: ParksList) {
+    func setParksCellValues(parksList: ParksList,currentRow:Int?) {
         
         
         titleLabel.text = parksList.title?.uppercased()
@@ -53,12 +54,7 @@ class ParkTableViewCell: UITableViewCell {
        // titleSecondDescriptionLabel.text =
         timeTitleLabel.text = NSLocalizedString("OPENING_TIME_TITLE",
                                                 comment: "OPENING_TIME_TITLE in the Heritage detail")
-//        if ((cellValues.value(forKey: "subTitle")  != nil) && (cellValues.value(forKey: "subTitle") as! String != "")) {
-//
-//            subTitleTopConstraint.constant = 13
-//            subTitleLabel.text = (cellValues.value(forKey: "subTitle") as? String)?.uppercased()
-//        }
-//        else {
+
             subTitleTopConstraint.constant = 0
             subTitleLabel.frame = CGRect(x: self.subTitleLabel.frame.origin.x, y: self.subTitleLabel.frame.origin.x, width: 0, height: 0)
             
@@ -90,6 +86,22 @@ class ParkTableViewCell: UITableViewCell {
 //
 //            locationButtonBottomConstraint.constant = 0
 //        }
+        if (currentRow == 0) {
+            locationsTitleLabel.isHidden = false
+            locationButton.isHidden = false
+            locationsTitleLabel.text =  NSLocalizedString("LOCATION_TITLE",
+                                                          comment: "LOCATION_TITLE in the Park detail")
+            let mapRedirectionMessage = NSLocalizedString("MAP_REDIRECTION_MESSAGE",
+                                                          comment: "MAP_REDIRECTION_MESSAGE in the Dining detail")
+            locationButton.setTitle(mapRedirectionMessage, for: .normal)
+            locationLineViewHeight.constant = 2
+            locationButtonBottomConstraint.constant = 29
+        } else {
+            locationsTitleLabel.isHidden = true
+            locationButton.isHidden = true
+            locationLineViewHeight.constant = 0
+            locationButtonBottomConstraint.constant = 0
+        }
         
         if let imageUrl = parksList.image{
             parkImageView.kf.setImage(with: URL(string: imageUrl))
@@ -107,6 +119,11 @@ class ParkTableViewCell: UITableViewCell {
         locationFirstLabel.font = UIFont.sideMenuLabelFont
         locationButton.titleLabel?.font = UIFont.sideMenuLabelFont
         locationsTitleLabel.font = UIFont.closeButtonFont
+        favouriteViewHeight.constant = 0
+        favouriteView.isHidden = true
+        shareView.isHidden = true
+        favouriteButton.isHidden = true
+        shareButton.isHidden = true
     }
    
     @IBAction func didTapFavourite(_ sender: UIButton) {
