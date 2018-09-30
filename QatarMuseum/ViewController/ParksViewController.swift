@@ -7,8 +7,9 @@
 //
 
 import Alamofire
-import UIKit
 import CoreData
+import Crashlytics
+import UIKit
 
 class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,comingSoonPopUpProtocol {
     
@@ -109,20 +110,20 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 parkCell.titleLineView.isHidden = false
                 parkCell.imageViewHeight.constant = 0
             }
-            if(indexPath.row == parksListArray.count-1) {
-                parkCell.favouriteViewHeight.constant = 130
-                parkCell.favouriteView.isHidden = false
-                parkCell.shareView.isHidden = false
-                parkCell.favouriteButton.isHidden = false
-                parkCell.shareButton.isHidden = false
-            }
-            else {
+//            if(indexPath.row == parksListArray.count-1) {
+//                parkCell.favouriteViewHeight.constant = 130
+//                parkCell.favouriteView.isHidden = false
+//                parkCell.shareView.isHidden = false
+//                parkCell.favouriteButton.isHidden = false
+//                parkCell.shareButton.isHidden = false
+//            }
+//            else {
                 parkCell.favouriteViewHeight.constant = 0
                 parkCell.favouriteView.isHidden = true
                 parkCell.shareView.isHidden = true
                 parkCell.favouriteButton.isHidden = true
                 parkCell.shareButton.isHidden = true
-            }
+           // }
         parkCell.favouriteButtonAction = {
             ()in
             self.setFavouritesAction(cellObj: parkCell)
@@ -134,7 +135,8 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             () in
             self.loadLocationInMap(currentRow: indexPath.row)
         }
-        parkCell.setParksCellValues(parksList: parksListArray[indexPath.row])
+        parkCell.setParksCellValues(parksList: parksListArray[indexPath.row], currentRow: indexPath.row)
+        
             loadingView.stopLoading()
             loadingView.isHidden = true
             return parkCell

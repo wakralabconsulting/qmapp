@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import Crashlytics
 class WebViewController: UIViewController,UIWebViewDelegate {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var webView: UIWebView!

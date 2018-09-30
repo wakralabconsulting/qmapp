@@ -5,7 +5,7 @@
 //  Created by Exalture on 10/09/18.
 //  Copyright © 2018 Wakralab. All rights reserved.
 //
-
+import Crashlytics
 import UIKit
 
 protocol MapDetailProtocol
