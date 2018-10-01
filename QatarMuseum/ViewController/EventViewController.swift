@@ -338,11 +338,13 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 if (granted) && (error == nil) {
                     DispatchQueue.main.async {
                     let event = EKEvent.init(eventStore: self.store)
-                    event.title = title
+                    event.title = title.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
                     event.calendar = self.store.defaultCalendarForNewEvents
                     event.startDate = startDate
                     event.endDate = endDate
-                    event.notes = description
+                        event.notes = description?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
+                        print(event.title)
+                        print(event.description)
                     // let alarm = EKAlarm.init(absoluteDate: Date.init(timeInterval: -3600, since: event.startDate))
                     // event.addAlarm(alarm)
                     
@@ -364,11 +366,11 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             })
         case EKAuthorizationStatus.authorized:
             let event = EKEvent.init(eventStore: self.store)
-            event.title = title
+            event.title = title.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
             event.calendar = self.store.defaultCalendarForNewEvents
             event.startDate = startDate
             event.endDate = endDate
-            event.notes = description
+            event.notes = description?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
             
             do {
                 try self.store.save(event, span: .thisEvent)
