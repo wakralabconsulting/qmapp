@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Crashlytics
 import Alamofire
 import ZKCarousel
 

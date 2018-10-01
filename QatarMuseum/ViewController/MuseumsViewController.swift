@@ -16,11 +16,8 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     @IBOutlet weak var museumsTopbar: TopBarView!
     @IBOutlet weak var museumsSlideView: KASlideShow!
     @IBOutlet weak var pageControl: UIPageControl!
-    
     @IBOutlet weak var museumsBottomCollectionView: UICollectionView!
- 
     @IBOutlet weak var previousButton: UIButton!
-    
     @IBOutlet weak var museumTitle: UITextView!
     @IBOutlet weak var nextButton: UIButton!
     
@@ -43,6 +40,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
     func setupUI() {
         
         getMuseumDataFromServer()
@@ -55,20 +53,16 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         let parkName = NSLocalizedString("PARKS_LABEL", comment: "PARKS_LABEL  in the Museum page")
         let diningName = NSLocalizedString("DINING_LABEL", comment: "DINING_LABEL  in the Museum page")
         
-        
         museumsTopbar.topbarDelegate = self
         museumsTopbar.menuButton.isHidden = true
         museumsTopbar.backButton.isHidden = false
         museumTitle.text = museumTitleString
         museumTitle.font = UIFont.museumTitleFont
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            
             museumsTopbar.backButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
             previousButton.isHidden = true
             nextButton.isHidden = false
-        }
-        else {
-            
+        } else {
             museumsTopbar.backButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
             previousButton.isHidden = false
             nextButton.isHidden = true
@@ -77,20 +71,16 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         if ((museumId != nil) && ((museumId == "63") || (museumId == "96"))) {
             collectionViewImages = ["MIA_AboutX1","Audio CircleX1","exhibition_blackX1","collectionsX1","park_blackX1","diningX1",]
             collectionViewNames = [aboutName,tourGuideName,exhibitionsName,collectionsName,parkName,diningName]
-        }
-        else {
+        } else {
             collectionViewImages = ["MIA_AboutX1","exhibition_blackX1","collectionsX1","diningX1",]
             collectionViewNames = [aboutName,exhibitionsName,collectionsName,diningName]
             previousButton.isHidden = true
             nextButton.isHidden = true
         }
-       
-        
     }
+    
     override func viewDidAppear(_ animated: Bool) {
-        
         //museumsSlideView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        
     }
     
     func setSlideShow(imgArray: NSArray) {
@@ -112,10 +102,8 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         
         pageControl.currentPage = Int(museumsSlideView.currentIndex)
         pageControl.addTarget(self, action: #selector(MuseumsViewController.pageChanged), for: .valueChanged)
-        
-       
-        
     }
+    
     func setImageArray() {
         self.sliderImgArray[0] = UIImage(named: "sliderPlaceholder")!
         self.sliderImgArray[1] = UIImage(named: "sliderPlaceholder")!
@@ -134,9 +122,8 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 downloadImage(imageUrlString: imageUrlString)
             }
         }
-        
-        
     }
+    
     func downloadImage(imageUrlString : String?)  {
             if (imageUrlString != nil) {
                 let imageUrl = URL(string: imageUrlString!)
@@ -147,25 +134,21 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                         self.sliderImgArray[self.sliderImgCount!-1] = image
                         self.setSlideShow(imgArray: self.sliderImgArray)
                         self.museumsSlideView.start()
-                        
                     } else {
-                        
                         if(self.sliderImgCount == 0) {
                            self.sliderImgArray[0] = UIImage(named: "sliderPlaceholder")!
-                        }else {
+                        } else {
                             self.sliderImgArray[self.sliderImgCount!-1] = UIImage(named: "sliderPlaceholder")!
                         }
                         self.sliderImgCount = self.sliderImgCount!+1
                         self.setSlideShow(imgArray: self.sliderImgArray)
                         self.museumsSlideView.start()
-                        
                     }
-                    
                 }
             }
     }
+
     //KASlideShow delegate
-    
     func kaSlideShowWillShowNext(_ slideshow: KASlideShow) {
         
     }
@@ -186,6 +169,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         pageControl.currentPage = Int(museumsSlideView.currentIndex)
         customizePageControlDot(currentIndex: currentIndex)
     }
+    
     func customizePageControlDot(currentIndex: Int) {
         for i in 0...2 {
             if (i == currentIndex) {
@@ -454,9 +438,9 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     func menuButtonPressed() {
         
     }
+    
     //MARK: WebServiceCall
-    func getMuseumDataFromServer()
-    {
+    func getMuseumDataFromServer() {
         _ = Alamofire.request(QatarMuseumRouter.LandingPageMuseums(["nid": museumId ?? 0])).responseObject { (response: DataResponse<Museums>) -> Void in
             switch response.result {
             case .success(let data):
@@ -464,18 +448,14 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 if(self.museumArray.count > 0) {
                     self.setImageArray()
                 }
-                
             case .failure(let error):
                 print(error)
             }
         }
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-  
-
 }

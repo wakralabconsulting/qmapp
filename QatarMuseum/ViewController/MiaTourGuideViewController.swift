@@ -5,7 +5,7 @@
 //  Created by Exalture on 17/07/18.
 //  Copyright © 2018 Exalture. All rights reserved.
 //
-
+import Crashlytics
 import UIKit
 
 class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,HeaderViewProtocol,comingSoonPopUpProtocol,UICollectionViewDelegateFlowLayout,MiaTourProtocol {

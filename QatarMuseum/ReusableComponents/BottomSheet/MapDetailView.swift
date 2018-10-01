@@ -5,7 +5,7 @@
 //  Created by Exalture on 10/09/18.
 //  Copyright © 2018 Wakralab. All rights reserved.
 //
-
+import Crashlytics
 import UIKit
 
 protocol MapDetailProtocol
@@ -20,12 +20,13 @@ class MapDetailView: UIViewController,ObjectImageViewProtocol {
     var viewMoveUp : Bool = false
     let fullView: CGFloat = 20
     var partialView: CGFloat {
-        return UIScreen.main.bounds.height - 190
+        return UIScreen.main.bounds.height - 200
     }
     var mapdetailDelegate : MapDetailProtocol?
     let closeButton = UIButton()
     var objectImagePopupView : ObjectImageView = ObjectImageView()
     var gesture = UIPanGestureRecognizer()
+    var popUpArray: [TourGuideFloorMap]! = []
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -169,7 +170,8 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (indexPath.row == 0) {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "objectPopupId", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "objectPopupId", for: indexPath) as! ObjectPopupTableViewCell
+            cell.setPopupDetails(mapDetails: popUpArray[indexPath.row])
             cell.selectionStyle = .none
            // return tableView.dequeueReusableCell(withIdentifier: "objectPopupId")!
             return cell
@@ -178,22 +180,26 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             let objectImageView = UIImageView()
             objectImageView.frame = CGRect(x: 0, y: 20, width: tableView.frame.width, height: 300)
-            objectImageView.image = UIImage.init(named: "science_tour_object")
+            
             objectImageView.backgroundColor = UIColor.white
             objectImageView.contentMode = .scaleAspectFit
             objectImageView.clipsToBounds = true
             cell.addSubview(objectImageView)
             addCloseButton(cell: cell)
             objectImageView.isUserInteractionEnabled = true
+            
+            if let imageUrl = popUpArray[0].image {
+                objectImageView.kf.setImage(with: URL(string: imageUrl))
+            }
             return cell
         } else {
              let cell = tableView.dequeueReusableCell(withIdentifier: "objectDetailID", for: indexPath) as! ObjectDetailTableViewCell
             cell.selectionStyle = .none
             if (indexPath.row == 2){
-                cell.setObjectDetail()
+                cell.setObjectDetail(objectDetail: popUpArray[0])
                 //return tableView.dequeueReusableCell(withIdentifier: "objectDetailID")!
             } else {
-                cell.setObjectHistoryDetail()
+                cell.setObjectHistoryDetail(historyDetail: popUpArray[0])
                 
             }
             cell.favBtnTapAction = {
@@ -221,7 +227,10 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
             })
 
         } else if(indexPath.row == 1) {
-            self.loadObjectImagePopup()
+            if let imageUrl = popUpArray[0].image {
+               self.loadObjectImagePopup(imgName: imageUrl )
+            }
+            
         }
     }
     func setFavouritesAction(cellObj: ObjectDetailTableViewCell) {
@@ -262,11 +271,11 @@ extension MapDetailView: UIGestureRecognizerDelegate {
         }
         return false
     }
-    @objc func loadObjectImagePopup() {
+    @objc func loadObjectImagePopup(imgName: String?) {
         let frameRect = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
         objectImagePopupView = ObjectImageView(frame: frameRect)
         objectImagePopupView.objectImageViewDelegate = self
-        objectImagePopupView.loadPopup(image : "science_tour_object")
+        objectImagePopupView.loadPopup(image : imgName!)
         self.view.removeGestureRecognizer(gesture)
         self.view.addSubview(objectImagePopupView)
         

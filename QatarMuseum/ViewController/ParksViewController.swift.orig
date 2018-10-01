@@ -8,9 +8,12 @@
 
 import Alamofire
 import CoreData
+<<<<<<< HEAD
 import ZKCarousel
+=======
 import Crashlytics
 import UIKit
+>>>>>>> mastercopy
 
 class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,comingSoonPopUpProtocol {
     

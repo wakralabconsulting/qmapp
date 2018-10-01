@@ -98,6 +98,15 @@ extension UIFont {
         }
         
     }
+    static var popupProductionFont: UIFont {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            return UIFont.init(name: "DINNextLTPro-Bold", size: 16)!
+        }
+        else{
+            return UIFont.init(name: "DINNextLTArabic-Bold", size:16)!
+        }
+        
+    }
     static var collectionSubTitleFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             return UIFont.init(name: "DINNextLTPro-Light", size: 19)!

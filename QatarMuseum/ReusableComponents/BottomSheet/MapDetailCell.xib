@@ -26,7 +26,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ufY-1D-YLg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Albarello" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GRf-yS-kRR">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GRf-yS-kRR">
                                 <rect key="frame" x="25" y="27" width="364" height="26"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="26" id="i4S-Q7-fjY"/>
@@ -35,27 +35,23 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VRd-aa-gdf">
-                                <rect key="frame" x="25" y="68" width="364" height="162.5"/>
-                                <string key="text">This example is a rare example of the Mamluk production of albarelli in Damascus, primarily produced for the European market. The albarello (pl. albarelli) was used as a medicinal jar for holding apothecary ointments and dried herbal drugs. ITs elongated shape helps us to recognize the nature and function of this typical object.</string>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VRd-aa-gdf">
+                                <rect key="frame" x="25" y="68" width="364" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6hy-Q4-BR9">
-                                <rect key="frame" x="25" y="250.5" width="364" height="101"/>
+                                <rect key="frame" x="25" y="88" width="364" height="461"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yC8-2W-iut">
-                                        <rect key="frame" x="0.0" y="40" width="364" height="61"/>
-                                        <string key="text">Saint Jerome in His Study
-Domenico Ghirlandaio (1449-1494)
-Church of Ognissanti, Florence, 1480</string>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yC8-2W-iut">
+                                        <rect key="frame" x="0.0" y="461" width="364" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hl8-wT-k1P">
-                                        <rect key="frame" x="0.0" y="0.0" width="364" height="32"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="364" height="453"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -69,15 +65,14 @@ Church of Ognissanti, Florence, 1480</string>
                                     <constraint firstItem="yC8-2W-iut" firstAttribute="top" secondItem="hl8-wT-k1P" secondAttribute="bottom" constant="8" id="ntW-rO-WV5"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gud-rz-Wjq">
-                                <rect key="frame" x="25" y="371.5" width="364" height="142.5"/>
-                                <string key="text">In the heart of the museum, with spectacular views of the Doha skyline, Idam offers an innovative and flavorsome selection of contemporary French Mediterranean cuisine designed with an Arabic twist. Timeless classics of local and regional cuisine, with most ingredients sourced locally in Qatar. </string>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gud-rz-Wjq">
+                                <rect key="frame" x="25" y="549" width="364" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SVT-qA-CDh">
-                                <rect key="frame" x="0.0" y="524" width="207" height="74"/>
+                                <rect key="frame" x="0.0" y="549" width="207" height="74"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TnQ-Ha-1Y9">
                                         <rect key="frame" x="141" y="14" width="46" height="46"/>
@@ -99,7 +94,7 @@ Church of Ognissanti, Florence, 1480</string>
                                 </constraints>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jzw-OW-L65">
-                                <rect key="frame" x="207" y="524" width="207" height="74"/>
+                                <rect key="frame" x="207" y="549" width="207" height="74"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Nx-KU-xOf">
                                         <rect key="frame" x="20" y="14" width="46" height="46"/>
@@ -118,17 +113,17 @@ Church of Ognissanti, Florence, 1480</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="SVT-qA-CDh" firstAttribute="top" secondItem="Gud-rz-Wjq" secondAttribute="bottom" constant="10" id="2Pd-O5-Ao0"/>
                             <constraint firstItem="VRd-aa-gdf" firstAttribute="leading" secondItem="Gud-rz-Wjq" secondAttribute="leading" id="2sd-fd-ADs"/>
                             <constraint firstItem="SVT-qA-CDh" firstAttribute="width" secondItem="jzw-OW-L65" secondAttribute="width" id="Dh4-Bf-DAb"/>
                             <constraint firstAttribute="trailing" secondItem="jzw-OW-L65" secondAttribute="trailing" id="Ico-LW-QsW"/>
                             <constraint firstItem="VRd-aa-gdf" firstAttribute="top" secondItem="GRf-yS-kRR" secondAttribute="bottom" constant="15" id="KWS-b3-Lbm"/>
                             <constraint firstItem="VRd-aa-gdf" firstAttribute="leading" secondItem="ufY-1D-YLg" secondAttribute="leading" constant="25" id="L2y-Fz-dn8"/>
-                            <constraint firstItem="Gud-rz-Wjq" firstAttribute="top" secondItem="6hy-Q4-BR9" secondAttribute="bottom" constant="20" id="MUq-mK-vBe"/>
-                            <constraint firstAttribute="bottom" secondItem="SVT-qA-CDh" secondAttribute="bottom" constant="25" id="NPg-lJ-yMm"/>
+                            <constraint firstItem="Gud-rz-Wjq" firstAttribute="top" secondItem="6hy-Q4-BR9" secondAttribute="bottom" id="MUq-mK-vBe"/>
+                            <constraint firstAttribute="bottom" secondItem="SVT-qA-CDh" secondAttribute="bottom" id="NPg-lJ-yMm"/>
                             <constraint firstItem="6hy-Q4-BR9" firstAttribute="top" secondItem="VRd-aa-gdf" secondAttribute="bottom" constant="20" id="OGF-Uo-J2b"/>
                             <constraint firstItem="TnQ-Ha-1Y9" firstAttribute="height" secondItem="6Nx-KU-xOf" secondAttribute="height" id="R7t-59-NRk"/>
                             <constraint firstAttribute="trailing" secondItem="VRd-aa-gdf" secondAttribute="trailing" constant="25" id="SBb-WJ-YKP"/>
+                            <constraint firstItem="SVT-qA-CDh" firstAttribute="top" secondItem="Gud-rz-Wjq" secondAttribute="bottom" id="XvL-kO-Nfc"/>
                             <constraint firstItem="jzw-OW-L65" firstAttribute="centerY" secondItem="SVT-qA-CDh" secondAttribute="centerY" id="aps-Fp-BgI"/>
                             <constraint firstItem="VRd-aa-gdf" firstAttribute="leading" secondItem="6hy-Q4-BR9" secondAttribute="leading" id="fg2-hO-JU6"/>
                             <constraint firstItem="VRd-aa-gdf" firstAttribute="trailing" secondItem="6hy-Q4-BR9" secondAttribute="trailing" id="grK-Sb-Z3N"/>

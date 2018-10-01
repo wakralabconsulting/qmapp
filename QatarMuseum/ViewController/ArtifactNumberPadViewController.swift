@@ -5,7 +5,7 @@
 //  Created by Developer on 17/08/18.
 //  Copyright © 2018 Exalture. All rights reserved.
 //
-
+import Crashlytics
 import UIKit
 
 class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
