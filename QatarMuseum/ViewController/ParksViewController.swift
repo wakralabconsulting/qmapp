@@ -57,21 +57,32 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             if let imageUrl = parksListArray[0].image{
 //                imageView.kf.setImage(with: URL(string: imageUrl))
                 setupCarousel(imageUrlString: imageUrl)
+                carousel.contentMode = .scaleAspectFill
+                carousel.clipsToBounds = true
+                self.view.addSubview(carousel)
             }
             else {
                 imageView.image = UIImage(named: "default_imageX2")
+                imageView.contentMode = .scaleAspectFill
+                imageView.clipsToBounds = true
+                view.addSubview(imageView)
+
             }
         }else {
             imageView.image = nil
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
+            view.addSubview(imageView)
+
         }
         
 //        imageView.contentMode = .scaleAspectFill
 //        imageView.clipsToBounds = true
 //        view.addSubview(imageView)
         
-        carousel.contentMode = .scaleAspectFill
-        carousel.clipsToBounds = true
-        self.view.addSubview(carousel)
+//        carousel.contentMode = .scaleAspectFill
+//        carousel.clipsToBounds = true
+//        self.view.addSubview(carousel)
         
         let darkBlur = UIBlurEffect(style: UIBlurEffectStyle.light)
         blurView = UIVisualEffectView(effect: darkBlur)

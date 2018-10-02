@@ -88,26 +88,49 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 if let imageUrl = heritageDetailtArray[0].image{
 //                    imageView.kf.setImage(with: URL(string: imageUrl))
                     setupCarousel(imageUrlString: imageUrl)
+                    carousel.contentMode = .scaleAspectFill
+                    carousel.clipsToBounds = true
+                    self.view.addSubview(carousel)
                 }
                 else {
                     imageView.image = UIImage(named: "default_imageX2")
+                    imageView.contentMode = .scaleAspectFill
+                    imageView.clipsToBounds = true
+                    view.addSubview(imageView)
+
                 }
             }
             else {
                 imageView.image = nil
+                imageView.contentMode = .scaleAspectFill
+                imageView.clipsToBounds = true
+                view.addSubview(imageView)
+
             }
         } else if (pageNameString == PageName.publicArtsDetail){
             if publicArtsDetailtArray.count != 0 {
                 if let imageUrl = publicArtsDetailtArray[0].image{
 //                    imageView.kf.setImage(with: URL(string: imageUrl))
                     setupCarousel(imageUrlString: imageUrl)
+                    carousel.contentMode = .scaleAspectFill
+                    carousel.clipsToBounds = true
+                    carousel.isUserInteractionEnabled = false
+                    self.view.addSubview(carousel)
                 }
                 else {
                     imageView.image = UIImage(named: "default_imageX2")
+                    imageView.contentMode = .scaleAspectFill
+                    imageView.clipsToBounds = true
+                    view.addSubview(imageView)
+
                 }
             }
             else {
                 imageView.image = nil
+                imageView.contentMode = .scaleAspectFill
+                imageView.clipsToBounds = true
+                view.addSubview(imageView)
+
             }
         } else if (pageNameString == PageName.museumAbout){
 
@@ -118,15 +141,27 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 if( url![0] != nil) {
                     imageView.kf.setImage(with: URL(string: url![0]))
                     setupCarousel(imageUrlString: url![0])
+                    carousel.contentMode = .scaleAspectFill
+                    carousel.clipsToBounds = true
+//                    carousel.isUserInteractionEnabled = false
+                    self.view.addSubview(carousel)
                 }
                 else {
                     imageView.image = UIImage(named: "default_imageX2")
+                    imageView.contentMode = .scaleAspectFill
+                    imageView.clipsToBounds = true
+                    view.addSubview(imageView)
+
                 }
                 }
                 }
             }
             else {
                 imageView.image = nil
+                imageView.contentMode = .scaleAspectFill
+                imageView.clipsToBounds = true
+                view.addSubview(imageView)
+
             }
  
         }
@@ -134,9 +169,9 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
 //        imageView.clipsToBounds = true
 //        view.addSubview(imageView)
         
-        carousel.contentMode = .scaleAspectFill
-        carousel.clipsToBounds = true
-        self.view.addSubview(carousel)
+//        carousel.contentMode = .scaleAspectFill
+//        carousel.clipsToBounds = true
+//        self.view.addSubview(carousel)
         
 //        let darkBlur = UIBlurEffect(style: UIBlurEffectStyle.light)
 //        blurView = UIVisualEffectView(effect: darkBlur)
@@ -150,7 +185,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         blurView.frame = carousel.bounds
         blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         blurView.alpha = 0
-        imageView.addSubview(blurView)
+        carousel.addSubview(blurView)
         
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
@@ -257,6 +292,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                         if let res = response as? HTTPURLResponse {
                             print("Downloaded picture with response code \(res.statusCode)")
                             if let imageData = data {
+                                self.carousel.isUserInteractionEnabled = true
                                 // Finally convert that Data into an image and do what you wish with it.
                                 let imagepub = UIImage(data: imageData)
                                 // Do something with your image.
