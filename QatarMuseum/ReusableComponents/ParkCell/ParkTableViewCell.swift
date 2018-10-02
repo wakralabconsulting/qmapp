@@ -22,7 +22,6 @@ class ParkTableViewCell: UITableViewCell {
     @IBOutlet weak var locationLineViewHeight: NSLayoutConstraint!
     @IBOutlet weak var locationFirstLabel: UILabel!
     
-
     
     @IBOutlet weak var locationButtonBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var locationButton: UIButton!
@@ -101,6 +100,7 @@ class ParkTableViewCell: UITableViewCell {
             locationButton.isHidden = true
             locationLineViewHeight.constant = 0
             locationButtonBottomConstraint.constant = 0
+            
         }
         
         if let imageUrl = parksList.image{
