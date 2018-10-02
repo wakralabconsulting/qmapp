@@ -220,7 +220,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     //Function for show level 2 marker
     func showLevelTwoMarker() {
-        if (zoomValue > 19) {
+        if (zoomValue > 18) {
             l2Marker.position = l2_atr1
             l2Marker.title = ""
             l2Marker.snippet = ""
@@ -333,7 +333,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     //Function for show level 3 marker
     func showLevelThreeMarker() {
-        if (zoomValue > 19) {
+        if (zoomValue > 18) {
             l3Marker1.position = l3_atr1
             l3Marker1.title = "PO.297"
             l3Marker1.snippet = "PO.297"
@@ -388,10 +388,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         }
     }
     func showMarker(marker:GMSMarker,position: CLLocationCoordinate2D,titleString: String,imageName:String, zoomValue : Float){
-        if (zoomValue > 19) {
+        if (zoomValue > 18) {
             marker.position = position
             marker.title = titleString
-            marker.snippet = "San Francisco"
+            marker.snippet = ""
             marker.icon = UIImage(named: imageName)
             marker.icon = self.imageWithImage(image: UIImage(named: imageName)!, scaledToSize: CGSize(width:28, height: 34))
             marker.appearAnimation = .pop
@@ -422,7 +422,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         overlay.icon = UIImage(named: "qm_level_3")
         removeMarkers()
         
-        if (zoomValue > 19) {
+        if (zoomValue > 18) {
             showLevelThreeMarker()
         }
     }
@@ -434,7 +434,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         thirdLevelView.backgroundColor = UIColor.mapLevelColor
         overlay.icon = UIImage(named: "qm_level_2")
         removeMarkers()
-        if (zoomValue > 19) {
+        if (zoomValue > 18) {
             showLevelTwoMarker()
         }
     }
@@ -480,6 +480,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
         let zoom = mapView.camera.zoom
+        print(zoom)
         zoomValue = zoom
         //let center = CLLocationCoordinate2DMake(25.294730,51.539021)
         let center = CLLocationCoordinate2DMake(25.296059,51.538703)
