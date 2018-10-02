@@ -41,8 +41,8 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     
     func setupUI() {
-        loadingView.isHidden = false
-        loadingView.showLoading()
+        //loadingView.isHidden = false
+       // loadingView.showLoading()
         headerView.headerViewDelegate = self
         headerView.headerTitle.text = NSLocalizedString("CULTUREPASS_TITLE", comment: "CULTUREPASS_TITLE in the Culture Pass page")
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {

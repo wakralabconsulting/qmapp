@@ -41,6 +41,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     
     var bottomSheetVC:MapDetailView = MapDetailView()
     var floorMapArray: [TourGuideFloorMap]! = []
+    var tourGuideArray: [TourGuideFloorMap]! = []
     @IBOutlet weak var overlayView: UIView!
     var overlay = GMSGroundOverlay()
     let l2_atr1 = CLLocationCoordinate2D(latitude: 25.295141, longitude: 51.539185)
@@ -640,33 +641,15 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             switch response.result {
             case .success(let data):
                 self.floorMapArray = data.tourGuideFloorMap
-                //self.saveOrUpdateHeritageCoredata()
-                //self.heritageCollectionView.reloadData()
-                //self.loadingView.stopLoading()
-                //self.loadingView.isHidden = true
-                if (self.floorMapArray.count == 0) {
-                    //self.loadingView.stopLoading()
-                    //self.loadingView.noDataView.isHidden = false
-                    //self.loadingView.isHidden = false
-                    //self.loadingView.showNoDataView()
-                }
             case .failure(let error):
-                if let unhandledError = handleError(viewController: self, errorType: error as! BackendError) {
-                    var errorMessage: String
-                    var errorTitle: String
-                    switch unhandledError.code {
-                    default: print(unhandledError.code)
-                    errorTitle = String(format: NSLocalizedString("UNKNOWN_ERROR_ALERT_TITLE",
-                                                                  comment: "Setting the title of the alert"))
-                    errorMessage = String(format: NSLocalizedString("ERROR_MESSAGE",
-                                                                    comment: "Setting the content of the alert"))
-                    }
-                    presentAlert(self, title: errorTitle, message: errorMessage)
-                }
+                print("error")
+            
+                
+                
             }
         }
     }
-    
+
     
     
     

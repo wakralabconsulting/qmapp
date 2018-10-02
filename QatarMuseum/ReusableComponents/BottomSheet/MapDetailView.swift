@@ -180,7 +180,10 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             let objectImageView = UIImageView()
             objectImageView.frame = CGRect(x: 0, y: 20, width: tableView.frame.width, height: 300)
-            
+            objectImageView.image = UIImage(named: "default_imageX2")
+            if let imageUrl = popUpArray[0].image {
+                objectImageView.kf.setImage(with: URL(string: imageUrl))
+            }
             objectImageView.backgroundColor = UIColor.white
             objectImageView.contentMode = .scaleAspectFit
             objectImageView.clipsToBounds = true
@@ -188,16 +191,13 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
             addCloseButton(cell: cell)
             objectImageView.isUserInteractionEnabled = true
             
-            if let imageUrl = popUpArray[0].image {
-                objectImageView.kf.setImage(with: URL(string: imageUrl))
-            }
             return cell
         } else {
              let cell = tableView.dequeueReusableCell(withIdentifier: "objectDetailID", for: indexPath) as! ObjectDetailTableViewCell
             cell.selectionStyle = .none
             if (indexPath.row == 2){
                 cell.setObjectDetail(objectDetail: popUpArray[0])
-                //return tableView.dequeueReusableCell(withIdentifier: "objectDetailID")!
+                
             } else {
                 cell.setObjectHistoryDetail(historyDetail: popUpArray[0])
                 

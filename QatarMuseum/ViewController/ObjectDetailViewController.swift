@@ -125,8 +125,7 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
             cell.addSubview(objectImageView)
             
             objectImageView.isUserInteractionEnabled = true
-//            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(loadObjectImagePopup))
-//            objectImageView.addGestureRecognizer(tapGesture)
+
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "objectDetailCellId", for: indexPath) as! ObjectDetailTableViewCell
