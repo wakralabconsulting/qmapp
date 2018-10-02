@@ -20,6 +20,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var scienceTourTitle: UILabel!
     
+    @IBOutlet weak var overlayView: UIView!
     var slideshowImages : NSArray!
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var i = 0
@@ -33,6 +34,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
         super.viewDidLoad()
         getTourGuideDataFromServer()
         setupUI()
+        setGradientLayer()
     }
 
     func setupUI() {
@@ -43,7 +45,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
         headerView.headerViewDelegate = self
         headerView.headerTitle.text = NSLocalizedString("MIA_TOUR_GUIDES_TITLE", comment: "MIA_TOUR_GUIDES_TITLE in the Mia tour guide page")
 
-        slideshowView.imagesContentMode = .scaleAspectFill
+       // slideshowView.imagesContentMode = .scaleAspectFill
         self.slideshowView.addImage(UIImage(named: "sliderPlaceholder"))
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
@@ -242,5 +244,19 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
                 }
             }
         }
+    }
+    func setGradientLayer() {
+
+        
+        let gradient: CAGradientLayer = CAGradientLayer()
+        
+        gradient.colors = [UIColor.white.cgColor, UIColor.clear.cgColor]
+        gradient.locations = [0.0 , 1.3]
+        gradient.startPoint = CGPoint(x: 0.0, y: 1.0)
+        gradient.endPoint = CGPoint(x: 0.0, y: 0.0)
+        gradient.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+        
+        self.overlayView.layer.insertSublayer(gradient, at: 0)
+        
     }
 }
