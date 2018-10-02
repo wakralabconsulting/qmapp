@@ -21,12 +21,12 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     @IBOutlet weak var benefitsDiscountLabel: UILabel!
     var fromHome: Bool = false
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
-    let benefitList = ["15% DISCOUNT AT QM CAFE'S ACROSS ALL VENUES",
-                       "10% DISCOUNT ON ITEMS IN ALL QM GIFT SHOPS (without minimum purchase)",
-                       "10% DISCOUNT AT IDAM RESTAURANT AT LUNCH TIME",
-                       "RECEIVE OUR MONTHLY NEWSLETTER TO STAY UP TO DATE ON QM AND PARTNER OFFERINGS",
-                       "GET PREMIER ACCESS TO MEMBERS ONLY TALKS &WORKSHOPS",
-                       "GET EXCLUSIVE INVITATION TO QM OPEN HOUSE ACCESS TO OUR WORLD CLASS CALL CENTER 8AM TO 8PM DAILY"]
+    let benefitList = ["15% Discount at QM Cafe's across all venues",
+                       "10% Discount on items in all QM Gift Shops (without minimum purchase)",
+                       "10% Discount at Idam Restaurant at lunch time",
+                       "Receive our monthly newsletter to stay up to date on QM and partner offerings",
+                       "Get premier access to members only talks &workkshops",
+                       "Get exclusive invitation to QM open house access to our world class call center 8AM to 8PM daily"]
     
     override func viewDidLoad() {
         super.viewDidLoad()   
@@ -68,7 +68,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         for i in 0 ... benefitList.count-1 {
             benefitString = benefitString + "\n\n" + "-" + benefitList[i]
             benefitsDiscountLabel.text = benefitString
-            benefitsDiscountLabel.font = UIFont.englishTitleFont
+            benefitsDiscountLabel.font = UIFont.settingsUpdateLabelFont
         }
         
     }
