@@ -61,8 +61,7 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
         loadUI()
         registerNib()
         getTourGuideDataFromServer()
-        
-        
+     
     }
     
     func loadUI() {
@@ -78,7 +77,7 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
 //        if (pageCount! >= 5) {
 //            showOrHidePageControlView(countValue: 5, scrolling: true)
 //        } else {
-            showOrHidePageControlView(countValue: pageCount, scrolling: false)
+            showOrHidePageControlView(countValue: tourGuideArray.count, scrolling: false)
         //}
         
         
@@ -287,9 +286,9 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if (collectionView == previewCllectionView) {
             //return tourGuideArray.count
-            return pageCount!
+            return tourGuideArray.count
         } else {
-            return pageCount!
+            return tourGuideArray.count
             //return tourGuideArray.count
         }
         
@@ -299,24 +298,24 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
         
         if (collectionView == previewCllectionView) {
             let cell : PreviewCollectionViewCell = previewCllectionView.dequeueReusableCell(withReuseIdentifier: "previewCellId", for: indexPath) as! PreviewCollectionViewCell
-          //  cell.setPreviewData(tourGuideData: tourGuideArray[indexPath.row])
+            cell.setPreviewData(tourGuideData: tourGuideArray[indexPath.row])
            pageControlCollectionView.scrollToItem(at: indexPath, at: .right, animated: false)
            currentPreviewItem = indexPath
             if(indexPath.row == 0) {
                 viewOneLineOne.isHidden = true
-                if (pageCount! <= 5) {
-                    if(pageCount == 4) {
+                if (tourGuideArray.count <= 5) {
+                    if(tourGuideArray.count == 4) {
                         viewFourLineTwo.isHidden = true
-                    } else if (pageCount == 3) {
+                    } else if (tourGuideArray.count == 3) {
                         viewThreeLineTwo.isHidden = true
-                    } else if(pageCount == 2) {
+                    } else if(tourGuideArray.count == 2) {
                         viewTwoLineTwo.isHidden = true
                     }
-                    else if(pageCount == 1) {
+                    else if(tourGuideArray.count == 1) {
                         viewOneLineTwo.isHidden = true
                         pageViewOne.isHidden = true
                     }
-                    if(pageCount == 5) {
+                    if(tourGuideArray.count == 5) {
                         pageImageViewFive.image = UIImage(named: "stripper_inactive_end")
                         pageImageFiveHeight.constant = 15
                         pageImageFiveWidth.constant = 15
@@ -375,19 +374,35 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
         // Dispose of any resources that can be recreated.
     }
     
-    
+   
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        
+        
+       // let pageWidth1 = scrollView.frame.size.width;
+       // let page = floor((scrollView.contentOffset.x - pageWidth1 / 2) / pageWidth1) + 1;
+        
+    
+       
+        
+        
+        
+        print(scrollView.contentOffset)
+        
         targetContentOffset.pointee = scrollView.contentOffset
         let pageWidth:Float = Float(self.view.bounds.width)
         let minSpace:Float = 10.0
         var cellToSwipe:Double = Double(Float((scrollView.contentOffset.x))/Float((pageWidth+minSpace))) + Double(0.5)
+        
+       // var cellToSwipe:Double = Double(Float((scrollView.contentOffset.x))/(Float((pageWidth+minSpace)) * tourGuideArray.count))  + Double(0.5)
+
         if cellToSwipe < 0 {
             cellToSwipe = 0
-        } else if cellToSwipe >= Double(pageCount!) {
-            cellToSwipe = Double(pageCount!) - Double(1)
+        } else if cellToSwipe >= Double(tourGuideArray.count) {
+            cellToSwipe = Double(tourGuideArray.count) - Double(1)
         }
         let indexPath:IndexPath = IndexPath(row: Int(cellToSwipe), section:0)
         self.previewCllectionView.scrollToItem(at:indexPath, at: UICollectionViewScrollPosition.left, animated: true)
+       // self.previewCllectionView.scrollToItem(at:indexPath, at: UICollectionViewScrollPosition.right, animated: true)
         currentPreviewItem = indexPath
         pageControlCollectionView.reloadData()
         reloaded = true
@@ -400,7 +415,7 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
             pageImageViewThree.image = UIImage(named: "unselected")
             pageImageViewFour.image = UIImage(named: "unselected")
             pageImageViewFive.image = UIImage(named: "unselected")
-            remainingCount = pageCount! - ( indexPath.row+1)
+            remainingCount = tourGuideArray.count - ( indexPath.row+1)
             if(velocity.x >= 0) {
                 
                 if (remainingCount < 5) {
@@ -484,7 +499,7 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
         }
         else if(indexPath.row%5 == 4) {
             if(velocity.x >= 0) {
-               let remnCount = pageCount! - ( indexPath.row+1)
+               let remnCount = tourGuideArray.count - ( indexPath.row+1)
                 if(remnCount <= 0) {
                     viewFiveLineTwo.isHidden = true
                 }
@@ -521,7 +536,7 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
         }
         
     }
-    
+ 
     func setPageViewVisible() {
         pageViewOne.isHidden = false
         pageViewTwo.isHidden = false
@@ -579,6 +594,7 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
                 self.pageControlCollectionView.reloadData()
                 self.loadingView.stopLoading()
                 self.loadingView.isHidden = true
+                self.showOrHidePageControlView(countValue: self.tourGuideArray.count, scrolling: false)
                 if (self.tourGuideArray.count == 0) {
                     self.loadingView.stopLoading()
                     self.loadingView.noDataView.isHidden = false
