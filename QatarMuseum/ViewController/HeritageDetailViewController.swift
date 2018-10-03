@@ -33,6 +33,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     let networkReachability = NetworkReachabilityManager()
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var museumId : String? = nil
+    var progressImgArray = [UIImage]()
     
     //musheer
     let imageName = UIImage()
@@ -140,11 +141,8 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 let url = aboutDetailtArray[0].multimediaFile
                 if( url![0] != nil) {
                     imageView.kf.setImage(with: URL(string: url![0]))
-                    setupCarousel(imageUrlString: url![0])
-                    carousel.contentMode = .scaleAspectFill
-                    carousel.clipsToBounds = true
-//                    carousel.isUserInteractionEnabled = false
-                    self.view.addSubview(carousel)
+                    self.gallaryForAbout(url:aboutDetailtArray[0].multimediaFile!)
+                    
                 }
                 else {
                     imageView.image = UIImage(named: "default_imageX2")
@@ -208,6 +206,97 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
+    func gallaryForAbout(url: Array<Any>) {
+        
+        DispatchQueue.global().async {
+            self.progressImgArray.removeAll() // this is the image array
+            print(url)
+            print("-------Musheer ENTER-------")
+            if let url:Array = url {
+                for i in 0..<url.count {
+                    guard let url = URL(string: url[i] as! String) else {
+                        continue
+                    }
+                    
+                    let group = DispatchGroup()
+                    
+                    print(url)
+                    print("-------GROUP ENTER-------")
+                    
+                    group.enter()
+                    URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
+                        print(response?.suggestedFilename ?? url.lastPathComponent)
+                        
+                        if let imgData = data, let image = UIImage(data: imgData) {
+                            DispatchQueue.main.async() {
+                                self.progressImgArray.append(image)
+                                //                                            self.collectionView.reloadData()
+                                
+                                if (self.progressImgArray.count > 4)
+                                {
+                                    self.gallaryCarousel(uiimageGallary:self.progressImgArray)
+                                }
+                            }
+                        } else if let error = error {
+                            print(error)
+                        }
+                        
+                        group.leave()
+                    }).resume()
+                    
+                    group.wait()
+                }
+            }
+        }
+    }
+    
+    func gallaryCarousel(uiimageGallary: Array<Any>) {
+        
+        print(uiimageGallary)
+        print(uiimageGallary)
+        
+        let slide1 = ZKCarouselSlide(image: uiimageGallary[0] as! UIImage, title: "", description: "")
+        let slide2 = ZKCarouselSlide(image: uiimageGallary[1] as! UIImage, title: "", description: "")
+        let slide3 = ZKCarouselSlide(image: uiimageGallary[2] as! UIImage, title: "", description: "")
+        let slide4 = ZKCarouselSlide(image: uiimageGallary[3] as! UIImage, title: "", description: "")
+        let slide5 = ZKCarouselSlide(image: uiimageGallary[4] as! UIImage, title: "", description: "")
+
+        // Add the slides to the carousel
+        self.carousel.slides = [slide1, slide2, slide3, slide4, slide5]
+        
+        carousel.contentMode = .scaleAspectFill
+        carousel.clipsToBounds = true
+//        carousel.isUserInteractionEnabled = false
+        self.view.addSubview(carousel)
+        self.carousel.pageControl.isHidden = false
+        
+        let darkBlur = UIBlurEffect(style: UIBlurEffectStyle.light)
+        blurView = UIVisualEffectView(effect: darkBlur)
+        blurView.frame = carousel.bounds
+        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurView.alpha = 0
+        carousel.addSubview(blurView)
+        
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
+        } else {
+            closeButton.frame = CGRect(x: self.view.frame.width-50, y: 30, width: 40, height: 40)
+        }
+        closeButton.setImage(UIImage(named: "closeX1"), for: .normal)
+        closeButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom:12, right: 12)
+        
+        closeButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(closeTouchDownAction), for: .touchDown)
+        
+        closeButton.layer.shadowColor = UIColor.black.cgColor
+        closeButton.layer.shadowOffset = CGSize(width: 4, height: 4)
+        closeButton.layer.shadowRadius = 3
+        closeButton.layer.shadowOpacity = 2.0
+        view.addSubview(closeButton)
+    }
+    
+    
     
     private func setupCarousel(imageUrlString: String) {
         
