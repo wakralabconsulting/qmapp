@@ -209,7 +209,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     
     func gallaryForAbout(url: Array<Any>) {
         
-        DispatchQueue.global().async {
+        DispatchQueue.global(qos: .background).async {
             self.progressImgArray.removeAll() // this is the image array
             print(url)
             print("-------Musheer ENTER-------")
@@ -235,7 +235,10 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                 
                                 if (self.progressImgArray.count > 4)
                                 {
-                                    self.gallaryCarousel(uiimageGallary:self.progressImgArray)
+                                    DispatchQueue.main.async {
+                                        self.gallaryCarousel(uiimageGallary:self.progressImgArray)
+                                        
+                                    }
                                 }
                             }
                         } else if let error = error {
