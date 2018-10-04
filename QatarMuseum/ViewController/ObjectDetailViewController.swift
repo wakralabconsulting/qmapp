@@ -19,7 +19,7 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     let fullView: CGFloat = 100
     let closeButton = UIButton()
     var detailArray : [TourGuideFloorMap]! = []
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         objectTableView.register(UITableViewCell.self, forCellReuseIdentifier: "imageCell")
@@ -123,9 +123,8 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
             objectImageView.contentMode = .scaleAspectFit
             objectImageView.clipsToBounds = true
             cell.addSubview(objectImageView)
-            
+            cell.selectionStyle = .none
             objectImageView.isUserInteractionEnabled = true
-
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "objectDetailCellId", for: indexPath) as! ObjectDetailTableViewCell
@@ -144,7 +143,7 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
                 () in
                 self.setShareAction(cellObj: cell)
             }
-            
+            cell.selectionStyle = .none
             loadingView.stopLoading()
             loadingView.isHidden = true
             return cell

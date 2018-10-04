@@ -56,12 +56,13 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
     let pageCount: Int? = 14
     var reloaded: Bool = false
     var tourGuideArray: [TourGuideFloorMap]! = []
+    var countValue : Int? = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         loadUI()
         registerNib()
         getTourGuideDataFromServer()
-     
+     //previewCllectionView.isScrollEnabled = false
     }
     
     func loadUI() {
@@ -298,9 +299,11 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
         
         if (collectionView == previewCllectionView) {
             let cell : PreviewCollectionViewCell = previewCllectionView.dequeueReusableCell(withReuseIdentifier: "previewCellId", for: indexPath) as! PreviewCollectionViewCell
+            
             cell.setPreviewData(tourGuideData: tourGuideArray[indexPath.row])
            pageControlCollectionView.scrollToItem(at: indexPath, at: .right, animated: false)
            currentPreviewItem = indexPath
+            //self.previewCllectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
             if(indexPath.row == 0) {
                 viewOneLineOne.isHidden = true
                 if (tourGuideArray.count <= 5) {
@@ -343,10 +346,17 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
                     return cell
                 }
             }
-            
+            previewCllectionView.layoutIfNeeded()
             
             return cell
             
+        }
+    }
+    @objc func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+        if ((context.nextFocusedIndexPath != nil) && !collectionView.isScrollEnabled) {
+            
+            
+            collectionView.scrollToItem(at: context.nextFocusedIndexPath!, at: .centeredHorizontally, animated: true)
         }
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -360,7 +370,7 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
         self.present(objectDetailView, animated: false, completion: nil)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let heightValue = UIScreen.main.bounds.height/100
+        
         if (collectionView == previewCllectionView) {
             return CGSize(width: previewCllectionView.frame.width, height: previewCllectionView.frame.height)
         } else {
@@ -369,29 +379,28 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
             )
         }
     }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-   
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         
         
        // let pageWidth1 = scrollView.frame.size.width;
        // let page = floor((scrollView.contentOffset.x - pageWidth1 / 2) / pageWidth1) + 1;
         
-    
-       
-        
-        
-        
-        print(scrollView.contentOffset)
-        
+   
+
         targetContentOffset.pointee = scrollView.contentOffset
         let pageWidth:Float = Float(self.view.bounds.width)
         let minSpace:Float = 10.0
-        var cellToSwipe:Double = Double(Float((scrollView.contentOffset.x))/Float((pageWidth+minSpace))) + Double(0.5)
+        var cellToSwipe = Double()
+        //var cellToSwipe:Double = Double(Float((scrollView.contentOffset.x))/Float((pageWidth+minSpace))) + Double(0.5)
+
+        
+            cellToSwipe = Double(Float((scrollView.contentOffset.x))/Float((pageWidth+minSpace))) + Double(0.5)
         
        // var cellToSwipe:Double = Double(Float((scrollView.contentOffset.x))/(Float((pageWidth+minSpace)) * tourGuideArray.count))  + Double(0.5)
 
@@ -401,6 +410,14 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
             cellToSwipe = Double(tourGuideArray.count) - Double(1)
         }
         let indexPath:IndexPath = IndexPath(row: Int(cellToSwipe), section:0)
+        
+        
+    
+        
+        
+        
+        
+        
         self.previewCllectionView.scrollToItem(at:indexPath, at: UICollectionViewScrollPosition.left, animated: true)
        // self.previewCllectionView.scrollToItem(at:indexPath, at: UICollectionViewScrollPosition.right, animated: true)
         currentPreviewItem = indexPath
@@ -578,6 +595,9 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
         let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as! FloorMapViewController
+        let selectedItem = tourGuideArray[currentPreviewItem.row]
+        floorMapView.selectedScienceTour = selectedItem.artifactPosition
+        floorMapView.selectedScienceTourLevel = selectedItem.floorLevel
         floorMapView.fromScienceTour = true
         self.present(floorMapView, animated: false, completion: nil)
     }
@@ -590,6 +610,7 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
             case .success(let data):
                 self.tourGuideArray = data.tourGuideFloorMap
                 //self.saveOrUpdateHeritageCoredata()
+                self.countValue = self.tourGuideArray.count
                 self.previewCllectionView.reloadData()
                 self.pageControlCollectionView.reloadData()
                 self.loadingView.stopLoading()

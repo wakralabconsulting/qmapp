@@ -95,6 +95,8 @@
 		B891D06320DBCC3900919F30 /* HeritageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B891D06220DBCC3900919F30 /* HeritageCollectionCell.swift */; };
 		B891D06520DBCC5200919F30 /* HeritageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B891D06420DBCC5100919F30 /* HeritageCell.xib */; };
 		B8A1479B20FCA2AB00833B7B /* TourGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A1479A20FCA2AB00833B7B /* TourGuideViewController.swift */; };
+		B8ADA8AB2164CC2E00127F9A /* PreviewContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8ADA8AA2164CC2E00127F9A /* PreviewContentViewController.swift */; };
+		B8ADA8AD2164CD4100127F9A /* PreviewContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8ADA8AC2164CD4100127F9A /* PreviewContainerViewController.swift */; };
 		B8AFA2EB20E78BA9008838A6 /* DINNextLTArabic-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8AFA2E820E78BA1008838A6 /* DINNextLTArabic-Bold.ttf */; };
 		B8AFA2EC20E78BA9008838A6 /* DINNextLTArabic-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8AFA2E920E78BA3008838A6 /* DINNextLTArabic-Light.ttf */; };
 		B8AFA2ED20E78BA9008838A6 /* DINNextLTArabic-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8AFA2EA20E78BA6008838A6 /* DINNextLTArabic-Regular.ttf */; };
@@ -311,6 +313,8 @@
 		B891D06220DBCC3900919F30 /* HeritageCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeritageCollectionCell.swift; sourceTree = "<group>"; };
 		B891D06420DBCC5100919F30 /* HeritageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeritageCell.xib; sourceTree = "<group>"; };
 		B8A1479A20FCA2AB00833B7B /* TourGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourGuideViewController.swift; sourceTree = "<group>"; };
+		B8ADA8AA2164CC2E00127F9A /* PreviewContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContentViewController.swift; sourceTree = "<group>"; };
+		B8ADA8AC2164CD4100127F9A /* PreviewContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContainerViewController.swift; sourceTree = "<group>"; };
 		B8AFA2E820E78BA1008838A6 /* DINNextLTArabic-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINNextLTArabic-Bold.ttf"; sourceTree = "<group>"; };
 		B8AFA2E920E78BA3008838A6 /* DINNextLTArabic-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINNextLTArabic-Light.ttf"; sourceTree = "<group>"; };
 		B8AFA2EA20E78BA6008838A6 /* DINNextLTArabic-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINNextLTArabic-Regular.ttf"; sourceTree = "<group>"; };
@@ -663,6 +667,8 @@
 				1B3C505621270F260034E560 /* ArtifactNumberPadViewController.swift */,
 				1B373E94212C794600EE8DD1 /* CulturePassViewController.swift */,
 				B85285D9214A699C00F5D1FF /* PreviewPageViewController.swift */,
+				B8ADA8AA2164CC2E00127F9A /* PreviewContentViewController.swift */,
+				B8ADA8AC2164CD4100127F9A /* PreviewContainerViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1280,6 +1286,7 @@
 				B8B81FE720DE2E47004885D0 /* KASlideShow.m in Sources */,
 				B8E2C01020C7E9E900F3CE41 /* ComingSoonPopUp.swift in Sources */,
 				B8B54D6E20FF516B00B21348 /* CollectionDetailCell.swift in Sources */,
+				B8ADA8AD2164CD4100127F9A /* PreviewContainerViewController.swift in Sources */,
 				B8294CE720CBF265002AFF72 /* FSCalendarCalculator.m in Sources */,
 				B8294CED20CBF265002AFF72 /* NSString+Category.m in Sources */,
 				B8D1228D20C8EE8600772507 /* WebViewController.swift in Sources */,
@@ -1297,6 +1304,7 @@
 				B8C64D4720FDC71400C2D51A /* TourGuideCollectionReusableView.swift in Sources */,
 				B8294CE820CBF265002AFF72 /* FSCalendarConstants.m in Sources */,
 				B8C64D4D20FDDBB700C2D51A /* MiaCollectionReusableView.swift in Sources */,
+				B8ADA8AB2164CC2E00127F9A /* PreviewContentViewController.swift in Sources */,
 				B8EAB7BC20CA424300C001B2 /* CalendarConfigViewController.swift in Sources */,
 				B8D4B8D72114465100937180 /* Heritage.swift in Sources */,
 				B82C87F220E69C9700777674 /* DiningDetailViewController.swift in Sources */,
