@@ -1,36 +1,35 @@
 //
-//  ViewController.swift
-//  QatarMuseum
+//  PreviewContainerViewController.swift
+//  QatarMuseums
 //
-//  Created by Exalture on 06/06/18.
-//  Copyright © 2018 Exalture. All rights reserved.
+//  Created by Exalture on 03/10/18.
+//  Copyright © 2018 Wakralab. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController,UIPageViewControllerDelegate,UIPageViewControllerDataSource {
+class PreviewContainerViewController: UIViewController,UIPageViewControllerDelegate,UIPageViewControllerDataSource {
 
     var pageViewController = UIPageViewController()
     
-    @IBOutlet weak var contentView: UIView!
     var pageImages = NSArray()
     override func viewDidLoad() {
         super.viewDidLoad()
         pageImages = ["exhibition","artifactimg","001_MIA_MW.146_005","coming_soon_2","coming_soon_1"]
-        pageViewController = storyboard?.instantiateViewController(withIdentifier: "PageViewControllerId") as! UIPageViewController
-        self.pageViewController.dataSource = self;
+        let pageViewController = storyboard?.instantiateViewController(withIdentifier: "PageViewControllerId")
+         self.pageViewController.dataSource = self;
         let startingViewController: PreviewContentViewController = self.viewControllerAtIndex(index: 0)!
         let viewControllers = [startingViewController]
         
         self.pageViewController.setViewControllers(viewControllers, direction: .forward, animated: false, completion: nil)
+
         
-        
-        self.pageViewController.view.frame = contentView.frame
-        self.addChildViewController(pageViewController)
-        self.contentView.addSubview((pageViewController.view)!)
+        self.pageViewController.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height - 30)
+        self.addChildViewController(pageViewController!)
+        self.view.addSubview((pageViewController?.view)!)
         self.pageViewController.didMove(toParentViewController: self)
     }
-    
+
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         
         
@@ -56,7 +55,7 @@ class ViewController: UIViewController,UIPageViewControllerDelegate,UIPageViewCo
         return self.viewControllerAtIndex(index: index!)
     }
     func viewControllerAtIndex(index : Int) -> PreviewContentViewController? {
-        
+      
         if ((self.pageImages.count == 0) || (index > self.pageImages.count)){
             return nil
         }
@@ -65,12 +64,12 @@ class ViewController: UIViewController,UIPageViewControllerDelegate,UIPageViewCo
         pageContentViewController.pageIndex = index
         return pageContentViewController
     }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
 
+    
 
 }
-
