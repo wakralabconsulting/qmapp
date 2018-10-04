@@ -42,46 +42,54 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     var bottomSheetVC:MapDetailView = MapDetailView()
     var floorMapArray: [TourGuideFloorMap]! = []
     var tourGuideArray: [TourGuideFloorMap]! = []
+    var selectedScienceTour : String? = nil
+    var selectedScienceTourLevel : String? = nil
     @IBOutlet weak var overlayView: UIView!
+    
+    
+    
     var overlay = GMSGroundOverlay()
-    let l2_atr1 = CLLocationCoordinate2D(latitude: 25.295141, longitude: 51.539185)
-    let l2_atr2 = CLLocationCoordinate2D(latitude: 25.295500, longitude: 51.538855)
-    let l2_atr3 = CLLocationCoordinate2D(latitude: 25.295468, longitude: 51.538905)
-    let l2_atr4 = CLLocationCoordinate2D(latitude: 25.295510, longitude: 51.538803)
-    let l2_atr5 = CLLocationCoordinate2D(latitude: 25.295450, longitude: 51.538830)
-    let l2_atr6 = CLLocationCoordinate2D(latitude: 25.295540, longitude: 51.538835)
-    let l2_atr7 = CLLocationCoordinate2D(latitude: 25.295571, longitude: 51.538840)
-    let l2_atr8 = CLLocationCoordinate2D(latitude: 25.295558, longitude: 51.538841)
-    let l2_atr9 = CLLocationCoordinate2D(latitude: 25.295643, longitude: 51.538895)
-    let l2_atr10 = CLLocationCoordinate2D(latitude: 25.295654, longitude: 51.538918)
-    let l2_atr11 = CLLocationCoordinate2D(latitude: 25.295652, longitude: 51.538927)
-    let l2_atr12 = CLLocationCoordinate2D(latitude: 25.295686, longitude: 51.539265)
-    let l2_atr13 = CLLocationCoordinate2D(latitude: 25.295566, longitude: 51.539397)
-    let l3_atr1 = CLLocationCoordinate2D(latitude: 25.295230, longitude: 51.539170)
-    let l3_atr2 = CLLocationCoordinate2D(latitude: 25.295245, longitude: 51.539210)
-    let l3_atr3 = CLLocationCoordinate2D(latitude: 25.295330, longitude: 51.539414)
-    let l3_atr4 = CLLocationCoordinate2D(latitude: 25.295664, longitude: 51.539330)
-    let l3_atr5 = CLLocationCoordinate2D(latitude: 25.295628, longitude: 51.539360)
-    let l3_atr6 = CLLocationCoordinate2D(latitude: 25.295505, longitude: 51.538905)
-    let l2Marker = GMSMarker()
-    let l2Marker2 = GMSMarker()
-    let l2Marker3 = GMSMarker()
-    let l2Marker4 = GMSMarker()
-    let l2Marker5 = GMSMarker()
-    let l2Marker6 = GMSMarker()
-    let l2Marker7 = GMSMarker()
-    let l2Marker8 = GMSMarker()
-    let l2Marker9 = GMSMarker()
-    let l2Marker10 = GMSMarker()
-    let l2Marker11 = GMSMarker()
-    let l2Marker12 = GMSMarker()
-    let l2Marker13 = GMSMarker()
-    let l3Marker1 = GMSMarker()
-    let l3Marker2 = GMSMarker()
-    let l3Marker3 = GMSMarker()
-    let l3Marker4 = GMSMarker()
-    let l3Marker5 = GMSMarker()
-    let l3Marker6 = GMSMarker()
+    let L2_G1_SC3 = CLLocationCoordinate2D(latitude: 25.295141, longitude: 51.539185)
+    let L2_G8 = CLLocationCoordinate2D(latitude: 25.295500, longitude: 51.538855)
+    let L2_G8_SC1 = CLLocationCoordinate2D(latitude: 25.295468, longitude: 51.538905)
+    let L2_G8_SC6_1 = CLLocationCoordinate2D(latitude: 25.295510, longitude: 51.538803)
+    let L2_G8_SC6_2 = CLLocationCoordinate2D(latitude: 25.295450, longitude: 51.538830)
+    let L2_G8_SC5 = CLLocationCoordinate2D(latitude: 25.295540, longitude: 51.538835)
+    let L2_G8_SC4_1 = CLLocationCoordinate2D(latitude: 25.295571, longitude: 51.538840)
+    let L2_G8_SC4_2 = CLLocationCoordinate2D(latitude: 25.295558, longitude: 51.538841)
+    let L2_G9_SC7 = CLLocationCoordinate2D(latitude: 25.295643, longitude: 51.538895)
+    let L2_G9_SC5_1 = CLLocationCoordinate2D(latitude: 25.295654, longitude: 51.538918)
+    let L2_G9_SC5_2 = CLLocationCoordinate2D(latitude: 25.295652, longitude: 51.538927)
+    let L2_G5_SC6 = CLLocationCoordinate2D(latitude: 25.295686, longitude: 51.539265)
+   // let L2_G3_SC14 = CLLocationCoordinate2D(latitude: 25.295566, longitude: 51.539397)
+    let L2_G3_SC13 = CLLocationCoordinate2D(latitude: 25.295566, longitude: 51.539429)
+    
+    let L3_G10_SC1_1 = CLLocationCoordinate2D(latitude: 25.295230, longitude: 51.539170)
+    let L3_G10_SC1_2 = CLLocationCoordinate2D(latitude: 25.295245, longitude: 51.539210)
+    let L3_G11_WR15 = CLLocationCoordinate2D(latitude: 25.295330, longitude: 51.539414)
+    let L3_G13_5 = CLLocationCoordinate2D(latitude: 25.295664, longitude: 51.539330)
+    let L3_G13_7 = CLLocationCoordinate2D(latitude: 25.295628, longitude: 51.539360)
+    
+    let L3_G17_3 = CLLocationCoordinate2D(latitude: 25.295505, longitude: 51.538905)
+    let l2_g1_sc3 = GMSMarker()
+    let l2_g8 = GMSMarker()
+    let l2_g8_sc1 = GMSMarker()
+    let l2_g8_sc6_1 = GMSMarker()
+    let l2_g8_sc6_2 = GMSMarker()
+    let l2_g8_sc5 = GMSMarker()
+    let l2_g8_sc4_1 = GMSMarker()
+    let l2_g8_sc4_2 = GMSMarker()
+    let l2_g9_sc7 = GMSMarker()
+    let l2_g9_sc5_1 = GMSMarker()
+    let l2_g9_sc5_2 = GMSMarker()
+    let l2_g5_sc6 = GMSMarker()
+    let l2_g3_sc13 = GMSMarker()
+    let l3_g10_sc1_1 = GMSMarker()
+    let l3_g10_sc1_2 = GMSMarker()
+    let l3_g11_wr15 = GMSMarker()
+    let l3_g13_5 = GMSMarker()
+    let l3_g13_7 = GMSMarker()
+    let l3_g17_3 = GMSMarker()
     var objectPopupView : ObjectPopupView = ObjectPopupView()
     var level : levelNumber?
     var zoomValue = Float()
@@ -121,9 +129,20 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         thirdLevelView.layer.shadowOffset = CGSize.zero
         thirdLevelView.layer.shadowRadius = 1
         if (fromScienceTour == true) {
-            firstLevelView.backgroundColor = UIColor.mapLevelColor
-            secondLevelView.backgroundColor = UIColor.mapLevelColor
-            thirdLevelView.backgroundColor = UIColor.white
+            
+            
+            if(selectedScienceTourLevel == "2") {
+                firstLevelView.backgroundColor = UIColor.mapLevelColor
+                secondLevelView.backgroundColor = UIColor.white
+                thirdLevelView.backgroundColor = UIColor.mapLevelColor
+            } else {
+                firstLevelView.backgroundColor = UIColor.mapLevelColor
+                secondLevelView.backgroundColor = UIColor.mapLevelColor
+                thirdLevelView.backgroundColor = UIColor.white
+            }
+            
+            
+            
             //numberSerchBtn.setImage(UIImage(named: "side_menu_blackX1"), for: .normal)
            // self.numberSerchBtn.contentEdgeInsets = UIEdgeInsets(top: 11, left: 5, bottom: 11, right: 5)
             numberSerchBtn.isHidden = true
@@ -178,9 +197,16 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         viewForMap.mapType = .normal
         var icon = UIImage()
         if (fromScienceTour == true) {
-            level = levelNumber.three
-            icon = UIImage(named: "qm_level_3")!
-            viewForMap.animate(toZoom: 19.5)
+            if(selectedScienceTourLevel == "3") {
+                level = levelNumber.three
+                icon = UIImage(named: "qm_level_3")!
+                viewForMap.animate(toZoom: 19.5)
+            } else {
+                level = levelNumber.two
+                icon = UIImage(named: "qm_level_2")!
+                viewForMap.animate(toZoom: 19.5)
+            }
+            
         } else {
             level = levelNumber.one
             icon = UIImage(named: "qm_level_1")!
@@ -221,170 +247,265 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     //Function for show level 2 marker
     func showLevelTwoMarker() {
         if (zoomValue > 18) {
-            l2Marker.position = l2_atr1
-            l2Marker.title = ""
-            l2Marker.snippet = ""
-            l2Marker.icon = UIImage(named: "SI.5.1999.Front.2000x2000")
-            l2Marker.icon = self.imageWithImage(image: UIImage(named: "SI.5.1999.Front.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
-            l2Marker.appearAnimation = .pop
-            l2Marker.map = viewForMap
+            l2_g1_sc3.position = L2_G1_SC3
+            l2_g1_sc3.title = "l2_g1_sc3"
+            l2_g1_sc3.snippet = ""
+            l2_g1_sc3.icon = UIImage(named: "SI.5.1999.Front.2000x2000")
+            if((fromScienceTour) && (selectedScienceTour == "l2_g1_sc3")) {
+                l2_g1_sc3.icon = self.imageWithImage(image: UIImage(named: "SI.5.1999.Front.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
+            } else {
+                l2_g1_sc3.icon = self.imageWithImage(image: UIImage(named: "SI.5.1999.Front.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
+            }
             
-            l2Marker2.position = l2_atr2
-            l2Marker2.title = ""
-            l2Marker2.snippet = ""
-            //l2Marker2.icon = UIImage(named: "MS.523.1999-1.2000x2000")
-            l2Marker2.icon = self.imageWithImage(image: UIImage(named: "MS.523.1999-1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
-            l2Marker2.appearAnimation = .pop
-            l2Marker2.map = viewForMap
+            l2_g1_sc3.appearAnimation = .pop
+            l2_g1_sc3.map = viewForMap
             
-            l2Marker3.position = l2_atr3
-            l2Marker3.title = ""
-            l2Marker3.snippet = ""
-            l2Marker3.icon = self.imageWithImage(image: UIImage(named: "MW_548")!, scaledToSize: CGSize(width:38, height: 44))
-            l2Marker3.appearAnimation = .pop
-            l2Marker3.map = viewForMap
+            l2_g8.position = L2_G8
+            l2_g8.title = "l2_g8"
+            l2_g8.snippet = ""
+            //l2_g8.icon = UIImage(named: "MS.523.1999-1.2000x2000")
+            if((fromScienceTour) && (selectedScienceTour == "l2_g8")) {
+                l2_g8.icon = self.imageWithImage(image: UIImage(named: "MS.523.1999-1.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
+            } else {
+                l2_g8.icon = self.imageWithImage(image: UIImage(named: "MS.523.1999-1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
+            }
             
-            l2Marker4.position = l2_atr4
-            l2Marker4.title = ""
-            l2Marker4.snippet = ""
-            l2Marker4.icon = self.imageWithImage(image: UIImage(named: "MS.709.2010-1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
-            l2Marker4.appearAnimation = .pop
-            l2Marker4.map = viewForMap
+            l2_g8.appearAnimation = .pop
+            l2_g8.map = viewForMap
             
-            l2Marker5.position = l2_atr5
-            l2Marker5.title = ""
-            l2Marker5.snippet = ""
-            l2Marker5.icon = self.imageWithImage(image: UIImage(named: "MS.709.2010-2")!, scaledToSize: CGSize(width:38, height: 44))
-            l2Marker5.appearAnimation = .pop
-            l2Marker5.map = viewForMap
+            l2_g8_sc1.position = L2_G8_SC1
+            l2_g8_sc1.title = "l2_g8_sc1"
+            l2_g8_sc1.snippet = ""
+            if((fromScienceTour) && (selectedScienceTour == "l2_g8_sc1")) {
+                l2_g8_sc1.icon = self.imageWithImage(image: UIImage(named: "MW_548")!, scaledToSize: CGSize(width:58, height: 64))
+            } else {
+                l2_g8_sc1.icon = self.imageWithImage(image: UIImage(named: "MW_548")!, scaledToSize: CGSize(width:38, height: 44))
+            }
             
-            l2Marker6.position = l2_atr6
-            l2Marker6.title = ""
-            l2Marker6.snippet = ""
-            l2Marker6.icon = self.imageWithImage(image: UIImage(named: "MW.361.2007.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
-            l2Marker6.appearAnimation = .pop
-            l2Marker6.map = viewForMap
+            l2_g8_sc1.appearAnimation = .pop
+            l2_g8_sc1.map = viewForMap
             
-            l2Marker7.position = l2_atr7
-            l2Marker7.title = ""
-            l2Marker7.snippet = ""
-            l2Marker7.icon = self.imageWithImage(image: UIImage(named: "MS.688.2008.Recto-1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
-            l2Marker7.appearAnimation = .pop
-            l2Marker7.map = viewForMap
+            l2_g8_sc6_1.position = L2_G8_SC6_1
+            l2_g8_sc6_1.title = "l2_g8_sc6_1"
+            l2_g8_sc6_1.snippet = ""
+            if((fromScienceTour) && (selectedScienceTour == "l2_g8_sc6_1")) {
+                l2_g8_sc6_1.icon = self.imageWithImage(image: UIImage(named: "MS.709.2010-1.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
+            } else {
+                l2_g8_sc6_1.icon = self.imageWithImage(image: UIImage(named: "MS.709.2010-1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
+            }
             
-            l2Marker8.position = l2_atr8
-            l2Marker8.title = ""
-            l2Marker8.snippet = ""
-            l2Marker8.icon = self.imageWithImage(image: UIImage(named: "MS.650 .1 recto-1")!, scaledToSize: CGSize(width:38, height: 44))
-            l2Marker8.appearAnimation = .pop
-            l2Marker8.map = viewForMap
+            l2_g8_sc6_1.appearAnimation = .pop
+            l2_g8_sc6_1.map = viewForMap
             
-            l2Marker9.position = l2_atr9
-            l2Marker9.title = ""
-            l2Marker9.snippet = ""
-            l2Marker9.icon = self.imageWithImage(image: UIImage(named: "001_MIA_MW.146_005")!, scaledToSize: CGSize(width:38, height: 44))
-            l2Marker9.appearAnimation = .pop
-            l2Marker9.map = viewForMap
+            l2_g8_sc6_2.position = L2_G8_SC6_2
+            l2_g8_sc6_2.title = "l2_g8_sc6_2"
+            l2_g8_sc6_2.snippet = ""
+            if((fromScienceTour) && (selectedScienceTour == "l2_g8_sc6_2")) {
+                l2_g8_sc6_2.icon = self.imageWithImage(image: UIImage(named: "MS.709.2010-2")!, scaledToSize: CGSize(width:54, height: 64))
+            } else {
+                l2_g8_sc6_2.icon = self.imageWithImage(image: UIImage(named: "MS.709.2010-2")!, scaledToSize: CGSize(width:38, height: 44))
+            }
             
-            l2Marker10.position = l2_atr10
-            l2Marker10.title = ""
-            l2Marker10.snippet = ""
-            l2Marker10.icon = self.imageWithImage(image: UIImage(named: "MW.340.Front.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
-            l2Marker10.appearAnimation = .pop
-            l2Marker10.map = viewForMap
+            l2_g8_sc6_2.appearAnimation = .pop
+            l2_g8_sc6_2.map = viewForMap
             
-            l2Marker11.position = l2_atr11
-            l2Marker11.title = ""
-            l2Marker11.snippet = ""
-            l2Marker11.icon = self.imageWithImage(image: UIImage(named: "MS.794-1")!, scaledToSize: CGSize(width:38, height: 44))
-            l2Marker11.appearAnimation = .pop
-            l2Marker11.map = viewForMap
+            l2_g8_sc5.position = L2_G8_SC5
+            l2_g8_sc5.title = "l2_g8_sc5"
+            l2_g8_sc5.snippet = ""
+            if((fromScienceTour) && (selectedScienceTour == "l2_g8_sc5")) {
+                l2_g8_sc5.icon = self.imageWithImage(image: UIImage(named: "MW.361.2007.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
+            } else {
+                l2_g8_sc5.icon = self.imageWithImage(image: UIImage(named: "MW.361.2007.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
+            }
             
-            l2Marker12.position = l2_atr12
-            l2Marker12.title = ""
-            l2Marker12.snippet = ""
-            l2Marker12.icon = self.imageWithImage(image: UIImage(named: "MW_56")!, scaledToSize: CGSize(width:38, height: 44))
-            l2Marker12.appearAnimation = .pop
-            l2Marker12.map = viewForMap
+            l2_g8_sc5.appearAnimation = .pop
+            l2_g8_sc5.map = viewForMap
             
-            l2Marker13.position = l2_atr13
-            l2Marker13.title = ""
-            l2Marker13.snippet = ""
-            l2Marker13.icon = self.imageWithImage(image: UIImage(named: "MW.634-EMu.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
-            l2Marker13.appearAnimation = .pop
-            l2Marker13.map = viewForMap
+            l2_g8_sc4_1.position = L2_G8_SC4_1
+            l2_g8_sc4_1.title = "l2_g8_sc4_1"
+            l2_g8_sc4_1.snippet = ""
+            if((fromScienceTour) && (selectedScienceTour == "l2_g8_sc4_1")) {
+                l2_g8_sc4_1.icon = self.imageWithImage(image: UIImage(named: "MS.688.2008.Recto-1.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
+            } else {
+                l2_g8_sc4_1.icon = self.imageWithImage(image: UIImage(named: "MS.688.2008.Recto-1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
+            }
+            
+            l2_g8_sc4_1.appearAnimation = .pop
+            l2_g8_sc4_1.map = viewForMap
+            
+            l2_g8_sc4_2.position = L2_G8_SC4_2
+            l2_g8_sc4_2.title = "l2_g8_sc4_2"
+            l2_g8_sc4_2.snippet = ""
+            if((fromScienceTour) && (selectedScienceTour == "l2_g8_sc4_2")) {
+                l2_g8_sc4_2.icon = self.imageWithImage(image: UIImage(named: "MS.650 .1 recto-1")!, scaledToSize: CGSize(width:54, height: 64))
+            } else {
+                l2_g8_sc4_2.icon = self.imageWithImage(image: UIImage(named: "MS.650 .1 recto-1")!, scaledToSize: CGSize(width:38, height: 44))
+            }
+            
+            l2_g8_sc4_2.appearAnimation = .pop
+            l2_g8_sc4_2.map = viewForMap
+            
+            l2_g9_sc7.position = L2_G9_SC7
+            l2_g9_sc7.title = "l2_g9_sc7"
+            l2_g9_sc7.snippet = ""
+            if((fromScienceTour) && (selectedScienceTour == "l2_g9_sc7")) {
+                l2_g9_sc7.icon = self.imageWithImage(image: UIImage(named: "001_MIA_MW.146_005")!, scaledToSize: CGSize(width:54, height: 64))
+            } else {
+                l2_g9_sc7.icon = self.imageWithImage(image: UIImage(named: "001_MIA_MW.146_005")!, scaledToSize: CGSize(width:38, height: 44))
+            }
+            
+            l2_g9_sc7.appearAnimation = .pop
+            l2_g9_sc7.map = viewForMap
+            
+            l2_g9_sc5_1.position = L2_G9_SC5_1
+            l2_g9_sc5_1.title = "l2_g9_sc5_1"
+            l2_g9_sc5_1.snippet = ""
+            if((fromScienceTour) && (selectedScienceTour == "l2_g9_sc5_1")) {
+                l2_g9_sc5_1.icon = self.imageWithImage(image: UIImage(named: "MW.340.Front.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
+            } else {
+                l2_g9_sc5_1.icon = self.imageWithImage(image: UIImage(named: "MW.340.Front.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
+            }
+            
+            l2_g9_sc5_1.appearAnimation = .pop
+            l2_g9_sc5_1.map = viewForMap
+            
+            l2_g9_sc5_2.position = L2_G9_SC5_2
+            l2_g9_sc5_2.title = "l2_g9_sc5_2"
+            l2_g9_sc5_2.snippet = ""
+            if((fromScienceTour) && (selectedScienceTour == "l2_g9_sc5_2")) {
+                l2_g9_sc5_2.icon = self.imageWithImage(image: UIImage(named: "MS.794-1")!, scaledToSize: CGSize(width:54, height: 64))
+            } else {
+                l2_g9_sc5_2.icon = self.imageWithImage(image: UIImage(named: "MS.794-1")!, scaledToSize: CGSize(width:38, height: 44))
+            }
+            
+            l2_g9_sc5_2.appearAnimation = .pop
+            l2_g9_sc5_2.map = viewForMap
+            
+            l2_g5_sc6.position = L2_G5_SC6
+            l2_g5_sc6.title = "l2_g5_sc6"
+            l2_g5_sc6.snippet = ""
+            if((fromScienceTour) && (selectedScienceTour == "l2_g5_sc6")) {
+                l2_g5_sc6.icon = self.imageWithImage(image: UIImage(named: "MW_56")!, scaledToSize: CGSize(width:54, height: 64))
+            } else {
+                l2_g5_sc6.icon = self.imageWithImage(image: UIImage(named: "MW_56")!, scaledToSize: CGSize(width:38, height: 44))
+            }
+            
+            l2_g5_sc6.appearAnimation = .pop
+            l2_g5_sc6.map = viewForMap
+            
+            l2_g3_sc13.position = L2_G3_SC13
+            l2_g3_sc13.title = "l2_g3_sc13"
+            l2_g3_sc13.snippet = ""
+            if((fromScienceTour) && (selectedScienceTour == "l2_g3_sc13")) {
+                l2_g3_sc13.icon = self.imageWithImage(image: UIImage(named: "MW.634-EMu.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
+            } else {
+                l2_g3_sc13.icon = self.imageWithImage(image: UIImage(named: "MW.634-EMu.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
+            }
+            
+            l2_g3_sc13.appearAnimation = .pop
+            l2_g3_sc13.map = viewForMap
             
             
         } else {
-            l2Marker.map = nil
-            l2Marker2.map = nil
-            l2Marker3.map = nil
-            l2Marker4.map = nil
-            l2Marker5.map = nil
-            l2Marker6.map = nil
-            l2Marker7.map = nil
-            l2Marker8.map = nil
-            l2Marker9.map = nil
-            l2Marker10.map = nil
-            l2Marker11.map = nil
-            l2Marker12.map = nil
-            l2Marker13.map = nil
+            l2_g1_sc3.map = nil
+            l2_g8.map = nil
+            l2_g8_sc1.map = nil
+            l2_g8_sc6_1.map = nil
+            l2_g8_sc6_2.map = nil
+            l2_g8_sc5.map = nil
+            l2_g8_sc4_1.map = nil
+            l2_g8_sc4_2.map = nil
+            l2_g9_sc7.map = nil
+            l2_g9_sc5_1.map = nil
+            l2_g9_sc5_2.map = nil
+            l2_g5_sc6.map = nil
+            l2_g3_sc13.map = nil
         }
     }
     //Function for show level 3 marker
     func showLevelThreeMarker() {
         if (zoomValue > 18) {
-            l3Marker1.position = l3_atr1
-            l3Marker1.title = "PO.297"
-            l3Marker1.snippet = "PO.297"
-            l3Marker1.icon = self.imageWithImage(image: UIImage(named: "PO.297.2006.1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
-            l3Marker1.appearAnimation = .pop
-            l3Marker1.map = viewForMap
+            l3_g10_sc1_1.position = L3_G10_SC1_1
+            l3_g10_sc1_1.title = "l3_g10_sc1_1"
+            l3_g10_sc1_1.snippet = "PO.297"
+            if((fromScienceTour) && (selectedScienceTour == "l3_g10_sc1_1")) {
+                l3_g10_sc1_1.icon = self.imageWithImage(image: UIImage(named: "PO.297.2006.1.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
+            } else {
+                l3_g10_sc1_1.icon = self.imageWithImage(image: UIImage(named: "PO.297.2006.1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
+            }
             
-            l3Marker2.position = l3_atr2
-            l3Marker2.title = ""
-            l3Marker2.snippet = ""
-            l3Marker2.icon = self.imageWithImage(image: UIImage(named: "PO.308")!, scaledToSize: CGSize(width:38, height: 44))
-            l3Marker2.appearAnimation = .pop
-            l3Marker2.map = viewForMap
+            l3_g10_sc1_1.appearAnimation = .pop
+            l3_g10_sc1_1.map = viewForMap
             
-            l3Marker3.position = l3_atr3
-            l3Marker3.title = ""
-            l3Marker3.snippet = ""
-            l3Marker3.icon = self.imageWithImage(image: UIImage(named: "MS.647.A-59")!, scaledToSize: CGSize(width:38, height: 44))
-            l3Marker3.appearAnimation = .pop
-            l3Marker3.map = viewForMap
+            l3_g10_sc1_2.position = L3_G10_SC1_2
+            l3_g10_sc1_2.title = "l3_g10_sc1_2"
+            l3_g10_sc1_2.snippet = ""
+            if((fromScienceTour) && (selectedScienceTour == "l3_g10_sc1_2")) {
+                l3_g10_sc1_2.icon = self.imageWithImage(image: UIImage(named: "PO.308")!, scaledToSize: CGSize(width:54, height: 64))
+            } else {
+                l3_g10_sc1_2.icon = self.imageWithImage(image: UIImage(named: "PO.308")!, scaledToSize: CGSize(width:38, height: 44))
+            }
             
-            l3Marker4.position = l3_atr4
-            l3Marker4.title = ""
-            l3Marker4.snippet = ""
-            l3Marker4.icon = self.imageWithImage(image: UIImage(named: "HS.32-1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
-            l3Marker4.appearAnimation = .pop
-            l3Marker4.map = viewForMap
+            l3_g10_sc1_2.appearAnimation = .pop
+            l3_g10_sc1_2.map = viewForMap
             
-            l3Marker5.position = l3_atr5
-            l3Marker5.title = ""
-            l3Marker5.snippet = ""
-            l3Marker5.icon = self.imageWithImage(image: UIImage(named: "GL.322-0564.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
-            l3Marker5.appearAnimation = .pop
-            l3Marker5.map = viewForMap
+            l3_g11_wr15.position = L3_G11_WR15
+            l3_g11_wr15.title = "l3_g11_wr15"
+            l3_g11_wr15.snippet = ""
+            if((fromScienceTour) && (selectedScienceTour == "l3_g11_wr15")) {
+                l3_g11_wr15.icon = self.imageWithImage(image: UIImage(named: "MS.647.A-59")!, scaledToSize: CGSize(width:54, height: 64))
+            } else {
+                l3_g11_wr15.icon = self.imageWithImage(image: UIImage(named: "MS.647.A-59")!, scaledToSize: CGSize(width:38, height: 44))
+            }
             
-            l3Marker6.position = l2_atr6
-            l3Marker6.title = ""
-            l3Marker6.snippet = ""
-            l3Marker6.icon = self.imageWithImage(image: UIImage(named: "IV_61")!, scaledToSize: CGSize(width:38, height: 44))
-            l3Marker6.appearAnimation = .pop
-            l3Marker6.map = viewForMap
+            l3_g11_wr15.appearAnimation = .pop
+            l3_g11_wr15.map = viewForMap
+            
+            l3_g13_5.position = L3_G13_5
+            l3_g13_5.title = "l3_g13_5"
+            l3_g13_5.snippet = ""
+            if((fromScienceTour) && (selectedScienceTour == "l3_g13_5")) {
+                l3_g13_5.icon = self.imageWithImage(image: UIImage(named: "GL.322-0564.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
+            } else {
+                l3_g13_5.icon = self.imageWithImage(image: UIImage(named: "GL.322-0564.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
+            }
+            
+            l3_g13_5.appearAnimation = .pop
+            l3_g13_5.map = viewForMap
+            
+            l3_g13_7.position = L3_G13_7
+            l3_g13_7.title = "l3_g13_7"
+            l3_g13_7.snippet = ""
+            if((fromScienceTour) && (selectedScienceTour == "l3_g13_7")) {
+                l3_g13_7.icon = self.imageWithImage(image: UIImage(named: "HS.32-1.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
+            } else {
+                l3_g13_7.icon = self.imageWithImage(image: UIImage(named: "HS.32-1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
+            }
+            
+            l3_g13_7.appearAnimation = .pop
+            l3_g13_7.map = viewForMap
+            
+            l3_g17_3.position = L3_G17_3
+            l3_g17_3.title = "l3_g17_3"
+            l3_g17_3.snippet = ""
+            if((fromScienceTour) && (selectedScienceTour == "l3_g17_3")) {
+                l3_g17_3.icon = self.imageWithImage(image: UIImage(named: "IV_61")!, scaledToSize: CGSize(width:54, height: 64))
+            } else {
+                l3_g17_3.icon = self.imageWithImage(image: UIImage(named: "IV_61")!, scaledToSize: CGSize(width:38, height: 44))
+            }
+            
+            l3_g17_3.appearAnimation = .pop
+            l3_g17_3.map = viewForMap
             
             
             
         } else {
-            l3Marker1.map = nil
-            l3Marker2.map = nil
-            l3Marker3.map = nil
-            l3Marker4.map = nil
-            l3Marker5.map = nil
-            l3Marker6.map = nil
+            l3_g10_sc1_1.map = nil
+            l3_g10_sc1_2.map = nil
+            l3_g11_wr15.map = nil
+            l3_g13_5.map = nil
+            l3_g13_7.map = nil
+            l3_g17_3.map = nil
         }
     }
     func showMarker(marker:GMSMarker,position: CLLocationCoordinate2D,titleString: String,imageName:String, zoomValue : Float){
@@ -415,37 +536,43 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     
     //MARK: Floor Levels
     @IBAction func didTapThirdLevel(_ sender: UIButton) {
-        level = levelNumber.three
-        firstLevelView.backgroundColor = UIColor.mapLevelColor
-        secondLevelView.backgroundColor = UIColor.mapLevelColor
-        thirdLevelView.backgroundColor = UIColor.white
-        overlay.icon = UIImage(named: "qm_level_3")
-        removeMarkers()
-        
-        if (zoomValue > 18) {
-            showLevelThreeMarker()
+        if (fromScienceTour == false) {
+            level = levelNumber.three
+            firstLevelView.backgroundColor = UIColor.mapLevelColor
+            secondLevelView.backgroundColor = UIColor.mapLevelColor
+            thirdLevelView.backgroundColor = UIColor.white
+            overlay.icon = UIImage(named: "qm_level_3")
+            removeMarkers()
+            
+            if (zoomValue > 18) {
+                showLevelThreeMarker()
+            }
         }
     }
     
     @IBAction func didtapSecondbutton(_ sender: UIButton) {
-        level = levelNumber.two
-        firstLevelView.backgroundColor = UIColor.mapLevelColor
-        secondLevelView.backgroundColor = UIColor.white
-        thirdLevelView.backgroundColor = UIColor.mapLevelColor
-        overlay.icon = UIImage(named: "qm_level_2")
-        removeMarkers()
-        if (zoomValue > 18) {
-            showLevelTwoMarker()
+        if (fromScienceTour == false) {
+            level = levelNumber.two
+            firstLevelView.backgroundColor = UIColor.mapLevelColor
+            secondLevelView.backgroundColor = UIColor.white
+            thirdLevelView.backgroundColor = UIColor.mapLevelColor
+            overlay.icon = UIImage(named: "qm_level_2")
+            removeMarkers()
+            if (zoomValue > 18) {
+                showLevelTwoMarker()
+            }
         }
     }
     
     @IBAction func didTapFirstButton(_ sender: UIButton) {
-        level = levelNumber.one
-        firstLevelView.backgroundColor = UIColor.white
-        secondLevelView.backgroundColor = UIColor.mapLevelColor
-        thirdLevelView.backgroundColor = UIColor.mapLevelColor
-        overlay.icon = UIImage(named: "qm_level_1")
-        removeMarkers()
+        if (fromScienceTour == false) {
+            level = levelNumber.one
+            firstLevelView.backgroundColor = UIColor.white
+            secondLevelView.backgroundColor = UIColor.mapLevelColor
+            thirdLevelView.backgroundColor = UIColor.mapLevelColor
+            overlay.icon = UIImage(named: "qm_level_1")
+            removeMarkers()
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -463,7 +590,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     
     //MARK: map delegate
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        if (fromScienceTour == false) {
         let markerIcon = marker.icon
+        let searchstring = marker.title
+            print(searchstring)
         if (level == levelNumber.two) {
             showLevelTwoMarker()
         }
@@ -475,7 +605,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             marker.icon = self?.imageWithImage(image: markerIcon!, scaledToSize: CGSize(width:52, height: 62))
             })
         //loadObjectPopup()
-        addBottomSheetView()
+       
+        if let arrayOffset = floorMapArray.index(where: {$0.artifactPosition == searchstring}) {
+            addBottomSheetView(index: arrayOffset)
+        }
+
+        }
         return true
     }
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
@@ -503,25 +638,25 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     
     func removeMarkers() {
-        l2Marker.map = nil
-        l2Marker2.map = nil
-        l2Marker3.map = nil
-        l2Marker4.map = nil
-        l2Marker5.map = nil
-        l2Marker6.map = nil
-        l2Marker7.map = nil
-        l2Marker8.map = nil
-        l2Marker9.map = nil
-        l2Marker10.map = nil
-        l2Marker11.map = nil
-        l2Marker12.map = nil
-        l2Marker13.map = nil
-        l3Marker1.map = nil
-        l3Marker2.map = nil
-        l3Marker3.map = nil
-        l3Marker4.map = nil
-        l3Marker5.map = nil
-        l3Marker6.map = nil
+        l2_g1_sc3.map = nil
+        l2_g8.map = nil
+        l2_g8_sc1.map = nil
+        l2_g8_sc6_1.map = nil
+        l2_g8_sc6_2.map = nil
+        l2_g8_sc5.map = nil
+        l2_g8_sc4_1.map = nil
+        l2_g8_sc4_2.map = nil
+        l2_g9_sc7.map = nil
+        l2_g9_sc5_1.map = nil
+        l2_g9_sc5_2.map = nil
+        l2_g5_sc6.map = nil
+        l2_g3_sc13.map = nil
+        l3_g10_sc1_1.map = nil
+        l3_g10_sc1_2.map = nil
+        l3_g11_wr15.map = nil
+        l3_g13_5.map = nil
+        l3_g13_7.map = nil
+        l3_g17_3.map = nil
     }
     
     //MARK: Poup Delegate
@@ -586,11 +721,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             self.dismiss(animated: false, completion: nil)
     }
     //Added BottomSheet for showing popup when we clicked in marker
-    func addBottomSheetView(scrollable: Bool? = true) {
+    func addBottomSheetView(scrollable: Bool? = true,index: Int?) {
         overlayView.isHidden = false
         bottomSheetVC = MapDetailView()
         bottomSheetVC.mapdetailDelegate = self
         bottomSheetVC.popUpArray = floorMapArray
+        bottomSheetVC.selectedIndex = index
         self.addChildViewController(bottomSheetVC)
         self.view.addSubview(bottomSheetVC.view)
         bottomSheetVC.didMove(toParentViewController: self)
@@ -637,8 +773,15 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     //MARK: WebServiceCall
     func getFloorMapDataFromServer()
     {
+        var tourGuideId : String? = ""
+        if (fromScienceTour) {
+            tourGuideId = "12216"
+        } else {
+            //tourGuideId = "12476"
+            tourGuideId = "12216"
+        }
         
-        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": "12216"])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": tourGuideId!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
             switch response.result {
             case .success(let data):
                 self.floorMapArray = data.tourGuideFloorMap
