@@ -27,6 +27,7 @@ class MapDetailView: UIViewController,ObjectImageViewProtocol {
     var objectImagePopupView : ObjectImageView = ObjectImageView()
     var gesture = UIPanGestureRecognizer()
     var popUpArray: [TourGuideFloorMap]! = []
+    var selectedIndex: Int? = 0
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -171,7 +172,9 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (indexPath.row == 0) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "objectPopupId", for: indexPath) as! ObjectPopupTableViewCell
-            cell.setPopupDetails(mapDetails: popUpArray[indexPath.row])
+            if(selectedIndex != nil) {
+                cell.setPopupDetails(mapDetails: popUpArray[selectedIndex!])
+            }
             cell.selectionStyle = .none
            // return tableView.dequeueReusableCell(withIdentifier: "objectPopupId")!
             return cell
@@ -181,8 +184,10 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
             let objectImageView = UIImageView()
             objectImageView.frame = CGRect(x: 0, y: 20, width: tableView.frame.width, height: 300)
             objectImageView.image = UIImage(named: "default_imageX2")
-            if let imageUrl = popUpArray[0].image {
-                objectImageView.kf.setImage(with: URL(string: imageUrl))
+            if(selectedIndex != nil) {
+                if let imageUrl = popUpArray[selectedIndex!].image {
+                    objectImageView.kf.setImage(with: URL(string: imageUrl))
+                }
             }
             objectImageView.backgroundColor = UIColor.white
             objectImageView.contentMode = .scaleAspectFit
@@ -195,12 +200,12 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
         } else {
              let cell = tableView.dequeueReusableCell(withIdentifier: "objectDetailID", for: indexPath) as! ObjectDetailTableViewCell
             cell.selectionStyle = .none
-            if (indexPath.row == 2){
-                cell.setObjectDetail(objectDetail: popUpArray[0])
-                
-            } else {
-                cell.setObjectHistoryDetail(historyDetail: popUpArray[0])
-                
+            if(selectedIndex != nil) {
+                if (indexPath.row == 2){
+                    cell.setObjectDetail(objectDetail: popUpArray[selectedIndex!])
+                } else {
+                    cell.setObjectHistoryDetail(historyDetail: popUpArray[selectedIndex!])
+                }
             }
             cell.favBtnTapAction = {
                 () in
@@ -227,10 +232,11 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
             })
 
         } else if(indexPath.row == 1) {
-            if let imageUrl = popUpArray[0].image {
-               self.loadObjectImagePopup(imgName: imageUrl )
+            if(selectedIndex != nil) {
+                if let imageUrl = popUpArray[selectedIndex!].image {
+                   self.loadObjectImagePopup(imgName: imageUrl )
+                }
             }
-            
         }
     }
     func setFavouritesAction(cellObj: ObjectDetailTableViewCell) {

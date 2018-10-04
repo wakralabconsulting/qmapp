@@ -9,7 +9,7 @@
 import UIKit
 
 class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate {
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var titleLabel: UITextView!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var detailSecondLabel: UILabel!
     @IBOutlet weak var centerImageView: UIImageView!
@@ -47,7 +47,7 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate {
     }
     
     func setObjectDetail(objectDetail:TourGuideFloorMap) {
-        titleLabel.text = objectDetail.title
+        titleLabel.text = objectDetail.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&#039", with: "", options: .regularExpression, range: nil)
         descriptionLabel?.text = objectDetail.curatorialDescription
         detailSecondLabel.text = objectDetail.objectENGSummary
        // imageDetailLabel.text = "Saint Jerome in His Study \nDomenico Ghirlandaio (1449-1494) \nChurch of Ognissanti, Florence, 1480"

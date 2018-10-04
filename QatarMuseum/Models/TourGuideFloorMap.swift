@@ -22,8 +22,14 @@ struct TourGuideFloorMap: ResponseObjectSerializable, ResponseCollectionSerializ
     var productionDates: String? = nil
     var image: String? = nil
     var tourGuideId: String? = nil
-    var floorLevel: String? = nil
     
+    var artifactNumber : String? = nil
+    var artifactPosition : String? = nil
+    var audioDescriptif : String? = nil
+    var images : [String]? = []
+    var audioFile : String? = nil
+    
+    var floorLevel: String? = nil
     var galleyNumber: String? = nil
     var artistOrCreatorOrAuthor: String? = nil
     var periodOrStyle: String? = nil
@@ -45,6 +51,14 @@ struct TourGuideFloorMap: ResponseObjectSerializable, ResponseCollectionSerializ
             self.productionDates = representation["Production_dates"] as? String
             self.image = representation["Image"] as? String
             self.tourGuideId = representation["tour_guide_id"] as? String
+            
+            self.artifactNumber = representation["artifact_number"] as? String
+            self.artifactPosition = representation["artifact_position"] as? String
+            self.audioDescriptif = representation["audio_descriptif"] as? String
+            self.images = representation["images"] as? [String]
+            self.audioFile = representation["audio_file"] as? String
+            
+            
             self.floorLevel = representation["floor_level"] as? String
             self.galleyNumber = representation["galley_Number"] as? String
             self.artistOrCreatorOrAuthor = representation["Artist/Creator/Author"] as? String
