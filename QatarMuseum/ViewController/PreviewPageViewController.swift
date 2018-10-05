@@ -12,10 +12,6 @@ import Crashlytics
 class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol {
    
     
-    var pageIndex: Int = 0
-    var strTitle: String!
-    var strPhotoName: String!
-    
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var previewCllectionView: UICollectionView!
     @IBOutlet weak var pageControlCollectionView: UICollectionView!
@@ -352,13 +348,7 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
             
         }
     }
-    @objc func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-        if ((context.nextFocusedIndexPath != nil) && !collectionView.isScrollEnabled) {
-            
-            
-            collectionView.scrollToItem(at: context.nextFocusedIndexPath!, at: .centeredHorizontally, animated: true)
-        }
-    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let objectDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "objectDetailId") as! ObjectDetailViewController
         objectDetailView.detailArray.append(tourGuideArray[indexPath.row])
@@ -589,17 +579,22 @@ class PreviewPageViewController: UIViewController,UICollectionViewDelegate,UICol
     }
     func filterButtonPressed() {
        
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromRight
-        view.window!.layer.add(transition, forKey: kCATransition)
+//        let transition = CATransition()
+//        transition.duration = 0.3
+//        transition.type = kCATransitionMoveIn
+//        //transition.subtype = kCATransitionFromRight
+//
+//
+//        view.window!.layer.add(transition, forKey: kCATransition)
         let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as! FloorMapViewController
+        
         let selectedItem = tourGuideArray[currentPreviewItem.row]
         floorMapView.selectedScienceTour = selectedItem.artifactPosition
         floorMapView.selectedScienceTourLevel = selectedItem.floorLevel
+        floorMapView.selectedTourdGuidIndex = currentPreviewItem.row
         floorMapView.fromScienceTour = true
-        self.present(floorMapView, animated: false, completion: nil)
+        floorMapView.modalTransitionStyle = .flipHorizontal
+        self.present(floorMapView, animated: true, completion: nil)
     }
     //MARK: WebServiceCall
     func getTourGuideDataFromServer()
