@@ -335,18 +335,109 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                 let imagepub = UIImage(data: imageData)
                                 // Do something with your image.
                                 
-                                //                                let museumName:String = heritageDetailtArray[0].name!
+                                let heritageName:String = self.heritageDetailtArray[0].name!
                                 
-                                let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
-                                let slide1 = ZKCarouselSlide(image: UIImage(named: "mia2")!, title: "", description: "")
-                                let slide2 = ZKCarouselSlide(image: UIImage(named: "mia3")!, title: "", description: "")
-                                let slide3 = ZKCarouselSlide(image: UIImage(named: "mia4")!, title: "", description: "")
-                                let slide4 = ZKCarouselSlide(image: UIImage(named: "mia5")!, title: "", description: "")
+                                switch heritageName{
+                                case let str where str.contains("Cultural Heritage Management"):
+                                    print("Cultural Heritage Management")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "cultureheritage1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "cultureheritage2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "cultureheritage3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide1, slide2, slide3, slide4]
+                                case let str where str.contains("Settlements of Qatar"):
+                                    print("Settlements of Qatar")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "heritagesettlment1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "heritagesettlment2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "heritagesettlment3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "heritagesettlment4")!, title: "", description: "")
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                case let str where str.contains("Al Zubarah"):
+                                    print("Al Zubarah")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "alzubra1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "alzubra2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "alzubra3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "alzubra4")!, title: "", description: "")
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                case let str where str.contains("Forts of Qatar"):
+                                    print("Forts of Qatar")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "fortqatar1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "fortqatar2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "fortqatar3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "fortqatar4")!, title: "", description: "")
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                case let str where str.contains("Towers of Qatar"):
+                                    print("Towers of Qatar")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "towerqatar1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "towerqatar2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "towerqatar3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "towerqatar4")!, title: "", description: "")
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                case let str where str.contains("Wells of Qatar"):
+                                    print("Wells of Qatar")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "wellqatar1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "wellqatar2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "wellqatar3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "wellqatar4")!, title: "", description: "")
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                case let str where str.contains("New life for old Qatar"):
+                                    print("New life for old Qatar")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "newlifeqatar1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "newlifeqatar2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "newlifeqatar3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "newlifeqatar4")!, title: "", description: "")
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                case let str where str.contains("Cliffs, Carvings and Islands"):
+                                    print("Cliffs, Carvings and Islands")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "cliff1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "cliff2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "cliff3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "cliff4")!, title: "", description: "")
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                default:
+                                    break
+                                }
                                 
-                                // Add the slides to the carousel
-                                self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
-                                
-                                
+                            
                                 // You can optionally use the 'interval' property to set the timing for automatic slide changes. The default is 1 second.
                                 self.carousel.interval = 1.5
                                 
@@ -370,7 +461,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             }
         } else if (self.pageNameString == PageName.publicArtsDetail){
             if self.publicArtsDetailtArray.count != 0 {
-                
+
                 // Define a download task. The download task will download the contents of the URL as a Data object and then you can do what you wish with that data.
                 let downloadPicTask = session.dataTask(with: pictureURL!) { (data, response, error) in
                     // The download has finished.
@@ -382,23 +473,163 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                         if let res = response as? HTTPURLResponse {
                             print("Downloaded picture with response code \(res.statusCode)")
                             if let imageData = data {
-                                self.carousel.isUserInteractionEnabled = true
                                 // Finally convert that Data into an image and do what you wish with it.
                                 let imagepub = UIImage(data: imageData)
                                 // Do something with your image.
                                 
 //                                let museumName:String = self.publicArtsDetailtArray[0].name!
                                 
-                                let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
-                                let slide1 = ZKCarouselSlide(image: UIImage(named: "mia2")!, title: "", description: "")
-                                let slide2 = ZKCarouselSlide(image: UIImage(named: "mia3")!, title: "", description: "")
-                                let slide3 = ZKCarouselSlide(image: UIImage(named: "mia4")!, title: "", description: "")
-                                let slide4 = ZKCarouselSlide(image: UIImage(named: "mia5")!, title: "", description: "")
+                                let publicArtname:String = self.publicArtsDetailtArray[0].name!
                                 
-                                // Add the slides to the carousel
-                                self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
-                            
+                                switch publicArtname{
+                                case let str where str.contains("7 by Richard Serra"):
+                                    print("7 by Richard Serra")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "7by1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "7by2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "7by3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide1, slide2, slide3, slide4]
+                                case let str where str.contains("Gandhi’s Three Monkeys by Subodh Gupta"):
+                                    print("Gandhi’s Three Monkeys by Subodh Gupta")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "gandhi1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "gandhi2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "gandhi3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "gandhi4")!, title: "", description: "")
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                case let str where str.contains("Lusail Handball"):
+                                    print("Lusail Handball")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "lusail1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "lusail2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "lusail3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "lusail4")!, title: "", description: "")
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                case let str where str.contains("Smoke by Tony Smith"):
+                                    print("Smoke by Tony Smith")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "smoke1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "smoke2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "smoke3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "smoke4")!, title: "", description: "")
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                case let str where str.contains("Qatar University"):
+                                    print("Qatar University")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "qtruniversity1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "qtruniversity2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "qtruniversity3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "qtruniversity4")!, title: "", description: "")
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                case let str where str.contains("Airport"):
+                                    print("Airport")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "airport1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "airport2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "airport3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "airport4")!, title: "", description: "")
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                case let str where str.contains("East-west / West-east by Richard Serra"):
+                                    print("East-west / West-east by Richard Serra")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "ew1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "ew2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "ew3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "ew4")!, title: "", description: "")
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                case let str where str.contains("The Miraculous"):
+                                    print("The Miraculous")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "miraculous1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "miraculous2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "miraculous3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "miraculous4")!, title: "", description: "")
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                case let str where str.contains("Calligraffiti"):
+                                    print("Calligraffiti")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "calligraffiti1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "calligraffiti2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "calligraffiti3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "calligraffiti4")!, title: "", description: "")
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                case let str where str.contains("Maman"):
+                                    print("Maman")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "maman1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "maman2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "maman3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "maman4")!, title: "", description: "")
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                case let str where str.contains("Perceval"):
+                                    print("Perceval")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "perceval1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "perceval2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "perceval3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "perceval4")!, title: "", description: "")
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                case let str where str.contains("Healthy Living"):
+                                    print("Healthy Living")
+                                    // Create as many slides as you'd like to show in the carousel
+                                    
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "healthy1")!, title: "", description: "")
+                                    let slide2 = ZKCarouselSlide(image: UIImage(named: "healthy2")!, title: "", description: "")
+                                    let slide3 = ZKCarouselSlide(image: UIImage(named: "healthy3")!, title: "", description: "")
+                                    let slide4 = ZKCarouselSlide(image: UIImage(named: "healthy4")!, title: "", description: "")
+                                    let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                                    
+                                    // Add the slides to the carousel
+                                    self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                                default:
+                                    break
+                                }
                                 
+                                self.carousel.isUserInteractionEnabled = true
                                 // You can optionally use the 'interval' property to set the timing for automatic slide changes. The default is 1 second.
                                 self.carousel.interval = 1.5
                                 
