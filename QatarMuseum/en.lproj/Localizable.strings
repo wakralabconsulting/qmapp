@@ -78,6 +78,8 @@
 "PRODUCTION_LABEL" = "Production:";
 "PRODUCTION_DATES_LABEL" = "Production dates:";
 "PERIOD_STYLE_LABEL" = "Period/Style:";
+"TECHNIQUES_LABEL" = "Technique & Materials:";
+"DIMENSIONS_LABEL" = "Dimensions";
 "FLOOR_MAP_TITLE" = "MIA FLOORS";
 "NO_EVENTS" = "No Events";
 "ARTIFACT_NUMBERPAD_TITLE" = "OBJECT SEARCH";
