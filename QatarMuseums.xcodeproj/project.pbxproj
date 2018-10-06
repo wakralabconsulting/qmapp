@@ -49,7 +49,6 @@
 		B806B7CD21247FB400F9F338 /* MapStyle.json in Resources */ = {isa = PBXBuildFile; fileRef = B806B7CC21247FB400F9F338 /* MapStyle.json */; };
 		B806B7D72152BE6A00F9534F /* CollectionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B806B7D62152BE6A00F9534F /* CollectionDetail.swift */; };
 		B80DC05920C792E400E28034 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80DC05820C792E400E28034 /* AppDelegate.swift */; };
-		B80DC05B20C792E400E28034 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80DC05A20C792E400E28034 /* ViewController.swift */; };
 		B80DC05E20C792E400E28034 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B80DC05C20C792E400E28034 /* Main.storyboard */; };
 		B80DC06020C792E600E28034 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B80DC05F20C792E600E28034 /* Assets.xcassets */; };
 		B80DC06320C792E600E28034 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B80DC06120C792E600E28034 /* LaunchScreen.storyboard */; };
@@ -84,9 +83,6 @@
 		B82C87F220E69C9700777674 /* DiningDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82C87F120E69C9700777674 /* DiningDetailViewController.swift */; };
 		B82C87F620E69D4100777674 /* DiningDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82C87F520E69D4100777674 /* DiningDetailTableViewCell.swift */; };
 		B839831A21196E68007090C8 /* QatarMuseums.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B839831821196E68007090C8 /* QatarMuseums.xcdatamodeld */; };
-		B85285DA214A699C00F5D1FF /* PreviewPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85285D9214A699C00F5D1FF /* PreviewPageViewController.swift */; };
-		B85285DF214A721300F5D1FF /* PreviewCellXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = B85285DE214A721300F5D1FF /* PreviewCellXib.xib */; };
-		B85285E1214A722D00F5D1FF /* PreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85285E0214A722D00F5D1FF /* PreviewCollectionViewCell.swift */; };
 		B85BA4AA20D01B2600E7F4D1 /* ExhibitionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4A920D01B2600E7F4D1 /* ExhibitionDetailViewController.swift */; };
 		B85BA4AC20D01BC900E7F4D1 /* ExhibitionDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4AB20D01BC800E7F4D1 /* ExhibitionDetailTableViewCell.swift */; };
 		B85BA4B020D01D1C00E7F4D1 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4AF20D01D1C00E7F4D1 /* SplashViewController.swift */; };
@@ -132,7 +128,6 @@
 		B8C700852116F833006F3653 /* PublicArtsDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C700842116F833006F3653 /* PublicArtsDetail.swift */; };
 		B8CA08DF2146D38400783642 /* ObjectPopupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CA08D62146D38400783642 /* ObjectPopupTableViewCell.swift */; };
 		B8CA08E02146D38400783642 /* MapDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CA08D72146D38400783642 /* MapDetailView.swift */; };
-		B8CA08E22146D38400783642 /* MapDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CA08D92146D38400783642 /* MapDetailTableViewCell.swift */; };
 		B8CA08E42146D38400783642 /* ObjectPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8CA08DB2146D38400783642 /* ObjectPopupView.xib */; };
 		B8CA08E52146D38400783642 /* MapDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8CA08DC2146D38400783642 /* MapDetailCell.xib */; };
 		B8CA08E72146D38400783642 /* MapDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8CA08DE2146D38400783642 /* MapDetailView.xib */; };
@@ -160,8 +155,6 @@
 		B8E2C01020C7E9E900F3CE41 /* ComingSoonPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E2C00F20C7E9E900F3CE41 /* ComingSoonPopUp.swift */; };
 		B8E2C01320C7FD0000F3CE41 /* SideMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8E2C01220C7FD0000F3CE41 /* SideMenu.xib */; };
 		B8E2C01520C7FD6800F3CE41 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E2C01420C7FD6800F3CE41 /* SideMenuView.swift */; };
-		B8E8CAE7214B6625003CCA7F /* PageControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E8CAE6214B6625003CCA7F /* PageControlCell.swift */; };
-		B8E8CAE9214B6EC8003CCA7F /* PageControlCellXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8E8CAE8214B6EC8003CCA7F /* PageControlCellXib.xib */; };
 		B8EAA3592158D4520060D168 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8EAA3582158D4520060D168 /* GoogleService-Info.plist */; };
 		B8EAB77B20CA3E2900C001B2 /* EventCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8EAB77A20CA3E2900C001B2 /* EventCellView.xib */; };
 		B8EAB77D20CA3E6100C001B2 /* EventCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EAB77C20CA3E6100C001B2 /* EventCollectionViewCell.swift */; };
@@ -241,7 +234,6 @@
 		B806B7D62152BE6A00F9534F /* CollectionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionDetail.swift; sourceTree = "<group>"; };
 		B80DC05520C792E400E28034 /* QatarMuseums.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QatarMuseums.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B80DC05820C792E400E28034 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B80DC05A20C792E400E28034 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B80DC05D20C792E400E28034 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B80DC05F20C792E600E28034 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B80DC06220C792E600E28034 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -302,9 +294,6 @@
 		B82C87F120E69C9700777674 /* DiningDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDetailViewController.swift; sourceTree = "<group>"; };
 		B82C87F520E69D4100777674 /* DiningDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDetailTableViewCell.swift; sourceTree = "<group>"; };
 		B839831921196E68007090C8 /* QatarMuseums.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QatarMuseums.xcdatamodel; sourceTree = "<group>"; };
-		B85285D9214A699C00F5D1FF /* PreviewPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewPageViewController.swift; sourceTree = "<group>"; };
-		B85285DE214A721300F5D1FF /* PreviewCellXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewCellXib.xib; sourceTree = "<group>"; };
-		B85285E0214A722D00F5D1FF /* PreviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		B85BA4A920D01B2600E7F4D1 /* ExhibitionDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExhibitionDetailViewController.swift; sourceTree = "<group>"; };
 		B85BA4AB20D01BC800E7F4D1 /* ExhibitionDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExhibitionDetailTableViewCell.swift; sourceTree = "<group>"; };
 		B85BA4AF20D01D1C00E7F4D1 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -351,7 +340,6 @@
 		B8C700842116F833006F3653 /* PublicArtsDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicArtsDetail.swift; sourceTree = "<group>"; };
 		B8CA08D62146D38400783642 /* ObjectPopupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectPopupTableViewCell.swift; sourceTree = "<group>"; };
 		B8CA08D72146D38400783642 /* MapDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapDetailView.swift; sourceTree = "<group>"; };
-		B8CA08D92146D38400783642 /* MapDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapDetailTableViewCell.swift; sourceTree = "<group>"; };
 		B8CA08DB2146D38400783642 /* ObjectPopupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ObjectPopupView.xib; sourceTree = "<group>"; };
 		B8CA08DC2146D38400783642 /* MapDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapDetailCell.xib; sourceTree = "<group>"; };
 		B8CA08DE2146D38400783642 /* MapDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapDetailView.xib; sourceTree = "<group>"; };
@@ -379,8 +367,6 @@
 		B8E2C00F20C7E9E900F3CE41 /* ComingSoonPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComingSoonPopUp.swift; sourceTree = "<group>"; };
 		B8E2C01220C7FD0000F3CE41 /* SideMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideMenu.xib; sourceTree = "<group>"; };
 		B8E2C01420C7FD6800F3CE41 /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
-		B8E8CAE6214B6625003CCA7F /* PageControlCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControlCell.swift; sourceTree = "<group>"; };
-		B8E8CAE8214B6EC8003CCA7F /* PageControlCellXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PageControlCellXib.xib; sourceTree = "<group>"; };
 		B8EAA3582158D4520060D168 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B8EAB77A20CA3E2900C001B2 /* EventCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventCellView.xib; sourceTree = "<group>"; };
 		B8EAB77C20CA3E6100C001B2 /* EventCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -602,7 +588,6 @@
 				B80DC08620C792FE00E28034 /* ViewController */,
 				1BE526CE210738B600C8CD51 /* Services */,
 				B80DC05820C792E400E28034 /* AppDelegate.swift */,
-				B80DC05A20C792E400E28034 /* ViewController.swift */,
 				B80DC05C20C792E400E28034 /* Main.storyboard */,
 				B80DC05F20C792E600E28034 /* Assets.xcassets */,
 				B80DC06120C792E600E28034 /* LaunchScreen.storyboard */,
@@ -666,7 +651,6 @@
 				1B51B3D121219366002B84AA /* ObjectDetailViewController.swift */,
 				1B3C505621270F260034E560 /* ArtifactNumberPadViewController.swift */,
 				1B373E94212C794600EE8DD1 /* CulturePassViewController.swift */,
-				B85285D9214A699C00F5D1FF /* PreviewPageViewController.swift */,
 				B8ADA8AA2164CC2E00127F9A /* PreviewContentViewController.swift */,
 				B8ADA8AC2164CD4100127F9A /* PreviewContainerViewController.swift */,
 			);
@@ -676,7 +660,6 @@
 		B80DC08720C7943100E28034 /* ReusableComponents */ = {
 			isa = PBXGroup;
 			children = (
-				B85285DD214A71FA00F5D1FF /* PreviewCell */,
 				B8CA08D52146D38400783642 /* BottomSheet */,
 				B8B49438212EDDD000203C7F /* Toast */,
 				1B902BFE212D56A800D3055B /* LabelViewCell */,
@@ -744,17 +727,6 @@
 				B82C87F520E69D4100777674 /* DiningDetailTableViewCell.swift */,
 			);
 			path = DiningDetailCell;
-			sourceTree = "<group>";
-		};
-		B85285DD214A71FA00F5D1FF /* PreviewCell */ = {
-			isa = PBXGroup;
-			children = (
-				B85285DE214A721300F5D1FF /* PreviewCellXib.xib */,
-				B85285E0214A722D00F5D1FF /* PreviewCollectionViewCell.swift */,
-				B8E8CAE6214B6625003CCA7F /* PageControlCell.swift */,
-				B8E8CAE8214B6EC8003CCA7F /* PageControlCellXib.xib */,
-			);
-			path = PreviewCell;
 			sourceTree = "<group>";
 		};
 		B85BA4B120D01DBF00E7F4D1 /* GifFiles */ = {
@@ -831,7 +803,6 @@
 			children = (
 				B8CA08D62146D38400783642 /* ObjectPopupTableViewCell.swift */,
 				B8CA08D72146D38400783642 /* MapDetailView.swift */,
-				B8CA08D92146D38400783642 /* MapDetailTableViewCell.swift */,
 				B8CA08DB2146D38400783642 /* ObjectPopupView.xib */,
 				B8CA08DC2146D38400783642 /* MapDetailCell.xib */,
 				B8CA08DE2146D38400783642 /* MapDetailView.xib */,
@@ -1101,7 +1072,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8AFA2EB20E78BA9008838A6 /* DINNextLTArabic-Bold.ttf in Resources */,
-				B85285DF214A721300F5D1FF /* PreviewCellXib.xib in Resources */,
 				B80DC09220C7A9CE00E28034 /* TopBarView.xib in Resources */,
 				B80DC08A20C794E100E28034 /* HomeCollectionCell.xib in Resources */,
 				B8AFA2F320E78E09008838A6 /* DINNextLTPro-Bold.otf in Resources */,
@@ -1126,7 +1096,6 @@
 				B8D1229020C9092D00772507 /* LoadingXib.xib in Resources */,
 				B8AFA2F220E78E09008838A6 /* DINNextLTPro-Regular.ttf in Resources */,
 				B8B54D6C20FF514E00B21348 /* CollectionDetailView.xib in Resources */,
-				B8E8CAE9214B6EC8003CCA7F /* PageControlCellXib.xib in Resources */,
 				1B51B3D021214853002B84AA /* ObjectPopupXib.xib in Resources */,
 				B8CA08E42146D38400783642 /* ObjectPopupView.xib in Resources */,
 				1B3C505C212AB3460034E560 /* ArtifactNumberPadCell.xib in Resources */,
@@ -1227,7 +1196,6 @@
 			files = (
 				B8B81FE320DE2C8A004885D0 /* MuseumsViewController.swift in Sources */,
 				B8C1C2BD21160B7300531AB3 /* PublicArtsList.swift in Sources */,
-				B8CA08E22146D38400783642 /* MapDetailTableViewCell.swift in Sources */,
 				B80DC09420C7A9F500E28034 /* TopBarView.swift in Sources */,
 				B8E01BFE21060FDC008D7F33 /* LocalizationLanguage.swift in Sources */,
 				B8C64D5120FDF22800C2D51A /* MiaTourGuideExploreViewController.swift in Sources */,
@@ -1247,7 +1215,6 @@
 				B8294CEF20CBF265002AFF72 /* FSCalendarDelegationFactory.m in Sources */,
 				B8294CF020CBF265002AFF72 /* FSCalendarCollectionViewLayout.m in Sources */,
 				B8BBF459211C1AC000352706 /* ParksList.swift in Sources */,
-				B8E8CAE7214B6625003CCA7F /* PageControlCell.swift in Sources */,
 				B8294CEE20CBF265002AFF72 /* FSCalendarScopeHandle.m in Sources */,
 				B811FBCC2103811400960246 /* QMColours.swift in Sources */,
 				B8F3A940212728EE005360AD /* CommonStrings.swift in Sources */,
@@ -1256,7 +1223,6 @@
 				B8294CF520CBF265002AFF72 /* FSCalendarStickyHeader.m in Sources */,
 				B8EAB77D20CA3E6100C001B2 /* EventCollectionViewCell.swift in Sources */,
 				B806B7A5212451B200F9F338 /* FloorMapViewController.swift in Sources */,
-				B85285DA214A699C00F5D1FF /* PreviewPageViewController.swift in Sources */,
 				B8B79CF8212D2FB8008B10D7 /* MuseumAbout.swift in Sources */,
 				B8DC40A920C9A5760044134D /* EventViewController.swift in Sources */,
 				B8294CEA20CBF265002AFF72 /* FSCalendar+Deprecated.m in Sources */,
@@ -1274,9 +1240,7 @@
 				B8E2C01520C7FD6800F3CE41 /* SideMenuView.swift in Sources */,
 				B839831A21196E68007090C8 /* QatarMuseums.xcdatamodeld in Sources */,
 				B8294CE920CBF265002AFF72 /* FSCalendarAppearance.m in Sources */,
-				B80DC05B20C792E400E28034 /* ViewController.swift in Sources */,
 				1BE526D0210739BF00C8CD51 /* Request.swift in Sources */,
-				B85285E1214A722D00F5D1FF /* PreviewCollectionViewCell.swift in Sources */,
 				B8294CF420CBF265002AFF72 /* FSCalendarCollectionView.m in Sources */,
 				B8294CEC20CBF265002AFF72 /* FSCalendarTransitionCoordinator.m in Sources */,
 				B8CAA93D20DC15FA009A936D /* HeritageDetailCell.swift in Sources */,

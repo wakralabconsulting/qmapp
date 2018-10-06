@@ -26,7 +26,7 @@ class ObjectPopupTableViewCell: UITableViewCell {
         // Initialization code
     }
     func setPopupDetails(mapDetails: TourGuideFloorMap) {
-        title.text = mapDetails.title
+        title.text = mapDetails.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&#039;", with: "", options: .regularExpression, range: nil)
         productionTitle.text = NSLocalizedString("PRODUCTION_LABEL", comment: "PRODUCTION_LABEL  in the Popup")
         productionDateTitle.text = NSLocalizedString("PRODUCTION_DATES_LABEL", comment: "PRODUCTION_DATES_LABEL  in the Popup")
         periodTitle.text = NSLocalizedString("PERIOD_STYLE_LABEL", comment: "PERIOD_STYLE_LABEL  in the Popup")

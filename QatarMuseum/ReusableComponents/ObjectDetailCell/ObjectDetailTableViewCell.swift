@@ -47,9 +47,9 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate {
     }
     
     func setObjectDetail(objectDetail:TourGuideFloorMap) {
-        titleLabel.text = objectDetail.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&#039", with: "", options: .regularExpression, range: nil)
-        descriptionLabel?.text = objectDetail.curatorialDescription
-        detailSecondLabel.text = objectDetail.objectENGSummary
+        titleLabel.text = objectDetail.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&#039;", with: "", options: .regularExpression, range: nil)
+        descriptionLabel?.text = objectDetail.curatorialDescription?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&#039;", with: "", options: .regularExpression, range: nil)
+        detailSecondLabel.text = objectDetail.objectENGSummary?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&#039;", with: "", options: .regularExpression, range: nil)
        // imageDetailLabel.text = "Saint Jerome in His Study \nDomenico Ghirlandaio (1449-1494) \nChurch of Ognissanti, Florence, 1480"
         imageDetailLabel.isHidden = true
        // centerImageView.image = UIImage(named: "lusterwar_apothecarry_jar_full")
@@ -60,7 +60,7 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate {
     func setObjectHistoryDetail(historyDetail:TourGuideFloorMap) {
         if ((historyDetail.objectHistory != nil) && (historyDetail.objectHistory != "")){
              titleLabel.text = "Object History"
-            descriptionLabel?.text = historyDetail.objectHistory
+            descriptionLabel?.text = historyDetail.objectHistory?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&#039;", with: "", options: .regularExpression, range: nil)
         }
        
       //  detailSecondLabel.text = "Like his father before him, Piero continued the family's tradition of artistic patronage, extending the collection beyond Italian Renaissance works to include Dutch and Flemish paintings, as well as rare books. This particular vase most probably remained in royal or aristocratic families for generations, before being discovered - along with four other similar vases - in a private Italian collection in 2005. Before this re-discovery, only one other albarello of its kind was recorded in the Musee des arts Decoratifs, Paris."
