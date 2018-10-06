@@ -109,7 +109,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         initialSetUp()
         getFloorMapDataFromServer()
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(false)
+        bottomSheetVC.removeFromParentViewController()
+        bottomSheetVC.dismiss(animated: false, completion: nil)
+    }
     func initialSetUp() {
         overlayView.isHidden = true
         bottomSheetVC.mapdetailDelegate = self
@@ -676,7 +680,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         
         let markerIcon = marker.icon
         let searchstring = marker.title
-            print(searchstring)
         selectedScienceTourLevel = ""
         if (level == levelNumber.two) {
             showLevelTwoMarker()
@@ -703,7 +706,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
         let zoom = mapView.camera.zoom
-        print(zoom)
+        
         zoomValue = zoom
         //let center = CLLocationCoordinate2DMake(25.294730,51.539021)
         let center = CLLocationCoordinate2DMake(25.296059,51.538703)
@@ -809,21 +812,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         let width  = view.frame.width
         bottomSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height)
     }
-    func viewTapAction(sender: UITapGestureRecognizer) {
-        if (sender.state == .began) {
-            
-            UIView.animate(withDuration: 1, delay: 0.0, options: [.allowUserInteraction], animations: {
-                //                if  velocity.y >= 0 {
-                self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
-                //                } else {
-                //                    self.view.frame = CGRect(x: 0, y: self.fullView, width: self.view.frame.width, height: self.view.frame.height)
-                //                }
-                
-            }, completion: { [weak self] _ in
-                
-            })
-        }
-    }
+
     @objc func handleTap(sender: UITapGestureRecognizer? = nil) {
         bottomSheetVC.removeFromParentViewController()
         bottomSheetVC.dismiss(animated: false, completion: nil)
