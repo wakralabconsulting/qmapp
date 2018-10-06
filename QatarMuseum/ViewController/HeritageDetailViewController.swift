@@ -230,9 +230,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                         
                         if let imgData = data, let image = UIImage(data: imgData) {
                             DispatchQueue.main.async() {
-                                self.progressImgArray.append(image)
-                                //                                            self.collectionView.reloadData()
-                                
+                                self.progressImgArray.append(image)                               
                                 if (self.progressImgArray.count > 4)
                                 {
                                     DispatchQueue.main.async {
