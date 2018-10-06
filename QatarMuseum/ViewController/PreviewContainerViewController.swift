@@ -7,13 +7,13 @@
 //
 
 import Alamofire
+import Crashlytics
 import UIKit
 
 class PreviewContainerViewController: UIViewController,UIPageViewControllerDelegate,UIPageViewControllerDataSource,HeaderViewProtocol,UIGestureRecognizerDelegate {
     
+    @IBOutlet weak var loadingView: LoadingView!
     
-
-    var pageViewController = UIPageViewController()
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var pageViewOne: UIView!
@@ -47,9 +47,10 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     @IBOutlet weak var pageImageFourWidth: NSLayoutConstraint!
     @IBOutlet weak var pageImageFiveHeight: NSLayoutConstraint!
     @IBOutlet weak var pageImageFiveWidth: NSLayoutConstraint!
+    var pageViewController = UIPageViewController()
     var pageImages = NSArray()
     var currentPreviewItem = Int()
-    let pageCount: Int? = 4
+    let pageCount: Int? = 11
     var reloaded: Bool = false
     var tourGuideArray: [TourGuideFloorMap]! = []
     var countValue : Int? = 0
@@ -62,8 +63,8 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         
     }
     func loadUI() {
-        //loadingView.isHidden = false
-        //loadingView.showLoading()
+        loadingView.isHidden = false
+        loadingView.showLoading()
         
         
         
@@ -94,7 +95,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         //self.pageViewController.didMove(toParentViewController: self)
         
         pageImageViewOne.image = UIImage(named: "selectedControl")
-        showOrHidePageControlView(countValue: pageCount, scrolling: false)
+        showOrHidePageControlView(countValue: tourGuideArray.count, scrolling: false)
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.loadDetailPage))
         tap.delegate = self // This is not required
         self.view.addGestureRecognizer(tap)
@@ -288,25 +289,39 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         }
     }
     func showPageControlAtFirstTime() {
-        if (pageCount! <= 5) {
-            if(pageCount! == 4) {
+        if (tourGuideArray.count <= 5) {
+            if(tourGuideArray.count == 4) {
                 viewFourLineTwo.isHidden = true
-            } else if (pageCount! == 3) {
+                pageImageFourWidth.constant = 15
+                pageImageFourHeight.constant = 15
+                pageImageViewFour.image = UIImage(named: "stripper_inactive_end")
+            } else if (tourGuideArray.count == 3) {
                 viewThreeLineTwo.isHidden = true
-            } else if(pageCount! == 2) {
+                pageImageThreeWidth.constant = 15
+                pageImageThreeHeight.constant = 15
+                pageImageViewThree.image = UIImage(named: "stripper_inactive_end")
+            } else if(tourGuideArray.count == 2) {
                 viewTwoLineTwo.isHidden = true
+                pageImageTwoWidth.constant = 15
+                pageImageTwoHeight.constant = 15
+                pageImageViewTwo.image = UIImage(named: "stripper_inactive_end")
             }
-            else if(pageCount! == 1) {
+            else if(tourGuideArray.count == 1) {
                 viewOneLineTwo.isHidden = true
                 pageViewOne.isHidden = true
+                pageImageOneWidth.constant = 15
+                pageImageOneHeight.constant = 15
+                pageImageViewOne.image = UIImage(named: "stripper_inactive_end")
             }
-            if(pageCount! == 5) {
+            if(tourGuideArray.count == 5) {
                 pageImageViewFive.image = UIImage(named: "stripper_inactive_end")
                 pageImageFiveHeight.constant = 15
                 pageImageFiveWidth.constant = 15
+                pageImageViewFive.image = UIImage(named: "stripper_inactive_end")
             }
             viewFiveLineTwo.isHidden = true
         }
+        viewOneLineOne.isHidden = true
     }
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         
@@ -332,7 +347,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         }
         index = index! + 1
         
-        if (index == self.pageCount) {
+        if (index == self.tourGuideArray.count) {
             return nil
         }
         
@@ -361,11 +376,14 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                 pageImageViewThree.image = UIImage(named: "unselected")
                 pageImageViewFour.image = UIImage(named: "unselected")
                 pageImageViewFive.image = UIImage(named: "unselected")
-                remainingCount = pageCount! - ( currentPageIndex+1)
+                remainingCount = tourGuideArray.count - ( currentPageIndex+1)
                 if(currentPageIndex > currentPreviewItem) {
                     
                     if (remainingCount < 5) {
                         showOrHidePageControlView(countValue: remainingCount+1, scrolling: true)
+                        if(remainingCount+1 == 1) {
+                            pageImageViewOne.image = UIImage(named: "selectedControl")
+                        }
                         if(remainingCount+1 == 2) {
                             pageImageViewTwo.image = UIImage(named: "stripper_inactive_end")
                         } else if(remainingCount+1 == 3) {
@@ -411,21 +429,59 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                 
             } else if(currentPageIndex%5 == 1) {
                 
-                if(currentPageIndex == 1) {
-                    pageImageOneHeight.constant = 15
-                    pageImageOneWidth.constant = 15
-                    pageImageViewOne.image = UIImage(named: "stripper_inactive_end")
-                } else {
-                    pageImageOneHeight.constant = 20
-                    pageImageOneWidth.constant = 20
-                    pageImageViewOne.image = UIImage(named: "unselected")
-                }
+                
                 pageImageTwoHeight.constant = 20
                 pageImageTwoWidth.constant = 20
                 pageImageViewTwo.image = UIImage(named: "selectedControl")
                 pageImageViewThree.image = UIImage(named: "unselected")
                 pageImageViewFour.image = UIImage(named: "unselected")
                 pageImageViewFive.image = UIImage(named: "unselected")
+                
+                
+                
+                
+                if(currentPageIndex > currentPreviewItem) {
+                    remainingCount = tourGuideArray.count - ( currentPageIndex+1)
+                    if ((remainingCount < 4) && (remainingCount != 0)) {
+                        showOrHidePageControlView(countValue: remainingCount+2, scrolling: true)
+                        if(remainingCount+2 == 3) {
+                            pageImageViewThree.image = UIImage(named: "stripper_inactive_end")
+                        } else if(remainingCount+2 == 4) {
+                            pageImageViewFour.image = UIImage(named: "stripper_inactive_end")
+                        } else if(remainingCount+2 == 5) {
+                            pageImageViewFive.image = UIImage(named: "stripper_inactive_end")
+                        }
+                    }
+                    
+                }
+                else  {
+                    remainingCount = tourGuideArray.count - ( currentPageIndex+1)
+                    if(remainingCount+2 == 3) {
+                        pageImageViewThree.image = UIImage(named: "stripper_inactive_end")
+                        pageImageThreeHeight.constant = 15
+                        pageImageThreeWidth.constant = 15
+                    } else if(remainingCount+2 == 4) {
+                        pageImageViewFour.image = UIImage(named: "stripper_inactive_end")
+                        pageImageFourHeight.constant = 15
+                        pageImageFourWidth.constant = 15
+                    } else if(remainingCount+2 == 5) {
+                        pageImageViewFive.image = UIImage(named: "stripper_inactive_end")
+                        pageImageFiveHeight.constant = 15
+                        pageImageFiveWidth.constant = 15
+                    }
+                    
+                }
+                
+                if(currentPageIndex == 1) {
+                    pageImageOneHeight.constant = 15
+                    pageImageOneWidth.constant = 15
+                    pageImageViewOne.image = UIImage(named: "stripper_inactive_end")
+                    viewOneLineOne.isHidden = true
+                } else {
+                    pageImageOneHeight.constant = 20
+                    pageImageOneWidth.constant = 20
+                    pageImageViewOne.image = UIImage(named: "unselected")
+                }
             } else if(currentPageIndex%5 == 2) {
                 pageImageThreeHeight.constant = 20
                 pageImageThreeWidth.constant = 20
@@ -434,6 +490,36 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                 pageImageViewThree.image = UIImage(named: "selectedControl")
                 pageImageViewFour.image = UIImage(named: "unselected")
                 pageImageViewFive.image = UIImage(named: "unselected")
+                
+                
+                
+                
+                if(currentPageIndex > currentPreviewItem) {
+                    remainingCount = tourGuideArray.count - ( currentPageIndex+1)
+                    if ((remainingCount < 3) && (remainingCount != 0)) {
+                        showOrHidePageControlView(countValue: remainingCount+3, scrolling: true)
+                        if(remainingCount+3 == 4) {
+                            pageImageViewFour.image = UIImage(named: "stripper_inactive_end")
+                        } else if(remainingCount+3 == 5) {
+                            pageImageViewFive.image = UIImage(named: "stripper_inactive_end")
+                        }
+                    }
+                    
+                }
+                else  {
+                    remainingCount = tourGuideArray.count - ( currentPageIndex+1)
+                    if(remainingCount+3 == 4) {
+                        pageImageViewFour.image = UIImage(named: "stripper_inactive_end")
+                        pageImageFourHeight.constant = 15
+                        pageImageFourWidth.constant = 15
+                    } else if(remainingCount+3 == 5) {
+                        pageImageViewFive.image = UIImage(named: "stripper_inactive_end")
+                        pageImageFiveHeight.constant = 15
+                        pageImageFiveWidth.constant = 15
+                    }
+                    
+                }
+                
             } else if(currentPageIndex%5 == 3) {
                 pageImageFourHeight.constant = 20
                 pageImageFourWidth.constant = 20
@@ -443,10 +529,33 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                 pageImageViewThree.image = UIImage(named: "unselected")
                 pageImageViewFour.image = UIImage(named: "selectedControl")
                 pageImageViewFive.image = UIImage(named: "unselected")
+                
+                
+                if(currentPageIndex > currentPreviewItem) {
+                    remainingCount = tourGuideArray.count - ( currentPageIndex+1)
+                    if ((remainingCount < 2) && (remainingCount != 0)) {
+                        showOrHidePageControlView(countValue: remainingCount+4, scrolling: true)
+                        if(remainingCount+4 == 5) {
+                            pageImageViewFive.image = UIImage(named: "stripper_inactive_end")
+                        }
+                    }
+                    
+                }
+                else  {
+                    remainingCount = tourGuideArray.count - ( currentPageIndex+1)
+                    if(remainingCount+4 == 5) {
+                        pageImageViewFive.image = UIImage(named: "stripper_inactive_end")
+                        pageImageFiveHeight.constant = 15
+                        pageImageFiveWidth.constant = 15
+                    }
+                    
+                }
+                
+                
             }
             else if(currentPageIndex%5 == 4) {
                 if(currentPageIndex > currentPreviewItem) {
-                    let remnCount = pageCount! - ( currentPageIndex+1)
+                    let remnCount = tourGuideArray.count - ( currentPageIndex+1)
                     if(remnCount <= 0) {
                         viewFiveLineTwo.isHidden = true
                     }
@@ -469,7 +578,8 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                         pageImageFiveWidth.constant = 20
                     }
                 }
-                
+                pageImageFiveHeight.constant = 20
+                pageImageFiveWidth.constant = 20
                 pageImageViewTwo.image = UIImage(named: "unselected")
                 pageImageViewThree.image = UIImage(named: "unselected")
                 pageImageViewFour.image = UIImage(named: "unselected")
@@ -482,29 +592,19 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                 pageImageOneWidth.constant = 20
             }
             currentPreviewItem = currentPageIndex
-            print(currentViewController.pageIndex)
         }
        
     }
-    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
-        let currentPageIndex = (pendingViewControllers.last! as! PreviewContentViewController).pageIndex
-       // print(currentPageIndex)
-        
-        
-       
-        
-    }
-    
+   
     func viewControllerAtIndex(index : Int) -> PreviewContentViewController? {
         
-        if ((self.pageCount! == 0) || (index > self.pageCount!)){
+        if ((self.tourGuideArray.count == 0) || (index > self.tourGuideArray.count)){
             return nil
         }
         
         let pageContentViewController = self.storyboard?.instantiateViewController(withIdentifier: "PageContentViewControllerId") as! PreviewContentViewController
         pageContentViewController.pageIndex = index
         pageContentViewController.tourGuideDict = tourGuideArray[index]
-        //print(index)
         
         return pageContentViewController
     }
@@ -531,6 +631,21 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         viewFourLineTwo.isHidden = false
         viewFiveLineOne.isHidden = false
         viewFiveLineTwo.isHidden = false
+        
+        pageImageOneHeight.constant = 20
+        pageImageOneWidth.constant = 20
+        pageImageTwoHeight.constant = 20
+        pageImageTwoWidth.constant = 20
+        pageImageThreeHeight.constant = 20
+        pageImageThreeWidth.constant = 20
+        pageImageFourHeight.constant = 20
+        pageImageFourWidth.constant = 20
+       // pageImageOneHeight.constant = 20
+       // pageImageOneWidth.constant = 20
+        pageImageViewOne.image = UIImage(named: "unselected")
+        pageImageViewTwo.image = UIImage(named: "unselected")
+        pageImageViewThree.image = UIImage(named: "unselected")
+        pageImageViewFour.image = UIImage(named: "unselected")
     }
     //MARK: Header Delegate
     func headerCloseButtonPressed() {
@@ -549,44 +664,33 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
             switch response.result {
             case .success(let data):
                 self.tourGuideArray = data.tourGuideFloorMap
-                //self.saveOrUpdateHeritageCoredata()
-                self.countValue = self.pageCount
+                self.countValue = self.tourGuideArray.count
                 if(self.tourGuideArray.count != 0) {
                     self.setUpPageControl()
+                    self.showOrHidePageControlView(countValue: self.tourGuideArray.count, scrolling: false)
                     self.showPageControlAtFirstTime()
                 }
-                //self.previewCllectionView.reloadData()
+                
                
-                //self.loadingView.stopLoading()
-                //self.loadingView.isHidden = true
-                self.showOrHidePageControlView(countValue: self.pageCount, scrolling: false)
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
+                
                 if (self.tourGuideArray.count == 0) {
-                   // self.loadingView.stopLoading()
-                   // self.loadingView.noDataView.isHidden = false
-                    //self.loadingView.isHidden = false
-                   // self.loadingView.showNoDataView()
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
                 }
             case .failure(let error):
-                print(("error"))
                 
-//                self.loadingView.stopLoading()
-//                self.loadingView.noDataView.isHidden = false
-//                self.loadingView.isHidden = false
-//                self.loadingView.showNoDataView()
-//
-                
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
             }
         }
     }
     func filterButtonPressed() {
-        
-        //        let transition = CATransition()
-        //        transition.duration = 0.3
-        //        transition.type = kCATransitionMoveIn
-        //        //transition.subtype = kCATransitionFromRight
-        //
-        //
-        //        view.window!.layer.add(transition, forKey: kCATransition)
         let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as! FloorMapViewController
         
         let selectedItem = tourGuideArray[currentPreviewItem]

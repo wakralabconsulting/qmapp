@@ -78,6 +78,8 @@
 "PRODUCTION_LABEL" = "الانتاج:";
 "PRODUCTION_DATES_LABEL" = "تاريخ الإنتاج:";
 "PERIOD_STYLE_LABEL" = "الفترة/النمط:";
+"TECHNIQUES_LABEL" = "Technique & Materials:";
+"DIMENSIONS_LABEL" = "Dimensions:";
 "FLOOR_MAP_TITLE" = "طوابق متحف الفن الإسلامي";
 "NO_EVENTS" = "لا توجد فعاليات";
 "ARTIFACT_NUMBERPAD_TITLE" = "بحث الكائن";

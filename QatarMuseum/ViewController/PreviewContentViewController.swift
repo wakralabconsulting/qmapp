@@ -11,7 +11,7 @@ import UIKit
 class PreviewContentViewController: UIViewController {
 
     @IBOutlet weak var previewContentView: UIView!
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var titleLabel: UITextView!
     @IBOutlet weak var accessNumberLabel: UILabel!
     @IBOutlet weak var tourGuideImage: UIImageView!
     
@@ -25,11 +25,12 @@ class PreviewContentViewController: UIViewController {
     @IBOutlet weak var periodText: UILabel!
     @IBOutlet weak var techniqueText: UILabel!
     @IBOutlet weak var dimensionsText: UILabel!
+    
+    @IBOutlet weak var imageViewHeight: NSLayoutConstraint!
     var tourGuideDict : TourGuideFloorMap!
     var pageIndex = Int()
     override func viewDidLoad() {
         super.viewDidLoad()
-       // print(pageIndex)
         setPreviewData()
     }
     func setUI() {
@@ -51,8 +52,10 @@ class PreviewContentViewController: UIViewController {
         productionTitle.text = NSLocalizedString("PRODUCTION_LABEL", comment: "PRODUCTION_LABEL  in the Popup")
         productionDateTitle.text = NSLocalizedString("PRODUCTION_DATES_LABEL", comment: "PRODUCTION_DATES_LABEL  in the Popup")
         periodTitle.text = NSLocalizedString("PERIOD_STYLE_LABEL", comment: "PERIOD_STYLE_LABEL  in the Popup")
-        titleLabel.text = tourGuideData?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
-        accessNumberLabel.text = tourGuideData?.accessionNumber?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        techniqueTitle.text = NSLocalizedString("TECHNIQUES_LABEL", comment: "TECHNIQUES_LABEL  in the Popup")
+        dimensionsTitle.text = NSLocalizedString("DIMENSIONS_LABEL", comment: "DIMENSIONS_LABEL  in the Popup")
+        titleLabel.text = tourGuideData?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&#039;", with: "", options: .regularExpression, range: nil)
+        accessNumberLabel.text = tourGuideData?.accessionNumber?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&#039;", with: "", options: .regularExpression, range: nil)
         productionText.text = tourGuideData?.production
         productionDateText.text = tourGuideData?.productionDates
         periodText.text = tourGuideData?.periodOrStyle
@@ -74,8 +77,10 @@ class PreviewContentViewController: UIViewController {
         if let imageUrl = tourGuideData?.image {
             tourGuideImage.kf.setImage(with: URL(string: imageUrl))
         }
-        
-        
+        if(UIScreen.main.bounds.height <= 568) {
+            titleLabel.font = UIFont.eventCellTitleFont
+            accessNumberLabel.font = UIFont.exhibitionDateLabelFont
+        }
     }
     
     override func didReceiveMemoryWarning() {

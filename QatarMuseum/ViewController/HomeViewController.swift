@@ -139,6 +139,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(museumsView, animated: false, completion: nil)
+        
     }
     
     func loadExhibitionPage() {
