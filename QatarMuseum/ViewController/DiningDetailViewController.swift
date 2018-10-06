@@ -135,15 +135,82 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                         // Finally convert that Data into an image and do what you wish with it.
                         let imagepub = UIImage(data: imageData)
                         // Do something with your image.
-                        // Create as many slides as you'd like to show in the carousel
-                        let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
-                        let slide1 = ZKCarouselSlide(image: UIImage(named: "mia2")!, title: "", description: "")
-                        let slide2 = ZKCarouselSlide(image: UIImage(named: "mia3")!, title: "", description: "")
-                        let slide3 = ZKCarouselSlide(image: UIImage(named: "mia4")!, title: "", description: "")
-                        let slide4 = ZKCarouselSlide(image: UIImage(named: "mia5")!, title: "", description: "")
+                        let diningName:String = self.diningDetailtArray[0].name!
                         
-                        // Add the slides to the carousel
-                        self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                        switch diningName{
+                        case let str where str.contains("MATHAF MAQHA"):
+                            print("MATHAF MAQHA")
+                            // Create as many slides as you'd like to show in the carousel
+                            self.carousel.pageControl.isHidden = true
+//                            let slide1 = ZKCarouselSlide(image: UIImage(named: "mathaf")!, title: "", description: "")
+                            let slide2 = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                            
+                            // Add the slides to the carousel
+                            self.carousel.slides = [slide2]
+                        case let str where str.contains("#999"):
+                            print("#999")
+                            // Create as many slides as you'd like to show in the carousel
+                            
+                            let slide1 = ZKCarouselSlide(image: UIImage(named: "cafe991")!, title: "", description: "")
+                            let slide2 = ZKCarouselSlide(image: UIImage(named: "cafe992")!, title: "", description: "")
+                            let slide3 = ZKCarouselSlide(image: UIImage(named: "cafe993")!, title: "", description: "")
+                            let slide4 = ZKCarouselSlide(image: UIImage(named: "cafe994")!, title: "", description: "")
+                            let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                            
+                            // Add the slides to the carousel
+                            self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                        case let str where str.contains("IDAM"):
+                            print("IDAM")
+                            // Create as many slides as you'd like to show in the carousel
+                            
+                            let slide1 = ZKCarouselSlide(image: UIImage(named: "idam1")!, title: "", description: "")
+                            let slide2 = ZKCarouselSlide(image: UIImage(named: "idam2")!, title: "", description: "")
+                            let slide3 = ZKCarouselSlide(image: UIImage(named: "idam3")!, title: "", description: "")
+                            let slide4 = ZKCarouselSlide(image: UIImage(named: "idam4")!, title: "", description: "")
+                            let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                            
+                            // Add the slides to the carousel
+                            self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                        case let str where str.contains("IN-Q CAFÉ AT HIA"):
+                            print("IN-Q CAFÉ AT HIA")
+                            // Create as many slides as you'd like to show in the carousel
+                            self.carousel.pageControl.isHidden = true
+//                            let slide1 = ZKCarouselSlide(image: UIImage(named: "inq")!, title: "", description: "")
+                            let slide2 = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                            
+                            // Add the slides to the carousel
+                            self.carousel.slides = [slide2]
+                        case let str where str.contains("MIA CAFÉ"):
+                            print("MIA CAFÉ")
+                            // Create as many slides as you'd like to show in the carousel
+                            self.carousel.pageControl.isHidden = true
+//                            let slide1 = ZKCarouselSlide(image: UIImage(named: "miacafe")!, title: "", description: "")
+                            let slide2 = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                            
+                            // Add the slides to the carousel
+                            self.carousel.slides = [slide2]
+                        case let str where str.contains("AL RIWAQ CAFÉ"):
+                            print("AL RIWAQ CAFÉ")
+                            // Create as many slides as you'd like to show in the carousel
+                            self.carousel.pageControl.isHidden = true
+//                            let slide1 = ZKCarouselSlide(image: UIImage(named: "riwaq")!, title: "", description: "")
+                            let slide2 = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                            
+                            // Add the slides to the carousel
+                            self.carousel.slides = [slide2]
+                        case let str where str.contains("MIA CATERING"):
+                            print("MIA CATERING")
+                            // Create as many slides as you'd like to show in the carousel
+                            self.carousel.pageControl.isHidden = true
+//                            let slide1 = ZKCarouselSlide(image: UIImage(named: "mia-catering")!, title: "", description: "")
+                            let slide2 = ZKCarouselSlide(image: imagepub!, title: "", description: "")
+                            
+                            // Add the slides to the carousel
+                            self.carousel.slides = [slide2]
+                        
+                        default:
+                            break
+                        }
                         
                         // You can optionally use the 'interval' property to set the timing for automatic slide changes. The default is 1 second.
                         self.carousel.interval = 1.5
