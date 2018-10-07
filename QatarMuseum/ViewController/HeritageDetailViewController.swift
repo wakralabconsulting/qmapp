@@ -336,9 +336,13 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                 // Do something with your image.
                                 
                                 let heritageName:String = self.heritageDetailtArray[0].name!
+                                let heritageId:String = self.heritageDetailtArray[0].id!
                                 
-                                switch heritageName{
-                                case let str where str.contains("Cultural Heritage Management"):
+//                                switch (publicArtname, publicArtId){
+//                                case _ where publicArtname.contains("7 by Richard Serra") || publicArtId.contains("698"):
+                                
+                                switch (heritageName, heritageId){
+                                case _ where heritageName.contains("Cultural Heritage Management"):
                                     print("Cultural Heritage Management")
                                     // Create as many slides as you'd like to show in the carousel
                                     
@@ -349,7 +353,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                     
                                     // Add the slides to the carousel
                                     self.carousel.slides = [slide1, slide2, slide3, slide4]
-                                case let str where str.contains("Settlements of Qatar"):
+                                case _ where heritageName.contains("Settlements of Qatar"):
                                     print("Settlements of Qatar")
                                     // Create as many slides as you'd like to show in the carousel
                                     
@@ -361,7 +365,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                     
                                     // Add the slides to the carousel
                                     self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
-                                case let str where str.contains("Al Zubarah"):
+                                case _ where heritageName.contains("Al Zubarah"):
                                     print("Al Zubarah")
                                     // Create as many slides as you'd like to show in the carousel
                                     
@@ -373,7 +377,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                     
                                     // Add the slides to the carousel
                                     self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
-                                case let str where str.contains("Forts of Qatar"):
+                                case _ where heritageName.contains("Forts of Qatar") || heritageId.contains("684"):
                                     print("Forts of Qatar")
                                     // Create as many slides as you'd like to show in the carousel
                                     
@@ -385,7 +389,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                     
                                     // Add the slides to the carousel
                                     self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
-                                case let str where str.contains("Towers of Qatar"):
+                                case _ where heritageName.contains("Towers of Qatar")  || heritageId.contains("179"):
                                     print("Towers of Qatar")
                                     // Create as many slides as you'd like to show in the carousel
                                     
@@ -397,7 +401,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                     
                                     // Add the slides to the carousel
                                     self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
-                                case let str where str.contains("Wells of Qatar"):
+                                case _ where heritageName.contains("Wells of Qatar")  || heritageId.contains("1031"):
                                     print("Wells of Qatar")
                                     // Create as many slides as you'd like to show in the carousel
                                     
@@ -409,7 +413,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                     
                                     // Add the slides to the carousel
                                     self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
-                                case let str where str.contains("New life for old Qatar"):
+                                case _ where heritageName.contains("New life for old Qatar")  || heritageId.contains("178"):
                                     print("New life for old Qatar")
                                     // Create as many slides as you'd like to show in the carousel
                                     
@@ -421,7 +425,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                     
                                     // Add the slides to the carousel
                                     self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
-                                case let str where str.contains("Cliffs, Carvings and Islands"):
+                                case _ where heritageName.contains("Cliffs, Carvings and Islands")  || heritageId.contains("1021"):
                                     print("Cliffs, Carvings and Islands")
                                     // Create as many slides as you'd like to show in the carousel
                                     
@@ -434,6 +438,8 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                     // Add the slides to the carousel
                                     self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
                                 default:
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "defaultabout")!, title: "", description: "")
+                                    self.carousel.slides = [slide1]
                                     break
                                 }
                                 
@@ -480,9 +486,10 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
 //                                let museumName:String = self.publicArtsDetailtArray[0].name!
                                 
                                 let publicArtname:String = self.publicArtsDetailtArray[0].name!
+                                let publicArtId:String = self.publicArtsDetailtArray[0].id!
                                 
-                                switch publicArtname{
-                                case let str where str.contains("7 by Richard Serra"):
+                                switch (publicArtname, publicArtId){
+                                case _ where publicArtname.contains("7 by Richard Serra") || publicArtId.contains("698"):
                                     print("7 by Richard Serra")
                                     // Create as many slides as you'd like to show in the carousel
                                     
@@ -493,7 +500,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                     
                                     // Add the slides to the carousel
                                     self.carousel.slides = [slide1, slide2, slide3, slide4]
-                                case let str where str.contains("Gandhi’s Three Monkeys by Subodh Gupta"):
+                                case _ where publicArtname.contains("Gandhi’s Three Monkeys by Subodh Gupta") || publicArtId.contains("699"):
                                     print("Gandhi’s Three Monkeys by Subodh Gupta")
                                     // Create as many slides as you'd like to show in the carousel
                                     
@@ -505,7 +512,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                     
                                     // Add the slides to the carousel
                                     self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
-                                case let str where str.contains("Lusail Handball"):
+                                case _ where publicArtname.contains("Lusail Handball"):
                                     print("Lusail Handball")
                                     // Create as many slides as you'd like to show in the carousel
                                     
@@ -517,7 +524,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                     
                                     // Add the slides to the carousel
                                     self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
-                                case let str where str.contains("Smoke by Tony Smith"):
+                                case _ where publicArtname.contains("Smoke by Tony Smith") || publicArtId.contains("6356"):
                                     print("Smoke by Tony Smith")
                                     // Create as many slides as you'd like to show in the carousel
                                     
@@ -529,7 +536,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                     
                                     // Add the slides to the carousel
                                     self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
-                                case let str where str.contains("Qatar University"):
+                                case _ where publicArtname.contains("Qatar University"):
                                     print("Qatar University")
                                     // Create as many slides as you'd like to show in the carousel
                                     
@@ -541,7 +548,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                     
                                     // Add the slides to the carousel
                                     self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
-                                case let str where str.contains("Airport"):
+                                case _ where publicArtname.contains("Airport") || publicArtId.contains("651"):
                                     print("Airport")
                                     // Create as many slides as you'd like to show in the carousel
                                     
@@ -553,7 +560,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                     
                                     // Add the slides to the carousel
                                     self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
-                                case let str where str.contains("East-west / West-east by Richard Serra"):
+                                case _ where publicArtname.contains("East-west / West-east by Richard Serra") || publicArtId.contains("698"):
                                     print("East-west / West-east by Richard Serra")
                                     // Create as many slides as you'd like to show in the carousel
                                     
@@ -565,7 +572,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                     
                                     // Add the slides to the carousel
                                     self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
-                                case let str where str.contains("The Miraculous"):
+                                case _ where publicArtname.contains("The Miraculous") || publicArtId.contains("690"):
                                     print("The Miraculous")
                                     // Create as many slides as you'd like to show in the carousel
                                     
@@ -577,7 +584,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                     
                                     // Add the slides to the carousel
                                     self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
-                                case let str where str.contains("Calligraffiti"):
+                                case _ where publicArtname.contains("Calligraffiti") || publicArtId.contains("674"):
                                     print("Calligraffiti")
                                     // Create as many slides as you'd like to show in the carousel
                                     
@@ -589,7 +596,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                     
                                     // Add the slides to the carousel
                                     self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
-                                case let str where str.contains("Maman"):
+                                case _ where publicArtname.contains("Maman") || publicArtId.contains("647"):
                                     print("Maman")
                                     // Create as many slides as you'd like to show in the carousel
                                     
@@ -601,7 +608,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                     
                                     // Add the slides to the carousel
                                     self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
-                                case let str where str.contains("Perceval"):
+                                case _ where publicArtname.contains("Perceval") || publicArtId.contains("697"):
                                     print("Perceval")
                                     // Create as many slides as you'd like to show in the carousel
                                     
@@ -613,7 +620,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                     
                                     // Add the slides to the carousel
                                     self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
-                                case let str where str.contains("Healthy Living"):
+                                case _ where publicArtname.contains("Healthy Living") || publicArtId.contains("632"):
                                     print("Healthy Living")
                                     // Create as many slides as you'd like to show in the carousel
                                     
@@ -626,6 +633,8 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                                     // Add the slides to the carousel
                                     self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
                                 default:
+                                    let slide1 = ZKCarouselSlide(image: UIImage(named: "defaultabout")!, title: "", description: "")
+                                    self.carousel.slides = [slide1]
                                     break
                                 }
                                 

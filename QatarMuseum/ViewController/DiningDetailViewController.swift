@@ -137,8 +137,11 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                         // Do something with your image.
                         let diningName:String = self.diningDetailtArray[0].name!
                         
-                        switch diningName{
-                        case let str where str.contains("MATHAF MAQHA"):
+                        
+                        let diningId:String = self.diningDetailtArray[0].id!
+
+                        switch (diningName, diningId){
+                        case _ where diningName.contains("MATHAF MAQHA") || diningId.contains("12651"):
                             print("MATHAF MAQHA")
                             // Create as many slides as you'd like to show in the carousel
                             self.carousel.pageControl.isHidden = true
@@ -147,7 +150,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                             
                             // Add the slides to the carousel
                             self.carousel.slides = [slide2]
-                        case let str where str.contains("#999"):
+                        case _ where diningName.contains("#999") || diningId.contains("12641"):
                             print("#999")
                             // Create as many slides as you'd like to show in the carousel
                             
@@ -159,7 +162,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                             
                             // Add the slides to the carousel
                             self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
-                        case let str where str.contains("IDAM"):
+                         case _ where diningName.contains("IDAM") || diningId.contains("12646"):
                             print("IDAM")
                             // Create as many slides as you'd like to show in the carousel
                             
@@ -171,7 +174,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                             
                             // Add the slides to the carousel
                             self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
-                        case let str where str.contains("IN-Q CAFÉ AT HIA"):
+                        case _ where diningName.contains("IN-Q CAFÉ AT HIA") || diningId.contains("12661"):
                             print("IN-Q CAFÉ AT HIA")
                             // Create as many slides as you'd like to show in the carousel
                             self.carousel.pageControl.isHidden = true
@@ -180,7 +183,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                             
                             // Add the slides to the carousel
                             self.carousel.slides = [slide2]
-                        case let str where str.contains("MIA CAFÉ"):
+                        case _ where diningName.contains("MIA CAFÉ") || diningId.contains("12656"):
                             print("MIA CAFÉ")
                             // Create as many slides as you'd like to show in the carousel
                             self.carousel.pageControl.isHidden = true
@@ -189,7 +192,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                             
                             // Add the slides to the carousel
                             self.carousel.slides = [slide2]
-                        case let str where str.contains("AL RIWAQ CAFÉ"):
+                        case _ where diningName.contains("AL RIWAQ CAFÉ"):
                             print("AL RIWAQ CAFÉ")
                             // Create as many slides as you'd like to show in the carousel
                             self.carousel.pageControl.isHidden = true
@@ -198,7 +201,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                             
                             // Add the slides to the carousel
                             self.carousel.slides = [slide2]
-                        case let str where str.contains("MIA CATERING"):
+                        case _ where diningName.contains("MIA CATERING"):
                             print("MIA CATERING")
                             // Create as many slides as you'd like to show in the carousel
                             self.carousel.pageControl.isHidden = true
@@ -209,6 +212,8 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                             self.carousel.slides = [slide2]
                         
                         default:
+                            let slide1 = ZKCarouselSlide(image: UIImage(named: "defaultabout")!, title: "", description: "")
+                            self.carousel.slides = [slide1]
                             break
                         }
                         

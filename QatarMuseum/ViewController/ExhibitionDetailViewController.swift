@@ -230,13 +230,14 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
                         
                         // Create as many slides as you'd like to show in the carousel
                         let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
-                        let slide1 = ZKCarouselSlide(image: UIImage(named: "mia2")!, title: "", description: "")
-                        let slide2 = ZKCarouselSlide(image: UIImage(named: "mia3")!, title: "", description: "")
-                        let slide3 = ZKCarouselSlide(image: UIImage(named: "mia4")!, title: "", description: "")
-                        let slide4 = ZKCarouselSlide(image: UIImage(named: "mia5")!, title: "", description: "")
+//                        let slide1 = ZKCarouselSlide(image: UIImage(named: "mia2")!, title: "", description: "")
+//                        let slide2 = ZKCarouselSlide(image: UIImage(named: "mia3")!, title: "", description: "")
+//                        let slide3 = ZKCarouselSlide(image: UIImage(named: "mia4")!, title: "", description: "")
+//                        let slide4 = ZKCarouselSlide(image: UIImage(named: "mia5")!, title: "", description: "")
                         
                         // Add the slides to the carousel
-                        self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+//                        self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                        self.carousel.slides = [slide]
                         
                         // You can optionally use the 'interval' property to set the timing for automatic slide changes. The default is 1 second.
                         self.carousel.interval = 1.5
@@ -256,7 +257,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         downloadPicTask.resume()
         //Mk here array of image will go
         imageView.kf.setImage(with: URL(string: imageUrlString))
-        self.carousel.pageControl.isHidden = false
+//        self.carousel.pageControl.isHidden = false
         
     }
     
