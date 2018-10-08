@@ -146,25 +146,33 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     func loadLocationInMap(currentRow: Int) {
-        var latitudeString :String?
-        var longitudeString : String?
-        
+        var latitudeString = String()
+        var longitudeString = String()
+        var latitude : Double?
+        var longitude : Double?
         if ((diningDetailtArray[currentRow].latitude != nil) && (diningDetailtArray[currentRow].longitude != nil)) {
-            latitudeString = diningDetailtArray[currentRow].latitude
-            longitudeString = diningDetailtArray[currentRow].longitude
+            latitudeString = diningDetailtArray[currentRow].latitude!
+            longitudeString = diningDetailtArray[currentRow].longitude!
         }
         
-        if latitudeString != nil && longitudeString != nil {
-            let latitude = convertDMSToDDCoordinate(latLongString: latitudeString!)
-            let longitude = convertDMSToDDCoordinate(latLongString: longitudeString!)
+        if ((latitudeString != nil) && (longitudeString != nil) && (latitudeString != "") && (longitudeString != "")) {
+            //latitude = convertDMSToDDCoordinate(latLongString: latitudeString!)
+           // longitude = convertDMSToDDCoordinate(latLongString: longitudeString!)
+            if let lat : Double = Double(latitudeString) {
+                latitude = lat
+            }
+            if let long : Double = Double(longitudeString) {
+                longitude = long
+            }
+            
             if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
                 if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!, options: [:], completionHandler: nil)
+                    UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude!),\(longitude!)&zoom=14&views=traffic&q=\(latitude!),\(longitude!)")!, options: [:], completionHandler: nil)
                 } else {
-                    UIApplication.shared.openURL(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!)
+                    UIApplication.shared.openURL(URL(string:"comgooglemaps://?center=\(latitude!),\(longitude!)&zoom=14&views=traffic&q=\(latitude!),\(longitude!)")!)
                 }
             } else {
-                let locationUrl = URL(string: "https://maps.google.com/?q=@\(latitude),\(longitude)")!
+                let locationUrl = URL(string: "https://maps.google.com/?q=\(latitude!),\(longitude!)")!
                 UIApplication.shared.openURL(locationUrl)
             }
         } else {

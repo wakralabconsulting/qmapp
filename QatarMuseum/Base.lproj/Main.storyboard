@@ -486,7 +486,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EVENTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWB-Sh-j4n">
-                                        <rect key="frame" x="167" y="308.66666666666669" width="81.333333333333314" height="29"/>
+                                        <rect key="frame" x="164" y="308.66666666666669" width="87" height="29"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="29" id="guL-0K-jjs"/>
                                         </constraints>
@@ -4625,14 +4625,14 @@
                             <constraint firstItem="CH7-x7-44M" firstAttribute="top" secondItem="fxx-YZ-9gH" secondAttribute="bottom" id="8zP-wH-8KL"/>
                             <constraint firstItem="CH7-x7-44M" firstAttribute="leading" secondItem="MOd-IF-zW2" secondAttribute="leading" id="CBe-jN-tmM"/>
                             <constraint firstItem="zrv-Uk-Smv" firstAttribute="top" secondItem="9IZ-LI-JCr" secondAttribute="bottom" id="D33-5b-dhK"/>
+                            <constraint firstAttribute="bottom" secondItem="zrv-Uk-Smv" secondAttribute="bottom" id="LQn-tg-YFa"/>
+                            <constraint firstAttribute="bottom" secondItem="CH7-x7-44M" secondAttribute="bottom" id="LRL-pX-2EF"/>
                             <constraint firstItem="9IZ-LI-JCr" firstAttribute="leading" secondItem="MOd-IF-zW2" secondAttribute="leading" id="OVv-57-QAB"/>
                             <constraint firstItem="zrv-Uk-Smv" firstAttribute="leading" secondItem="MOd-IF-zW2" secondAttribute="leading" id="SAE-df-TB0"/>
                             <constraint firstAttribute="trailing" secondItem="9IZ-LI-JCr" secondAttribute="trailing" id="aHV-jj-tiM"/>
-                            <constraint firstItem="hMA-ei-WK4" firstAttribute="top" secondItem="CH7-x7-44M" secondAttribute="bottom" id="axt-ap-uSs"/>
                             <constraint firstItem="fxx-YZ-9gH" firstAttribute="leading" secondItem="MOd-IF-zW2" secondAttribute="leading" id="c2E-J0-0Io"/>
                             <constraint firstAttribute="trailing" secondItem="CH7-x7-44M" secondAttribute="trailing" id="dNH-1v-jLe"/>
                             <constraint firstItem="9IZ-LI-JCr" firstAttribute="top" secondItem="fxx-YZ-9gH" secondAttribute="bottom" id="iZ5-0r-cZB"/>
-                            <constraint firstItem="hMA-ei-WK4" firstAttribute="top" secondItem="zrv-Uk-Smv" secondAttribute="bottom" id="kZe-ee-8qN"/>
                             <constraint firstAttribute="trailing" secondItem="fxx-YZ-9gH" secondAttribute="trailing" id="vPo-yu-fME"/>
                         </constraints>
                     </view>

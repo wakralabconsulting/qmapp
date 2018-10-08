@@ -16,6 +16,7 @@ struct Heritage: ResponseObjectSerializable, ResponseCollectionSerializable {
     var image: String? = nil
     var shortdescription: String? = nil
     var longdescription: String? = nil
+    var images: [String]? = []
     //HeritageListList
     var sortid: String? = nil
     var isFavourite : Bool = false
@@ -31,12 +32,13 @@ struct Heritage: ResponseObjectSerializable, ResponseCollectionSerializable {
             self.image = representation["LATEST_IMAGE"] as? String
             self.shortdescription = representation["short_description"] as? String
             self.longdescription = representation["long_description"] as? String
+            self.images = representation["images"] as? [String]
             //HeritageListList
             self.sortid = representation["SORT_ID"] as? String
             
         }
     }
-init(id:String?,name:String?,location:String?,latitude:String?,longitude:String?,image:String?,shortdescription:String?,longdescription:String?,sortid:String?) {
+init(id:String?,name:String?,location:String?,latitude:String?,longitude:String?,image:String?,shortdescription:String?,longdescription:String?,images:[String]?,sortid:String?) {
         self.id = id
         self.name = name
         self.location = location
@@ -45,6 +47,7 @@ init(id:String?,name:String?,location:String?,latitude:String?,longitude:String?
         self.image = image
         self.shortdescription = shortdescription
         self.longdescription = longdescription
+        self.images = images
         self.sortid = sortid
     
     }

@@ -691,15 +691,16 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         }
     }
     func filterButtonPressed() {
-        let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as! FloorMapViewController
-        
-        let selectedItem = tourGuideArray[currentPreviewItem]
-        floorMapView.selectedScienceTour = selectedItem.artifactPosition
-        floorMapView.selectedScienceTourLevel = selectedItem.floorLevel
-        floorMapView.selectedTourdGuidIndex = currentPreviewItem
-        floorMapView.fromScienceTour = true
-        floorMapView.modalTransitionStyle = .flipHorizontal
-        self.present(floorMapView, animated: true, completion: nil)
+        if (tourGuideArray.count != 0) {
+            let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as!FloorMapViewController
+            let selectedItem = tourGuideArray[currentPreviewItem]
+            floorMapView.selectedScienceTour = selectedItem.artifactPosition
+            floorMapView.selectedScienceTourLevel = selectedItem.floorLevel
+            floorMapView.selectedTourdGuidIndex = currentPreviewItem
+            floorMapView.fromScienceTour = true
+            floorMapView.modalTransitionStyle = .flipHorizontal
+            self.present(floorMapView, animated: true, completion: nil)
+        }
     }
     @objc func loadDetailPage(sender: UITapGestureRecognizer? = nil) {
         let objectDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "objectDetailId") as! ObjectDetailViewController

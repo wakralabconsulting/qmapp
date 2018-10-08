@@ -314,7 +314,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
             view.window!.layer.add(transition, forKey: kCATransition)
             self.present(parkView, animated: false, completion: nil)
-       } else if((selectedItem == "Dining") || (selectedItem == "العشاء")) {
+       } else if((selectedItem == "Dining") || (selectedItem == "الطعام")) {
             let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "diningViewId") as! DiningViewController
             diningView.museumId = museumId
             diningView.fromHome = false

@@ -76,8 +76,48 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     let L3_G11_WR15 = CLLocationCoordinate2D(latitude: 25.295330, longitude: 51.539414)
     let L3_G13_5 = CLLocationCoordinate2D(latitude: 25.295664, longitude: 51.539330)
     let L3_G13_7 = CLLocationCoordinate2D(latitude: 25.295628, longitude: 51.539360)
-    
     let L3_G17_3 = CLLocationCoordinate2D(latitude: 25.295505, longitude: 51.538905)
+    
+    
+    // Highlight Tour
+    let L2_G1_SC2 = CLLocationCoordinate2D(latitude: 25.295195, longitude: 51.539160);
+    let L2_G1_SC7 = CLLocationCoordinate2D(latitude: 25.295215, longitude: 51.539395);
+    let L2_G1_SC8 = CLLocationCoordinate2D(latitude: 25.295268, longitude: 51.539373);
+    let L2_G1_SC13 = CLLocationCoordinate2D(latitude: 25.295180, longitude: 51.539248);
+    let L2_G1_SC14 = CLLocationCoordinate2D(latitude: 25.295205, longitude: 51.539319);
+    let L2_G2_2 = CLLocationCoordinate2D(latitude: 25.295220, longitude: 51.539450);
+    let L2_G3_SC14_1 = CLLocationCoordinate2D(latitude: 25.295548, longitude: 51.539406);
+    let L2_G3_SC14_2 = CLLocationCoordinate2D(latitude: 25.295580, longitude: 51.539392);
+    let L2_G3_WR4 = CLLocationCoordinate2D(latitude: 25.295540, longitude: 51.539470);
+    let L2_G4_SC5 = CLLocationCoordinate2D(latitude: 25.295690, longitude: 51.539312);
+    let L2_G3_SC3 = CLLocationCoordinate2D(latitude: 25.295715, longitude: 51.539348);
+    let L2_G5_SC5 = CLLocationCoordinate2D(latitude: 25.295715, longitude: 51.539205);
+    let L2_G5_SC11 = CLLocationCoordinate2D(latitude: 25.295735, longitude: 51.539225);
+    let L2_G7_SC13 = CLLocationCoordinate2D(latitude: 25.295395, longitude: 51.538915);
+    let L2_G7_SC8 = CLLocationCoordinate2D(latitude: 25.295345, longitude: 51.538880);
+    let L2_G7_SC4 = CLLocationCoordinate2D(latitude: 25.295450, longitude: 51.538908);
+    
+    let L3_G10_WR2_1 = CLLocationCoordinate2D(latitude: 25.295130, longitude: 51.539217);
+    let L3_G10_WR2_2 = CLLocationCoordinate2D(latitude: 25.295138, longitude: 51.539240);
+    let L3_G10_PODIUM14 = CLLocationCoordinate2D(latitude: 25.295188, longitude: 51.539240);
+    let L3_G10_PODIUM9 = CLLocationCoordinate2D(latitude: 25.295222, longitude: 51.539333);
+    let L3_G11_14 = CLLocationCoordinate2D(latitude: 25.295392, longitude: 51.539495);
+    let L3_G12_11 = CLLocationCoordinate2D(latitude: 25.295530, longitude: 51.539390);
+    let L3_G12_12 = CLLocationCoordinate2D(latitude: 25.295492, longitude: 51.539405);
+    let L3_G12_17 = CLLocationCoordinate2D(latitude: 25.295480, longitude: 51.539440);
+    let L3_G12_WR5 = CLLocationCoordinate2D(latitude: 25.295540, longitude: 51.539470);
+    let L3_G13_2 = CLLocationCoordinate2D(latitude: 25.295690, longitude: 51.539402);
+    let L3_G13_15 = CLLocationCoordinate2D(latitude: 25.295660, longitude: 51.539375);
+    let L3_G14_7 = CLLocationCoordinate2D(latitude: 25.295693, longitude: 51.539270);
+    let L3_G14_13 = CLLocationCoordinate2D(latitude: 25.295723, longitude: 51.539225);
+    let L3_G15_13 = CLLocationCoordinate2D(latitude: 25.295150, longitude: 51.539135);
+    let L3_G16_WR5 = CLLocationCoordinate2D(latitude: 25.295444, longitude: 51.538955);
+    let L3_G17_8 = CLLocationCoordinate2D(latitude: 25.295504, longitude: 51.538880);
+    let L3_G17_9 = CLLocationCoordinate2D(latitude: 25.295490, longitude: 51.538850);
+    let L3_G18_1 = CLLocationCoordinate2D(latitude: 25.295555, longitude: 51.538892);
+    let L3_G18_2 = CLLocationCoordinate2D(latitude: 25.295557, longitude: 51.538906);
+    let L3_G18_11 = CLLocationCoordinate2D(latitude: 25.295613, longitude: 51.538914);
+    
     let l2_g1_sc3 = GMSMarker()
     let l2_g8 = GMSMarker()
     let l2_g8_sc1 = GMSMarker()
@@ -97,6 +137,47 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     let l3_g13_5 = GMSMarker()
     let l3_g13_7 = GMSMarker()
     let l3_g17_3 = GMSMarker()
+    
+    //Highligh Marker
+    let l2_g1_sc2 = GMSMarker()
+    let l2_g1_sc7 = GMSMarker()
+    let l2_g1_sc8 = GMSMarker()
+    let l2_g1_sc13 = GMSMarker()
+    let l2_g1_sc14 = GMSMarker()
+    let l2_g2_2 = GMSMarker()
+    let l2_g3_sc14_1 = GMSMarker()
+    let l2_g3_sc14_2 = GMSMarker()
+    let l2_g3_wr4 = GMSMarker()
+    let l2_g4_sc5 = GMSMarker()
+    let l2_g3_sc3 = GMSMarker()
+    let l2_g5_sc5 = GMSMarker()
+    let l2_g5_sc11 = GMSMarker()
+    let l2_g7_sc13 = GMSMarker()
+    let l2_g7_sc8 = GMSMarker()
+    let l2_g7_sc4 = GMSMarker()
+    
+    let l3_g10_wr2_1 = GMSMarker()
+    let l3_g10_wr2_2 = GMSMarker()
+    let l3_g10_podium14 = GMSMarker()
+    let l3_g10_podium9 = GMSMarker()
+    let l3_g11_14 = GMSMarker()
+    let l3_g12_11 = GMSMarker()
+    let l3_g12_12 = GMSMarker()
+    let l3_g12_17 = GMSMarker()
+    let l3_g12_wr5 = GMSMarker()
+    let l3_g13_2 = GMSMarker()
+    let l3_g13_15 = GMSMarker()
+    let l3_g14_7 = GMSMarker()
+    let l3_g14_13 = GMSMarker()
+    let l3_g15_13 = GMSMarker()
+    let l3_g16_wr5 = GMSMarker()
+    let l3_g17_8 = GMSMarker()
+    let l3_g17_9 = GMSMarker()
+    let l3_g18_1 = GMSMarker()
+    let l3_g18_2 = GMSMarker()
+    let l3_g18_11 = GMSMarker()
+    
+    
     var objectPopupView : ObjectPopupView = ObjectPopupView()
     var level : levelNumber?
     var zoomValue = Float()
