@@ -86,6 +86,22 @@
         <attribute name="openingtimearabic" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortidarabic" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="EdAgeGroupEntity" representedClassName="EdAgeGroupEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="ageGroup" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="ageGroupRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntity" syncable="YES"/>
+    </entity>
+    <entity name="EdAgeGroupEntityAr" representedClassName="EdAgeGroupEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="ageGroup" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="ageGroupRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntityAr" syncable="YES"/>
+    </entity>
+    <entity name="EdEndDateEntity" representedClassName="EdEndDateEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="endDate" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="endDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntity" syncable="YES"/>
+    </entity>
+    <entity name="EdEndDateEntityAr" representedClassName="EdEndDateEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="endDate" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="endDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntityAr" syncable="YES"/>
+    </entity>
     <entity name="EdEventDateEntity" representedClassName="EdEventDateEntity" syncable="YES" codeGenerationType="class">
         <attribute name="fieldRepeatDate" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="fieldRepeatDates" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntity" syncable="YES"/>
@@ -102,6 +118,22 @@
         <attribute name="mainDesc" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="mainDescription" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntityAr" syncable="YES"/>
     </entity>
+    <entity name="EdEventTopicsEntity" representedClassName="EdEventTopicsEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="associatedTopic" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="assTopicRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntity" syncable="YES"/>
+    </entity>
+    <entity name="EdEventTopicsEntityAr" representedClassName="EdEventTopicsEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="associatedTopic" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="assTopicRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntityAr" syncable="YES"/>
+    </entity>
+    <entity name="EdStartDateEntity" representedClassName="EdStartDateEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="startDate" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="startDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntity" syncable="YES"/>
+    </entity>
+    <entity name="EdStartDateEntityAr" representedClassName="EdStartDateEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="startDate" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="startDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntityAr" syncable="YES"/>
+    </entity>
     <entity name="EducationEventEntity" representedClassName="EducationEventEntity" syncable="YES" codeGenerationType="class">
         <attribute name="dateId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="fieldRepeatDate" optional="YES" attributeType="String" syncable="YES"/>
@@ -110,8 +142,12 @@
         <attribute name="pgmType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="register" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="ageGroupRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdAgeGroupEntity" syncable="YES"/>
+        <relationship name="assTopicRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdEventTopicsEntity" syncable="YES"/>
+        <relationship name="endDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdEndDateEntity" syncable="YES"/>
         <relationship name="fieldRepeatDates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdEventDateEntity" syncable="YES"/>
         <relationship name="mainDescription" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdEventDescEntity" syncable="YES"/>
+        <relationship name="startDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventStartDateEntity" syncable="YES"/>
     </entity>
     <entity name="EducationEventEntityAr" representedClassName="EducationEventEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="dateId" optional="YES" attributeType="String" syncable="YES"/>
@@ -121,8 +157,20 @@
         <attribute name="pgmTypeAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="registerAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="titleAr" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="ageGroupRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventAgeGroupEntityAr" syncable="YES"/>
+        <relationship name="assTopicRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdEventTopicsEntityAr" syncable="YES"/>
+        <relationship name="endDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdEndDateEntityAr" syncable="YES"/>
         <relationship name="fieldRepeatDates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdEventDateEntityAr" syncable="YES"/>
         <relationship name="mainDescription" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdEventDescEntityAr" syncable="YES"/>
+        <relationship name="startDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdStartDateEntityAr" syncable="YES"/>
+    </entity>
+    <entity name="EventAgeGroupEntity" representedClassName="EventAgeGroupEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="ageGroup" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="ageGroupRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntity" syncable="YES"/>
+    </entity>
+    <entity name="EventAgeGroupEntityAr" representedClassName="EventAgeGroupEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="ageGroup" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="ageGroupRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntityArabic" syncable="YES"/>
     </entity>
     <entity name="EventDateEntity" representedClassName="EventDateEntity" syncable="YES" codeGenerationType="class">
         <attribute name="fieldRepeatDate" optional="YES" attributeType="String" syncable="YES"/>
@@ -140,27 +188,61 @@
         <attribute name="mainDesc" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="mainDescription" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntityArabic" syncable="YES"/>
     </entity>
+    <entity name="EventEndDateEntity" representedClassName="EventEndDateEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="endDate" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="endDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntity" syncable="YES"/>
+    </entity>
+    <entity name="EventEndDateEntityAr" representedClassName="EventEndDateEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="endDate" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="endDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntityArabic" syncable="YES"/>
+    </entity>
     <entity name="EventEntity" representedClassName="EventEntity" syncable="YES" codeGenerationType="class">
         <attribute name="dateId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="fieldRepeatDate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="introductionText" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="itemId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="museumDepartMent" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pgmType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="register" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="ageGroupRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventAgeGroupEntity" syncable="YES"/>
+        <relationship name="assTopicRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventTopicsEntity" syncable="YES"/>
+        <relationship name="endDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventEndDateEntity" syncable="YES"/>
         <relationship name="fieldRepeatDates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventDateEntity" syncable="YES"/>
         <relationship name="mainDescription" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventDescEntity" syncable="YES"/>
+        <relationship name="startDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventStartDateEntity" syncable="YES"/>
     </entity>
     <entity name="EventEntityArabic" representedClassName="EventEntityArabic" syncable="YES" codeGenerationType="class">
         <attribute name="dateId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="fieldRepeatDate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="introductionText" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="itemId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="museumDepartMent" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pgmTypeAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="registerAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="titleAr" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="ageGroupRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventAgeGroupEntityAr" syncable="YES"/>
+        <relationship name="assTopicRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventTopicsEntityAr" syncable="YES"/>
+        <relationship name="endDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventEndDateEntityAr" syncable="YES"/>
         <relationship name="fieldRepeatDates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventDateEntityAr" syncable="YES"/>
         <relationship name="mainDescription" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventDescEntityAr" syncable="YES"/>
+        <relationship name="startDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventStartDateEntityAr" syncable="YES"/>
+    </entity>
+    <entity name="EventStartDateEntity" representedClassName="EventStartDateEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="startDate" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="startDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntity" syncable="YES"/>
+    </entity>
+    <entity name="EventStartDateEntityAr" representedClassName="EventStartDateEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="startDate" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="startDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntityArabic" syncable="YES"/>
+    </entity>
+    <entity name="EventTopicsEntity" representedClassName="EventTopicsEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="associatedTopic" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="assTopicRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntity" syncable="YES"/>
+    </entity>
+    <entity name="EventTopicsEntityAr" representedClassName="EventTopicsEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="associatedTopic" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="assTopicRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntityArabic" syncable="YES"/>
     </entity>
     <entity name="ExhibitionsEntity" representedClassName="ExhibitionsEntity" syncable="YES" codeGenerationType="class">
         <attribute name="detailEndDate" optional="YES" attributeType="String" syncable="YES"/>
@@ -208,6 +290,7 @@
         <attribute name="listimage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="listname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="listsortid" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="imagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HeritageImagesEntity" syncable="YES"/>
     </entity>
     <entity name="HeritageEntityArabic" representedClassName="HeritageEntityArabic" syncable="YES" codeGenerationType="class">
         <attribute name="detaillatitudearabic" optional="YES" attributeType="String" syncable="YES"/>
@@ -219,6 +302,15 @@
         <attribute name="listimagearabic" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="listnamearabic" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="listsortidarabic" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="imagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HeritageImagesEntityAr" syncable="YES"/>
+    </entity>
+    <entity name="HeritageImagesEntity" representedClassName="HeritageImagesEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="imagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HeritageEntity" syncable="YES"/>
+    </entity>
+    <entity name="HeritageImagesEntityAr" representedClassName="HeritageImagesEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="imagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HeritageEntityArabic" syncable="YES"/>
     </entity>
     <entity name="HomeEntity" representedClassName="HomeEntity" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
@@ -255,6 +347,7 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shortdescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortcoefficient" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="publicImagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PublicArtsImagesEntity" syncable="YES"/>
     </entity>
     <entity name="PublicArtsEntityArabic" representedClassName="PublicArtsEntityArabic" syncable="YES" codeGenerationType="class">
         <attribute name="descriptionarabic" optional="YES" attributeType="String" syncable="YES"/>
@@ -265,6 +358,15 @@
         <attribute name="namearabic" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shortdescriptionarabic" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortcoefficientarabic" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="publicImagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PublicArtsImagesEntityAr" syncable="YES"/>
+    </entity>
+    <entity name="PublicArtsImagesEntity" representedClassName="PublicArtsImagesEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="publicImagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PublicArtsEntity" syncable="YES"/>
+    </entity>
+    <entity name="PublicArtsImagesEntityAr" representedClassName="PublicArtsImagesEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="publicImagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PublicArtsEntityArabic" syncable="YES"/>
     </entity>
     <elements>
         <element name="AboutDescriptionEntity" positionX="-27" positionY="135" width="128" height="75"/>
@@ -279,25 +381,45 @@
         <element name="DiningEntityArabic" positionX="-45" positionY="108" width="128" height="180"/>
         <element name="EdEventDateEntity" positionX="-18" positionY="153" width="128" height="75"/>
         <element name="EdEventDateEntityAr" positionX="-9" positionY="162" width="128" height="75"/>
-        <element name="EducationEventEntity" positionX="-36" positionY="108" width="128" height="180"/>
-        <element name="EducationEventEntityAr" positionX="-27" positionY="144" width="128" height="180"/>
+        <element name="EdEventDescEntity" positionX="-9" positionY="153" width="128" height="75"/>
+        <element name="EdEventDescEntityAr" positionX="0" positionY="162" width="128" height="75"/>
+        <element name="EducationEventEntity" positionX="-36" positionY="108" width="128" height="240"/>
+        <element name="EducationEventEntityAr" positionX="-27" positionY="144" width="128" height="240"/>
         <element name="EventDateEntity" positionX="-27" positionY="144" width="128" height="75"/>
         <element name="EventDateEntityAr" positionX="0" positionY="171" width="128" height="75"/>
-        <element name="EventEntity" positionX="-18" positionY="153" width="128" height="180"/>
-        <element name="EventEntityArabic" positionX="-9" positionY="162" width="128" height="180"/>
+        <element name="EventDescEntity" positionX="-27" positionY="135" width="128" height="75"/>
+        <element name="EventDescEntityAr" positionX="-18" positionY="144" width="128" height="75"/>
+        <element name="EventEntity" positionX="-18" positionY="153" width="128" height="255"/>
+        <element name="EventEntityArabic" positionX="-9" positionY="162" width="128" height="255"/>
         <element name="ExhibitionsEntity" positionX="-54" positionY="108" width="128" height="285"/>
         <element name="ExhibitionsEntityArabic" positionX="-45" positionY="126" width="128" height="285"/>
-        <element name="HeritageEntity" positionX="-63" positionY="27" width="128" height="180"/>
-        <element name="HeritageEntityArabic" positionX="-54" positionY="63" width="128" height="180"/>
+        <element name="HeritageEntity" positionX="-63" positionY="27" width="128" height="195"/>
+        <element name="HeritageEntityArabic" positionX="-54" positionY="63" width="128" height="195"/>
+        <element name="HeritageImagesEntity" positionX="-27" positionY="135" width="128" height="75"/>
+        <element name="HeritageImagesEntityAr" positionX="-27" positionY="135" width="128" height="75"/>
         <element name="HomeEntity" positionX="-63" positionY="-18" width="128" height="30"/>
         <element name="HomeEntityArabic" positionX="-54" positionY="63" width="128" height="120"/>
         <element name="ParksEntity" positionX="-54" positionY="108" width="128" height="105"/>
         <element name="ParksEntityArabic" positionX="-45" positionY="117" width="128" height="105"/>
-        <element name="PublicArtsEntity" positionX="-54" positionY="108" width="128" height="165"/>
-        <element name="PublicArtsEntityArabic" positionX="-54" positionY="117" width="128" height="165"/>
-        <element name="EventDescEntity" positionX="-27" positionY="135" width="128" height="75"/>
-        <element name="EventDescEntityAr" positionX="-18" positionY="144" width="128" height="75"/>
-        <element name="EdEventDescEntity" positionX="-9" positionY="153" width="128" height="75"/>
-        <element name="EdEventDescEntityAr" positionX="0" positionY="162" width="128" height="75"/>
+        <element name="PublicArtsEntity" positionX="-54" positionY="108" width="128" height="180"/>
+        <element name="PublicArtsEntityArabic" positionX="-54" positionY="117" width="128" height="180"/>
+        <element name="PublicArtsImagesEntity" positionX="-18" positionY="144" width="128" height="75"/>
+        <element name="PublicArtsImagesEntityAr" positionX="-9" positionY="153" width="128" height="75"/>
+        <element name="EventAgeGroupEntity" positionX="-27" positionY="135" width="128" height="75"/>
+        <element name="EventAgeGroupEntityAr" positionX="-18" positionY="144" width="128" height="75"/>
+        <element name="EdAgeGroupEntity" positionX="-9" positionY="153" width="128" height="75"/>
+        <element name="EdAgeGroupEntityAr" positionX="0" positionY="162" width="128" height="75"/>
+        <element name="EventTopicsEntity" positionX="9" positionY="171" width="128" height="75"/>
+        <element name="EventTopicsEntityAr" positionX="18" positionY="180" width="128" height="75"/>
+        <element name="EdEventTopicsEntity" positionX="36" positionY="189" width="128" height="75"/>
+        <element name="EdEventTopicsEntityAr" positionX="-9" positionY="135" width="128" height="75"/>
+        <element name="EventStartDateEntity" positionX="0" positionY="144" width="128" height="75"/>
+        <element name="EventStartDateEntityAr" positionX="9" positionY="153" width="128" height="75"/>
+        <element name="EdStartDateEntity" positionX="18" positionY="162" width="128" height="75"/>
+        <element name="EdStartDateEntityAr" positionX="27" positionY="171" width="128" height="75"/>
+        <element name="EventEndDateEntity" positionX="36" positionY="180" width="128" height="75"/>
+        <element name="EventEndDateEntityAr" positionX="45" positionY="189" width="128" height="75"/>
+        <element name="EdEndDateEntity" positionX="-9" positionY="135" width="128" height="75"/>
+        <element name="EdEndDateEntityAr" positionX="0" positionY="144" width="128" height="75"/>
     </elements>
 </model>

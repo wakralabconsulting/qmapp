@@ -36,9 +36,9 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
        // loadingView.showLoading()
         
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
+            closeButton.frame = CGRect(x: 10, y: 40, width: 40, height: 40)
         } else {
-            closeButton.frame = CGRect(x: self.view.frame.width-50, y: 30, width: 40, height: 40)
+            closeButton.frame = CGRect(x: self.view.frame.width-50, y: 40, width: 40, height: 40)
         }
         closeButton.setImage(UIImage(named: "closeX1"), for: .normal)
         closeButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom:12, right: 12)

@@ -240,10 +240,12 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
             UserDefaults.standard.set(true, forKey: "Arabic")
             if #available(iOS 9.0, *) {
                 UIView.appearance().semanticContentAttribute = .forceRightToLeft
+//                self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
                 let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
-                
+
                 let appDelegate = UIApplication.shared.delegate
                 appDelegate?.window??.rootViewController = homeViewController
+                
                 
             } else {
                 // Fallback on earlier versions
@@ -255,9 +257,11 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
             UserDefaults.standard.set(false, forKey: "Arabic")
             if #available(iOS 9.0, *) {
                 UIView.appearance().semanticContentAttribute = .forceLeftToRight
+//                self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
                 let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
                 let appDelegate = UIApplication.shared.delegate
                 appDelegate?.window??.rootViewController = homeViewController
+                // self.dismiss(animated: false, completion: nil)
                 
             } else {
                 // Fallback on earlier versions
