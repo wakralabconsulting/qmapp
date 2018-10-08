@@ -39,8 +39,10 @@ class EventCollectionViewCell: UICollectionViewCell {
         
         firstTitle.text = event.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
         let dateValue = event.fieldRepeatDate
+        if(dateValue != nil) {
         if((dateValue?.count)! > 0) {
             descriptionLabel.text = event.fieldRepeatDate?[0].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        }
         }
         //secondTitleLabel.text = event.title?.uppercased()
        // descriptionLabel.text = event.shortDesc
@@ -75,8 +77,10 @@ class EventCollectionViewCell: UICollectionViewCell {
 //        }
         firstTitle.text = educationEvent.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
         let dateValue = educationEvent.fieldRepeatDate
+        if(dateValue != nil) {
         if((dateValue?.count)! > 0) {
             descriptionLabel.text = educationEvent.fieldRepeatDate?[0].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        }
         }
         
     }

@@ -82,6 +82,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         self.view.addGestureRecognizer(self.scopeGesture)
         listTitleLabel.font = UIFont.diningHeaderFont
         self.eventCollectionView.panGestureRecognizer.require(toFail: self.scopeGesture)
+        calendarView.appearance.headerMinimumDissolvedAlpha = -1
+        
         if (isLoadEventPage == true) {
             listTitleLabel.text = NSLocalizedString("CALENDAR_EVENT_TITLE", comment: "CALENDAR_EVENT_TITLE Label in the Event page")
             headerView.headerTitle.text = NSLocalizedString("CALENDAR_TITLE", comment: "CALENDAR_TITLE Label in the Event page")
@@ -93,7 +95,9 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 self.getEducationEventFromServer()
             }
             else {
-                self.fetchEventFromCoredata()
+               // self.fetchEventFromCoredata()
+                loadingView.isHidden = true
+                loadingView.stopLoading()
             }
         }
         else {
@@ -105,7 +109,9 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 self.getEducationEventFromServer()
             }
             else {
-                self.fetchEducationEventFromCoredata()
+                //self.fetchEducationEventFromCoredata()
+                loadingView.isHidden = true
+                loadingView.stopLoading()
             }
         }
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -343,8 +349,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     event.startDate = startDate
                     event.endDate = endDate
                         event.notes = description?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
-                        print(event.title)
-                        print(event.description)
+                        
                     // let alarm = EKAlarm.init(absoluteDate: Date.init(timeInterval: -3600, since: event.startDate))
                     // event.addAlarm(alarm)
                     
@@ -433,7 +438,9 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     self.getEducationEventFromServer()
                 }
                 else {
-                    self.fetchEventFromCoredata()
+                   // self.fetchEventFromCoredata()
+                    self.loadingView.isHidden = true
+                    self.loadingView.stopLoading()
                 }
             }
             else {
@@ -441,7 +448,9 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     self.getEducationEventFromServer()
                 }
                 else {
-                    self.fetchEducationEventFromCoredata()
+                    //self.fetchEducationEventFromCoredata()
+                    self.loadingView.isHidden = true
+                    self.loadingView.stopLoading()
                 }
             }
         }
@@ -543,7 +552,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
        // let dateString = toMillis()
         let getDate = toDayMonthYear()
         if ((getDate.day != nil) && (getDate.month != nil) && (getDate.year != nil)) {
-            _ = Alamofire.request(QatarMuseumRouter.EducationEvent(["institution" : institutionType ?? "All","age" : ageGroupType ?? "All", "programe" : programmeType ?? "All","date_filter[value][month]" : getDate.month!, "date_filter[value][day]" : getDate.day!,"date_filter[value][year]" : getDate.year!,"cck_multiple_field_remove_fields" : "All"] )).responseObject { (response: DataResponse<EducationEventList>) -> Void in
+            _ = Alamofire.request(QatarMuseumRouter.EducationEvent(["institution" : institutionType ?? "All","age" : ageGroupType ?? "All", "programe" : programmeType ?? "All","field_eduprog_repeat_field_date_value[value][month]" : getDate.month!, "field_eduprog_repeat_field_date_value[value][day]" : getDate.day!,"field_eduprog_repeat_field_date_value[value][year]" : getDate.year!,"cck_multiple_field_remove_fields" : "All"] )).responseObject { (response: DataResponse<EducationEventList>) -> Void in
                 switch response.result {
                 case .success(let data):
                     self.educationEventArray = data.educationEvent!
@@ -720,7 +729,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 //edducationInfo.field =  educationEventDict.shortDesc
                 edducationInfo.title = educationEventDict.title
                 edducationInfo.pgmType = educationEventDict.programType
-            
+            if(educationEventDict.fieldRepeatDate != nil) {
             if((educationEventDict.fieldRepeatDate?.count)! > 0) {
                 for i in 0 ... (educationEventDict.fieldRepeatDate?.count)!-1 {
                     var eventDateEntity: EdEventDateEntity!
@@ -740,7 +749,9 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     
                 }
             }
+        }
             //Main desc
+            if(educationEventDict.mainDescription != nil) {
             if((educationEventDict.mainDescription?.count)! > 0) {
                 for i in 0 ... (educationEventDict.mainDescription?.count)!-1 {
                     var eventDescEntity: EdEventDescEntity!
@@ -760,7 +771,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     
                 }
             }
-                
+        }
           
         }
         else {
@@ -778,7 +789,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 edducationInfo.registerAr = educationEventDict.register
                 edducationInfo.titleAr = educationEventDict.title
                 edducationInfo.pgmTypeAr = educationEventDict.programType
-            
+            if(educationEventDict.fieldRepeatDate != nil) {
             if((educationEventDict.fieldRepeatDate?.count)! > 0) {
                 for i in 0 ... (educationEventDict.fieldRepeatDate?.count)!-1 {
                     var eventDateEntity: EdEventDateEntityAr!
@@ -797,8 +808,9 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     
                 }
             }
-            
+        }
             //Main desc
+            if(educationEventDict.mainDescription != nil) {
             if((educationEventDict.mainDescription?.count)! > 0) {
                 for i in 0 ... (educationEventDict.mainDescription?.count)!-1 {
                     var eventDescEntity: EdEventDescEntityAr!
@@ -818,7 +830,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     
                 }
             }
-            //}
+            }
         }
         do {
             try managedObjContext.save()
@@ -828,6 +840,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    /*
     func fetchEducationEventFromCoredata() {
         
         do {
@@ -897,6 +910,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
+    */
     //MARK: EVENT DB
  
     func saveOrUpdateEventCoredata() {
@@ -985,14 +999,16 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
 //            }
             
             
-                 edducationInfo.dateId = dateId
+                edducationInfo.dateId = dateId
                 edducationInfo.itemId = educationEventDict.itemId
                 edducationInfo.introductionText = educationEventDict.introductionText
                 edducationInfo.register = educationEventDict.register
                 edducationInfo.title = educationEventDict.title
                 edducationInfo.pgmType = educationEventDict.programType
+                //edducationInfo.museumDepartMent = educationEventDict.museumDepartMent
             
-            
+            //Date
+             if(educationEventDict.fieldRepeatDate != nil){
             if((educationEventDict.fieldRepeatDate?.count)! > 0) {
                 for i in 0 ... (educationEventDict.fieldRepeatDate?.count)!-1 {
                     var eventDateEntity: EventDateEntity!
@@ -1010,8 +1026,10 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     
                 }
             }
+        }
             
             //Main desc
+             if(educationEventDict.mainDescription != nil){
             if((educationEventDict.mainDescription?.count)! > 0) {
                 for i in 0 ... (educationEventDict.mainDescription?.count)!-1 {
                     var eventDescEntity: EventDescEntity!
@@ -1031,7 +1049,25 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     
                 }
             }
-            
+        }
+//           //AgeGroup
+//            if((educationEventDict.ageGroup?.count)! > 0) {
+//                for i in 0 ... (educationEventDict.ageGroup?.count)!-1 {
+//                    var eventDateEntity: EventA!
+//                    let edEventDate: EventDateEntity = NSEntityDescription.insertNewObject(forEntityName: "EventDateEntity", into: managedObjContext) as! EventDateEntity
+//                    edEventDate.fieldRepeatDate = educationEventDict.fieldRepeatDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+//
+//                    eventDateEntity = edEventDate
+//                    edducationInfo.addToFieldRepeatDates(eventDateEntity)
+//                    do {
+//                        try managedObjContext.save()
+//
+//                    } catch let error as NSError {
+//                        print("Could not save. \(error), \(error.userInfo)")
+//                    }
+//
+//                }
+//            }
           
             
         }
@@ -1043,10 +1079,10 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 edducationInfo.itemId = educationEventDict.itemId
                 edducationInfo.introductionText = educationEventDict.introductionText
                 edducationInfo.registerAr = educationEventDict.register
-                //edducationInfo.field =  educationEventDict.shortDesc
                 edducationInfo.titleAr = educationEventDict.title
                 edducationInfo.pgmTypeAr = educationEventDict.programType
-            
+                edducationInfo.museumDepartMent = educationEventDict.museumDepartMent
+            if(educationEventDict.fieldRepeatDate != nil) {
             if((educationEventDict.fieldRepeatDate?.count)! > 0) {
                 for i in 0 ... (educationEventDict.fieldRepeatDate?.count)!-1 {
                     var eventDateEntity: EventDateEntityAr!
@@ -1066,8 +1102,10 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     
                 }
             }
+        }
             
             //Main desc
+            if(educationEventDict.mainDescription != nil){
             if((educationEventDict.mainDescription?.count)! > 0) {
                 for i in 0 ... (educationEventDict.mainDescription?.count)!-1 {
                     var eventDescEntity: EventDescEntityAr!
@@ -1088,7 +1126,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 }
             }
             
-            //}
+            }
         }
         do {
             try managedObjContext.save()
@@ -1098,6 +1136,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    /*
     func fetchEventFromCoredata() {
         
         do {
@@ -1173,6 +1212,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
+    */
     func getContext() -> NSManagedObjectContext{
         
         let appDelegate =  UIApplication.shared.delegate as? AppDelegate

@@ -75,6 +75,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         imageView.frame = CGRect(x: 0, y:20, width: UIScreen.main.bounds.size.width, height: 300)
         imageView.image = UIImage(named: "default_imageX2")
         if (pageNameString == PageName.heritageDetail) {
+        
             if heritageDetailtArray.count != 0 {
                 if let imageUrl = heritageDetailtArray[0].image{
                     imageView.kf.setImage(with: URL(string: imageUrl))
@@ -87,6 +88,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 imageView.image = nil
             }
         } else if (pageNameString == PageName.publicArtsDetail){
+            
             if publicArtsDetailtArray.count != 0 {
                 if let imageUrl = publicArtsDetailtArray[0].image{
                     imageView.kf.setImage(with: URL(string: imageUrl))
@@ -226,11 +228,11 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             latitudeString = heritageDetailtArray[currentRow].latitude!
             longitudeString = heritageDetailtArray[currentRow].longitude!
         }
-            //else if ((pageNameString == PageName.publicArtsDetail) && (publicArtsDetailtArray[currentRow]. != nil) && (publicArtsDetailtArray[currentRow].longitude != nil))
-//        {
-//            latitudeString = publicArtsDetailtArray[currentRow].latitude
-//            longitudeString = publicArtsDetailtArray[currentRow].longitude
-//        }
+            else if ((pageNameString == PageName.publicArtsDetail) && (publicArtsDetailtArray[currentRow].latitude != nil) && (publicArtsDetailtArray[currentRow].longitude != nil))
+        {
+            latitudeString = publicArtsDetailtArray[currentRow].latitude!
+            longitudeString = publicArtsDetailtArray[currentRow].longitude!
+        }
         
         if latitudeString != nil && longitudeString != nil && latitudeString != "" && longitudeString != ""{
             if (pageNameString == PageName.museumAbout) {
@@ -252,7 +254,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                     UIApplication.shared.openURL(URL(string:"comgooglemaps://?center=\(latitude!),\(longitude!)&zoom=14&views=traffic&q=\(latitude!),\(longitude!)")!)
                 }
             } else {
-                let locationUrl = URL(string: "https://maps.google.com/?q=@\(latitude!),\(longitude!)")!
+                let locationUrl = URL(string: "https://maps.google.com/?q=\(latitude!),\(longitude!)")!
                 UIApplication.shared.openURL(locationUrl)
             }
         } else {
@@ -371,27 +373,49 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "HeritageEntity", idKey: "listid" , idValue: heritageDetailtArray[0].id) as! [HeritageEntity]
            if (fetchData.count > 0) {
-            let managedContext = getContext()
-            let heritageDetailDict = heritageDetailtArray[0]
+                let managedContext = getContext()
+                let heritageDetailDict = heritageDetailtArray[0]
             
-            //update
-            let heritagedbDict = fetchData[0]
+                //update
+                let heritagedbDict = fetchData[0]
             
-            heritagedbDict.listname = heritageDetailDict.name
-            heritagedbDict.listimage = heritageDetailDict.image
-            heritagedbDict.listsortid =  heritageDetailDict.sortid
-            heritagedbDict.detaillocation = heritageDetailDict.location
-            heritagedbDict.detailshortdescription = heritageDetailDict.shortdescription
-            heritagedbDict.detaillongdescription =  heritageDetailDict.longdescription
-            heritagedbDict.detaillatitude =  heritageDetailDict.latitude
-            heritagedbDict.detaillongitude = heritageDetailDict.longitude
+                heritagedbDict.listname = heritageDetailDict.name
+                heritagedbDict.listimage = heritageDetailDict.image
+                heritagedbDict.listsortid =  heritageDetailDict.sortid
+                heritagedbDict.detaillocation = heritageDetailDict.location
+                heritagedbDict.detailshortdescription = heritageDetailDict.shortdescription
+                heritagedbDict.detaillongdescription =  heritageDetailDict.longdescription
+                heritagedbDict.detaillatitude =  heritageDetailDict.latitude
+                heritagedbDict.detaillongitude = heritageDetailDict.longitude
             
-            do{
-                try managedContext.save()
+            
+            if((heritageDetailDict.images?.count)! > 0) {
+                for i in 0 ... (heritageDetailDict.images?.count)!-1 {
+                    var heritageImagesEntity: HeritageImagesEntity!
+                    let heritageImage: HeritageImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "HeritageImagesEntity", into: managedContext) as! HeritageImagesEntity
+                    heritageImage.images = heritageDetailDict.images![i]
+                    
+                    heritageImagesEntity = heritageImage
+                    heritagedbDict.addToImagesRelation(heritageImagesEntity)
+                    do {
+                        try managedContext.save()
+                        
+                        
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                    
+                }
             }
-            catch{
-                print(error)
-            }
+            
+            
+            
+                do{
+                    try managedContext.save()
+                }
+                catch{
+                    print(error)
+                }
            }
             else {
             let managedContext = getContext()
@@ -417,6 +441,25 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 heritagedbDict.detaillongdescriptionarabic =  heritageDetailDict.longdescription
                 heritagedbDict.detaillatitudearabic =  heritageDetailDict.latitude
                 heritagedbDict.detaillongitudearabic = heritageDetailDict.longitude
+                
+                if((heritageDetailDict.images?.count)! > 0) {
+                    for i in 0 ... (heritageDetailDict.images?.count)!-1 {
+                        var heritageImagesEntity: HeritageImagesEntityAr!
+                        let heritageImage: HeritageImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "HeritageImagesEntityAr", into: managedContext) as! HeritageImagesEntityAr
+                        heritageImage.images = heritageDetailDict.images![i]
+                        
+                        heritageImagesEntity = heritageImage
+                        heritagedbDict.addToImagesRelation(heritageImagesEntity)
+                        do {
+                            try managedContext.save()
+                            
+                            
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                        
+                    }
+                }
                 
                 do{
                     try managedContext.save()
@@ -449,6 +492,25 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             if(heritageDetailDict.sortid != nil) {
                 heritageInfo.listsortid = heritageDetailDict.sortid
             }
+            
+            if((heritageDetailDict.images?.count)! > 0) {
+                for i in 0 ... (heritageDetailDict.images?.count)!-1 {
+                    var heritageImagesEntity: HeritageImagesEntity!
+                    let heritageImage: HeritageImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "HeritageImagesEntity", into: managedObjContext) as! HeritageImagesEntity
+                    heritageImage.images = heritageDetailDict.images![i]
+                    
+                    heritageImagesEntity = heritageImage
+                    heritageInfo.addToImagesRelation(heritageImagesEntity)
+                    do {
+                        try managedObjContext.save()
+                        
+                        
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                    
+                }
+            }
         }
         else {
             let heritageInfo: HeritageEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "HeritageEntityArabic", into: managedObjContext) as! HeritageEntityArabic
@@ -464,6 +526,27 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             if(heritageDetailDict.sortid != nil) {
                 heritageInfo.listsortidarabic = heritageDetailDict.sortid
             }
+            
+            
+            if((heritageDetailDict.images?.count)! > 0) {
+                for i in 0 ... (heritageDetailDict.images?.count)!-1 {
+                    var heritageImagesEntity: HeritageImagesEntityAr!
+                    let heritageImage: HeritageImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "HeritageImagesEntityAr", into: managedObjContext) as! HeritageImagesEntityAr
+                    heritageImage.images = heritageDetailDict.images![i]
+                    
+                    heritageImagesEntity = heritageImage
+                    heritageInfo.addToImagesRelation(heritageImagesEntity)
+                    do {
+                        try managedObjContext.save()
+                        
+                        
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                    
+                }
+            }
+
         }
         do {
             try managedObjContext.save()
@@ -486,10 +569,19 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                     
                     if (heritageArray.count > 0) {
                         let heritageDict = heritageArray[0]
+                        
+                        
                         if((heritageDict.detailshortdescription != nil) && (heritageDict.detaillongdescription != nil) ) {
-                            self.heritageDetailtArray.insert(Heritage(id: heritageDict.listid, name: heritageDict.listname, location: heritageDict.detaillocation, latitude: heritageDict.detaillatitude, longitude: heritageDict.detaillongitude, image: heritageDict.listimage, shortdescription: heritageDict.detailshortdescription, longdescription: heritageDict.detaillongdescription, sortid: heritageDict.listsortid), at: 0)
+                            var imagesArray : [String] = []
+                            let heritageImagesArray = (heritageDict.imagesRelation?.allObjects) as! [HeritageImagesEntity]
+                            if(heritageImagesArray.count > 0) {
+                                for i in 0 ... heritageImagesArray.count-1 {
+                                    imagesArray.append(heritageImagesArray[i].images!)
+                                }
+                            }
+                            self.heritageDetailtArray.insert(Heritage(id: heritageDict.listid, name: heritageDict.listname, location: heritageDict.detaillocation, latitude: heritageDict.detaillatitude, longitude: heritageDict.detaillongitude, image: heritageDict.listimage, shortdescription: heritageDict.detailshortdescription, longdescription: heritageDict.detaillongdescription, images: imagesArray, sortid: heritageDict.listsortid), at: 0)
                             
-                            
+                          
                             if(heritageDetailtArray.count == 0){
                                 self.showNodata()
                             }
@@ -514,8 +606,16 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                     
                     if (heritageArray.count > 0) {
                         let heritageDict = heritageArray[0]
+                       
                         if( (heritageDict.detailshortdescarabic != nil) && (heritageDict.detaillongdescriptionarabic != nil)) {
-                            self.heritageDetailtArray.insert(Heritage(id: heritageDict.listid, name: heritageDict.listnamearabic, location: heritageDict.detaillocationarabic, latitude: heritageDict.detaillatitudearabic, longitude: heritageDict.detaillongitudearabic, image: heritageDict.listimagearabic, shortdescription: heritageDict.detailshortdescarabic, longdescription: heritageDict.detaillongdescriptionarabic, sortid: heritageDict.listsortidarabic), at: 0)
+                            var imagesArray : [String] = []
+                            let heritageImagesArray = (heritageDict.imagesRelation?.allObjects) as! [HeritageImagesEntityAr]
+                            if(heritageImagesArray.count > 0) {
+                                for i in 0 ... heritageImagesArray.count-1 {
+                                    imagesArray.append(heritageImagesArray[i].images!)
+                                }
+                            }
+                            self.heritageDetailtArray.insert(Heritage(id: heritageDict.listid, name: heritageDict.listnamearabic, location: heritageDict.detaillocationarabic, latitude: heritageDict.detaillatitudearabic, longitude: heritageDict.detaillongitudearabic, image: heritageDict.listimagearabic, shortdescription: heritageDict.detailshortdescarabic, longdescription: heritageDict.detaillongdescriptionarabic,images: imagesArray, sortid: heritageDict.listsortidarabic), at: 0)
                             
                             
                             if(heritageDetailtArray.count == 0){
@@ -553,6 +653,27 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                     publicArtsbDict.detaildescription = publicArtsDetailDict.description
                     publicArtsbDict.shortdescription = publicArtsDetailDict.shortdescription
                     publicArtsbDict.image = publicArtsDetailDict.image
+                    publicArtsbDict.latitude = publicArtsDetailDict.latitude
+                    publicArtsbDict.longitude = publicArtsDetailDict.longitude
+                    if(publicArtsDetailDict.images != nil) {
+                    if((publicArtsDetailDict.images?.count)! > 0) {
+                        for i in 0 ... (publicArtsDetailDict.images?.count)!-1 {
+                            var publicArtsImagesEntity: PublicArtsImagesEntity!
+                            let publicArtsImage: PublicArtsImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "PublicArtsImagesEntity", into: managedContext) as! PublicArtsImagesEntity
+                            publicArtsImage.images = publicArtsDetailDict.images![i]
+                            publicArtsImagesEntity = publicArtsImage
+                            publicArtsbDict.addToPublicImagesRelation(publicArtsImagesEntity)
+                            do {
+                                try managedContext.save()
+                                
+                                
+                            } catch let error as NSError {
+                                print("Could not save. \(error), \(error.userInfo)")
+                            }
+                            
+                        }
+                    }
+                }
                     do{
                         try managedContext.save()
                     }
@@ -580,6 +701,25 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                     publicArtsdbDict.descriptionarabic = publicArtsDetailDict.description
                     publicArtsdbDict.shortdescriptionarabic = publicArtsDetailDict.shortdescription
                     publicArtsdbDict.imagearabic = publicArtsDetailDict.image
+                    publicArtsdbDict.latitudearabic = publicArtsDetailDict.latitude
+                    publicArtsdbDict.longitudearabic = publicArtsDetailDict.longitude
+                    if((publicArtsDetailDict.images?.count)! > 0) {
+                        for i in 0 ... (publicArtsDetailDict.images?.count)!-1 {
+                            var publicArtsImagesEntity: PublicArtsImagesEntityAr!
+                            let publicArtsImage: PublicArtsImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "PublicArtsImagesEntityAr", into: managedContext) as! PublicArtsImagesEntityAr
+                            publicArtsImage.images = publicArtsDetailDict.images![i]
+                            publicArtsImagesEntity = publicArtsImage
+                            publicArtsdbDict.addToPublicImagesRelation(publicArtsImagesEntity)
+                            do {
+                                try managedContext.save()
+                                
+                                
+                            } catch let error as NSError {
+                                print("Could not save. \(error), \(error.userInfo)")
+                            }
+                            
+                        }
+                    }
                     do{
                         try managedContext.save()
                     }
@@ -604,6 +744,26 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             publicArtsInfo.detaildescription = publicArtseDetailDict.description
             publicArtsInfo.shortdescription = publicArtseDetailDict.shortdescription
             publicArtsInfo.image = publicArtseDetailDict.image
+            publicArtsInfo.latitude = publicArtseDetailDict.latitude
+            publicArtsInfo.longitude = publicArtseDetailDict.longitude
+            
+            if((publicArtseDetailDict.images?.count)! > 0) {
+                for i in 0 ... (publicArtseDetailDict.images?.count)!-1 {
+                    var publicArtsImagesEntity: PublicArtsImagesEntity!
+                    let publicArtsImage: PublicArtsImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "PublicArtsImagesEntity", into: managedObjContext) as! PublicArtsImagesEntity
+                    publicArtsImage.images = publicArtseDetailDict.images![i]
+                    publicArtsImagesEntity = publicArtsImage
+                    publicArtsInfo.addToPublicImagesRelation(publicArtsImagesEntity)
+                    do {
+                        try managedObjContext.save()
+                        
+                        
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                    
+                }
+            }
             
         }
         else {
@@ -613,6 +773,26 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             publicArtsInfo.descriptionarabic = publicArtseDetailDict.description
             publicArtsInfo.shortdescriptionarabic = publicArtseDetailDict.shortdescription
             publicArtsInfo.imagearabic = publicArtseDetailDict.image
+            publicArtsInfo.latitudearabic = publicArtseDetailDict.latitude
+            publicArtsInfo.longitudearabic = publicArtseDetailDict.longitude
+            
+            if((publicArtseDetailDict.images?.count)! > 0) {
+                for i in 0 ... (publicArtseDetailDict.images?.count)!-1 {
+                    var publicArtsImagesEntity: PublicArtsImagesEntityAr!
+                    let publicArtsImage: PublicArtsImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "PublicArtsImagesEntityAr", into: managedObjContext) as! PublicArtsImagesEntityAr
+                    publicArtsImage.images = publicArtseDetailDict.images![i]
+                    publicArtsImagesEntity = publicArtsImage
+                    publicArtsInfo.addToPublicImagesRelation(publicArtsImagesEntity)
+                    do {
+                        try managedObjContext.save()
+                        
+                        
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                    
+                }
+            }
         }
         do {
             try managedObjContext.save()
@@ -636,7 +816,15 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                     if (publicArtsArray.count > 0) {
                         let publicArtsDict = publicArtsArray[0]
                         if((publicArtsDict.detaildescription != nil) && (publicArtsDict.shortdescription != nil) ) {
-                            self.publicArtsDetailtArray.insert(PublicArtsDetail(id:publicArtsDict.id , name:publicArtsDict.name, description: publicArtsDict.detaildescription, shortdescription: publicArtsDict.shortdescription, image: publicArtsDict.image), at: 0)
+                            
+                            var imagesArray : [String] = []
+                            let publicArtsImagesArray = (publicArtsDict.publicImagesRelation?.allObjects) as! [PublicArtsImagesEntity]
+                            if(publicArtsImagesArray.count > 0) {
+                                for i in 0 ... publicArtsImagesArray.count-1 {
+                                    imagesArray.append(publicArtsImagesArray[i].images!)
+                                }
+                            }
+                            self.publicArtsDetailtArray.insert(PublicArtsDetail(id:publicArtsDict.id , name:publicArtsDict.name, description: publicArtsDict.detaildescription, shortdescription: publicArtsDict.shortdescription, image: publicArtsDict.image, images: imagesArray,longitude: publicArtsDict.longitude, latitude: publicArtsDict.latitude), at: 0)
                             
                             if(publicArtsDetailtArray.count == 0){
                                 self.showNodata()
@@ -664,7 +852,14 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                     if (publicArtsArray.count > 0)  {
                         let publicArtsDict = publicArtsArray[0]
                         if((publicArtsDict.descriptionarabic != nil) && (publicArtsDict.shortdescriptionarabic != nil)) {
-                            self.publicArtsDetailtArray.insert(PublicArtsDetail(id:publicArtsDict.id , name:publicArtsDict.namearabic, description: publicArtsDict.descriptionarabic, shortdescription: publicArtsDict.shortdescriptionarabic, image: publicArtsDict.imagearabic), at: 0)
+                            var imagesArray : [String] = []
+                            let publicArtsImagesArray = (publicArtsDict.publicImagesRelation?.allObjects) as! [PublicArtsImagesEntityAr]
+                            if(publicArtsImagesArray.count > 0) {
+                                for i in 0 ... publicArtsImagesArray.count-1 {
+                                    imagesArray.append(publicArtsImagesArray[i].images!)
+                                }
+                            }
+                            self.publicArtsDetailtArray.insert(PublicArtsDetail(id:publicArtsDict.id , name:publicArtsDict.namearabic, description: publicArtsDict.descriptionarabic, shortdescription: publicArtsDict.shortdescriptionarabic, image: publicArtsDict.imagearabic,images: imagesArray,longitude: publicArtsDict.longitudearabic, latitude: publicArtsDict.latitudearabic), at: 0)
                             
                             
                             if(publicArtsDetailtArray.count == 0){

@@ -107,7 +107,6 @@
 		B8B54D6E20FF516B00B21348 /* CollectionDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B54D6D20FF516B00B21348 /* CollectionDetailCell.swift */; };
 		B8B7604C2100E7FC00CEE280 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B7604B2100E7FC00CEE280 /* NotificationsViewController.swift */; };
 		B8B760512100E88E00CEE280 /* NotificationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B760502100E88E00CEE280 /* NotificationsTableViewCell.swift */; };
-		B8B79CF8212D2FB8008B10D7 /* MuseumAbout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B79CF7212D2FB8008B10D7 /* MuseumAbout.swift */; };
 		B8B81FE320DE2C8A004885D0 /* MuseumsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B81FE220DE2C8A004885D0 /* MuseumsViewController.swift */; };
 		B8B81FE720DE2E47004885D0 /* KASlideShow.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B81FE620DE2E47004885D0 /* KASlideShow.m */; };
 		B8BA80B520CCDDA3007E880A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BA80B420CCDDA3007E880A /* ProfileViewController.swift */; };
@@ -318,7 +317,6 @@
 		B8B54D6D20FF516B00B21348 /* CollectionDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionDetailCell.swift; sourceTree = "<group>"; };
 		B8B7604B2100E7FC00CEE280 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		B8B760502100E88E00CEE280 /* NotificationsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTableViewCell.swift; sourceTree = "<group>"; };
-		B8B79CF7212D2FB8008B10D7 /* MuseumAbout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseumAbout.swift; sourceTree = "<group>"; };
 		B8B81FE220DE2C8A004885D0 /* MuseumsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseumsViewController.swift; sourceTree = "<group>"; };
 		B8B81FE520DE2E47004885D0 /* KASlideShow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KASlideShow.h; sourceTree = "<group>"; };
 		B8B81FE620DE2E47004885D0 /* KASlideShow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KASlideShow.m; sourceTree = "<group>"; };
@@ -504,7 +502,6 @@
 				B8BBF458211C1AC000352706 /* ParksList.swift */,
 				1BAA2FCE2126D15D00D785DD /* Collection.swift */,
 				B8BD1DA621298AA500150A01 /* EducationEvent.swift */,
-				B8B79CF7212D2FB8008B10D7 /* MuseumAbout.swift */,
 				B8B49560212DBAD8006F509B /* Museum.swift */,
 				B806B7D62152BE6A00F9534F /* CollectionDetail.swift */,
 				1B51411D215B892D0055AAF5 /* TourGuide.swift */,
@@ -1223,7 +1220,6 @@
 				B8294CF520CBF265002AFF72 /* FSCalendarStickyHeader.m in Sources */,
 				B8EAB77D20CA3E6100C001B2 /* EventCollectionViewCell.swift in Sources */,
 				B806B7A5212451B200F9F338 /* FloorMapViewController.swift in Sources */,
-				B8B79CF8212D2FB8008B10D7 /* MuseumAbout.swift in Sources */,
 				B8DC40A920C9A5760044134D /* EventViewController.swift in Sources */,
 				B8294CEA20CBF265002AFF72 /* FSCalendar+Deprecated.m in Sources */,
 				B82C87F620E69D4100777674 /* DiningDetailTableViewCell.swift in Sources */,
