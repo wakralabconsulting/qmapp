@@ -42,12 +42,6 @@ class MapDetailView: UIViewController,ObjectImageViewProtocol {
         view.addGestureRecognizer(gesture)
         objectImagePopupView.objectImageViewDelegate = self
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        prepareBackgroundView()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -125,20 +119,6 @@ class MapDetailView: UIViewController,ObjectImageViewProtocol {
                 }
             })
         }
-    }
-//    @objc func tapGestureAction(_ sender: UITapGestureRecognizer) {
-//       // viewTapDelegate?.viewTapAction(sender: sender)
-//
-//    }
-    
-    func prepareBackgroundView(){
-        let blurEffect = UIBlurEffect.init(style: .dark)
-        let visualEffect = UIVisualEffectView.init(effect: blurEffect)
-        let bluredView = UIVisualEffectView.init(effect: blurEffect)
-        bluredView.contentView.addSubview(visualEffect)
-        visualEffect.frame = UIScreen.main.bounds
-        bluredView.frame = UIScreen.main.bounds
-        view.insertSubview(bluredView, at: 0)
     }
     
 }

@@ -42,8 +42,15 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     var bottomSheetVC:MapDetailView = MapDetailView()
     var floorMapArray: [TourGuideFloorMap]! = []
     var tourGuideArray: [TourGuideFloorMap]! = []
-    var selectedScienceTour : String? = nil
-    var selectedScienceTourLevel : String? = nil
+    var selectedScienceTour : String? = ""
+    var selectedScienceTourLevel : String? = ""
+    var selectedTourdGuidIndex : Int? = 0
+    var selectedMarker = GMSMarker()
+    var selectedMarkerImage = UIImage()
+    
+    var bounceTimerTwo = Timer()
+    var bounceTimerThree = Timer()
+    
     @IBOutlet weak var overlayView: UIView!
     
     
@@ -69,8 +76,48 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     let L3_G11_WR15 = CLLocationCoordinate2D(latitude: 25.295330, longitude: 51.539414)
     let L3_G13_5 = CLLocationCoordinate2D(latitude: 25.295664, longitude: 51.539330)
     let L3_G13_7 = CLLocationCoordinate2D(latitude: 25.295628, longitude: 51.539360)
-    
     let L3_G17_3 = CLLocationCoordinate2D(latitude: 25.295505, longitude: 51.538905)
+    
+    
+    // Highlight Tour
+    let L2_G1_SC2 = CLLocationCoordinate2D(latitude: 25.295195, longitude: 51.539160);
+    let L2_G1_SC7 = CLLocationCoordinate2D(latitude: 25.295215, longitude: 51.539395);
+    let L2_G1_SC8 = CLLocationCoordinate2D(latitude: 25.295268, longitude: 51.539373);
+    let L2_G1_SC13 = CLLocationCoordinate2D(latitude: 25.295180, longitude: 51.539248);
+    let L2_G1_SC14 = CLLocationCoordinate2D(latitude: 25.295205, longitude: 51.539319);
+    let L2_G2_2 = CLLocationCoordinate2D(latitude: 25.295220, longitude: 51.539450);
+    let L2_G3_SC14_1 = CLLocationCoordinate2D(latitude: 25.295548, longitude: 51.539406);
+    let L2_G3_SC14_2 = CLLocationCoordinate2D(latitude: 25.295580, longitude: 51.539392);
+    let L2_G3_WR4 = CLLocationCoordinate2D(latitude: 25.295540, longitude: 51.539470);
+    let L2_G4_SC5 = CLLocationCoordinate2D(latitude: 25.295690, longitude: 51.539312);
+    let L2_G3_SC3 = CLLocationCoordinate2D(latitude: 25.295715, longitude: 51.539348);
+    let L2_G5_SC5 = CLLocationCoordinate2D(latitude: 25.295715, longitude: 51.539205);
+    let L2_G5_SC11 = CLLocationCoordinate2D(latitude: 25.295735, longitude: 51.539225);
+    let L2_G7_SC13 = CLLocationCoordinate2D(latitude: 25.295395, longitude: 51.538915);
+    let L2_G7_SC8 = CLLocationCoordinate2D(latitude: 25.295345, longitude: 51.538880);
+    let L2_G7_SC4 = CLLocationCoordinate2D(latitude: 25.295450, longitude: 51.538908);
+    
+    let L3_G10_WR2_1 = CLLocationCoordinate2D(latitude: 25.295130, longitude: 51.539217);
+    let L3_G10_WR2_2 = CLLocationCoordinate2D(latitude: 25.295138, longitude: 51.539240);
+    let L3_G10_PODIUM14 = CLLocationCoordinate2D(latitude: 25.295188, longitude: 51.539240);
+    let L3_G10_PODIUM9 = CLLocationCoordinate2D(latitude: 25.295222, longitude: 51.539333);
+    let L3_G11_14 = CLLocationCoordinate2D(latitude: 25.295392, longitude: 51.539495);
+    let L3_G12_11 = CLLocationCoordinate2D(latitude: 25.295530, longitude: 51.539390);
+    let L3_G12_12 = CLLocationCoordinate2D(latitude: 25.295492, longitude: 51.539405);
+    let L3_G12_17 = CLLocationCoordinate2D(latitude: 25.295480, longitude: 51.539440);
+    let L3_G12_WR5 = CLLocationCoordinate2D(latitude: 25.295540, longitude: 51.539470);
+    let L3_G13_2 = CLLocationCoordinate2D(latitude: 25.295690, longitude: 51.539402);
+    let L3_G13_15 = CLLocationCoordinate2D(latitude: 25.295660, longitude: 51.539375);
+    let L3_G14_7 = CLLocationCoordinate2D(latitude: 25.295693, longitude: 51.539270);
+    let L3_G14_13 = CLLocationCoordinate2D(latitude: 25.295723, longitude: 51.539225);
+    let L3_G15_13 = CLLocationCoordinate2D(latitude: 25.295150, longitude: 51.539135);
+    let L3_G16_WR5 = CLLocationCoordinate2D(latitude: 25.295444, longitude: 51.538955);
+    let L3_G17_8 = CLLocationCoordinate2D(latitude: 25.295504, longitude: 51.538880);
+    let L3_G17_9 = CLLocationCoordinate2D(latitude: 25.295490, longitude: 51.538850);
+    let L3_G18_1 = CLLocationCoordinate2D(latitude: 25.295555, longitude: 51.538892);
+    let L3_G18_2 = CLLocationCoordinate2D(latitude: 25.295557, longitude: 51.538906);
+    let L3_G18_11 = CLLocationCoordinate2D(latitude: 25.295613, longitude: 51.538914);
+    
     let l2_g1_sc3 = GMSMarker()
     let l2_g8 = GMSMarker()
     let l2_g8_sc1 = GMSMarker()
@@ -90,6 +137,47 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     let l3_g13_5 = GMSMarker()
     let l3_g13_7 = GMSMarker()
     let l3_g17_3 = GMSMarker()
+    
+    //Highligh Marker
+    let l2_g1_sc2 = GMSMarker()
+    let l2_g1_sc7 = GMSMarker()
+    let l2_g1_sc8 = GMSMarker()
+    let l2_g1_sc13 = GMSMarker()
+    let l2_g1_sc14 = GMSMarker()
+    let l2_g2_2 = GMSMarker()
+    let l2_g3_sc14_1 = GMSMarker()
+    let l2_g3_sc14_2 = GMSMarker()
+    let l2_g3_wr4 = GMSMarker()
+    let l2_g4_sc5 = GMSMarker()
+    let l2_g3_sc3 = GMSMarker()
+    let l2_g5_sc5 = GMSMarker()
+    let l2_g5_sc11 = GMSMarker()
+    let l2_g7_sc13 = GMSMarker()
+    let l2_g7_sc8 = GMSMarker()
+    let l2_g7_sc4 = GMSMarker()
+    
+    let l3_g10_wr2_1 = GMSMarker()
+    let l3_g10_wr2_2 = GMSMarker()
+    let l3_g10_podium14 = GMSMarker()
+    let l3_g10_podium9 = GMSMarker()
+    let l3_g11_14 = GMSMarker()
+    let l3_g12_11 = GMSMarker()
+    let l3_g12_12 = GMSMarker()
+    let l3_g12_17 = GMSMarker()
+    let l3_g12_wr5 = GMSMarker()
+    let l3_g13_2 = GMSMarker()
+    let l3_g13_15 = GMSMarker()
+    let l3_g14_7 = GMSMarker()
+    let l3_g14_13 = GMSMarker()
+    let l3_g15_13 = GMSMarker()
+    let l3_g16_wr5 = GMSMarker()
+    let l3_g17_8 = GMSMarker()
+    let l3_g17_9 = GMSMarker()
+    let l3_g18_1 = GMSMarker()
+    let l3_g18_2 = GMSMarker()
+    let l3_g18_11 = GMSMarker()
+    
+    
     var objectPopupView : ObjectPopupView = ObjectPopupView()
     var level : levelNumber?
     var zoomValue = Float()
@@ -102,7 +190,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         initialSetUp()
         getFloorMapDataFromServer()
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(false)
+        bottomSheetVC.removeFromParentViewController()
+        bottomSheetVC.dismiss(animated: false, completion: nil)
+    }
     func initialSetUp() {
         overlayView.isHidden = true
         bottomSheetVC.mapdetailDelegate = self
@@ -253,6 +345,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g1_sc3.icon = UIImage(named: "SI.5.1999.Front.2000x2000")
             if((fromScienceTour) && (selectedScienceTour == "l2_g1_sc3")) {
                 l2_g1_sc3.icon = self.imageWithImage(image: UIImage(named: "SI.5.1999.Front.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
+                self.setMarkerBounce()
+                selectedMarker = l2_g1_sc3
+                selectedMarkerImage = UIImage(named: "SI.5.1999.Front.2000x2000")!
             } else {
                 l2_g1_sc3.icon = self.imageWithImage(image: UIImage(named: "SI.5.1999.Front.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
             }
@@ -266,6 +361,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             //l2_g8.icon = UIImage(named: "MS.523.1999-1.2000x2000")
             if((fromScienceTour) && (selectedScienceTour == "l2_g8")) {
                 l2_g8.icon = self.imageWithImage(image: UIImage(named: "MS.523.1999-1.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
+                self.setMarkerBounce()
+                selectedMarker = l2_g8
+                selectedMarkerImage = UIImage(named: "MS.523.1999-1.2000x2000")!
             } else {
                 l2_g8.icon = self.imageWithImage(image: UIImage(named: "MS.523.1999-1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
             }
@@ -278,6 +376,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g8_sc1.snippet = ""
             if((fromScienceTour) && (selectedScienceTour == "l2_g8_sc1")) {
                 l2_g8_sc1.icon = self.imageWithImage(image: UIImage(named: "MW_548")!, scaledToSize: CGSize(width:58, height: 64))
+                self.setMarkerBounce()
+                selectedMarker = l2_g8_sc1
+                selectedMarkerImage = UIImage(named: "MW_548")!
             } else {
                 l2_g8_sc1.icon = self.imageWithImage(image: UIImage(named: "MW_548")!, scaledToSize: CGSize(width:38, height: 44))
             }
@@ -290,6 +391,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g8_sc6_1.snippet = ""
             if((fromScienceTour) && (selectedScienceTour == "l2_g8_sc6_1")) {
                 l2_g8_sc6_1.icon = self.imageWithImage(image: UIImage(named: "MS.709.2010-1.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
+                self.setMarkerBounce()
+                selectedMarker = l2_g8_sc6_1
+                selectedMarkerImage = UIImage(named: "MS.709.2010-1.2000x2000")!
             } else {
                 l2_g8_sc6_1.icon = self.imageWithImage(image: UIImage(named: "MS.709.2010-1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
             }
@@ -302,6 +406,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g8_sc6_2.snippet = ""
             if((fromScienceTour) && (selectedScienceTour == "l2_g8_sc6_2")) {
                 l2_g8_sc6_2.icon = self.imageWithImage(image: UIImage(named: "MS.709.2010-2")!, scaledToSize: CGSize(width:54, height: 64))
+                self.setMarkerBounce()
+                selectedMarker = l2_g8_sc6_2
+                selectedMarkerImage = UIImage(named: "MS.709.2010-2")!
             } else {
                 l2_g8_sc6_2.icon = self.imageWithImage(image: UIImage(named: "MS.709.2010-2")!, scaledToSize: CGSize(width:38, height: 44))
             }
@@ -314,6 +421,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g8_sc5.snippet = ""
             if((fromScienceTour) && (selectedScienceTour == "l2_g8_sc5")) {
                 l2_g8_sc5.icon = self.imageWithImage(image: UIImage(named: "MW.361.2007.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
+                self.setMarkerBounce()
+                selectedMarker = l2_g8_sc5
+                selectedMarkerImage = UIImage(named: "MW.361.2007.2000x2000")!
             } else {
                 l2_g8_sc5.icon = self.imageWithImage(image: UIImage(named: "MW.361.2007.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
             }
@@ -326,6 +436,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g8_sc4_1.snippet = ""
             if((fromScienceTour) && (selectedScienceTour == "l2_g8_sc4_1")) {
                 l2_g8_sc4_1.icon = self.imageWithImage(image: UIImage(named: "MS.688.2008.Recto-1.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
+                self.setMarkerBounce()
+                selectedMarker = l2_g8_sc4_1
+                selectedMarkerImage = UIImage(named: "MS.688.2008.Recto-1.2000x2000")!
             } else {
                 l2_g8_sc4_1.icon = self.imageWithImage(image: UIImage(named: "MS.688.2008.Recto-1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
             }
@@ -338,6 +451,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g8_sc4_2.snippet = ""
             if((fromScienceTour) && (selectedScienceTour == "l2_g8_sc4_2")) {
                 l2_g8_sc4_2.icon = self.imageWithImage(image: UIImage(named: "MS.650 .1 recto-1")!, scaledToSize: CGSize(width:54, height: 64))
+                self.setMarkerBounce()
+                selectedMarker = l2_g8_sc4_2
+                selectedMarkerImage = UIImage(named: "MS.650 .1 recto-1")!
             } else {
                 l2_g8_sc4_2.icon = self.imageWithImage(image: UIImage(named: "MS.650 .1 recto-1")!, scaledToSize: CGSize(width:38, height: 44))
             }
@@ -350,6 +466,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g9_sc7.snippet = ""
             if((fromScienceTour) && (selectedScienceTour == "l2_g9_sc7")) {
                 l2_g9_sc7.icon = self.imageWithImage(image: UIImage(named: "001_MIA_MW.146_005")!, scaledToSize: CGSize(width:54, height: 64))
+                self.setMarkerBounce()
+                selectedMarker = l2_g9_sc7
+                selectedMarkerImage = UIImage(named: "001_MIA_MW.146_005")!
             } else {
                 l2_g9_sc7.icon = self.imageWithImage(image: UIImage(named: "001_MIA_MW.146_005")!, scaledToSize: CGSize(width:38, height: 44))
             }
@@ -362,6 +481,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g9_sc5_1.snippet = ""
             if((fromScienceTour) && (selectedScienceTour == "l2_g9_sc5_1")) {
                 l2_g9_sc5_1.icon = self.imageWithImage(image: UIImage(named: "MW.340.Front.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
+                self.setMarkerBounce()
+                selectedMarker = l2_g9_sc5_1
+                selectedMarkerImage = UIImage(named: "MW.340.Front.2000x2000")!
             } else {
                 l2_g9_sc5_1.icon = self.imageWithImage(image: UIImage(named: "MW.340.Front.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
             }
@@ -374,6 +496,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g9_sc5_2.snippet = ""
             if((fromScienceTour) && (selectedScienceTour == "l2_g9_sc5_2")) {
                 l2_g9_sc5_2.icon = self.imageWithImage(image: UIImage(named: "MS.794-1")!, scaledToSize: CGSize(width:54, height: 64))
+                self.setMarkerBounce()
+                selectedMarker = l2_g9_sc5_2
+                selectedMarkerImage = UIImage(named: "MS.794-1")!
             } else {
                 l2_g9_sc5_2.icon = self.imageWithImage(image: UIImage(named: "MS.794-1")!, scaledToSize: CGSize(width:38, height: 44))
             }
@@ -386,6 +511,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g5_sc6.snippet = ""
             if((fromScienceTour) && (selectedScienceTour == "l2_g5_sc6")) {
                 l2_g5_sc6.icon = self.imageWithImage(image: UIImage(named: "MW_56")!, scaledToSize: CGSize(width:54, height: 64))
+                self.setMarkerBounce()
+                selectedMarker = l2_g5_sc6
+                selectedMarkerImage = UIImage(named: "MW_56")!
             } else {
                 l2_g5_sc6.icon = self.imageWithImage(image: UIImage(named: "MW_56")!, scaledToSize: CGSize(width:38, height: 44))
             }
@@ -398,6 +526,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g3_sc13.snippet = ""
             if((fromScienceTour) && (selectedScienceTour == "l2_g3_sc13")) {
                 l2_g3_sc13.icon = self.imageWithImage(image: UIImage(named: "MW.634-EMu.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
+                self.setMarkerBounce()
+                selectedMarker = l2_g3_sc13
+                selectedMarkerImage = UIImage(named: "MW.634-EMu.2000x2000")!
             } else {
                 l2_g3_sc13.icon = self.imageWithImage(image: UIImage(named: "MW.634-EMu.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
             }
@@ -429,9 +560,15 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l3_g10_sc1_1.title = "l3_g10_sc1_1"
             l3_g10_sc1_1.snippet = "PO.297"
             if((fromScienceTour) && (selectedScienceTour == "l3_g10_sc1_1")) {
-                l3_g10_sc1_1.icon = self.imageWithImage(image: UIImage(named: "PO.297.2006.1.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
+                l3_g10_sc1_1.icon = imageWithImage(image: UIImage(named: "PO.297.2006.1.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
+                setMarkerBounce()
+                selectedMarker = l3_g10_sc1_1
+                selectedMarkerImage = UIImage(named: "PO.297.2006.1.2000x2000")!
+                
             } else {
-                l3_g10_sc1_1.icon = self.imageWithImage(image: UIImage(named: "PO.297.2006.1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
+                
+               l3_g10_sc1_1.icon = imageWithImage(image: UIImage(named: "PO.297.2006.1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
+                
             }
             
             l3_g10_sc1_1.appearAnimation = .pop
@@ -442,6 +579,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l3_g10_sc1_2.snippet = ""
             if((fromScienceTour) && (selectedScienceTour == "l3_g10_sc1_2")) {
                 l3_g10_sc1_2.icon = self.imageWithImage(image: UIImage(named: "PO.308")!, scaledToSize: CGSize(width:54, height: 64))
+                setMarkerBounce()
+                selectedMarker = l3_g10_sc1_2
+                selectedMarkerImage = UIImage(named: "PO.308")!
             } else {
                 l3_g10_sc1_2.icon = self.imageWithImage(image: UIImage(named: "PO.308")!, scaledToSize: CGSize(width:38, height: 44))
             }
@@ -454,6 +594,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l3_g11_wr15.snippet = ""
             if((fromScienceTour) && (selectedScienceTour == "l3_g11_wr15")) {
                 l3_g11_wr15.icon = self.imageWithImage(image: UIImage(named: "MS.647.A-59")!, scaledToSize: CGSize(width:54, height: 64))
+                setMarkerBounce()
+                selectedMarker = l3_g11_wr15
+                selectedMarkerImage = UIImage(named: "MS.647.A-59")!
             } else {
                 l3_g11_wr15.icon = self.imageWithImage(image: UIImage(named: "MS.647.A-59")!, scaledToSize: CGSize(width:38, height: 44))
             }
@@ -466,6 +609,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l3_g13_5.snippet = ""
             if((fromScienceTour) && (selectedScienceTour == "l3_g13_5")) {
                 l3_g13_5.icon = self.imageWithImage(image: UIImage(named: "GL.322-0564.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
+                setMarkerBounce()
+                selectedMarker = l3_g13_5
+                selectedMarkerImage = UIImage(named: "GL.322-0564.2000x2000")!
             } else {
                 l3_g13_5.icon = self.imageWithImage(image: UIImage(named: "GL.322-0564.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
             }
@@ -478,6 +624,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l3_g13_7.snippet = ""
             if((fromScienceTour) && (selectedScienceTour == "l3_g13_7")) {
                 l3_g13_7.icon = self.imageWithImage(image: UIImage(named: "HS.32-1.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
+                setMarkerBounce()
+                selectedMarker = l3_g13_7
+                selectedMarkerImage = UIImage(named: "HS.32-1.2000x2000")!
+                
             } else {
                 l3_g13_7.icon = self.imageWithImage(image: UIImage(named: "HS.32-1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
             }
@@ -490,6 +640,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l3_g17_3.snippet = ""
             if((fromScienceTour) && (selectedScienceTour == "l3_g17_3")) {
                 l3_g17_3.icon = self.imageWithImage(image: UIImage(named: "IV_61")!, scaledToSize: CGSize(width:54, height: 64))
+                self.setMarkerBounce()
+                selectedMarker = l3_g17_3
+                selectedMarkerImage = UIImage(named: "IV_61")!
             } else {
                 l3_g17_3.icon = self.imageWithImage(image: UIImage(named: "IV_61")!, scaledToSize: CGSize(width:38, height: 44))
             }
@@ -507,6 +660,27 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l3_g13_7.map = nil
             l3_g17_3.map = nil
         }
+    }
+   
+     func setMarkerBounce() {
+        
+        
+        bounceTimerTwo = Timer.scheduledTimer(timeInterval: 1,
+                                         target: self,
+                                         selector: #selector(settMarkerSmall),
+                                         userInfo: nil,
+                                         repeats: true)
+        bounceTimerThree = Timer.scheduledTimer(timeInterval: 1.2,
+                                         target: self,
+                                         selector: #selector(FloorMapViewController.highlightMarker),
+                                         userInfo: nil,
+                                         repeats: true)
+    }
+    @objc func highlightMarker() {
+        selectedMarker.icon = self.imageWithImage(image: selectedMarkerImage, scaledToSize: CGSize(width:54, height: 64))
+    }
+    @objc func settMarkerSmall() {
+        selectedMarker.icon = self.imageWithImage(image: selectedMarkerImage, scaledToSize: CGSize(width:38, height: 44))
     }
     func showMarker(marker:GMSMarker,position: CLLocationCoordinate2D,titleString: String,imageName:String, zoomValue : Float){
         if (zoomValue > 18) {
@@ -536,43 +710,37 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     
     //MARK: Floor Levels
     @IBAction func didTapThirdLevel(_ sender: UIButton) {
-        if (fromScienceTour == false) {
-            level = levelNumber.three
-            firstLevelView.backgroundColor = UIColor.mapLevelColor
-            secondLevelView.backgroundColor = UIColor.mapLevelColor
-            thirdLevelView.backgroundColor = UIColor.white
-            overlay.icon = UIImage(named: "qm_level_3")
-            removeMarkers()
-            
-            if (zoomValue > 18) {
-                showLevelThreeMarker()
-            }
+        level = levelNumber.three
+        firstLevelView.backgroundColor = UIColor.mapLevelColor
+        secondLevelView.backgroundColor = UIColor.mapLevelColor
+        thirdLevelView.backgroundColor = UIColor.white
+        overlay.icon = UIImage(named: "qm_level_3")
+        removeMarkers()
+        
+        if (zoomValue > 18) {
+            showLevelThreeMarker()
         }
     }
     
     @IBAction func didtapSecondbutton(_ sender: UIButton) {
-        if (fromScienceTour == false) {
-            level = levelNumber.two
-            firstLevelView.backgroundColor = UIColor.mapLevelColor
-            secondLevelView.backgroundColor = UIColor.white
-            thirdLevelView.backgroundColor = UIColor.mapLevelColor
-            overlay.icon = UIImage(named: "qm_level_2")
-            removeMarkers()
-            if (zoomValue > 18) {
-                showLevelTwoMarker()
-            }
+        level = levelNumber.two
+        firstLevelView.backgroundColor = UIColor.mapLevelColor
+        secondLevelView.backgroundColor = UIColor.white
+        thirdLevelView.backgroundColor = UIColor.mapLevelColor
+        overlay.icon = UIImage(named: "qm_level_2")
+        removeMarkers()
+        if (zoomValue > 18) {
+            showLevelTwoMarker()
         }
     }
     
     @IBAction func didTapFirstButton(_ sender: UIButton) {
-        if (fromScienceTour == false) {
-            level = levelNumber.one
-            firstLevelView.backgroundColor = UIColor.white
-            secondLevelView.backgroundColor = UIColor.mapLevelColor
-            thirdLevelView.backgroundColor = UIColor.mapLevelColor
-            overlay.icon = UIImage(named: "qm_level_1")
-            removeMarkers()
-        }
+        level = levelNumber.one
+        firstLevelView.backgroundColor = UIColor.white
+        secondLevelView.backgroundColor = UIColor.mapLevelColor
+        thirdLevelView.backgroundColor = UIColor.mapLevelColor
+        overlay.icon = UIImage(named: "qm_level_1")
+        removeMarkers()
     }
     
     override func didReceiveMemoryWarning() {
@@ -590,10 +758,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     
     //MARK: map delegate
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        if (fromScienceTour == false) {
+        
         let markerIcon = marker.icon
         let searchstring = marker.title
-            print(searchstring)
+        selectedScienceTourLevel = ""
         if (level == levelNumber.two) {
             showLevelTwoMarker()
         }
@@ -601,21 +769,25 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             showLevelThreeMarker()
         }
         marker.appearAnimation = .pop
-        UIView.animate(withDuration: 0.6, animations: { [weak self] in
-            marker.icon = self?.imageWithImage(image: markerIcon!, scaledToSize: CGSize(width:52, height: 62))
-            })
+        
+//        UIView.animate(withDuration: 0.6, animations: { [weak self] in
+//            marker.icon = self?.imageWithImage(image: markerIcon!, scaledToSize: CGSize(width:52, height: 62))
+//            })
         //loadObjectPopup()
        
         if let arrayOffset = floorMapArray.index(where: {$0.artifactPosition == searchstring}) {
+            self.setMarkerBounce()
+            selectedMarker = marker
+            selectedMarkerImage = markerIcon!
             addBottomSheetView(index: arrayOffset)
         }
 
-        }
+        
         return true
     }
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
         let zoom = mapView.camera.zoom
-        print(zoom)
+        
         zoomValue = zoom
         //let center = CLLocationCoordinate2DMake(25.294730,51.539021)
         let center = CLLocationCoordinate2DMake(25.296059,51.538703)
@@ -670,15 +842,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     //Present detail popup using Bottomsheet
     func viewDetailButtonTapAction() {
-//        let objectDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "objectDetailId") as! ObjectDetailViewController
-//
-//        let bottomSheet = MDCBottomSheetController(contentViewController: objectDetailView)
-//               bottomSheet.isScrimAccessibilityElement = true
-//            bottomSheet.scrimAccessibilityLabel = "Close"
-//      //  bottomSheet.trackingScrollView = objectDetailView.objectTableView
-//        bottomSheet.preferredContentSize = CGSize(width: self.view.frame.size.width, height: self.view.frame.size.height)
-//
-//        present(bottomSheet, animated: true)
+
     }
     @IBAction func didTapQrCode(_ sender: UIButton) {
     }
@@ -713,12 +877,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         self.dismiss(animated: false, completion: nil)
     }
     func filterButtonPressed() {
-            let transition = CATransition()
-            transition.duration = 0.3
-            transition.type = kCATransitionPush
-            transition.subtype = kCATransitionFromLeft
-            self.view.window!.layer.add(transition, forKey: kCATransition)
-            self.dismiss(animated: false, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     //Added BottomSheet for showing popup when we clicked in marker
     func addBottomSheetView(scrollable: Bool? = true,index: Int?) {
@@ -734,24 +893,14 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         let width  = view.frame.width
         bottomSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height)
     }
-    func viewTapAction(sender: UITapGestureRecognizer) {
-        if (sender.state == .began) {
-            
-            UIView.animate(withDuration: 1, delay: 0.0, options: [.allowUserInteraction], animations: {
-                //                if  velocity.y >= 0 {
-                self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
-                //                } else {
-                //                    self.view.frame = CGRect(x: 0, y: self.fullView, width: self.view.frame.width, height: self.view.frame.height)
-                //                }
-                
-            }, completion: { [weak self] _ in
-                
-            })
-        }
-    }
+
     @objc func handleTap(sender: UITapGestureRecognizer? = nil) {
         bottomSheetVC.removeFromParentViewController()
         bottomSheetVC.dismiss(animated: false, completion: nil)
+        selectedScienceTour = ""
+        
+        bounceTimerTwo.invalidate()
+        bounceTimerThree.invalidate()
         bottomSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: 0, height: 0)
         overlayView.isHidden = true
         if (level == levelNumber.two) {
@@ -763,6 +912,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     func dismissOvelay() {
         overlayView.isHidden = true
+        selectedScienceTour = ""
+        bounceTimerTwo.invalidate()
+        bounceTimerThree.invalidate()
+        
         if (level == levelNumber.two) {
             showLevelTwoMarker()
             
@@ -778,13 +931,16 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             tourGuideId = "12216"
         } else {
             //tourGuideId = "12476"
-            tourGuideId = "12216"
+            //tourGuideId = "12216"
         }
         
         _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": tourGuideId!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
             switch response.result {
             case .success(let data):
                 self.floorMapArray = data.tourGuideFloorMap
+                if(self.fromScienceTour) {
+                    self.addBottomSheetView(index: self.selectedTourdGuidIndex)
+                }
             case .failure(let error):
                 print("error")
             

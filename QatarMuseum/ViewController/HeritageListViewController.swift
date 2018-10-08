@@ -267,7 +267,7 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
                 if (heritageArray.count > 0) {
                     for i in 0 ... heritageArray.count-1 {
                         
-                        self.heritageListArray.insert(Heritage(id: heritageArray[i].listid, name: heritageArray[i].listname, location: nil, latitude: nil, longitude: nil, image: heritageArray[i].listimage, shortdescription: nil, longdescription: nil, sortid: heritageArray[i].listsortid), at: i)
+                        self.heritageListArray.insert(Heritage(id: heritageArray[i].listid, name: heritageArray[i].listname, location: nil, latitude: nil, longitude: nil, image: heritageArray[i].listimage, shortdescription: nil, longdescription: nil,images: nil, sortid: heritageArray[i].listsortid), at: i)
                         
                     }
                     if(heritageListArray.count == 0){
@@ -284,7 +284,7 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
                 heritageArray = (try managedContext.fetch(homeFetchRequest) as? [HeritageEntityArabic])!
                 if (heritageArray.count > 0) {
                     for i in 0 ... heritageArray.count-1 {
-                        self.heritageListArray.insert(Heritage(id: heritageArray[i].listid, name: heritageArray[i].listnamearabic, location: nil, latitude: nil, longitude: nil, image: heritageArray[i].listimagearabic, shortdescription: nil, longdescription: nil, sortid: heritageArray[i].listsortidarabic), at: i)
+                        self.heritageListArray.insert(Heritage(id: heritageArray[i].listid, name: heritageArray[i].listnamearabic, location: nil, latitude: nil, longitude: nil, image: heritageArray[i].listimagearabic, shortdescription: nil, longdescription: nil,images: nil, sortid: heritageArray[i].listsortidarabic), at: i)
                         
                     }
                     if(heritageListArray.count == 0){
