@@ -196,8 +196,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         loadMap()
         initialSetUp()
         getFloorMapDataFromServer()
-        print(UIScreen.main.bounds.width)
-        print(UIScreen.main.bounds.height)
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
@@ -232,23 +231,23 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         if (fromScienceTour == true) {
             
             if (selectedScienceTourLevel == "1"){
-                playButton.isHidden = true
-                playerSlider.isHidden = true
+                playButton.isHidden = false
+                playerSlider.isHidden = false
             }
             if(selectedScienceTourLevel == "2") {
                 firstLevelView.backgroundColor = UIColor.mapLevelColor
                 secondLevelView.backgroundColor = UIColor.white
                 thirdLevelView.backgroundColor = UIColor.mapLevelColor
                 
-                playButton.isHidden = false
-                playerSlider.isHidden = false
+                playButton.isHidden = true
+                playerSlider.isHidden = true
             } else {
                 firstLevelView.backgroundColor = UIColor.mapLevelColor
                 secondLevelView.backgroundColor = UIColor.mapLevelColor
                 thirdLevelView.backgroundColor = UIColor.white
                 
-                playButton.isHidden = false
-                playerSlider.isHidden = false
+                playButton.isHidden = true
+                playerSlider.isHidden = true
             }
             
             
@@ -730,8 +729,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     
     //MARK: Floor Levels
     @IBAction func didTapThirdLevel(_ sender: UIButton) {
-        playButton.isHidden = false
-        playerSlider.isHidden = false
+        
+        
+        playButton.isHidden = true
+        playerSlider.isHidden = true
         firstLoad = true
         self.avPlayer = nil
         self.timer?.invalidate()
@@ -750,8 +751,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     
     @IBAction func didtapSecondbutton(_ sender: UIButton) {
-        playButton.isHidden = false
-        playerSlider.isHidden = false
+        playButton.isHidden = true
+        playerSlider.isHidden = true
         firstLoad = true
         self.avPlayer = nil
         self.timer?.invalidate()
@@ -769,8 +770,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     
     @IBAction func didTapFirstButton(_ sender: UIButton) {
-        playButton.isHidden = true
-        playerSlider.isHidden = true
+        playButton.isHidden = false
+        playerSlider.isHidden = false
         firstLoad = true
         self.avPlayer = nil
         self.timer?.invalidate()
