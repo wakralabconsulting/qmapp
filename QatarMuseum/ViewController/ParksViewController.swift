@@ -55,11 +55,11 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         imageView.image = UIImage(named: "default_imageX2")
         if parksListArray.count != 0 {
             if let imageUrl = parksListArray[0].image{
-//                imageView.kf.setImage(with: URL(string: imageUrl))
-                setupCarousel(imageUrlString: imageUrl)
-                carousel.contentMode = .scaleAspectFill
-                carousel.clipsToBounds = true
-                self.view.addSubview(carousel)
+                imageView.kf.setImage(with: URL(string: imageUrl))
+//                setupCarousel(imageUrlString: imageUrl)
+//                carousel.contentMode = .scaleAspectFill
+//                carousel.clipsToBounds = true
+//                self.view.addSubview(carousel)
             }
             else {
                 imageView.image = UIImage(named: "default_imageX2")
@@ -76,9 +76,9 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
 
         }
         
-//        imageView.contentMode = .scaleAspectFill
-//        imageView.clipsToBounds = true
-//        view.addSubview(imageView)
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        view.addSubview(imageView)
         
 //        carousel.contentMode = .scaleAspectFill
 //        carousel.clipsToBounds = true
@@ -89,7 +89,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         blurView.frame = carousel.bounds
         blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         blurView.alpha = 0
-        carousel.addSubview(blurView)
+        imageView.addSubview(blurView)
         
         
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
@@ -137,13 +137,13 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                         // Do something with your image.
                         // Create as many slides as you'd like to show in the carousel
                         let slide = ZKCarouselSlide(image: imagepub!, title: "", description: "")
-                        let slide1 = ZKCarouselSlide(image: UIImage(named: "mia2")!, title: "", description: "")
-                        let slide2 = ZKCarouselSlide(image: UIImage(named: "mia3")!, title: "", description: "")
-                        let slide3 = ZKCarouselSlide(image: UIImage(named: "mia4")!, title: "", description: "")
-                        let slide4 = ZKCarouselSlide(image: UIImage(named: "mia5")!, title: "", description: "")
+//                        let slide1 = ZKCarouselSlide(image: UIImage(named: "mia2")!, title: "", description: "")
+//                        let slide2 = ZKCarouselSlide(image: UIImage(named: "mia3")!, title: "", description: "")
+//                        let slide3 = ZKCarouselSlide(image: UIImage(named: "mia4")!, title: "", description: "")
+//                        let slide4 = ZKCarouselSlide(image: UIImage(named: "mia5")!, title: "", description: "")
                         
                         // Add the slides to the carousel
-                        self.carousel.slides = [slide, slide1, slide2, slide3, slide4]
+                        self.carousel.slides = [slide]
                         
                         // You can optionally use the 'interval' property to set the timing for automatic slide changes. The default is 1 second.
                         self.carousel.interval = 1.5
@@ -240,30 +240,30 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = 300 - (scrollView.contentOffset.y + 300)
         let height = min(max(y, 60), 400)
-        carousel.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: height)
+        imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: height)
         
         
-        if (carousel.frame.height >= 300 ){
+        if (imageView.frame.height >= 300 ){
             blurView.alpha  = 0.0
             
         }
-        else if (carousel.frame.height >= 250 ){
+        else if (imageView.frame.height >= 250 ){
             blurView.alpha  = 0.2
             
         }
-        else if (carousel.frame.height >= 200 ){
+        else if (imageView.frame.height >= 200 ){
             blurView.alpha  = 0.4
             
         }
-        else if (carousel.frame.height >= 150 ){
+        else if (imageView.frame.height >= 150 ){
             blurView.alpha  = 0.6
             
         }
-        else if (carousel.frame.height >= 100 ){
+        else if (imageView.frame.height >= 100 ){
             blurView.alpha  = 0.8
             
         }
-        else if (carousel.frame.height >= 50 ){
+        else if (imageView.frame.height >= 50 ){
             blurView.alpha  = 0.9
             
         }
