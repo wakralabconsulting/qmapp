@@ -5,6 +5,8 @@
 //  Created by Exalture on 10/09/18.
 //  Copyright © 2018 Wakralab. All rights reserved.
 //
+import AVFoundation
+import AVKit
 import Crashlytics
 import UIKit
 
@@ -31,6 +33,12 @@ class MapDetailView: UIViewController,ObjectImageViewProtocol {
     var gesture = UIPanGestureRecognizer()
     var popUpArray: [TourGuideFloorMap]! = []
     var selectedIndex: Int? = 0
+    var playList: String = ""
+    var timer: Timer?
+    var avPlayer: AVPlayer!
+    var isPaused: Bool!
+    var firstLoad: Bool = true
+    var selectedCell : ObjectDetailTableViewCell?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -198,6 +206,10 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
                 () in
                 self.setShareAction(cellObj: cell)
             }
+            cell.playBtnTapAction = {
+                () in
+                self.setPlayButtonAction(cellObj: cell)
+            }
             return cell
             
            // loadingView.stopLoading()
@@ -235,6 +247,52 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
     func setShareAction(cellObj: ObjectDetailTableViewCell) {
         
     }
+    func setPlayButtonAction(cellObj: ObjectDetailTableViewCell) {
+        selectedCell  = cellObj
+        if (firstLoad == true) {
+            cellObj.playList = "http://www.qm.org.qa/sites/default/files/floors.mp3"
+            cellObj.play(url: URL(string:cellObj.playList)!)
+            cellObj.setupTimer()
+        }
+        firstLoad = false
+        if #available(iOS 10.0, *) {
+            cellObj.togglePlayPause()
+        } else {
+            // showAlert "upgrade ios version to use this feature"
+            
+        }
+    }
+    //MARK: Audio SetUp
+//    func play(url:URL) {
+//        self.avPlayer = AVPlayer(playerItem: AVPlayerItem(url: url))
+//        if #available(iOS 10.0, *) {
+//            self.avPlayer.automaticallyWaitsToMinimizeStalling = false
+//        }
+//        avPlayer!.volume = 1.0
+//        avPlayer.play()
+//    }
+//    @available(iOS 10.0, *)
+//    func togglePlayPause(cellObj: ObjectDetailTableViewCell) {
+//        if avPlayer.timeControlStatus == .playing  {
+//           cellObj.playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
+//            avPlayer.pause()
+//            isPaused = true
+//        } else {
+//            cellObj.playButton.setImage(UIImage(named:"pause_blackX1"), for: .normal)
+//            avPlayer.play()
+//            isPaused = false
+//        }
+//    }
+//    func setupTimer(){
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.didPlayToEnd), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+//        timer = Timer(timeInterval: 0.001, target: self, selector: #selector(ObjectDetailTableViewCell.tick), userInfo: nil, repeats: true)
+//        RunLoop.current.add(timer!, forMode: RunLoopMode.commonModes)
+//    }
+    @objc func didPlayToEnd() {
+        // self.nextTrack()
+    }
+    
+
 }
 
 extension MapDetailView: UIGestureRecognizerDelegate {
@@ -285,7 +343,8 @@ extension MapDetailView: UIGestureRecognizerDelegate {
         mapdetailDelegate?.dismissOvelay()
         self.removeFromParentViewController()
         self.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: 0, height: 0)
-        
+        selectedCell?.avPlayer = nil
+        selectedCell?.timer?.invalidate()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
