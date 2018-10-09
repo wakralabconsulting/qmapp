@@ -40,7 +40,7 @@
                     <rect key="frame" x="0.0" y="487" width="375" height="180"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Albarello" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ow5-OB-1an">
-                            <rect key="frame" x="20" y="12" width="335" height="27"/>
+                            <rect key="frame" x="20" y="12" width="340" height="27"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="27" id="zXo-J4-YeX"/>
                             </constraints>
@@ -118,7 +118,7 @@
                         <constraint firstItem="ow5-OB-1an" firstAttribute="top" secondItem="j5J-ue-9Nf" secondAttribute="top" constant="12" id="co4-9J-kMV"/>
                         <constraint firstItem="WIa-tz-h8g" firstAttribute="leading" secondItem="SJL-G5-hwV" secondAttribute="trailing" id="f9V-wr-VcE"/>
                         <constraint firstItem="CAX-81-WOg" firstAttribute="leading" secondItem="Jig-1T-Dab" secondAttribute="leading" id="fZA-uW-s17"/>
-                        <constraint firstAttribute="trailing" secondItem="ow5-OB-1an" secondAttribute="trailing" constant="20" id="ia7-Vd-jyi"/>
+                        <constraint firstAttribute="trailing" secondItem="ow5-OB-1an" secondAttribute="trailing" constant="15" id="ia7-Vd-jyi"/>
                         <constraint firstItem="WIa-tz-h8g" firstAttribute="centerY" secondItem="CAX-81-WOg" secondAttribute="centerY" id="ixN-Nf-iJ6"/>
                         <constraint firstItem="CAX-81-WOg" firstAttribute="trailing" secondItem="1rK-Mf-Ff5" secondAttribute="trailing" id="l8y-vF-kqT"/>
                         <constraint firstItem="CAX-81-WOg" firstAttribute="leading" secondItem="1rK-Mf-Ff5" secondAttribute="leading" id="mPe-Nz-uUH"/>
