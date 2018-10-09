@@ -5,6 +5,8 @@
 //  Created by Developer on 13/08/18.
 //  Copyright © 2018 Exalture. All rights reserved.
 //
+import AVFoundation
+import AVKit
 import Crashlytics
 import UIKit
 
@@ -19,7 +21,12 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     let fullView: CGFloat = 100
     let closeButton = UIButton()
     var detailArray : [TourGuideFloorMap]! = []
-    
+    var playList: String = ""
+    var timer: Timer?
+    var avPlayer: AVPlayer!
+    var isPaused: Bool!
+    var firstLoad: Bool = true
+    var selectedCell : ObjectDetailTableViewCell?
     override func viewDidLoad() {
         super.viewDidLoad()
         objectTableView.register(UITableViewCell.self, forCellReuseIdentifier: "imageCell")
@@ -143,6 +150,10 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
                 () in
                 self.setShareAction(cellObj: cell)
             }
+            cell.playBtnTapAction = {
+                () in
+                self.setPlayButtonAction(cellObj: cell)
+            }
             cell.selectionStyle = .none
             loadingView.stopLoading()
             loadingView.isHidden = true
@@ -198,7 +209,21 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     func setShareAction(cellObj: ObjectDetailTableViewCell) {
         
     }
-    
+    func setPlayButtonAction(cellObj: ObjectDetailTableViewCell) {
+        selectedCell  = cellObj
+        if (firstLoad == true) {
+            cellObj.playList = "http://www.qm.org.qa/sites/default/files/floors.mp3"
+            cellObj.play(url: URL(string:cellObj.playList)!)
+            cellObj.setupTimer()
+        }
+        firstLoad = false
+        if #available(iOS 10.0, *) {
+            cellObj.togglePlayPause()
+        } else {
+            // showAlert "upgrade ios version to use this feature"
+            
+        }
+    }
    
     @objc func buttonAction(sender: UIButton!) {
        // sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -207,7 +232,10 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
 //        transition.type = kCATransitionFade
 //        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
 //        self.view.window!.layer.add(transition, forKey: kCATransition)
+        selectedCell?.avPlayer = nil
+        selectedCell?.timer?.invalidate()
         dismiss(animated: false, completion: nil)
+        
     }
     
     @objc func closeButtonTouchDownAction(sender: UIButton!) {
