@@ -21,7 +21,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var topbarView: TopBarView!
     @IBOutlet weak var visualEffectView: UIVisualEffectView!
-
+    
+    @IBOutlet weak var moreLabel: UILabel!
+    @IBOutlet weak var giftShopLabel: UILabel!
+    @IBOutlet weak var culturePassLabel: UILabel!
+    @IBOutlet weak var diningLabel: UILabel!
+    
     var homeDataFullArray : NSArray!
     var effect:UIVisualEffect!
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
@@ -67,6 +72,16 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         visualEffectView.isHidden = true
         loadingView.isHidden = false
         loadingView.showLoading()
+        moreLabel.text = NSLocalizedString("MORE",comment: "MORE in Home Page")
+        culturePassLabel.text = NSLocalizedString("CULTUREPASS_TITLE",comment: "CULTUREPASS_TITLE in Home Page")
+        giftShopLabel.text = NSLocalizedString("GIFT_SHOP",comment: "GIFT_SHOP in Home Page")
+        diningLabel.text = NSLocalizedString("DINING_LABEL",comment: "DINING_LABEL in Home Page")
+        
+        moreLabel.font = UIFont.exhibitionDateLabelFont
+        culturePassLabel.font = UIFont.exhibitionDateLabelFont
+        giftShopLabel.font = UIFont.exhibitionDateLabelFont
+        diningLabel.font = UIFont.exhibitionDateLabelFont
+        
     }
     
     func registerNib() {

@@ -255,12 +255,7 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
             cellObj.setupTimer()
         }
         firstLoad = false
-        if #available(iOS 10.0, *) {
-            cellObj.togglePlayPause()
-        } else {
-            // showAlert "upgrade ios version to use this feature"
-            
-        }
+        cellObj.togglePlayPause()
     }
     //MARK: Audio SetUp
 //    func play(url:URL) {

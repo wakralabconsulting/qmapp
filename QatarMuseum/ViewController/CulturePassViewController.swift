@@ -44,7 +44,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         //loadingView.isHidden = false
        // loadingView.showLoading()
         headerView.headerViewDelegate = self
-        headerView.headerTitle.text = NSLocalizedString("CULTUREPASS_TITLE", comment: "CULTUREPASS_TITLE in the Culture Pass page")
+        headerView.headerTitle.text = NSLocalizedString("CULTUREPASS_TITLE", comment: "CULTUREPASS_TITLE in the Culture Pass page").uppercased()
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         } else {
@@ -64,12 +64,20 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         benefitLabel.text = NSLocalizedString("BENEFIT_TITLE", comment: "BENEFIT_TITLE in the Culture Pass page")
         introLabel.text = NSLocalizedString("CULTURE_PASS_INTRO", comment: "CULTURE_PASS_INTRO in the Culture Pass page")
         secondIntroLabel.text = NSLocalizedString("CULTURE_PASS_SECONDDESC", comment: "CULTURE_PASS_SECONDDESC in the Culture Pass page")
-        var benefitString = String()
-        for i in 0 ... benefitList.count-1 {
-            benefitString = benefitString + "\n\n" + "-" + benefitList[i]
-            benefitsDiscountLabel.text = benefitString
-            benefitsDiscountLabel.font = UIFont.settingsUpdateLabelFont
-        }
+//        var benefitString = String()
+//        for i in 0 ... benefitList.count-1 {
+//            benefitString = benefitString + "\n\n" + "-" + benefitList[i]
+//            benefitsDiscountLabel.text = benefitString
+//            benefitsDiscountLabel.font = UIFont.settingsUpdateLabelFont
+//        }
+        benefitsDiscountLabel.text = NSLocalizedString("CULTURE_DISCOUNT_LABEL", comment: "CULTURE_DISCOUNT_LABEL in the Culture Pass page")
+        notMemberLabel.text = NSLocalizedString("CULTURE_NOT_A_MEMBER", comment: "CULTURE_NOT_A_MEMBER in the Culture Pass page")
+        registerButton.setTitle(NSLocalizedString("CULTURE_BECOME_A_MEMBER", comment: "CULTURE_BECOME_A_MEMBER in the Culture Pass page"), for: .normal)
+        alreadyMemberLabel.text = NSLocalizedString("CULTURE_BECOME_ALREADY_MEMBER", comment: "CULTURE_BECOME_ALREADY_MEMBER in the Culture Pass page")
+        logInButton.setTitle(NSLocalizedString("CULTURE_LOG_IN", comment: "CULTURE_LOG_IN in the Culture Pass page"), for: .normal)
+        benefitsDiscountLabel.font = UIFont.settingsUpdateLabelFont
+        registerButton.titleLabel?.font = UIFont.discoverButtonFont
+        logInButton.titleLabel?.font = UIFont.discoverButtonFont
         
     }
     
