@@ -99,20 +99,20 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         exhibitionDetailTableView.estimatedRowHeight = 50
         exhibitionDetailTableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0)
         self.carousel.pageControl.isHidden = true
-//        imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: 300)
+        imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: 300)
 //        imageView.image = UIImage(named: "default_imageX2")
         
-        self.carousel.frame = CGRect(x: 0, y:20, width: UIScreen.main.bounds.size.width, height: 300)
+//        self.carousel.frame = CGRect(x: 0, y:20, width: UIScreen.main.bounds.size.width, height: 300)
 
         if (fromHome == true) {
             if exhibition.count > 0 {
                 
                 if let imageUrl = exhibition[0].detailImage {
-//                      imageView.kf.setImage(with: URL(string: imageUrl))
-                        setupCarousel(imageUrlString: imageUrl)
-                    carousel.contentMode = .scaleAspectFill
-                    carousel.clipsToBounds = true
-                    self.view.addSubview(carousel)
+                      imageView.kf.setImage(with: URL(string: imageUrl))
+//                        setupCarousel(imageUrlString: imageUrl)
+//                    carousel.contentMode = .scaleAspectFill
+//                    carousel.clipsToBounds = true
+//                    self.view.addSubview(carousel)
                 }
                 else {
                     imageView.image = UIImage(named: "default_imageX2")
@@ -135,11 +135,11 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
                 
                 if let imageUrl = exhibition[0].detailImage {
                     if(imageUrl != "") {
-//                        imageView.kf.setImage(with: URL(string: imageUrl))
-                        setupCarousel(imageUrlString: imageUrl)
-                        carousel.contentMode = .scaleAspectFill
-                        carousel.clipsToBounds = true
-                        self.view.addSubview(carousel)
+                        imageView.kf.setImage(with: URL(string: imageUrl))
+//                        setupCarousel(imageUrlString: imageUrl)
+//                        carousel.contentMode = .scaleAspectFill
+//                        carousel.clipsToBounds = true
+//                        self.view.addSubview(carousel)
                     }else {
                         imageView.image = UIImage(named: "default_imageX2")
                         imageView.contentMode = .scaleAspectFill
@@ -165,9 +165,9 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
             }
         }
         
-//        imageView.contentMode = .scaleAspectFill
-//        imageView.clipsToBounds = true
-//        view.addSubview(imageView)
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        view.addSubview(imageView)
         
 //        carousel.contentMode = .scaleAspectFill
 //        carousel.clipsToBounds = true
@@ -178,7 +178,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         blurView.frame = carousel.bounds
         blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         blurView.alpha = 0
-        carousel.addSubview(blurView)
+        imageView.addSubview(blurView)
         
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
@@ -303,19 +303,19 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = 300 - (scrollView.contentOffset.y + 300)
         let height = min(max(y, 60), 400)
-        carousel.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: height)
+        imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: height)
 
-        if (carousel.frame.height >= 300 ){
+        if (imageView.frame.height >= 300 ){
             blurView.alpha  = 0.0
-        } else if (carousel.frame.height >= 250 ){
+        } else if (imageView.frame.height >= 250 ){
             blurView.alpha  = 0.2
-        } else if (carousel.frame.height >= 200 ){
+        } else if (imageView.frame.height >= 200 ){
             blurView.alpha  = 0.4
-        } else if (carousel.frame.height >= 150 ){
+        } else if (imageView.frame.height >= 150 ){
             blurView.alpha  = 0.6
-        } else if (carousel.frame.height >= 100 ){
+        } else if (imageView.frame.height >= 100 ){
             blurView.alpha  = 0.8
-        } else if (carousel.frame.height >= 50 ){
+        } else if (imageView.frame.height >= 50 ){
             blurView.alpha  = 0.9
         }
     }
