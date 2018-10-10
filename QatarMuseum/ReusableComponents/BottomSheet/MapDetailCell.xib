@@ -186,6 +186,8 @@
                 <outlet property="playerSlider" destination="Lks-Lf-4dr" id="SQa-UQ-PqL"/>
                 <outlet property="shareBtnViewHeight" destination="zQG-R8-YTk" id="NtN-EJ-mJf"/>
                 <outlet property="shareButton" destination="TnQ-Ha-1Y9" id="1rD-Po-PKt"/>
+                <outlet property="sliderBottomPadding" destination="HSj-bD-SLg" id="cyG-7B-n54"/>
+                <outlet property="sliderTopPadding" destination="NAG-t4-RH7" id="04c-Uo-SFF"/>
                 <outlet property="titleLabel" destination="GRf-yS-kRR" id="eYU-17-oFj"/>
             </connections>
             <point key="canvasLocation" x="53" y="70.5"/>
