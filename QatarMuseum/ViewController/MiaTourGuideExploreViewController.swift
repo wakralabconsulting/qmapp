@@ -27,6 +27,7 @@ class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol, co
         miaTitle.font = UIFont.miatourGuideFont
         tourGuideDescription.font = UIFont.englishTitleFont
         startTourButton.titleLabel?.font = UIFont.startTourFont
+        miaTitle.text = NSLocalizedString("MIA_TOUR_GUIDE_TITLE", comment: "MIA_TOUR_GUIDE_TITLE in tour guide")
         tourGuideDescription.text = NSLocalizedString("MIA_TOUR_GUIDE_DESC1", comment: "MIA_TOUR_GUIDE_DESC1 in tour guide") + "\n" + NSLocalizedString("MIA_TOUR_GUIDE_DESC2", comment: "MIA_TOUR_GUIDE_DESC2 in tour guide")
        
         headerView.headerViewDelegate = self

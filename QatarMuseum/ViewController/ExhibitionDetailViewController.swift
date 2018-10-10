@@ -27,7 +27,6 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         setUi()
-        print(exhibitionId)
         if (fromHome == true) {
             if  (networkReachability?.isReachable)! {
                 getExhibitionDetail()

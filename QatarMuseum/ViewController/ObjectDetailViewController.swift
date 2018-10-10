@@ -212,17 +212,17 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     func setPlayButtonAction(cellObj: ObjectDetailTableViewCell) {
         selectedCell  = cellObj
         if (firstLoad == true) {
-            cellObj.playList = "http://www.qm.org.qa/sites/default/files/floors.mp3"
-            cellObj.play(url: URL(string:cellObj.playList)!)
-            cellObj.setupTimer()
-        }
-        firstLoad = false
-        if #available(iOS 10.0, *) {
-            cellObj.togglePlayPause()
-        } else {
-            // showAlert "upgrade ios version to use this feature"
+            if(detailArray.count > 0) {
+                if((detailArray[0].audioFile != nil) && (detailArray[0].audioFile != "")){
+                    cellObj.playList = detailArray[0].audioFile!
+                    cellObj.play(url: URL(string:cellObj.playList)!)
+                    cellObj.setupTimer()
+                }
+            }
             
         }
+        firstLoad = false
+        cellObj.togglePlayPause()
     }
    
     @objc func buttonAction(sender: UIButton!) {
