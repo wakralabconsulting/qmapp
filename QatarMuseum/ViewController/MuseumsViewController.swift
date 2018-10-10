@@ -71,6 +71,9 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         if ((museumId != nil) && ((museumId == "63") || (museumId == "96"))) {
             collectionViewImages = ["MIA_AboutX1","Audio CircleX1","exhibition_blackX1","collectionsX1","park_blackX1","diningX1",]
             collectionViewNames = [aboutName,tourGuideName,exhibitionsName,collectionsName,parkName,diningName]
+        }else if ((museumId == "61") || (museumId == "66") || (museumId == "635") || (museumId == "638")) {
+            collectionViewImages = ["MIA_AboutX1","Audio CircleX1","exhibition_blackX1","collectionsX1","diningX1",]
+            collectionViewNames = [aboutName,tourGuideName,exhibitionsName,collectionsName,diningName]
         } else {
             collectionViewImages = ["MIA_AboutX1","exhibition_blackX1","collectionsX1","diningX1",]
             collectionViewNames = [aboutName,exhibitionsName,collectionsName,diningName]
@@ -278,14 +281,19 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             view.window!.layer.add(transition, forKey: kCATransition)
             self.present(heritageDtlView, animated: false, completion: nil)
        } else if ((selectedItem == "Tour Guide") || (selectedItem == "الدليل السياحي")){
-            let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "miaTourGuideId") as! MiaTourGuideViewController
-           // tourGuideView.fromHome = false
-            let transition = CATransition()
-            transition.duration = 0.3
-            transition.type = kCATransitionPush
-            transition.subtype = kCATransitionFromRight
-            view.window!.layer.add(transition, forKey: kCATransition)
-            self.present(tourGuideView, animated: false, completion: nil)
+            if((museumId == "63") || (museumId == "96")) {
+                let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "miaTourGuideId") as! MiaTourGuideViewController
+                // tourGuideView.fromHome = false
+                let transition = CATransition()
+                transition.duration = 0.3
+                transition.type = kCATransitionPush
+                transition.subtype = kCATransitionFromRight
+                view.window!.layer.add(transition, forKey: kCATransition)
+                self.present(tourGuideView, animated: false, completion: nil)
+            } else {
+                self.loadComingSoonPopup()
+        }
+        
        } else if ((selectedItem == "Exhibitions") || (selectedItem == "المعارض")){
             let exhibitionView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
             exhibitionView.museumId = museumId

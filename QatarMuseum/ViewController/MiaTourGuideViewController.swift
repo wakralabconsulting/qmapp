@@ -99,7 +99,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     func loadComingSoonPopup() {
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
-        popupView.loadPopup()
+        popupView.loadTourGuidePopup()
         self.view.addSubview(popupView)
         
     }
