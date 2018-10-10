@@ -267,6 +267,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             thirdLevelView.backgroundColor = UIColor.mapLevelColor
             numberSerchBtn.setImage(UIImage(named: "number_padX1"), for: .normal)
             headerView.headerBackButton.isHidden = false
+            playButton.isHidden = false
+            playerSlider.isHidden = false
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 
                 headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
@@ -733,11 +735,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         
         playButton.isHidden = true
         playerSlider.isHidden = true
-        firstLoad = true
-        self.avPlayer = nil
-        self.timer?.invalidate()
-        playerSlider.value = 0
-        playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
         level = levelNumber.three
         firstLevelView.backgroundColor = UIColor.mapLevelColor
         secondLevelView.backgroundColor = UIColor.mapLevelColor
@@ -753,11 +750,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     @IBAction func didtapSecondbutton(_ sender: UIButton) {
         playButton.isHidden = true
         playerSlider.isHidden = true
-        firstLoad = true
-        self.avPlayer = nil
-        self.timer?.invalidate()
-        playerSlider.value = 0
-        playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
         level = levelNumber.two
         firstLevelView.backgroundColor = UIColor.mapLevelColor
         secondLevelView.backgroundColor = UIColor.white
@@ -772,11 +764,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     @IBAction func didTapFirstButton(_ sender: UIButton) {
         playButton.isHidden = false
         playerSlider.isHidden = false
-        firstLoad = true
-        self.avPlayer = nil
-        self.timer?.invalidate()
-        playerSlider.value = 0
-        playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
         level = levelNumber.one
         firstLevelView.backgroundColor = UIColor.white
         secondLevelView.backgroundColor = UIColor.mapLevelColor
@@ -916,14 +903,20 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromLeft
         self.view.window!.layer.add(transition, forKey: kCATransition)
+        self.avPlayer = nil
+        self.timer?.invalidate()
         self.dismiss(animated: false, completion: nil)
     }
     func filterButtonPressed() {
+        self.avPlayer = nil
+        self.timer?.invalidate()
         self.dismiss(animated: true, completion: nil)
     }
     //Added BottomSheet for showing popup when we clicked in marker
     func addBottomSheetView(scrollable: Bool? = true,index: Int?) {
         overlayView.isHidden = false
+        self.avPlayer = nil
+        self.timer?.invalidate()
         bottomSheetVC = MapDetailView()
         bottomSheetVC.mapdetailDelegate = self
         bottomSheetVC.popUpArray = floorMapArray
@@ -981,32 +974,44 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             self.setupTimer()
         }
         firstLoad = false
-        if #available(iOS 10.0, *) {
+        
             self.togglePlayPause()
-        } else {
-            // showAlert "upgrade ios version to use this feature"
-            
-        }
     }
-    @available(iOS 10.0, *)
+    
     func togglePlayPause() {
-        if avPlayer.timeControlStatus == .playing  {
-            playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
-            avPlayer.pause()
-            isPaused = true
+        if #available(iOS 10.0, *) {
+            if avPlayer.timeControlStatus == .playing  {
+                playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
+                avPlayer.pause()
+                isPaused = true
+            } else {
+                playButton.setImage(UIImage(named:"pause_blackX1"), for: .normal)
+                avPlayer.play()
+                isPaused = false
+            }
         } else {
-            playButton.setImage(UIImage(named:"pause_blackX1"), for: .normal)
-            avPlayer.play()
-            isPaused = false
+            if((avPlayer.rate != 0) && (avPlayer.error == nil)) {
+                playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
+                avPlayer.pause()
+                isPaused = true
+            } else {
+                playButton.setImage(UIImage(named:"pause_blackX1"), for: .normal)
+                avPlayer.play()
+                isPaused = false
+            }
         }
     }
     @IBAction func sliderValueChange(_ sender: UISlider) {
-//        let seconds : Int64 = Int64(sender.value)
-//        let targetTime:CMTime = CMTimeMake(seconds, 1)
-//        avPlayer!.seek(to: targetTime)
-//        if(isPaused == false){
-//            //seekLoadingLabel.alpha = 1
-//        }
+        if(firstLoad) {
+            self.playList = "http://www.qm.org.qa/sites/default/files/floors.mp3"
+            self.avPlayer = AVPlayer(playerItem: AVPlayerItem(url: URL(string: playList)!))
+        }
+        let seconds : Int64 = Int64(sender.value)
+        let targetTime:CMTime = CMTimeMake(seconds, 1)
+        avPlayer!.seek(to: targetTime)
+        if(isPaused == false){
+            //seekLoadingLabel.alpha = 1
+        }
     }
 //    @IBAction func sliderTapped(_ sender: UILongPressGestureRecognizer) {
 //        if let slider = sender.view as? UISlider {
