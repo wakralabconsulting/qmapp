@@ -34,8 +34,9 @@
 "GIFTSHOP_LABEL" = "محل الهدايا";
 "SIDEMENU_SETTINGS_LABEL" = "الإعدادات";
 "COMINGSOON_TITLE" = "قريباً";
-"COMINGSOON_MESSAGE" = "نحن نعمل بجد لجعل التفاصيل متاحة تحت يدك. ترقب";
+"COMINGSOON_MESSAGE" = "نحن نعمل بجد لجعل التفاصيل متاحة.";
 "COMINGSOON_STAY_TUNED" = "ترقّب";
+"TOUR_GUIDE_COMINGSOON" = "ستكون خرائط المتحف و تفاصيل القطع الخاصة بالمتحف متوفرة عما قريب";
 "CLOSEBUTTON_TITLE" = "مغلق";
 "EVENT_POPUP_TITLE" = "اسم الفعالية";
 "POPUP_ADD_BUTTON_TITLE" = "أضف إلى التقويم";
