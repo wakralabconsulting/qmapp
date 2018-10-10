@@ -103,7 +103,7 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
     }
     
     @IBAction func didTapDiscoverButton(_ sender: UIButton) {
-        self.discoverButton.backgroundColor = UIColor.viewMycultureBlue
+        //self.discoverButton.backgroundColor = UIColor.viewMycultureBlue
         self.discoverButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         let eventView =  self.storyboard?.instantiateViewController(withIdentifier: "eventPageID") as! EventViewController
         eventView.fromHome = false
@@ -118,7 +118,7 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
     //For Button Animations
     @IBAction func discovereButtonTouchDown(_ sender: UIButton) {
         self.discoverButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-        self.discoverButton.backgroundColor = UIColor.startTourLightBlue
+        //self.discoverButton.backgroundColor = UIColor.startTourLightBlue
     }
     @IBAction func playPauseButtonTouchDown(_ sender: UIButton) {
         self.playButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)

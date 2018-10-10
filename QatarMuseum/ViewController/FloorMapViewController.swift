@@ -19,6 +19,12 @@ enum levelNumber{
     case two
     case three
 }
+enum fromTour{
+    case exploreTour
+    case scienceTour
+    case HighlightTour
+}
+
 
 class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpProtocol, HeaderViewProtocol,UIGestureRecognizerDelegate,MapDetailProtocol {
     
@@ -188,7 +194,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     var objectPopupView : ObjectPopupView = ObjectPopupView()
     var level : levelNumber?
     var zoomValue = Float()
-    var fromScienceTour : Bool = false
+   // var fromScienceTour : Bool = false
+    var fromTourString : fromTour?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -228,7 +235,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         thirdLevelView.layer.shadowOpacity = 0.5
         thirdLevelView.layer.shadowOffset = CGSize.zero
         thirdLevelView.layer.shadowRadius = 1
-        if (fromScienceTour == true) {
+        if (fromTourString == fromTour.scienceTour) {
             
             if (selectedScienceTourLevel == "1"){
                 playButton.isHidden = false
@@ -265,6 +272,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             firstLevelView.backgroundColor = UIColor.white
             secondLevelView.backgroundColor = UIColor.mapLevelColor
             thirdLevelView.backgroundColor = UIColor.mapLevelColor
+            numberSerchBtn.isHidden = false
             numberSerchBtn.setImage(UIImage(named: "number_padX1"), for: .normal)
             headerView.headerBackButton.isHidden = false
             playButton.isHidden = false
@@ -309,7 +317,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         }
         viewForMap.mapType = .normal
         var icon = UIImage()
-        if (fromScienceTour == true) {
+        if (fromTourString == fromTour.scienceTour) {
             if(selectedScienceTourLevel == "3") {
                 level = levelNumber.three
                 icon = UIImage(named: "qm_level_3")!
@@ -343,7 +351,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         circ.strokeColor = UIColor.clear
         circ.map = viewForMap
         
-        if (fromScienceTour == true) {
+        if (fromTourString == fromTour.scienceTour) {
             if (UIScreen.main.bounds.height > 700) {
                 camera = GMSCameraPosition.camera(withLatitude: 25.295447, longitude: 51.539195, zoom:19)
             }
@@ -364,7 +372,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g1_sc3.title = "l2_g1_sc3"
             l2_g1_sc3.snippet = ""
             l2_g1_sc3.icon = UIImage(named: "SI.5.1999.Front.2000x2000")
-            if((fromScienceTour) && (selectedScienceTour == "l2_g1_sc3")) {
+            if((fromTourString == fromTour.scienceTour) && (selectedScienceTour == "l2_g1_sc3")) {
                 l2_g1_sc3.icon = self.imageWithImage(image: UIImage(named: "SI.5.1999.Front.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
                 self.setMarkerBounce()
                 selectedMarker = l2_g1_sc3
@@ -380,7 +388,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g8.title = "l2_g8"
             l2_g8.snippet = ""
             //l2_g8.icon = UIImage(named: "MS.523.1999-1.2000x2000")
-            if((fromScienceTour) && (selectedScienceTour == "l2_g8")) {
+            if((fromTourString == fromTour.scienceTour) && (selectedScienceTour == "l2_g8")) {
                 l2_g8.icon = self.imageWithImage(image: UIImage(named: "MS.523.1999-1.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
                 self.setMarkerBounce()
                 selectedMarker = l2_g8
@@ -395,7 +403,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g8_sc1.position = L2_G8_SC1
             l2_g8_sc1.title = "l2_g8_sc1"
             l2_g8_sc1.snippet = ""
-            if((fromScienceTour) && (selectedScienceTour == "l2_g8_sc1")) {
+            if((fromTourString == fromTour.scienceTour) && (selectedScienceTour == "l2_g8_sc1")) {
                 l2_g8_sc1.icon = self.imageWithImage(image: UIImage(named: "MW_548")!, scaledToSize: CGSize(width:58, height: 64))
                 self.setMarkerBounce()
                 selectedMarker = l2_g8_sc1
@@ -410,7 +418,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g8_sc6_1.position = L2_G8_SC6_1
             l2_g8_sc6_1.title = "l2_g8_sc6_1"
             l2_g8_sc6_1.snippet = ""
-            if((fromScienceTour) && (selectedScienceTour == "l2_g8_sc6_1")) {
+            if((fromTourString == fromTour.scienceTour) && (selectedScienceTour == "l2_g8_sc6_1")) {
                 l2_g8_sc6_1.icon = self.imageWithImage(image: UIImage(named: "MS.709.2010-1.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
                 self.setMarkerBounce()
                 selectedMarker = l2_g8_sc6_1
@@ -425,7 +433,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g8_sc6_2.position = L2_G8_SC6_2
             l2_g8_sc6_2.title = "l2_g8_sc6_2"
             l2_g8_sc6_2.snippet = ""
-            if((fromScienceTour) && (selectedScienceTour == "l2_g8_sc6_2")) {
+            if((fromTourString == fromTour.scienceTour) && (selectedScienceTour == "l2_g8_sc6_2")) {
                 l2_g8_sc6_2.icon = self.imageWithImage(image: UIImage(named: "MS.709.2010-2")!, scaledToSize: CGSize(width:54, height: 64))
                 self.setMarkerBounce()
                 selectedMarker = l2_g8_sc6_2
@@ -440,7 +448,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g8_sc5.position = L2_G8_SC5
             l2_g8_sc5.title = "l2_g8_sc5"
             l2_g8_sc5.snippet = ""
-            if((fromScienceTour) && (selectedScienceTour == "l2_g8_sc5")) {
+            if((fromTourString == fromTour.scienceTour) && (selectedScienceTour == "l2_g8_sc5")) {
                 l2_g8_sc5.icon = self.imageWithImage(image: UIImage(named: "MW.361.2007.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
                 self.setMarkerBounce()
                 selectedMarker = l2_g8_sc5
@@ -455,7 +463,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g8_sc4_1.position = L2_G8_SC4_1
             l2_g8_sc4_1.title = "l2_g8_sc4_1"
             l2_g8_sc4_1.snippet = ""
-            if((fromScienceTour) && (selectedScienceTour == "l2_g8_sc4_1")) {
+            if((fromTourString == fromTour.scienceTour) && (selectedScienceTour == "l2_g8_sc4_1")) {
                 l2_g8_sc4_1.icon = self.imageWithImage(image: UIImage(named: "MS.688.2008.Recto-1.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
                 self.setMarkerBounce()
                 selectedMarker = l2_g8_sc4_1
@@ -470,7 +478,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g8_sc4_2.position = L2_G8_SC4_2
             l2_g8_sc4_2.title = "l2_g8_sc4_2"
             l2_g8_sc4_2.snippet = ""
-            if((fromScienceTour) && (selectedScienceTour == "l2_g8_sc4_2")) {
+            if((fromTourString == fromTour.scienceTour) && (selectedScienceTour == "l2_g8_sc4_2")) {
                 l2_g8_sc4_2.icon = self.imageWithImage(image: UIImage(named: "MS.650 .1 recto-1")!, scaledToSize: CGSize(width:54, height: 64))
                 self.setMarkerBounce()
                 selectedMarker = l2_g8_sc4_2
@@ -485,7 +493,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g9_sc7.position = L2_G9_SC7
             l2_g9_sc7.title = "l2_g9_sc7"
             l2_g9_sc7.snippet = ""
-            if((fromScienceTour) && (selectedScienceTour == "l2_g9_sc7")) {
+            if((fromTourString == fromTour.scienceTour) && (selectedScienceTour == "l2_g9_sc7")) {
                 l2_g9_sc7.icon = self.imageWithImage(image: UIImage(named: "001_MIA_MW.146_005")!, scaledToSize: CGSize(width:54, height: 64))
                 self.setMarkerBounce()
                 selectedMarker = l2_g9_sc7
@@ -500,7 +508,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g9_sc5_1.position = L2_G9_SC5_1
             l2_g9_sc5_1.title = "l2_g9_sc5_1"
             l2_g9_sc5_1.snippet = ""
-            if((fromScienceTour) && (selectedScienceTour == "l2_g9_sc5_1")) {
+            if((fromTourString == fromTour.scienceTour) && (selectedScienceTour == "l2_g9_sc5_1")) {
                 l2_g9_sc5_1.icon = self.imageWithImage(image: UIImage(named: "MW.340.Front.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
                 self.setMarkerBounce()
                 selectedMarker = l2_g9_sc5_1
@@ -515,7 +523,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g9_sc5_2.position = L2_G9_SC5_2
             l2_g9_sc5_2.title = "l2_g9_sc5_2"
             l2_g9_sc5_2.snippet = ""
-            if((fromScienceTour) && (selectedScienceTour == "l2_g9_sc5_2")) {
+            if((fromTourString == fromTour.scienceTour) && (selectedScienceTour == "l2_g9_sc5_2")) {
                 l2_g9_sc5_2.icon = self.imageWithImage(image: UIImage(named: "MS.794-1")!, scaledToSize: CGSize(width:54, height: 64))
                 self.setMarkerBounce()
                 selectedMarker = l2_g9_sc5_2
@@ -530,7 +538,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g5_sc6.position = L2_G5_SC6
             l2_g5_sc6.title = "l2_g5_sc6"
             l2_g5_sc6.snippet = ""
-            if((fromScienceTour) && (selectedScienceTour == "l2_g5_sc6")) {
+            if((fromTourString == fromTour.scienceTour) && (selectedScienceTour == "l2_g5_sc6")) {
                 l2_g5_sc6.icon = self.imageWithImage(image: UIImage(named: "MW_56")!, scaledToSize: CGSize(width:54, height: 64))
                 self.setMarkerBounce()
                 selectedMarker = l2_g5_sc6
@@ -545,7 +553,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g3_sc13.position = L2_G3_SC13
             l2_g3_sc13.title = "l2_g3_sc13"
             l2_g3_sc13.snippet = ""
-            if((fromScienceTour) && (selectedScienceTour == "l2_g3_sc13")) {
+            if((fromTourString == fromTour.scienceTour) && (selectedScienceTour == "l2_g3_sc13")) {
                 l2_g3_sc13.icon = self.imageWithImage(image: UIImage(named: "MW.634-EMu.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
                 self.setMarkerBounce()
                 selectedMarker = l2_g3_sc13
@@ -580,7 +588,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l3_g10_sc1_1.position = L3_G10_SC1_1
             l3_g10_sc1_1.title = "l3_g10_sc1_1"
             l3_g10_sc1_1.snippet = "PO.297"
-            if((fromScienceTour) && (selectedScienceTour == "l3_g10_sc1_1")) {
+            if((fromTourString == fromTour.scienceTour) && (selectedScienceTour == "l3_g10_sc1_1")) {
                 l3_g10_sc1_1.icon = imageWithImage(image: UIImage(named: "PO.297.2006.1.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
                 setMarkerBounce()
                 selectedMarker = l3_g10_sc1_1
@@ -598,7 +606,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l3_g10_sc1_2.position = L3_G10_SC1_2
             l3_g10_sc1_2.title = "l3_g10_sc1_2"
             l3_g10_sc1_2.snippet = ""
-            if((fromScienceTour) && (selectedScienceTour == "l3_g10_sc1_2")) {
+            if((fromTourString == fromTour.scienceTour) && (selectedScienceTour == "l3_g10_sc1_2")) {
                 l3_g10_sc1_2.icon = self.imageWithImage(image: UIImage(named: "PO.308")!, scaledToSize: CGSize(width:54, height: 64))
                 setMarkerBounce()
                 selectedMarker = l3_g10_sc1_2
@@ -613,7 +621,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l3_g11_wr15.position = L3_G11_WR15
             l3_g11_wr15.title = "l3_g11_wr15"
             l3_g11_wr15.snippet = ""
-            if((fromScienceTour) && (selectedScienceTour == "l3_g11_wr15")) {
+            if((fromTourString == fromTour.scienceTour) && (selectedScienceTour == "l3_g11_wr15")) {
                 l3_g11_wr15.icon = self.imageWithImage(image: UIImage(named: "MS.647.A-59")!, scaledToSize: CGSize(width:54, height: 64))
                 setMarkerBounce()
                 selectedMarker = l3_g11_wr15
@@ -628,7 +636,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l3_g13_5.position = L3_G13_5
             l3_g13_5.title = "l3_g13_5"
             l3_g13_5.snippet = ""
-            if((fromScienceTour) && (selectedScienceTour == "l3_g13_5")) {
+            if((fromTourString == fromTour.scienceTour) && (selectedScienceTour == "l3_g13_5")) {
                 l3_g13_5.icon = self.imageWithImage(image: UIImage(named: "GL.322-0564.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
                 setMarkerBounce()
                 selectedMarker = l3_g13_5
@@ -643,7 +651,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l3_g13_7.position = L3_G13_7
             l3_g13_7.title = "l3_g13_7"
             l3_g13_7.snippet = ""
-            if((fromScienceTour) && (selectedScienceTour == "l3_g13_7")) {
+            if((fromTourString == fromTour.scienceTour) && (selectedScienceTour == "l3_g13_7")) {
                 l3_g13_7.icon = self.imageWithImage(image: UIImage(named: "HS.32-1.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
                 setMarkerBounce()
                 selectedMarker = l3_g13_7
@@ -659,7 +667,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l3_g17_3.position = L3_G17_3
             l3_g17_3.title = "l3_g17_3"
             l3_g17_3.snippet = ""
-            if((fromScienceTour) && (selectedScienceTour == "l3_g17_3")) {
+            if((fromTourString == fromTour.scienceTour) && (selectedScienceTour == "l3_g17_3")) {
                 l3_g17_3.icon = self.imageWithImage(image: UIImage(named: "IV_61")!, scaledToSize: CGSize(width:54, height: 64))
                 self.setMarkerBounce()
                 selectedMarker = l3_g17_3
@@ -1092,18 +1100,19 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     func getFloorMapDataFromServer()
     {
         var tourGuideId : String? = ""
-        if (fromScienceTour) {
+        if (fromTourString == fromTour.scienceTour) {
             tourGuideId = "12216"
         } else {
             //tourGuideId = "12476"
             //tourGuideId = "12216"
+            //Highlight 12471
         }
         
         _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": tourGuideId!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
             switch response.result {
             case .success(let data):
                 self.floorMapArray = data.tourGuideFloorMap
-                if(self.fromScienceTour) {
+                if(self.fromTourString == fromTour.scienceTour) {
                     self.addBottomSheetView(index: self.selectedTourdGuidIndex)
                 }
             case .failure(let error):
