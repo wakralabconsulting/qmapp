@@ -128,7 +128,6 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     }
     
     @IBAction func didTapStartTour(_ sender: UIButton) {
-        self.startTourButton.backgroundColor = UIColor.viewMycultureBlue
         self.startTourButton.transform = CGAffineTransform(scaleX: 1, y: 1)
         let transition = CATransition()
         transition.duration = 0.3
@@ -147,7 +146,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     }
     
     @IBAction func startTourButtonTouchDown(_ sender: UIButton) {
-        self.startTourButton.backgroundColor = UIColor.startTourLightBlue
+       
        // self.startTourButton.setTitleColor(UIColor.viewMyculTitleBlue, for: .normal)
         
         self.startTourButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)

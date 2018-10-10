@@ -22,7 +22,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     func setHomeCellData(home: Home) {
         let titleString = home.name
-        homeTitleLabel.text = titleString?.capitalized
+        homeTitleLabel.text = titleString
         homeTitleLabel.font = UIFont.homeTitleFont
         //Added Tour guide icon for MIA in home page
         if ((home.id == "63") || (home.id == "61") || (home.id == "66") || (home.id == "96") || (home.id == "635") || (home.id == "638")) {
