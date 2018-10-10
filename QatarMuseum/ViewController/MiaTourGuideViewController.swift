@@ -24,7 +24,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     }
 
     func setUpUI() {
-        miaTourImageArray = ["science_tour","museum_of_islamic_art","coming_soon_1","coming_soon_2"];
+        miaTourImageArray = ["science_tour","museum_of_islamic_art"];
         topbarView.headerViewDelegate = self
         topbarView.headerTitle.isHidden = true
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -60,7 +60,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell : HomeCollectionViewCell = miaTourCollectionView.dequeueReusableCell(withReuseIdentifier: "homeCellId", for: indexPath) as! HomeCollectionViewCell
         let homeDataDict = miaTourDataFullArray.object(at: indexPath.row) as! NSDictionary
-        cell.setTourGuideCellData(homeCellData: homeDataDict, imageName: miaTourImageArray.object(at: indexPath.row) as! String)
+        cell.setScienceTourGuideCellData(homeCellData: homeDataDict, imageName: miaTourImageArray.object(at: indexPath.row) as! String)
         return cell
     }
     
@@ -99,7 +99,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     func loadComingSoonPopup() {
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
-        popupView.loadPopup()
+        popupView.loadTourGuidePopup()
         self.view.addSubview(popupView)
         
     }

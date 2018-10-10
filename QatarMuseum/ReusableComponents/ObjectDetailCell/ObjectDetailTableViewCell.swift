@@ -27,6 +27,8 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
     @IBOutlet weak var bottomPadding: NSLayoutConstraint!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var playerSlider: UISlider!
+    @IBOutlet weak var sliderBottomPadding: NSLayoutConstraint!
+    @IBOutlet weak var sliderTopPadding: NSLayoutConstraint!
     
     var favBtnTapAction : (()->())?
     var shareBtnTapAction : (()->())?
@@ -45,7 +47,8 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         bottomSheetVC.mapdetailDelegate = self
-        playList = "http://www.qm.org.qa/sites/default/files/floors.mp3"
+        
+        
         // Configure the view for the selected state
     }
     
@@ -70,9 +73,22 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
        // centerImageView.image = UIImage(named: "lusterwar_apothecarry_jar_full")
         shareBtnViewHeight.constant = 0
         bottomPadding.constant = 0
+        
+        if ((objectDetail.audioFile != nil) && (objectDetail.audioFile != "")) {
+            playButton.isEnabled = true
+            playerSlider.isEnabled = true
+            playList = objectDetail.audioFile!
+        } else {
+            playButton.isEnabled = false
+            playerSlider.isEnabled = false
+        }
+        sliderTopPadding.constant = 30
+        sliderBottomPadding.constant = 30
     }
     
     func setObjectHistoryDetail(historyDetail:TourGuideFloorMap) {
+        playButton.isHidden = true
+        playerSlider.isHidden = true
         if ((historyDetail.objectHistory != nil) && (historyDetail.objectHistory != "")){
              titleLabel.text = "Object History"
             descriptionLabel?.text = historyDetail.objectHistory?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&#039;", with: "", options: .regularExpression, range: nil)
@@ -84,6 +100,8 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
         //centerImageView.image = UIImage(named: "science_tour")
         shareBtnViewHeight.constant = 0
         bottomPadding.constant = 0
+        sliderTopPadding.constant = 0
+        sliderBottomPadding.constant = 0
     }
     
     @IBAction func didTapFavouriteButton(_ sender: UIButton) {
@@ -135,25 +153,41 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
 //
 //        }
     }
-    @available(iOS 10.0, *)
+    
     func togglePlayPause() {
-        if avPlayer.timeControlStatus == .playing  {
-            playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
-            avPlayer.pause()
-            isPaused = true
+        if #available(iOS 10.0, *) {
+            if avPlayer.timeControlStatus == .playing  {
+                playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
+                avPlayer.pause()
+                isPaused = true
+            } else {
+                playButton.setImage(UIImage(named:"pause_blackX1"), for: .normal)
+                avPlayer.play()
+                isPaused = false
+            }
         } else {
-            playButton.setImage(UIImage(named:"pause_blackX1"), for: .normal)
-            avPlayer.play()
-            isPaused = false
+            if((avPlayer.rate != 0) && (avPlayer.error == nil)) {
+                playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
+                avPlayer.pause()
+                isPaused = true
+            } else {
+                playButton.setImage(UIImage(named:"pause_blackX1"), for: .normal)
+                avPlayer.play()
+                isPaused = false
+            }
         }
     }
     @IBAction func sliderValueChange(_ sender: UISlider) {
-        //        let seconds : Int64 = Int64(sender.value)
-        //        let targetTime:CMTime = CMTimeMake(seconds, 1)
-        //        avPlayer!.seek(to: targetTime)
-        //        if(isPaused == false){
-        //            //seekLoadingLabel.alpha = 1
-        //        }
+//        if(firstLoad) {
+//            self.playList = "http://www.qm.org.qa/sites/default/files/floors.mp3"
+//            self.avPlayer = AVPlayer(playerItem: AVPlayerItem(url: URL(string: playList)!))
+//        }
+                let seconds : Int64 = Int64(sender.value)
+                let targetTime:CMTime = CMTimeMake(seconds, 1)
+                avPlayer!.seek(to: targetTime)
+                if(isPaused == false){
+                    //seekLoadingLabel.alpha = 1
+                }
     }
     //    @IBAction func sliderTapped(_ sender: UILongPressGestureRecognizer) {
     //        if let slider = sender.view as? UISlider {
