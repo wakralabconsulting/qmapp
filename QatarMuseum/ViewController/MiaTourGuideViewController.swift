@@ -24,7 +24,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     }
 
     func setUpUI() {
-        miaTourImageArray = ["science_tour","museum_of_islamic_art","coming_soon_1","coming_soon_2"];
+        miaTourImageArray = ["science_tour","museum_of_islamic_art"];
         topbarView.headerViewDelegate = self
         topbarView.headerTitle.isHidden = true
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
