@@ -73,13 +73,13 @@ class ComingSoonPopUp: UIView {
     }
     
     @IBAction func closeButtonTouchDown(_ sender: UIButton) {
-        self.closeButton.backgroundColor = UIColor.startTourLightBlue
+        
         self.closeButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
     @IBAction func didTapClose(_ sender: UIButton) {
-        self.closeButton.backgroundColor = UIColor.viewMycultureBlue
-        self.closeButton.setTitleColor(UIColor.black, for: .normal)
+        
+        
         self.closeButton.transform = CGAffineTransform(scaleX: 1, y: 1)
         comingSoonPopupDelegate?.closeButtonPressed()
     }

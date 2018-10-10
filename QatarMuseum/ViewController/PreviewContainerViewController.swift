@@ -697,7 +697,8 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
             floorMapView.selectedScienceTour = selectedItem.artifactPosition
             floorMapView.selectedScienceTourLevel = selectedItem.floorLevel
             floorMapView.selectedTourdGuidIndex = currentPreviewItem
-            floorMapView.fromScienceTour = true
+            //floorMapView.fromScienceTour = true
+            floorMapView.fromTourString = fromTour.scienceTour
             floorMapView.modalTransitionStyle = .flipHorizontal
             self.present(floorMapView, animated: true, completion: nil)
         }
