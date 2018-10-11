@@ -37,7 +37,7 @@
 "COMINGSOON_MESSAGE" = "نحن نعمل بجد لجعل التفاصيل متاحة.";
 "COMINGSOON_STAY_TUNED" = "ترقّب";
 "TOUR_GUIDE_COMINGSOON" = "ستكون خرائط المتحف و تفاصيل القطع الخاصة بالمتحف متوفرة عما قريب";
-"CLOSEBUTTON_TITLE" = "مغلق";
+"CLOSEBUTTON_TITLE" = "أغلق";
 "EVENT_POPUP_TITLE" = "اسم الفعالية";
 "POPUP_ADD_BUTTON_TITLE" = "أضف إلى التقويم";
 "EDUCATION_EVENT_POPUP_TITLE" = "تاريخ إم إس 248";
@@ -65,7 +65,7 @@
 "CHANGE_LANGUAGE_TITLE" = "تغيير اللغة";
 "CONTINUE_TITLE" = "المتابعة";
 "MUSEUM_TITLE" = "متحف الفن الإسلامي";
-"NO_RESULT_MESSAGE" = "لم يتم العثور على أي نتائج";
+"NO_RESULT_MESSAGE" = "قريباً";
 "CHECK_INTERNET" = "تأكد من اتصالك بالانترنت";
 "LOCATION_TITLE" = "الموقع";
 "TO" = "إلى";

@@ -19,7 +19,7 @@ struct EducationEvent: ResponseObjectSerializable, ResponseCollectionSerializabl
     var startDate: [String]? = []
     var endDate: [String]? = []
     var itemId: String? = nil
-    var mainDescription: [String]? = []
+    var mainDescription: String? = nil
     
     
     
@@ -30,23 +30,23 @@ struct EducationEvent: ResponseObjectSerializable, ResponseCollectionSerializabl
             
             self.title = representation["title"] as? String
             self.fieldRepeatDate = representation["field_eduprog_repeat_field_date"] as? [String]
-           // self.ageGroup = representation["Age_group"] as? [String]
-            //self.associatedTopics = representation["Associated_topics"] as? [String]
+            self.ageGroup = representation["Age_group"] as? [String]
+            self.associatedTopics = representation["Associated_topics"] as? [String]
             self.introductionText = representation["Introduction_Text"] as? String
-           // self.museumDepartMent = representation["Museum_Department"] as? String
+            self.museumDepartMent = representation["Museum_Department"] as? String
             self.programType = representation["Programme_type"] as? String
             self.register = representation["Register"] as? String
-            //self.startDate = representation["start_Date"] as? [String]
-           // self.endDate = representation["End_Date"] as? [String]
-            self.itemId = representation["ID"] as? String
-            self.mainDescription = representation["Description"] as? [String]
+            self.startDate = representation["start_Date"] as? [String]
+            self.endDate = representation["End_Date"] as? [String]
+            self.itemId = representation["item_id"] as? String
+            self.mainDescription = representation["main_description"] as? String
             
         }
     }
 
     
-//    init (itemId:String?, introductionText: String?, register: String?, fieldRepeatDate: [String]?, title: String?,programType:String?,mainDescription:[String]?,ageGroup:[String]?,associatedTopics:[String]?,museumDepartMent:String?,startDate:[String]?,endDate:[String]?) {
-    init (itemId:String?, introductionText: String?, register: String?, fieldRepeatDate: [String]?, title: String?,programType:String?,mainDescription:[String]?) {
+    init (itemId:String?, introductionText: String?, register: String?, fieldRepeatDate: [String]?, title: String?,programType:String?,mainDescription: String?,ageGroup:[String]?,associatedTopics:[String]?,museumDepartMent:String?,startDate:[String]?,endDate:[String]?) {
+//    init (itemId:String?, introductionText: String?, register: String?, fieldRepeatDate: [String]?, title: String?,programType:String?,mainDescription:[String]?) {
         self.itemId = itemId
         self.introductionText = introductionText
         self.register = register
@@ -55,11 +55,11 @@ struct EducationEvent: ResponseObjectSerializable, ResponseCollectionSerializabl
         self.programType = programType
         self.mainDescription = mainDescription
         
-//        self.ageGroup = ageGroup
-//        self.associatedTopics = associatedTopics
-//        self.museumDepartMent = museumDepartMent
-//        self.startDate = startDate
-//        self.endDate = endDate
+        self.ageGroup = ageGroup
+        self.associatedTopics = associatedTopics
+        self.museumDepartMent = museumDepartMent
+        self.startDate = startDate
+        self.endDate = endDate
         
     }
 }

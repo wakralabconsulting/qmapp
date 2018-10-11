@@ -75,15 +75,23 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
         bottomPadding.constant = 0
         
         if ((objectDetail.audioFile != nil) && (objectDetail.audioFile != "")) {
-            playButton.isEnabled = true
-            playerSlider.isEnabled = true
+            playButton.isHidden = false
+            playerSlider.isHidden = false
+            sliderTopPadding.constant = 30
+            sliderBottomPadding.constant = 30
             playList = objectDetail.audioFile!
         } else {
-            playButton.isEnabled = false
-            playerSlider.isEnabled = false
+            sliderTopPadding.constant = 0
+            sliderBottomPadding.constant = 0
+            playButton.isHidden = true
+            playerSlider.isHidden = true
         }
-        sliderTopPadding.constant = 30
-        sliderBottomPadding.constant = 30
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
+        } else {
+            playButton.setImage(UIImage(named:"play_black-mirror"), for: .normal)
+        }
+        
     }
     
     func setObjectHistoryDetail(historyDetail:TourGuideFloorMap) {
@@ -157,7 +165,11 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
     func togglePlayPause() {
         if #available(iOS 10.0, *) {
             if avPlayer.timeControlStatus == .playing  {
-                playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
+                if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                    playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
+                } else {
+                    playButton.setImage(UIImage(named:"play_black-mirror"), for: .normal)
+                }
                 avPlayer.pause()
                 isPaused = true
             } else {
@@ -167,7 +179,11 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
             }
         } else {
             if((avPlayer.rate != 0) && (avPlayer.error == nil)) {
-                playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
+                if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                    playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
+                } else {
+                    playButton.setImage(UIImage(named:"play_black-mirror"), for: .normal)
+                }
                 avPlayer.pause()
                 isPaused = true
             } else {

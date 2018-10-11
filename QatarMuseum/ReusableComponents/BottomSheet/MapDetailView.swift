@@ -250,39 +250,19 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
     func setPlayButtonAction(cellObj: ObjectDetailTableViewCell) {
         selectedCell  = cellObj
         if (firstLoad == true) {
-            cellObj.playList = "http://www.qm.org.qa/sites/default/files/floors.mp3"
-            cellObj.play(url: URL(string:cellObj.playList)!)
-            cellObj.setupTimer()
+            if(popUpArray.count > 0) {
+                if((popUpArray[0].audioFile != nil) && (popUpArray[0].audioFile != "")){
+                    cellObj.playList = popUpArray[0].audioFile!
+                    cellObj.play(url: URL(string:cellObj.playList)!)
+                    cellObj.setupTimer()
+                    firstLoad = false
+                    cellObj.togglePlayPause()
+                }
+            }
         }
-        firstLoad = false
-        cellObj.togglePlayPause()
+        
     }
-    //MARK: Audio SetUp
-//    func play(url:URL) {
-//        self.avPlayer = AVPlayer(playerItem: AVPlayerItem(url: url))
-//        if #available(iOS 10.0, *) {
-//            self.avPlayer.automaticallyWaitsToMinimizeStalling = false
-//        }
-//        avPlayer!.volume = 1.0
-//        avPlayer.play()
-//    }
-//    @available(iOS 10.0, *)
-//    func togglePlayPause(cellObj: ObjectDetailTableViewCell) {
-//        if avPlayer.timeControlStatus == .playing  {
-//           cellObj.playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
-//            avPlayer.pause()
-//            isPaused = true
-//        } else {
-//            cellObj.playButton.setImage(UIImage(named:"pause_blackX1"), for: .normal)
-//            avPlayer.play()
-//            isPaused = false
-//        }
-//    }
-//    func setupTimer(){
-//        NotificationCenter.default.addObserver(self, selector: #selector(self.didPlayToEnd), name: .AVPlayerItemDidPlayToEndTime, object: nil)
-//        timer = Timer(timeInterval: 0.001, target: self, selector: #selector(ObjectDetailTableViewCell.tick), userInfo: nil, repeats: true)
-//        RunLoop.current.add(timer!, forMode: RunLoopMode.commonModes)
-//    }
+    
     @objc func didPlayToEnd() {
         // self.nextTrack()
     }

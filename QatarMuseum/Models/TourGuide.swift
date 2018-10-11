@@ -12,6 +12,7 @@ struct TourGuide: ResponseObjectSerializable, ResponseCollectionSerializable {
     var tourGuideDescription: String? = nil
     var multimediaFile: [String]? = []
     var museumsEntity: String? = nil
+    var nid: String? = nil
     
     public init?(response: HTTPURLResponse, representation: AnyObject) {
         if let representation = representation as? [String: Any] {
@@ -19,6 +20,7 @@ struct TourGuide: ResponseObjectSerializable, ResponseCollectionSerializable {
             self.tourGuideDescription = representation["Description"] as? String
             self.multimediaFile = representation["multimedia"] as? [String]
             self.museumsEntity = representation["Museums_entity"] as? String
+            self.nid = representation["Nid"] as? String
         }
     }
     
