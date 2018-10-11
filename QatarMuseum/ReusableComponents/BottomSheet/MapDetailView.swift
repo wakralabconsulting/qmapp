@@ -249,17 +249,18 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
     }
     func setPlayButtonAction(cellObj: ObjectDetailTableViewCell) {
         selectedCell  = cellObj
-        if (firstLoad == true) {
+        
             if(popUpArray.count > 0) {
                 if((popUpArray[0].audioFile != nil) && (popUpArray[0].audioFile != "")){
-                    cellObj.playList = popUpArray[0].audioFile!
-                    cellObj.play(url: URL(string:cellObj.playList)!)
-                    cellObj.setupTimer()
+                    if (firstLoad == true) {
+                        cellObj.playList = popUpArray[0].audioFile!
+                        cellObj.play(url: URL(string:cellObj.playList)!)
+                        cellObj.setupTimer()
+                    }
                     firstLoad = false
                     cellObj.togglePlayPause()
                 }
             }
-        }
         
     }
     

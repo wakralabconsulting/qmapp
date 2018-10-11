@@ -194,7 +194,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     var objectPopupView : ObjectPopupView = ObjectPopupView()
     var level : levelNumber?
     var zoomValue = Float()
-   // var fromScienceTour : Bool = false
+   
     var fromTourString : fromTour?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -988,8 +988,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             self.setupTimer()
         }
         firstLoad = false
-        
-            self.togglePlayPause()
+        self.togglePlayPause()
     }
     
     func togglePlayPause() {
@@ -1114,12 +1113,18 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     func getFloorMapDataFromServer()
     {
         var tourGuideId : String? = ""
-        if (fromTourString == fromTour.scienceTour) {
-            tourGuideId = "12216"
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            if (fromTourString == fromTour.scienceTour) {
+                tourGuideId = "12216"
+            } else if (fromTourString == fromTour.HighlightTour){
+                tourGuideId = "12471"
+            }
         } else {
-            //tourGuideId = "12476"
-            //tourGuideId = "12216"
-            //Highlight 12471
+            if (fromTourString == fromTour.scienceTour) {
+                tourGuideId = "12226"
+            } else if (fromTourString == fromTour.HighlightTour){
+                tourGuideId = "12471"
+            }
         }
         
         _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": tourGuideId!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in

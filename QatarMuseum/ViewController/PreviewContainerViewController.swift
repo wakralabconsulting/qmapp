@@ -54,7 +54,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     var reloaded: Bool = false
     var tourGuideArray: [TourGuideFloorMap]! = []
     var countValue : Int? = 0
-    
+    var fromScienceTour : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -659,8 +659,24 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     //MARK: WebServiceCall
     func getTourGuideDataFromServer()
     {
+        var tourGuideId : String? = ""
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            if (fromScienceTour) {
+                tourGuideId = "12216"
+            } else {
+                //tourGuideId = "12476"
+                //tourGuideId = "12216"
+                tourGuideId = "12471"
+            }
+        } else {
+            if (fromScienceTour) {
+                tourGuideId = "12226"
+            } else {
+                tourGuideId = "12471"
+            }
+        }
         
-        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": "12216"])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": tourGuideId!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
             switch response.result {
             case .success(let data):
                 self.tourGuideArray = data.tourGuideFloorMap
@@ -697,8 +713,11 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
             floorMapView.selectedScienceTour = selectedItem.artifactPosition
             floorMapView.selectedScienceTourLevel = selectedItem.floorLevel
             floorMapView.selectedTourdGuidIndex = currentPreviewItem
-            //floorMapView.fromScienceTour = true
-            floorMapView.fromTourString = fromTour.scienceTour
+            if(fromScienceTour) {
+                floorMapView.fromTourString = fromTour.scienceTour
+            } else {
+                floorMapView.fromTourString = fromTour.HighlightTour
+            }
             floorMapView.modalTransitionStyle = .flipHorizontal
             self.present(floorMapView, animated: true, completion: nil)
         }
