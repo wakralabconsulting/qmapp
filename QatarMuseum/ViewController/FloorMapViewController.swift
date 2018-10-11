@@ -276,7 +276,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             firstLevelView.backgroundColor = UIColor.white
             secondLevelView.backgroundColor = UIColor.mapLevelColor
             thirdLevelView.backgroundColor = UIColor.mapLevelColor
-            numberSerchBtn.isHidden = false
+            numberSerchBtn.isHidden = true
             numberSerchBtn.setImage(UIImage(named: "number_padX1"), for: .normal)
             headerView.headerBackButton.isHidden = false
             playButton.isHidden = false
