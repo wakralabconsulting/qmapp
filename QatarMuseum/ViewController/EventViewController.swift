@@ -309,32 +309,42 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             else {
                 self.eventPopup.removeFromSuperview()
                 var calendar = Calendar.current
-                ////calendar.timeZone = TimeZone(identifier: "UTC")!
-                let startDt = calendar.date(bySettingHour:14, minute: 0, second: 0, of: selectedDateForEvent)!
-                let endDt = calendar.date(bySettingHour: 16, minute: 0, second: 0, of: selectedDateForEvent)!
-                
-                
-                
-                
-                
-                
-                
-                
-//                let dateArray = selectedEvent?.startDate![0].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil).components(separatedBy: " ")
-//                if((dateArray?.count)! > 0) {
-//                    let dateValue = dateArray![0]
-//                    let dateFormatter = DateFormatter()
-//                    dateFormatter.dateFormat = "yyyy-MM-dd"
-//                    dateFormatter.timeZone = TimeZone.current
-//                    dateFormatter.locale = Locale.current
-//                    print(dateFormatter.date(from: dateValue))
-//                    //return dateFormatter.date(from: dateValue)
-//                }
-//
-//
-//
-//                let startDt = selectedEvent?.startDate![0].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
-//                let endDt = selectedEvent?.endDate![0].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
+                var startDt = Date()
+                var endDt = Date()
+                if((selectedEvent?.startDate?.count)! > 0) {
+                    let dateArray = selectedEvent?.startDate![0].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil).components(separatedBy: " ")
+                    if((dateArray?.count)! > 0) {
+                        
+                        let time = dateArray![(dateArray?.count)!-1]
+                        let timeArray = time.components(separatedBy: ":")
+                        if(timeArray.count > 1) {
+                            let hr = Int(timeArray[0])
+                            let min = Int(timeArray[1])
+                            startDt = calendar.date(bySettingHour:hr!, minute: min!, second: 0, of: selectedDateForEvent)!
+                        } else if(timeArray.count > 0) {
+                            let hr = Int(timeArray[0])
+                            startDt = calendar.date(bySettingHour:hr!, minute: 0, second: 0, of: selectedDateForEvent)!
+                        }
+                    }
+            }
+                if((selectedEvent?.endDate?.count)! > 0) {
+                    let dateArray2 = selectedEvent?.endDate![0].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil).components(separatedBy: " ")
+                    if((dateArray2?.count)! > 0) {
+                        
+                        let time = dateArray2![(dateArray2?.count)!-1]
+                        let timeArray = time.components(separatedBy: ":")
+                        if(timeArray.count > 1) {
+                            let hr = Int(timeArray[0])
+                            let min = Int(timeArray[1])
+                            endDt = calendar.date(bySettingHour: hr!, minute: min!, second: 0, of: selectedDateForEvent)!
+                        } else if(timeArray.count > 0) {
+                            let hr = Int(timeArray[0])
+                            endDt = calendar.date(bySettingHour: hr!, minute: 0, second: 0, of: selectedDateForEvent)!
+                        }
+
+                    }
+            }
+
                 self.addEventToCalendar(title:  (selectedEvent?.title)!, description: selectedEvent?.mainDescription, startDate: startDt, endDate: endDt)
                 
             }
@@ -529,10 +539,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
        // let dateString = toMillis()
         let getDate = toDayMonthYear()
         if ((getDate.day != nil) && (getDate.month != nil) && (getDate.year != nil)) {
-            _ = Alamofire.request(QatarMuseumRouter.EducationEvent(["field_eduprog_repeat_field_date_value[value][month]" : "11", "field_eduprog_repeat_field_date_value[value][day]" : "5","field_eduprog_repeat_field_date_value[value][year]" : getDate.year!,"cck_multiple_field_remove_fields" : "All","institution" : institutionType ?? "All","age" : ageGroupType ?? "All", "programe" : programmeType ?? "All"] )).responseObject { (response: DataResponse<EducationEventList>) -> Void in
+            _ = Alamofire.request(QatarMuseumRouter.EducationEvent(["field_eduprog_repeat_field_date_value[value][month]" : getDate.month!, "field_eduprog_repeat_field_date_value[value][day]" : getDate.day!,"field_eduprog_repeat_field_date_value[value][year]" : getDate.year!,"cck_multiple_field_remove_fields" : "All","institution" : institutionType ?? "All","age" : ageGroupType ?? "All", "programe" : programmeType ?? "All"] )).responseObject { (response: DataResponse<EducationEventList>) -> Void in
                 switch response.result {
-//            _ = Alamofire.request(QatarMuseumRouter.EducationEvent(["institution" : institutionType ?? "All","age" : ageGroupType ?? "All", "programe" : programmeType ?? "All","field_eduprog_repeat_field_date_value[value][month]" : getDate.month!, "field_eduprog_repeat_field_date_value[value][day]" : "5","field_eduprog_repeat_field_date_value[value][year]" : getDate.year!,"cck_multiple_field_remove_fields" : "All"] )).responseObject { (response: DataResponse<EducationEventList>) -> Void in
-//                switch response.result {
                 case .success(let data):
                     self.educationEventArray = data.educationEvent!
                     //  let evetPosition = self.findItem(educationArray: self.educationEventArray, fixedStartTime: "14:00")

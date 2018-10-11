@@ -88,7 +88,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
 
     func loadMiaTourDetail() {
         let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "miaDetailId") as! MiaTourDetailViewController
-        miaView.titleString = "Science Tour"
+        miaView.titleString = NSLocalizedString("SCIENCE_TOUR_TITLE",comment: "SCIENCE_TOUR_TITLE in Mia Tour Guide Page")
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush

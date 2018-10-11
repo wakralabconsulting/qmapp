@@ -197,7 +197,10 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
                         self.tourGuideDescription.text = searchDict.tourGuideDescription
                         self.setImageArray(tourGuideImgDict: searchDict)
                     } else {
-                        // item could not be found
+                        if let searchDict = self.tourGuide.first(where: {$0.nid == "12226"}) {
+                            self.tourGuideDescription.text = searchDict.tourGuideDescription
+                            self.setImageArray(tourGuideImgDict: searchDict)
+                        }
                     }
 
                    // self.scienceTourTitle.text = self.tourGuide[0].title?.uppercased()
