@@ -88,7 +88,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
 
     func loadMiaTourDetail() {
         let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "miaDetailId") as! MiaTourDetailViewController
-        
+        miaView.titleString = "Science Tour"
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush

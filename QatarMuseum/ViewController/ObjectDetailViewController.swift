@@ -217,12 +217,13 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
                     cellObj.playList = detailArray[0].audioFile!
                     cellObj.play(url: URL(string:cellObj.playList)!)
                     cellObj.setupTimer()
+                    firstLoad = false
+                    cellObj.togglePlayPause()
                 }
             }
             
         }
-        firstLoad = false
-        cellObj.togglePlayPause()
+       
     }
    
     @objc func buttonAction(sender: UIButton!) {

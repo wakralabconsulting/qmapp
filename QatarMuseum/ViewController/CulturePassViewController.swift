@@ -96,27 +96,19 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     
     @IBAction func didTapRegisterButton(_ sender: UIButton) {
         loadComingSoonPopup()
-        self.registerButton.backgroundColor = UIColor.profilePink
-        self.registerButton.setTitleColor(UIColor.whiteColor, for: .normal)
         self.registerButton.transform = CGAffineTransform(scaleX: 1, y: 1)
     }
     
     @IBAction func registerButtonTouchDown(_ sender: UIButton) {
-        self.registerButton.backgroundColor = UIColor.profileLightPink
-        self.registerButton.setTitleColor(UIColor.viewMyFavDarkPink, for: .normal)
         self.registerButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
     }
     
     @IBAction func didTapLogInButton(_ sender: UIButton) {
         loadComingSoonPopup()
-        self.logInButton.backgroundColor = UIColor.viewMycultureBlue
-        self.logInButton.setTitleColor(UIColor.white, for: .normal)
         self.logInButton.transform = CGAffineTransform(scaleX: 1, y: 1)
     }
     
     @IBAction func logInButtonTouchDown(_ sender: UIButton) {
-        self.logInButton.backgroundColor = UIColor.viewMycultureLightBlue
-        self.logInButton.setTitleColor(UIColor.viewMyculTitleBlue, for: .normal)
         self.logInButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
     }
     

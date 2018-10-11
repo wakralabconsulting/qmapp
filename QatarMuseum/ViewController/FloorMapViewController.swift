@@ -256,7 +256,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                 playButton.isHidden = true
                 playerSlider.isHidden = true
             }
-            
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
+            } else {
+                playButton.setImage(UIImage(named:"play_black-mirror"), for: .normal)
+            }
             
             
             //numberSerchBtn.setImage(UIImage(named: "side_menu_blackX1"), for: .normal)
@@ -280,9 +284,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 
                 headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
+                playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
             }
             else {
                 headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+                playButton.setImage(UIImage(named:"play_black-mirror"), for: .normal)
             }
         }
         
@@ -989,7 +995,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     func togglePlayPause() {
         if #available(iOS 10.0, *) {
             if avPlayer.timeControlStatus == .playing  {
-                playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
+                if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                    playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
+                } else {
+                    playButton.setImage(UIImage(named:"play_black-mirror"), for: .normal)
+                }
                 avPlayer.pause()
                 isPaused = true
             } else {
@@ -999,7 +1009,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
         } else {
             if((avPlayer.rate != 0) && (avPlayer.error == nil)) {
-                playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
+                if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                    playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
+                } else {
+                    playButton.setImage(UIImage(named:"play_black-mirror"), for: .normal)
+                }
                 avPlayer.pause()
                 isPaused = true
             } else {

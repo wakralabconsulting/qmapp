@@ -29,7 +29,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     var totalImgCount = Int()
     var sliderImgCount : Int? = 0
     var sliderImgArray = NSMutableArray()
-    
+    var titleString : String? = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         getTourGuideDataFromServer()
@@ -52,6 +52,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
         } else {
             headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
+        self.scienceTourTitle.text = titleString?.uppercased()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -191,9 +192,16 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
             case .success(let data):
                 self.tourGuide = data.tourGuide!
                 if(self.tourGuide.count > 0) {
-                    self.setImageArray()
-                    self.scienceTourTitle.text = self.tourGuide[0].title?.uppercased()
-                    self.tourGuideDescription.text = self.tourGuide[0].tourGuideDescription
+                    
+                    if let searchDict = self.tourGuide.first(where: {$0.nid == "12216"}) {
+                        self.tourGuideDescription.text = searchDict.tourGuideDescription
+                        self.setImageArray(tourGuideImgDict: searchDict)
+                    } else {
+                        // item could not be found
+                    }
+
+                   // self.scienceTourTitle.text = self.tourGuide[0].title?.uppercased()
+                   // self.tourGuideDescription.text = self.tourGuide[0].tourGuideDescription
                 }
             case .failure(let error):
                 print(error)
@@ -201,21 +209,21 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
         }
     }
     
-    func setImageArray() {
+    func setImageArray(tourGuideImgDict : TourGuide?) {
         self.sliderImgArray[0] = UIImage(named: "sliderPlaceholder")!
         self.sliderImgArray[1] = UIImage(named: "sliderPlaceholder")!
         self.sliderImgArray[2] = UIImage(named: "sliderPlaceholder")!
         
-        if ((tourGuide[0].multimediaFile?.count)! >= 4) {
-            totalImgCount = 3
-        } else if ((tourGuide[0].multimediaFile?.count)! > 1){
-            totalImgCount = (tourGuide[0].multimediaFile?.count)!-1
-        } else {
-            totalImgCount = 0
-        }
-        if (totalImgCount > 0) {
-            for  var i in 1 ... totalImgCount {
-                let imageUrlString = tourGuide[0].multimediaFile![i]
+//        if ((tourGuideImgDict?.multimediaFile?.count)! >= 3) {
+//            totalImgCount = 3
+//        } else if ((tourGuideImgDict?.multimediaFile?.count)! > 1){
+//            totalImgCount = (tourGuideImgDict?.multimediaFile?.count)!-1
+//        } else {
+//            totalImgCount = 0
+//        }
+        if ((tourGuideImgDict?.multimediaFile?.count)! > 0) {
+            for  var i in 0 ... (tourGuideImgDict?.multimediaFile?.count)!-1 {
+                let imageUrlString = tourGuideImgDict?.multimediaFile![i]
                 downloadImage(imageUrlString: imageUrlString)
             }
         }
