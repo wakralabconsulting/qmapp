@@ -74,9 +74,6 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
             headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
         headerView.headerViewDelegate = self
-        headerView.settingsButton.isHidden = false
-        headerView.settingsButton.setImage(UIImage(named: "locationImg"), for: .normal)
-        headerView.settingsButton.contentEdgeInsets = UIEdgeInsets(top: 9, left: 10, bottom:9, right: 10)
     }
     func setUpPageControl() {
        
@@ -682,6 +679,9 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                 self.tourGuideArray = data.tourGuideFloorMap
                 self.countValue = self.tourGuideArray.count
                 if(self.tourGuideArray.count != 0) {
+                    self.headerView.settingsButton.isHidden = false
+                    self.headerView.settingsButton.setImage(UIImage(named: "locationImg"), for: .normal)
+                    self.headerView.settingsButton.contentEdgeInsets = UIEdgeInsets(top: 9, left: 10, bottom:9, right: 10)
                     self.setUpPageControl()
                     self.showOrHidePageControlView(countValue: self.tourGuideArray.count, scrolling: false)
                     self.showPageControlAtFirstTime()
@@ -708,18 +708,27 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     }
     func filterButtonPressed() {
         if (tourGuideArray.count != 0) {
-            let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as!FloorMapViewController
             let selectedItem = tourGuideArray[currentPreviewItem]
-            floorMapView.selectedScienceTour = selectedItem.artifactPosition
-            floorMapView.selectedScienceTourLevel = selectedItem.floorLevel
-            floorMapView.selectedTourdGuidIndex = currentPreviewItem
-            if(fromScienceTour) {
-                floorMapView.fromTourString = fromTour.scienceTour
+            if((selectedItem.artifactPosition != nil) && (selectedItem.artifactPosition != "") && (selectedItem.floorLevel != nil) && (selectedItem.floorLevel != "")) {
+                let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as!FloorMapViewController
+                
+                floorMapView.selectedScienceTour = selectedItem.artifactPosition
+                floorMapView.selectedScienceTourLevel = selectedItem.floorLevel
+                floorMapView.selectedTourdGuidIndex = currentPreviewItem
+                if(fromScienceTour) {
+                    floorMapView.fromTourString = fromTour.scienceTour
+                } else {
+                    floorMapView.fromTourString = fromTour.HighlightTour
+                }
+                floorMapView.modalTransitionStyle = .flipHorizontal
+                self.present(floorMapView, animated: true, completion: nil)
             } else {
-                floorMapView.fromTourString = fromTour.HighlightTour
+                self.view.hideAllToasts()
+                let locationMissingMessage =  NSLocalizedString("LOCATION_MISSING_MESSAGE", comment: "LOCATION_MISSING_MESSAGE")
+                self.view.makeToast(locationMissingMessage)
             }
-            floorMapView.modalTransitionStyle = .flipHorizontal
-            self.present(floorMapView, animated: true, completion: nil)
+        } else {
+            
         }
     }
     @objc func loadDetailPage(sender: UITapGestureRecognizer? = nil) {

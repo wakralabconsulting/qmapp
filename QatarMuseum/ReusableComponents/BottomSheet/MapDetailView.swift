@@ -180,6 +180,9 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
                     objectImageView.kf.setImage(with: URL(string: imageUrl))
                 }
             }
+            if(objectImageView.image == nil) {
+                objectImageView.image = UIImage(named: "default_imageX2")
+            }
             objectImageView.backgroundColor = UIColor.white
             objectImageView.contentMode = .scaleAspectFit
             objectImageView.clipsToBounds = true
@@ -226,7 +229,7 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
                 self?.tableView.reloadData()
             })
 
-        } else if(indexPath.row == 1) {
+        } else if((indexPath.row == 1) && (popUpArray[selectedIndex!].image != "")) {
             if(selectedIndex != nil) {
                 if let imageUrl = popUpArray[selectedIndex!].image {
                    self.loadObjectImagePopup(imgName: imageUrl )
