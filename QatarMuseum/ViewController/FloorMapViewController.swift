@@ -65,7 +65,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     var avPlayer: AVPlayer!
     var isPaused: Bool!
     var firstLoad: Bool = true
-    
+    var levelTwoPositionArray = NSArray()
+    var levelTwoMarkerArray = NSArray()
+    var levelThreePositionArray = NSArray()
+    var levelThreeMarkerArray = NSArray()
     
     
     var overlay = GMSGroundOverlay()
@@ -168,6 +171,13 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     let l2_g7_sc13 = GMSMarker()
     let l2_g7_sc8 = GMSMarker()
     let l2_g7_sc4 = GMSMarker()
+    //Already added
+    /*
+    let l2_g8_sc1 = GMSMarker()
+    let l2_g8_sc5 = GMSMarker()
+    let l2_g9_sc7 = GMSMarker()
+    let l2_g1_sc3 = GMSMarker()
+    */
     
     let l3_g10_wr2_1 = GMSMarker()
     let l3_g10_wr2_2 = GMSMarker()
@@ -194,7 +204,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     var objectPopupView : ObjectPopupView = ObjectPopupView()
     var level : levelNumber?
     var zoomValue = Float()
-   // var fromScienceTour : Bool = false
+   
     var fromTourString : fromTour?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -202,7 +212,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         viewForMap.delegate = self
         loadMap()
         initialSetUp()
-        getFloorMapDataFromServer()
+        
+        
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -272,6 +283,54 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             
             headerView.settingsButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 10, bottom:11, right: 8)
             
+            
+            levelTwoPositionArray = ["l2_g1_sc3","l2_g8","l2_g8_sc1","l2_g8_sc6_1","l2_g8_sc6_2","l2_g8_sc5","l2_g8_sc4_1","l2_g8_sc4_2","l2_g9_sc7","l2_g9_sc5_1","l2_g9_sc5_2","l2_g5_sc6","l2_g3_sc13"]
+            levelTwoMarkerArray = [l2_g1_sc3,l2_g8,l2_g8_sc1,l2_g8_sc6_1,l2_g8_sc6_2,l2_g8_sc5,l2_g8_sc4_1,l2_g8_sc4_2,l2_g9_sc7,l2_g9_sc5_1,l2_g9_sc5_2,l2_g5_sc6,l2_g3_sc13]
+            levelThreePositionArray = ["l3_g10_sc1_1","l3_g10_sc1_2","l3_g11_wr15","l3_g13_5","l3_g13_7","l3_g17_3"]
+            levelThreeMarkerArray = [l3_g10_sc1_1,l3_g10_sc1_2,l3_g11_wr15,l3_g13_5,l3_g13_7,l3_g17_3]
+            showLevelTwoMarker()
+            showLevelThreeMarker()
+            
+        } else {
+         if (fromTourString == fromTour.HighlightTour) {
+            
+            if (selectedScienceTourLevel == "1"){
+                playButton.isHidden = false
+                playerSlider.isHidden = false
+                firstLevelView.backgroundColor = UIColor.white
+                secondLevelView.backgroundColor = UIColor.mapLevelColor
+                thirdLevelView.backgroundColor = UIColor.mapLevelColor
+            }
+            if(selectedScienceTourLevel == "2") {
+                firstLevelView.backgroundColor = UIColor.mapLevelColor
+                secondLevelView.backgroundColor = UIColor.white
+                thirdLevelView.backgroundColor = UIColor.mapLevelColor
+                
+                playButton.isHidden = true
+                playerSlider.isHidden = true
+            } else {
+                firstLevelView.backgroundColor = UIColor.mapLevelColor
+                secondLevelView.backgroundColor = UIColor.mapLevelColor
+                thirdLevelView.backgroundColor = UIColor.white
+                
+                playButton.isHidden = true
+                playerSlider.isHidden = true
+            }
+            
+            
+            
+            
+            //numberSerchBtn.setImage(UIImage(named: "side_menu_blackX1"), for: .normal)
+            // self.numberSerchBtn.contentEdgeInsets = UIEdgeInsets(top: 11, left: 5, bottom: 11, right: 5)
+            numberSerchBtn.isHidden = true
+            headerView.headerBackButton.isHidden = true
+            headerView.settingsButton.isHidden = false
+            headerView.settingsButton.setImage(UIImage(named: "side_menu_iconX1"), for: .normal)
+            
+            headerView.settingsButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 10, bottom:11, right: 8)
+            
+            
+            
         } else {
             firstLevelView.backgroundColor = UIColor.white
             secondLevelView.backgroundColor = UIColor.mapLevelColor
@@ -284,12 +343,26 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 
                 headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
-                playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
+                
             }
             else {
                 headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+                
+            }
+        }
+            
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
+            } else {
                 playButton.setImage(UIImage(named:"play_black-mirror"), for: .normal)
             }
+            
+            levelTwoPositionArray = ["l2_g1_sc2","l2_g1_sc7","l2_g1_sc8","l2_g1_sc13","l2_g1_sc14","l2_g2_2","l2_g3_sc14_1","l2_g3_sc14_2","l2_g3_wr4","l2_g4_sc5","l2_g3_sc3","l2_g5_sc5","l2_g5_sc11","l2_g7_sc13","l2_g7_sc8","l2_g7_sc4","l2_g1_sc3","l2_g8_sc1","l2_g8_sc5","l2_g9_sc7"]
+            levelTwoMarkerArray = [l2_g1_sc2,l2_g1_sc7,l2_g1_sc8,l2_g1_sc13,l2_g1_sc14,l2_g2_2,l2_g3_sc14_1,l2_g3_sc14_2,l2_g3_wr4,l2_g4_sc5,l2_g3_sc3,l2_g5_sc5,l2_g5_sc11,l2_g7_sc13,l2_g7_sc8,l2_g7_sc4,l2_g1_sc3,l2_g8_sc1,l2_g8_sc5,l2_g9_sc7]
+            levelThreePositionArray = ["l3_g10_wr2_1","l3_g10_wr2_2","l3_g10_podium14","l3_g10_podium9","l3_g11_14","l3_g12_11","l3_g12_12","l3_g12_17","l3_g12_wr5","l3_g13_2","l3_g13_15","l3_g14_7","l3_g14_13","l3_g15_13","l3_g16_wr5","l3_g17_8","l3_g17_9","l3_g18_1","l3_g18_2","l3_g18_11"]
+            levelThreeMarkerArray = [l3_g10_wr2_1,l3_g10_wr2_2,l3_g10_podium14,l3_g10_podium9,l3_g11_14,l3_g12_11,l3_g12_12,l3_g12_17,l3_g12_wr5,l3_g13_2,l3_g13_15,l3_g14_7,l3_g14_13,l3_g15_13,l3_g16_wr5,l3_g17_8,l3_g17_9,l3_g18_1,l3_g18_2,l3_g18_11]
+            showLevelTwoHighlightMarker()
+            showLevelThreeHighlightMarker()
         }
         
         thirdLevelLabel.text = NSLocalizedString("LEVEL_STRING", comment: "LEVEL_STRING in floor map")
@@ -298,7 +371,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         headerView.headerViewDelegate = self
         headerView.headerTitle.text = NSLocalizedString("FLOOR_MAP_TITLE", comment: "FLOOR_MAP_TITLE  in the Floormap page")
         
-        
+        getFloorMapDataFromServer()
     
     }
     
@@ -334,6 +407,17 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                 viewForMap.animate(toZoom: 19.5)
             }
             
+        } else if (fromTourString == fromTour.HighlightTour) {
+            if(selectedScienceTourLevel == "3") {
+                level = levelNumber.three
+                icon = UIImage(named: "qm_level_3")!
+                viewForMap.animate(toZoom: 19.5)
+            } else {
+                level = levelNumber.two
+                icon = UIImage(named: "qm_level_2")!
+                viewForMap.animate(toZoom: 19.5)
+            }
+            
         } else {
             level = levelNumber.one
             icon = UIImage(named: "qm_level_1")!
@@ -357,7 +441,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         circ.strokeColor = UIColor.clear
         circ.map = viewForMap
         
-        if (fromTourString == fromTour.scienceTour) {
+        if ((fromTourString == fromTour.scienceTour) || (fromTourString == fromTour.HighlightTour)){
             if (UIScreen.main.bounds.height > 700) {
                 camera = GMSCameraPosition.camera(withLatitude: 25.295447, longitude: 51.539195, zoom:19)
             }
@@ -373,7 +457,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     //Function for show level 2 marker
     func showLevelTwoMarker() {
-        if (zoomValue > 18) {
             l2_g1_sc3.position = L2_G1_SC3
             l2_g1_sc3.title = "l2_g1_sc3"
             l2_g1_sc3.snippet = ""
@@ -388,7 +471,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g1_sc3.appearAnimation = .pop
-            l2_g1_sc3.map = viewForMap
+            //l2_g1_sc3.map = viewForMap
             
             l2_g8.position = L2_G8
             l2_g8.title = "l2_g8"
@@ -404,7 +487,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g8.appearAnimation = .pop
-            l2_g8.map = viewForMap
+            //l2_g8.map = viewForMap
             
             l2_g8_sc1.position = L2_G8_SC1
             l2_g8_sc1.title = "l2_g8_sc1"
@@ -419,7 +502,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g8_sc1.appearAnimation = .pop
-            l2_g8_sc1.map = viewForMap
+            //l2_g8_sc1.map = viewForMap
             
             l2_g8_sc6_1.position = L2_G8_SC6_1
             l2_g8_sc6_1.title = "l2_g8_sc6_1"
@@ -434,7 +517,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g8_sc6_1.appearAnimation = .pop
-            l2_g8_sc6_1.map = viewForMap
+           // l2_g8_sc6_1.map = viewForMap
             
             l2_g8_sc6_2.position = L2_G8_SC6_2
             l2_g8_sc6_2.title = "l2_g8_sc6_2"
@@ -449,7 +532,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g8_sc6_2.appearAnimation = .pop
-            l2_g8_sc6_2.map = viewForMap
+            //l2_g8_sc6_2.map = viewForMap
             
             l2_g8_sc5.position = L2_G8_SC5
             l2_g8_sc5.title = "l2_g8_sc5"
@@ -464,7 +547,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g8_sc5.appearAnimation = .pop
-            l2_g8_sc5.map = viewForMap
+            //l2_g8_sc5.map = viewForMap
             
             l2_g8_sc4_1.position = L2_G8_SC4_1
             l2_g8_sc4_1.title = "l2_g8_sc4_1"
@@ -479,7 +562,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g8_sc4_1.appearAnimation = .pop
-            l2_g8_sc4_1.map = viewForMap
+           // l2_g8_sc4_1.map = viewForMap
             
             l2_g8_sc4_2.position = L2_G8_SC4_2
             l2_g8_sc4_2.title = "l2_g8_sc4_2"
@@ -494,7 +577,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g8_sc4_2.appearAnimation = .pop
-            l2_g8_sc4_2.map = viewForMap
+            //l2_g8_sc4_2.map = viewForMap
             
             l2_g9_sc7.position = L2_G9_SC7
             l2_g9_sc7.title = "l2_g9_sc7"
@@ -509,7 +592,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g9_sc7.appearAnimation = .pop
-            l2_g9_sc7.map = viewForMap
+           // l2_g9_sc7.map = viewForMap
             
             l2_g9_sc5_1.position = L2_G9_SC5_1
             l2_g9_sc5_1.title = "l2_g9_sc5_1"
@@ -524,7 +607,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g9_sc5_1.appearAnimation = .pop
-            l2_g9_sc5_1.map = viewForMap
+           // l2_g9_sc5_1.map = viewForMap
             
             l2_g9_sc5_2.position = L2_G9_SC5_2
             l2_g9_sc5_2.title = "l2_g9_sc5_2"
@@ -539,7 +622,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g9_sc5_2.appearAnimation = .pop
-            l2_g9_sc5_2.map = viewForMap
+           // l2_g9_sc5_2.map = viewForMap
             
             l2_g5_sc6.position = L2_G5_SC6
             l2_g5_sc6.title = "l2_g5_sc6"
@@ -554,7 +637,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g5_sc6.appearAnimation = .pop
-            l2_g5_sc6.map = viewForMap
+            //l2_g5_sc6.map = viewForMap
             
             l2_g3_sc13.position = L2_G3_SC13
             l2_g3_sc13.title = "l2_g3_sc13"
@@ -569,28 +652,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g3_sc13.appearAnimation = .pop
-            l2_g3_sc13.map = viewForMap
-            
-            
-        } else {
-            l2_g1_sc3.map = nil
-            l2_g8.map = nil
-            l2_g8_sc1.map = nil
-            l2_g8_sc6_1.map = nil
-            l2_g8_sc6_2.map = nil
-            l2_g8_sc5.map = nil
-            l2_g8_sc4_1.map = nil
-            l2_g8_sc4_2.map = nil
-            l2_g9_sc7.map = nil
-            l2_g9_sc5_1.map = nil
-            l2_g9_sc5_2.map = nil
-            l2_g5_sc6.map = nil
-            l2_g3_sc13.map = nil
-        }
+            //l2_g3_sc13.map = viewForMap
+        
     }
     //Function for show level 3 marker
     func showLevelThreeMarker() {
-        if (zoomValue > 18) {
+        //if (zoomValue > 18) {
             l3_g10_sc1_1.position = L3_G10_SC1_1
             l3_g10_sc1_1.title = "l3_g10_sc1_1"
             l3_g10_sc1_1.snippet = "PO.297"
@@ -605,9 +672,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                l3_g10_sc1_1.icon = imageWithImage(image: UIImage(named: "PO.297.2006.1.2000x2000")!, scaledToSize: CGSize(width:38, height: 44))
                 
             }
-            
             l3_g10_sc1_1.appearAnimation = .pop
-            l3_g10_sc1_1.map = viewForMap
+           // l3_g10_sc1_1.map = viewForMap
             
             l3_g10_sc1_2.position = L3_G10_SC1_2
             l3_g10_sc1_2.title = "l3_g10_sc1_2"
@@ -622,7 +688,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l3_g10_sc1_2.appearAnimation = .pop
-            l3_g10_sc1_2.map = viewForMap
+            //l3_g10_sc1_2.map = viewForMap
             
             l3_g11_wr15.position = L3_G11_WR15
             l3_g11_wr15.title = "l3_g11_wr15"
@@ -637,7 +703,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l3_g11_wr15.appearAnimation = .pop
-            l3_g11_wr15.map = viewForMap
+            //l3_g11_wr15.map = viewForMap
             
             l3_g13_5.position = L3_G13_5
             l3_g13_5.title = "l3_g13_5"
@@ -652,7 +718,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l3_g13_5.appearAnimation = .pop
-            l3_g13_5.map = viewForMap
+            //l3_g13_5.map = viewForMap
             
             l3_g13_7.position = L3_G13_7
             l3_g13_7.title = "l3_g13_7"
@@ -668,7 +734,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l3_g13_7.appearAnimation = .pop
-            l3_g13_7.map = viewForMap
+            //l3_g13_7.map = viewForMap
             
             l3_g17_3.position = L3_G17_3
             l3_g17_3.title = "l3_g17_3"
@@ -683,20 +749,534 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l3_g17_3.appearAnimation = .pop
-            l3_g17_3.map = viewForMap
-            
-            
-            
-        } else {
-            l3_g10_sc1_1.map = nil
-            l3_g10_sc1_2.map = nil
-            l3_g11_wr15.map = nil
-            l3_g13_5.map = nil
-            l3_g13_7.map = nil
-            l3_g17_3.map = nil
-        }
+            //l3_g17_3.map = viewForMap
     }
-   
+    //MARK: Highlight Marker
+    func showLevelTwoHighlightMarker() {
+        
+        l2_g1_sc2.position = L2_G1_SC2
+        l2_g1_sc2.title = "l2_g1_sc2"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l2_g1_sc2")) {
+            l2_g1_sc2.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l2_g1_sc2
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l2_g1_sc2.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l2_g1_sc2.appearAnimation = .pop
+        //l2_g1_sc2.map = viewForMap
+        
+        l2_g1_sc7.position = L2_G1_SC7
+        l2_g1_sc7.title = "l2_g1_sc7"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l2_g1_sc7")) {
+            l2_g1_sc7.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l2_g1_sc7
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l2_g1_sc7.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l2_g1_sc7.appearAnimation = .pop
+        //l2_g1_sc7.map = viewForMap
+        
+        l2_g1_sc8.position = L2_G1_SC8
+        l2_g1_sc8.title = "l2_g1_sc8"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l2_g1_sc8")) {
+            l2_g1_sc8.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l2_g1_sc8
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l2_g1_sc8.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l2_g1_sc8.appearAnimation = .pop
+        //l2_g1_sc8.map = viewForMap
+        
+        l2_g1_sc13.position = L2_G1_SC13
+        l2_g1_sc13.title = "l2_g1_sc13"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l2_g1_sc13")) {
+            l2_g1_sc13.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l2_g1_sc13
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l2_g1_sc13.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l2_g1_sc13.appearAnimation = .pop
+        //l2_g1_sc13.map = viewForMap
+        
+        l2_g1_sc14.position = L2_G1_SC14
+        l2_g1_sc14.title = "l2_g1_sc14"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l2_g1_sc14")) {
+            l2_g1_sc14.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l2_g1_sc14
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l2_g1_sc14.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l2_g1_sc14.appearAnimation = .pop
+        //l2_g1_sc14.map = viewForMap
+        
+        l2_g2_2.position = L2_G2_2
+        l2_g2_2.title = "l2_g2_2"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l2_g2_2")) {
+            l2_g2_2.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l2_g2_2
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l2_g2_2.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l2_g2_2.appearAnimation = .pop
+        //l2_g2_2.map = viewForMap
+        
+        l2_g3_sc14_1.position = L2_G3_SC14_1
+        l2_g3_sc14_1.title = "l2_g3_sc14_1"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l2_g3_sc14_1")) {
+            l2_g3_sc14_1.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l2_g3_sc14_1
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l2_g3_sc14_1.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l2_g3_sc14_1.appearAnimation = .pop
+       // l2_g3_sc14_1.map = viewForMap
+        
+        l2_g3_sc14_2.position = L2_G3_SC14_2
+        l2_g3_sc14_2.title = "l2_g3_sc14_2"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l2_g3_sc14_2")) {
+            l2_g3_sc14_2.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l2_g3_sc14_2
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l2_g3_sc14_2.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l2_g3_sc14_2.appearAnimation = .pop
+        //l2_g3_sc14_2.map = viewForMap
+        
+        l2_g3_wr4.position = L2_G3_WR4
+        l2_g3_wr4.title = "l2_g3_wr4"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l2_g3_wr4")) {
+            l2_g3_wr4.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l2_g3_wr4
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l2_g3_wr4.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l2_g3_wr4.appearAnimation = .pop
+        //l2_g3_wr4.map = viewForMap
+        
+        l2_g4_sc5.position = L2_G4_SC5
+        l2_g4_sc5.title = "l2_g4_sc5"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l2_g4_sc5")) {
+            l2_g4_sc5.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l2_g4_sc5
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l2_g4_sc5.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l2_g4_sc5.appearAnimation = .pop
+       // l2_g4_sc5.map = viewForMap
+        
+        l2_g3_sc3.position = L2_G3_SC3
+        l2_g3_sc3.title = "l2_g3_sc3"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l2_g3_sc3")) {
+            l2_g3_sc3.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l2_g3_sc3
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l2_g3_sc3.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l2_g3_sc3.appearAnimation = .pop
+        //l2_g3_sc3.map = viewForMap
+        
+        l2_g5_sc5.position = L2_G5_SC5
+        l2_g5_sc5.title = "l2_g5_sc5"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l2_g5_sc5")) {
+            l2_g5_sc5.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l2_g5_sc5
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l2_g5_sc5.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l2_g5_sc5.appearAnimation = .pop
+        //l2_g5_sc5.map = viewForMap
+        
+        l2_g5_sc11.position = L2_G5_SC11
+        l2_g5_sc11.title = "l2_g5_sc11"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l2_g5_sc11")) {
+            l2_g5_sc11.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l2_g5_sc11
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l2_g5_sc11.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l2_g5_sc11.appearAnimation = .pop
+        //l2_g5_sc11.map = viewForMap
+        
+        l2_g7_sc13.position = L2_G7_SC13
+        l2_g7_sc13.title = "l2_g7_sc13"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l2_g7_sc13")) {
+            l2_g7_sc13.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l2_g7_sc13
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l2_g7_sc13.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l2_g7_sc13.appearAnimation = .pop
+        //l2_g7_sc13.map = viewForMap
+        
+        l2_g7_sc8.position = L2_G7_SC8
+        l2_g7_sc8.title = "l2_g7_sc8"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l2_g7_sc8")) {
+            l2_g7_sc8.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l2_g7_sc8
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l2_g7_sc8.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l2_g7_sc8.appearAnimation = .pop
+        //l2_g7_sc8.map = viewForMap
+        
+        l2_g7_sc4.position = L2_G7_SC4
+        l2_g7_sc4.title = "l2_g7_sc4"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l2_g7_sc4")) {
+            l2_g7_sc4.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l2_g7_sc4
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l2_g7_sc4.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l2_g7_sc4.appearAnimation = .pop
+       // l2_g7_sc4.map = viewForMap
+        
+        l2_g8_sc1.position = L2_G8_SC1
+        l2_g8_sc1.title = "l2_g8_sc1"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l2_g8_sc1")) {
+            l2_g8_sc1.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l2_g8_sc1
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l2_g8_sc1.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l2_g8_sc1.appearAnimation = .pop
+        //l2_g8_sc1.map = viewForMap
+        
+        l2_g8_sc5.position = L2_G8_SC5
+        l2_g8_sc5.title = "l2_g8_sc5"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l2_g8_sc5")) {
+            l2_g8_sc5.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l2_g8_sc5
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l2_g8_sc5.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l2_g8_sc5.appearAnimation = .pop
+        //l2_g8_sc5.map = viewForMap
+        
+        l2_g9_sc7.position = L2_G9_SC7
+        l2_g9_sc7.title = "l2_g9_sc7"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l2_g9_sc7")) {
+            l2_g9_sc7.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l2_g9_sc7
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l2_g9_sc7.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l2_g9_sc7.appearAnimation = .pop
+        //l2_g9_sc7.map = viewForMap
+        
+        l2_g1_sc3.position = L2_G1_SC3
+        l2_g1_sc3.title = "l2_g1_sc3"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l2_g1_sc3")) {
+            l2_g1_sc3.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l2_g1_sc3
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l2_g1_sc3.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l2_g1_sc3.appearAnimation = .pop
+        //l2_g1_sc3.map = viewForMap
+       
+    }
+    func showLevelThreeHighlightMarker() {
+        
+        l3_g10_wr2_1.position = L3_G10_WR2_1
+        l3_g10_wr2_1.title = "l3_g10_wr2_1"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l3_g10_wr2_1")) {
+            l3_g10_wr2_1.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l3_g10_wr2_1
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l3_g10_wr2_1.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l3_g10_wr2_1.appearAnimation = .pop
+        //l3_g10_wr2_1.map = viewForMap
+        
+        l3_g10_wr2_2.position = L3_G10_WR2_2
+        l3_g10_wr2_2.title = "l3_g10_wr2_2"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l3_g10_wr2_2")) {
+            l3_g10_wr2_2.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l3_g10_wr2_2
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l3_g10_wr2_2.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l3_g10_wr2_2.appearAnimation = .pop
+        //l3_g10_wr2_2.map = viewForMap
+        
+        l3_g10_podium14.position = L3_G10_PODIUM14
+        l3_g10_podium14.title = "l3_g10_podium14"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l3_g10_podium14")) {
+            l3_g10_podium14.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l3_g10_podium14
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l3_g10_podium14.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l3_g10_podium14.appearAnimation = .pop
+        //l3_g10_podium14.map = viewForMap
+        
+        l3_g10_podium9.position = L3_G10_PODIUM9
+        l3_g10_podium9.title = "l3_g10_podium9"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l3_g10_podium9")) {
+            l3_g10_podium9.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l3_g10_podium9
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l3_g10_podium9.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l3_g10_podium9.appearAnimation = .pop
+        //l3_g10_podium9.map = viewForMap
+        
+        l3_g11_14.position = L3_G11_14
+        l3_g11_14.title = "l3_g11_14"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l3_g11_14")) {
+            l3_g11_14.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l3_g11_14
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l3_g11_14.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l3_g11_14.appearAnimation = .pop
+       // l3_g11_14.map = viewForMap
+        
+        l3_g12_11.position = L3_G12_11
+        l3_g12_11.title = "l3_g12_11"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l3_g12_11")) {
+            l3_g12_11.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l3_g12_11
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l3_g12_11.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l3_g12_11.appearAnimation = .pop
+        //l3_g12_11.map = viewForMap
+        
+        l3_g12_12.position = L3_G12_12
+        l3_g12_12.title = "l3_g12_12"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l3_g12_12")) {
+            l3_g12_12.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l3_g12_12
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l3_g12_12.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l3_g12_12.appearAnimation = .pop
+        //l3_g12_12.map = viewForMap
+        
+        l3_g12_17.position = L3_G12_17
+        l3_g12_17.title = "l3_g12_17"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l3_g12_17")) {
+            l3_g12_17.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l3_g12_17
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l3_g12_17.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l3_g12_17.appearAnimation = .pop
+        //l3_g12_17.map = viewForMap
+        
+        l3_g12_wr5.position = L3_G12_WR5
+        l3_g12_wr5.title = "l3_g12_wr5"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l3_g12_wr5")) {
+            l3_g12_wr5.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l3_g12_wr5
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l3_g12_wr5.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l3_g12_wr5.appearAnimation = .pop
+        //l3_g12_wr5.map = viewForMap
+        
+        l3_g13_2.position = L3_G13_2
+        l3_g13_2.title = "l3_g13_2"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l3_g13_2")) {
+            l3_g13_2.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l3_g13_2
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l3_g13_2.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l3_g13_2.appearAnimation = .pop
+       // l3_g13_2.map = viewForMap
+        
+        l3_g13_15.position = L3_G13_15
+        l3_g13_15.title = "l3_g13_15"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l3_g13_15")) {
+            l3_g13_15.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l3_g13_15
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l3_g13_15.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l3_g13_15.appearAnimation = .pop
+        //l3_g13_15.map = viewForMap
+        
+        l3_g14_7.position = L3_G14_7
+        l3_g14_7.title = "l3_g14_7"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l3_g14_7")) {
+            l3_g14_7.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l3_g14_7
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l3_g14_7.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l3_g14_7.appearAnimation = .pop
+        //l3_g14_7.map = viewForMap
+        
+        l3_g14_13.position = L3_G14_13
+        l3_g14_13.title = "l3_g14_13"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l3_g14_13")) {
+            l3_g14_13.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l3_g14_13
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l3_g14_13.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l3_g14_13.appearAnimation = .pop
+       // l3_g14_13.map = viewForMap
+        
+        l3_g15_13.position = L3_G15_13
+        l3_g15_13.title = "l3_g15_13"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l3_g15_13")) {
+            l3_g15_13.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l3_g15_13
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l3_g15_13.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l3_g15_13.appearAnimation = .pop
+        //l3_g15_13.map = viewForMap
+        
+        l3_g16_wr5.position = L3_G16_WR5
+        l3_g16_wr5.title = "l3_g16_wr5"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l3_g16_wr5")) {
+            l3_g16_wr5.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l3_g16_wr5
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l3_g16_wr5.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l3_g16_wr5.appearAnimation = .pop
+        //l3_g16_wr5.map = viewForMap
+        
+        l3_g17_8.position = L3_G17_8
+        l3_g17_8.title = "l3_g17_8"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l3_g17_8")) {
+            l3_g16_wr5.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l3_g17_8
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l3_g17_8.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l3_g17_8.appearAnimation = .pop
+        //l3_g17_8.map = viewForMap
+        
+        l3_g17_9.position = L3_G17_9
+        l3_g17_9.title = "l3_g17_9"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l3_g17_9")) {
+            l3_g17_9.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l3_g17_9
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l3_g17_9.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l3_g17_9.appearAnimation = .pop
+        //l3_g17_9.map = viewForMap
+        
+        l3_g18_1.position = L3_G18_1
+        l3_g18_1.title = "l3_g18_1"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l3_g18_1")) {
+            l3_g18_1.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l3_g18_1
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l3_g18_1.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l3_g18_1.appearAnimation = .pop
+        //l3_g18_1.map = viewForMap
+        
+        l3_g18_2.position = L3_G18_2
+        l3_g18_2.title = "l3_g18_2"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l3_g18_2")) {
+            l3_g18_2.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l3_g18_2
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l3_g18_2.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l3_g18_2.appearAnimation = .pop
+        //l3_g18_2.map = viewForMap
+        
+        l3_g18_11.position = L3_G18_11
+        l3_g18_11.title = "l3_g18_11"
+        if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour == "l3_g18_11")) {
+            l3_g18_11.icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:54, height: 64))
+            self.setMarkerBounce()
+            selectedMarker = l3_g18_11
+            selectedMarkerImage = UIImage(named: "default_map_marker")!
+        } else {
+            l3_g18_11.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
+        }
+        l3_g18_11.appearAnimation = .pop
+        //l3_g18_11.map = viewForMap
+    }
      func setMarkerBounce() {
         
         
@@ -757,7 +1337,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         removeMarkers()
         
         if (zoomValue > 18) {
-            showLevelThreeMarker()
+            if((fromTourString == fromTour.HighlightTour) || (fromTourString == fromTour.exploreTour)) {
+                showOrHideLevelThreeHighlightTour()
+            } else {
+                showOrHideLevelThreeScienceTour()
+            }
         }
     }
     
@@ -770,8 +1354,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         thirdLevelView.backgroundColor = UIColor.mapLevelColor
         overlay.icon = UIImage(named: "qm_level_2")
         removeMarkers()
-        if (zoomValue > 18) {
-            showLevelTwoMarker()
+        if (zoomValue > 18)  {
+            if((fromTourString == fromTour.HighlightTour) || (fromTourString == fromTour.exploreTour)) {
+                showOrHideLevelTwoHighlightTour()
+            } else {
+                self.showOrHideLevelTwoScienceTour()
+            }
         }
     }
     
@@ -805,18 +1393,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         let markerIcon = marker.icon
         let searchstring = marker.title
         selectedScienceTourLevel = ""
-        if (level == levelNumber.two) {
-            showLevelTwoMarker()
-        }
-        else if (level == levelNumber.three){
-            showLevelThreeMarker()
-        }
         marker.appearAnimation = .pop
-        
-//        UIView.animate(withDuration: 0.6, animations: { [weak self] in
-//            marker.icon = self?.imageWithImage(image: markerIcon!, scaledToSize: CGSize(width:52, height: 62))
-//            })
-        //loadObjectPopup()
+        marker.groundAnchor = CGPoint(x: 0.5, y: 1.0)
        
         if let arrayOffset = floorMapArray.index(where: {$0.artifactPosition == searchstring}) {
             self.setMarkerBounce()
@@ -844,12 +1422,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             viewForMap.animate(to: camera)
         }
         
-        if (level == levelNumber.two) {
-            showLevelTwoMarker()
-            
-        } else if(level == levelNumber.three) {
-            showLevelThreeMarker()
-        }
+        
     }
     
     func removeMarkers() {
@@ -872,15 +1445,65 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         l3_g13_5.map = nil
         l3_g13_7.map = nil
         l3_g17_3.map = nil
+        
+        l2_g1_sc2.map = nil
+        l2_g1_sc7.map = nil
+        l2_g1_sc8.map = nil
+        l2_g1_sc13.map = nil
+        l2_g1_sc14.map = nil
+        l2_g2_2.map = nil
+        l2_g3_sc14_1.map = nil
+        l2_g3_sc14_2.map = nil
+        l2_g3_wr4.map = nil
+        l2_g4_sc5.map = nil
+        l2_g3_sc3.map = nil
+        l2_g5_sc5.map = nil
+        l2_g5_sc11.map = nil
+        l2_g7_sc13.map = nil
+        l2_g7_sc8.map = nil
+        l2_g7_sc4.map = nil
+        
+        
+        l3_g10_wr2_1.map = nil
+        l3_g10_wr2_2.map = nil
+        l3_g10_podium14.map = nil
+        l3_g10_podium9.map = nil
+        l3_g11_14.map = nil
+        l3_g12_11.map = nil
+        l3_g12_12.map = nil
+        l3_g12_17.map = nil
+        l3_g12_wr5.map = nil
+        l3_g13_2.map = nil
+        l3_g13_15.map = nil
+        l3_g14_7.map = nil
+        l3_g14_13.map = nil
+        l3_g15_13.map = nil
+        l3_g16_wr5.map = nil
+        l3_g17_8.map = nil
+        l3_g17_9.map = nil
+        l3_g18_1.map = nil
+        
+        l3_g18_2.map = nil
+        l3_g18_11.map = nil
+    
     }
     
     //MARK: Poup Delegate
     func objectPopupCloseButtonPressed() {
         self.objectPopupView.removeFromSuperview()
-        if (level == levelNumber.two) {
-            self.showLevelTwoMarker()
+        if ((fromTourString == fromTour.HighlightTour) || (fromTourString == fromTour.exploreTour))
+        {
+            if(level == levelNumber.two) {
+                showOrHideLevelTwoHighlightTour()
+            } else if(level == levelNumber.three) {
+                showOrHideLevelThreeHighlightTour()
+            }
         } else {
-            self.showLevelThreeMarker()
+            if (level == levelNumber.two) {
+                self.showOrHideLevelTwoScienceTour()
+            } else {
+                self.showOrHideLevelThreeScienceTour()
+            }
         }
     }
     //Present detail popup using Bottomsheet
@@ -952,11 +1575,19 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         bounceTimerThree.invalidate()
         bottomSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: 0, height: 0)
         overlayView.isHidden = true
-        if (level == levelNumber.two) {
-            showLevelTwoMarker()
-            
-        } else if(level == levelNumber.three) {
-            showLevelThreeMarker()
+        if ((fromTourString == fromTour.HighlightTour) || (fromTourString == fromTour.exploreTour))
+        {
+            if(level == levelNumber.two) {
+                showOrHideLevelTwoHighlightTour()
+            } else if(level == levelNumber.three) {
+                showOrHideLevelThreeHighlightTour()
+            }
+        } else {
+            if (level == levelNumber.two) {
+                self.showOrHideLevelTwoScienceTour()
+            } else if(level == levelNumber.three) {
+                self.showOrHideLevelThreeScienceTour()
+            }
         }
     }
     func dismissOvelay() {
@@ -964,12 +1595,19 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         selectedScienceTour = ""
         bounceTimerTwo.invalidate()
         bounceTimerThree.invalidate()
-        
-        if (level == levelNumber.two) {
-            showLevelTwoMarker()
-            
-        } else if(level == levelNumber.three) {
-            showLevelThreeMarker()
+        if ((fromTourString == fromTour.HighlightTour) || (fromTourString == fromTour.exploreTour))
+        {
+            if(level == levelNumber.two) {
+                showOrHideLevelTwoHighlightTour()
+            } else if(level == levelNumber.three) {
+                showOrHideLevelThreeHighlightTour()
+            }
+        } else {
+            if (level == levelNumber.two) {
+                self.showOrHideLevelTwoScienceTour()
+            } else if(level == levelNumber.three) {
+                self.showOrHideLevelThreeScienceTour()
+            }
         }
     }
     //MARK: Audio SetUp
@@ -988,8 +1626,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             self.setupTimer()
         }
         firstLoad = false
-        
-            self.togglePlayPause()
+        self.togglePlayPause()
     }
     
     func togglePlayPause() {
@@ -1114,30 +1751,88 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     func getFloorMapDataFromServer()
     {
         var tourGuideId : String? = ""
-        if (fromTourString == fromTour.scienceTour) {
-            tourGuideId = "12216"
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            if (fromTourString == fromTour.scienceTour) {
+                tourGuideId = "12216"
+            } else if ((fromTourString == fromTour.HighlightTour) || (fromTourString == fromTour.exploreTour)){
+                tourGuideId = "12471"
+            }
         } else {
-            //tourGuideId = "12476"
-            //tourGuideId = "12216"
-            //Highlight 12471
+            if (fromTourString == fromTour.scienceTour) {
+                tourGuideId = "12226"
+            } else if ((fromTourString == fromTour.HighlightTour) || (fromTourString == fromTour.exploreTour)){
+                tourGuideId = "12471"
+            }
         }
         
         _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": tourGuideId!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
             switch response.result {
             case .success(let data):
                 self.floorMapArray = data.tourGuideFloorMap
-                if(self.fromTourString == fromTour.scienceTour) {
-                    self.addBottomSheetView(index: self.selectedTourdGuidIndex)
+                if (self.floorMapArray.count > 0) {
+                    if (self.fromTourString == fromTour.HighlightTour) {
+                        if(self.selectedScienceTourLevel == "2" ) {
+                            self.showOrHideLevelTwoHighlightTour()
+                        } else if (self.selectedScienceTourLevel == "3" ) {
+                            self.showOrHideLevelThreeHighlightTour()
+                        }
+                        self.addBottomSheetView(index: self.selectedTourdGuidIndex)
+                    } else if(self.fromTourString == fromTour.scienceTour) {
+                        if(self.selectedScienceTourLevel == "2" ) {
+                            self.showOrHideLevelTwoScienceTour()
+                        } else if(self.selectedScienceTourLevel == "3") {
+                            self.showOrHideLevelThreeScienceTour()
+                        }
+                        self.addBottomSheetView(index: self.selectedTourdGuidIndex)
+                    }
                 }
+                
             case .failure(let error):
                 print("error")
-            
-                
-                
+
             }
         }
     }
+    func showOrHideLevelTwoHighlightTour() {
+        for i in 0 ... self.levelTwoPositionArray.count-1 {
+            if let searchResult = self.floorMapArray.first(where: {$0.artifactPosition! == self.levelTwoPositionArray[i] as! String}) {
+                (self.levelTwoMarkerArray[i] as! GMSMarker).map = self.viewForMap
+            } else {
+                (self.levelTwoMarkerArray[i] as! GMSMarker).map = nil
+            }
+        }
 
+    }
+    func showOrHideLevelThreeHighlightTour() {
+        for i in 0 ... self.levelThreePositionArray.count-1 {
+            if let searchResult = self.floorMapArray.first(where: {$0.artifactPosition! == self.levelThreePositionArray[i] as! String}) {
+                (self.levelThreeMarkerArray[i] as! GMSMarker).map = self.viewForMap
+            } else {
+                (self.levelThreeMarkerArray[i] as! GMSMarker).map = nil
+            }
+        }
+        
+    }
+    func showOrHideLevelTwoScienceTour() {
+        for i in 0 ... self.levelTwoPositionArray.count-1 {
+            if let searchResult = self.floorMapArray.first(where: {$0.artifactPosition! == self.levelTwoPositionArray[i] as! String}) {
+                (self.levelTwoMarkerArray[i] as! GMSMarker).map = self.viewForMap
+            } else {
+                (self.levelTwoMarkerArray[i] as! GMSMarker).map = nil
+            }
+        }
+        
+    }
+    func showOrHideLevelThreeScienceTour() {
+        for i in 0 ... self.levelThreePositionArray.count-1 {
+            if let searchResult = self.floorMapArray.first(where: {$0.artifactPosition! == self.levelThreePositionArray[i] as! String}) {
+                (self.levelThreeMarkerArray[i] as! GMSMarker).map = self.viewForMap
+            } else {
+                (self.levelThreeMarkerArray[i] as! GMSMarker).map = nil
+            }
+        }
+        
+    }
     
     
     

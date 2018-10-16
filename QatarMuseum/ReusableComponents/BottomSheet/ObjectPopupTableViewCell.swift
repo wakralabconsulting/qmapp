@@ -39,7 +39,9 @@ class ObjectPopupTableViewCell: UITableViewCell {
         if let imageUrl = mapDetails.image {
             popupImgeView.kf.setImage(with: URL(string: imageUrl))
         }
-        
+        if(popupImgeView.image == nil) {
+            popupImgeView.image = UIImage(named: "default_imageX2")
+        }
         title.font = UIFont.eventPopupTitleFont
         productionTitle.font = UIFont.settingResetButtonFont
         productionDateTitle.font = UIFont.settingResetButtonFont

@@ -68,7 +68,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
         if (indexPath.row == 0) {
             loadMiaTourDetail()
         } else {
-            loadComingSoonPopup()
+            loadPreviewPage()
         }
     }
     
@@ -95,6 +95,16 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(miaView, animated: false, completion: nil)
+    }
+    func loadPreviewPage() {
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        let shortDetailsView =  self.storyboard?.instantiateViewController(withIdentifier: "previewContainerId") as! PreviewContainerViewController
+        shortDetailsView.fromScienceTour = false
+        self.present(shortDetailsView, animated: false, completion: nil)
     }
     func loadComingSoonPopup() {
         popupView  = ComingSoonPopUp(frame: self.view.frame)

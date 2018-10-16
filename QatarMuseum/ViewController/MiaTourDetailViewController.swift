@@ -135,13 +135,8 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
-
-        
-        //Open PageViewcontroller with short details
-//        let shortDetailsView =  self.storyboard?.instantiateViewController(withIdentifier: "previewPageId") as! PreviewPageViewController
-//
-//        self.present(shortDetailsView, animated: false, completion: nil)
         let shortDetailsView =  self.storyboard?.instantiateViewController(withIdentifier: "previewContainerId") as! PreviewContainerViewController
+        shortDetailsView.fromScienceTour = true
         self.present(shortDetailsView, animated: false, completion: nil)
 
     }

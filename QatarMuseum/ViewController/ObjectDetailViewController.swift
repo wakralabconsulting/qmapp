@@ -122,10 +122,14 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
             let cell = tableView.dequeueReusableCell(withIdentifier: "imageCell", for: indexPath)
             let objectImageView = UIImageView()
             objectImageView.frame = CGRect(x: 0, y: 20, width: tableView.frame.width, height: 300)
+            objectImageView.image = UIImage(named: "default_imageX2")
             if let imageUrl = detailArray[0].image {
                 objectImageView.kf.setImage(with: URL(string: imageUrl))
             }
-            //objectImageView.image = UIImage.init(named: "science_tour_object")
+            if(objectImageView.image == nil) {
+                objectImageView.image = UIImage(named: "default_imageX2")
+            }
+            
             objectImageView.backgroundColor = UIColor.white
             objectImageView.contentMode = .scaleAspectFit
             objectImageView.clipsToBounds = true
@@ -162,7 +166,7 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if(indexPath.row == 0) {
+        if((indexPath.row == 0) && (detailArray[0].image != "")) {
             if let imageUrl = detailArray[0].image {
                 self.loadObjectImagePopup(imgName: imageUrl )
             }
@@ -211,18 +215,20 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     }
     func setPlayButtonAction(cellObj: ObjectDetailTableViewCell) {
         selectedCell  = cellObj
-        if (firstLoad == true) {
+        
             if(detailArray.count > 0) {
                 if((detailArray[0].audioFile != nil) && (detailArray[0].audioFile != "")){
-                    cellObj.playList = detailArray[0].audioFile!
-                    cellObj.play(url: URL(string:cellObj.playList)!)
-                    cellObj.setupTimer()
+                    if (firstLoad == true) {
+                        cellObj.playList = detailArray[0].audioFile!
+                        cellObj.play(url: URL(string:cellObj.playList)!)
+                        cellObj.setupTimer()
+                    }
                     firstLoad = false
                     cellObj.togglePlayPause()
                 }
             }
             
-        }
+        
        
     }
    

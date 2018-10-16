@@ -54,7 +54,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     var reloaded: Bool = false
     var tourGuideArray: [TourGuideFloorMap]! = []
     var countValue : Int? = 0
-    
+    var fromScienceTour : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -74,9 +74,6 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
             headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
         headerView.headerViewDelegate = self
-        headerView.settingsButton.isHidden = false
-        headerView.settingsButton.setImage(UIImage(named: "locationImg"), for: .normal)
-        headerView.settingsButton.contentEdgeInsets = UIEdgeInsets(top: 9, left: 10, bottom:9, right: 10)
     }
     func setUpPageControl() {
        
@@ -659,13 +656,32 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     //MARK: WebServiceCall
     func getTourGuideDataFromServer()
     {
+        var tourGuideId : String? = ""
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            if (fromScienceTour) {
+                tourGuideId = "12216"
+            } else {
+                //tourGuideId = "12476"
+                //tourGuideId = "12216"
+                tourGuideId = "12471"
+            }
+        } else {
+            if (fromScienceTour) {
+                tourGuideId = "12226"
+            } else {
+                tourGuideId = "12471"
+            }
+        }
         
-        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": "12216"])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": tourGuideId!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
             switch response.result {
             case .success(let data):
                 self.tourGuideArray = data.tourGuideFloorMap
                 self.countValue = self.tourGuideArray.count
                 if(self.tourGuideArray.count != 0) {
+                    self.headerView.settingsButton.isHidden = false
+                    self.headerView.settingsButton.setImage(UIImage(named: "locationImg"), for: .normal)
+                    self.headerView.settingsButton.contentEdgeInsets = UIEdgeInsets(top: 9, left: 10, bottom:9, right: 10)
                     self.setUpPageControl()
                     self.showOrHidePageControlView(countValue: self.tourGuideArray.count, scrolling: false)
                     self.showPageControlAtFirstTime()
@@ -692,15 +708,27 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     }
     func filterButtonPressed() {
         if (tourGuideArray.count != 0) {
-            let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as!FloorMapViewController
             let selectedItem = tourGuideArray[currentPreviewItem]
-            floorMapView.selectedScienceTour = selectedItem.artifactPosition
-            floorMapView.selectedScienceTourLevel = selectedItem.floorLevel
-            floorMapView.selectedTourdGuidIndex = currentPreviewItem
-            //floorMapView.fromScienceTour = true
-            floorMapView.fromTourString = fromTour.scienceTour
-            floorMapView.modalTransitionStyle = .flipHorizontal
-            self.present(floorMapView, animated: true, completion: nil)
+            if((selectedItem.artifactPosition != nil) && (selectedItem.artifactPosition != "") && (selectedItem.floorLevel != nil) && (selectedItem.floorLevel != "")) {
+                let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as!FloorMapViewController
+                
+                floorMapView.selectedScienceTour = selectedItem.artifactPosition
+                floorMapView.selectedScienceTourLevel = selectedItem.floorLevel
+                floorMapView.selectedTourdGuidIndex = currentPreviewItem
+                if(fromScienceTour) {
+                    floorMapView.fromTourString = fromTour.scienceTour
+                } else {
+                    floorMapView.fromTourString = fromTour.HighlightTour
+                }
+                floorMapView.modalTransitionStyle = .flipHorizontal
+                self.present(floorMapView, animated: true, completion: nil)
+            } else {
+                self.view.hideAllToasts()
+                let locationMissingMessage =  NSLocalizedString("LOCATION_MISSING_MESSAGE", comment: "LOCATION_MISSING_MESSAGE")
+                self.view.makeToast(locationMissingMessage)
+            }
+        } else {
+            
         }
     }
     @objc func loadDetailPage(sender: UITapGestureRecognizer? = nil) {

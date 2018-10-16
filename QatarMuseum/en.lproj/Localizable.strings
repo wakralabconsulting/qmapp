@@ -165,5 +165,6 @@
 "RESET_TO_DEFAULT" = "Reset to Default";
 "MORE" = "More";
 "GIFT_SHOP" = "Gift Shop";
+"LOCATION_MISSING_MESSAGE" = "No Location Data";
 
 

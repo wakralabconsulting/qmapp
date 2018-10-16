@@ -165,3 +165,4 @@
 "RESET_TO_DEFAULT" = "إعداة تعيين للوضع الإفتراضي";
 "MORE" = "المزيد";
 "GIFT_SHOP" = "محل الهدايا";
+"LOCATION_MISSING_MESSAGE" = "No Location Data";
