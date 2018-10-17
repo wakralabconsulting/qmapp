@@ -51,6 +51,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var playerSlider: UISlider!
     
+    @IBOutlet weak var seekLoadingLabel: UILabel!
     var bottomSheetVC:MapDetailView = MapDetailView()
     var floorMapArray: [TourGuideFloorMap]! = []
     //var tourGuideArray: [TourGuideFloorMap]! = []
@@ -1650,7 +1651,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         let targetTime:CMTime = CMTimeMake(seconds, 1)
         avPlayer!.seek(to: targetTime)
         if(isPaused == false){
-            //seekLoadingLabel.alpha = 1
+            seekLoadingLabel.alpha = 1
         }
     }
 //    @IBAction func sliderTapped(_ sender: UILongPressGestureRecognizer) {
@@ -1680,17 +1681,17 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     
     @objc func tick(){
         if(avPlayer.currentTime().seconds == 0.0){
-           // loadingLabel.alpha = 1
+            seekLoadingLabel.alpha = 1
         }else{
-            //loadingLabel.alpha = 0
+            seekLoadingLabel.alpha = 0
         }
         
         if(isPaused == false){
             if(avPlayer.rate == 0){
                 avPlayer.play()
-               // seekLoadingLabel.alpha = 1
+                seekLoadingLabel.alpha = 1
             }else{
-                //seekLoadingLabel.alpha = 0
+                seekLoadingLabel.alpha = 0
             }
         }
         
