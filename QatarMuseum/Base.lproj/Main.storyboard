@@ -5189,8 +5189,8 @@
                             </button>
                             <slider hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Wq6-bK-3gi">
                                 <rect key="frame" x="66" y="672.66666666666663" width="325" height="31"/>
-                                <color key="minimumTrackTintColor" red="0.94852989912033081" green="0.91629409790039062" blue="0.29902085661888123" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="maximumTrackTintColor" red="0.97349530458450317" green="0.75936973094940186" blue="0.27463909983634949" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="minimumTrackTintColor" red="0.94901960784313721" green="0.91764705882352937" blue="0.29803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="maximumTrackTintColor" red="0.97254901960784312" green="0.76078431372549016" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="sliderValueChange:" destination="avg-al-ab5" eventType="valueChanged" id="D6c-cJ-tSd"/>
                                 </connections>
