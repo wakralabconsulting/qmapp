@@ -9,8 +9,9 @@
 import Alamofire
 import AVFoundation
 import AVKit
-import GoogleMaps
 import Crashlytics
+import CoreData
+import GoogleMaps
 import UIKit
 import MaterialComponents.MaterialBottomSheet
 
@@ -24,7 +25,7 @@ enum fromTour{
     case scienceTour
     case HighlightTour
 }
-
+//fetchTourGuideFromCoredata
 
 class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpProtocol, HeaderViewProtocol,UIGestureRecognizerDelegate,MapDetailProtocol {
     
@@ -52,10 +53,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     
     var bottomSheetVC:MapDetailView = MapDetailView()
     var floorMapArray: [TourGuideFloorMap]! = []
-    var tourGuideArray: [TourGuideFloorMap]! = []
+    //var tourGuideArray: [TourGuideFloorMap]! = []
     var selectedScienceTour : String? = ""
     var selectedScienceTourLevel : String? = ""
     var selectedTourdGuidIndex : Int? = 0
+    var selectednid : String? = ""
     var selectedMarker = GMSMarker()
     var selectedMarkerImage = UIImage()
     var bounceTimerTwo = Timer()
@@ -69,7 +71,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     var levelTwoMarkerArray = NSArray()
     var levelThreePositionArray = NSArray()
     var levelThreeMarkerArray = NSArray()
-    
+    var tourGuideId : String? = ""
+    let networkReachability = NetworkReachabilityManager()
     
     var overlay = GMSGroundOverlay()
     let L2_G1_SC3 = CLLocationCoordinate2D(latitude: 25.295141, longitude: 51.539185)
@@ -371,7 +374,24 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         headerView.headerViewDelegate = self
         headerView.headerTitle.text = NSLocalizedString("FLOOR_MAP_TITLE", comment: "FLOOR_MAP_TITLE  in the Floormap page")
         
-        getFloorMapDataFromServer()
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            if (fromTourString == fromTour.scienceTour) {
+                tourGuideId = "12216"
+            } else if ((fromTourString == fromTour.HighlightTour) || (fromTourString == fromTour.exploreTour)){
+                tourGuideId = "12471"
+            }
+        } else {
+            if (fromTourString == fromTour.scienceTour) {
+                tourGuideId = "12226"
+            } else if ((fromTourString == fromTour.HighlightTour) || (fromTourString == fromTour.exploreTour)){
+                tourGuideId = "12471"
+            }
+        }
+        if  (networkReachability?.isReachable)! {
+            getFloorMapDataFromServer()
+        } else {
+            fetchTourGuideFromCoredata()
+        }
     
     }
     
@@ -471,12 +491,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g1_sc3.appearAnimation = .pop
-            //l2_g1_sc3.map = viewForMap
             
             l2_g8.position = L2_G8
             l2_g8.title = "l2_g8"
             l2_g8.snippet = ""
-            //l2_g8.icon = UIImage(named: "MS.523.1999-1.2000x2000")
             if((fromTourString == fromTour.scienceTour) && (selectedScienceTour == "l2_g8")) {
                 l2_g8.icon = self.imageWithImage(image: UIImage(named: "MS.523.1999-1.2000x2000")!, scaledToSize: CGSize(width:54, height: 64))
                 self.setMarkerBounce()
@@ -487,7 +505,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g8.appearAnimation = .pop
-            //l2_g8.map = viewForMap
             
             l2_g8_sc1.position = L2_G8_SC1
             l2_g8_sc1.title = "l2_g8_sc1"
@@ -502,7 +519,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g8_sc1.appearAnimation = .pop
-            //l2_g8_sc1.map = viewForMap
             
             l2_g8_sc6_1.position = L2_G8_SC6_1
             l2_g8_sc6_1.title = "l2_g8_sc6_1"
@@ -517,7 +533,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g8_sc6_1.appearAnimation = .pop
-           // l2_g8_sc6_1.map = viewForMap
             
             l2_g8_sc6_2.position = L2_G8_SC6_2
             l2_g8_sc6_2.title = "l2_g8_sc6_2"
@@ -532,7 +547,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g8_sc6_2.appearAnimation = .pop
-            //l2_g8_sc6_2.map = viewForMap
             
             l2_g8_sc5.position = L2_G8_SC5
             l2_g8_sc5.title = "l2_g8_sc5"
@@ -547,7 +561,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g8_sc5.appearAnimation = .pop
-            //l2_g8_sc5.map = viewForMap
             
             l2_g8_sc4_1.position = L2_G8_SC4_1
             l2_g8_sc4_1.title = "l2_g8_sc4_1"
@@ -562,7 +575,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g8_sc4_1.appearAnimation = .pop
-           // l2_g8_sc4_1.map = viewForMap
             
             l2_g8_sc4_2.position = L2_G8_SC4_2
             l2_g8_sc4_2.title = "l2_g8_sc4_2"
@@ -577,7 +589,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g8_sc4_2.appearAnimation = .pop
-            //l2_g8_sc4_2.map = viewForMap
             
             l2_g9_sc7.position = L2_G9_SC7
             l2_g9_sc7.title = "l2_g9_sc7"
@@ -592,7 +603,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g9_sc7.appearAnimation = .pop
-           // l2_g9_sc7.map = viewForMap
             
             l2_g9_sc5_1.position = L2_G9_SC5_1
             l2_g9_sc5_1.title = "l2_g9_sc5_1"
@@ -607,7 +617,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g9_sc5_1.appearAnimation = .pop
-           // l2_g9_sc5_1.map = viewForMap
             
             l2_g9_sc5_2.position = L2_G9_SC5_2
             l2_g9_sc5_2.title = "l2_g9_sc5_2"
@@ -622,7 +631,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g9_sc5_2.appearAnimation = .pop
-           // l2_g9_sc5_2.map = viewForMap
             
             l2_g5_sc6.position = L2_G5_SC6
             l2_g5_sc6.title = "l2_g5_sc6"
@@ -637,7 +645,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g5_sc6.appearAnimation = .pop
-            //l2_g5_sc6.map = viewForMap
             
             l2_g3_sc13.position = L2_G3_SC13
             l2_g3_sc13.title = "l2_g3_sc13"
@@ -652,12 +659,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l2_g3_sc13.appearAnimation = .pop
-            //l2_g3_sc13.map = viewForMap
         
     }
     //Function for show level 3 marker
     func showLevelThreeMarker() {
-        //if (zoomValue > 18) {
             l3_g10_sc1_1.position = L3_G10_SC1_1
             l3_g10_sc1_1.title = "l3_g10_sc1_1"
             l3_g10_sc1_1.snippet = "PO.297"
@@ -673,7 +678,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                 
             }
             l3_g10_sc1_1.appearAnimation = .pop
-           // l3_g10_sc1_1.map = viewForMap
             
             l3_g10_sc1_2.position = L3_G10_SC1_2
             l3_g10_sc1_2.title = "l3_g10_sc1_2"
@@ -688,7 +692,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l3_g10_sc1_2.appearAnimation = .pop
-            //l3_g10_sc1_2.map = viewForMap
             
             l3_g11_wr15.position = L3_G11_WR15
             l3_g11_wr15.title = "l3_g11_wr15"
@@ -703,7 +706,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l3_g11_wr15.appearAnimation = .pop
-            //l3_g11_wr15.map = viewForMap
             
             l3_g13_5.position = L3_G13_5
             l3_g13_5.title = "l3_g13_5"
@@ -718,7 +720,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l3_g13_5.appearAnimation = .pop
-            //l3_g13_5.map = viewForMap
             
             l3_g13_7.position = L3_G13_7
             l3_g13_7.title = "l3_g13_7"
@@ -734,7 +735,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l3_g13_7.appearAnimation = .pop
-            //l3_g13_7.map = viewForMap
             
             l3_g17_3.position = L3_G17_3
             l3_g17_3.title = "l3_g17_3"
@@ -749,7 +749,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
             
             l3_g17_3.appearAnimation = .pop
-            //l3_g17_3.map = viewForMap
     }
     //MARK: Highlight Marker
     func showLevelTwoHighlightMarker() {
@@ -765,7 +764,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g1_sc2.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
         }
         l2_g1_sc2.appearAnimation = .pop
-        //l2_g1_sc2.map = viewForMap
         
         l2_g1_sc7.position = L2_G1_SC7
         l2_g1_sc7.title = "l2_g1_sc7"
@@ -778,7 +776,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g1_sc7.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
         }
         l2_g1_sc7.appearAnimation = .pop
-        //l2_g1_sc7.map = viewForMap
         
         l2_g1_sc8.position = L2_G1_SC8
         l2_g1_sc8.title = "l2_g1_sc8"
@@ -791,7 +788,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g1_sc8.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
         }
         l2_g1_sc8.appearAnimation = .pop
-        //l2_g1_sc8.map = viewForMap
         
         l2_g1_sc13.position = L2_G1_SC13
         l2_g1_sc13.title = "l2_g1_sc13"
@@ -804,7 +800,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g1_sc13.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
         }
         l2_g1_sc13.appearAnimation = .pop
-        //l2_g1_sc13.map = viewForMap
         
         l2_g1_sc14.position = L2_G1_SC14
         l2_g1_sc14.title = "l2_g1_sc14"
@@ -817,7 +812,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g1_sc14.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
         }
         l2_g1_sc14.appearAnimation = .pop
-        //l2_g1_sc14.map = viewForMap
         
         l2_g2_2.position = L2_G2_2
         l2_g2_2.title = "l2_g2_2"
@@ -830,7 +824,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g2_2.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
         }
         l2_g2_2.appearAnimation = .pop
-        //l2_g2_2.map = viewForMap
         
         l2_g3_sc14_1.position = L2_G3_SC14_1
         l2_g3_sc14_1.title = "l2_g3_sc14_1"
@@ -843,7 +836,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g3_sc14_1.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
         }
         l2_g3_sc14_1.appearAnimation = .pop
-       // l2_g3_sc14_1.map = viewForMap
         
         l2_g3_sc14_2.position = L2_G3_SC14_2
         l2_g3_sc14_2.title = "l2_g3_sc14_2"
@@ -856,7 +848,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g3_sc14_2.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
         }
         l2_g3_sc14_2.appearAnimation = .pop
-        //l2_g3_sc14_2.map = viewForMap
         
         l2_g3_wr4.position = L2_G3_WR4
         l2_g3_wr4.title = "l2_g3_wr4"
@@ -869,7 +860,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g3_wr4.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
         }
         l2_g3_wr4.appearAnimation = .pop
-        //l2_g3_wr4.map = viewForMap
         
         l2_g4_sc5.position = L2_G4_SC5
         l2_g4_sc5.title = "l2_g4_sc5"
@@ -882,7 +872,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g4_sc5.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
         }
         l2_g4_sc5.appearAnimation = .pop
-       // l2_g4_sc5.map = viewForMap
         
         l2_g3_sc3.position = L2_G3_SC3
         l2_g3_sc3.title = "l2_g3_sc3"
@@ -895,7 +884,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g3_sc3.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
         }
         l2_g3_sc3.appearAnimation = .pop
-        //l2_g3_sc3.map = viewForMap
         
         l2_g5_sc5.position = L2_G5_SC5
         l2_g5_sc5.title = "l2_g5_sc5"
@@ -908,7 +896,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g5_sc5.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
         }
         l2_g5_sc5.appearAnimation = .pop
-        //l2_g5_sc5.map = viewForMap
         
         l2_g5_sc11.position = L2_G5_SC11
         l2_g5_sc11.title = "l2_g5_sc11"
@@ -921,7 +908,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g5_sc11.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
         }
         l2_g5_sc11.appearAnimation = .pop
-        //l2_g5_sc11.map = viewForMap
         
         l2_g7_sc13.position = L2_G7_SC13
         l2_g7_sc13.title = "l2_g7_sc13"
@@ -934,7 +920,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g7_sc13.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
         }
         l2_g7_sc13.appearAnimation = .pop
-        //l2_g7_sc13.map = viewForMap
         
         l2_g7_sc8.position = L2_G7_SC8
         l2_g7_sc8.title = "l2_g7_sc8"
@@ -947,7 +932,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g7_sc8.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
         }
         l2_g7_sc8.appearAnimation = .pop
-        //l2_g7_sc8.map = viewForMap
         
         l2_g7_sc4.position = L2_G7_SC4
         l2_g7_sc4.title = "l2_g7_sc4"
@@ -960,7 +944,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g7_sc4.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
         }
         l2_g7_sc4.appearAnimation = .pop
-       // l2_g7_sc4.map = viewForMap
         
         l2_g8_sc1.position = L2_G8_SC1
         l2_g8_sc1.title = "l2_g8_sc1"
@@ -973,7 +956,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g8_sc1.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
         }
         l2_g8_sc1.appearAnimation = .pop
-        //l2_g8_sc1.map = viewForMap
         
         l2_g8_sc5.position = L2_G8_SC5
         l2_g8_sc5.title = "l2_g8_sc5"
@@ -986,7 +968,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g8_sc5.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
         }
         l2_g8_sc5.appearAnimation = .pop
-        //l2_g8_sc5.map = viewForMap
         
         l2_g9_sc7.position = L2_G9_SC7
         l2_g9_sc7.title = "l2_g9_sc7"
@@ -999,7 +980,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g9_sc7.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
         }
         l2_g9_sc7.appearAnimation = .pop
-        //l2_g9_sc7.map = viewForMap
         
         l2_g1_sc3.position = L2_G1_SC3
         l2_g1_sc3.title = "l2_g1_sc3"
@@ -1012,7 +992,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             l2_g1_sc3.icon = imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:38, height: 44))
         }
         l2_g1_sc3.appearAnimation = .pop
-        //l2_g1_sc3.map = viewForMap
        
     }
     func showLevelThreeHighlightMarker() {
@@ -1569,6 +1548,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     @objc func handleTap(sender: UITapGestureRecognizer? = nil) {
         bottomSheetVC.removeFromParentViewController()
         bottomSheetVC.dismiss(animated: false, completion: nil)
+        selectedMarker.icon = self.imageWithImage(image: selectedMarkerImage, scaledToSize: CGSize(width:38, height: 44))
         selectedScienceTour = ""
         
         bounceTimerTwo.invalidate()
@@ -1592,6 +1572,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     func dismissOvelay() {
         overlayView.isHidden = true
+        selectedMarker.icon = self.imageWithImage(image: selectedMarkerImage, scaledToSize: CGSize(width:38, height: 44))
         selectedScienceTour = ""
         bounceTimerTwo.invalidate()
         bounceTimerThree.invalidate()
@@ -1750,40 +1731,30 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     //MARK: WebServiceCall
     func getFloorMapDataFromServer()
     {
-        var tourGuideId : String? = ""
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            if (fromTourString == fromTour.scienceTour) {
-                tourGuideId = "12216"
-            } else if ((fromTourString == fromTour.HighlightTour) || (fromTourString == fromTour.exploreTour)){
-                tourGuideId = "12471"
-            }
-        } else {
-            if (fromTourString == fromTour.scienceTour) {
-                tourGuideId = "12226"
-            } else if ((fromTourString == fromTour.HighlightTour) || (fromTourString == fromTour.exploreTour)){
-                tourGuideId = "12471"
-            }
-        }
-        
         _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": tourGuideId!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
             switch response.result {
             case .success(let data):
                 self.floorMapArray = data.tourGuideFloorMap
                 if (self.floorMapArray.count > 0) {
+                    self.saveOrUpdateTourGuideCoredata()
                     if (self.fromTourString == fromTour.HighlightTour) {
                         if(self.selectedScienceTourLevel == "2" ) {
                             self.showOrHideLevelTwoHighlightTour()
                         } else if (self.selectedScienceTourLevel == "3" ) {
                             self.showOrHideLevelThreeHighlightTour()
                         }
-                        self.addBottomSheetView(index: self.selectedTourdGuidIndex)
+                        if let arrayOffset = self.self.floorMapArray.index(where: {$0.nid == self.selectednid}) {
+                            self.addBottomSheetView(index: arrayOffset)
+                        }
                     } else if(self.fromTourString == fromTour.scienceTour) {
                         if(self.selectedScienceTourLevel == "2" ) {
                             self.showOrHideLevelTwoScienceTour()
                         } else if(self.selectedScienceTourLevel == "3") {
                             self.showOrHideLevelThreeScienceTour()
                         }
-                        self.addBottomSheetView(index: self.selectedTourdGuidIndex)
+                        if let arrayOffset = self.floorMapArray.index(where: {$0.nid == self.selectednid}) {
+                            self.addBottomSheetView(index: arrayOffset)
+                        }
                     }
                 }
                 
@@ -1832,6 +1803,393 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
         }
         
+    }
+    //MARK: TourGuide DataBase
+    func saveOrUpdateTourGuideCoredata() {
+        if (floorMapArray.count > 0) {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                let fetchData = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "tourGuideId" , idValue: tourGuideId ) as! [FloorMapTourGuideEntity]
+                
+                if (fetchData.count > 0) {
+                    for i in 0 ... floorMapArray.count-1 {
+                        let managedContext = getContext()
+                        let tourGuideDeatilDict = floorMapArray[i]
+                        let fetchResult = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "nid", idValue: floorMapArray[i].nid) as! [FloorMapTourGuideEntity]
+                        
+                        if(fetchResult.count != 0) {
+                            
+                            //update
+                            let tourguidedbDict = fetchResult[0]
+                            tourguidedbDict.title = tourGuideDeatilDict.title
+                            tourguidedbDict.accessionNumber = tourGuideDeatilDict.accessionNumber
+                            tourguidedbDict.nid =  tourGuideDeatilDict.nid
+                            tourguidedbDict.curatorialDescription = tourGuideDeatilDict.curatorialDescription
+                            tourguidedbDict.diam = tourGuideDeatilDict.diam
+                            
+                            tourguidedbDict.dimensions = tourGuideDeatilDict.dimensions
+                            tourguidedbDict.mainTitle = tourGuideDeatilDict.mainTitle
+                            tourguidedbDict.objectEngSummary =  tourGuideDeatilDict.objectENGSummary
+                            tourguidedbDict.objectHistory = tourGuideDeatilDict.objectHistory
+                            tourguidedbDict.production = tourGuideDeatilDict.production
+                            
+                            tourguidedbDict.productionDates = tourGuideDeatilDict.productionDates
+                            tourguidedbDict.image = tourGuideDeatilDict.image
+                            tourguidedbDict.tourGuideId =  tourGuideDeatilDict.tourGuideId
+                            tourguidedbDict.artifactNumber = tourGuideDeatilDict.artifactNumber
+                            tourguidedbDict.artifactPosition = tourGuideDeatilDict.artifactPosition
+                            
+                            tourguidedbDict.audioDescriptif = tourGuideDeatilDict.audioDescriptif
+                            tourguidedbDict.audioFile = tourGuideDeatilDict.audioFile
+                            tourguidedbDict.floorLevel =  tourGuideDeatilDict.floorLevel
+                            tourguidedbDict.galleyNumber = tourGuideDeatilDict.galleyNumber
+                            tourguidedbDict.artistOrCreatorOrAuthor = tourGuideDeatilDict.artistOrCreatorOrAuthor
+                            tourguidedbDict.periodOrStyle = tourGuideDeatilDict.periodOrStyle
+                            tourguidedbDict.techniqueAndMaterials = tourGuideDeatilDict.techniqueAndMaterials
+                            
+                            
+                            if(tourGuideDeatilDict.images != nil) {
+                                if((tourGuideDeatilDict.images?.count)! > 0) {
+                                    for i in 0 ... (tourGuideDeatilDict.images?.count)!-1 {
+                                        var tourGuideImgEntity: FloorMapImagesEntity!
+                                        let tourGuideImg: FloorMapImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "FloorMapImagesEntity", into: managedContext) as! FloorMapImagesEntity
+                                        tourGuideImg.image = tourGuideDeatilDict.images?[i]
+                                        
+                                        tourGuideImgEntity = tourGuideImg
+                                        tourguidedbDict.addToImagesRelation(tourGuideImgEntity)
+                                        do {
+                                            try managedContext.save()
+                                            
+                                        } catch let error as NSError {
+                                            print("Could not save. \(error), \(error.userInfo)")
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                            
+                            do{
+                                try managedContext.save()
+                            }
+                            catch{
+                                print(error)
+                            }
+                        }else {
+                            self.saveToCoreData(tourGuideDetailDict: tourGuideDeatilDict, managedObjContext: managedContext)
+                        }
+                    }//for
+                }//if
+                else {
+                    for i in 0 ... floorMapArray.count-1 {
+                        let managedContext = getContext()
+                        let tourGuideDetailDict : TourGuideFloorMap?
+                        tourGuideDetailDict = floorMapArray[i]
+                        self.saveToCoreData(tourGuideDetailDict: tourGuideDetailDict!, managedObjContext: managedContext)
+                    }
+                    
+                }
+            }
+            else {
+                let fetchData = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey:"tourGuideId" , idValue: tourGuideId) as! [FloorMapTourGuideEntityAr]
+                if (fetchData.count > 0) {
+                    for i in 0 ... floorMapArray.count-1 {
+                        let managedContext = getContext()
+                        let tourGuideDeatilDict = floorMapArray[i]
+                        let fetchResult = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey: "nid", idValue: floorMapArray[i].nid) as! [FloorMapTourGuideEntityAr]
+                        //update
+                        if(fetchResult.count != 0) {
+                            let tourguidedbDict = fetchResult[0]
+                            tourguidedbDict.title = tourGuideDeatilDict.title
+                            tourguidedbDict.accessionNumber = tourGuideDeatilDict.accessionNumber
+                            tourguidedbDict.nid =  tourGuideDeatilDict.nid
+                            tourguidedbDict.curatorialDescription = tourGuideDeatilDict.curatorialDescription
+                            tourguidedbDict.diam = tourGuideDeatilDict.diam
+                            
+                            tourguidedbDict.dimensions = tourGuideDeatilDict.dimensions
+                            tourguidedbDict.mainTitle = tourGuideDeatilDict.mainTitle
+                            tourguidedbDict.objectEngSummary =  tourGuideDeatilDict.objectENGSummary
+                            tourguidedbDict.objectHistory = tourGuideDeatilDict.objectHistory
+                            tourguidedbDict.production = tourGuideDeatilDict.production
+                            
+                            tourguidedbDict.productionDates = tourGuideDeatilDict.productionDates
+                            tourguidedbDict.image = tourGuideDeatilDict.image
+                            tourguidedbDict.tourGuideId =  tourGuideDeatilDict.tourGuideId
+                            tourguidedbDict.artifactNumber = tourGuideDeatilDict.artifactNumber
+                            tourguidedbDict.artifactPosition = tourGuideDeatilDict.artifactPosition
+                            
+                            tourguidedbDict.audioDescriptif = tourGuideDeatilDict.audioDescriptif
+                            tourguidedbDict.audioFile = tourGuideDeatilDict.audioFile
+                            tourguidedbDict.floorLevel =  tourGuideDeatilDict.floorLevel
+                            tourguidedbDict.galleyNumber = tourGuideDeatilDict.galleyNumber
+                            tourguidedbDict.artistOrCreatorOrAuthor = tourGuideDeatilDict.artistOrCreatorOrAuthor
+                            tourguidedbDict.periodOrStyle = tourGuideDeatilDict.periodOrStyle
+                            tourguidedbDict.techniqueAndMaterials = tourGuideDeatilDict.techniqueAndMaterials
+                            
+                            if(tourGuideDeatilDict.images != nil) {
+                                if((tourGuideDeatilDict.images?.count)! > 0) {
+                                    for i in 0 ... (tourGuideDeatilDict.images?.count)!-1 {
+                                        var tourGuideImgEntity: FloorMapImagesEntityAr!
+                                        let tourGuideImg: FloorMapImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FloorMapImagesEntityAr", into: managedContext) as! FloorMapImagesEntityAr
+                                        tourGuideImg.image = tourGuideDeatilDict.images?[i]
+                                        
+                                        tourGuideImgEntity = tourGuideImg
+                                        tourguidedbDict.addToImagesRelation(tourGuideImgEntity)
+                                        do {
+                                            try managedContext.save()
+                                            
+                                        } catch let error as NSError {
+                                            print("Could not save. \(error), \(error.userInfo)")
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                            do{
+                                try managedContext.save()
+                            }
+                            catch{
+                                print(error)
+                            }
+                        } else {
+                            self.saveToCoreData(tourGuideDetailDict: tourGuideDeatilDict, managedObjContext: managedContext)
+                        }
+                    }//for
+                } //if
+                else {
+                    for i in 0 ... floorMapArray.count-1 {
+                        let managedContext = getContext()
+                        let tourGuideDetailDict : TourGuideFloorMap?
+                        tourGuideDetailDict = floorMapArray[i]
+                        self.saveToCoreData(tourGuideDetailDict: tourGuideDetailDict!, managedObjContext: managedContext)
+                    }
+                    
+                }
+            }
+        }
+    }
+    func saveToCoreData(tourGuideDetailDict: TourGuideFloorMap, managedObjContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let tourguidedbDict: FloorMapTourGuideEntity = NSEntityDescription.insertNewObject(forEntityName: "FloorMapTourGuideEntity", into: managedObjContext) as! FloorMapTourGuideEntity
+            tourguidedbDict.title = tourGuideDetailDict.title
+            tourguidedbDict.accessionNumber = tourGuideDetailDict.accessionNumber
+            tourguidedbDict.nid =  tourGuideDetailDict.nid
+            tourguidedbDict.curatorialDescription = tourGuideDetailDict.curatorialDescription
+            tourguidedbDict.diam = tourGuideDetailDict.diam
+            
+            tourguidedbDict.dimensions = tourGuideDetailDict.dimensions
+            tourguidedbDict.mainTitle = tourGuideDetailDict.mainTitle
+            tourguidedbDict.objectEngSummary =  tourGuideDetailDict.objectENGSummary
+            tourguidedbDict.objectHistory = tourGuideDetailDict.objectHistory
+            tourguidedbDict.production = tourGuideDetailDict.production
+            
+            tourguidedbDict.productionDates = tourGuideDetailDict.productionDates
+            tourguidedbDict.image = tourGuideDetailDict.image
+            tourguidedbDict.tourGuideId =  tourGuideDetailDict.tourGuideId
+            tourguidedbDict.artifactNumber = tourGuideDetailDict.artifactNumber
+            tourguidedbDict.artifactPosition = tourGuideDetailDict.artifactPosition
+            
+            tourguidedbDict.audioDescriptif = tourGuideDetailDict.audioDescriptif
+            tourguidedbDict.audioFile = tourGuideDetailDict.audioFile
+            tourguidedbDict.floorLevel =  tourGuideDetailDict.floorLevel
+            tourguidedbDict.galleyNumber = tourGuideDetailDict.galleyNumber
+            tourguidedbDict.artistOrCreatorOrAuthor = tourGuideDetailDict.artistOrCreatorOrAuthor
+            tourguidedbDict.periodOrStyle = tourGuideDetailDict.periodOrStyle
+            tourguidedbDict.techniqueAndMaterials = tourGuideDetailDict.techniqueAndMaterials
+            if(tourGuideDetailDict.images != nil) {
+                if((tourGuideDetailDict.images?.count)! > 0) {
+                    for i in 0 ... (tourGuideDetailDict.images?.count)!-1 {
+                        var tourGuideImgEntity: FloorMapImagesEntity!
+                        let tourGuideImg: FloorMapImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "FloorMapImagesEntity", into: managedObjContext) as! FloorMapImagesEntity
+                        tourGuideImg.image = tourGuideDetailDict.images?[i]
+                        
+                        tourGuideImgEntity = tourGuideImg
+                        tourguidedbDict.addToImagesRelation(tourGuideImgEntity)
+                        do {
+                            try managedObjContext.save()
+                            
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                        
+                    }
+                }
+            }
+            
+        }
+        else {
+            let tourguidedbDict: FloorMapTourGuideEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FloorMapTourGuideEntityAr", into: managedObjContext) as! FloorMapTourGuideEntityAr
+            tourguidedbDict.title = tourGuideDetailDict.title
+            tourguidedbDict.accessionNumber = tourGuideDetailDict.accessionNumber
+            tourguidedbDict.nid =  tourGuideDetailDict.nid
+            tourguidedbDict.curatorialDescription = tourGuideDetailDict.curatorialDescription
+            tourguidedbDict.diam = tourGuideDetailDict.diam
+            
+            tourguidedbDict.dimensions = tourGuideDetailDict.dimensions
+            tourguidedbDict.mainTitle = tourGuideDetailDict.mainTitle
+            tourguidedbDict.objectEngSummary =  tourGuideDetailDict.objectENGSummary
+            tourguidedbDict.objectHistory = tourGuideDetailDict.objectHistory
+            tourguidedbDict.production = tourGuideDetailDict.production
+            
+            tourguidedbDict.productionDates = tourGuideDetailDict.productionDates
+            tourguidedbDict.image = tourGuideDetailDict.image
+            tourguidedbDict.tourGuideId =  tourGuideDetailDict.tourGuideId
+            tourguidedbDict.artifactNumber = tourGuideDetailDict.artifactNumber
+            tourguidedbDict.artifactPosition = tourGuideDetailDict.artifactPosition
+            
+            tourguidedbDict.audioDescriptif = tourGuideDetailDict.audioDescriptif
+            tourguidedbDict.audioFile = tourGuideDetailDict.audioFile
+            tourguidedbDict.floorLevel =  tourGuideDetailDict.floorLevel
+            tourguidedbDict.galleyNumber = tourGuideDetailDict.galleyNumber
+            tourguidedbDict.artistOrCreatorOrAuthor = tourGuideDetailDict.artistOrCreatorOrAuthor
+            tourguidedbDict.periodOrStyle = tourGuideDetailDict.periodOrStyle
+            tourguidedbDict.techniqueAndMaterials = tourGuideDetailDict.techniqueAndMaterials
+            if(tourGuideDetailDict.images != nil) {
+                if((tourGuideDetailDict.images?.count)! > 0) {
+                    for i in 0 ... (tourGuideDetailDict.images?.count)!-1 {
+                        var tourGuideImgEntity: FloorMapImagesEntityAr!
+                        let tourGuideImg: FloorMapImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FloorMapImagesEntityAr", into: managedObjContext) as! FloorMapImagesEntityAr
+                        tourGuideImg.image = tourGuideDetailDict.images?[i]
+                        
+                        tourGuideImgEntity = tourGuideImg
+                        tourguidedbDict.addToImagesRelation(tourGuideImgEntity)
+                        do {
+                            try managedObjContext.save()
+                            
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                        
+                    }
+                }
+            }
+        }
+        do {
+            try managedObjContext.save()
+            
+            
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    func fetchTourGuideFromCoredata() {
+        do {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                var tourGuideArray = [FloorMapTourGuideEntity]()
+                tourGuideArray = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "tourGuideId", idValue: tourGuideId) as! [FloorMapTourGuideEntity]
+                if (tourGuideArray.count > 0) {
+                    for i in 0 ... tourGuideArray.count-1 {
+                        let tourGuideDict = tourGuideArray[i]
+                        var imgsArray : [String] = []
+                        let imgInfoArray = (tourGuideDict.imagesRelation?.allObjects) as! [FloorMapImagesEntity]
+                        if(imgInfoArray != nil) {
+                            if(imgInfoArray.count > 0) {
+                                for i in 0 ... imgInfoArray.count-1 {
+                                    imgsArray.append(imgInfoArray[i].image!)
+                                }
+                            }
+                        }
+                        self.floorMapArray.insert(TourGuideFloorMap(title: tourGuideDict.title, accessionNumber: tourGuideDict.accessionNumber, nid: tourGuideDict.nid, curatorialDescription: tourGuideDict.curatorialDescription, diam: tourGuideDict.diam, dimensions: tourGuideDict.dimensions, mainTitle: tourGuideDict.mainTitle, objectENGSummary: tourGuideDict.objectEngSummary, objectHistory: tourGuideDict.objectHistory, production: tourGuideDict.production, productionDates: tourGuideDict.productionDates, image: tourGuideDict.image, tourGuideId: tourGuideDict.tourGuideId,artifactNumber: tourGuideDict.artifactNumber, artifactPosition: tourGuideDict.artifactPosition, audioDescriptif: tourGuideDict.audioDescriptif, images: imgsArray, audioFile: tourGuideDict.audioFile, floorLevel: tourGuideDict.floorLevel, galleyNumber: tourGuideDict.galleyNumber, artistOrCreatorOrAuthor: tourGuideDict.artistOrCreatorOrAuthor, periodOrStyle: tourGuideDict.periodOrStyle, techniqueAndMaterials: tourGuideDict.techniqueAndMaterials), at: 0)
+                        
+                    }
+                    
+                    if (self.floorMapArray.count > 0) {
+                        if (self.fromTourString == fromTour.HighlightTour) {
+                            if(self.selectedScienceTourLevel == "2" ) {
+                                self.showOrHideLevelTwoHighlightTour()
+                            } else if (self.selectedScienceTourLevel == "3" ) {
+                                self.showOrHideLevelThreeHighlightTour()
+                            }
+                            
+                            if let arrayOffset = floorMapArray.index(where: {$0.nid == selectednid}) {
+                                self.addBottomSheetView(index: arrayOffset)
+                            }
+                        } else if(self.fromTourString == fromTour.scienceTour) {
+                            if(self.selectedScienceTourLevel == "2" ) {
+                                self.showOrHideLevelTwoScienceTour()
+                            } else if(self.selectedScienceTourLevel == "3") {
+                                self.showOrHideLevelThreeScienceTour()
+                            }
+                            if let arrayOffset = floorMapArray.index(where: {$0.nid == selectednid}) {
+                                self.addBottomSheetView(index: arrayOffset)
+                            }
+                        }
+                    }
+                   
+                }
+                
+                
+                
+            }
+            else {
+                var tourGuideArray = [FloorMapTourGuideEntityAr]()
+                tourGuideArray = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey: "tourGuideId", idValue: tourGuideId) as! [FloorMapTourGuideEntityAr]
+                if(tourGuideArray.count > 0) {
+                    for i in 0 ... tourGuideArray.count-1 {
+                        let tourGuideDict = tourGuideArray[i]
+                        var imgsArray : [String] = []
+                        let imgInfoArray = (tourGuideDict.imagesRelation?.allObjects) as! [FloorMapImagesEntity]
+                        if(imgInfoArray != nil) {
+                            if(imgInfoArray.count > 0) {
+                                for i in 0 ... imgInfoArray.count-1 {
+                                    imgsArray.append(imgInfoArray[i].image!)
+                                }
+                            }
+                        }
+                        self.floorMapArray.insert(TourGuideFloorMap(title: tourGuideDict.title, accessionNumber: tourGuideDict.accessionNumber, nid: tourGuideDict.nid, curatorialDescription: tourGuideDict.curatorialDescription, diam: tourGuideDict.diam, dimensions: tourGuideDict.dimensions, mainTitle: tourGuideDict.mainTitle, objectENGSummary: tourGuideDict.objectEngSummary, objectHistory: tourGuideDict.objectHistory, production: tourGuideDict.production, productionDates: tourGuideDict.productionDates, image: tourGuideDict.image, tourGuideId: tourGuideDict.tourGuideId,artifactNumber: tourGuideDict.artifactNumber, artifactPosition: tourGuideDict.artifactPosition, audioDescriptif: tourGuideDict.audioDescriptif, images: imgsArray, audioFile: tourGuideDict.audioFile, floorLevel: tourGuideDict.floorLevel, galleyNumber: tourGuideDict.galleyNumber, artistOrCreatorOrAuthor: tourGuideDict.artistOrCreatorOrAuthor, periodOrStyle: tourGuideDict.periodOrStyle, techniqueAndMaterials: tourGuideDict.techniqueAndMaterials), at: 0)
+                            
+                        
+                    }
+                    if (self.floorMapArray.count > 0) {
+                        if (self.fromTourString == fromTour.HighlightTour) {
+                            if(self.selectedScienceTourLevel == "2" ) {
+                                self.showOrHideLevelTwoHighlightTour()
+                            } else if (self.selectedScienceTourLevel == "3" ) {
+                                self.showOrHideLevelThreeHighlightTour()
+                            }
+                            if let arrayOffset = floorMapArray.index(where: {$0.nid == selectednid}) {
+                                self.addBottomSheetView(index: arrayOffset)
+                            }
+                        } else if(self.fromTourString == fromTour.scienceTour) {
+                            if(self.selectedScienceTourLevel == "2" ) {
+                                self.showOrHideLevelTwoScienceTour()
+                            } else if(self.selectedScienceTourLevel == "3") {
+                                self.showOrHideLevelThreeScienceTour()
+                            }
+                            if let arrayOffset = floorMapArray.index(where: {$0.nid == selectednid}) {
+                                self.addBottomSheetView(index: arrayOffset)
+                            }
+                        }
+                    }
+                }
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    func getContext() -> NSManagedObjectContext{
+        
+        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+        if #available(iOS 10.0, *) {
+            return
+                appDelegate!.persistentContainer.viewContext
+        } else {
+            return appDelegate!.managedObjectContext
+        }
+    }
+    func checkAddedToCoredata(entityName: String?,idKey:String?, idValue: String?) -> [NSManagedObject]
+    {
+        let managedContext = getContext()
+        var fetchResults : [NSManagedObject] = []
+        
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
+        if (idValue != nil) {
+            fetchRequest.predicate = NSPredicate(format: "\(idKey!) == %@", idValue!)
+            
+        }
+        fetchResults = try! managedContext.fetch(fetchRequest)
+        return fetchResults
+    }
+    func showNodata() {
+
     }
     
     
