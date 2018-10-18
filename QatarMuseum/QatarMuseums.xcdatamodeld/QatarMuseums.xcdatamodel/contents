@@ -12,17 +12,15 @@
         <attribute name="contactEmail" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="contactNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mobileLatitude" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mobileLongtitude" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="openingTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="subTitleDesc" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="titleDesc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tourGuideAvailability" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tourguideAvailable" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="mobileDescRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AboutDescriptionEntity" syncable="YES"/>
+        <relationship name="multimediaRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AboutMultimediaFileEntity" syncable="YES"/>
     </entity>
     <entity name="AboutEntityArabic" representedClassName="AboutEntityArabic" syncable="YES" codeGenerationType="class">
         <attribute name="contactEmailAr" optional="YES" attributeType="String" syncable="YES"/>
@@ -39,6 +37,15 @@
         <attribute name="tourguideAvailableAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tourGuideAvlblyAr" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="mobileDescRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AboutDescriptionEntityAr" syncable="YES"/>
+        <relationship name="multimediaRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AboutMultimediaFileEntityAr" syncable="YES"/>
+    </entity>
+    <entity name="AboutMultimediaFileEntity" representedClassName="AboutMultimediaFileEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="multimediaRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AboutEntity" syncable="YES"/>
+    </entity>
+    <entity name="AboutMultimediaFileEntityAr" representedClassName="AboutMultimediaFileEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="multimediaRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AboutEntityArabic" syncable="YES"/>
     </entity>
     <entity name="CollectionDetailsEntity" representedClassName="CollectionDetailsEntity" syncable="YES" codeGenerationType="class">
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
@@ -415,8 +422,8 @@
     <elements>
         <element name="AboutDescriptionEntity" positionX="-27" positionY="135" width="128" height="75"/>
         <element name="AboutDescriptionEntityAr" positionX="-18" positionY="144" width="128" height="75"/>
-        <element name="AboutEntity" positionX="-36" positionY="135" width="128" height="255"/>
-        <element name="AboutEntityArabic" positionX="-27" positionY="144" width="128" height="255"/>
+        <element name="AboutEntity" positionX="-36" positionY="135" width="128" height="225"/>
+        <element name="AboutEntityArabic" positionX="-27" positionY="144" width="128" height="270"/>
         <element name="CollectionDetailsEntity" positionX="-36" positionY="135" width="128" height="120"/>
         <element name="CollectionDetailsEntityAr" positionX="-27" positionY="144" width="128" height="120"/>
         <element name="CollectionsEntity" positionX="-36" positionY="126" width="128" height="90"/>
@@ -452,6 +459,7 @@
         <element name="FloorMapImagesEntity" positionX="0" positionY="144" width="128" height="75"/>
         <element name="FloorMapImagesEntityAr" positionX="18" positionY="162" width="128" height="75"/>
         <element name="FloorMapTourGuideEntity" positionX="-9" positionY="135" width="128" height="390"/>
+        <element name="FloorMapTourGuideEntityAr" positionX="-9" positionY="135" width="128" height="390"/>
         <element name="HeritageEntity" positionX="-63" positionY="27" width="128" height="195"/>
         <element name="HeritageEntityArabic" positionX="-54" positionY="63" width="128" height="195"/>
         <element name="HeritageImagesEntity" positionX="-27" positionY="135" width="128" height="75"/>
@@ -464,6 +472,7 @@
         <element name="PublicArtsEntityArabic" positionX="-54" positionY="117" width="128" height="180"/>
         <element name="PublicArtsImagesEntity" positionX="-18" positionY="144" width="128" height="75"/>
         <element name="PublicArtsImagesEntityAr" positionX="-9" positionY="153" width="128" height="75"/>
-        <element name="FloorMapTourGuideEntityAr" positionX="-9" positionY="135" width="128" height="390"/>
+        <element name="AboutMultimediaFileEntity" positionX="-9" positionY="135" width="128" height="75"/>
+        <element name="AboutMultimediaFileEntityAr" positionX="0" positionY="144" width="128" height="75"/>
     </elements>
 </model>

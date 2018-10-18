@@ -8,5 +8,5 @@
 
 #import "FSCalendar.h"
 #import "KASlideShow.h"
-
+#import "iCarousel.h"
 #endif

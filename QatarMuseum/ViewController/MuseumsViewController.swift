@@ -268,12 +268,17 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     func loadBottomCellPages(cellObj: MuseumBottomCell, selectedItem: String?) {
        if ((selectedItem == "About") || (selectedItem == "عن")) {
-            let heritageDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
-            heritageDtlView.pageNameString = PageName.museumAbout
-//            if(museumArray.count > 0) {
-//                 heritageDtlView.aboutDetailtArray = museumArray
-//            }
-            heritageDtlView.museumId = museumId
+//            let heritageDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
+//            heritageDtlView.pageNameString = PageName.museumAbout
+//            heritageDtlView.museumId = museumId
+        
+        let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
+        
+        let heritageDtlView = detailStoryboard.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
+        heritageDtlView.pageNameString = PageName2.museumAbout
+        heritageDtlView.museumId = museumId
+
+        
             let transition = CATransition()
             transition.duration = 0.3
             transition.type = kCATransitionFade
