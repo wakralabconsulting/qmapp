@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -544,7 +544,6 @@
 				9735B6C6D5A616E4AA4B1DA082C73FC8 /* Resources */,
 				6378E0FF047181ADC5523F598298A28C /* Support Files */,
 			);
-			name = YouTubePlayer;
 			path = YouTubePlayer;
 			sourceTree = "<group>";
 		};
