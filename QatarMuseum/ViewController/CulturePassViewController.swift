@@ -8,7 +8,9 @@
 import Crashlytics
 import UIKit
 
-class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoonPopUpProtocol {
+class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoonPopUpProtocol,LoginPopUpProtocol {
+    
+    
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var introLabel: UILabel!
@@ -21,6 +23,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     @IBOutlet weak var benefitsDiscountLabel: UILabel!
     var fromHome: Bool = false
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
+    var loginPopUpView : LoginPopupPage = LoginPopupPage()
     let benefitList = ["15% Discount at QM Cafe's across all venues",
                        "10% Discount on items in all QM Gift Shops (without minimum purchase)",
                        "10% Discount at Idam Restaurant at lunch time",
@@ -104,14 +107,31 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     
     @IBAction func didTapLogInButton(_ sender: UIButton) {
-        loadComingSoonPopup()
+        //loadComingSoonPopup()
+        loadLoginPopup()
         self.logInButton.transform = CGAffineTransform(scaleX: 1, y: 1)
     }
     
     @IBAction func logInButtonTouchDown(_ sender: UIButton) {
         self.logInButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
     }
+    func loadLoginPopup() {
+        loginPopUpView  = LoginPopupPage(frame: self.view.frame)
+        loginPopUpView.loginPopupDelegate = self
+        self.view.addSubview(loginPopUpView)
+    }
+    //MARK: Login Popup Delegate
+    func popupCloseButtonPressed() {
+        self.loginPopUpView.removeFromSuperview()
+    }
     
+    func loginButtonPressed() {
+        
+    }
+    
+    func forgotButtonPressed() {
+        
+    }
     //MARK: Header delegates
     func headerCloseButtonPressed() {
         let transition = CATransition()

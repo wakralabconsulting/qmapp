@@ -187,6 +187,8 @@
 		B8EAB7BD20CA424300C001B2 /* LunarFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EAB7B820CA424300C001B2 /* LunarFormatter.swift */; };
 		B8EAB7C020CA67CD00C001B2 /* EventPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8EAB7BF20CA67CD00C001B2 /* EventPopUp.xib */; };
 		B8EAB7C220CA67E000C001B2 /* EventPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EAB7C120CA67E000C001B2 /* EventPopupView.swift */; };
+		B8F00C8321787CF800320DF1 /* LoginPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8F00C8221787CF800320DF1 /* LoginPopupView.xib */; };
+		B8F00C8521787D0D00320DF1 /* LoginPopupPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F00C8421787D0D00320DF1 /* LoginPopupPage.swift */; };
 		B8F3A940212728EE005360AD /* CommonStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F3A93F212728EE005360AD /* CommonStrings.swift */; };
 		B8FC190120DE854400D00E6B /* MuseumBottomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FC190020DE854400D00E6B /* MuseumBottomCell.swift */; };
 		B8FEC77C2112E57100648F66 /* Dining.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FEC77B2112E57100648F66 /* Dining.swift */; };
@@ -423,6 +425,8 @@
 		B8EAB7B820CA424300C001B2 /* LunarFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunarFormatter.swift; sourceTree = "<group>"; };
 		B8EAB7BF20CA67CD00C001B2 /* EventPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventPopUp.xib; sourceTree = "<group>"; };
 		B8EAB7C120CA67E000C001B2 /* EventPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPopupView.swift; sourceTree = "<group>"; };
+		B8F00C8221787CF800320DF1 /* LoginPopupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginPopupView.xib; sourceTree = "<group>"; };
+		B8F00C8421787D0D00320DF1 /* LoginPopupPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPopupPage.swift; sourceTree = "<group>"; };
 		B8F3A93F212728EE005360AD /* CommonStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonStrings.swift; sourceTree = "<group>"; };
 		B8FC190020DE854400D00E6B /* MuseumBottomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseumBottomCell.swift; sourceTree = "<group>"; };
 		B8FEC77B2112E57100648F66 /* Dining.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dining.swift; sourceTree = "<group>"; };
@@ -707,6 +711,7 @@
 		B80DC08720C7943100E28034 /* ReusableComponents */ = {
 			isa = PBXGroup;
 			children = (
+				B8F00C8121787CD300320DF1 /* LoginPopup */,
 				B827299321778B2F0017EC71 /* VersaPlayer */,
 				B8C31CDC2162435B00AE7788 /* iCarousel */,
 				B8CA08D52146D38400783642 /* BottomSheet */,
@@ -1116,6 +1121,15 @@
 			path = EventPopup;
 			sourceTree = "<group>";
 		};
+		B8F00C8121787CD300320DF1 /* LoginPopup */ = {
+			isa = PBXGroup;
+			children = (
+				B8F00C8221787CF800320DF1 /* LoginPopupView.xib */,
+				B8F00C8421787D0D00320DF1 /* LoginPopupPage.swift */,
+			);
+			path = LoginPopup;
+			sourceTree = "<group>";
+		};
 		B8FC18FF20DE84FA00D00E6B /* MuseumBottomCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1261,6 +1275,7 @@
 				B8AFA2ED20E78BA9008838A6 /* DINNextLTArabic-Regular.ttf in Resources */,
 				B82729C121778B2F0017EC71 /* .gitkeep in Resources */,
 				B8D1229020C9092D00772507 /* LoadingXib.xib in Resources */,
+				B8F00C8321787CF800320DF1 /* LoginPopupView.xib in Resources */,
 				B8AFA2F220E78E09008838A6 /* DINNextLTPro-Regular.ttf in Resources */,
 				B8B54D6C20FF514E00B21348 /* CollectionDetailView.xib in Resources */,
 				B8D827ED216239DC0092262A /* DetailPageStoryboard.storyboard in Resources */,
@@ -1493,6 +1508,7 @@
 				B82729C021778B2F0017EC71 /* VersaPlayerControlsCoordinator.swift in Sources */,
 				B8A1479B20FCA2AB00833B7B /* TourGuideViewController.swift in Sources */,
 				B85AE812217744D600A658A2 /* MapViewController.swift in Sources */,
+				B8F00C8521787D0D00320DF1 /* LoginPopupPage.swift in Sources */,
 				B8E024ED211042C200CB18E2 /* CollectionDetailViewController.swift in Sources */,
 				B812BA04210AF3540083E0E2 /* QMFont.swift in Sources */,
 				B806B7D72152BE6A00F9534F /* CollectionDetail.swift in Sources */,
