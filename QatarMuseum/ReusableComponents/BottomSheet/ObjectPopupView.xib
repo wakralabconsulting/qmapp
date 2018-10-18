@@ -29,7 +29,7 @@
                         <rect key="frame" x="0.0" y="-0.5" width="345" height="200"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Albarello" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yl5-mB-uaq">
-                                <rect key="frame" x="20" y="7" width="94.5" height="27"/>
+                                <rect key="frame" x="20" y="7" width="310" height="27"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="27" id="3J4-Dh-2Pr"/>
                                 </constraints>
@@ -40,7 +40,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mMZ-D1-NNh">
                                 <rect key="frame" x="10" y="47" width="70" height="100"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="science_tour_object" translatesAutoresizingMaskIntoConstraints="NO" id="xRI-LK-efb">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_imageX2" translatesAutoresizingMaskIntoConstraints="NO" id="xRI-LK-efb">
                                         <rect key="frame" x="0.0" y="0.0" width="65" height="100"/>
                                     </imageView>
                                 </subviews>
@@ -116,11 +116,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="KqM-qd-xSA" secondAttribute="trailing" constant="11" id="0pu-gd-Azl"/>
+                            <constraint firstAttribute="bottom" secondItem="KqM-qd-xSA" secondAttribute="bottom" constant="35.5" id="2Ra-Eq-wna"/>
                             <constraint firstItem="Iuc-Fs-MhJ" firstAttribute="leading" secondItem="0mn-mk-5hw" secondAttribute="leading" id="4kT-Q0-fee"/>
                             <constraint firstItem="Rpx-sd-T7S" firstAttribute="height" secondItem="8uJ-x8-l0t" secondAttribute="height" id="4vT-ul-gcx"/>
                             <constraint firstItem="h3J-Mc-SvW" firstAttribute="centerY" secondItem="Iuc-Fs-MhJ" secondAttribute="centerY" id="644-wn-qiE"/>
                             <constraint firstItem="8uJ-x8-l0t" firstAttribute="bottom" secondItem="xRI-LK-efb" secondAttribute="bottom" id="BHw-Sz-Pfe"/>
                             <constraint firstItem="Iuc-Fs-MhJ" firstAttribute="trailing" secondItem="0mn-mk-5hw" secondAttribute="trailing" id="Dak-KL-ehi"/>
+                            <constraint firstAttribute="trailing" secondItem="Yl5-mB-uaq" secondAttribute="trailing" constant="15" id="Deb-lN-9Mc"/>
                             <constraint firstItem="Iuc-Fs-MhJ" firstAttribute="trailing" secondItem="rDb-f4-Nvp" secondAttribute="trailing" id="GQh-OA-sSE"/>
                             <constraint firstItem="h3J-Mc-SvW" firstAttribute="leading" secondItem="Rpx-sd-T7S" secondAttribute="leading" id="K2Y-Qw-tnH"/>
                             <constraint firstAttribute="height" constant="200" id="Kfn-Yd-jqk"/>
@@ -178,6 +180,6 @@
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
     </objects>
     <resources>
-        <image name="science_tour_object" width="390" height="520"/>
+        <image name="default_imageX2" width="235" height="120"/>
     </resources>
 </document>

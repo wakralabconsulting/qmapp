@@ -68,12 +68,13 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
+    //changed
     if (_needsAdjustingViewFrame) {
         _needsAdjustingViewFrame = NO;
         _collectionViewLayout.itemSize = CGSizeMake(1, 1);
         [_collectionViewLayout invalidateLayout];
-        _collectionView.frame = CGRectMake(0, self.fs_height*0.1, self.fs_width, self.fs_height*0.9);
+       // _collectionView.frame = CGRectMake(0, self.fs_height*0.1, self.fs_width, self.fs_height*0.9);
+         _collectionView.frame = CGRectMake(25, self.fs_height*0.1, self.fs_width, self.fs_height*0.9);
     }
     
     if (_needsAdjustingMonthPosition) {

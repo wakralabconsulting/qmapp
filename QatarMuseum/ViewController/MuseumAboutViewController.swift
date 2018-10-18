@@ -9,6 +9,8 @@
 
 
 import Alamofire
+import AVFoundation
+import AVKit
 import CoreData
 import Firebase
 import  MapKit
@@ -24,7 +26,8 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     @IBOutlet weak var heritageDetailTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
     
-   
+    
+    
     
     
     
@@ -42,11 +45,11 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     let networkReachability = NetworkReachabilityManager()
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var museumId : String? = nil
-    var imgArray = NSArray()
+   // var imgArray = NSArray()
     var carousel = iCarousel()
     var imgButton = UIButton()
     var transparentView = UIView()
-    
+    var selectedCell : MuseumAboutCell?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -85,7 +88,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         loadingView.isHidden = false
         loadingView.showLoading()
         setTopBarImage()
-        imgArray = ["dajar_women","artifactimg","001_MIA_MW.146_005","exhibition","firestation"]
+        //imgArray = ["dajar_women","artifactimg","001_MIA_MW.146_005","exhibition","firestation"]
         
     }
     
@@ -133,6 +136,9 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                             imageView.image = UIImage(named: "default_imageX2")
                         }
                     }
+                }
+                if(imageView.image == nil) {
+                     imageView.image = UIImage(named: "default_imageX2")
                 }
             }
             else {
@@ -227,6 +233,15 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             () in
             self.loadLocationInMap(currentRow: indexPath.row)
         }
+        heritageCell.loadMapView = {
+            () in
+            self.loadLocationMap(currentRow: indexPath.row)
+        }
+        heritageCell.loadAboutVideo = {
+            () in
+            self.showVideoInAboutPage(currentRow: indexPath.row)
+        }
+        selectedCell = heritageCell
         loadingView.stopLoading()
         loadingView.isHidden = true
         return heritageCell
@@ -247,6 +262,39 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
 //    func setShareAction(cellObj :HeritageDetailCell) {
 //
 //    }
+    func loadLocationMap(currentRow: Int) {
+        let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
+        
+        let mapDetailView = detailStoryboard.instantiateViewController(withIdentifier: "mapViewId") as! MapViewController
+        mapDetailView.aboutData = aboutDetailtArray[0]
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionFade
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(mapDetailView, animated: false, completion: nil)
+
+    }
+    func showVideoInAboutPage(currentRow: Int) {
+        let aboutData = aboutDetailtArray[currentRow]
+        if (aboutData.multimediaVideo != nil) {
+            if((aboutData.multimediaVideo?.count)! > 0) {
+                let urlString = aboutData.multimediaVideo![0]
+                if (urlString != nil && urlString != "") {
+                    let player = AVPlayer(url: URL(string: urlString)!)
+                    //let player = AVPlayer(url: filePathURL)
+                    let playerController = AVPlayerViewController()
+                    playerController.player = player
+                    
+                    self.present(playerController, animated: true) {
+                        player.play()
+                    }
+                }
+            }
+        }
+        
+        
+    }
     
     func loadLocationInMap(currentRow: Int) {
         var latitudeString  = String()
@@ -327,6 +375,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     @objc func buttonAction(sender: UIButton!) {
+        selectedCell?.player.pause()
         sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         let transition = CATransition()
         transition.duration = 0.25
@@ -521,8 +570,14 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                     if (heritageArray.count > 0) {
                         let heritageDict = heritageArray[0]
                         if((heritageDict.detailshortdescription != nil) && (heritageDict.detaillongdescription != nil) ) {
-                            self.heritageDetailtArray.insert(Heritage(id: heritageDict.listid, name: heritageDict.listname, location: heritageDict.detaillocation, latitude: heritageDict.detaillatitude, longitude: heritageDict.detaillongitude, image: heritageDict.listimage, shortdescription: heritageDict.detailshortdescription, longdescription: heritageDict.detaillongdescription, sortid: heritageDict.listsortid), at: 0)
-                            
+                            var imagesArray : [String] = []
+                            let heritageImagesArray = (heritageDict.imagesRelation?.allObjects) as! [HeritageImagesEntity]
+                            if(heritageImagesArray.count > 0) {
+                                for i in 0 ... heritageImagesArray.count-1 {
+                                    imagesArray.append(heritageImagesArray[i].images!)
+                                }
+                            }
+                            self.heritageDetailtArray.insert(Heritage(id: heritageDict.listid, name: heritageDict.listname, location: heritageDict.detaillocation, latitude: heritageDict.detaillatitude, longitude: heritageDict.detaillongitude, image: heritageDict.listimage, shortdescription: heritageDict.detailshortdescription, longdescription: heritageDict.detaillongdescription, images: imagesArray, sortid: heritageDict.listsortid), at: 0)
                             
                             if(heritageDetailtArray.count == 0){
                                 self.showNodata()
@@ -549,7 +604,14 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                     if (heritageArray.count > 0) {
                         let heritageDict = heritageArray[0]
                         if( (heritageDict.detailshortdescarabic != nil) && (heritageDict.detaillongdescriptionarabic != nil)) {
-                            self.heritageDetailtArray.insert(Heritage(id: heritageDict.listid, name: heritageDict.listnamearabic, location: heritageDict.detaillocationarabic, latitude: heritageDict.detaillatitudearabic, longitude: heritageDict.detaillongitudearabic, image: heritageDict.listimagearabic, shortdescription: heritageDict.detailshortdescarabic, longdescription: heritageDict.detaillongdescriptionarabic, sortid: heritageDict.listsortidarabic), at: 0)
+                            var imagesArray : [String] = []
+                            let heritageImagesArray = (heritageDict.imagesRelation?.allObjects) as! [HeritageImagesEntityAr]
+                            if(heritageImagesArray.count > 0) {
+                                for i in 0 ... heritageImagesArray.count-1 {
+                                    imagesArray.append(heritageImagesArray[i].images!)
+                                }
+                            }
+                            self.heritageDetailtArray.insert(Heritage(id: heritageDict.listid, name: heritageDict.listnamearabic, location: heritageDict.detaillocationarabic, latitude: heritageDict.detaillatitudearabic, longitude: heritageDict.detaillongitudearabic, image: heritageDict.listimagearabic, shortdescription: heritageDict.detailshortdescarabic, longdescription: heritageDict.detaillongdescriptionarabic,images: imagesArray, sortid: heritageDict.listsortidarabic), at: 0)
                             
                             
                             if(heritageDetailtArray.count == 0){
@@ -670,7 +732,14 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                     if (publicArtsArray.count > 0) {
                         let publicArtsDict = publicArtsArray[0]
                         if((publicArtsDict.detaildescription != nil) && (publicArtsDict.shortdescription != nil) ) {
-                            self.publicArtsDetailtArray.insert(PublicArtsDetail(id:publicArtsDict.id , name:publicArtsDict.name, description: publicArtsDict.detaildescription, shortdescription: publicArtsDict.shortdescription, image: publicArtsDict.image), at: 0)
+                            var imagesArray : [String] = []
+                            let publicArtsImagesArray = (publicArtsDict.publicImagesRelation?.allObjects) as! [PublicArtsImagesEntity]
+                            if(publicArtsImagesArray.count > 0) {
+                                for i in 0 ... publicArtsImagesArray.count-1 {
+                                    imagesArray.append(publicArtsImagesArray[i].images!)
+                                }
+                            }
+                            self.publicArtsDetailtArray.insert(PublicArtsDetail(id:publicArtsDict.id , name:publicArtsDict.name, description: publicArtsDict.detaildescription, shortdescription: publicArtsDict.shortdescription, image: publicArtsDict.image, images: imagesArray,longitude: publicArtsDict.longitude, latitude: publicArtsDict.latitude), at: 0)
                             
                             if(publicArtsDetailtArray.count == 0){
                                 self.showNodata()
@@ -698,7 +767,14 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                     if (publicArtsArray.count > 0)  {
                         let publicArtsDict = publicArtsArray[0]
                         if((publicArtsDict.descriptionarabic != nil) && (publicArtsDict.shortdescriptionarabic != nil)) {
-                            self.publicArtsDetailtArray.insert(PublicArtsDetail(id:publicArtsDict.id , name:publicArtsDict.namearabic, description: publicArtsDict.descriptionarabic, shortdescription: publicArtsDict.shortdescriptionarabic, image: publicArtsDict.imagearabic), at: 0)
+                            var imagesArray : [String] = []
+                            let publicArtsImagesArray = (publicArtsDict.publicImagesRelation?.allObjects) as! [PublicArtsImagesEntityAr]
+                            if(publicArtsImagesArray.count > 0) {
+                                for i in 0 ... publicArtsImagesArray.count-1 {
+                                    imagesArray.append(publicArtsImagesArray[i].images!)
+                                }
+                            }
+                            self.publicArtsDetailtArray.insert(PublicArtsDetail(id:publicArtsDict.id , name:publicArtsDict.namearabic, description: publicArtsDict.descriptionarabic, shortdescription: publicArtsDict.shortdescriptionarabic, image: publicArtsDict.imagearabic,images: imagesArray,longitude: publicArtsDict.longitudearabic, latitude: publicArtsDict.latitudearabic), at: 0)
                             
                             
                             if(publicArtsDetailtArray.count == 0){
@@ -721,39 +797,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-    //MARK:MUSEUMABOUT
-    /*
-     
-     func getAboutDetailsFromServer() {
-     _ = Alamofire.request(QatarMuseumRouter.MuseumAbout(["mid": museumId ?? "0"])).responseObject { (response: DataResponse<MuseumAboutDetails>) -> Void in
-     switch response.result {
-     case .success(let data):
-     self.aboutDetailtArray = data.museumAbout!
-     self.setTopBarImage()
-     self.saveOrUpdateAboutCoredata()
-     self.heritageDetailTableView.reloadData()
-     self.loadingView.stopLoading()
-     self.loadingView.isHidden = true
-     if (self.aboutDetailtArray.count == 0) {
-     self.loadingView.stopLoading()
-     self.loadingView.noDataView.isHidden = false
-     self.loadingView.isHidden = false
-     self.loadingView.showNoDataView()
-     }
-     case .failure( _):
-     var errorMessage: String
-     errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
-     comment: "Setting the content of the alert"))
-     self.loadingView.stopLoading()
-     self.loadingView.noDataView.isHidden = false
-     self.loadingView.isHidden = false
-     self.loadingView.showNoDataView()
-     self.loadingView.noDataLabel.text = errorMessage
-     }
-     }
-     }
-     */
-    
+    //MARK: ABout Webservice
     func getAboutDetailsFromServer()
     {
         _ = Alamofire.request(QatarMuseumRouter.LandingPageMuseums(["nid": museumId ?? 0])).responseObject { (response: DataResponse<Museums>) -> Void in
@@ -765,6 +809,13 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.heritageDetailTableView.reloadData()
                 self.loadingView.stopLoading()
                 self.loadingView.isHidden = true
+                if(self.aboutDetailtArray.count != 0) {
+                    if(self.aboutDetailtArray[0].multimediaFile != nil) {
+                        if((self.aboutDetailtArray[0].multimediaFile?.count)! > 0) {
+                            self.carousel.reloadData()
+                        }
+                    }
+                }
                 if (self.aboutDetailtArray.count == 0) {
                     self.loadingView.stopLoading()
                     self.loadingView.noDataView.isHidden = false
@@ -795,12 +846,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                     
                     //update
                     let aboutdbDict = fetchData[0]
-                    if(aboutDetailDict.multimediaFile != nil) {
-                        if ((aboutDetailtArray[0].multimediaFile?.count)! > 0) {
-                            let url = aboutDetailDict.multimediaFile![0]
-                            aboutdbDict.image = url
-                        }
-                    }
+
                     
                     aboutdbDict.name = aboutDetailDict.name
                     aboutdbDict.id = aboutDetailDict.id
@@ -810,15 +856,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                     aboutdbDict.mobileLongtitude = aboutDetailDict.mobileLongtitude
                     aboutdbDict.subtitle = aboutDetailDict.subtitle
                     aboutdbDict.openingTime = aboutDetailDict.openingTime
-                    if(aboutDetailDict.mobileDescription?.count == 1) {
-                        let titleDescription = aboutDetailDict.mobileDescription![0]
-                        aboutdbDict.titleDesc = titleDescription
-                    } else if((aboutDetailDict.mobileDescription?.count)! > 1) {
-                        let titleDescription = aboutDetailDict.mobileDescription![0]
-                        aboutdbDict.titleDesc = titleDescription
-                        let subTitleDescription = aboutDetailDict.mobileDescription![1]
-                        aboutdbDict.subTitleDesc = subTitleDescription.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
-                    }
+
                     aboutdbDict.mobileLatitude = aboutDetailDict.mobileLatitude
                     aboutdbDict.tourGuideAvailability = aboutDetailDict.tourGuideAvailability
                     
@@ -842,7 +880,27 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                             
                         }
                     }
-                    
+
+                    //MultimediaFile
+                    if(aboutDetailDict.multimediaFile != nil){
+                        if((aboutDetailDict.multimediaFile?.count)! > 0) {
+                            for i in 0 ... (aboutDetailDict.multimediaFile?.count)!-1 {
+                                var aboutImage: AboutMultimediaFileEntity!
+                                let aboutImgaeArray: AboutMultimediaFileEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutMultimediaFileEntity", into: managedContext) as! AboutMultimediaFileEntity
+                                aboutImgaeArray.image = aboutDetailDict.multimediaFile![i]
+                                
+                                aboutImage = aboutImgaeArray
+                                aboutdbDict.addToMultimediaRelation(aboutImage)
+                                do {
+                                    try managedContext.save()
+                                    
+                                } catch let error as NSError {
+                                    print("Could not save. \(error), \(error.userInfo)")
+                                }
+                                
+                            }
+                        }
+                    }
                     
                     do{
                         try managedContext.save()
@@ -883,15 +941,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                     aboutdbDict.mobileLongtitudeAr = aboutDetailDict.mobileLongtitude
                     aboutdbDict.subtitleAr = aboutDetailDict.subtitle
                     aboutdbDict.openingTimeAr = aboutDetailDict.openingTime
-                    if(aboutDetailDict.mobileDescription?.count == 1) {
-                        let titleDescription = aboutDetailDict.mobileDescription![0]
-                        aboutdbDict.titleDescAr = titleDescription
-                    } else if((aboutDetailDict.mobileDescription?.count)! > 1) {
-                        let titleDescription = aboutDetailDict.mobileDescription![0]
-                        aboutdbDict.titleDescAr = titleDescription
-                        let subTitleDescription = aboutDetailDict.mobileDescription![1]
-                        aboutdbDict.subTitleDescAr = subTitleDescription
-                    }
+
                     aboutdbDict.mobileLatitudear = aboutDetailDict.mobileLatitude
                     aboutdbDict.tourGuideAvlblyAr = aboutDetailDict.tourGuideAvailability
                     
@@ -916,7 +966,26 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                         }
                     }
                     
-                    
+                    //MultimediaFile
+                    if(aboutDetailDict.multimediaFile != nil){
+                        if((aboutDetailDict.multimediaFile?.count)! > 0) {
+                            for i in 0 ... (aboutDetailDict.multimediaFile?.count)!-1 {
+                                var aboutImage: AboutMultimediaFileEntityAr!
+                                let aboutImgaeArray: AboutMultimediaFileEntityAr = NSEntityDescription.insertNewObject(forEntityName: "AboutMultimediaFileEntityAr", into: managedContext) as! AboutMultimediaFileEntityAr
+                                aboutImgaeArray.image = aboutDetailDict.multimediaFile![i]
+                                
+                                aboutImage = aboutImgaeArray
+                                aboutdbDict.addToMultimediaRelation(aboutImage)
+                                do {
+                                    try managedContext.save()
+                                    
+                                } catch let error as NSError {
+                                    print("Could not save. \(error), \(error.userInfo)")
+                                }
+                                
+                            }
+                        }
+                    }
                     do{
                         try managedContext.save()
                     }
@@ -936,16 +1005,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     func saveToCoreData(aboutDetailDict: Museum, managedObjContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let aboutdbDict: AboutEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutEntity", into: managedObjContext) as! AboutEntity
-            
-            
-            
-            if(aboutDetailDict.multimediaFile != nil) {
-                if ((aboutDetailtArray[0].multimediaFile?.count)! > 0) {
-                    let url = aboutDetailDict.multimediaFile![0]
-                    aboutdbDict.image = url
-                }
-            }
-            
+
             aboutdbDict.name = aboutDetailDict.name
             aboutdbDict.id = aboutDetailDict.id
             aboutdbDict.tourguideAvailable = aboutDetailDict.tourguideAvailable
@@ -954,15 +1014,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             aboutdbDict.mobileLongtitude = aboutDetailDict.mobileLongtitude
             aboutdbDict.subtitle = aboutDetailDict.subtitle
             aboutdbDict.openingTime = aboutDetailDict.openingTime
-            if(aboutDetailDict.mobileDescription?.count == 1) {
-                let titleDescription = aboutDetailDict.mobileDescription![0]
-                aboutdbDict.titleDesc = titleDescription
-            } else if((aboutDetailDict.mobileDescription?.count)! > 1) {
-                let titleDescription = aboutDetailDict.mobileDescription![0]
-                aboutdbDict.titleDesc = titleDescription
-                let subTitleDescription = aboutDetailDict.mobileDescription![1]
-                aboutdbDict.subTitleDesc = subTitleDescription
-            }
+
             aboutdbDict.mobileLatitude = aboutDetailDict.mobileLatitude
             aboutdbDict.tourGuideAvailability = aboutDetailDict.tourGuideAvailability
             
@@ -985,17 +1037,33 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                     
                 }
             }
+
+            //MultimediaFile
+            if(aboutDetailDict.multimediaFile != nil){
+                if((aboutDetailDict.multimediaFile?.count)! > 0) {
+                    for i in 0 ... (aboutDetailDict.multimediaFile?.count)!-1 {
+                        var aboutImage: AboutMultimediaFileEntity!
+                        let aboutImgaeArray: AboutMultimediaFileEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutMultimediaFileEntity", into: managedObjContext) as! AboutMultimediaFileEntity
+                        aboutImgaeArray.image = aboutDetailDict.multimediaFile![i]
+                        
+                        aboutImage = aboutImgaeArray
+                        aboutdbDict.addToMultimediaRelation(aboutImage)
+                        do {
+                            try managedObjContext.save()
+                            
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                        
+                    }
+                }
+            }
             
         }
         else {
             let aboutdbDict: AboutEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "AboutEntityArabic", into: managedObjContext) as! AboutEntityArabic
             
-            if(aboutDetailDict.multimediaFile != nil) {
-                if ((aboutDetailtArray[0].multimediaFile?.count)! > 0) {
-                    let url = aboutDetailDict.multimediaFile![0]
-                    aboutdbDict.image = url
-                }
-            }
+
             aboutdbDict.nameAr = aboutDetailDict.name
             aboutdbDict.id = aboutDetailDict.id
             aboutdbDict.tourguideAvailableAr = aboutDetailDict.tourguideAvailable
@@ -1004,15 +1072,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             aboutdbDict.mobileLongtitudeAr = aboutDetailDict.mobileLongtitude
             aboutdbDict.subtitleAr = aboutDetailDict.subtitle
             aboutdbDict.openingTimeAr = aboutDetailDict.openingTime
-            if(aboutDetailDict.mobileDescription?.count == 1) {
-                let titleDescription = aboutDetailDict.mobileDescription![0]
-                aboutdbDict.titleDescAr = titleDescription
-            } else if((aboutDetailDict.mobileDescription?.count)! > 1) {
-                let titleDescription = aboutDetailDict.mobileDescription![0]
-                aboutdbDict.titleDescAr = titleDescription
-                let subTitleDescription = aboutDetailDict.mobileDescription![1]
-                aboutdbDict.subTitleDescAr = subTitleDescription
-            }
+
             aboutdbDict.mobileLatitudear = aboutDetailDict.mobileLatitude
             aboutdbDict.tourGuideAvlblyAr = aboutDetailDict.tourGuideAvailability
             
@@ -1033,6 +1093,27 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                         print("Could not save. \(error), \(error.userInfo)")
                     }
                     
+                }
+            }
+
+            //MultimediaFile
+            if(aboutDetailDict.multimediaFile != nil){
+                if((aboutDetailDict.multimediaFile?.count)! > 0) {
+                    for i in 0 ... (aboutDetailDict.multimediaFile?.count)!-1 {
+                        var aboutImage: AboutMultimediaFileEntityAr!
+                        let aboutImgaeArray: AboutMultimediaFileEntityAr = NSEntityDescription.insertNewObject(forEntityName: "AboutMultimediaFileEntityAr", into: managedObjContext) as! AboutMultimediaFileEntityAr
+                        aboutImgaeArray.image = aboutDetailDict.multimediaFile![i]
+                        
+                        aboutImage = aboutImgaeArray
+                        aboutdbDict.addToMultimediaRelation(aboutImage)
+                        do {
+                            try managedObjContext.save()
+                            
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                        
+                    }
                 }
             }
             
@@ -1060,30 +1141,25 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                     
                     if (aboutArray.count > 0 ){
                         let aboutDict = aboutArray[0]
-                        
-                        
-                        // descriptionArray.append(aboutDict.titleDesc!)
-                        // descriptionArray.append(aboutDict.subTitleDesc!)
-                        
-                        var imageArray : [String] = []
-                        if(aboutDict.image != nil) {
-                            imageArray.append(aboutDict.image!)
-                        }
-                        
-                        
-                        
-                        
-                        
-                        
+        
                         var descriptionArray : [String] = []
                         let aboutInfoArray = (aboutDict.mobileDescRelation?.allObjects) as! [AboutDescriptionEntity]
-                        
-                        for i in 0 ... aboutInfoArray.count-1 {
-                            descriptionArray.append(aboutInfoArray[i].mobileDesc!)
+                         if(aboutInfoArray.count > 0) {
+                            for i in 0 ... aboutInfoArray.count-1 {
+                                descriptionArray.append(aboutInfoArray[i].mobileDesc!)
+                            }
                         }
                         
+
                         
-                        self.aboutDetailtArray.insert(Museum(name: aboutDict.name, id: aboutDict.id, tourguideAvailable: aboutDict.tourguideAvailable, contactNumber: aboutDict.contactNumber, contactEmail: aboutDict.contactEmail, mobileLongtitude: aboutDict.mobileLongtitude, subtitle: aboutDict.subtitle, openingTime: aboutDict.openingTime, mobileDescription: descriptionArray, multimediaFile: imageArray, mobileLatitude: aboutDict.mobileLatitude, tourGuideAvailability: aboutDict.tourGuideAvailability),at: 0)
+                        var multimediaArray : [String] = []
+                        let mutimediaInfoArray = (aboutDict.multimediaRelation?.allObjects) as! [AboutMultimediaFileEntity]
+                        if(mutimediaInfoArray.count > 0) {
+                            for i in 0 ... mutimediaInfoArray.count-1 {
+                                multimediaArray.append(mutimediaInfoArray[i].image!)
+                            }
+                        }
+                        self.aboutDetailtArray.insert(Museum(name: aboutDict.name, id: aboutDict.id, tourguideAvailable: aboutDict.tourguideAvailable, contactNumber: aboutDict.contactNumber, contactEmail: aboutDict.contactEmail, mobileLongtitude: aboutDict.mobileLongtitude, subtitle: aboutDict.subtitle, openingTime: aboutDict.openingTime, mobileDescription: descriptionArray, multimediaFile: multimediaArray, mobileLatitude: aboutDict.mobileLatitude, tourGuideAvailability: aboutDict.tourGuideAvailability,multimediaVideo: nil),at: 0)
                         
                         
                         if(aboutDetailtArray.count == 0){
@@ -1108,17 +1184,23 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                     
                     if (aboutArray.count > 0) {
                         let aboutDict = aboutArray[0]
-                        var imageArray : [String] = []
-                        if(aboutDict.image != nil) {
-                            imageArray.append(aboutDict.image!)
-                        }
                         var descriptionArray : [String] = []
                         let aboutInfoArray = (aboutDict.mobileDescRelation?.allObjects) as! [AboutDescriptionEntityAr]
-                        
-                        for i in 0 ... aboutInfoArray.count-1 {
-                            descriptionArray.append(aboutInfoArray[i].mobileDesc!)
+                        if(aboutInfoArray.count > 0){
+                            for i in 0 ... aboutInfoArray.count-1 {
+                                descriptionArray.append(aboutInfoArray[i].mobileDesc!)
+                            }
                         }
-                        self.aboutDetailtArray.insert(Museum(name: aboutDict.nameAr, id: aboutDict.id, tourguideAvailable: aboutDict.tourguideAvailableAr, contactNumber: aboutDict.contactNumberAr, contactEmail: aboutDict.contactEmailAr, mobileLongtitude: aboutDict.mobileLongtitudeAr, subtitle: aboutDict.subtitleAr, openingTime: aboutDict.openingTimeAr, mobileDescription: descriptionArray, multimediaFile: imageArray, mobileLatitude: aboutDict.mobileLatitudear, tourGuideAvailability: aboutDict.tourGuideAvlblyAr),at: 0)
+                        
+                        
+                        var multimediaArray : [String] = []
+                        let mutimediaInfoArray = (aboutDict.multimediaRelation?.allObjects) as! [AboutMultimediaFileEntity]
+                        if(mutimediaInfoArray.count > 0){
+                            for i in 0 ... mutimediaInfoArray.count-1 {
+                                multimediaArray.append(mutimediaInfoArray[i].image!)
+                            }
+                        }
+                        self.aboutDetailtArray.insert(Museum(name: aboutDict.nameAr, id: aboutDict.id, tourguideAvailable: aboutDict.tourguideAvailableAr, contactNumber: aboutDict.contactNumberAr, contactEmail: aboutDict.contactEmailAr, mobileLongtitude: aboutDict.mobileLongtitudeAr, subtitle: aboutDict.subtitleAr, openingTime: aboutDict.openingTimeAr, mobileDescription: descriptionArray, multimediaFile: multimediaArray, mobileLatitude: aboutDict.mobileLatitudear, tourGuideAvailability: aboutDict.tourGuideAvlblyAr,multimediaVideo: nil),at: 0)
                         if(aboutDetailtArray.count == 0){
                             self.showNodata()
                         }
@@ -1176,18 +1258,25 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     //MARK: iCarousel Delegate
     func numberOfItems(in carousel: iCarousel) -> Int {
-        return imgArray.count
+        if(self.aboutDetailtArray.count != 0) {
+            if(self.aboutDetailtArray[0].multimediaFile != nil) {
+                if((self.aboutDetailtArray[0].multimediaFile?.count)! > 0) {
+                    return (self.aboutDetailtArray[0].multimediaFile?.count)!
+                }
+            }
+        }
+        return 0
     }
     
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
         var itemView: UIImageView
         itemView = UIImageView(frame: CGRect(x: 0, y: 0, width: carousel.frame.width, height: 300))
         itemView.contentMode = .scaleAspectFit
-        //if let image = url {
-        // itemView.setImageWithIndicator(imageUrl: image)
-        itemView.image = UIImage(named: imgArray[index] as! String)
-        //}
-        
+        let carouselImg = self.aboutDetailtArray[0].multimediaFile
+        let imageUrl = carouselImg![index]
+        if(imageUrl != nil){
+            itemView.kf.setImage(with: URL(string: imageUrl))
+        }
         return itemView
     }
     func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
@@ -1221,8 +1310,9 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     @objc func imgButtonPressed(sender: UIButton!) {
-        
-        setiCarouselView()
+        if((imageView.image != nil) && (imageView.image != UIImage(named: "default_imageX2"))) {
+            setiCarouselView()
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

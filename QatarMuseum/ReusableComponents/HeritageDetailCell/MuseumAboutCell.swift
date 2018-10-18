@@ -6,6 +6,8 @@
 //  Copyright © 2018 Wakralab. All rights reserved.
 //
 
+import AVFoundation
+import AVKit
 import UIKit
 import MapKit
 import YouTubePlayer
@@ -39,12 +41,18 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
     @IBOutlet weak var favoriteBtnViewHeight: NSLayoutConstraint!
     @IBOutlet weak var bottomCarousel: iCarousel!
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var videoView: YouTubePlayerView!
+    @IBOutlet weak var mapOverlayView: UIView!
+    @IBOutlet weak var player: VersaPlayer!
+    @IBOutlet weak var controls: VersaPlayerControls!
+    
+    @IBOutlet weak var videoImageView: UIImageView!
     var imgArray = NSArray()
     
     var favBtnTapAction : (()->())?
     var shareBtnTapAction : (()->())?
     var locationButtonTapAction : (()->())?
+    var loadMapView : (()->())?
+    var loadAboutVideo : (()->())?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -55,10 +63,59 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         bottomCarousel.delegate = self
         bottomCarousel.dataSource = self
         bottomCarousel.type = .rotary
-        loadVideo()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
+        tap.delegate = self // This is not required
+        mapOverlayView.addGestureRecognizer(tap)
+        //loadVideo()
     }
-    func loadVideo() {
-        videoView.loadVideoID("2cEYXuCTJjQ")
+    func loadVideo(urlString:String?) {
+       // self.loadAboutVideo?()
+        
+        
+        player.use(controls: controls)
+        if let url = URL.init(string: urlString!) {
+            let item = VPlayerItem(url: url)
+            videoImageView.image = nil
+            player.set(item: item)
+            player.pause()
+        }
+        controls.rewindButton?.isHidden = true
+        controls.forwardButton?.isHidden = true
+        
+        
+        
+        
+        
+       // let urlString = aboutData.multimediaVideo![0]
+//        if (urlString != nil && urlString != "") {
+//            let videoURL = URL(string:urlString!)
+//            let player = AVPlayer(url: videoURL!)
+//            let playerLayer = AVPlayerLayer(player: player)
+//            playerLayer.frame = self.videoView.bounds
+//            self.videoView.layer.addSublayer(playerLayer)
+//            player.play()
+        
+            
+            
+            
+            
+            
+//            let player = AVPlayer(url: URL(string: urlString!)!)
+//            //let player = AVPlayer(url: filePathURL)
+//            let playerController = AVPlayerViewController()
+//            playerController.view.frame = videoView.frame
+//            playerController.player = player
+//            self.videoView.addSubview(playerController.view)
+//            self.bringSubview(toFront: videoView)
+//            //self.present(playerController, animated: true) {
+//                player.play()
+//            //}
+       // }
+        //videoView.loadVideoID("2cEYXuCTJjQ")
+        
+    }
+    @objc func handleTap(sender: UITapGestureRecognizer? = nil) {
+        self.loadMapView?()
     }
     func setUi() {
         titleLabel.font = UIFont.settingsUpdateLabelFont
@@ -156,7 +213,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         sundayTimeLabel.isHidden = false
         fridayTimeLabel.isHidden = false
         contactTitleLabel.isHidden = false
-        contactLine.isHidden = false
+        //contactLine.isHidden = false
         contactLabel.isHidden = false
         subTitleLabel.isHidden = true
         subTitleHeight.constant = 0
@@ -182,40 +239,64 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         
         
         sundayTimeLabel.text = aboutData.openingTime
-        contactLabel.text = aboutData.contactEmail
+        
         titleLabel.font = UIFont.closeButtonFont
         middleTitleLabel.font = UIFont.closeButtonFont
         locationTitleLabel.text = NSLocalizedString("LOCATION_TITLE",
                                                     comment: "LOCATION_TITLE in the Heritage detail")
         openingTimeTitleLabel.text = NSLocalizedString("MUSEUM_TIMING",
                                                        comment: "MUSEUM_TIMING in the Heritage detail")
-        contactTitleLabel.text = NSLocalizedString("CONTACT_TITLE",
-                                                   comment: "CONTACT_TITLE in the Heritage detail")
+        if ((aboutData.contactEmail != nil) && (aboutData.contactEmail != "")) {
+            contactTitleLabel.text = NSLocalizedString("CONTACT_TITLE",
+                                                       comment: "CONTACT_TITLE in the Heritage detail")
+            contactLabel.text = aboutData.contactEmail
+            contactLine.isHidden = false
+        }
         
         
         
         
         
+        var latitudeString  = String()
+        var longitudeString = String()
+        var latitude : Double?
+        var longitude : Double?
         
+        if (aboutData.mobileLatitude != nil && aboutData.mobileLatitude != "" && aboutData.mobileLongtitude != nil && aboutData.mobileLongtitude != "") {
+            latitudeString = aboutData.mobileLatitude!
+            longitudeString = aboutData.mobileLongtitude!
+            if let lat : Double = Double(latitudeString) {
+                latitude = lat
+            }
+            if let long : Double = Double(longitudeString) {
+                longitude = long
+            }
+            
+            let location = CLLocationCoordinate2D(latitude: latitude!,
+                                                  longitude: longitude!)
+            
+            // 2
+            let span = MKCoordinateSpanMake(0.05, 0.05)
+            let region = MKCoordinateRegion(center: location, span: span)
+            mapView.setRegion(region, animated: true)
+           // let viewRegion = MKCoordinateRegionMakeWithDistance(location, 0.05, 0.05)
+            //mapView.setRegion(viewRegion, animated: false)
+            //3
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = location
+            //annotation.title = aboutData.name
+            annotation.subtitle = aboutData.name
+            mapView.addAnnotation(annotation)
+        }
+        if (aboutData.multimediaVideo != nil) {
+            if((aboutData.multimediaVideo?.count)! > 0) {
+                self.loadVideo(urlString: aboutData.multimediaVideo?[0])
+            }
+        }
         
-        
-        
-        let location = CLLocationCoordinate2D(latitude: 51.50007773,
-                                              longitude: -0.1246402)
-        
-        // 2
-        let span = MKCoordinateSpanMake(0.05, 0.05)
-        let region = MKCoordinateRegion(center: location, span: span)
-        mapView.setRegion(region, animated: true)
-        
-        //3
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = location
-        annotation.title = "Big Ben"
-        annotation.subtitle = "London"
-        mapView.addAnnotation(annotation)
+       
     }
-    
+
     @IBAction func didTapFavouriteButton(_ sender: UIButton) {
         UIButton.animate(withDuration: 0.3,
                          animations: {

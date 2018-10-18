@@ -53,6 +53,8 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
         museumLabel.text = NSLocalizedString("MUSEUM_UPDATE_LABEL", comment: "MUSEUM_UPDATE_LABEL in the Settings page")
         culturePassLabel.text = NSLocalizedString("CULTUREPASS_UPDATE_LABEL", comment: "CULTUREPASS_UPDATE_LABEL in the Settings page")
         tourGuideLabel.text = NSLocalizedString("TOURGUIDE_UPDATE_LABEL", comment: "TOURGUIDE_UPDATE_LABEL in the Settings page")
+        applyButton.setTitle(NSLocalizedString("APPLY", comment: "APPLY in the Settings page"), for: .normal)
+        resetButton.setTitle(NSLocalizedString("RESET_TO_DEFAULT", comment: "RESET_TO_DEFAULT in the Settings page"), for: .normal)
         
         //setting font for english and Arabic
         headerView.headerTitle.font = UIFont.headerFont
@@ -65,8 +67,8 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
         museumLabel.font = UIFont.settingsUpdateLabelFont
         culturePassLabel.font = UIFont.settingsUpdateLabelFont
         tourGuideLabel.font = UIFont.settingsUpdateLabelFont
-        resetButton.titleLabel?.font = UIFont.settingResetButtonFont
-        applyButton.titleLabel?.font = UIFont.settingResetButtonFont
+        resetButton.titleLabel?.font = UIFont.clearButtonFont
+        applyButton.titleLabel?.font = UIFont.clearButtonFont
         
        self.languageSwitch.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
        
@@ -240,10 +242,12 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
             UserDefaults.standard.set(true, forKey: "Arabic")
             if #available(iOS 9.0, *) {
                 UIView.appearance().semanticContentAttribute = .forceRightToLeft
+//                self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
                 let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
-                
+
                 let appDelegate = UIApplication.shared.delegate
                 appDelegate?.window??.rootViewController = homeViewController
+                
                 
             } else {
                 // Fallback on earlier versions
@@ -255,9 +259,11 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
             UserDefaults.standard.set(false, forKey: "Arabic")
             if #available(iOS 9.0, *) {
                 UIView.appearance().semanticContentAttribute = .forceLeftToRight
+//                self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
                 let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
                 let appDelegate = UIApplication.shared.delegate
                 appDelegate?.window??.rootViewController = homeViewController
+                // self.dismiss(animated: false, completion: nil)
                 
             } else {
                 // Fallback on earlier versions

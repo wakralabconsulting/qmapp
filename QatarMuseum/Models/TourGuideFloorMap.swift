@@ -22,8 +22,13 @@ struct TourGuideFloorMap: ResponseObjectSerializable, ResponseCollectionSerializ
     var productionDates: String? = nil
     var image: String? = nil
     var tourGuideId: String? = nil
-    var floorLevel: String? = nil
     
+    var artifactNumber : String? = nil
+    var artifactPosition : String? = nil
+    var audioDescriptif : String? = nil
+    var images : [String]? = []
+    var audioFile : String? = nil
+    var floorLevel: String? = nil
     var galleyNumber: String? = nil
     var artistOrCreatorOrAuthor: String? = nil
     var periodOrStyle: String? = nil
@@ -45,17 +50,24 @@ struct TourGuideFloorMap: ResponseObjectSerializable, ResponseCollectionSerializ
             self.productionDates = representation["Production_dates"] as? String
             self.image = representation["Image"] as? String
             self.tourGuideId = representation["tour_guide_id"] as? String
+            
+            self.artifactNumber = representation["artifact_number"] as? String
+            self.artifactPosition = representation["artifact_position"] as? String
+            self.audioDescriptif = representation["audio_descriptif"] as? String
+            self.images = representation["images"] as? [String]
+            self.audioFile = representation["audio_file"] as? String
+            
+            
             self.floorLevel = representation["floor_level"] as? String
             self.galleyNumber = representation["galley_Number"] as? String
             self.artistOrCreatorOrAuthor = representation["Artist/Creator/Author"] as? String
-            //HeritageListList
             self.periodOrStyle = representation["Period/Style"] as? String
             self.techniqueAndMaterials = representation["Technique_&_Materials"] as? String
             
             
         }
     }
-    init(title:String?,accessionNumber:String?,nid:String?,curatorialDescription:String?,diam:String?,dimensions:String?,mainTitle:String?,objectENGSummary:String?,objectHistory:String?      ,production:String?,productionDates:String?,image:String?,tourGuideId:String?,floorLevel:String?     ,galleyNumber:String?,artistOrCreatorOrAuthor:String?,periodOrStyle:String?,techniqueAndMaterials:String?) {
+    init(title:String?,accessionNumber:String?,nid:String?,curatorialDescription:String?,diam:String?,dimensions:String?,mainTitle:String?,objectENGSummary:String?,objectHistory:String?,production:String?,productionDates:String?,image:String?,tourGuideId:String?,artifactNumber:String?,artifactPosition:String?,audioDescriptif:String?,images:[String]?,audioFile:String?,floorLevel:String?,galleyNumber:String?,artistOrCreatorOrAuthor:String?,periodOrStyle:String?,techniqueAndMaterials:String?) {
         self.title = title
         self.accessionNumber = accessionNumber
         self.nid = nid
@@ -70,6 +82,11 @@ struct TourGuideFloorMap: ResponseObjectSerializable, ResponseCollectionSerializ
         self.productionDates = productionDates
         self.image = image
         self.tourGuideId = tourGuideId
+        self.artifactNumber = artifactNumber
+        self.artifactPosition = artifactPosition
+        self.audioDescriptif = audioDescriptif
+        self.images = images
+        self.audioFile = audioFile
         self.floorLevel = floorLevel
         self.galleyNumber = galleyNumber
         self.artistOrCreatorOrAuthor = artistOrCreatorOrAuthor

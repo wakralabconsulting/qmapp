@@ -101,7 +101,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .CollectionDetail( _):
             return "/collection_ws.json"
         case .EducationEvent( _):
-            return "/ws_education.json"
+            //return "/ws_education.json"
+            return "/new_ws_educations.json"
         case .MuseumAbout( _):
             return "/about.php"
         case .LandingPageMuseums( _):

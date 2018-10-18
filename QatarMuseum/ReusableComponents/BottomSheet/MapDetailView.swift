@@ -5,6 +5,8 @@
 //  Created by Exalture on 10/09/18.
 //  Copyright © 2018 Wakralab. All rights reserved.
 //
+import AVFoundation
+import AVKit
 import Crashlytics
 import UIKit
 
@@ -20,6 +22,9 @@ class MapDetailView: UIViewController,ObjectImageViewProtocol {
     var viewMoveUp : Bool = false
     let fullView: CGFloat = 20
     var partialView: CGFloat {
+        if (UIScreen.main.bounds.height >= 812) {
+            return UIScreen.main.bounds.height - 220
+        }
         return UIScreen.main.bounds.height - 200
     }
     var mapdetailDelegate : MapDetailProtocol?
@@ -27,6 +32,13 @@ class MapDetailView: UIViewController,ObjectImageViewProtocol {
     var objectImagePopupView : ObjectImageView = ObjectImageView()
     var gesture = UIPanGestureRecognizer()
     var popUpArray: [TourGuideFloorMap]! = []
+    var selectedIndex: Int? = 0
+    var playList: String = ""
+    var timer: Timer?
+    var avPlayer: AVPlayer!
+    var isPaused: Bool!
+    var firstLoad: Bool = true
+    var selectedCell : ObjectDetailTableViewCell?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -41,12 +53,6 @@ class MapDetailView: UIViewController,ObjectImageViewProtocol {
         view.addGestureRecognizer(gesture)
         objectImagePopupView.objectImageViewDelegate = self
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        prepareBackgroundView()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -125,20 +131,6 @@ class MapDetailView: UIViewController,ObjectImageViewProtocol {
             })
         }
     }
-//    @objc func tapGestureAction(_ sender: UITapGestureRecognizer) {
-//       // viewTapDelegate?.viewTapAction(sender: sender)
-//
-//    }
-    
-    func prepareBackgroundView(){
-        let blurEffect = UIBlurEffect.init(style: .dark)
-        let visualEffect = UIVisualEffectView.init(effect: blurEffect)
-        let bluredView = UIVisualEffectView.init(effect: blurEffect)
-        bluredView.contentView.addSubview(visualEffect)
-        visualEffect.frame = UIScreen.main.bounds
-        bluredView.frame = UIScreen.main.bounds
-        view.insertSubview(bluredView, at: 0)
-    }
     
 }
 
@@ -171,7 +163,9 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (indexPath.row == 0) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "objectPopupId", for: indexPath) as! ObjectPopupTableViewCell
-            cell.setPopupDetails(mapDetails: popUpArray[indexPath.row])
+            if(selectedIndex != nil) {
+                cell.setPopupDetails(mapDetails: popUpArray[selectedIndex!])
+            }
             cell.selectionStyle = .none
            // return tableView.dequeueReusableCell(withIdentifier: "objectPopupId")!
             return cell
@@ -181,8 +175,13 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
             let objectImageView = UIImageView()
             objectImageView.frame = CGRect(x: 0, y: 20, width: tableView.frame.width, height: 300)
             objectImageView.image = UIImage(named: "default_imageX2")
-            if let imageUrl = popUpArray[0].image {
-                objectImageView.kf.setImage(with: URL(string: imageUrl))
+            if(selectedIndex != nil) {
+                if let imageUrl = popUpArray[selectedIndex!].image {
+                    objectImageView.kf.setImage(with: URL(string: imageUrl))
+                }
+            }
+            if(objectImageView.image == nil) {
+                objectImageView.image = UIImage(named: "default_imageX2")
             }
             objectImageView.backgroundColor = UIColor.white
             objectImageView.contentMode = .scaleAspectFit
@@ -195,12 +194,12 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
         } else {
              let cell = tableView.dequeueReusableCell(withIdentifier: "objectDetailID", for: indexPath) as! ObjectDetailTableViewCell
             cell.selectionStyle = .none
-            if (indexPath.row == 2){
-                cell.setObjectDetail(objectDetail: popUpArray[0])
-                
-            } else {
-                cell.setObjectHistoryDetail(historyDetail: popUpArray[0])
-                
+            if(selectedIndex != nil) {
+                if (indexPath.row == 2){
+                    cell.setObjectDetail(objectDetail: popUpArray[selectedIndex!])
+                } else {
+                    cell.setObjectHistoryDetail(historyDetail: popUpArray[selectedIndex!])
+                }
             }
             cell.favBtnTapAction = {
                 () in
@@ -209,6 +208,10 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
             cell.shareBtnTapAction = {
                 () in
                 self.setShareAction(cellObj: cell)
+            }
+            cell.playBtnTapAction = {
+                () in
+                self.setPlayButtonAction(cellObj: cell)
             }
             return cell
             
@@ -226,11 +229,12 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
                 self?.tableView.reloadData()
             })
 
-        } else if(indexPath.row == 1) {
-            if let imageUrl = popUpArray[0].image {
-               self.loadObjectImagePopup(imgName: imageUrl )
+        } else if((indexPath.row == 1) && (popUpArray[selectedIndex!].image != "")) {
+            if(selectedIndex != nil) {
+                if let imageUrl = popUpArray[selectedIndex!].image {
+                   self.loadObjectImagePopup(imgName: imageUrl )
+                }
             }
-            
         }
     }
     func setFavouritesAction(cellObj: ObjectDetailTableViewCell) {
@@ -246,6 +250,28 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
     func setShareAction(cellObj: ObjectDetailTableViewCell) {
         
     }
+    func setPlayButtonAction(cellObj: ObjectDetailTableViewCell) {
+        selectedCell  = cellObj
+        
+            if(popUpArray.count > 0) {
+                if((popUpArray[0].audioFile != nil) && (popUpArray[0].audioFile != "")){
+                    if (firstLoad == true) {
+                        cellObj.playList = popUpArray[0].audioFile!
+                        cellObj.play(url: URL(string:cellObj.playList)!)
+                        cellObj.setupTimer()
+                    }
+                    firstLoad = false
+                    cellObj.togglePlayPause()
+                }
+            }
+        
+    }
+    
+    @objc func didPlayToEnd() {
+        // self.nextTrack()
+    }
+    
+
 }
 
 extension MapDetailView: UIGestureRecognizerDelegate {
@@ -296,7 +322,8 @@ extension MapDetailView: UIGestureRecognizerDelegate {
         mapdetailDelegate?.dismissOvelay()
         self.removeFromParentViewController()
         self.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: 0, height: 0)
-        
+        selectedCell?.avPlayer = nil
+        selectedCell?.timer?.invalidate()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

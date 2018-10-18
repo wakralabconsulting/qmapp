@@ -5,6 +5,8 @@
 //  Created by Developer on 13/08/18.
 //  Copyright © 2018 Exalture. All rights reserved.
 //
+import AVFoundation
+import AVKit
 import Crashlytics
 import UIKit
 
@@ -19,7 +21,12 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     let fullView: CGFloat = 100
     let closeButton = UIButton()
     var detailArray : [TourGuideFloorMap]! = []
-
+    var playList: String = ""
+    var timer: Timer?
+    var avPlayer: AVPlayer!
+    var isPaused: Bool!
+    var firstLoad: Bool = true
+    var selectedCell : ObjectDetailTableViewCell?
     override func viewDidLoad() {
         super.viewDidLoad()
         objectTableView.register(UITableViewCell.self, forCellReuseIdentifier: "imageCell")
@@ -36,9 +43,9 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
        // loadingView.showLoading()
         
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
+            closeButton.frame = CGRect(x: 10, y: 40, width: 40, height: 40)
         } else {
-            closeButton.frame = CGRect(x: self.view.frame.width-50, y: 30, width: 40, height: 40)
+            closeButton.frame = CGRect(x: self.view.frame.width-50, y: 40, width: 40, height: 40)
         }
         closeButton.setImage(UIImage(named: "closeX1"), for: .normal)
         closeButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom:12, right: 12)
@@ -115,17 +122,20 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
             let cell = tableView.dequeueReusableCell(withIdentifier: "imageCell", for: indexPath)
             let objectImageView = UIImageView()
             objectImageView.frame = CGRect(x: 0, y: 20, width: tableView.frame.width, height: 300)
+            objectImageView.image = UIImage(named: "default_imageX2")
             if let imageUrl = detailArray[0].image {
                 objectImageView.kf.setImage(with: URL(string: imageUrl))
             }
-            //objectImageView.image = UIImage.init(named: "science_tour_object")
+            if(objectImageView.image == nil) {
+                objectImageView.image = UIImage(named: "default_imageX2")
+            }
+            
             objectImageView.backgroundColor = UIColor.white
             objectImageView.contentMode = .scaleAspectFit
             objectImageView.clipsToBounds = true
             cell.addSubview(objectImageView)
-            
+            cell.selectionStyle = .none
             objectImageView.isUserInteractionEnabled = true
-
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "objectDetailCellId", for: indexPath) as! ObjectDetailTableViewCell
@@ -144,7 +154,11 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
                 () in
                 self.setShareAction(cellObj: cell)
             }
-            
+            cell.playBtnTapAction = {
+                () in
+                self.setPlayButtonAction(cellObj: cell)
+            }
+            cell.selectionStyle = .none
             loadingView.stopLoading()
             loadingView.isHidden = true
             return cell
@@ -152,7 +166,7 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if(indexPath.row == 0) {
+        if((indexPath.row == 0) && (detailArray[0].image != "")) {
             if let imageUrl = detailArray[0].image {
                 self.loadObjectImagePopup(imgName: imageUrl )
             }
@@ -199,7 +213,24 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     func setShareAction(cellObj: ObjectDetailTableViewCell) {
         
     }
-    
+    func setPlayButtonAction(cellObj: ObjectDetailTableViewCell) {
+        selectedCell  = cellObj
+        
+            if(detailArray.count > 0) {
+                if((detailArray[0].audioFile != nil) && (detailArray[0].audioFile != "")){
+                    if (firstLoad == true) {
+                        cellObj.playList = detailArray[0].audioFile!
+                        cellObj.play(url: URL(string:cellObj.playList)!)
+                        cellObj.setupTimer()
+                    }
+                    firstLoad = false
+                    cellObj.togglePlayPause()
+                }
+            }
+            
+        
+       
+    }
    
     @objc func buttonAction(sender: UIButton!) {
        // sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -208,7 +239,10 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
 //        transition.type = kCATransitionFade
 //        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
 //        self.view.window!.layer.add(transition, forKey: kCATransition)
+        selectedCell?.avPlayer = nil
+        selectedCell?.timer?.invalidate()
         dismiss(animated: false, completion: nil)
+        
     }
     
     @objc func closeButtonTouchDownAction(sender: UIButton!) {

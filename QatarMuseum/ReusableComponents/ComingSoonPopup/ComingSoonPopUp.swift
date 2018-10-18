@@ -64,15 +64,22 @@ class ComingSoonPopUp: UIView {
         let buttonTitle = NSLocalizedString("CLOSEBUTTON_TITLE", comment: "CLOSEBUTTON_TITLE Label in the Popup")
         closeButton.setTitle(buttonTitle, for: .normal)
     }
+    func loadTourGuidePopup() {
+        titleLabel.text = NSLocalizedString("COMINGSOON_TITLE", comment: "COMINGSOON_TITLE Label in the Popup")
+        messageLabel.text = NSLocalizedString("COMINGSOON_MESSAGE", comment: "COMINGSOON_MESSAGE Label in the Popup") + "\n" + NSLocalizedString("TOUR_GUIDE_COMINGSOON", comment: "TOUR_GUIDE_COMINGSOON Label in the Popup")
+        stayTunedLabel.text = NSLocalizedString("COMINGSOON_STAY_TUNED", comment: "COMINGSOON_STAY_TUNED Label in the Popup")
+        let buttonTitle = NSLocalizedString("CLOSEBUTTON_TITLE", comment: "CLOSEBUTTON_TITLE Label in the Popup")
+        closeButton.setTitle(buttonTitle, for: .normal)
+    }
     
     @IBAction func closeButtonTouchDown(_ sender: UIButton) {
-        self.closeButton.backgroundColor = UIColor.startTourLightBlue
+        
         self.closeButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
     @IBAction func didTapClose(_ sender: UIButton) {
-        self.closeButton.backgroundColor = UIColor.viewMycultureBlue
-        self.closeButton.setTitleColor(UIColor.black, for: .normal)
+        
+        
         self.closeButton.transform = CGAffineTransform(scaleX: 1, y: 1)
         comingSoonPopupDelegate?.closeButtonPressed()
     }

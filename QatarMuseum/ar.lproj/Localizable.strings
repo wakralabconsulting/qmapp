@@ -1,10 +1,10 @@
-/* 
-  Localizable.strings
-  QatarMuseums
-
-  Created by Exalture on 21/07/18.
-  Copyright © 2018 Exalture. All rights reserved.
-*/
+/*
+ Localizable.strings
+ QatarMuseums
+ 
+ Created by Exalture on 21/07/18.
+ Copyright © 2018 Exalture. All rights reserved.
+ */
 "WEBVIEW_TITLE" = "متاحف قطر";
 "CALENDAR_TITLE" = "التقويم";
 "CALENDAR_EVENT_TITLE" = "الفعاليات";
@@ -15,9 +15,9 @@
 "PROFILE_TITLE" = "الصفحة الشخصية";
 "EXHIBITIONS_TITLE" = "المعارض";
 "HERITAGE_SITES_TITLE" = "المواقع التراثية";
-"PUBLIC_ARTS_TITLE" = "الفنون الشعبية";
+"PUBLIC_ARTS_TITLE" = "الفنون العامة";
 "COLLECTIONS_TITLE" = "المجموعات";
-"DINING_TITLE" = "العشاء";
+"DINING_TITLE" = "الطعام";
 "MIA_TOUR_GUIDES_TITLE" = "دليل التجول لمتحف الفن الإسلامي";
 "NOTIFICATIONS_TITLE" = "الإشعارات";
 "EDUCATION_TITLE" = "التعليم";
@@ -28,15 +28,16 @@
 "EDUCATION_LABEL" = "التعليم";
 "TOURGUIDE_LABEL" = "الدليل السياحي";
 "HERITAGESITES_LABEL" = "المواقع التراثية";
-"PUBLIC_ARTS_LABEL" = "الفنون الشعبية";
+"PUBLIC_ARTS_LABEL" = "الفنون العامة";
 "PARKS_LABEL" = "الحدائق";
-"DINING_LABEL" = "العشاء";
+"DINING_LABEL" = "الطعام";
 "GIFTSHOP_LABEL" = "محل الهدايا";
 "SIDEMENU_SETTINGS_LABEL" = "الإعدادات";
 "COMINGSOON_TITLE" = "قريباً";
-"COMINGSOON_MESSAGE" = "نحن نعمل بجد لجعل التفاصيل متاحة تحت يدك. ترقب";
-"COMINGSOON_STAY_TUNED" = "Stay Tuned.";
-"CLOSEBUTTON_TITLE" = "مغلق";
+"COMINGSOON_MESSAGE" = "نحن نعمل بجد لجعل التفاصيل متاحة.";
+"COMINGSOON_STAY_TUNED" = "ترقّب";
+"TOUR_GUIDE_COMINGSOON" = "ستكون خرائط المتحف و تفاصيل القطع الخاصة بالمتحف متوفرة عما قريب";
+"CLOSEBUTTON_TITLE" = "أغلق";
 "EVENT_POPUP_TITLE" = "اسم الفعالية";
 "POPUP_ADD_BUTTON_TITLE" = "أضف إلى التقويم";
 "EDUCATION_EVENT_POPUP_TITLE" = "تاريخ إم إس 248";
@@ -47,7 +48,7 @@
 "AGE_GROUP_LABEL" = "الفئة العمرية -";
 "PROGRAMME_TYPE_LABEL" = "نوع البرنامج -";
 "CLEAR_LABEL" = "مسح";
-"SETTINGS_LABEL" = "SETTINGS";
+"SETTINGS_LABEL" = "الإعدادات";
 "SETTINGS_REDIRECTION_MSG" = "سيتم تحويلك إلى الصفحة الرئيسية بعد تغيير اللغة، هل تريد المتابعة؟";
 "YES" = "YES";
 "NO" = "NO";
@@ -64,7 +65,7 @@
 "CHANGE_LANGUAGE_TITLE" = "تغيير اللغة";
 "CONTINUE_TITLE" = "المتابعة";
 "MUSEUM_TITLE" = "متحف الفن الإسلامي";
-"NO_RESULT_MESSAGE" = "لم يتم العثور على أي نتائج";
+"NO_RESULT_MESSAGE" = "قريباً";
 "CHECK_INTERNET" = "تأكد من اتصالك بالانترنت";
 "LOCATION_TITLE" = "الموقع";
 "TO" = "إلى";
@@ -78,6 +79,8 @@
 "PRODUCTION_LABEL" = "الانتاج:";
 "PRODUCTION_DATES_LABEL" = "تاريخ الإنتاج:";
 "PERIOD_STYLE_LABEL" = "الفترة/النمط:";
+"TECHNIQUES_LABEL" = "Technique & Materials:";
+"DIMENSIONS_LABEL" = "Dimensions:";
 "FLOOR_MAP_TITLE" = "طوابق متحف الفن الإسلامي";
 "NO_EVENTS" = "لا توجد فعاليات";
 "ARTIFACT_NUMBERPAD_TITLE" = "بحث الكائن";
@@ -124,31 +127,42 @@
 "PGM_TYPE_7" = "الأبحاث";
 "PGM_TYPE_8" = "ورشة العمل";
 
-"KNOWLEDGE_ACTION_TITLE" = "KNOWLEDGE IN ACTION";
-"EDUCATION_TEXT" = "All of our education parameters privide interactive opportunities. We hope that they create lasting memories and lead to the development of creative, compassionate and engaged individuals.\n\n For school teachers and educators, we bring custom-made worshops, conferences and trainings to suit their needs. We also focus on working with children to encourage them to explore the world around them, engage with it, and express themselves through creative activities.\n\n All of our activities with Qatar Supreme Educational Council Professional Standards for Teachers and National Curriculum Standars.";
+"KNOWLEDGE_ACTION_TITLE" = "المعرفة بين يديك";
+"EDUCATION_DESCRIPTION" = "Our numerous programmes are designed for families, university students and adults \n\n Find out what's on offer and register ahead to secure your place.";
+"EDUCATION_TEXT" = "تُتيح جميع برامج التعليم لدينا فرص تفاعلية. نحن نأمل بأن ترسخ هذه البرامج في ذاكرة المشاركين وتؤدي إلى تطوير مهاراتهم وقدراتهم الإبداعية.\nأما بالنسبة لمعلمي المدارس، فقد أعددنا ورش عمل ومنتديات ودورات تدريبية حسب الطلب والتي تتناسب مع إحتياجاتهم. نحن نركز أيضا على العمل مع الأطفال لتشجيعهم على إستكشاف العالم من حولهم، والانخراط والمشاركة فيه والتعبير عن أنفسهم من خلال الأنشطة الإبداعية.\nوتتماشى جميع أنشطتنا مع المعايير المهنية للمجلس الأعلى للتعليم الخاصة بالمعلمين وبمعايير المناهج الوطنية.";
 "TOUR_GUIDES" = "المرشد";
-"TOUR_GUIDE_TEXT" = "Welcome to Qatar Museum Premises. \n Select the museums to explore the floors and objects on display. \n Immerse yourself into the object details curated specially for you by our experts.";
+"TOUR_GUIDE_TEXT" = "أهلا بك في متاحف قطر\n. يرجى اختيار المتحف لإستكشاف القطع المعروضة \n اغمر نفسك في تفاصيل القطعة التي اختيرت خصيصا لك من قبل خبرائنا";
 "EVENT_ADDED_MESSAGE" = "تم إضافة الفعالية للتقويم";
-"CULTUREPASS_TITLE" = "CULTURE PASS";
-"BENEFIT_TITLE" = "BENEFITS";
-"CULTURE_PASS_INTRO" = "Qatar Museums Culture Pass gives you discounts, free access and exclusive opportunities  across many cultural venues in Qatar and discounts at a wide range of ever expanding list of partners.Best of all, as a member you're invited to join us in a wide range of exciting creative activities.";
-"CULTURE_PASS_SECONDDESC" = "Get access by activating your membership today.";
+"CULTUREPASS_TITLE" = "بطاقتك إلى الثقافة";
+"BENEFIT_TITLE" = "المزايا";
+"CULTURE_PASS_INTRO" = "بطاقتك إلى الثقافة الخاصة بمتاحف قطر تمنح مجاناً وتمكنك من التمتع بعديد من الخصومات فضلًا عن فرص حصريةً في العديد من الأماكن الثقافية في قطر وأفضل ما تتيحه لك كعضو هو أنك مدعو إلى الانضمام لنا لتجربة مجموعة واسعة من الأنشطة الإبداعية المثيرة والرائعة.";
+"CULTURE_PASS_SECONDDESC" = "";
 "YET_NO_NOTIFICATION_MESSAGE" = "لا توجد إشعارات بعد";
-"TOUR_GUIDE_IMG_NAME_2" = "Mathaf - Arab Museum of Modern Art";
-"TOUR_GUIDE_IMG_NAME_3" = "Firestation - Artists In Residence ";
-"TOUR_GUIDE_IMG_NAME_4" = "Qatar Olympic And Sports Museum";
-"TOUR_GUIDE_IMG_NAME_5" = "National Museum Of Qatar";
-"MIA_TOUR_GUIDE_TITLE" = "MIA TOUR GUIDE";
-"SELF_GUIDED_TOUR_TITLE" = "Self Guided Tours";
-"SELF_GUIDED_TEXT1" = "You may also try our self guided tours.";
-"SELF_GUIDED_TEXT2" = "Immerse yourself into the journeys curated specially for you by our experts.";
-"MIA_TOUR_GUIDE_DESC1" = "Welcome to Qatar Museum Premises. Explore the architecture and the objects on display.";
+"TOUR_GUIDE_IMG_NAME_2" = "متحف: المتحف العربي للفن الحديث";
+"TOUR_GUIDE_IMG_NAME_3" = "مطافئ: مقر الفنانين";
+"TOUR_GUIDE_IMG_NAME_4" = "3-2-1 متحف قطر الأولمبي والرياضي";
+"TOUR_GUIDE_IMG_NAME_5" = "متحف قطر الوطني";
+"MIA_TOUR_GUIDE_TITLE" = "دليل متحف الفن الإسلامي";
+"SELF_GUIDED_TOUR_TITLE" = "تجول كما يحلو لك";
+"SELF_GUIDED_TEXT1" = "ربما تريد أن تجرب جولاتنا كما يحلو لك";
+"SELF_GUIDED_TEXT2" = "اغمر نفسك في تفاصيل القطعة التي اختيرت خصيصا لك من قبل خبرائنا.";
+"MIA_TOUR_GUIDE_DESC1" = "أهلا بك في متاحف قطر. يرجى اختيار المتحف لإستكشاف القطع المعروضة";
 "MIA_TOUR_GUIDE_DESC2" = "Scan the QR codes available on the galleries for more information.";
 "SCIENCE_TOUR_TEXT" = "In this tour, you will see and learn about the achievements and contributions of Muslim scientists through history. The eight objects have an obvious scientific purpose or show how science has influenced artistic methods.";
-"SCIENCE_TOUR_TITLE" = "SCIENCE TOUR";
+"SCIENCE_TOUR_TITLE" = "جولة العلوم";
 "YET_NO_NOTIFICATION_MESSAGE" = "لا توجد إشعارات بعد.";
-"SOMETHING_WENT_WRONG_TITLE" = "Something went wrong";
-"LOCATION_ERROR_MESSAGE" = "Unfortunately we cannot open Google Maps.";
+"SOMETHING_WENT_WRONG_TITLE" = "حدث خطأ ما";
+"LOCATION_ERROR_MESSAGE" = "للأسف لقد تعذر فتح خرائط جوجل";
 "ANYSTRING" = "All";
 "LEVEL_STRING" = "Level";
-
+"MIA_HIGHLIGHTS_TOUR" = "جولة مختارات متحف الفن الإسلامي";
+"CULTURE_DISCOUNT_LABEL" = "- خصم بنسبة 15٪ في QM CAFÉ'S على جميع المنتجات \n\n- خصم بنسبة 10٪ على العناصر في جميع متاجر هدايا QM (بدون حد أدنى من الشراء) \n\n - خصم بنسبة 10٪ في مطعم IDAM في وقت الغداء \n\n- استلام النشرة الإخبارية الشهرية للبقاء على إطلاع على عروض متاحف قطر والشركاء \n\n- الحصول على وصول أولي إلى مناقشات وحلقات الأعضاء فقط \n\n- الحصول على دعوات حصرية إلى مركز اتصال متاحف قطر ذو المواصفات العالمية من 8 صباحًا إلى 8 مساءً يوميًا";
+"CULTURE_NOT_A_MEMBER" = "لست عضواً بعد؟";
+"CULTURE_BECOME_A_MEMBER" = "أنضم إلينا الأن";
+"CULTURE_BECOME_ALREADY_MEMBER" = "عضو سابق؟";
+"CULTURE_LOG_IN" = "تسجيل الدخول";
+"APPLY" = "تقديم";
+"RESET_TO_DEFAULT" = "إعداة تعيين للوضع الإفتراضي";
+"MORE" = "المزيد";
+"GIFT_SHOP" = "محل الهدايا";
+"LOCATION_MISSING_MESSAGE" = "No Location Data";

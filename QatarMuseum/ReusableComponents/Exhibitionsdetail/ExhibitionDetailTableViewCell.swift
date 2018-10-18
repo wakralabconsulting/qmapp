@@ -66,7 +66,7 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
         descriptionLabel?.text = exhibition.shortDescription?.replacingOccurrences(of: "&nbsp;", with: " ", options: .regularExpression, range: nil)
         detailSecondLabel.text = exhibition.longDescription?.replacingOccurrences(of: "&nbsp;", with: " ", options: .regularExpression, range: nil)
         exbtnDateLabel.text = ""
-        exbtnTimeLabel.text = exhibition.startDate!.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil) + "-" + exhibition.endDate!.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+        exbtnTimeLabel.text = exhibition.startDate!.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil) + "\n" + exhibition.endDate!.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
         locationLabel.text = exhibition.location?.uppercased()
         centerImgHeight.constant = 0
         centerImageView.isHidden = true

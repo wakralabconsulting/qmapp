@@ -20,6 +20,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var scienceTourTitle: UILabel!
     
+    @IBOutlet weak var overlayView: UIView!
     var slideshowImages : NSArray!
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var i = 0
@@ -28,11 +29,12 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     var totalImgCount = Int()
     var sliderImgCount : Int? = 0
     var sliderImgArray = NSMutableArray()
-    
+    var titleString : String? = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         getTourGuideDataFromServer()
         setupUI()
+        setGradientLayer()
     }
 
     func setupUI() {
@@ -43,13 +45,14 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
         headerView.headerViewDelegate = self
         headerView.headerTitle.text = NSLocalizedString("MIA_TOUR_GUIDES_TITLE", comment: "MIA_TOUR_GUIDES_TITLE in the Mia tour guide page")
 
-        slideshowView.imagesContentMode = .scaleAspectFill
+       // slideshowView.imagesContentMode = .scaleAspectFill
         self.slideshowView.addImage(UIImage(named: "sliderPlaceholder"))
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         } else {
             headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
+        self.scienceTourTitle.text = titleString?.uppercased()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -126,26 +129,20 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     }
     
     @IBAction func didTapStartTour(_ sender: UIButton) {
-        self.startTourButton.backgroundColor = UIColor.viewMycultureBlue
-        //self.startTourButton.setTitleColor(UIColor.white, for: .normal)
         self.startTourButton.transform = CGAffineTransform(scaleX: 1, y: 1)
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
-//        let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as! FloorMapViewController
-//        floorMapView.fromScienceTour = true
-//        self.present(floorMapView, animated: false, completion: nil)
-        
-        //Open PageViewcontroller with short details
-        let shortDetailsView =  self.storyboard?.instantiateViewController(withIdentifier: "previewPageId") as! PreviewPageViewController
-        
+        let shortDetailsView =  self.storyboard?.instantiateViewController(withIdentifier: "previewContainerId") as! PreviewContainerViewController
+        shortDetailsView.fromScienceTour = true
         self.present(shortDetailsView, animated: false, completion: nil)
+
     }
     
     @IBAction func startTourButtonTouchDown(_ sender: UIButton) {
-        self.startTourButton.backgroundColor = UIColor.startTourLightBlue
+       
        // self.startTourButton.setTitleColor(UIColor.viewMyculTitleBlue, for: .normal)
         
         self.startTourButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -190,9 +187,19 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
             case .success(let data):
                 self.tourGuide = data.tourGuide!
                 if(self.tourGuide.count > 0) {
-                    self.setImageArray()
-                    self.scienceTourTitle.text = self.tourGuide[0].title?.uppercased()
-                    self.tourGuideDescription.text = self.tourGuide[0].tourGuideDescription
+                    
+                    if let searchDict = self.tourGuide.first(where: {$0.nid == "12216"}) {
+                        self.tourGuideDescription.text = searchDict.tourGuideDescription
+                        self.setImageArray(tourGuideImgDict: searchDict)
+                    } else {
+                        if let searchDict = self.tourGuide.first(where: {$0.nid == "12226"}) {
+                            self.tourGuideDescription.text = searchDict.tourGuideDescription
+                            self.setImageArray(tourGuideImgDict: searchDict)
+                        }
+                    }
+
+                   // self.scienceTourTitle.text = self.tourGuide[0].title?.uppercased()
+                   // self.tourGuideDescription.text = self.tourGuide[0].tourGuideDescription
                 }
             case .failure(let error):
                 print(error)
@@ -200,21 +207,21 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
         }
     }
     
-    func setImageArray() {
+    func setImageArray(tourGuideImgDict : TourGuide?) {
         self.sliderImgArray[0] = UIImage(named: "sliderPlaceholder")!
         self.sliderImgArray[1] = UIImage(named: "sliderPlaceholder")!
         self.sliderImgArray[2] = UIImage(named: "sliderPlaceholder")!
         
-        if ((tourGuide[0].multimediaFile?.count)! >= 4) {
-            totalImgCount = 3
-        } else if ((tourGuide[0].multimediaFile?.count)! > 1){
-            totalImgCount = (tourGuide[0].multimediaFile?.count)!-1
-        } else {
-            totalImgCount = 0
-        }
-        if (totalImgCount > 0) {
-            for  var i in 1 ... totalImgCount {
-                let imageUrlString = tourGuide[0].multimediaFile![i]
+//        if ((tourGuideImgDict?.multimediaFile?.count)! >= 3) {
+//            totalImgCount = 3
+//        } else if ((tourGuideImgDict?.multimediaFile?.count)! > 1){
+//            totalImgCount = (tourGuideImgDict?.multimediaFile?.count)!-1
+//        } else {
+//            totalImgCount = 0
+//        }
+        if ((tourGuideImgDict?.multimediaFile?.count)! > 0) {
+            for  var i in 0 ... (tourGuideImgDict?.multimediaFile?.count)!-1 {
+                let imageUrlString = tourGuideImgDict?.multimediaFile![i]
                 downloadImage(imageUrlString: imageUrlString)
             }
         }
@@ -242,5 +249,19 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
                 }
             }
         }
+    }
+    func setGradientLayer() {
+
+        
+        let gradient: CAGradientLayer = CAGradientLayer()
+        
+        gradient.colors = [UIColor.white.cgColor, UIColor.clear.cgColor]
+        gradient.locations = [0.0 , 1.3]
+        gradient.startPoint = CGPoint(x: 0.0, y: 1.0)
+        gradient.endPoint = CGPoint(x: 0.0, y: 0.0)
+        gradient.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+        
+        self.overlayView.layer.insertSublayer(gradient, at: 0)
+        
     }
 }

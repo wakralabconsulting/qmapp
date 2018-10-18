@@ -27,7 +27,6 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         setUi()
-        
         if (fromHome == true) {
             if  (networkReachability?.isReachable)! {
                 getExhibitionDetail()
@@ -184,7 +183,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
                     UIApplication.shared.openURL(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic&q=\(latitude),\(longitude)")!)
                 }
             } else {
-                let locationUrl = URL(string: "https://maps.google.com/?q=@\(latitude),\(longitude)")!
+                let locationUrl = URL(string: "https://maps.google.com/?q=\(latitude),\(longitude)")!
                 UIApplication.shared.openURL(locationUrl)
             }
         } else {

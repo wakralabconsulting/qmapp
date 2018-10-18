@@ -27,7 +27,9 @@ class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol, co
         miaTitle.font = UIFont.miatourGuideFont
         tourGuideDescription.font = UIFont.englishTitleFont
         startTourButton.titleLabel?.font = UIFont.startTourFont
-        tourGuideDescription.text = NSLocalizedString("MIA_TOUR_GUIDE_DESC1", comment: "MIA_TOUR_GUIDE_DESC1 in tour guide") + "\n" + NSLocalizedString("MIA_TOUR_GUIDE_DESC2", comment: "MIA_TOUR_GUIDE_DESC2 in tour guide")
+        miaTitle.text = NSLocalizedString("MIA_TOUR_GUIDE_TITLE", comment: "MIA_TOUR_GUIDE_TITLE in tour guide")
+        tourGuideDescription.text = NSLocalizedString("MIA_TOUR_GUIDE_DESC1", comment: "MIA_TOUR_GUIDE_DESC1 in tour guide")
+            //+ "\n" + NSLocalizedString("MIA_TOUR_GUIDE_DESC2", comment: "MIA_TOUR_GUIDE_DESC2 in tour guide")
        
         headerView.headerViewDelegate = self
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
@@ -55,7 +57,7 @@ class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol, co
     }
     
     @IBAction func didTapStartTour(_ sender: UIButton) {
-        self.startTourButton.backgroundColor = UIColor.viewMycultureBlue
+       
         self.startTourButton.setTitleColor(UIColor.white, for: .normal)
         self.startTourButton.transform = CGAffineTransform(scaleX: 1, y: 1)
         let transition = CATransition()
@@ -64,12 +66,12 @@ class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol, co
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
         let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as! FloorMapViewController
-        floorMapView.fromScienceTour = false
+        //floorMapView.fromScienceTour = false
+        floorMapView.fromTourString = fromTour.exploreTour
         self.present(floorMapView, animated: false, completion: nil)
     }
     
     @IBAction func startTourButtonTouchDown(_ sender: UIButton) {
-        self.startTourButton.backgroundColor = UIColor.startTourLightBlue
         self.startTourButton.setTitleColor(UIColor.viewMyculTitleBlue, for: .normal)
         self.startTourButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }

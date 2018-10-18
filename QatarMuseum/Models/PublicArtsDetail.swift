@@ -13,6 +13,9 @@ struct PublicArtsDetail: ResponseObjectSerializable, ResponseCollectionSerializa
     var description: String? = nil
     var shortdescription: String? = nil
     var image: String? = nil
+    var images: [String]? = []
+    var longitude: String? = nil
+    var latitude: String? = nil
     
     
     
@@ -23,15 +26,20 @@ struct PublicArtsDetail: ResponseObjectSerializable, ResponseCollectionSerializa
             self.description = representation["Description"] as? String
             self.shortdescription = representation["short_description"] as? String
             self.image = representation["Teaser_image"] as? String
-            
+            self.images = representation["images"] as? [String]
+            self.longitude = representation["longitude"] as? String
+            self.latitude = representation["latitude"] as? String
         }
     }
-    init(id:String?,name:String?,description:String?,shortdescription:String?,image:String?) {
+    init(id:String?,name:String?,description:String?,shortdescription:String?,image:String?,images:[String]?,longitude:String?,latitude:String? ) {
         self.id = id
         self.name = name
         self.description = description
         self.shortdescription = id
         self.image = image
+        self.images = images
+        self.longitude = longitude
+        self.latitude = latitude
     }
 }
 

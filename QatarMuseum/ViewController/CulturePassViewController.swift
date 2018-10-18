@@ -21,12 +21,12 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     @IBOutlet weak var benefitsDiscountLabel: UILabel!
     var fromHome: Bool = false
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
-    let benefitList = ["15% DISCOUNT AT QM CAFE'S ACROSS ALL VENUES",
-                       "10% DISCOUNT ON ITEMS IN ALL QM GIFT SHOPS (without minimum purchase)",
-                       "10% DISCOUNT AT IDAM RESTAURANT AT LUNCH TIME",
-                       "RECEIVE OUR MONTHLY NEWSLETTER TO STAY UP TO DATE ON QM AND PARTNER OFFERINGS",
-                       "GET PREMIER ACCESS TO MEMBERS ONLY TALKS &WORKSHOPS",
-                       "GET EXCLUSIVE INVITATION TO QM OPEN HOUSE ACCESS TO OUR WORLD CLASS CALL CENTER 8AM TO 8PM DAILY"]
+    let benefitList = ["15% Discount at QM Cafe's across all venues",
+                       "10% Discount on items in all QM Gift Shops (without minimum purchase)",
+                       "10% Discount at Idam Restaurant at lunch time",
+                       "Receive our monthly newsletter to stay up to date on QM and partner offerings",
+                       "Get premier access to members only talks &workkshops",
+                       "Get exclusive invitation to QM open house access to our world class call center 8AM to 8PM daily"]
     
     override func viewDidLoad() {
         super.viewDidLoad()   
@@ -44,7 +44,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         //loadingView.isHidden = false
        // loadingView.showLoading()
         headerView.headerViewDelegate = self
-        headerView.headerTitle.text = NSLocalizedString("CULTUREPASS_TITLE", comment: "CULTUREPASS_TITLE in the Culture Pass page")
+        headerView.headerTitle.text = NSLocalizedString("CULTUREPASS_TITLE", comment: "CULTUREPASS_TITLE in the Culture Pass page").uppercased()
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         } else {
@@ -64,12 +64,20 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         benefitLabel.text = NSLocalizedString("BENEFIT_TITLE", comment: "BENEFIT_TITLE in the Culture Pass page")
         introLabel.text = NSLocalizedString("CULTURE_PASS_INTRO", comment: "CULTURE_PASS_INTRO in the Culture Pass page")
         secondIntroLabel.text = NSLocalizedString("CULTURE_PASS_SECONDDESC", comment: "CULTURE_PASS_SECONDDESC in the Culture Pass page")
-        var benefitString = String()
-        for i in 0 ... benefitList.count-1 {
-            benefitString = benefitString + "\n\n" + "-" + benefitList[i]
-            benefitsDiscountLabel.text = benefitString
-            benefitsDiscountLabel.font = UIFont.englishTitleFont
-        }
+//        var benefitString = String()
+//        for i in 0 ... benefitList.count-1 {
+//            benefitString = benefitString + "\n\n" + "-" + benefitList[i]
+//            benefitsDiscountLabel.text = benefitString
+//            benefitsDiscountLabel.font = UIFont.settingsUpdateLabelFont
+//        }
+        benefitsDiscountLabel.text = NSLocalizedString("CULTURE_DISCOUNT_LABEL", comment: "CULTURE_DISCOUNT_LABEL in the Culture Pass page")
+        notMemberLabel.text = NSLocalizedString("CULTURE_NOT_A_MEMBER", comment: "CULTURE_NOT_A_MEMBER in the Culture Pass page")
+        registerButton.setTitle(NSLocalizedString("CULTURE_BECOME_A_MEMBER", comment: "CULTURE_BECOME_A_MEMBER in the Culture Pass page"), for: .normal)
+        alreadyMemberLabel.text = NSLocalizedString("CULTURE_BECOME_ALREADY_MEMBER", comment: "CULTURE_BECOME_ALREADY_MEMBER in the Culture Pass page")
+        logInButton.setTitle(NSLocalizedString("CULTURE_LOG_IN", comment: "CULTURE_LOG_IN in the Culture Pass page"), for: .normal)
+        benefitsDiscountLabel.font = UIFont.settingsUpdateLabelFont
+        registerButton.titleLabel?.font = UIFont.discoverButtonFont
+        logInButton.titleLabel?.font = UIFont.discoverButtonFont
         
     }
     
@@ -88,27 +96,19 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     
     @IBAction func didTapRegisterButton(_ sender: UIButton) {
         loadComingSoonPopup()
-        self.registerButton.backgroundColor = UIColor.profilePink
-        self.registerButton.setTitleColor(UIColor.whiteColor, for: .normal)
         self.registerButton.transform = CGAffineTransform(scaleX: 1, y: 1)
     }
     
     @IBAction func registerButtonTouchDown(_ sender: UIButton) {
-        self.registerButton.backgroundColor = UIColor.profileLightPink
-        self.registerButton.setTitleColor(UIColor.viewMyFavDarkPink, for: .normal)
         self.registerButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
     }
     
     @IBAction func didTapLogInButton(_ sender: UIButton) {
         loadComingSoonPopup()
-        self.logInButton.backgroundColor = UIColor.viewMycultureBlue
-        self.logInButton.setTitleColor(UIColor.white, for: .normal)
         self.logInButton.transform = CGAffineTransform(scaleX: 1, y: 1)
     }
     
     @IBAction func logInButtonTouchDown(_ sender: UIButton) {
-        self.logInButton.backgroundColor = UIColor.viewMycultureLightBlue
-        self.logInButton.setTitleColor(UIColor.viewMyculTitleBlue, for: .normal)
         self.logInButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
     }
     
