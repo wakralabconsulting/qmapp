@@ -15,7 +15,7 @@ PODS:
     - GoogleUtilities/AppDelegateSwizzler (~> 5.2.0)
     - GoogleUtilities/MethodSwizzler (~> 5.2.0)
     - GoogleUtilities/Network (~> 5.2)
-    - "GoogleUtilities/NSData+zlib (~> 5.2)"
+    - GoogleUtilities/NSData+zlib (~> 5.2)
     - nanopb (~> 0.3)
   - FirebaseCore (5.1.2):
     - GoogleUtilities/Logger (~> 5.2)
@@ -26,7 +26,7 @@ PODS:
     - GoogleUtilities/AppDelegateSwizzler (~> 5.2.0)
     - GoogleUtilities/MethodSwizzler (~> 5.2.0)
     - GoogleUtilities/Network (~> 5.2)
-    - "GoogleUtilities/NSData+zlib (~> 5.2)"
+    - GoogleUtilities/NSData+zlib (~> 5.2)
     - nanopb (~> 0.3)
   - GoogleUtilities/AppDelegateSwizzler (5.2.3):
     - GoogleUtilities/Environment
@@ -39,30 +39,12 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/Network (5.2.3):
     - GoogleUtilities/Logger
-    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/NSData+zlib
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (5.2.3)"
+  - GoogleUtilities/NSData+zlib (5.2.3)
   - GoogleUtilities/Reachability (5.2.3):
     - GoogleUtilities/Logger
   - Kingfisher (4.9.0)
-  - MaterialComponents/BottomSheet (62.1.0):
-    - MaterialComponents/private/KeyboardWatcher
-    - MaterialComponents/private/Math
-    - MaterialComponents/private/ShapeLibrary
-    - MaterialComponents/private/Shapes
-  - MaterialComponents/private/Application (62.1.0)
-  - MaterialComponents/private/KeyboardWatcher (62.1.0):
-    - MaterialComponents/private/Application
-  - MaterialComponents/private/Math (62.1.0)
-  - MaterialComponents/private/ShapeLibrary (62.1.0):
-    - MaterialComponents/private/Math
-    - MaterialComponents/private/Shapes
-  - MaterialComponents/private/Shapes (62.1.0):
-    - MaterialComponents/private/Math
-    - MaterialComponents/ShadowLayer
-  - MaterialComponents/ShadowElevations (62.1.0)
-  - MaterialComponents/ShadowLayer (62.1.0):
-    - MaterialComponents/ShadowElevations
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
@@ -76,24 +58,7 @@ DEPENDENCIES:
   - Fabric
   - Firebase/Core
   - Kingfisher
-  - MaterialComponents/BottomSheet
   - YouTubePlayer
-
-SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - Alamofire
-    - Crashlytics
-    - Fabric
-    - Firebase
-    - FirebaseAnalytics
-    - FirebaseCore
-    - FirebaseInstanceID
-    - GoogleAppMeasurement
-    - GoogleUtilities
-    - Kingfisher
-    - MaterialComponents
-    - nanopb
-    - YouTubePlayer
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
@@ -106,10 +71,9 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: f7507b39b70ad0bd80b3d81518b2f43868974307
   GoogleUtilities: 6f681e27050c5e130325e89fa0316dfca826f954
   Kingfisher: 64539b51826b778206daa6ed815d12653caa69dd
-  MaterialComponents: 3d9e6a0aaba5d7211a4b4465e78ec40cd599a4ef
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   YouTubePlayer: 028451f6772f372d4759866db99824c676ac1473
 
-PODFILE CHECKSUM: 4a38a75442e7bc2b81ed8f5fe9171948bc4febe1
+PODFILE CHECKSUM: 1204f9f340b94bee894c727156c39afdb878514f
 
-COCOAPODS: 1.6.0.beta.1
+COCOAPODS: 1.4.0
