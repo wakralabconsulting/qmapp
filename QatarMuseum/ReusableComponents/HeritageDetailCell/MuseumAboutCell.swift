@@ -12,8 +12,6 @@ import UIKit
 import MapKit
 import YouTubePlayer
 class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
-    
-    
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var titleLabel: UITextView!
@@ -35,19 +33,17 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
     @IBOutlet weak var contactLabel: UILabel!
     @IBOutlet weak var locationFirstLabel: UILabel!
     @IBOutlet weak var subTitleHeight: NSLayoutConstraint!
-    @IBOutlet weak var locationTotalTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var locationTotalBottomConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var locationTotalTopConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var locationTotalBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var favoriteBtnViewHeight: NSLayoutConstraint!
-    @IBOutlet weak var bottomCarousel: iCarousel!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var mapOverlayView: UIView!
     @IBOutlet weak var player: VersaPlayer!
     @IBOutlet weak var controls: VersaPlayerControls!
-    
     @IBOutlet weak var videoImageView: UIImageView!
-    var imgArray = NSArray()
     
+    var imgArray = NSArray()
     var favBtnTapAction : (()->())?
     var shareBtnTapAction : (()->())?
     var locationButtonTapAction : (()->())?
@@ -60,17 +56,14 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         // setPublicArtsDetailCellData()
         //setHeritageDetailCellData()
         imgArray = ["default_imageX2","default_imageX2","default_imageX2","default_imageX2"]
-        bottomCarousel.delegate = self
-        bottomCarousel.dataSource = self
-        bottomCarousel.type = .rotary
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
         tap.delegate = self // This is not required
         mapOverlayView.addGestureRecognizer(tap)
         //loadVideo()
     }
+    
     func loadVideo(urlString:String?) {
        // self.loadAboutVideo?()
-        
         
         player.use(controls: controls)
         if let url = URL.init(string: urlString!) {
@@ -82,10 +75,6 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         controls.rewindButton?.isHidden = true
         controls.forwardButton?.isHidden = true
         
-        
-        
-        
-        
        // let urlString = aboutData.multimediaVideo![0]
 //        if (urlString != nil && urlString != "") {
 //            let videoURL = URL(string:urlString!)
@@ -95,9 +84,6 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
 //            self.videoView.layer.addSublayer(playerLayer)
 //            player.play()
         
-            
-            
-            
             
             
 //            let player = AVPlayer(url: URL(string: urlString!)!)
@@ -114,9 +100,11 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         //videoView.loadVideoID("2cEYXuCTJjQ")
         
     }
+    
     @objc func handleTap(sender: UITapGestureRecognizer? = nil) {
         self.loadMapView?()
     }
+    
     func setUi() {
         titleLabel.font = UIFont.settingsUpdateLabelFont
         titleDescriptionLabel.font = UIFont.englishTitleFont
@@ -137,8 +125,8 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
     func setHeritageDetailData(heritageDetail: Heritage) {
         titleBottomOnlyConstraint.isActive = false
         //titleBottomOnlyConstraint.constant = 45
-        locationTotalTopConstraint.isActive = false
-        locationTotalBottomConstraint.isActive = false
+//        locationTotalTopConstraint.isActive = false
+//        locationTotalBottomConstraint.isActive = false
         middleTitleLabel.isHidden = false
         midTitleDescriptionLabel.isHidden = false
         middleLabelLine.isHidden = true
@@ -169,8 +157,6 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         let mapRedirectionMessage = NSLocalizedString("MAP_REDIRECTION_MESSAGE",
                                                       comment: "MAP_REDIRECTION_MESSAGE in the Dining detail")
         locationButton.setTitle(mapRedirectionMessage, for: .normal)
-        
-        
     }
     
     func setPublicArtsDetailValues(publicArsDetail: PublicArtsDetail) {
@@ -189,10 +175,10 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         
         titleBottomOnlyConstraint.isActive = true//
         titleBottomOnlyConstraint.constant = 45//
-        locationTotalTopConstraint.isActive = true
-        locationTotalTopConstraint.constant = 35
-        locationTotalBottomConstraint.isActive = true
-        locationTotalBottomConstraint.constant = 50
+//        locationTotalTopConstraint.isActive = true
+//        locationTotalTopConstraint.constant = 35
+//        locationTotalBottomConstraint.isActive = true
+//        locationTotalBottomConstraint.constant = 50
         
         titleDescriptionLabel.text = publicArsDetail.description?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         midTitleDescriptionLabel.text = publicArsDetail.shortdescription?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
@@ -203,8 +189,8 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
     
     func setMuseumAboutCellData(aboutData: Museum) {
         titleBottomOnlyConstraint.isActive = false
-        locationTotalTopConstraint.isActive = false
-        locationTotalBottomConstraint.isActive = false
+//        locationTotalTopConstraint.isActive = false
+//        locationTotalBottomConstraint.isActive = false
         middleTitleLabel.isHidden = false
         midTitleDescriptionLabel.isHidden = false
         middleLabelLine.isHidden = false
@@ -235,9 +221,6 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
             }
         }
         
-        
-        
-        
         sundayTimeLabel.text = aboutData.openingTime
         
         titleLabel.font = UIFont.closeButtonFont
@@ -252,10 +235,6 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
             contactLabel.text = aboutData.contactEmail
             contactLine.isHidden = false
         }
-        
-        
-        
-        
         
         var latitudeString  = String()
         var longitudeString = String()
