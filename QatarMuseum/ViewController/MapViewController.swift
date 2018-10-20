@@ -9,16 +9,25 @@
 import MapKit
 import UIKit
 
-class MapViewController: UIViewController,HeaderViewProtocol {
-    
-    
-
+class MapViewController: UIViewController,HeaderViewProtocol, CLLocationManagerDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var headerView: CommonHeaderView!
+    
     var aboutData : Museum?
+    let locationManager = CLLocationManager()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         headerView.headerViewDelegate = self
+        
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+            locationManager.requestLocation()
+        }
+        
         loadMapData()
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -56,8 +65,16 @@ class MapViewController: UIViewController,HeaderViewProtocol {
             annotation.subtitle = aboutData?.name
             mapView.addAnnotation(annotation)
         }
-        
     }
+    
+    @IBAction func setMapType(_ sender: UISwitch) {
+        if sender.isOn == true {
+            mapView.mapType = .satellite
+        } else {
+            mapView.mapType = .standard
+        }
+    }
+    
     func headerCloseButtonPressed() {
         let transition = CATransition()
         transition.duration = 0.3

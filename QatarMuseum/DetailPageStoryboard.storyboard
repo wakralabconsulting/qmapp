@@ -27,11 +27,11 @@
                         <viewControllerLayoutGuide type="bottom" id="AEO-l0-vMp"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ptq-QW-HYO">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="1300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gC4-Ir-SsL">
-                                <rect key="frame" x="0.0" y="20" width="414" height="1280"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="980"/>
                                 <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="heritageDetailCellId2" rowHeight="1300" id="Akh-2R-i7o" customClass="MuseumAboutCell" customModule="QatarMuseums" customModuleProvider="target">
@@ -41,19 +41,19 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="1300"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1lx-cw-fLc">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="1300"/>
+                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1lx-cw-fLc">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="1032"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J58-nk-sCF">
+                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J58-nk-sCF">
                                                             <rect key="frame" x="15" y="20" width="384" height="184"/>
                                                             <subviews>
-                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="749" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="title" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Psv-bB-spw">
+                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="749" ambiguous="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="title" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Psv-bB-spw">
                                                                     <rect key="frame" x="25" y="27" width="334" height="38"/>
                                                                     <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="18"/>
                                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                 </textView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="subtitle" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pZP-93-HWM">
-                                                                    <rect key="frame" x="164.5" y="89" width="55.5" height="21"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="subtitle" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pZP-93-HWM">
+                                                                    <rect key="frame" x="164" y="89" width="56" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="21" id="avz-XW-ZLG"/>
                                                                     </constraints>
@@ -61,13 +61,13 @@
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XMg-AW-idH">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XMg-AW-idH">
                                                                     <rect key="frame" x="192" y="126" width="0.0" height="0.0"/>
                                                                     <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4VR-o3-Lcg">
+                                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4VR-o3-Lcg">
                                                                     <rect key="frame" x="178" y="77" width="29" height="3"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
@@ -75,17 +75,17 @@
                                                                         <constraint firstAttribute="height" constant="3" id="fYD-Xc-MVt"/>
                                                                     </constraints>
                                                                 </view>
-                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="desc" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ell-97-t0K">
+                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="desc" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ell-97-t0K">
                                                                     <rect key="frame" x="25" y="89" width="334" height="37"/>
                                                                     <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="17"/>
                                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                 </textView>
-                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="mid ds" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l5c-7I-cyD">
+                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="mid ds" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l5c-7I-cyD">
                                                                     <rect key="frame" x="25" y="131" width="334" height="28"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                 </textView>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pRy-Wq-pRg">
+                                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pRy-Wq-pRg">
                                                                     <rect key="frame" x="178" y="131" width="29" height="0.0"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
@@ -126,14 +126,14 @@
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DsF-np-ZdL">
-                                                            <rect key="frame" x="15" y="194" width="384" height="972"/>
+                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DsF-np-ZdL">
+                                                            <rect key="frame" x="15" y="214" width="384" height="734"/>
                                                             <subviews>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zcw-oW-sUO" customClass="VersaPlayer" customModule="QatarMuseums" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="-0.5" width="384" height="184.5"/>
+                                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zcw-oW-sUO" customClass="VersaPlayer" customModule="QatarMuseums" customModuleProvider="target">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="384" height="185"/>
                                                                     <subviews>
-                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_video" translatesAutoresizingMaskIntoConstraints="NO" id="3R2-dE-lAa">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="384" height="184.5"/>
+                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="placeholder_video" translatesAutoresizingMaskIntoConstraints="NO" id="3R2-dE-lAa">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="384" height="185"/>
                                                                         </imageView>
                                                                     </subviews>
                                                                     <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
@@ -145,8 +145,8 @@
                                                                         <constraint firstAttribute="trailing" secondItem="3R2-dE-lAa" secondAttribute="trailing" id="zTR-Lg-SGO"/>
                                                                     </constraints>
                                                                 </view>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OPENING TIMINGS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y91-ye-xUv">
-                                                                    <rect key="frame" x="120" y="204" width="144" height="21"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="OPENING TIMINGS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y91-ye-xUv">
+                                                                    <rect key="frame" x="120" y="205" width="144" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="21" id="Yvm-Cp-tbJ"/>
                                                                     </constraints>
@@ -154,28 +154,28 @@
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cNV-Hg-bLd">
-                                                                    <rect key="frame" x="177.5" y="234" width="29" height="3"/>
+                                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cNV-Hg-bLd">
+                                                                    <rect key="frame" x="178" y="235" width="29" height="3"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="29" id="4Ey-Me-U25"/>
                                                                         <constraint firstAttribute="height" constant="3" id="YhF-Q5-ujL"/>
                                                                     </constraints>
                                                                 </view>
-                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eUH-lb-eDo">
-                                                                    <rect key="frame" x="25" y="250" width="334" height="34"/>
+                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eUH-lb-eDo">
+                                                                    <rect key="frame" x="25" y="251" width="334" height="34"/>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="15"/>
                                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                 </textView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4fK-U9-TFx">
-                                                                    <rect key="frame" x="192" y="284" width="0.0" height="0.0"/>
+                                                                    <rect key="frame" x="192" y="285" width="0.0" height="0.0"/>
                                                                     <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="15"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOCATIONS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fBT-Ut-cGZ">
-                                                                    <rect key="frame" x="147" y="284" width="90.5" height="21"/>
+                                                                    <rect key="frame" x="147" y="285" width="91" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="21" id="lbR-uZ-6xs"/>
                                                                     </constraints>
@@ -184,7 +184,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hSu-dr-bze">
-                                                                    <rect key="frame" x="177" y="314" width="29" height="3"/>
+                                                                    <rect key="frame" x="178" y="315" width="29" height="3"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="3" id="dMg-eL-noH"/>
@@ -192,7 +192,7 @@
                                                                     </constraints>
                                                                 </view>
                                                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xOc-VW-Qtf">
-                                                                    <rect key="frame" x="177.5" y="650.5" width="29" height="3"/>
+                                                                    <rect key="frame" x="178" y="652" width="29" height="3"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="3" id="3eu-Hv-VgZ"/>
@@ -200,19 +200,19 @@
                                                                     </constraints>
                                                                 </view>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RcA-O5-1Dd">
-                                                                    <rect key="frame" x="147" y="317" width="90.5" height="0.0"/>
+                                                                    <rect key="frame" x="147" y="318" width="91" height="0.0"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aXK-nl-XNw">
-                                                                    <rect key="frame" x="192" y="641.5" width="0.0" height="0.0"/>
+                                                                    <rect key="frame" x="192" y="643" width="0.0" height="0.0"/>
                                                                     <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="18"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqM-56-omt">
-                                                                    <rect key="frame" x="83.5" y="596.5" width="218" height="35"/>
+                                                                    <rect key="frame" x="83" y="598" width="218" height="35"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="35" id="7hi-Dh-SeJ"/>
                                                                     </constraints>
@@ -226,7 +226,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZSR-Lu-lsl">
-                                                                    <rect key="frame" x="192" y="661.5" width="0.0" height="21"/>
+                                                                    <rect key="frame" x="192" y="663" width="0.0" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="21" id="jMi-KI-taB"/>
                                                                     </constraints>
@@ -235,7 +235,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="01t-4J-Snn">
-                                                                    <rect key="frame" x="192" y="325.5" width="0.0" height="22"/>
+                                                                    <rect key="frame" x="192" y="326" width="0.0" height="22"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="22" id="JNw-y6-r5V"/>
                                                                     </constraints>
@@ -244,13 +244,13 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="dGv-dr-SC8">
-                                                                    <rect key="frame" x="0.0" y="325" width="384" height="264"/>
+                                                                    <rect key="frame" x="0.0" y="326" width="384" height="264"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="264" id="W1w-lY-qc3"/>
                                                                     </constraints>
                                                                 </mapView>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DSB-CZ-BAS">
-                                                                    <rect key="frame" x="0.0" y="325" width="384" height="264"/>
+                                                                    <rect key="frame" x="0.0" y="326" width="384" height="264"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </view>
                                                             </subviews>
@@ -302,6 +302,7 @@
                                                                 <constraint firstItem="aXK-nl-XNw" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DsF-np-ZdL" secondAttribute="leading" constant="20" id="q7P-q0-IAd"/>
                                                                 <constraint firstItem="01t-4J-Snn" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DsF-np-ZdL" secondAttribute="leading" constant="20" id="qRe-pV-pkT"/>
                                                                 <constraint firstAttribute="trailing" secondItem="Zcw-oW-sUO" secondAttribute="trailing" id="s8O-ts-zAh"/>
+                                                                <constraint firstAttribute="bottom" secondItem="ZSR-Lu-lsl" secondAttribute="bottom" constant="50" id="sSQ-ZP-LWb"/>
                                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fBT-Ut-cGZ" secondAttribute="trailing" constant="20" id="tDX-Mb-xTm"/>
                                                                 <constraint firstItem="hqM-56-omt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DsF-np-ZdL" secondAttribute="leading" constant="12" id="viG-zV-uQg"/>
                                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="aXK-nl-XNw" secondAttribute="trailing" constant="20" id="yJZ-Ho-OCH"/>
@@ -360,9 +361,9 @@
                                                         <constraint firstAttribute="trailing" secondItem="J58-nk-sCF" secondAttribute="trailing" constant="15" id="DLW-uj-LX0"/>
                                                         <constraint firstItem="DsF-np-ZdL" firstAttribute="leading" secondItem="J58-nk-sCF" secondAttribute="leading" id="Esv-6P-RQx"/>
                                                         <constraint firstItem="Pqb-39-KdR" firstAttribute="width" secondItem="sZg-6G-Zgc" secondAttribute="width" id="GKV-ie-mmE"/>
-                                                        <constraint firstItem="DsF-np-ZdL" firstAttribute="top" secondItem="J58-nk-sCF" secondAttribute="bottom" constant="-10" id="KJR-Hw-rGz"/>
+                                                        <constraint firstItem="DsF-np-ZdL" firstAttribute="top" secondItem="J58-nk-sCF" secondAttribute="bottom" constant="10" id="KJR-Hw-rGz"/>
                                                         <constraint firstItem="xbK-Dh-95S" firstAttribute="leading" secondItem="1lx-cw-fLc" secondAttribute="leading" id="Lc9-81-sQc"/>
-                                                        <constraint firstItem="xbK-Dh-95S" firstAttribute="top" secondItem="DsF-np-ZdL" secondAttribute="bottom" constant="24" id="Q8y-oR-Tbw"/>
+                                                        <constraint firstItem="xbK-Dh-95S" firstAttribute="top" secondItem="DsF-np-ZdL" secondAttribute="bottom" constant="20" id="UrZ-5l-H09"/>
                                                         <constraint firstAttribute="trailing" secondItem="FWa-7w-ZOM" secondAttribute="trailing" id="Whq-84-Ooz"/>
                                                         <constraint firstAttribute="bottom" secondItem="FWa-7w-ZOM" secondAttribute="bottom" constant="33" id="dWO-bE-2Fm"/>
                                                         <constraint firstItem="DsF-np-ZdL" firstAttribute="trailing" secondItem="J58-nk-sCF" secondAttribute="trailing" id="fIu-ke-5p4"/>
@@ -421,7 +422,7 @@
                                 </connections>
                             </tableView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="itZ-hc-c8t" customClass="LoadingView" customModule="QatarMuseums" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="20" width="414" height="1280"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="980"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
@@ -437,7 +438,7 @@
                         </constraints>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="414" height="1300"/>
+                    <size key="freeformSize" width="414" height="1000"/>
                     <connections>
                         <outlet property="heritageDetailTableView" destination="gC4-Ir-SsL" id="Yb2-6w-scr"/>
                         <outlet property="loadingView" destination="itZ-hc-c8t" id="NQc-lh-yJ9"/>
@@ -449,7 +450,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="crY-Cr-OL5" customClass="VersaStatefulButton" customModule="VersaPlayer">
-                            <rect key="frame" x="164" y="139" width="50" height="50"/>
+                            <rect key="frame" x="164" y="145" width="50" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="Klg-yG-Piw"/>
                                 <constraint firstAttribute="width" constant="50" id="ldl-YB-3cq"/>
@@ -462,7 +463,7 @@
                             </userDefinedRuntimeAttributes>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D3H-lq-nGO" customClass="VersaStatefulButton" customModule="VersaPlayer">
-                            <rect key="frame" x="268" y="139" width="30" height="50"/>
+                            <rect key="frame" x="286" y="145" width="30" height="50"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="image" keyPath="activeImage" value="fastforward"/>
@@ -470,7 +471,7 @@
                             </userDefinedRuntimeAttributes>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rLS-aC-dKq" customClass="VersaStatefulButton" customModule="QatarMuseums">
-                            <rect key="frame" x="226" y="139" width="30" height="50"/>
+                            <rect key="frame" x="226" y="145" width="48" height="50"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="image" keyPath="activeImage" value="skipForward"/>
@@ -478,7 +479,7 @@
                             </userDefinedRuntimeAttributes>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hZg-R5-df1" customClass="VersaStatefulButton" customModule="QatarMuseums">
-                            <rect key="frame" x="122" y="139" width="30" height="50"/>
+                            <rect key="frame" x="104" y="145" width="48" height="50"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="image" keyPath="activeImage" value="skipBackward"/>
@@ -486,7 +487,7 @@
                             </userDefinedRuntimeAttributes>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ogL-9a-CIs" customClass="VersaTimeLabel" customModule="QatarMuseums">
-                            <rect key="frame" x="20" y="209" width="70" height="30"/>
+                            <rect key="frame" x="20" y="215" width="70" height="24"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="70" id="vhD-j7-oec"/>
@@ -496,14 +497,14 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mAx-xz-nWG" customClass="VersaTimeLabel" customModule="QatarMuseums">
-                            <rect key="frame" x="205" y="209" width="70" height="30"/>
+                            <rect key="frame" x="217" y="215" width="70" height="24"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <slider opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="IH0-vD-X0I" customClass="VersaSeekbarSlider" customModule="QatarMuseums">
-                            <rect key="frame" x="100" y="209" width="95" height="31"/>
+                            <rect key="frame" x="100" y="215" width="107" height="25"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="image" keyPath="thumbImage" value="playhead"/>
@@ -514,7 +515,7 @@
                             <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </activityIndicatorView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f10-0c-7Ki" customClass="VersaStatefulButton" customModule="QatarMuseums">
-                            <rect key="frame" x="329" y="209" width="30" height="30"/>
+                            <rect key="frame" x="335" y="215" width="24" height="24"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <state key="normal">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -525,7 +526,7 @@
                             </userDefinedRuntimeAttributes>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IZ9-Oe-XhJ" customClass="VersaStatefulButton" customModule="QatarMuseums">
-                            <rect key="frame" x="287" y="209" width="30" height="30"/>
+                            <rect key="frame" x="299" y="215" width="24" height="24"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <state key="normal">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -536,7 +537,7 @@
                             </userDefinedRuntimeAttributes>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dr0-Vm-Nkt" customClass="VersaStatefulButton" customModule="QatarMuseums">
-                            <rect key="frame" x="80" y="139" width="30" height="50"/>
+                            <rect key="frame" x="44" y="145" width="48" height="50"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="image" keyPath="activeImage" value="rewind"/>
@@ -622,14 +623,22 @@
                                     <constraint firstAttribute="height" constant="65" id="ODm-44-17W"/>
                                 </constraints>
                             </view>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="LnX-M7-NGo">
+                                <rect key="frame" x="163" y="621" width="51" height="31"/>
+                                <connections>
+                                    <action selector="setMapType:" destination="M6f-b4-uti" eventType="valueChanged" id="ccE-Q2-dbG"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="sDt-Mm-84p" firstAttribute="top" secondItem="LnX-M7-NGo" secondAttribute="bottom" constant="15" id="1Fe-Wq-Bgc"/>
                             <constraint firstItem="g3C-1p-7g2" firstAttribute="leading" secondItem="0YN-5y-x0j" secondAttribute="leading" id="3bo-98-D1I"/>
                             <constraint firstAttribute="trailing" secondItem="TJw-Tg-BOA" secondAttribute="trailing" id="9vi-lW-ZbP"/>
                             <constraint firstItem="TJw-Tg-BOA" firstAttribute="leading" secondItem="0YN-5y-x0j" secondAttribute="leading" id="Fen-Va-4po"/>
                             <constraint firstItem="TJw-Tg-BOA" firstAttribute="leading" secondItem="0YN-5y-x0j" secondAttribute="leading" id="G2F-7Q-yEi"/>
                             <constraint firstItem="g3C-1p-7g2" firstAttribute="top" secondItem="KcW-LI-VhG" secondAttribute="bottom" id="M94-MM-CaR"/>
                             <constraint firstAttribute="trailing" secondItem="g3C-1p-7g2" secondAttribute="trailing" id="Ym2-Oh-Ky8"/>
+                            <constraint firstItem="LnX-M7-NGo" firstAttribute="centerX" secondItem="0YN-5y-x0j" secondAttribute="centerX" id="cyL-DO-L9c"/>
                             <constraint firstItem="sDt-Mm-84p" firstAttribute="top" secondItem="TJw-Tg-BOA" secondAttribute="bottom" id="oYr-tK-BCB"/>
                             <constraint firstItem="TJw-Tg-BOA" firstAttribute="top" secondItem="g3C-1p-7g2" secondAttribute="bottom" constant="-1" id="vpe-Au-xZW"/>
                             <constraint firstAttribute="trailing" secondItem="TJw-Tg-BOA" secondAttribute="trailing" id="y2y-YJ-RTv"/>

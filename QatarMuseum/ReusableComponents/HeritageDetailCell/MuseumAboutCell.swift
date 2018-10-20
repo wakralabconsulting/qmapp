@@ -33,8 +33,8 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
     @IBOutlet weak var contactLabel: UILabel!
     @IBOutlet weak var locationFirstLabel: UILabel!
     @IBOutlet weak var subTitleHeight: NSLayoutConstraint!
-    @IBOutlet weak var locationTotalTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var locationTotalBottomConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var locationTotalTopConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var locationTotalBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var favoriteBtnViewHeight: NSLayoutConstraint!
     @IBOutlet weak var mapView: MKMapView!
@@ -125,8 +125,8 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
     func setHeritageDetailData(heritageDetail: Heritage) {
         titleBottomOnlyConstraint.isActive = false
         //titleBottomOnlyConstraint.constant = 45
-        locationTotalTopConstraint.isActive = false
-        locationTotalBottomConstraint.isActive = false
+//        locationTotalTopConstraint.isActive = false
+//        locationTotalBottomConstraint.isActive = false
         middleTitleLabel.isHidden = false
         midTitleDescriptionLabel.isHidden = false
         middleLabelLine.isHidden = true
@@ -175,10 +175,10 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         
         titleBottomOnlyConstraint.isActive = true//
         titleBottomOnlyConstraint.constant = 45//
-        locationTotalTopConstraint.isActive = true
-        locationTotalTopConstraint.constant = 35
-        locationTotalBottomConstraint.isActive = true
-        locationTotalBottomConstraint.constant = 50
+//        locationTotalTopConstraint.isActive = true
+//        locationTotalTopConstraint.constant = 35
+//        locationTotalBottomConstraint.isActive = true
+//        locationTotalBottomConstraint.constant = 50
         
         titleDescriptionLabel.text = publicArsDetail.description?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         midTitleDescriptionLabel.text = publicArsDetail.shortdescription?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
@@ -189,8 +189,8 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
     
     func setMuseumAboutCellData(aboutData: Museum) {
         titleBottomOnlyConstraint.isActive = false
-        locationTotalTopConstraint.isActive = false
-        locationTotalBottomConstraint.isActive = false
+//        locationTotalTopConstraint.isActive = false
+//        locationTotalBottomConstraint.isActive = false
         middleTitleLabel.isHidden = false
         midTitleDescriptionLabel.isHidden = false
         middleLabelLine.isHidden = false
