@@ -9,7 +9,7 @@
 import MapKit
 import UIKit
 
-class MapViewController: UIViewController,HeaderViewProtocol, CLLocationManagerDelegate {
+class MapViewController: UIViewController,HeaderViewProtocol {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var headerView: CommonHeaderView!
     
@@ -20,13 +20,13 @@ class MapViewController: UIViewController,HeaderViewProtocol, CLLocationManagerD
         super.viewDidLoad()
         headerView.headerViewDelegate = self
         
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-            locationManager.requestLocation()
-        }
+//        locationManager.delegate = self
+//        locationManager.requestWhenInUseAuthorization()
+//
+//        if CLLocationManager.locationServicesEnabled() {
+//            locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+//            locationManager.requestLocation()
+//        }
         
         loadMapData()
     }
