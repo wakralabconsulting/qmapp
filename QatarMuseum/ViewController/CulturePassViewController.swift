@@ -98,7 +98,13 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     
     @IBAction func didTapRegisterButton(_ sender: UIButton) {
-        loadComingSoonPopup()
+        let registrationView =  self.storyboard?.instantiateViewController(withIdentifier: "registerViewId") as! RegistrationViewController
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionFade
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(registrationView, animated: false, completion: nil)
         self.registerButton.transform = CGAffineTransform(scaleX: 1, y: 1)
     }
     
@@ -126,7 +132,13 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     
     func loginButtonPressed() {
-        
+        let profileView =  self.storyboard?.instantiateViewController(withIdentifier: "profileViewId") as! ProfileViewController
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionFade
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(profileView, animated: false, completion: nil)
     }
     
     func forgotButtonPressed() {
