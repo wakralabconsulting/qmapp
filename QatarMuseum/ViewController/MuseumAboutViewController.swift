@@ -20,17 +20,9 @@ enum PageName2{
     case publicArtsDetail
     case museumAbout
 }
-class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,iCarouselDelegate,iCarouselDataSource,UIGestureRecognizerDelegate {
-    
-    
+class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,iCarouselDelegate,iCarouselDataSource,UIGestureRecognizerDelegate {    
     @IBOutlet weak var heritageDetailTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
-    
-    
-    
-    
-    
-    
    
     let imageView = UIImageView()
     let closeButton = UIButton()
@@ -634,6 +626,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
+    
     //MARK: PublicArts Coredata Method
     func saveOrUpdatePublicArtsCoredata() {
         if (publicArtsDetailtArray.count > 0) {
@@ -655,22 +648,19 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                     catch{
                         print(error)
                     }
-                }
-                else {
+                } else {
                     let managedContext = getContext()
                     let publicArtsDetailDict : PublicArtsDetail?
                     publicArtsDetailDict = publicArtsDetailtArray[0]
                     self.saveToCoreData(publicArtseDetailDict: publicArtsDetailDict!, managedObjContext: managedContext)
                 }
-            }
-            else {
+            } else {
                 let fetchData = checkAddedToCoredata(entityName: "PublicArtsEntityArabic", idKey:"id" , idValue: publicArtsDetailtArray[0].id) as! [PublicArtsEntityArabic]
                 if (fetchData.count > 0) {
                     let managedContext = getContext()
                     let publicArtsDetailDict = publicArtsDetailtArray[0]
                     
                     //update
-                    
                     let publicArtsdbDict = fetchData[0]
                     publicArtsdbDict.namearabic = publicArtsDetailDict.name
                     publicArtsdbDict.descriptionarabic = publicArtsDetailDict.description
@@ -682,8 +672,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                     catch{
                         print(error)
                     }
-                }
-                else {
+                } else {
                     let managedContext = getContext()
                     let publicArtsListDict : PublicArtsDetail?
                     publicArtsListDict = publicArtsDetailtArray[0]
@@ -692,6 +681,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             }
         }
     }
+    
     func saveToCoreData(publicArtseDetailDict: PublicArtsDetail, managedObjContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let publicArtsInfo: PublicArtsEntity = NSEntityDescription.insertNewObject(forEntityName: "PublicArtsEntity", into: managedObjContext) as! PublicArtsEntity
@@ -700,9 +690,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             publicArtsInfo.detaildescription = publicArtseDetailDict.description
             publicArtsInfo.shortdescription = publicArtseDetailDict.shortdescription
             publicArtsInfo.image = publicArtseDetailDict.image
-            
-        }
-        else {
+        } else {
             let publicArtsInfo: PublicArtsEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "PublicArtsEntityArabic", into: managedObjContext) as! PublicArtsEntityArabic
             publicArtsInfo.id = publicArtseDetailDict.id
             publicArtsInfo.namearabic = publicArtseDetailDict.name
@@ -712,14 +700,12 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         }
         do {
             try managedObjContext.save()
-            
-            
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    
     func fetchPublicArtsDetailsFromCoredata() {
-        
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var publicArtsArray = [PublicArtsEntity]()
@@ -746,17 +732,15 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                             }
                             self.setTopBarImage()
                             heritageDetailTableView.reloadData()
-                        }else {
+                        } else {
                             self.showNodata()
                         }
-                    }
-                    else{
+                    } else {
                         self.showNodata()
                     }
                 }
                 
-            }
-            else {
+            } else {
                 var publicArtsArray = [PublicArtsEntityArabic]()
                 let managedContext = getContext()
                 let publicArtsFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "PublicArtsEntityArabic")
@@ -791,12 +775,12 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.showNodata()
                     }
                 }
-                
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
+    
     //MARK: ABout Webservice
     func getAboutDetailsFromServer()
     {
@@ -846,8 +830,6 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                     
                     //update
                     let aboutdbDict = fetchData[0]
-
-                    
                     aboutdbDict.name = aboutDetailDict.name
                     aboutdbDict.id = aboutDetailDict.id
                     aboutdbDict.tourguideAvailable = aboutDetailDict.tourguideAvailable
@@ -856,7 +838,6 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                     aboutdbDict.mobileLongtitude = aboutDetailDict.mobileLongtitude
                     aboutdbDict.subtitle = aboutDetailDict.subtitle
                     aboutdbDict.openingTime = aboutDetailDict.openingTime
-
                     aboutdbDict.mobileLatitude = aboutDetailDict.mobileLatitude
                     aboutdbDict.tourGuideAvailability = aboutDetailDict.tourGuideAvailability
                     
@@ -872,12 +853,9 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                             
                             do {
                                 try managedContext.save()
-                                
-                                
                             } catch let error as NSError {
                                 print("Could not save. \(error), \(error.userInfo)")
                             }
-                            
                         }
                     }
 
@@ -893,7 +871,6 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                                 aboutdbDict.addToMultimediaRelation(aboutImage)
                                 do {
                                     try managedContext.save()
-                                    
                                 } catch let error as NSError {
                                     print("Could not save. \(error), \(error.userInfo)")
                                 }
@@ -908,22 +885,19 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                     catch{
                         print(error)
                     }
-                }
-                else {
+                } else {
                     let managedContext = getContext()
                     let aboutDetailDict : Museum?
                     aboutDetailDict = aboutDetailtArray[0]
                     self.saveToCoreData(aboutDetailDict: aboutDetailDict!, managedObjContext: managedContext)
                 }
-            }
-            else {
+            } else {
                 let fetchData = checkAddedToCoredata(entityName: "AboutEntityArabic", idKey:"id" , idValue: aboutDetailtArray[0].id) as! [AboutEntityArabic]
                 if (fetchData.count > 0) {
                     let managedContext = getContext()
                     let aboutDetailDict = aboutDetailtArray[0]
                     
                     //update
-                    
                     let aboutdbDict = fetchData[0]
                     
                     if(aboutDetailDict.multimediaFile != nil) {
@@ -941,10 +915,8 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                     aboutdbDict.mobileLongtitudeAr = aboutDetailDict.mobileLongtitude
                     aboutdbDict.subtitleAr = aboutDetailDict.subtitle
                     aboutdbDict.openingTimeAr = aboutDetailDict.openingTime
-
                     aboutdbDict.mobileLatitudear = aboutDetailDict.mobileLatitude
                     aboutdbDict.tourGuideAvlblyAr = aboutDetailDict.tourGuideAvailability
-                    
                     
                     if((aboutDetailDict.mobileDescription?.count)! > 0) {
                         for i in 0 ... (aboutDetailDict.mobileDescription?.count)!-1 {
@@ -957,8 +929,6 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                             
                             do {
                                 try managedContext.save()
-                                
-                                
                             } catch let error as NSError {
                                 print("Could not save. \(error), \(error.userInfo)")
                             }
@@ -989,11 +959,10 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                     do{
                         try managedContext.save()
                     }
-                    catch{
+                    catch {
                         print(error)
                     }
-                }
-                else {
+                } else {
                     let managedContext = getContext()
                     let aboutDetailDict : Museum?
                     aboutDetailDict = aboutDetailtArray[0]
@@ -1002,6 +971,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             }
         }
     }
+    
     func saveToCoreData(aboutDetailDict: Museum, managedObjContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let aboutdbDict: AboutEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutEntity", into: managedObjContext) as! AboutEntity
@@ -1050,20 +1020,14 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                         aboutdbDict.addToMultimediaRelation(aboutImage)
                         do {
                             try managedObjContext.save()
-                            
                         } catch let error as NSError {
                             print("Could not save. \(error), \(error.userInfo)")
                         }
-                        
                     }
                 }
             }
-            
-        }
-        else {
+        } else {
             let aboutdbDict: AboutEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "AboutEntityArabic", into: managedObjContext) as! AboutEntityArabic
-            
-
             aboutdbDict.nameAr = aboutDetailDict.name
             aboutdbDict.id = aboutDetailDict.id
             aboutdbDict.tourguideAvailableAr = aboutDetailDict.tourguideAvailable
@@ -1108,26 +1072,21 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                         aboutdbDict.addToMultimediaRelation(aboutImage)
                         do {
                             try managedObjContext.save()
-                            
                         } catch let error as NSError {
                             print("Could not save. \(error), \(error.userInfo)")
                         }
-                        
                     }
                 }
             }
-            
         }
         do {
             try managedObjContext.save()
-            
-            
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    
     func fetchAboutDetailsFromCoredata() {
-        
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var aboutArray = [AboutEntity]()
@@ -1141,7 +1100,6 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                     
                     if (aboutArray.count > 0 ){
                         let aboutDict = aboutArray[0]
-        
                         var descriptionArray : [String] = []
                         let aboutInfoArray = (aboutDict.mobileDescRelation?.allObjects) as! [AboutDescriptionEntity]
                          if(aboutInfoArray.count > 0) {
@@ -1149,9 +1107,6 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                                 descriptionArray.append(aboutInfoArray[i].mobileDesc!)
                             }
                         }
-                        
-
-                        
                         var multimediaArray : [String] = []
                         let mutimediaInfoArray = (aboutDict.multimediaRelation?.allObjects) as! [AboutMultimediaFileEntity]
                         if(mutimediaInfoArray.count > 0) {
@@ -1167,14 +1122,11 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                         }
                         self.setTopBarImage()
                         heritageDetailTableView.reloadData()
-                    }
-                    else{
+                    } else {
                         self.showNodata()
                     }
                 }
-                
-            }
-            else {
+            } else {
                 var aboutArray = [AboutEntityArabic]()
                 let managedContext = getContext()
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "AboutEntityArabic")
@@ -1191,8 +1143,6 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                                 descriptionArray.append(aboutInfoArray[i].mobileDesc!)
                             }
                         }
-                        
-                        
                         var multimediaArray : [String] = []
                         let mutimediaInfoArray = (aboutDict.multimediaRelation?.allObjects) as! [AboutMultimediaFileEntity]
                         if(mutimediaInfoArray.count > 0){
@@ -1285,28 +1235,33 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         }
         return value
     }
+    
     func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
         
-        transparentView.removeFromSuperview()
-        carousel.tag = 0
-        carousel.removeFromSuperview()
     }
+    
     func setiCarouselView() {
         if (carousel.tag == 0) {
             transparentView.frame = self.view.frame
             transparentView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.75)
-            
+            transparentView.isUserInteractionEnabled = true
+            let recognizer = UITapGestureRecognizer(target: self, action: #selector(closeCarouselView))
+            transparentView.addGestureRecognizer(recognizer)
             self.view.addSubview(transparentView)
+            
             carousel = iCarousel(frame: CGRect(x: (self.view.frame.width - 320)/2, y: 200, width: 350, height: 300))
             carousel.delegate = self
             carousel.dataSource = self
             carousel.type = .rotary
             carousel.tag = 1
             view.addSubview(carousel)
-           
-            
-            
         }
+    }
+    
+    @objc func closeCarouselView() {
+        transparentView.removeFromSuperview()
+        carousel.tag = 0
+        carousel.removeFromSuperview()
     }
     
     @objc func imgButtonPressed(sender: UIButton!) {
