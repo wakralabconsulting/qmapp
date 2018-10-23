@@ -62,7 +62,13 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
          self.viewMyFavoriteButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     @IBAction func didTapViewMyCulturePassCard(_ sender: UIButton) {
-        loadComingSoonPopup()
+        let cardView =  self.storyboard?.instantiateViewController(withIdentifier: "cardViewId") as! CulturePassCardViewController
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionFade
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(cardView, animated: false, completion: nil)
         self.viewmyCulturePassButton.backgroundColor = UIColor.viewMycultureBlue
         self.viewmyCulturePassButton.setTitleColor(UIColor.white, for: .normal)
         self.viewmyCulturePassButton.transform = CGAffineTransform(scaleX: 1, y: 1)
