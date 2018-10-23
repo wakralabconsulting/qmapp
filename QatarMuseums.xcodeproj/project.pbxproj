@@ -26,6 +26,10 @@
 		1BE526D22107460F00C8CD51 /* QatarMuseumRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526D12107460F00C8CD51 /* QatarMuseumRouter.swift */; };
 		1BE526D42107470700C8CD51 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526D32107470700C8CD51 /* Config.swift */; };
 		1BE526D72107896600C8CD51 /* Exhibition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526D62107896600C8CD51 /* Exhibition.swift */; };
+		2AEB36A0217EE78C000D7CE9 /* GreetingsPopupPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEB369E217EE78C000D7CE9 /* GreetingsPopupPage.swift */; };
+		2AEB36A1217EE78C000D7CE9 /* GreetingsPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AEB369F217EE78C000D7CE9 /* GreetingsPopupView.xib */; };
+		2AEB36A4217F03CE000D7CE9 /* InvitationAcceptedPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEB36A2217F03CE000D7CE9 /* InvitationAcceptedPopup.swift */; };
+		2AEB36A5217F03CE000D7CE9 /* InvitationAcceptedPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AEB36A3217F03CE000D7CE9 /* InvitationAcceptedPopup.xib */; };
 		B806B7A5212451B200F9F338 /* FloorMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B806B7A4212451B200F9F338 /* FloorMapViewController.swift */; };
 		B806B7A8212452A200F9F338 /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7A6212452A000F9F338 /* GoogleMapsCore.framework */; };
 		B806B7A9212452A200F9F338 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7A7212452A200F9F338 /* GoogleMaps.framework */; };
@@ -232,6 +236,10 @@
 		1BE526D12107460F00C8CD51 /* QatarMuseumRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QatarMuseumRouter.swift; sourceTree = "<group>"; };
 		1BE526D32107470700C8CD51 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		1BE526D62107896600C8CD51 /* Exhibition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exhibition.swift; sourceTree = "<group>"; };
+		2AEB369E217EE78C000D7CE9 /* GreetingsPopupPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreetingsPopupPage.swift; sourceTree = "<group>"; };
+		2AEB369F217EE78C000D7CE9 /* GreetingsPopupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GreetingsPopupView.xib; sourceTree = "<group>"; };
+		2AEB36A2217F03CE000D7CE9 /* InvitationAcceptedPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvitationAcceptedPopup.swift; sourceTree = "<group>"; };
+		2AEB36A3217F03CE000D7CE9 /* InvitationAcceptedPopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InvitationAcceptedPopup.xib; sourceTree = "<group>"; };
 		80387D6C7EDA0B5C9B3AB21C /* Pods-QatarMuseums.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QatarMuseums.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QatarMuseums/Pods-QatarMuseums.debug.xcconfig"; sourceTree = "<group>"; };
 		94F5559C89E84E914A76D7A7 /* Pods_QatarMuseums.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QatarMuseums.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B806B7A4212451B200F9F338 /* FloorMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorMapViewController.swift; sourceTree = "<group>"; };
@@ -561,6 +569,17 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		2AEB369D217EE6EF000D7CE9 /* RsvpPopups */ = {
+			isa = PBXGroup;
+			children = (
+				2AEB369E217EE78C000D7CE9 /* GreetingsPopupPage.swift */,
+				2AEB369F217EE78C000D7CE9 /* GreetingsPopupView.xib */,
+				2AEB36A2217F03CE000D7CE9 /* InvitationAcceptedPopup.swift */,
+				2AEB36A3217F03CE000D7CE9 /* InvitationAcceptedPopup.xib */,
+			);
+			path = RsvpPopups;
+			sourceTree = "<group>";
+		};
 		7989B881720353361A2FCB1C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -711,6 +730,7 @@
 		B80DC08720C7943100E28034 /* ReusableComponents */ = {
 			isa = PBXGroup;
 			children = (
+				2AEB369D217EE6EF000D7CE9 /* RsvpPopups */,
 				B8F00C8121787CD300320DF1 /* LoginPopup */,
 				B827299321778B2F0017EC71 /* VersaPlayer */,
 				B8C31CDC2162435B00AE7788 /* iCarousel */,
@@ -1258,6 +1278,7 @@
 				B8C64D4920FDCA8A00C2D51A /* TourGuideJson.json in Resources */,
 				B80DC06320C792E600E28034 /* LaunchScreen.storyboard in Resources */,
 				B8EAB7C020CA67CD00C001B2 /* EventPopUp.xib in Resources */,
+				2AEB36A5217F03CE000D7CE9 /* InvitationAcceptedPopup.xib in Resources */,
 				B891D06520DBCC5200919F30 /* HeritageCell.xib in Resources */,
 				B8EAA3592158D4520060D168 /* GoogleService-Info.plist in Resources */,
 				B82729B721778B2F0017EC71 /* .gitkeep in Resources */,
@@ -1269,6 +1290,7 @@
 				B8E2C00E20C7E9CA00F3CE41 /* ComingSoonpopup.xib in Resources */,
 				B8AFA2EC20E78BA9008838A6 /* DINNextLTArabic-Light.ttf in Resources */,
 				B8CA08E72146D38400783642 /* MapDetailView.xib in Resources */,
+				2AEB36A1217EE78C000D7CE9 /* GreetingsPopupView.xib in Resources */,
 				B8CA08E52146D38400783642 /* MapDetailCell.xib in Resources */,
 				B8C64D4F20FDDE5900C2D51A /* MiaTourGuideJson.json in Resources */,
 				B80DC06020C792E600E28034 /* Assets.xcassets in Resources */,
@@ -1425,8 +1447,10 @@
 				B806B7A5212451B200F9F338 /* FloorMapViewController.swift in Sources */,
 				B8DC40A920C9A5760044134D /* EventViewController.swift in Sources */,
 				B8294CEA20CBF265002AFF72 /* FSCalendar+Deprecated.m in Sources */,
+				2AEB36A0217EE78C000D7CE9 /* GreetingsPopupPage.swift in Sources */,
 				B82C87F620E69D4100777674 /* DiningDetailTableViewCell.swift in Sources */,
 				B8294CF120CBF265002AFF72 /* FSCalendarWeekdayView.m in Sources */,
+				2AEB36A4217F03CE000D7CE9 /* InvitationAcceptedPopup.swift in Sources */,
 				1B51411E215B892E0055AAF5 /* TourGuide.swift in Sources */,
 				B8294CF320CBF265002AFF72 /* FSCalendar.m in Sources */,
 				B8BA80B720CD8297007E880A /* ExhibitionsViewController.swift in Sources */,

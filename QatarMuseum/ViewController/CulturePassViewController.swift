@@ -10,7 +10,6 @@ import UIKit
 
 class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoonPopUpProtocol,LoginPopUpProtocol {
     
-    
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var introLabel: UILabel!
@@ -24,6 +23,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     var fromHome: Bool = false
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var loginPopUpView : LoginPopupPage = LoginPopupPage()
+    
     let benefitList = ["15% Discount at QM Cafe's across all venues",
                        "10% Discount on items in all QM Gift Shops (without minimum purchase)",
                        "10% Discount at Idam Restaurant at lunch time",
@@ -125,8 +125,21 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         self.loginPopUpView.removeFromSuperview()
     }
     
+//    func greetingsPopupClose() {
+//        self.greetingsPopUpView.removeFromSuperview()
+//    }
+    
     func loginButtonPressed() {
+        //Musheer
+        popupCloseButtonPressed()
         
+        let profileView =  self.storyboard?.instantiateViewController(withIdentifier: "profileViewId") as! ProfileViewController
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionFade
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(profileView, animated: false, completion: nil)
     }
     
     func forgotButtonPressed() {

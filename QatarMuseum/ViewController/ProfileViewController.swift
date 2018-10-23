@@ -8,7 +8,8 @@
 
 import UIKit
 import Crashlytics
-class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUpProtocol {
+class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUpProtocol, GreetingsPopUpProtocol, InvitationAcceptedPopupProtocol {
+    
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var dummyImg: UIImageView!
@@ -17,11 +18,18 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     @IBOutlet weak var editButton: UIButton!
     
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
+    
+    
+    //VVIP Invitation Scenes
+    
+    var greetingsPopUpView : GreetingsPopupPage = GreetingsPopupPage()
+    var invitationAcceptedPopUpView : InvitationAcceptedPopup = InvitationAcceptedPopup()
+    
     var fromHome : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpProfileUI()
-        
+        loadGreetingsPopup()
     }
 
     func setUpProfileUI() {
@@ -46,6 +54,13 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         popupView.loadPopup()
         self.view.addSubview(popupView)
     }
+    
+    func loadGreetingsPopup() {
+        greetingsPopUpView  = GreetingsPopupPage(frame: self.view.frame)
+        greetingsPopUpView.greetingsPopupDelegate = self
+        self.view.addSubview(greetingsPopUpView)
+    }
+    
     func closeButtonPressed() {
         self.popupView.removeFromSuperview()
     }
@@ -97,7 +112,41 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         }
     }
     
+    
+    //Methods for Invitation Greetings
+    
+    func greetingsPopupClose() {
+        self.greetingsPopUpView.removeFromSuperview()
+    }
+    
+    func greetingsPopupCloseButtonPressed() {
+        self.greetingsPopUpView.removeFromSuperview()
+    }
+    
+    func acceptNowButtonPressed() {
+        greetingsPopupClose()
+        invitationAcceptedPopUpView  = InvitationAcceptedPopup(frame: self.view.frame)
+        invitationAcceptedPopUpView.invitationAcceptedPopupDelegate = self
+        self.view.addSubview(invitationAcceptedPopUpView)
+    }
+    
+    func acceptLaterButtonPressed() {
+        greetingsPopupClose()
+        self.invitationAcceptedPopUpView.removeFromSuperview()
 
+    }
+    
+    
+    func invitationAcceptPopupClose() {
+        self.invitationAcceptedPopUpView.removeFromSuperview()
+
+    }
+    
+    func invitationAcceptClose() {
+        self.invitationAcceptedPopUpView.removeFromSuperview()
+
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
