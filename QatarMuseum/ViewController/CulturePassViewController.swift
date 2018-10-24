@@ -10,7 +10,7 @@ import Alamofire
 import Crashlytics
 import UIKit
 
-class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoonPopUpProtocol,LoginPopUpProtocol {
+class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoonPopUpProtocol,LoginPopUpProtocol,UITextFieldDelegate {
     
     
     @IBOutlet weak var headerView: CommonHeaderView!
@@ -85,7 +85,6 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         benefitsDiscountLabel.font = UIFont.settingsUpdateLabelFont
         registerButton.titleLabel?.font = UIFont.discoverButtonFont
         logInButton.titleLabel?.font = UIFont.discoverButtonFont
-        
     }
     
     
@@ -128,6 +127,8 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     func loadLoginPopup() {
         loginPopUpView  = LoginPopupPage(frame: self.view.frame)
         loginPopUpView.loginPopupDelegate = self
+        loginPopUpView.userNameText.delegate = self
+        loginPopUpView.passwordText.delegate = self
         self.view.addSubview(loginPopUpView)
     }
     //MARK: Login Popup Delegate
@@ -136,6 +137,8 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     
     func loginButtonPressed() {
+        loginPopUpView.userNameText.resignFirstResponder()
+        loginPopUpView.passwordText.resignFirstResponder()
         getCulturePassLoginFromServer()
     }
     func loadProfilepage () {
@@ -150,6 +153,16 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     func forgotButtonPressed() {
         
+    }
+    //MARK:TextField Delegate
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if (textField == loginPopUpView.userNameText) {
+            loginPopUpView.passwordText.becomeFirstResponder()
+        } else {
+            loginPopUpView.userNameText.resignFirstResponder()
+            loginPopUpView.passwordText.resignFirstResponder()
+        }
+        return true
     }
     //MARK: Header delegates
     func headerCloseButtonPressed() {

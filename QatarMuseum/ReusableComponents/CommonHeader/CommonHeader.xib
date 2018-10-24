@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -20,8 +19,6 @@
                 <outlet property="headerBackButton" destination="TUc-rO-ZJQ" id="hGO-ZE-i0m"/>
                 <outlet property="headerTitle" destination="slE-qj-JE4" id="Epz-SY-gnI"/>
                 <outlet property="headerView" destination="iN0-l3-epB" id="XXo-ZY-GeX"/>
-                <outlet property="logOutLine" destination="SwB-um-JlW" id="hS9-dI-EL7"/>
-                <outlet property="logoutButton" destination="Nfc-2g-22a" id="Drc-SO-ogT"/>
                 <outlet property="settingsButton" destination="lvn-LU-7eH" id="RBL-y6-ZzI"/>
             </connections>
         </placeholder>
@@ -62,47 +59,17 @@
                         <action selector="settingsButtonTouchDown:" destination="-1" eventType="touchDown" id="PgD-EJ-CaO"/>
                     </connections>
                 </button>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nfc-2g-22a">
-                    <rect key="frame" x="298" y="9" width="70" height="62"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="70" id="sde-oC-KCd"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="19"/>
-                    <state key="normal" title="Logout">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </state>
-                    <connections>
-                        <action selector="didTapLogOut:" destination="-1" eventType="touchUpInside" id="mQe-4e-flQ"/>
-                        <action selector="logOutButtonTouchDown:" destination="-1" eventType="touchUpInside" id="YTQ-kS-sDI"/>
-                    </connections>
-                </button>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SwB-um-JlW">
-                    <rect key="frame" x="304" y="50" width="56.5" height="1"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1" id="uiJ-dh-X36"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="Nfc-2g-22a" secondAttribute="trailing" constant="7" id="1sL-yS-A9c"/>
-                <constraint firstAttribute="bottom" secondItem="Nfc-2g-22a" secondAttribute="bottom" constant="9" id="4XS-rr-irU"/>
                 <constraint firstItem="slE-qj-JE4" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="9" id="7aL-yj-O2J"/>
-                <constraint firstItem="SwB-um-JlW" firstAttribute="leading" secondItem="Nfc-2g-22a" secondAttribute="leading" multiplier="1.02" id="GZn-wJ-ftO"/>
                 <constraint firstItem="lvn-LU-7eH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="slE-qj-JE4" secondAttribute="trailing" id="Mo6-Fh-hP0"/>
-                <constraint firstItem="SwB-um-JlW" firstAttribute="trailing" secondItem="Nfc-2g-22a" secondAttribute="trailing" multiplier="0.98" id="TVw-2r-9J3"/>
-                <constraint firstItem="Nfc-2g-22a" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="9" id="Y6g-kh-68e"/>
                 <constraint firstAttribute="trailing" secondItem="lvn-LU-7eH" secondAttribute="trailing" constant="7" id="Yh3-Wc-1ZN"/>
                 <constraint firstItem="TUc-rO-ZJQ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="5" id="nU0-Sl-zSp"/>
                 <constraint firstItem="TUc-rO-ZJQ" firstAttribute="centerY" secondItem="slE-qj-JE4" secondAttribute="centerY" id="q7A-TC-4vD"/>
                 <constraint firstItem="lvn-LU-7eH" firstAttribute="centerY" secondItem="slE-qj-JE4" secondAttribute="centerY" id="sIV-t0-NA4"/>
                 <constraint firstItem="slE-qj-JE4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TUc-rO-ZJQ" secondAttribute="trailing" id="wBN-Jh-gNE"/>
                 <constraint firstItem="slE-qj-JE4" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="yO2-4v-UqB"/>
-                <constraint firstItem="SwB-um-JlW" firstAttribute="top" secondItem="Nfc-2g-22a" secondAttribute="bottom" constant="-21" id="yvE-FO-pGU"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="37.5" y="59"/>

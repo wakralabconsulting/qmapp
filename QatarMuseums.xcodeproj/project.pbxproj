@@ -100,6 +100,7 @@
 		B8294CF720CBF265002AFF72 /* FSCalendarDelegationProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = B8294CE620CBF265002AFF72 /* FSCalendarDelegationProxy.m */; };
 		B82C87F220E69C9700777674 /* DiningDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82C87F120E69C9700777674 /* DiningDetailViewController.swift */; };
 		B82C87F620E69D4100777674 /* DiningDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82C87F520E69D4100777674 /* DiningDetailTableViewCell.swift */; };
+		B82E1B3321808229006623A6 /* LogoutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82E1B3221808229006623A6 /* LogoutData.swift */; };
 		B839831A21196E68007090C8 /* QatarMuseums.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B839831821196E68007090C8 /* QatarMuseums.xcdatamodeld */; };
 		B84BA060217EE3C000FD2C0D /* TokenData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84BA05F217EE3C000FD2C0D /* TokenData.swift */; };
 		B84BA062217F1A6300FD2C0D /* LoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84BA061217F1A6300FD2C0D /* LoginData.swift */; };
@@ -339,6 +340,7 @@
 		B8294CE620CBF265002AFF72 /* FSCalendarDelegationProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarDelegationProxy.m; sourceTree = "<group>"; };
 		B82C87F120E69C9700777674 /* DiningDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDetailViewController.swift; sourceTree = "<group>"; };
 		B82C87F520E69D4100777674 /* DiningDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDetailTableViewCell.swift; sourceTree = "<group>"; };
+		B82E1B3221808229006623A6 /* LogoutData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutData.swift; sourceTree = "<group>"; };
 		B839831921196E68007090C8 /* QatarMuseums.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QatarMuseums.xcdatamodel; sourceTree = "<group>"; };
 		B84BA05F217EE3C000FD2C0D /* TokenData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenData.swift; sourceTree = "<group>"; };
 		B84BA061217F1A6300FD2C0D /* LoginData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginData.swift; sourceTree = "<group>"; };
@@ -567,6 +569,7 @@
 				B816029D215A239900786F94 /* TourGuideFloorMap.swift */,
 				B84BA05F217EE3C000FD2C0D /* TokenData.swift */,
 				B84BA061217F1A6300FD2C0D /* LoginData.swift */,
+				B82E1B3221808229006623A6 /* LogoutData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1425,6 +1428,7 @@
 				B8D52A3620E638B900E34673 /* DiningViewController.swift in Sources */,
 				B8294CEF20CBF265002AFF72 /* FSCalendarDelegationFactory.m in Sources */,
 				B8294CF020CBF265002AFF72 /* FSCalendarCollectionViewLayout.m in Sources */,
+				B82E1B3321808229006623A6 /* LogoutData.swift in Sources */,
 				B8BBF459211C1AC000352706 /* ParksList.swift in Sources */,
 				B8294CEE20CBF265002AFF72 /* FSCalendarScopeHandle.m in Sources */,
 				B811FBCC2103811400960246 /* QMColours.swift in Sources */,
