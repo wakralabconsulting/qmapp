@@ -81,18 +81,14 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
                     self.saveOrUpdateExhibitionsCoredata()
                     self.exhibitionCollectionView.reloadData()
                 case .failure(let error):
-                    if let unhandledError = handleError(viewController: self, errorType: error as! BackendError) {
-                        var errorMessage: String
-                        var errorTitle: String
-                        switch unhandledError.code {
-                        default: print(unhandledError.code)
-                            errorTitle = String(format: NSLocalizedString("UNKNOWN_ERROR_ALERT_TITLE",
-                                                                          comment: "Setting the title of the alert"))
-                            errorMessage = String(format: NSLocalizedString("ERROR_MESSAGE",
-                                                                            comment: "Setting the content of the alert"))
-                        }
-                        presentAlert(self, title: errorTitle, message: errorMessage)
-                    }
+                    var errorMessage: String
+                    errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                    comment: "Setting the content of the alert"))
+                    self.exbtnLoadingView.stopLoading()
+                    self.exbtnLoadingView.noDataView.isHidden = false
+                    self.exbtnLoadingView.isHidden = false
+                    self.exbtnLoadingView.showNoDataView()
+                    self.exbtnLoadingView.noDataLabel.text = errorMessage
                 }
             }
 //        } else {

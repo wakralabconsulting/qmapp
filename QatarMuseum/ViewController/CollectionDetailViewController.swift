@@ -106,18 +106,14 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
                     self.loadingView.showNoDataView()
                 }
             case .failure(let error):
-                if let unhandledError = handleError(viewController: self, errorType: error as! BackendError) {
-                    var errorMessage: String
-                    var errorTitle: String
-                    switch unhandledError.code {
-                    default: print(unhandledError.code)
-                    errorTitle = String(format: NSLocalizedString("UNKNOWN_ERROR_ALERT_TITLE",
-                                                                  comment: "Setting the title of the alert"))
-                    errorMessage = String(format: NSLocalizedString("ERROR_MESSAGE",
-                                                                    comment: "Setting the content of the alert"))
-                    }
-                    presentAlert(self, title: errorTitle, message: errorMessage)
-                }
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
             }
         }
     }
