@@ -27,7 +27,8 @@
 		1BE526D42107470700C8CD51 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526D32107470700C8CD51 /* Config.swift */; };
 		1BE526D72107896600C8CD51 /* Exhibition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526D62107896600C8CD51 /* Exhibition.swift */; };
 		2A4EBFBB21805595004BF85C /* AcceptDeclinePopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4EBFB921805594004BF85C /* AcceptDeclinePopup.swift */; };
-		2A4EBFBC21805595004BF85C /* AcceptDeclinePopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A4EBFBA21805594004BF85C /* AcceptDeclinePopup.xib */; };
+		2A4EBFBC21805595004BF85C /* AcceptDeclinePopup1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A4EBFBA21805594004BF85C /* AcceptDeclinePopup1.xib */; };
+		2A4EBFBE21808EAF004BF85C /* AcceptDeclinePopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A4EBFBD21808EAF004BF85C /* AcceptDeclinePopup.xib */; };
 		2AEB36A0217EE78C000D7CE9 /* GreetingsPopupPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEB369E217EE78C000D7CE9 /* GreetingsPopupPage.swift */; };
 		2AEB36A1217EE78C000D7CE9 /* GreetingsPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AEB369F217EE78C000D7CE9 /* GreetingsPopupView.xib */; };
 		2AEB36A4217F03CE000D7CE9 /* InvitationAcceptedPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEB36A2217F03CE000D7CE9 /* InvitationAcceptedPopup.swift */; };
@@ -239,7 +240,8 @@
 		1BE526D32107470700C8CD51 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		1BE526D62107896600C8CD51 /* Exhibition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exhibition.swift; sourceTree = "<group>"; };
 		2A4EBFB921805594004BF85C /* AcceptDeclinePopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcceptDeclinePopup.swift; sourceTree = "<group>"; };
-		2A4EBFBA21805594004BF85C /* AcceptDeclinePopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AcceptDeclinePopup.xib; sourceTree = "<group>"; };
+		2A4EBFBA21805594004BF85C /* AcceptDeclinePopup1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AcceptDeclinePopup1.xib; sourceTree = "<group>"; };
+		2A4EBFBD21808EAF004BF85C /* AcceptDeclinePopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AcceptDeclinePopup.xib; sourceTree = "<group>"; };
 		2AEB369E217EE78C000D7CE9 /* GreetingsPopupPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreetingsPopupPage.swift; sourceTree = "<group>"; };
 		2AEB369F217EE78C000D7CE9 /* GreetingsPopupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GreetingsPopupView.xib; sourceTree = "<group>"; };
 		2AEB36A2217F03CE000D7CE9 /* InvitationAcceptedPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvitationAcceptedPopup.swift; sourceTree = "<group>"; };
@@ -577,7 +579,8 @@
 			isa = PBXGroup;
 			children = (
 				2A4EBFB921805594004BF85C /* AcceptDeclinePopup.swift */,
-				2A4EBFBA21805594004BF85C /* AcceptDeclinePopup.xib */,
+				2A4EBFBA21805594004BF85C /* AcceptDeclinePopup1.xib */,
+				2A4EBFBD21808EAF004BF85C /* AcceptDeclinePopup.xib */,
 				2AEB369E217EE78C000D7CE9 /* GreetingsPopupPage.swift */,
 				2AEB369F217EE78C000D7CE9 /* GreetingsPopupView.xib */,
 				2AEB36A2217F03CE000D7CE9 /* InvitationAcceptedPopup.swift */,
@@ -1177,7 +1180,6 @@
 				B80DC05320C792E400E28034 /* Resources */,
 				F4DCECD2DE5ED13A81094976 /* [CP] Embed Pods Frameworks */,
 				B8814DAC21281998004BAB28 /* ShellScript */,
-				92F51F3DCA15BB24BC3AA6D5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1306,6 +1308,7 @@
 				B8F00C8321787CF800320DF1 /* LoginPopupView.xib in Resources */,
 				B8AFA2F220E78E09008838A6 /* DINNextLTPro-Regular.ttf in Resources */,
 				B8B54D6C20FF514E00B21348 /* CollectionDetailView.xib in Resources */,
+				2A4EBFBE21808EAF004BF85C /* AcceptDeclinePopup.xib in Resources */,
 				B8D827ED216239DC0092262A /* DetailPageStoryboard.storyboard in Resources */,
 				1B51B3D021214853002B84AA /* ObjectPopupXib.xib in Resources */,
 				B8CA08E42146D38400783642 /* ObjectPopupView.xib in Resources */,
@@ -1317,7 +1320,7 @@
 				1BAA2FCB2125FCC600D785DD /* ObjectImageXib.xib in Resources */,
 				B8E2C01320C7FD0000F3CE41 /* SideMenu.xib in Resources */,
 				B80DC05E20C792E400E28034 /* Main.storyboard in Resources */,
-				2A4EBFBC21805595004BF85C /* AcceptDeclinePopup.xib in Resources */,
+				2A4EBFBC21805595004BF85C /* AcceptDeclinePopup1.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1338,21 +1341,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		92F51F3DCA15BB24BC3AA6D5 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QatarMuseums/Pods-QatarMuseums-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		B8814DAC21281998004BAB28 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;

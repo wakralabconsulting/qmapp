@@ -61,14 +61,18 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
 //        invitationMessageLabel.textAlignment = NSTextAlignment.center
         
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            accepetDeclineSwitch.isOn = false
-            let offColor = UIColor.red
+            accepetDeclineSwitch.isOn = true
+            let offColor = UIColor.green
             accepetDeclineSwitch.tintColor = offColor
             accepetDeclineSwitch.layer.cornerRadius = 16
             accepetDeclineSwitch.backgroundColor = offColor
             headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         } else {
-            accepetDeclineSwitch.isOn = true
+            accepetDeclineSwitch.isOn = false
+            let offColor = UIColor.red
+            accepetDeclineSwitch.tintColor = offColor
+            accepetDeclineSwitch.layer.cornerRadius = 16
+            accepetDeclineSwitch.backgroundColor = offColor
             headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
         
@@ -76,17 +80,16 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     
     @IBAction func accepetDeclineSwitchClicked(sender: AnyObject) {
         
-        let offColor = UIColor.red
         //Change to Arabic
         if (accepetDeclineSwitch.isOn) {
-            accepetDeclineSwitch.onTintColor = UIColor.settingsSwitchOnTint
+            accepetDeclineSwitch.onTintColor = UIColor.red
             loadConfirmationPopup()
         }
         else {
-            accepetDeclineSwitch.tintColor = offColor
-            accepetDeclineSwitch.layer.cornerRadius = 16
-            accepetDeclineSwitch.backgroundColor = offColor
-            loadConfirmationPopup()
+//            accepetDeclineSwitch.tintColor = offColor
+//            accepetDeclineSwitch.layer.cornerRadius = 16
+//            accepetDeclineSwitch.backgroundColor = offColor
+            acceptNowButtonPressed()
         }
         
     }
@@ -197,6 +200,11 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     
     func invitationAcceptClose() {
         self.invitationAcceptedPopUpView.removeFromSuperview()
+        let offColor = UIColor.settingsSwitchOnTint
+        accepetDeclineSwitch.tintColor = offColor
+        accepetDeclineSwitch.layer.cornerRadius = 16
+        accepetDeclineSwitch.backgroundColor = offColor
+        accepetDeclineSwitch.isOn = false
 
     }
     func declinePopupCloseButtonPressed() {
@@ -205,11 +213,17 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     
     func yesButtonPressed() {
         self.acceptDeclinePopupView.removeFromSuperview()
-
+        accepetDeclineSwitch.onTintColor = UIColor.red
+        accepetDeclineSwitch.isOn = true
     }
     
     func noButtonPressed() {
         self.acceptDeclinePopupView.removeFromSuperview()
+        let offColor = UIColor.settingsSwitchOnTint
+        accepetDeclineSwitch.tintColor = offColor
+        accepetDeclineSwitch.layer.cornerRadius = 16
+        accepetDeclineSwitch.backgroundColor = offColor
+        accepetDeclineSwitch.isOn = false
 
     }
     
