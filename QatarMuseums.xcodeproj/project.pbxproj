@@ -26,6 +26,8 @@
 		1BE526D22107460F00C8CD51 /* QatarMuseumRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526D12107460F00C8CD51 /* QatarMuseumRouter.swift */; };
 		1BE526D42107470700C8CD51 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526D32107470700C8CD51 /* Config.swift */; };
 		1BE526D72107896600C8CD51 /* Exhibition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526D62107896600C8CD51 /* Exhibition.swift */; };
+		2A4EBFBB21805595004BF85C /* AcceptDeclinePopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4EBFB921805594004BF85C /* AcceptDeclinePopup.swift */; };
+		2A4EBFBC21805595004BF85C /* AcceptDeclinePopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A4EBFBA21805594004BF85C /* AcceptDeclinePopup.xib */; };
 		2AEB36A0217EE78C000D7CE9 /* GreetingsPopupPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEB369E217EE78C000D7CE9 /* GreetingsPopupPage.swift */; };
 		2AEB36A1217EE78C000D7CE9 /* GreetingsPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AEB369F217EE78C000D7CE9 /* GreetingsPopupView.xib */; };
 		2AEB36A4217F03CE000D7CE9 /* InvitationAcceptedPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEB36A2217F03CE000D7CE9 /* InvitationAcceptedPopup.swift */; };
@@ -236,6 +238,8 @@
 		1BE526D12107460F00C8CD51 /* QatarMuseumRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QatarMuseumRouter.swift; sourceTree = "<group>"; };
 		1BE526D32107470700C8CD51 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		1BE526D62107896600C8CD51 /* Exhibition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exhibition.swift; sourceTree = "<group>"; };
+		2A4EBFB921805594004BF85C /* AcceptDeclinePopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcceptDeclinePopup.swift; sourceTree = "<group>"; };
+		2A4EBFBA21805594004BF85C /* AcceptDeclinePopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AcceptDeclinePopup.xib; sourceTree = "<group>"; };
 		2AEB369E217EE78C000D7CE9 /* GreetingsPopupPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreetingsPopupPage.swift; sourceTree = "<group>"; };
 		2AEB369F217EE78C000D7CE9 /* GreetingsPopupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GreetingsPopupView.xib; sourceTree = "<group>"; };
 		2AEB36A2217F03CE000D7CE9 /* InvitationAcceptedPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvitationAcceptedPopup.swift; sourceTree = "<group>"; };
@@ -572,6 +576,8 @@
 		2AEB369D217EE6EF000D7CE9 /* RsvpPopups */ = {
 			isa = PBXGroup;
 			children = (
+				2A4EBFB921805594004BF85C /* AcceptDeclinePopup.swift */,
+				2A4EBFBA21805594004BF85C /* AcceptDeclinePopup.xib */,
 				2AEB369E217EE78C000D7CE9 /* GreetingsPopupPage.swift */,
 				2AEB369F217EE78C000D7CE9 /* GreetingsPopupView.xib */,
 				2AEB36A2217F03CE000D7CE9 /* InvitationAcceptedPopup.swift */,
@@ -1311,6 +1317,7 @@
 				1BAA2FCB2125FCC600D785DD /* ObjectImageXib.xib in Resources */,
 				B8E2C01320C7FD0000F3CE41 /* SideMenu.xib in Resources */,
 				B80DC05E20C792E400E28034 /* Main.storyboard in Resources */,
+				2A4EBFBC21805595004BF85C /* AcceptDeclinePopup.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1421,6 +1428,7 @@
 				B82729BF21778B2F0017EC71 /* VersaPlayerControls.swift in Sources */,
 				B8E01BFD21060FDC008D7F33 /* AppLocalizer.swift in Sources */,
 				B8C64C9C20FE380D00D7CD63 /* MiaTourDetailViewController.swift in Sources */,
+				2A4EBFBB21805595004BF85C /* AcceptDeclinePopup.swift in Sources */,
 				1B51B3D52121B6A9002B84AA /* ObjectDetailTableViewCell.swift in Sources */,
 				B8294CF720CBF265002AFF72 /* FSCalendarDelegationProxy.m in Sources */,
 				B8B368BE20DD4B6200B1CDA4 /* MuseumCollectionsViewController.swift in Sources */,

@@ -8,7 +8,7 @@
 
 import UIKit
 import Crashlytics
-class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUpProtocol, GreetingsPopUpProtocol, InvitationAcceptedPopupProtocol {
+class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUpProtocol, GreetingsPopUpProtocol, InvitationAcceptedPopupProtocol,DeclinePopupProtocol {
     
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var profileImageView: UIImageView!
@@ -17,6 +17,13 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     @IBOutlet weak var viewMyFavoriteButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
     
+    //VIP Inviation controls
+    
+    @IBOutlet weak var invitationMessageLabel: UILabel!
+    @IBOutlet weak var acceptLabel: UILabel!
+    @IBOutlet weak var accepetDeclineSwitch: UISwitch!
+    @IBOutlet weak var declineLabel: UILabel!
+    
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     
     
@@ -24,6 +31,7 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     
     var greetingsPopUpView : GreetingsPopupPage = GreetingsPopupPage()
     var invitationAcceptedPopUpView : InvitationAcceptedPopup = InvitationAcceptedPopup()
+    var acceptDeclinePopupView : AcceptDeclinePopup = AcceptDeclinePopup()
     
     var fromHome : Bool = false
     override func viewDidLoad() {
@@ -43,6 +51,51 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         } else {
             headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
+        
+        //Invitation Controls updation
+        
+        self.accepetDeclineSwitch.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        
+//        acceptLabel.textAlignment = NSTextAlignment.right
+//        declineLabel.textAlignment = NSTextAlignment.left
+//        invitationMessageLabel.textAlignment = NSTextAlignment.center
+        
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            accepetDeclineSwitch.isOn = false
+            let offColor = UIColor.red
+            accepetDeclineSwitch.tintColor = offColor
+            accepetDeclineSwitch.layer.cornerRadius = 16
+            accepetDeclineSwitch.backgroundColor = offColor
+            headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
+        } else {
+            accepetDeclineSwitch.isOn = true
+            headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+        }
+        
+    }
+    
+    @IBAction func accepetDeclineSwitchClicked(sender: AnyObject) {
+        
+        let offColor = UIColor.red
+        //Change to Arabic
+        if (accepetDeclineSwitch.isOn) {
+            accepetDeclineSwitch.onTintColor = UIColor.settingsSwitchOnTint
+            loadConfirmationPopup()
+        }
+        else {
+            accepetDeclineSwitch.tintColor = offColor
+            accepetDeclineSwitch.layer.cornerRadius = 16
+            accepetDeclineSwitch.backgroundColor = offColor
+            loadConfirmationPopup()
+        }
+        
+    }
+    
+    
+    func loadConfirmationPopup() {
+        acceptDeclinePopupView  = AcceptDeclinePopup(frame: self.view.frame)
+        acceptDeclinePopupView.declinePopupDelegate = self
+        self.view.addSubview(acceptDeclinePopupView)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -144,6 +197,19 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     
     func invitationAcceptClose() {
         self.invitationAcceptedPopUpView.removeFromSuperview()
+
+    }
+    func declinePopupCloseButtonPressed() {
+        self.acceptDeclinePopupView.removeFromSuperview()
+    }
+    
+    func yesButtonPressed() {
+        self.acceptDeclinePopupView.removeFromSuperview()
+
+    }
+    
+    func noButtonPressed() {
+        self.acceptDeclinePopupView.removeFromSuperview()
 
     }
     
