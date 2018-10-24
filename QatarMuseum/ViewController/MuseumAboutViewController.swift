@@ -239,8 +239,8 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                     longitude = long
                 }
                 
-                let destinationLocation = CLLocationCoordinate2D(latitude: 11.1062111,
-                                                      longitude: 77.3401112)
+                let destinationLocation = CLLocationCoordinate2D(latitude: latitude!,
+                                                                 longitude: longitude!)
                 let destinationPlacemark = MKPlacemark(coordinate: destinationLocation, addressDictionary: nil)
                 let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
                 self.loadLocationMap(currentRow: indexPath.row, destination: destinationMapItem)

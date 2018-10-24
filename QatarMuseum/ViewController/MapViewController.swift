@@ -29,13 +29,11 @@ class MapViewController: UIViewController, HeaderViewProtocol, MKMapViewDelegate
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
 
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+//        if CLLocationManager.locationServicesEnabled() {
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.requestLocation()
-        }
-        
-//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        
+            locationManager.startUpdatingLocation()
+//        }
         loadMapData()
     }
     
@@ -55,18 +53,16 @@ class MapViewController: UIViewController, HeaderViewProtocol, MKMapViewDelegate
     }
     
     func getDirections() {
-        
         let request = MKDirectionsRequest()
         request.source = MKMapItem.forCurrentLocation()
         
         if let destination = destination {
             request.destination = destination
         }
-        
-        request.requestsAlternateRoutes = false
+        request.transportType = MKDirectionsTransportType.automobile
+        request.requestsAlternateRoutes = true
         
         let directions = MKDirections(request: request)
-        
         directions.calculate(completionHandler: {(response, error) in
             
             if let error = error {
@@ -80,7 +76,6 @@ class MapViewController: UIViewController, HeaderViewProtocol, MKMapViewDelegate
     }
     
     func showRoute(_ response: MKDirectionsResponse) {
-        
         for route in response.routes {
             
             mapView.add(route.polyline,
@@ -108,6 +103,7 @@ class MapViewController: UIViewController, HeaderViewProtocol, MKMapViewDelegate
         renderer.lineWidth = 5.0
         return renderer
     }
+    
     func loadMapData() {
         var latitudeString  = String()
         var longitudeString = String()
@@ -127,7 +123,6 @@ class MapViewController: UIViewController, HeaderViewProtocol, MKMapViewDelegate
             let location = CLLocationCoordinate2D(latitude: latitude!,
                                                   longitude: longitude!)
             
-            // 2
             let span = MKCoordinateSpanMake(0.05, 0.05)
             let region = MKCoordinateRegion(center: location, span: span)
             mapView.setRegion(region, animated: true)
@@ -141,27 +136,6 @@ class MapViewController: UIViewController, HeaderViewProtocol, MKMapViewDelegate
             mapView.addAnnotation(annotation)
         }
     }
-    
-//    func calculateSegmentDirections(index: Int) {
-//        // 1
-//        let request: MKDirectionsRequest = MKDirectionsRequest()
-//        request.source = locationArray[index].mapItem
-//        request.destination = locationArray[index+1].mapItem
-//        // 2
-//        request.requestsAlternateRoutes = true
-//        // 3
-//        request.transportType = .Automobile
-//        // 4
-//        let directions = MKDirections(request: request)
-//        directions.calculateDirectionsWithCompletionHandler ({
-//            (response: MKDirectionsResponse?, error: NSError?) in
-//            if let routeResponse = response?.routes {
-//                
-//            } else if let _ = error {
-//                
-//            }
-//        })
-//    }
     
     @IBAction func setMapType(_ sender: UISwitch) {
         if sender.isOn == true {
