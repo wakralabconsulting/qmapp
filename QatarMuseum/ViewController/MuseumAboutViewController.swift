@@ -227,7 +227,24 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         }
         heritageCell.loadMapView = {
             () in
-            self.loadLocationMap(currentRow: indexPath.row)
+            if (self.aboutDetailtArray[0].mobileLatitude != nil && self.aboutDetailtArray[0].mobileLatitude != "" && self.aboutDetailtArray[0].mobileLongtitude != nil && self.aboutDetailtArray[0].mobileLongtitude != "") {
+                let latitudeString = (self.aboutDetailtArray[0].mobileLatitude)!
+                let longitudeString = (self.aboutDetailtArray[0].mobileLongtitude)!
+                var latitude : Double?
+                var longitude : Double?
+                if let lat : Double = Double(latitudeString) {
+                    latitude = lat
+                }
+                if let long : Double = Double(longitudeString) {
+                    longitude = long
+                }
+                
+                let destinationLocation = CLLocationCoordinate2D(latitude: 11.1062111,
+                                                      longitude: 77.3401112)
+                let destinationPlacemark = MKPlacemark(coordinate: destinationLocation, addressDictionary: nil)
+                let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
+                self.loadLocationMap(currentRow: indexPath.row, destination: destinationMapItem)
+            }
         }
         heritageCell.loadAboutVideo = {
             () in
@@ -254,11 +271,12 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
 //    func setShareAction(cellObj :HeritageDetailCell) {
 //
 //    }
-    func loadLocationMap(currentRow: Int) {
+    func loadLocationMap(currentRow: Int, destination: MKMapItem) {
         let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
         
         let mapDetailView = detailStoryboard.instantiateViewController(withIdentifier: "mapViewId") as! MapViewController
         mapDetailView.aboutData = aboutDetailtArray[0]
+        mapDetailView.destination = destination
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionFade
