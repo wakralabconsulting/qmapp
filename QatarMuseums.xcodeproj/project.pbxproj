@@ -100,7 +100,10 @@
 		B8294CF720CBF265002AFF72 /* FSCalendarDelegationProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = B8294CE620CBF265002AFF72 /* FSCalendarDelegationProxy.m */; };
 		B82C87F220E69C9700777674 /* DiningDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82C87F120E69C9700777674 /* DiningDetailViewController.swift */; };
 		B82C87F620E69D4100777674 /* DiningDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82C87F520E69D4100777674 /* DiningDetailTableViewCell.swift */; };
+		B82E1B3321808229006623A6 /* LogoutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82E1B3221808229006623A6 /* LogoutData.swift */; };
 		B839831A21196E68007090C8 /* QatarMuseums.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B839831821196E68007090C8 /* QatarMuseums.xcdatamodeld */; };
+		B84BA060217EE3C000FD2C0D /* TokenData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84BA05F217EE3C000FD2C0D /* TokenData.swift */; };
+		B84BA062217F1A6300FD2C0D /* LoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84BA061217F1A6300FD2C0D /* LoginData.swift */; };
 		B85AE812217744D600A658A2 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85AE811217744D600A658A2 /* MapViewController.swift */; };
 		B85BA4AA20D01B2600E7F4D1 /* ExhibitionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4A920D01B2600E7F4D1 /* ExhibitionDetailViewController.swift */; };
 		B85BA4AC20D01BC900E7F4D1 /* ExhibitionDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4AB20D01BC800E7F4D1 /* ExhibitionDetailTableViewCell.swift */; };
@@ -337,7 +340,10 @@
 		B8294CE620CBF265002AFF72 /* FSCalendarDelegationProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarDelegationProxy.m; sourceTree = "<group>"; };
 		B82C87F120E69C9700777674 /* DiningDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDetailViewController.swift; sourceTree = "<group>"; };
 		B82C87F520E69D4100777674 /* DiningDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDetailTableViewCell.swift; sourceTree = "<group>"; };
+		B82E1B3221808229006623A6 /* LogoutData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutData.swift; sourceTree = "<group>"; };
 		B839831921196E68007090C8 /* QatarMuseums.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QatarMuseums.xcdatamodel; sourceTree = "<group>"; };
+		B84BA05F217EE3C000FD2C0D /* TokenData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenData.swift; sourceTree = "<group>"; };
+		B84BA061217F1A6300FD2C0D /* LoginData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginData.swift; sourceTree = "<group>"; };
 		B85AE811217744D600A658A2 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		B85BA4A920D01B2600E7F4D1 /* ExhibitionDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExhibitionDetailViewController.swift; sourceTree = "<group>"; };
 		B85BA4AB20D01BC800E7F4D1 /* ExhibitionDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExhibitionDetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -561,6 +567,9 @@
 				B806B7D62152BE6A00F9534F /* CollectionDetail.swift */,
 				1B51411D215B892D0055AAF5 /* TourGuide.swift */,
 				B816029D215A239900786F94 /* TourGuideFloorMap.swift */,
+				B84BA05F217EE3C000FD2C0D /* TokenData.swift */,
+				B84BA061217F1A6300FD2C0D /* LoginData.swift */,
+				B82E1B3221808229006623A6 /* LogoutData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1419,6 +1428,7 @@
 				B8D52A3620E638B900E34673 /* DiningViewController.swift in Sources */,
 				B8294CEF20CBF265002AFF72 /* FSCalendarDelegationFactory.m in Sources */,
 				B8294CF020CBF265002AFF72 /* FSCalendarCollectionViewLayout.m in Sources */,
+				B82E1B3321808229006623A6 /* LogoutData.swift in Sources */,
 				B8BBF459211C1AC000352706 /* ParksList.swift in Sources */,
 				B8294CEE20CBF265002AFF72 /* FSCalendarScopeHandle.m in Sources */,
 				B811FBCC2103811400960246 /* QMColours.swift in Sources */,
@@ -1487,6 +1497,7 @@
 				B82729BA21778B2F0017EC71 /* VersaPlayerGestureRecieverViewDelegate.swift in Sources */,
 				B88F07E8217DD5F600B16875 /* CulturePassCardViewController.swift in Sources */,
 				B82729B621778B2F0017EC71 /* VersaPlayer.swift in Sources */,
+				B84BA062217F1A6300FD2C0D /* LoginData.swift in Sources */,
 				B8D4B8D72114465100937180 /* Heritage.swift in Sources */,
 				B82C87F220E69C9700777674 /* DiningDetailViewController.swift in Sources */,
 				1BAA2FCD2125FD8200D785DD /* ObjectImageView.swift in Sources */,
@@ -1495,6 +1506,7 @@
 				B891D06320DBCC3900919F30 /* HeritageCollectionCell.swift in Sources */,
 				1BE526D22107460F00C8CD51 /* QatarMuseumRouter.swift in Sources */,
 				B8FC190120DE854400D00E6B /* MuseumBottomCell.swift in Sources */,
+				B84BA060217EE3C000FD2C0D /* TokenData.swift in Sources */,
 				1BC909D2210B277F00D6C00B /* Home.swift in Sources */,
 				B8EAB7BB20CA424300C001B2 /* LoadViewExampleViewController.swift in Sources */,
 				B8F00C872178D74800320DF1 /* RegistrationViewController.swift in Sources */,

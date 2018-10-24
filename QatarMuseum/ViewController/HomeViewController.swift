@@ -197,18 +197,14 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 self.saveOrUpdateHomeCoredata()
                 self.homeCollectionView.reloadData()
             case .failure(let error):
-                if let unhandledError = handleError(viewController: self, errorType: error as! BackendError) {
-                    var errorMessage: String
-                    var errorTitle: String
-                    switch unhandledError.code {
-                    default: print(unhandledError.code)
-                    errorTitle = String(format: NSLocalizedString("UNKNOWN_ERROR_ALERT_TITLE",
-                                                                  comment: "Setting the title of the alert"))
-                    errorMessage = String(format: NSLocalizedString("ERROR_MESSAGE",
-                                                                    comment: "Setting the content of the alert"))
-                    }
-                    presentAlert(self, title: errorTitle, message: errorMessage)
-                }
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
             }
         }
     }
@@ -345,7 +341,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func giftShopButtonPressed() {
-        let aboutUrlString = "https://inq-online.com/?SID=k36n3od6ovtc5jn5hlf8o54g64"
+        let aboutUrlString = "https://www.qm.org.qa/en/gift-shops"
+        //"https://inq-online.com/?SID=k36n3od6ovtc5jn5hlf8o54g64"
         if let aboutUrl = URL(string: aboutUrlString) {
             // show alert to choose app
             if UIApplication.shared.canOpenURL(aboutUrl as URL) {

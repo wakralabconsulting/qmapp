@@ -21,7 +21,9 @@ class CulturePassCardViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     @IBAction func didTapClose(_ sender: UIButton) {
         self.dismiss(animated: false, completion: nil)
     }

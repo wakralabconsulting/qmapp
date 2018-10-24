@@ -6,8 +6,10 @@
 //  Copyright © 2018 Exalture. All rights reserved.
 //
 
-import UIKit
+import Alamofire
 import Crashlytics
+import UIKit
+
 class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUpProtocol {
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var profileImageView: UIImageView!
@@ -15,9 +17,17 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     @IBOutlet weak var viewmyCulturePassButton: UIButton!
     @IBOutlet weak var viewMyFavoriteButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var membershipNumText: UILabel!
+    @IBOutlet weak var emailText: UILabel!
+    
+    @IBOutlet weak var dateOfBirthText: UILabel!
+    @IBOutlet weak var countryText: UILabel!
+    @IBOutlet weak var nationalityText: UILabel!
     
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var fromHome : Bool = false
+    var loginInfo : LoginData?
+    var logoutToken : String? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpProfileUI()
@@ -35,6 +45,35 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         } else {
             headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
+        if (loginInfo != nil) {
+            let userData = loginInfo?.user
+            membershipNumText.text = userData?.uid
+            emailText.text = userData?.mail
+            
+            if(userData?.fieldDateOfBirth != nil) {
+                if((userData?.fieldDateOfBirth?.count)! > 0) {
+                    dateOfBirthText.text = userData?.fieldDateOfBirth![0]
+                }
+            }
+            let locationData = userData?.fieldLocation["und"] as! NSArray
+            if(locationData.count > 0) {
+                let iso = locationData[0] as! NSDictionary
+                if(iso["iso2"] != nil) {
+                    countryText.text = iso["iso2"] as! String
+                }
+                
+            }
+            
+            let nationalityData = userData?.fieldNationality["und"] as! NSArray
+            if(nationalityData.count > 0) {
+                let nation = nationalityData[0] as! NSDictionary
+                if(nation["iso2"] != nil) {
+                    nationalityText.text = nation["iso2"] as! String
+                }
+                
+            }
+            
+        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -51,14 +90,10 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     }
     @IBAction func didTapViewMyFavoriteButton(_ sender: UIButton) {
         loadComingSoonPopup()
-        self.viewMyFavoriteButton.backgroundColor = UIColor.profilePink
-        self.viewMyFavoriteButton.setTitleColor(UIColor.whiteColor, for: .normal)
         self.viewMyFavoriteButton.transform = CGAffineTransform(scaleX: 1, y: 1)
         
     }
     @IBAction func viewMyFavoriteButtonTouchDown(_ sender: UIButton) {
-        self.viewMyFavoriteButton.backgroundColor = UIColor.profileLightPink
-        self.viewMyFavoriteButton.setTitleColor(UIColor.viewMyFavDarkPink, for: .normal)
          self.viewMyFavoriteButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     @IBAction func didTapViewMyCulturePassCard(_ sender: UIButton) {
@@ -69,13 +104,9 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(cardView, animated: false, completion: nil)
-        self.viewmyCulturePassButton.backgroundColor = UIColor.viewMycultureBlue
-        self.viewmyCulturePassButton.setTitleColor(UIColor.white, for: .normal)
         self.viewmyCulturePassButton.transform = CGAffineTransform(scaleX: 1, y: 1)
     }
     @IBAction func viewMyCulturePassButtonTouchDown(_ sender: UIButton) {
-        self.viewmyCulturePassButton.backgroundColor = UIColor.viewMycultureLightBlue
-        self.viewmyCulturePassButton.setTitleColor(UIColor.viewMyculTitleBlue, for: .normal)
         self.viewmyCulturePassButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     @IBAction func didTapProfileEditButton(_ sender: UIButton) {
@@ -102,7 +133,44 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
             self.dismiss(animated: false, completion: nil)
         }
     }
-    
+    func filterButtonPressed() {
+//        if(logoutToken != nil) {
+//           // if ((loginPopUpView.userNameText.text != "") && (loginPopUpView.passwordText.text != "")) {
+//                _ = Alamofire.request(QatarMuseumRouter.Login(String: logoutToken!, String: "application/json",["name" : loginPopUpView.userNameText.text!,"pass": loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<LoginData>) -> Void in
+//                    switch response.result {
+//                    case .success(let data):
+//                        if(response.response?.statusCode == 200) {
+//                            self.loginArray = data
+//                            self.loginPopUpView.removeFromSuperview()
+//                            self.loadProfilepage()
+//                        } else if(response.response?.statusCode == 401) {
+//                            showAlertView(title: "Qatar Museums", message: "Wrong username or password.", viewController: self)
+//                        } else if(response.response?.statusCode == 406) {
+//                            showAlertView(title: "Qatar Museums", message: "Already logged in", viewController: self)
+//                        }
+//                        else if(response.response?.statusCode == 403) {
+//                            showAlertView(title: "Qatar Museums", message: "The username <em class=\"placeholder\"></em> has not been activated or is blocked.", viewController: self)
+//                        }
+//                    case .failure(let error):
+//                        print(error)
+//                        
+//                    }
+//                }
+////            } else {
+////
+////                if ((loginPopUpView.userNameText.text == "") && (loginPopUpView.passwordText.text == "")) {
+////
+////                    showAlertView(title: "Qatar Museums", message: "Username or e-mail field is required \n Password field is required", viewController: self)
+////
+////                } else if ((loginPopUpView.userNameText.text == "") && (loginPopUpView.passwordText.text != "")) {
+////                    showAlertView(title: "Qatar Museums", message: "Username or e-mail field is required", viewController: self)
+////                } else if ((loginPopUpView.userNameText.text != "") && (loginPopUpView.passwordText.text == "")) {
+////                    showAlertView(title: "Qatar Museums", message: "Password field is required", viewController: self)
+////                }
+////
+////            }
+//        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

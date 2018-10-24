@@ -52,6 +52,7 @@ class LoginPopupPage: UIView {
         passwordText.font = UIFont.startTourFont
         loginButton.titleLabel?.font = UIFont.startTourFont
         forgotButton.titleLabel?.font = UIFont.discoverButtonFont
+        passwordText.isSecureTextEntry = true
     }
     @IBAction func didTapForgotPwd(_ sender: UIButton) {
         self.forgotButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
