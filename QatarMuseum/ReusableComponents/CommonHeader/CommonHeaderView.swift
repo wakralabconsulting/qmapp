@@ -11,7 +11,6 @@ import UIKit
 {
     func headerCloseButtonPressed()
     @objc optional func filterButtonPressed()
-    @objc optional func logOutButtonPressed()
 }
 class CommonHeaderView: UIView {
 
@@ -56,15 +55,7 @@ class CommonHeaderView: UIView {
     @IBAction func settingsButtonTouchDown(_ sender: UIButton) {
         self.settingsButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
-    @IBAction func didTapLogOut(_ sender: UIButton) {
-        self.logoutButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        self.logOutLine.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        self.headerViewDelegate?.logOutButtonPressed!()
-    }
-    @IBAction func logOutButtonTouchDown(_ sender: UIButton) {
-        self.logoutButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-        self.logOutLine.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-    }
+    
     
     
 }

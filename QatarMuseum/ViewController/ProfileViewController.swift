@@ -6,8 +6,10 @@
 //  Copyright © 2018 Exalture. All rights reserved.
 //
 
-import UIKit
+import Alamofire
 import Crashlytics
+import UIKit
+
 class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUpProtocol {
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var profileImageView: UIImageView!
@@ -25,6 +27,7 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var fromHome : Bool = false
     var loginInfo : LoginData?
+    var logoutToken : String? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpProfileUI()
@@ -130,8 +133,43 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
             self.dismiss(animated: false, completion: nil)
         }
     }
-    func logOutButtonPressed() {
-        
+    func filterButtonPressed() {
+//        if(logoutToken != nil) {
+//           // if ((loginPopUpView.userNameText.text != "") && (loginPopUpView.passwordText.text != "")) {
+//                _ = Alamofire.request(QatarMuseumRouter.Login(String: logoutToken!, String: "application/json",["name" : loginPopUpView.userNameText.text!,"pass": loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<LoginData>) -> Void in
+//                    switch response.result {
+//                    case .success(let data):
+//                        if(response.response?.statusCode == 200) {
+//                            self.loginArray = data
+//                            self.loginPopUpView.removeFromSuperview()
+//                            self.loadProfilepage()
+//                        } else if(response.response?.statusCode == 401) {
+//                            showAlertView(title: "Qatar Museums", message: "Wrong username or password.", viewController: self)
+//                        } else if(response.response?.statusCode == 406) {
+//                            showAlertView(title: "Qatar Museums", message: "Already logged in", viewController: self)
+//                        }
+//                        else if(response.response?.statusCode == 403) {
+//                            showAlertView(title: "Qatar Museums", message: "The username <em class=\"placeholder\"></em> has not been activated or is blocked.", viewController: self)
+//                        }
+//                    case .failure(let error):
+//                        print(error)
+//                        
+//                    }
+//                }
+////            } else {
+////
+////                if ((loginPopUpView.userNameText.text == "") && (loginPopUpView.passwordText.text == "")) {
+////
+////                    showAlertView(title: "Qatar Museums", message: "Username or e-mail field is required \n Password field is required", viewController: self)
+////
+////                } else if ((loginPopUpView.userNameText.text == "") && (loginPopUpView.passwordText.text != "")) {
+////                    showAlertView(title: "Qatar Museums", message: "Username or e-mail field is required", viewController: self)
+////                } else if ((loginPopUpView.userNameText.text != "") && (loginPopUpView.passwordText.text == "")) {
+////                    showAlertView(title: "Qatar Museums", message: "Password field is required", viewController: self)
+////                }
+////
+////            }
+//        }
     }
 
     override func didReceiveMemoryWarning() {
