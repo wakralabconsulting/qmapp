@@ -6,8 +6,8 @@
 //  Copyright © 2018 Exalture. All rights reserved.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 
 enum QatarMuseumRouter: URLRequestConvertible {
     case ExhibitionList()
@@ -30,6 +30,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case CollectionDetail([String: Any])
     case MuseumTourGuide([String: Any])
     case CollectionByTourGuide([String: Any])
+    case GetToken([String: Any])
+    case Login(String: Any, String: Any,[String: Any])
 
     var method: Alamofire.HTTPMethod {
         switch self {
@@ -71,6 +73,11 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return .get
         case .CollectionByTourGuide:
             return .get
+        case .GetToken:
+            return .post
+        case .Login:
+            return .post
+        
         }
     }
     
@@ -115,7 +122,10 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "tour_guide_list_museums.json"
         case .CollectionByTourGuide( _):
             return "collection_by_tour_guide.json"
-        
+        case .GetToken( _):
+            return "user/token.json"
+        case .Login( _,_,_):
+            return "user/login.json"
         }
     }
 
@@ -211,7 +221,46 @@ enum QatarMuseumRouter: URLRequestConvertible {
 //            return try! Alamofire.URLEncoding.default.encode(collectionMutableURLReq, with: parameters)
         case .MuseumTourGuide(let parameters):
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
+//        case .GetToken(let parameters):
+//            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
+        case .GetToken(let parameters):
+            let tokenURL = NSURL(string: Config.secureBaseURL + lang() + Config.mobileApiURL)!
+            var tokenMutableURLReq = URLRequest(url: tokenURL.appendingPathComponent(path)!)
+            tokenMutableURLReq.httpMethod = method.rawValue
+            return try! Alamofire.URLEncoding.default.encode(tokenMutableURLReq, with: parameters)
+        case .Login(let token, let contentType, let parameters):
+            let loginURL = NSURL(string: Config.secureBaseURL + lang() + Config.mobileApiURL)!
+            var loginMutableURLReq = URLRequest(url: loginURL.appendingPathComponent(path)!)
+            loginMutableURLReq.httpMethod = method.rawValue
+            loginMutableURLReq.setValue(token as? String, forHTTPHeaderField: "x-csrf-token")
+            loginMutableURLReq.setValue(contentType as? String, forHTTPHeaderField: "Content-Type")
+//            let jsonValue = [
+//                "name":"vivek",
+//                "pass":"RC}t;W#EEa}T"
+//                ]
+//            let jsonData = try? JSONSerialization.data(withJSONObject: jsonValue)
+//            loginMutableURLReq.httpBody = jsonData
+            return try! Alamofire.JSONEncoding.default.encode(loginMutableURLReq, with: parameters)
+            
+            //return try! Alamofire.JSONEncoding.default.encode(loginMutableURLReq)
+//        case .Login(let token, let ageGroup, let inst, let prog):
+//            let educationURL = NSURL(string: Config.tempBaseIP + lang())!
+//            var mutableURLReq = URLRequest(url: educationURL.appendingPathComponent(path)!)
+//            mutableURLReq.httpMethod = method.rawValue
+//            mutableURLReq.setValue(date as? String, forHTTPHeaderField: "date")
+//            mutableURLReq.setValue(inst as? String, forHTTPHeaderField: "inst")
+//            mutableURLReq.setValue(ageGroup as? String, forHTTPHeaderField: "age")
+//            mutableURLReq.setValue(prog as? String, forHTTPHeaderField: "ptype")
+//            if let accessToken = UserDefaults.standard.value(forKey: "accessToken")
+//                as? String {
+//                mutableURLReq.setValue("Bearer " + accessToken,
+//                                       forHTTPHeaderField: "Authorization")
+//            }
+//            return try! Alamofire.JSONEncoding.default.encode(mutableURLReq)
+            
+            
         }
+        
     }
     
     public func asURLRequest() throws -> URLRequest {

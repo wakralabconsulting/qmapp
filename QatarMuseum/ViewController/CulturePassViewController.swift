@@ -5,6 +5,8 @@
 //  Created by Developer on 21/08/18.
 //  Copyright © 2018 Exalture. All rights reserved.
 //
+
+import Alamofire
 import Crashlytics
 import UIKit
 
@@ -30,9 +32,11 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
                        "Receive our monthly newsletter to stay up to date on QM and partner offerings",
                        "Get premier access to members only talks &workkshops",
                        "Get exclusive invitation to QM open house access to our world class call center 8AM to 8PM daily"]
-    
+    var accessToken : String? = nil
+    var loginArray : LoginData?
     override func viewDidLoad() {
-        super.viewDidLoad()   
+        super.viewDidLoad()
+        getCulturePassTokenFromServer()
         setupUI()
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -132,7 +136,11 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     
     func loginButtonPressed() {
+        getCulturePassLoginFromServer()
+    }
+    func loadProfilepage () {
         let profileView =  self.storyboard?.instantiateViewController(withIdentifier: "profileViewId") as! ProfileViewController
+        profileView.loginInfo = loginArray
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionFade
@@ -140,7 +148,6 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(profileView, animated: false, completion: nil)
     }
-    
     func forgotButtonPressed() {
         
     }
@@ -161,4 +168,61 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         }
         
     }
+    //MARK: WebServiceCall
+    func getCulturePassTokenFromServer()
+    {
+        
+        _ = Alamofire.request(QatarMuseumRouter.GetToken(["name": "haithembahri","pass":"saliha"])).responseObject { (response: DataResponse<TokenData>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.accessToken = data.accessToken
+            case .failure(let error):
+                
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+            }
+        }
+    }
+    func getCulturePassLoginFromServer()
+    {
+        if(accessToken != nil) {
+            if ((loginPopUpView.userNameText.text != "") && (loginPopUpView.passwordText.text != "")) {
+                _ = Alamofire.request(QatarMuseumRouter.Login(String: accessToken!, String: "application/json",["name" : loginPopUpView.userNameText.text!,"pass": loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<LoginData>) -> Void in
+                switch response.result {
+                case .success(let data):
+                    if(response.response?.statusCode == 200) {
+                        self.loginArray = data
+                        self.loginPopUpView.removeFromSuperview()
+                        self.loadProfilepage()
+                    } else if(response.response?.statusCode == 401) {
+                        showAlertView(title: "Qatar Museums", message: "Wrong username or password.", viewController: self)
+                    } else if(response.response?.statusCode == 406) {
+                        showAlertView(title: "Qatar Museums", message: "Already logged in", viewController: self)
+                    }
+                    else if(response.response?.statusCode == 403) {
+                        showAlertView(title: "Qatar Museums", message: "The username <em class=\"placeholder\"></em> has not been activated or is blocked.", viewController: self)
+                    }
+                case .failure(let error):
+                    print(error)
+
+                }
+            }
+            } else {
+                
+                if ((loginPopUpView.userNameText.text == "") && (loginPopUpView.passwordText.text == "")) {
+
+                    showAlertView(title: "Qatar Museums", message: "Username or e-mail field is required \n Password field is required", viewController: self)
+                   
+                } else if ((loginPopUpView.userNameText.text == "") && (loginPopUpView.passwordText.text != "")) {
+                    showAlertView(title: "Qatar Museums", message: "Username or e-mail field is required", viewController: self)
+                } else if ((loginPopUpView.userNameText.text != "") && (loginPopUpView.passwordText.text == "")) {
+                    showAlertView(title: "Qatar Museums", message: "Password field is required", viewController: self)
+                }
+                
+            }
+    }
+    }
+
 }
