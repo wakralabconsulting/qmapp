@@ -330,14 +330,21 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func culturePassButtonPressed() {
-        let culturePassView =  self.storyboard?.instantiateViewController(withIdentifier: "culturePassViewId") as! CulturePassViewController
-        culturePassView.fromHome = true
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionFade
         transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
         view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(culturePassView, animated: false, completion: nil)
+        
+        if ((UserDefaults.standard.value(forKey: "name")  as? String != nil) && (UserDefaults.standard.value(forKey: "name")  as! String != "") && (UserDefaults.standard.value(forKey: "password")  as? String != nil) && (UserDefaults.standard.value(forKey: "password")  as! String != "")) {
+            let profileView =  self.storyboard?.instantiateViewController(withIdentifier: "profileViewId") as! ProfileViewController
+            self.present(profileView, animated: false, completion: nil)
+        } else {
+            let culturePassView =  self.storyboard?.instantiateViewController(withIdentifier: "culturePassViewId") as! CulturePassViewController
+            culturePassView.fromHome = true
+            
+            self.present(culturePassView, animated: false, completion: nil)
+        }
     }
     
     func giftShopButtonPressed() {

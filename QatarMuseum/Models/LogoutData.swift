@@ -8,18 +8,18 @@
 
 import Foundation
 struct LogoutData: ResponseObjectSerializable {
-    var uid: String? = nil
+    var uid: Int? = 0
     var hostName: String? = nil
     var roles: [String: Any] = [:]
-    var cache: String? = nil
+    var cache: Int? = 0
     
     
     public init?(response: HTTPURLResponse, representation: AnyObject) {
         if let representation = representation as? [String: Any] {
-            self.uid = representation["sessid"] as? String
-            self.hostName = representation["session_name"] as? String
+            self.uid = representation["uid"] as? Int
+            self.hostName = representation["hostname"] as? String
             self.roles = (representation["roles"] as? [String: Any])!
-            self.cache = representation["result"] as? String
+            self.cache = representation["cache"] as? Int
             
         }
     }
