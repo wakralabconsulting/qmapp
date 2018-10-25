@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina6_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -18,48 +18,33 @@
             <connections>
                 <outlet property="declinePopup" destination="iN0-l3-epB" id="fyK-4L-JsB"/>
                 <outlet property="declinePopupInnerView" destination="iKo-SS-FRg" id="L2N-qu-QNB"/>
-                <outlet property="noButton" destination="mac-28-EJW" id="mNX-md-Kbw"/>
-                <outlet property="titleLabel" destination="641-gH-egx" id="uV9-AE-ILa"/>
-                <outlet property="yesButton" destination="DMv-HZ-lZk" id="JcW-Uu-Eu8"/>
+                <outlet property="noButton" destination="6Nk-lM-Vrd" id="xDQ-Am-74M"/>
+                <outlet property="popupViewHeight" destination="YnK-r2-ra8" id="TvJ-yE-hOo"/>
+                <outlet property="titleLabel" destination="HxL-o0-pNE" id="1ZO-rC-u2b"/>
+                <outlet property="yesButton" destination="tzk-Pl-3ZK" id="Wlx-3j-C9k"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" userLabel="Greetings Popup">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iKo-SS-FRg" userLabel="Greetings Popup Inner View">
-                    <rect key="frame" x="41" y="182" width="293" height="303"/>
+                    <rect key="frame" x="46" y="323" width="322" height="250"/>
                     <subviews>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="Are you sure you want to decline the invitation" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Td5-SA-LMS">
-                            <rect key="frame" x="26" y="80" width="240" height="66"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <fontDescription key="fontDescription" type="italicSystem" pointSize="18"/>
-                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                        </textView>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mac-28-EJW">
-                            <rect key="frame" x="26" y="237" width="242.5" height="44"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CONFIRMATION!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HxL-o0-pNE">
+                            <rect key="frame" x="86.666666666666657" y="18" width="149" height="21"/>
+                            <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="21"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tzk-Pl-3ZK">
+                            <rect key="frame" x="39.666666666666686" y="137" width="243" height="44"/>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="19"/>
-                            <state key="normal" title="No">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </state>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                    <integer key="value" value="22"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                            <connections>
-                                <action selector="didTapNoButton:" destination="-1" eventType="touchUpInside" id="CJh-K1-N7K"/>
-                                <action selector="noButtonTouchDown:" destination="-1" eventType="touchDown" id="R7p-Vz-gpI"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DMv-HZ-lZk">
-                            <rect key="frame" x="26" y="174" width="242.5" height="44"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="243" id="Shz-dG-BVP"/>
+                                <constraint firstAttribute="height" constant="44" id="kuP-jj-VEM"/>
+                            </constraints>
                             <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="19"/>
                             <state key="normal" title="Yes">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -70,37 +55,79 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                             <connections>
-                                <action selector="didTapYesButton:" destination="-1" eventType="touchUpInside" id="QRJ-0g-D8h"/>
-                                <action selector="yesButtonTouchDown:" destination="-1" eventType="touchDown" id="WNz-FW-sTg"/>
+                                <action selector="didTapYesButton:" destination="-1" eventType="touchUpInside" id="KnO-2d-SwR"/>
+                                <action selector="yesButtonTouchDown:" destination="-1" eventType="touchDown" id="Nfg-rf-djS"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Nk-lM-Vrd">
+                            <rect key="frame" x="39.666666666666686" y="189" width="243" height="44"/>
+                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="243" id="VLU-rA-Ezj"/>
+                                <constraint firstAttribute="height" constant="44" id="vBT-hO-gHD"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="19"/>
+                            <state key="normal" title="No">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="22"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="didTapNoButton:" destination="-1" eventType="touchUpInside" id="4l4-RC-pC6"/>
+                                <action selector="noButtonTouchDown:" destination="-1" eventType="touchDown" id="YR1-lp-nxb"/>
+                            </connections>
+                        </button>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Are you sure you want to decline the invitation" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6hp-0t-BKX">
+                            <rect key="frame" x="39.666666666666686" y="58" width="243" height="76"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="243" id="F4U-ib-n5R"/>
+                                <constraint firstAttribute="height" constant="76" id="oJS-AL-w1V"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="italicSystem" pointSize="18"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q2V-7j-Pw4">
+                            <rect key="frame" x="140" y="40" width="42" height="3"/>
+                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="3" id="RZ9-sN-c4G"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="6Nk-lM-Vrd" firstAttribute="centerX" secondItem="iKo-SS-FRg" secondAttribute="centerX" id="165-lT-Avy"/>
+                        <constraint firstItem="q2V-7j-Pw4" firstAttribute="centerX" secondItem="iKo-SS-FRg" secondAttribute="centerX" id="1QF-C9-OOh"/>
+                        <constraint firstItem="tzk-Pl-3ZK" firstAttribute="centerX" secondItem="iKo-SS-FRg" secondAttribute="centerX" id="CIV-NR-p4W"/>
+                        <constraint firstItem="tzk-Pl-3ZK" firstAttribute="centerX" secondItem="6hp-0t-BKX" secondAttribute="centerX" id="JGx-bK-wZG"/>
+                        <constraint firstItem="q2V-7j-Pw4" firstAttribute="top" secondItem="HxL-o0-pNE" secondAttribute="bottom" constant="1" id="LfY-UJ-1En"/>
+                        <constraint firstItem="6hp-0t-BKX" firstAttribute="top" secondItem="q2V-7j-Pw4" secondAttribute="bottom" constant="15" id="QLv-GB-jWa"/>
+                        <constraint firstItem="6hp-0t-BKX" firstAttribute="centerX" secondItem="iKo-SS-FRg" secondAttribute="centerX" id="Vqk-E3-NZ3"/>
+                        <constraint firstAttribute="height" constant="250" id="YnK-r2-ra8"/>
+                        <constraint firstItem="HxL-o0-pNE" firstAttribute="centerX" secondItem="iKo-SS-FRg" secondAttribute="centerX" id="dGR-7g-eQc"/>
+                        <constraint firstItem="6Nk-lM-Vrd" firstAttribute="centerX" secondItem="6hp-0t-BKX" secondAttribute="centerX" id="jOn-nE-bWU"/>
+                        <constraint firstAttribute="bottom" secondItem="6Nk-lM-Vrd" secondAttribute="bottom" constant="17" id="nr5-l1-cKQ"/>
+                        <constraint firstItem="tzk-Pl-3ZK" firstAttribute="top" secondItem="6hp-0t-BKX" secondAttribute="bottom" constant="3" id="ueY-yz-BHk"/>
+                        <constraint firstItem="6Nk-lM-Vrd" firstAttribute="top" secondItem="tzk-Pl-3ZK" secondAttribute="bottom" constant="8" symbolic="YES" id="vDy-1u-aqK"/>
+                    </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CONFIRMATION!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="641-gH-egx">
-                    <rect key="frame" x="104" y="197" width="163" height="25"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="21"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Stw-JB-zWR">
-                    <rect key="frame" x="164" y="229" width="42" height="3"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="iKo-SS-FRg" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="25k-tb-aXx"/>
-                <constraint firstItem="iKo-SS-FRg" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Xgf-KR-3Ga"/>
-                <constraint firstItem="iKo-SS-FRg" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="182" id="hgJ-nL-Ovl"/>
-                <constraint firstItem="iKo-SS-FRg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="41" id="mlb-0b-Sr2"/>
+                <constraint firstItem="iKo-SS-FRg" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="4bb-g7-nqF"/>
+                <constraint firstItem="iKo-SS-FRg" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="MBW-M0-Inu"/>
+                <constraint firstItem="iKo-SS-FRg" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="bsP-Yf-qMi"/>
+                <constraint firstItem="iKo-SS-FRg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="46" id="gbd-ae-WBD"/>
+                <constraint firstItem="iKo-SS-FRg" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="oHK-4i-y0b"/>
             </constraints>
-            <point key="canvasLocation" x="34.399999999999999" y="131.78410794602701"/>
+            <point key="canvasLocation" x="32.799999999999997" y="130.78817733990149"/>
         </view>
     </objects>
 </document>

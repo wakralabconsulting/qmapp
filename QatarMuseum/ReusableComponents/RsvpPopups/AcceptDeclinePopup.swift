@@ -21,6 +21,9 @@ class AcceptDeclinePopup: UIView {
     @IBOutlet weak var yesButton: UIButton!
     @IBOutlet weak var noButton: UIButton!
     @IBOutlet weak var closeButton: UIButton!
+//    @IBOutlet weak var declinePopupHeight: NSLayoutConstraint!
+    @IBOutlet weak var popupViewHeight: NSLayoutConstraint!
+    
     var declinePopupDelegate : DeclinePopupProtocol?
     override init(frame: CGRect) {
         super.init(frame: frame)

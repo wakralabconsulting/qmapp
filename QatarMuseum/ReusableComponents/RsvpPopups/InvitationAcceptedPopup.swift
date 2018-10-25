@@ -19,6 +19,8 @@ class InvitationAcceptedPopup: UIView {
     @IBOutlet weak var invitationPopupInnerView: UIView!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var closeMessage: UIButton!
+    @IBOutlet weak var inviteAcceptPopupHeight: NSLayoutConstraint!
+    
     var invitationAcceptedPopupDelegate : InvitationAcceptedPopupProtocol?
     override init(frame: CGRect) {
         super.init(frame: frame)
