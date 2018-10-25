@@ -80,7 +80,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         headerView.headerViewDelegate = self
         headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         self.view.addGestureRecognizer(self.scopeGesture)
-        listTitleLabel.font = UIFont.diningHeaderFont
+        listTitleLabel.font = UIFont.eventPopupTitleFont
         self.eventCollectionView.panGestureRecognizer.require(toFail: self.scopeGesture)
         calendarView.appearance.headerMinimumDissolvedAlpha = -1
         

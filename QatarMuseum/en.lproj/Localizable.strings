@@ -170,6 +170,7 @@
 "ALREADY_LOGGEDIN" = "Already logged in";
 "PASSWORD_REQUIRED" = "Password field is required";
 "WRONG_USERNAME_OR_PWD" = "Wrong username or password.";
-
-
+"LOGOUT_SUCCESSFULLY" = "You have been successfully logged out!";
+"OK" = "OK";
+"MEMBERSHIP_NUMBER" = "Membership Number:";
 

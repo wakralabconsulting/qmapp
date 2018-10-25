@@ -166,3 +166,10 @@
 "MORE" = "المزيد";
 "GIFT_SHOP" = "محل الهدايا";
 "LOCATION_MISSING_MESSAGE" = "No Location Data";
+"USERNAME_REQUIRED" = "Username or e-mail field is required.";
+"ALREADY_LOGGEDIN" = "Already logged in";
+"PASSWORD_REQUIRED" = "Password field is required";
+"WRONG_USERNAME_OR_PWD" = "Wrong username or password.";
+"LOGOUT_SUCCESSFULLY" = "You have been successfully logged out!";
+"OK" = "OK";
+"MEMBERSHIP_NUMBER" = "Membership Number:";
