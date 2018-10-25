@@ -428,24 +428,19 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     
     func profileButtonPressed() {
-        //commented bcz now its not needed
-//        let profileView =  self.storyboard?.instantiateViewController(withIdentifier: "profileViewId") as! ProfileViewController
-//        profileView.fromHome = false
-//        let transition = CATransition()
-//        transition.duration = 0.3
-//        transition.type = kCATransitionPush
-//        transition.subtype = kCATransitionFromRight
-//        view.window!.layer.add(transition, forKey: kCATransition)
-//        self.present(profileView, animated: false, completion: nil)
-
+        let transition = CATransition()
+        transition.duration = 0.25
+        transition.type = kCATransitionFade
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        if ((UserDefaults.standard.value(forKey: "name")  as? String != nil) && (UserDefaults.standard.value(forKey: "name")  as! String != "") && (UserDefaults.standard.value(forKey: "password")  as? String != nil) && (UserDefaults.standard.value(forKey: "password")  as! String != "")) {
+            let profileView =  self.storyboard?.instantiateViewController(withIdentifier: "profileViewId") as! ProfileViewController
+            self.present(profileView, animated: false, completion: nil)
+        } else {
             let culturePassView =  self.storyboard?.instantiateViewController(withIdentifier: "culturePassViewId") as! CulturePassViewController
             culturePassView.fromHome = false
-            let transition = CATransition()
-            transition.duration = 0.25
-            transition.type = kCATransitionFade
-            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-            view.window!.layer.add(transition, forKey: kCATransition)
             self.present(culturePassView, animated: false, completion: nil)
+        }
     }
     
     func menuButtonPressed() {

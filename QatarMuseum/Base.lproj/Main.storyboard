@@ -963,6 +963,7 @@
                         <outlet property="membershipNumText" destination="lPn-jv-PJy" id="Qmb-np-mKY"/>
                         <outlet property="nationalityText" destination="4CI-08-8Ue" id="PVC-IE-0PD"/>
                         <outlet property="profileImageView" destination="TGk-HX-5Ub" id="4tc-1W-Okl"/>
+                        <outlet property="userNameText" destination="J8i-IN-aza" id="cH5-6L-mvt"/>
                         <outlet property="viewMyFavoriteButton" destination="bgd-TB-Lom" id="mMV-m8-5ZB"/>
                         <outlet property="viewmyCulturePassButton" destination="o6U-jC-40X" id="Voc-hU-qdi"/>
                     </connections>
@@ -6255,17 +6256,28 @@
                                     <action selector="didTapClose:" destination="CTn-E3-lTz" eventType="touchUpInside" id="RTi-7q-QEG"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Membership Number" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="83n-4v-2I2">
+                                <rect key="frame" x="0.0" y="365" width="201.66666666666666" height="26.333333333333314"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <constraints>
                             <constraint firstItem="tzN-4n-Pfh" firstAttribute="top" secondItem="6QP-cD-Hgf" secondAttribute="top" constant="20" symbolic="YES" id="3eK-bu-mz1"/>
                             <constraint firstItem="tzN-4n-Pfh" firstAttribute="leading" secondItem="6QP-cD-Hgf" secondAttribute="leading" id="9Qf-pf-fqU"/>
                             <constraint firstAttribute="bottom" secondItem="tzN-4n-Pfh" secondAttribute="bottom" id="IUd-Rm-Pud"/>
+                            <constraint firstItem="83n-4v-2I2" firstAttribute="leading" secondItem="6QP-cD-Hgf" secondAttribute="leading" id="JdI-l3-1x5"/>
                             <constraint firstAttribute="trailing" secondItem="tzN-4n-Pfh" secondAttribute="trailing" id="OTF-u2-m8k"/>
                             <constraint firstItem="xlh-Tg-vPR" firstAttribute="top" secondItem="6QP-cD-Hgf" secondAttribute="top" constant="40" id="kGF-UZ-EBT"/>
                             <constraint firstItem="xlh-Tg-vPR" firstAttribute="leading" secondItem="6QP-cD-Hgf" secondAttribute="leading" constant="12" id="p1G-nJ-WAC"/>
+                            <constraint firstItem="83n-4v-2I2" firstAttribute="centerY" secondItem="tzN-4n-Pfh" secondAttribute="centerY" id="z7b-3b-vMq"/>
                         </constraints>
                     </view>
                     <size key="freeformSize" width="414" height="736"/>
+                    <connections>
+                        <outlet property="membershipLabel" destination="83n-4v-2I2" id="3rL-qq-och"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uwn-97-nR1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
