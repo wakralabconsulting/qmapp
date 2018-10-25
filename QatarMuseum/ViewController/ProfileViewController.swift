@@ -97,7 +97,7 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     
     func loadConfirmationPopup() {
         acceptDeclinePopupView  = AcceptDeclinePopup(frame: self.view.frame)
-        acceptDeclinePopupView.popupViewHeight.constant = 250
+        acceptDeclinePopupView.popupViewHeight.constant = 270
         acceptDeclinePopupView.declinePopupDelegate = self
         self.view.addSubview(acceptDeclinePopupView)
     }
@@ -114,6 +114,7 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     
     func loadGreetingsPopup() {
         greetingsPopUpView  = GreetingsPopupPage(frame: self.view.frame)
+        greetingsPopUpView.greetingsPopupHeight.constant = 270
         greetingsPopUpView.greetingsPopupDelegate = self
         self.view.addSubview(greetingsPopUpView)
     }
@@ -183,7 +184,7 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     func acceptNowButtonPressed() {
         greetingsPopupClose()
         invitationAcceptedPopUpView  = InvitationAcceptedPopup(frame: self.view.frame)
-        invitationAcceptedPopUpView.inviteAcceptPopupHeight.constant = 250
+        invitationAcceptedPopUpView.inviteAcceptPopupHeight.constant = 270
         invitationAcceptedPopUpView.invitationAcceptedPopupDelegate = self
         self.view.addSubview(invitationAcceptedPopUpView)
     }

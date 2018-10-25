@@ -21,6 +21,8 @@ class GreetingsPopupPage: UIView {
     @IBOutlet weak var acceptNowButton: UIButton!
     @IBOutlet weak var acceptLaterButton: UIButton!
     @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var greetingsPopupHeight: NSLayoutConstraint!
+    
     var greetingsPopupDelegate : GreetingsPopUpProtocol?
     override init(frame: CGRect) {
         super.init(frame: frame)
