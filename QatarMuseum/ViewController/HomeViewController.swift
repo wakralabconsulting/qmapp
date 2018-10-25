@@ -197,18 +197,14 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 self.saveOrUpdateHomeCoredata()
                 self.homeCollectionView.reloadData()
             case .failure(let error):
-                if let unhandledError = handleError(viewController: self, errorType: error as! BackendError) {
-                    var errorMessage: String
-                    var errorTitle: String
-                    switch unhandledError.code {
-                    default: print(unhandledError.code)
-                    errorTitle = String(format: NSLocalizedString("UNKNOWN_ERROR_ALERT_TITLE",
-                                                                  comment: "Setting the title of the alert"))
-                    errorMessage = String(format: NSLocalizedString("ERROR_MESSAGE",
-                                                                    comment: "Setting the content of the alert"))
-                    }
-                    presentAlert(self, title: errorTitle, message: errorMessage)
-                }
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
             }
         }
     }
@@ -334,18 +330,26 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func culturePassButtonPressed() {
-        let culturePassView =  self.storyboard?.instantiateViewController(withIdentifier: "culturePassViewId") as! CulturePassViewController
-        culturePassView.fromHome = true
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionFade
         transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
         view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(culturePassView, animated: false, completion: nil)
+        
+        if ((UserDefaults.standard.value(forKey: "name")  as? String != nil) && (UserDefaults.standard.value(forKey: "name")  as! String != "") && (UserDefaults.standard.value(forKey: "password")  as? String != nil) && (UserDefaults.standard.value(forKey: "password")  as! String != "")) {
+            let profileView =  self.storyboard?.instantiateViewController(withIdentifier: "profileViewId") as! ProfileViewController
+            self.present(profileView, animated: false, completion: nil)
+        } else {
+            let culturePassView =  self.storyboard?.instantiateViewController(withIdentifier: "culturePassViewId") as! CulturePassViewController
+            culturePassView.fromHome = true
+            
+            self.present(culturePassView, animated: false, completion: nil)
+        }
     }
     
     func giftShopButtonPressed() {
-        let aboutUrlString = "https://inq-online.com/?SID=k36n3od6ovtc5jn5hlf8o54g64"
+        let aboutUrlString = "https://www.qm.org.qa/en/gift-shops"
+        //"https://inq-online.com/?SID=k36n3od6ovtc5jn5hlf8o54g64"
         if let aboutUrl = URL(string: aboutUrlString) {
             // show alert to choose app
             if UIApplication.shared.canOpenURL(aboutUrl as URL) {
