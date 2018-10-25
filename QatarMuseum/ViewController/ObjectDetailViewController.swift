@@ -213,23 +213,21 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     func setShareAction(cellObj: ObjectDetailTableViewCell) {
         
     }
+    
     func setPlayButtonAction(cellObj: ObjectDetailTableViewCell) {
         selectedCell  = cellObj
         
-            if(detailArray.count > 0) {
-                if((detailArray[0].audioFile != nil) && (detailArray[0].audioFile != "")){
-                    if (firstLoad == true) {
-                        cellObj.playList = detailArray[0].audioFile!
-                        cellObj.play(url: URL(string:cellObj.playList)!)
-                        cellObj.setupTimer()
-                    }
-                    firstLoad = false
-                    cellObj.togglePlayPause()
+        if(detailArray.count > 0) {
+            if((detailArray[0].audioFile != nil) && (detailArray[0].audioFile != "")){
+                if (firstLoad == true) {
+                    cellObj.playList = detailArray[0].audioFile!
+                    cellObj.play(url: URL(string:cellObj.playList)!)
+                    cellObj.setupTimer()
                 }
+                firstLoad = false
+                cellObj.togglePlayPause()
             }
-            
-        
-       
+        }
     }
    
     @objc func buttonAction(sender: UIButton!) {
@@ -241,6 +239,7 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
 //        self.view.window!.layer.add(transition, forKey: kCATransition)
         selectedCell?.avPlayer = nil
         selectedCell?.timer?.invalidate()
+        selectedCell?.closeAudio()
         dismiss(animated: false, completion: nil)
         
     }

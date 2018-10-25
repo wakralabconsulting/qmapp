@@ -275,9 +275,13 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
     
     @IBAction func backButtonClicked(_ sender: Any) {
         //self.dismiss(animated: true) {
-            self.avPlayer = nil
-            self.timer?.invalidate()
+        closeAudio()
        // }
+    }
+    
+    func closeAudio() {
+        self.avPlayer = nil
+        self.timer?.invalidate()
     }
     func dismissOvelay() {
         print("hi")

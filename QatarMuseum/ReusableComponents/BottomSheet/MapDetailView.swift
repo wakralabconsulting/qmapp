@@ -211,7 +211,7 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
             }
             cell.playBtnTapAction = {
                 () in
-                self.setPlayButtonAction(cellObj: cell)
+                self.setPlayButtonAction(cellObj: cell, index: self.selectedIndex!)
             }
             return cell
             
@@ -250,13 +250,13 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
     func setShareAction(cellObj: ObjectDetailTableViewCell) {
         
     }
-    func setPlayButtonAction(cellObj: ObjectDetailTableViewCell) {
+    func setPlayButtonAction(cellObj: ObjectDetailTableViewCell, index: Int) {
         selectedCell  = cellObj
         
             if(popUpArray.count > 0) {
-                if((popUpArray[0].audioFile != nil) && (popUpArray[0].audioFile != "")){
+                if((popUpArray[index].audioFile != nil) && (popUpArray[index].audioFile != "")){
                     if (firstLoad == true) {
-                        cellObj.playList = popUpArray[0].audioFile!
+                        cellObj.playList = popUpArray[index].audioFile!
                         cellObj.play(url: URL(string:cellObj.playList)!)
                         cellObj.setupTimer()
                     }
