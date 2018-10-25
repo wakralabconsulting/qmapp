@@ -54,6 +54,8 @@ open class VersaPlayer: UIView, AVPictureInPictureControllerDelegate {
         return player.rate > 1
     }
     
+    var videoView: VersaPlayer?
+    
     /// Whether Player is Rewinding
     public var isRewinding: Bool {
         return player.rate < 0
@@ -61,6 +63,7 @@ open class VersaPlayer: UIView, AVPictureInPictureControllerDelegate {
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
+        videoView = VersaPlayer(frame: frame)
         prepare()
     }
     
@@ -133,13 +136,19 @@ open class VersaPlayer: UIView, AVPictureInPictureControllerDelegate {
             if let window = UIApplication.shared.keyWindow {
                 nonFullscreenContainer = superview
 //                removeFromSuperview()
-                layout(view: self, into: window)
+//                let videoView = self
+                layout(view: videoView!, into: window)
                 let value = UIInterfaceOrientation.landscapeLeft.rawValue
                 UIDevice.current.setValue(value, forKey: "orientation")
                 UIViewController.attemptRotationToDeviceOrientation()
             }
         }else {
-            removeFromSuperview()
+            if let superView = superview {
+//                for view in (superview?.subviews)! {
+                    videoView!.removeFromSuperview()
+//                }
+            }
+            
 //            layout(view: self, into: nonFullscreenContainer)
             let value = UIInterfaceOrientation.portrait.rawValue
             UIDevice.current.setValue(value, forKey: "orientation")
