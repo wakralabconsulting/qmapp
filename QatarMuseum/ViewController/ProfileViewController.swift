@@ -179,14 +179,9 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromLeft
         self.view.window!.layer.add(transition, forKey: kCATransition)
-        if (fromHome) {
             let appDelegate = UIApplication.shared.delegate
             let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
             appDelegate?.window??.rootViewController = homeViewController
-        }
-        else {
-            self.dismiss(animated: false, completion: nil)
-        }
     }
     
     //MARK: WebServiceCall
@@ -226,10 +221,12 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
                             UserDefaults.standard.setValue("" , forKey: "profilePic")
                             if let presenter = self.presentingViewController as? CulturePassViewController {
                                 presenter.fromHome = true
+                                presenter.fromProfile = true
                                 self.dismiss(animated: false, completion: nil)
                             } else {
                                 let culturePassView =  self.storyboard?.instantiateViewController(withIdentifier: "culturePassViewId") as! CulturePassViewController
                                 culturePassView.fromHome = true
+                                culturePassView.fromProfile = true
                                 self.present(culturePassView, animated: false, completion: nil)
                             }
                             

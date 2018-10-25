@@ -160,10 +160,10 @@ extension UIFont {
     }
     static var diningHeaderFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            return UIFont.init(name: "DINNextLTPro-Bold", size: 23)!
+            return UIFont.init(name: "DINNextLTPro-Regular", size: 23)!
         }
         else {
-            return UIFont.init(name: "DINNextLTArabic-Bold", size: 23)!
+            return UIFont.init(name: "DINNextLTArabic-Regular", size: 23)!
         }
     }
     static var artifactNumberFont: UIFont {

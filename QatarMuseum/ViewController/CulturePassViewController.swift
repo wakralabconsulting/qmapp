@@ -24,6 +24,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     @IBOutlet weak var alreadyMemberLabel: UILabel!
     @IBOutlet weak var benefitsDiscountLabel: UILabel!
     var fromHome: Bool = false
+    var fromProfile : Bool = false
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var loginPopUpView : LoginPopupPage = LoginPopupPage()
     let benefitList = ["15% Discount at QM Cafe's across all venues",
@@ -37,6 +38,15 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(false)
+        if(fromProfile) {
+            popupView  = ComingSoonPopUp(frame: self.view.frame)
+            popupView.comingSoonPopupDelegate = self
+            popupView.loadLogoutMessage()
+            self.view.addSubview(popupView)
+        }
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent

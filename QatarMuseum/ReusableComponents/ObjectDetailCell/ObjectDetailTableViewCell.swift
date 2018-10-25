@@ -58,7 +58,7 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
         detailSecondLabel.textAlignment = .left
         imageDetailLabel.textAlignment = .left
 
-        titleLabel.font = UIFont.diningHeaderFont
+        titleLabel.font = UIFont.eventPopupTitleFont
         descriptionLabel.font = UIFont.englishTitleFont
         detailSecondLabel.font = UIFont.englishTitleFont
         imageDetailLabel.font = UIFont.sideMenuLabelFont
