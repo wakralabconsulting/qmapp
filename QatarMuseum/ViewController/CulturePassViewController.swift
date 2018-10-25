@@ -36,7 +36,6 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     var loginArray : LoginData?
     override func viewDidLoad() {
         super.viewDidLoad()
-        getCulturePassTokenFromServer()
         setupUI()
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -139,9 +138,46 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     func loginButtonPressed() {
         loginPopUpView.userNameText.resignFirstResponder()
         loginPopUpView.passwordText.resignFirstResponder()
-        getCulturePassLoginFromServer()
+        self.loadingView.isHidden = false
+        self.loadingView.bringSubview(toFront: self.loadingView)
+        self.loadingView.showLoading()
+        getCulturePassTokenFromServer()
     }
-    func loadProfilepage () {
+    func loadProfilepage (loginInfo : LoginData?) {
+        UserDefaults.standard.setValue(self.loginPopUpView.userNameText.text!, forKey: "name")
+        UserDefaults.standard.setValue(self.loginPopUpView.passwordText.text!, forKey: "password")
+        if (loginInfo != nil) {
+            let userData = loginInfo?.user
+            UserDefaults.standard.setValue(userData?.uid, forKey: "uid")
+            UserDefaults.standard.setValue(userData?.mail, forKey: "mail")
+            UserDefaults.standard.setValue(userData?.name, forKey: "displayName")
+            UserDefaults.standard.setValue(userData?.picture, forKey: "profilePic")
+            if(userData?.fieldDateOfBirth != nil) {
+                if((userData?.fieldDateOfBirth?.count)! > 0) {
+                    UserDefaults.standard.setValue(userData?.fieldDateOfBirth![0], forKey: "fieldDateOfBirth")
+                }
+            }
+            let locationData = userData?.fieldLocation["und"] as! NSArray
+            if(locationData.count > 0) {
+                let iso = locationData[0] as! NSDictionary
+                if(iso["iso2"] != nil) {
+                    UserDefaults.standard.setValue(iso["iso2"] as! String, forKey: "country")
+                }
+                
+            }
+            
+            let nationalityData = userData?.fieldNationality["und"] as! NSArray
+            if(nationalityData.count > 0) {
+                let nation = nationalityData[0] as! NSDictionary
+                if(nation["iso2"] != nil) {
+                    UserDefaults.standard.setValue(nation["iso2"] as! String , forKey: "nationality")
+                }
+                
+            }
+            
+        }
+        self.loginPopUpView.removeFromSuperview()
+        
         let profileView =  self.storyboard?.instantiateViewController(withIdentifier: "profileViewId") as! ProfileViewController
         profileView.loginInfo = loginArray
         let transition = CATransition()
@@ -184,58 +220,59 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     //MARK: WebServiceCall
     func getCulturePassTokenFromServer()
     {
-        
-        _ = Alamofire.request(QatarMuseumRouter.GetToken(["name": "haithembahri","pass":"saliha"])).responseObject { (response: DataResponse<TokenData>) -> Void in
-            switch response.result {
-            case .success(let data):
-                self.accessToken = data.accessToken
-            case .failure(let error):
+        let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
+        if ((loginPopUpView.userNameText.text != "") && (loginPopUpView.passwordText.text != "")) {
+            _ = Alamofire.request(QatarMuseumRouter.GetToken(String: "application/json",["name": loginPopUpView.userNameText.text!,"pass":loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<TokenData>) -> Void in
+                switch response.result {
+                case .success(let data):
+                    self.accessToken = data.accessToken
+                    self.getCulturePassLoginFromServer()
+                case .failure(let error):
+                    self.loadingView.stopLoading()
+                    self.loadingView.isHidden = true
+                }
+            }
+        } else {
+            self.loadingView.stopLoading()
+            self.loadingView.isHidden = true
+            if ((loginPopUpView.userNameText.text == "") && (loginPopUpView.passwordText.text == "")) {
+                showAlertView(title: titleString, message: NSLocalizedString("USERNAME_REQUIRED",comment: "Set the message for user name required")+"\n"+NSLocalizedString("PASSWORD_REQUIRED",comment: "Set the message for password required"), viewController: self)
                 
-                self.loadingView.stopLoading()
-                self.loadingView.noDataView.isHidden = false
-                self.loadingView.isHidden = false
-                self.loadingView.showNoDataView()
+            } else if ((loginPopUpView.userNameText.text == "") && (loginPopUpView.passwordText.text != "")) {
+                showAlertView(title: titleString, message: NSLocalizedString("USERNAME_REQUIRED",comment: "Set the message for user name required"), viewController: self)
+            } else if ((loginPopUpView.userNameText.text != "") && (loginPopUpView.passwordText.text == "")) {
+                showAlertView(title: titleString, message: NSLocalizedString("PASSWORD_REQUIRED",comment: "Set the message for password required"), viewController: self)
             }
         }
     }
     func getCulturePassLoginFromServer()
     {
+        let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
         if(accessToken != nil) {
-            if ((loginPopUpView.userNameText.text != "") && (loginPopUpView.passwordText.text != "")) {
-                _ = Alamofire.request(QatarMuseumRouter.Login(String: accessToken!, String: "application/json",["name" : loginPopUpView.userNameText.text!,"pass": loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<LoginData>) -> Void in
+            _ = Alamofire.request(QatarMuseumRouter.Login(String: accessToken!, String: "application/json",["name" : loginPopUpView.userNameText.text!,"pass": loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<LoginData>) -> Void in
                 switch response.result {
                 case .success(let data):
+                    self.loadingView.stopLoading()
+                    self.loadingView.isHidden = true
                     if(response.response?.statusCode == 200) {
                         self.loginArray = data
-                        self.loginPopUpView.removeFromSuperview()
-                        self.loadProfilepage()
+                        
+                        self.loadProfilepage(loginInfo: self.loginArray)
                     } else if(response.response?.statusCode == 401) {
-                        showAlertView(title: "Qatar Museums", message: "Wrong username or password.", viewController: self)
+                        
+                        showAlertView(title: titleString, message: NSLocalizedString("WRONG_USERNAME_OR_PWD",comment: "Set the message for wrong username or password"), viewController: self)
                     } else if(response.response?.statusCode == 406) {
-                        showAlertView(title: "Qatar Museums", message: "Already logged in", viewController: self)
+                        showAlertView(title: titleString, message: NSLocalizedString("ALREADY_LOGGEDIN",comment: "Set the message for Already Logged in"), viewController: self)
                     }
-                    else if(response.response?.statusCode == 403) {
-                        showAlertView(title: "Qatar Museums", message: "The username <em class=\"placeholder\"></em> has not been activated or is blocked.", viewController: self)
-                    }
+                    
                 case .failure(let error):
-                    print(error)
-
+                    self.loadingView.stopLoading()
+                    self.loadingView.isHidden = true
+                    
                 }
             }
-            } else {
-                
-                if ((loginPopUpView.userNameText.text == "") && (loginPopUpView.passwordText.text == "")) {
 
-                    showAlertView(title: "Qatar Museums", message: "Username or e-mail field is required \n Password field is required", viewController: self)
-                   
-                } else if ((loginPopUpView.userNameText.text == "") && (loginPopUpView.passwordText.text != "")) {
-                    showAlertView(title: "Qatar Museums", message: "Username or e-mail field is required", viewController: self)
-                } else if ((loginPopUpView.userNameText.text != "") && (loginPopUpView.passwordText.text == "")) {
-                    showAlertView(title: "Qatar Museums", message: "Password field is required", viewController: self)
-                }
-                
-            }
-    }
+        }
     }
 
 }

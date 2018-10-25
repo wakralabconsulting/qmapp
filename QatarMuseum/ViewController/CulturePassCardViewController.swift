@@ -9,13 +9,18 @@
 import UIKit
 
 class CulturePassCardViewController: UIViewController {
-
+    var membershipNumber : String? = nil
+    @IBOutlet weak var membershipLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        setUI ()
+        
     }
-
+    func setUI() {
+        membershipLabel.text = "Membership number: " + membershipNumber!
+        membershipLabel.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
+        membershipLabel.font = UIFont.homeTitleFont
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
