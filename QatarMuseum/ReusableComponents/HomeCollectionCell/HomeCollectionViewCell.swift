@@ -68,9 +68,10 @@ class HomeCollectionViewCell: UICollectionViewCell {
         }
         if let imageUrl = museumsListData.image{
             homeImageView.kf.setImage(with: URL(string: imageUrl))
-            
         }
-        
+        if(homeImageView.image == nil) {
+            homeImageView.image = UIImage(named: "default_imageX2")
+        }
         
         
     }

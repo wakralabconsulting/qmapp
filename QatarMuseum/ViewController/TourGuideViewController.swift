@@ -10,23 +10,32 @@ import Alamofire
 import Crashlytics
 import UIKit
 
-class TourGuideViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,HeaderViewProtocol,comingSoonPopUpProtocol,UICollectionViewDelegateFlowLayout {
+class TourGuideViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,HeaderViewProtocol,comingSoonPopUpProtocol,UICollectionViewDelegateFlowLayout,LoadingViewProtocol {
     @IBOutlet weak var tourCollectionView: UICollectionView!
     @IBOutlet weak var topbarView: CommonHeaderView!
     
+    @IBOutlet weak var loadingView: LoadingView!
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var fromHome : Bool = false
     var museumsList: [Home]! = []
     var fromSideMenu : Bool = false
+    let networkReachability = NetworkReachabilityManager()
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setUpUI()
         registerNib()
-        getTourGuideMuseumsList()
     }
 
     func setUpUI() {
+        self.loadingView.isHidden = false
+        self.loadingView.showLoading()
+        self.loadingView.loadingViewDelegate = self
+        if  (networkReachability?.isReachable)! {
+            getTourGuideMuseumsList()
+        } else {
+            showNoNetwork()
+        }
         topbarView.headerViewDelegate = self
         topbarView.headerTitle.isHidden = true
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
@@ -138,6 +147,8 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
             switch response.result {
             case .success(let data):
                 self.museumsList = data.homeList
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
                 if let arrayOffset = self.museumsList.index(where: {$0.id == searchstring}) {
                     self.museumsList.remove(at: arrayOffset)
                 }
@@ -147,16 +158,27 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                 var errorMessage: String
                 errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
                                                                 comment: "Setting the content of the alert"))
-//                self.loadingView.stopLoading()
-//                self.loadingView.noDataView.isHidden = false
-//                self.loadingView.isHidden = false
-//                self.loadingView.showNoDataView()
-//                self.loadingView.noDataLabel.text = errorMessage
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
             }
         }
     }
 
-
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            self.getTourGuideMuseumsList()
+        }
+    }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         

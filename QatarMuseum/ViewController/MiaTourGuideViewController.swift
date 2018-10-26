@@ -10,10 +10,11 @@ import Alamofire
 import Crashlytics
 import UIKit
 
-class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,HeaderViewProtocol,comingSoonPopUpProtocol,UICollectionViewDelegateFlowLayout,MiaTourProtocol {
+class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,HeaderViewProtocol,comingSoonPopUpProtocol,UICollectionViewDelegateFlowLayout,MiaTourProtocol,LoadingViewProtocol {
     @IBOutlet weak var miaTourCollectionView: UICollectionView!
     @IBOutlet weak var topbarView: CommonHeaderView!
     
+    @IBOutlet weak var loadingView: LoadingView!
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
  
     let networkReachability = NetworkReachabilityManager()
@@ -26,13 +27,13 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     }
 
     func setUpUI() {
-//        loadingView.isHidden = false
-//        loadingView.loadingViewDelegate = self
-//        loadingView.showLoading()
+        loadingView.isHidden = false
+        loadingView.loadingViewDelegate = self
+        loadingView.showLoading()
         if  (networkReachability?.isReachable)! {
             getTourGuideDataFromServer()
         } else {
-            
+            self.showNoNetwork()
         }
         
         topbarView.headerViewDelegate = self
@@ -143,23 +144,34 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
             switch response.result {
             case .success(let data):
                 self.miaTourDataFullArray = data.tourGuide!
-                //self.loadingView.stopLoading()
-                //self.loadingView.isHidden = true
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
                 self.miaTourCollectionView.reloadData()
             case .failure(let error):
                 var errorMessage: String
                 errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
                                                                 comment: "Setting the content of the alert"))
                 print(error)
-//                self.loadingView.stopLoading()
-//                self.loadingView.noDataView.isHidden = false
-//                self.loadingView.isHidden = false
-//                self.loadingView.showNoDataView()
-//                self.loadingView.noDataLabel.text = errorMessage
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
             }
         }
     }
-    
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            self.getTourGuideDataFromServer()
+        }
+    }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
