@@ -92,16 +92,6 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
         }
         self.present(miaView, animated: false, completion: nil)
     }
-    func loadPreviewPage() {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromRight
-        view.window!.layer.add(transition, forKey: kCATransition)
-        let shortDetailsView =  self.storyboard?.instantiateViewController(withIdentifier: "previewContainerId") as! PreviewContainerViewController
-        shortDetailsView.fromScienceTour = false
-        self.present(shortDetailsView, animated: false, completion: nil)
-    }
     func loadComingSoonPopup() {
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
@@ -125,13 +115,27 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     
     //MARK: Mia Tour Guide Delegate
     func exploreButtonTapAction(miaHeader: MiaCollectionReusableView) {
-        let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "miaExploreId") as! MiaTourGuideExploreViewController
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromRight
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(miaView, animated: false, completion: nil)
+        var searchstring = String()
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            searchstring = "12476"
+        } else {
+            searchstring = "12476"
+        }
+        let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "miaDetailId") as! MiaTourDetailViewController
+        
+        if (miaTourDataFullArray != nil) {
+            if let arrayOffset = miaTourDataFullArray.index(where: {$0.nid == searchstring}) {
+                miaView.tourGuideDetail = miaTourDataFullArray[arrayOffset]
+                let transition = CATransition()
+                transition.duration = 0.3
+                transition.type = kCATransitionPush
+                transition.subtype = kCATransitionFromRight
+                view.window!.layer.add(transition, forKey: kCATransition)
+                self.present(miaView, animated: false, completion: nil)
+            }
+            
+        }
+        
     }
     //MARK: WebServiceCall
     func getTourGuideDataFromServer() {

@@ -59,10 +59,12 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if (indexPath.row == 0) {
-            loadMiaTour() 
-        } else {
-            loadComingSoonPopup()
+        if (museumsList != nil) {
+            if(((museumsList[indexPath.row].id) == "63") || ((museumsList[indexPath.row].id) == "96") || ((museumsList[indexPath.row].id) == "61") || ((museumsList[indexPath.row].id) == "635")) {
+                loadMiaTour(currentRow: indexPath.row)
+            } else {
+                loadComingSoonPopup()
+            }
         }
     }
     
@@ -79,15 +81,19 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         
         return tourHeaderView
     }
-    func loadMiaTour() {
-        let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "miaTourGuideId") as! MiaTourGuideViewController
-        
+    func loadMiaTour(currentRow: Int?) {
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(miaView, animated: false, completion: nil)
+        let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "miaTourGuideId") as! MiaTourGuideViewController
+        if (museumsList != nil) {
+            miaView.museumId = museumsList[currentRow!].id!
+            self.present(miaView, animated: false, completion: nil)
+        }
+        
+        
     }
     
     func loadComingSoonPopup() {

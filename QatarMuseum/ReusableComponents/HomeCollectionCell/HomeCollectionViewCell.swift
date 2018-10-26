@@ -54,16 +54,18 @@ class HomeCollectionViewCell: UICollectionViewCell {
         if(homeImageView.image == nil) {
            homeImageView.image = UIImage(named: "default_imageX2")
         }
-        homeImageView.contentMode = .scaleAspectFit
+        homeImageView.contentMode = .scaleAspectFill
         
     }
     func setTourGuideCellData(museumsListData: Home) {
         homeTitleLabel.font = UIFont.homeTitleFont
         
         homeTitleLabel.text = museumsListData.name
-        //if ((homeCellData.value(forKey: "tourguide") as! Bool) == true) {
-        tourGuideImage.isHidden = true
-        // }
+        if (museumsListData.isTourguideAvailable == "True") {
+            tourGuideImage.isHidden = false
+        } else {
+            tourGuideImage.isHidden = true
+        }
         if let imageUrl = museumsListData.image{
             homeImageView.kf.setImage(with: URL(string: imageUrl))
             
