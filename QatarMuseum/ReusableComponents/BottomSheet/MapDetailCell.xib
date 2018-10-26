@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -127,11 +127,22 @@
                                     <action selector="sliderValueChange:" destination="Mzl-jo-ikZ" eventType="valueChanged" id="bQt-cq-dZx"/>
                                 </connections>
                             </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading......" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hsA-sE-ZjT">
+                                <rect key="frame" x="153" y="64.5" width="108" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="aFO-3b-DXy"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Lks-Lf-4dr" secondAttribute="trailing" constant="25" id="2FO-Zl-FrW"/>
+                            <constraint firstItem="hsA-sE-ZjT" firstAttribute="centerX" secondItem="ufY-1D-YLg" secondAttribute="centerX" id="2hM-Qw-9re"/>
                             <constraint firstItem="VRd-aa-gdf" firstAttribute="leading" secondItem="Gud-rz-Wjq" secondAttribute="leading" id="2sd-fd-ADs"/>
+                            <constraint firstItem="hsA-sE-ZjT" firstAttribute="top" secondItem="Lks-Lf-4dr" secondAttribute="bottom" id="38e-IZ-yTd"/>
                             <constraint firstItem="SVT-qA-CDh" firstAttribute="width" secondItem="jzw-OW-L65" secondAttribute="width" id="Dh4-Bf-DAb"/>
                             <constraint firstItem="GRf-yS-kRR" firstAttribute="top" secondItem="OPW-Tt-9cd" secondAttribute="bottom" constant="30" id="HSj-bD-SLg"/>
                             <constraint firstAttribute="trailing" secondItem="jzw-OW-L65" secondAttribute="trailing" id="Ico-LW-QsW"/>
@@ -184,6 +195,7 @@
                 <outlet property="imageViewContainer" destination="6hy-Q4-BR9" id="Bsy-CW-24q"/>
                 <outlet property="playButton" destination="OPW-Tt-9cd" id="uvD-qb-BGx"/>
                 <outlet property="playerSlider" destination="Lks-Lf-4dr" id="SQa-UQ-PqL"/>
+                <outlet property="seekLoadingLabel" destination="hsA-sE-ZjT" id="hFN-BF-9A6"/>
                 <outlet property="shareBtnViewHeight" destination="zQG-R8-YTk" id="NtN-EJ-mJf"/>
                 <outlet property="shareButton" destination="TnQ-Ha-1Y9" id="1rD-Po-PKt"/>
                 <outlet property="sliderBottomPadding" destination="HSj-bD-SLg" id="cyG-7B-n54"/>
