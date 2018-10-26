@@ -173,3 +173,8 @@
 "LOGOUT_SUCCESSFULLY" = "You have been successfully logged out!";
 "OK" = "OK";
 "MEMBERSHIP_NUMBER" = "Membership Number:";
+"NO_INTERNET" = "There is no Internet connection";
+"CHECK_INTERNET" = "Please check your Internet connection";
+"TRY_AGAIN" = "Try again";
+"OOPS_MESSAGE" = "Oops!";
+"CHECK_NETWORK" = "تفقد اتصالك بالانترنت";

@@ -11,7 +11,7 @@ import CoreData
 import Crashlytics
 import UIKit
 
-class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol {
+class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,LoadingViewProtocol {
     @IBOutlet weak var diningTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
     
@@ -38,6 +38,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     func setupUIContents() {
         loadingView.isHidden = false
         loadingView.showLoading()
+        loadingView.loadingViewDelegate = self
     }
     
     func setTopBarImage() {
@@ -358,13 +359,13 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                 if ((diningArray.count > 0) && (diningDict.diningdescription != nil)) {
                     self.diningDetailtArray.insert(Dining(id: diningDict.id, name: diningDict.name, location: diningDict.location, description: diningDict.diningdescription, image: diningDict.image, openingtime: diningDict.openingtime, closetime: diningDict.closetime, sortid: diningDict.sortid,museumId: nil), at: 0)
                     if(diningDetailtArray.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     self.setTopBarImage()
                     diningTableView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
             else {
@@ -382,13 +383,13 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                         
                     
                     if(diningDetailtArray.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     self.setTopBarImage()
                     diningTableView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
@@ -425,6 +426,18 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         self.loadingView.isHidden = false
         self.loadingView.showNoDataView()
         self.loadingView.noDataLabel.text = errorMessage
+    }
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            self.getDiningDetailsFromServer()
+        }
+    }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

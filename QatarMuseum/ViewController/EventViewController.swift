@@ -13,7 +13,7 @@ import EventKit
 import UIKit
 
 
-class EventViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource, HeaderViewProtocol,FSCalendarDelegate,FSCalendarDataSource,UICollectionViewDelegateFlowLayout,EventPopUpProtocol,UIViewControllerTransitioningDelegate,UIGestureRecognizerDelegate,comingSoonPopUpProtocol {
+class EventViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource, HeaderViewProtocol,FSCalendarDelegate,FSCalendarDataSource,UICollectionViewDelegateFlowLayout,EventPopUpProtocol,UIViewControllerTransitioningDelegate,UIGestureRecognizerDelegate,comingSoonPopUpProtocol,LoadingViewProtocol {
     
     @IBOutlet weak var eventCollectionView: UICollectionView!
     @IBOutlet weak var calendarView: FSCalendar!
@@ -76,6 +76,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     func setUpUiContent() {
         loadingView.isHidden = false
         loadingView.showLoading()
+        loadingView.loadingViewDelegate = self
         self.educationEventArray = [EducationEvent]()
         headerView.headerViewDelegate = self
         headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
@@ -970,12 +971,12 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                         self.educationEventArray.insert(EducationEvent(itemId: educationArray[i].itemId, introductionText: educationArray[i].introductionText, register: educationArray[i].register, fieldRepeatDate: dateArray, title: educationArray[i].title, programType: educationArray[i].pgmType, mainDescription: educationArray[i].mainDesc, ageGroup: ageGrpArray, associatedTopics: topicsArray, museumDepartMent: educationArray[i].museumDepartMent, startDate: startDateArray, endDate: endDateArray), at: i)
                     }
                     if(educationEventArray.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                         self.eventCollectionView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
             else {
@@ -1016,12 +1017,12 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                         
                     }
                     if(educationEventArray.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     eventCollectionView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
@@ -1378,12 +1379,12 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                         self.educationEventArray.insert(EducationEvent(itemId: educationArray[i].itemId, introductionText: educationArray[i].introductionText, register: educationArray[i].register, fieldRepeatDate: dateArray, title: educationArray[i].title, programType: educationArray[i].pgmType, mainDescription: educationArray[i].mainDesc, ageGroup: ageGrpArray, associatedTopics: topicsArray, museumDepartMent: educationArray[i].museumDepartMent, startDate: startDateArray, endDate: endDateArray), at: i)
                     }
                     if(educationEventArray.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     eventCollectionView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
             else {
@@ -1427,12 +1428,12 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                        
                     }
                     if(educationEventArray.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     eventCollectionView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
@@ -1486,5 +1487,16 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         self.view.addSubview(eventPopup)
     }
     
-    
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            self.getEducationEventFromServer()
+        }
+    }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
+    }
 }
