@@ -11,7 +11,7 @@ import CoreData
 import UIKit
 import Firebase
 
-class HomeViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,TopBarProtocol,comingSoonPopUpProtocol,SideMenuProtocol,UIViewControllerTransitioningDelegate {
+class HomeViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,TopBarProtocol,comingSoonPopUpProtocol,SideMenuProtocol,UIViewControllerTransitioningDelegate,LoadingViewProtocol {
 
     @IBOutlet weak var restaurantButton: UIButton!
     @IBOutlet weak var giftShopButton: UIButton!
@@ -71,6 +71,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         visualEffectView.effect = nil
         visualEffectView.isHidden = true
         loadingView.isHidden = false
+        loadingView.loadingViewDelegate = self
         loadingView.showLoading()
         moreLabel.text = NSLocalizedString("MORE",comment: "MORE in Home Page")
         culturePassLabel.text = NSLocalizedString("CULTUREPASS_TITLE",comment: "CULTUREPASS_TITLE in Home Page")
@@ -623,12 +624,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                                              at: i)
                 }
                 if(homeList.count == 0){
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
                 homeCollectionView.reloadData()
             }
             else{
-                self.showNodata()
+                self.showNoNetwork()
             }
         }
             else {
@@ -643,12 +644,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                                              at: i)
                     }
                     if(homeList.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     homeCollectionView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
@@ -686,4 +687,17 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         self.loadingView.showNoDataView()
         self.loadingView.noDataLabel.text = errorMessage
     }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
+    }
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            self.getHomeList()
+        }
+    }
+
 }

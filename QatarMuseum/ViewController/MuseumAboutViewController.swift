@@ -20,7 +20,7 @@ enum PageName2{
     case publicArtsDetail
     case museumAbout
 }
-class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,iCarouselDelegate,iCarouselDataSource,UIGestureRecognizerDelegate {    
+class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,iCarouselDelegate,iCarouselDataSource,UIGestureRecognizerDelegate,LoadingViewProtocol {
     @IBOutlet weak var heritageDetailTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
    
@@ -79,6 +79,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     func setupUIContents() {
         loadingView.isHidden = false
         loadingView.showLoading()
+        loadingView.loadingViewDelegate = self
         setTopBarImage()
         //imgArray = ["dajar_women","artifactimg","001_MIA_MW.146_005","exhibition","firestation"]
         
@@ -1136,12 +1137,12 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                         
                         if(aboutDetailtArray.count == 0){
-                            self.showNodata()
+                            self.showNoNetwork()
                         }
                         self.setTopBarImage()
                         heritageDetailTableView.reloadData()
                     } else {
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                 }
             } else {
@@ -1170,13 +1171,13 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                         }
                         self.aboutDetailtArray.insert(Museum(name: aboutDict.nameAr, id: aboutDict.id, tourguideAvailable: aboutDict.tourguideAvailableAr, contactNumber: aboutDict.contactNumberAr, contactEmail: aboutDict.contactEmailAr, mobileLongtitude: aboutDict.mobileLongtitudeAr, subtitle: aboutDict.subtitleAr, openingTime: aboutDict.openingTimeAr, mobileDescription: descriptionArray, multimediaFile: multimediaArray, mobileLatitude: aboutDict.mobileLatitudear, tourGuideAvailability: aboutDict.tourGuideAvlblyAr,multimediaVideo: nil),at: 0)
                         if(aboutDetailtArray.count == 0){
-                            self.showNodata()
+                            self.showNoNetwork()
                         }
                         self.setTopBarImage()
                         heritageDetailTableView.reloadData()
                     }
                     else{
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                 }
                 
@@ -1286,6 +1287,18 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         if((imageView.image != nil) && (imageView.image != UIImage(named: "default_imageX2"))) {
             setiCarouselView()
         }
+    }
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            self.getAboutDetailsFromServer()
+        }
+    }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

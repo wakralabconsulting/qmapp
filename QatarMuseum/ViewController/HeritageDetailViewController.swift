@@ -15,7 +15,7 @@ enum PageName{
     case publicArtsDetail
     case museumAbout
 }
-class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol {
+class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,LoadingViewProtocol {
     @IBOutlet weak var heritageDetailTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
     
@@ -65,6 +65,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     func setupUIContents() {
         loadingView.isHidden = false
         loadingView.showLoading()
+        loadingView.loadingViewDelegate = self
         setTopBarImage()
     }
     
@@ -583,15 +584,15 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                             
                           
                             if(heritageDetailtArray.count == 0){
-                                self.showNodata()
+                                self.showNoNetwork()
                             }
                             self.setTopBarImage()
                             heritageDetailTableView.reloadData()
                         }else{
-                            self.showNodata()
+                            self.showNoNetwork()
                         }
                     }else{
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                 }
 
@@ -619,17 +620,17 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                             
                             
                             if(heritageDetailtArray.count == 0){
-                                self.showNodata()
+                                self.showNoNetwork()
                             }
                             self.setTopBarImage()
                             heritageDetailTableView.reloadData()
                             
                         }else{
-                            self.showNodata()
+                            self.showNoNetwork()
                         }
                     }
                     else{
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                 }
 
@@ -827,16 +828,16 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                             self.publicArtsDetailtArray.insert(PublicArtsDetail(id:publicArtsDict.id , name:publicArtsDict.name, description: publicArtsDict.detaildescription, shortdescription: publicArtsDict.shortdescription, image: publicArtsDict.image, images: imagesArray,longitude: publicArtsDict.longitude, latitude: publicArtsDict.latitude), at: 0)
                             
                             if(publicArtsDetailtArray.count == 0){
-                                self.showNodata()
+                                self.showNoNetwork()
                             }
                             self.setTopBarImage()
                             heritageDetailTableView.reloadData()
                         }else {
-                            self.showNodata()
+                            self.showNoNetwork()
                         }
                     }
                     else{
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                 }
 
@@ -863,17 +864,17 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                             
                             
                             if(publicArtsDetailtArray.count == 0){
-                                self.showNodata()
+                                self.showNoNetwork()
                             }
                             self.setTopBarImage()
                             heritageDetailTableView.reloadData()
                         }
                         else{
-                            self.showNodata()
+                            self.showNoNetwork()
                         }
                     }
                     else{
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                 }
 
@@ -1264,13 +1265,13 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                        
                         
                         if(aboutDetailtArray.count == 0){
-                            self.showNodata()
+                            self.showNoNetwork()
                         }
                         self.setTopBarImage()
                         heritageDetailTableView.reloadData()
                     }
                     else{
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                 }
 
@@ -1304,13 +1305,13 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                         }
                         self.aboutDetailtArray.insert(Museum(name: aboutDict.nameAr, id: aboutDict.id, tourguideAvailable: aboutDict.tourguideAvailableAr, contactNumber: aboutDict.contactNumberAr, contactEmail: aboutDict.contactEmailAr, mobileLongtitude: aboutDict.mobileLongtitudeAr, subtitle: aboutDict.subtitleAr, openingTime: aboutDict.openingTimeAr, mobileDescription: descriptionArray, multimediaFile: multimediaArray, mobileLatitude: aboutDict.mobileLatitudear, tourGuideAvailability: aboutDict.tourGuideAvlblyAr,multimediaVideo: nil),at: 0)
                         if(aboutDetailtArray.count == 0){
-                            self.showNodata()
+                            self.showNoNetwork()
                         }
                         self.setTopBarImage()
                         heritageDetailTableView.reloadData()
                     }
                     else{
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                 }
  
@@ -1357,6 +1358,24 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         }
         let screenClass = classForCoder.description()
         Analytics.setScreenName(screenName, screenClass: screenClass)
+    }
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            if ((pageNameString == PageName.heritageDetail) && (heritageDetailId != nil)) {
+                self.getHeritageDetailsFromServer()
+            } else if ((pageNameString == PageName.publicArtsDetail) && (publicArtsDetailId != nil)) {
+                self.getPublicArtsDetailsFromServer()
+            } else if (pageNameString == PageName.museumAbout) {
+                self.getAboutDetailsFromServer()
+            }
+        }
+    }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

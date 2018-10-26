@@ -42,7 +42,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     
     func setupUI() {
-        
+
         getMuseumDataFromServer()
         museumsSlideView.imagesContentMode = .scaleAspectFill
         self.museumsSlideView.addImage(UIImage(named: "sliderPlaceholder"))

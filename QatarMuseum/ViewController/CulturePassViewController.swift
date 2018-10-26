@@ -35,6 +35,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
                        "Get exclusive invitation to QM open house access to our world class call center 8AM to 8PM daily"]
     var accessToken : String? = nil
     var loginArray : LoginData?
+    let networkReachability = NetworkReachabilityManager()
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -57,8 +58,6 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     
     func setupUI() {
-        //loadingView.isHidden = false
-       // loadingView.showLoading()
         headerView.headerViewDelegate = self
         headerView.headerTitle.text = NSLocalizedString("CULTUREPASS_TITLE", comment: "CULTUREPASS_TITLE in the Culture Pass page").uppercased()
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
@@ -151,7 +150,15 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         self.loadingView.isHidden = false
         self.loadingView.bringSubview(toFront: self.loadingView)
         self.loadingView.showLoading()
-        getCulturePassTokenFromServer()
+        if  (networkReachability?.isReachable)! {
+            self.getCulturePassTokenFromServer()
+        } else {
+            self.loadingView.stopLoading()
+            self.loadingView.isHidden = true
+            self.view.hideAllToasts()
+            let eventAddedMessage =  NSLocalizedString("CHECK_NETWORK", comment: "CHECK_NETWORK") 
+            self.view.makeToast(eventAddedMessage)
+        }
     }
     func loadProfilepage (loginInfo : LoginData?) {
         UserDefaults.standard.setValue(self.loginPopUpView.userNameText.text!, forKey: "name")

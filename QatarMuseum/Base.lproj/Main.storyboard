@@ -490,7 +490,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EVENTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWB-Sh-j4n">
-                                        <rect key="frame" x="164.33333333333334" y="308.66666666666669" width="87" height="29"/>
+                                        <rect key="frame" x="167" y="308.66666666666669" width="81.333333333333314" height="29"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="29" id="guL-0K-jjs"/>
                                         </constraints>
@@ -3054,9 +3054,14 @@
                                 <color key="pageIndicatorTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="currentPageIndicatorTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </pageControl>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Zx-cL-FAA" customClass="LoadingView" customModule="QatarMuseums" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="85" width="414" height="651"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="8Zx-cL-FAA" firstAttribute="top" secondItem="wa7-YK-iHP" secondAttribute="bottom" id="2nF-Px-tDB"/>
                             <constraint firstItem="Exd-pk-CxP" firstAttribute="centerX" secondItem="J7l-FS-07m" secondAttribute="centerX" id="2oA-SD-8fe"/>
                             <constraint firstAttribute="trailing" secondItem="CE9-eb-zH5" secondAttribute="trailing" constant="50" id="3Kf-5a-kg9"/>
                             <constraint firstItem="1LY-Vb-Tiq" firstAttribute="leading" secondItem="J7l-FS-07m" secondAttribute="leading" constant="30" id="49q-Tc-c3s"/>
@@ -3071,7 +3076,9 @@
                             <constraint firstAttribute="trailing" secondItem="jkw-LB-Uz1" secondAttribute="trailing" id="P34-oQ-vJR"/>
                             <constraint firstItem="jkw-LB-Uz1" firstAttribute="leading" secondItem="J7l-FS-07m" secondAttribute="leading" id="RDq-Z4-28O"/>
                             <constraint firstItem="CE9-eb-zH5" firstAttribute="leading" secondItem="J7l-FS-07m" secondAttribute="leading" constant="50" id="SVe-8b-JQx"/>
+                            <constraint firstAttribute="trailing" secondItem="8Zx-cL-FAA" secondAttribute="trailing" id="U9R-Pe-6Kz"/>
                             <constraint firstItem="Cc5-NE-r8L" firstAttribute="top" secondItem="jkw-LB-Uz1" secondAttribute="bottom" id="Vua-lq-oBT"/>
+                            <constraint firstItem="8Zx-cL-FAA" firstAttribute="leading" secondItem="J7l-FS-07m" secondAttribute="leading" id="W0P-fc-298"/>
                             <constraint firstItem="Exd-pk-CxP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="J7l-FS-07m" secondAttribute="leading" constant="6" id="aN9-j9-nuw"/>
                             <constraint firstAttribute="trailing" secondItem="1LY-Vb-Tiq" secondAttribute="trailing" constant="30" id="aQk-cV-OZo"/>
                             <constraint firstItem="wa7-YK-iHP" firstAttribute="leading" secondItem="J7l-FS-07m" secondAttribute="leading" id="aua-fm-7Tb"/>
@@ -3081,6 +3088,7 @@
                             <constraint firstItem="kpw-MP-Oyn" firstAttribute="centerX" secondItem="J7l-FS-07m" secondAttribute="centerX" id="gXR-VC-sRM"/>
                             <constraint firstItem="Exd-pk-CxP" firstAttribute="top" secondItem="NpL-VI-HM0" secondAttribute="bottom" constant="18" id="hJ4-S2-2IH"/>
                             <constraint firstItem="hqu-mt-iIE" firstAttribute="top" secondItem="J7l-FS-07m" secondAttribute="top" id="mrG-x9-ukL"/>
+                            <constraint firstItem="Cc5-NE-r8L" firstAttribute="top" secondItem="8Zx-cL-FAA" secondAttribute="bottom" id="pYb-j0-10T"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Exd-pk-CxP" secondAttribute="trailing" constant="6" id="pfG-dV-bb9"/>
                             <constraint firstItem="CE9-eb-zH5" firstAttribute="top" secondItem="1LY-Vb-Tiq" secondAttribute="bottom" constant="18" id="vdh-0G-v7K"/>
                             <constraint firstItem="kpw-MP-Oyn" firstAttribute="top" secondItem="CE9-eb-zH5" secondAttribute="bottom" constant="20" id="wT8-yf-bdJ"/>
@@ -3089,6 +3097,7 @@
                     </view>
                     <connections>
                         <outlet property="headerView" destination="wa7-YK-iHP" id="bhb-Dn-8k7"/>
+                        <outlet property="loadingView" destination="8Zx-cL-FAA" id="rfv-hk-jj3"/>
                         <outlet property="overlayView" destination="jkw-LB-Uz1" id="fc0-Lq-iEg"/>
                         <outlet property="pageControl" destination="kpw-MP-Oyn" id="pFw-48-JaS"/>
                         <outlet property="playButton" destination="NpL-VI-HM0" id="loJ-pF-jnc"/>
@@ -5237,16 +5246,23 @@
                                 <rect key="frame" x="0.0" y="20" width="414" height="716"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xQg-HM-YTp" customClass="LoadingView" customModule="QatarMuseums" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="85" width="414" height="651"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <constraints>
                             <constraint firstItem="GTM-k5-sAd" firstAttribute="top" secondItem="Wq6-bK-3gi" secondAttribute="bottom" id="2Go-Pr-530"/>
                             <constraint firstItem="jf5-dA-4V6" firstAttribute="top" secondItem="V3s-Ss-ezC" secondAttribute="bottom" id="5Gp-Ng-m9R"/>
+                            <constraint firstItem="yeH-gg-PZs" firstAttribute="top" secondItem="xQg-HM-YTp" secondAttribute="bottom" id="5dV-Jl-HGu"/>
                             <constraint firstAttribute="trailing" secondItem="jf5-dA-4V6" secondAttribute="trailing" id="6Ly-nH-4qE"/>
                             <constraint firstItem="yeH-gg-PZs" firstAttribute="top" secondItem="IAj-ZQ-CZE" secondAttribute="bottom" id="7b3-Su-hRQ"/>
                             <constraint firstItem="GTM-k5-sAd" firstAttribute="centerX" secondItem="6iC-kF-Ins" secondAttribute="centerX" id="8iJ-Kg-fAu"/>
                             <constraint firstItem="IAj-ZQ-CZE" firstAttribute="leading" secondItem="6iC-kF-Ins" secondAttribute="leading" id="CF9-C9-HQF"/>
                             <constraint firstItem="9pI-Wu-eS8" firstAttribute="leading" secondItem="6iC-kF-Ins" secondAttribute="leading" id="Etg-Xx-aAZ"/>
                             <constraint firstItem="Wq6-bK-3gi" firstAttribute="centerY" secondItem="84D-I2-0Ka" secondAttribute="centerY" id="Fl8-Fm-wTP"/>
+                            <constraint firstItem="xQg-HM-YTp" firstAttribute="leading" secondItem="6iC-kF-Ins" secondAttribute="leading" id="G9J-Gb-kUH"/>
+                            <constraint firstAttribute="trailing" secondItem="xQg-HM-YTp" secondAttribute="trailing" id="IF8-cI-Qlz"/>
                             <constraint firstItem="yeH-gg-PZs" firstAttribute="top" secondItem="84D-I2-0Ka" secondAttribute="bottom" constant="37" id="MXn-Fg-8Nd"/>
                             <constraint firstItem="9pI-Wu-eS8" firstAttribute="leading" secondItem="84D-I2-0Ka" secondAttribute="trailing" constant="-56" id="NOw-1D-5ki"/>
                             <constraint firstItem="jf5-dA-4V6" firstAttribute="leading" secondItem="6iC-kF-Ins" secondAttribute="leading" id="PaE-4h-M6s"/>
@@ -5254,6 +5270,7 @@
                             <constraint firstAttribute="trailing" secondItem="Pnd-PY-Kwv" secondAttribute="trailing" constant="18" id="Wfc-Mq-kRw"/>
                             <constraint firstAttribute="bottom" secondItem="9pI-Wu-eS8" secondAttribute="bottom" id="XhT-14-1GI"/>
                             <constraint firstAttribute="trailing" secondItem="Wq6-bK-3gi" secondAttribute="trailing" constant="25" id="aG0-cV-xRh"/>
+                            <constraint firstItem="xQg-HM-YTp" firstAttribute="top" secondItem="jf5-dA-4V6" secondAttribute="bottom" id="d8G-6E-2dq"/>
                             <constraint firstItem="eW7-6Q-nVu" firstAttribute="top" secondItem="jf5-dA-4V6" secondAttribute="bottom" constant="15" id="eHk-mM-pta"/>
                             <constraint firstAttribute="trailing" secondItem="IAj-ZQ-CZE" secondAttribute="trailing" id="eiU-z0-dgv"/>
                             <constraint firstItem="9pI-Wu-eS8" firstAttribute="top" secondItem="jf5-dA-4V6" secondAttribute="bottom" id="lIC-tK-dQ4"/>
@@ -5271,6 +5288,7 @@
                         <outlet property="firstLevelView" destination="hXL-UF-fqH" id="ta8-xL-CCe"/>
                         <outlet property="headerView" destination="jf5-dA-4V6" id="hPo-or-feo"/>
                         <outlet property="levelView" destination="Pnd-PY-Kwv" id="gTt-hL-GoI"/>
+                        <outlet property="loadingView" destination="xQg-HM-YTp" id="jV0-W6-SYQ"/>
                         <outlet property="numberOne" destination="Hob-Dm-ULS" id="yh9-ko-FEN"/>
                         <outlet property="numberSerchBtn" destination="eW7-6Q-nVu" id="dzp-GN-ZuL"/>
                         <outlet property="numberThree" destination="I1E-PJ-lNt" id="Ulb-9J-bTW"/>

@@ -11,7 +11,7 @@ import CoreData
 import Crashlytics
 import UIKit
 
-class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,HeaderViewProtocol {
+class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,HeaderViewProtocol,LoadingViewProtocol {
     @IBOutlet weak var collectionTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var headerView: CommonHeaderView!
@@ -28,6 +28,7 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
     func setUI() {
         loadingView.isHidden = false
         loadingView.showLoading()
+        loadingView.loadingViewDelegate = self
         if  (networkReachability?.isReachable)! {
             getCollectioDetailsFromServer()
         } else {
@@ -242,12 +243,12 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
                            
                         }
                         if(collectionDetailArray.count == 0){
-                            self.showNodata()
+                            self.showNoNetwork()
                         }
                         collectionTableView.reloadData()
                     }
                     else{
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                 
 
@@ -259,18 +260,18 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
                     for i in 0 ... collectionArray.count-1 {
                         let collectionDict = collectionArray[i]
                         if((collectionDict.titleAr == nil) && (collectionDict.bodyAr == nil)) {
-                            self.showNodata()
+                            self.showNoNetwork()
                         } else {
                            self.collectionDetailArray.insert(CollectionDetail(title: collectionDict.titleAr, image: collectionDict.imageAr, body: collectionDict.bodyAr, nid: collectionDict.nid, categoryCollection: collectionDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)), at: 0)
                         
                         }
                     }
                     if(collectionDetailArray.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     collectionTableView.reloadData()
                 }else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
@@ -310,7 +311,18 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
         self.loadingView.showNoDataView()
         self.loadingView.noDataLabel.text = errorMessage
     }
-    
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            self.getCollectioDetailsFromServer()
+        }
+    }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         

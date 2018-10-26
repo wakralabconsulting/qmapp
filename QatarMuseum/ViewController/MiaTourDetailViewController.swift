@@ -5,13 +5,12 @@
 //  Created by Exalture on 17/07/18.
 //  Copyright © 2018 Exalture. All rights reserved.
 //
-
-import Crashlytics
-import UIKit
 import Alamofire
+import Crashlytics
 import Kingfisher
+import UIKit
 
-class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingSoonPopUpProtocol, KASlideShowDelegate {
+class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingSoonPopUpProtocol, KASlideShowDelegate,LoadingViewProtocol {
     @IBOutlet weak var tourGuideDescription: UITextView!
     @IBOutlet weak var startTourButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
@@ -20,6 +19,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var scienceTourTitle: UILabel!
     
+    @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var overlayView: UIView!
     var slideshowImages : NSArray!
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
@@ -30,9 +30,17 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     var sliderImgCount : Int? = 0
     var sliderImgArray = NSMutableArray()
     var titleString : String? = ""
+    let networkReachability = NetworkReachabilityManager()
     override func viewDidLoad() {
         super.viewDidLoad()
-        getTourGuideDataFromServer()
+        loadingView.isHidden = false
+        loadingView.loadingViewDelegate = self
+        loadingView.showLoading()
+        if  (networkReachability?.isReachable)! {
+            getTourGuideDataFromServer()
+        } else {
+            self.showNoNetwork()
+        }
         setupUI()
         setGradientLayer()
     }
@@ -186,6 +194,8 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
             switch response.result {
             case .success(let data):
                 self.tourGuide = data.tourGuide!
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
                 if(self.tourGuide.count > 0) {
                     
                     if let searchDict = self.tourGuide.first(where: {$0.nid == "12216"}) {
@@ -202,7 +212,14 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
                    // self.tourGuideDescription.text = self.tourGuide[0].tourGuideDescription
                 }
             case .failure(let error):
-                print(error)
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
             }
         }
     }
@@ -263,5 +280,17 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
         
         self.overlayView.layer.insertSublayer(gradient, at: 0)
         
+    }
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            self.getTourGuideDataFromServer()
+        }
+    }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
     }
 }

@@ -11,7 +11,7 @@ import UIKit
 import CoreData
 import Crashlytics
 
-class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol {
+class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol,LoadingViewProtocol {
     @IBOutlet weak var museumCollectionView: UICollectionView!
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var collectionsHeader: CommonHeaderView!
@@ -36,7 +36,7 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
     func setUpUI() {
         loadingView.isHidden = false
         loadingView.showLoading()
-        
+        loadingView.loadingViewDelegate = self
         collectionsHeader.headerViewDelegate = self
         collectionsHeader.headerTitle.text = NSLocalizedString("COLLECTIONS_TITLE", comment: "COLLECTIONS_TITLE Label in the collections page").uppercased()
 
@@ -252,12 +252,12 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
                         
                     }
                     if(collection.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     museumCollectionView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
             else {
@@ -271,12 +271,12 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
                         self.collection.insert(Collection(name: collectionArray[i].listName?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil), image: collectionArray[i].listImageAr, museumId: collectionArray[i].museumId), at: i)
                     }
                     if(collection.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     museumCollectionView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
@@ -314,7 +314,18 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
         self.loadingView.showNoDataView()
         self.loadingView.noDataLabel.text = errorMessage
     }
-    
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            self.getCollectionList()
+        }
+    }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

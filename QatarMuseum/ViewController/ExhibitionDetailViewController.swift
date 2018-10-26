@@ -11,7 +11,7 @@ import CoreData
 import Crashlytics
 import Alamofire
 
-class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol {
+class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,LoadingViewProtocol {
     @IBOutlet weak var exhibitionDetailTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
     
@@ -39,6 +39,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     func setUi() {
         loadingView.isHidden = false
         loadingView.showLoading()
+        loadingView.loadingViewDelegate = self
         setTopImageUI()
     }
     
@@ -391,13 +392,13 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
                     self.exhibition.insert(Exhibition(id: exhibitionDict.id, name: exhibitionDict.detailName, image: nil,detailImage:exhibitionDict.detailImage, startDate: exhibitionDict.detailStartDate, endDate: exhibitionDict.detailEndDate, location: exhibitionDict.detailLocation, latitude: exhibitionDict.detailLatitude, longitude: exhibitionDict.detailLongitude, shortDescription: exhibitionDict.detailShortDesc, longDescription: exhibitionDict.detailLongDesc,museumId:nil), at: 0)
                     
                     if(exhibition.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     self.self.setTopImageUI()
                     exhibitionDetailTableView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
             else {
@@ -415,13 +416,13 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
                     
                     
                     if(exhibition.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     self.setTopImageUI()
                     exhibitionDetailTableView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
@@ -458,6 +459,18 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         self.loadingView.isHidden = false
         self.loadingView.showNoDataView()
         self.loadingView.noDataLabel.text = errorMessage
+    }
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            self.getExhibitionDetail()
+        }
+    }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
