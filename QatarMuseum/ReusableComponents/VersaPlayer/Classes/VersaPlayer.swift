@@ -132,15 +132,15 @@ open class VersaPlayer: UIView, AVPictureInPictureControllerDelegate {
         if enabled {
             if let window = UIApplication.shared.keyWindow {
                 nonFullscreenContainer = superview
-//                removeFromSuperview()
+                removeFromSuperview()
                 layout(view: self, into: window)
                 let value = UIInterfaceOrientation.landscapeLeft.rawValue
                 UIDevice.current.setValue(value, forKey: "orientation")
                 UIViewController.attemptRotationToDeviceOrientation()
             }
-        }else {
+        } else {
             removeFromSuperview()
-//            layout(view: self, into: nonFullscreenContainer)
+            layout(view: self, into: nonFullscreenContainer)
             let value = UIInterfaceOrientation.portrait.rawValue
             UIDevice.current.setValue(value, forKey: "orientation")
             UIViewController.attemptRotationToDeviceOrientation()
