@@ -1,13 +1,12 @@
 
 {
     "items": [{
-              "title": "Science Tour",
+              "title": "Mia Highlights Tour",
               "tourguide": true
               },
               {
-              "title": "Mia Highlights Tour",
+              "title": "Science Tour",
               "tourguide": true
-              
               }
               ]
 }

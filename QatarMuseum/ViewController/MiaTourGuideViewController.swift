@@ -24,7 +24,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     }
 
     func setUpUI() {
-        miaTourImageArray = ["science_tour","museum_of_islamic_art"];
+        miaTourImageArray = ["museum_of_islamic_art","science_tour"];
         topbarView.headerViewDelegate = self
         topbarView.headerTitle.isHidden = true
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -66,9 +66,9 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if (indexPath.row == 0) {
-            loadMiaTourDetail()
-        } else {
             loadPreviewPage()
+        } else {
+            loadMiaTourDetail()
         }
     }
     
