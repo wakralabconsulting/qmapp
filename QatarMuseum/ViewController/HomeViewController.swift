@@ -261,6 +261,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         let eventView =  self.storyboard?.instantiateViewController(withIdentifier: "eventPageID") as! EventViewController
         eventView.fromHome = true
         eventView.isLoadEventPage = true
+        eventView.fromSideMenu = true
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionFade
@@ -271,6 +272,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     func educationButtonPressed() {
         let educationView =  self.storyboard?.instantiateViewController(withIdentifier: "educationPageID") as! EducationViewController
+        educationView.fromSideMenu = true
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionFade
@@ -282,6 +284,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     func tourGuideButtonPressed() {
         let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "tourGuidId") as! TourGuideViewController
         //tourGuideView.fromHome = true
+        tourGuideView.fromSideMenu = true
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush
@@ -292,6 +295,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     func heritageButtonPressed() {
         let heritageView =  self.storyboard?.instantiateViewController(withIdentifier: "heritageViewId") as! HeritageListViewController
+        heritageView.fromSideMenu = true
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionFade
@@ -302,6 +306,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     func publicArtsButtonPressed() {
         let publicArtsView =  self.storyboard?.instantiateViewController(withIdentifier: "publicArtsViewId") as! PublicArtsViewController
+        publicArtsView.fromSideMenu = true
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionFade
