@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ru4-0J-FCz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ru4-0J-FCz">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment version="2048" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -490,7 +490,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EVENTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWB-Sh-j4n">
-                                        <rect key="frame" x="164.33333333333334" y="308.66666666666669" width="87" height="29"/>
+                                        <rect key="frame" x="166.33333333333334" y="308.66666666666669" width="81.333333333333343" height="29"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="29" id="guL-0K-jjs"/>
                                         </constraints>
@@ -2680,19 +2680,28 @@
                                     <constraint firstAttribute="height" constant="65" id="Ora-qL-KgJ"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="675-kB-eg9" customClass="LoadingView" customModule="QatarMuseums" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="85" width="414" height="651"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="Bvi-9i-jfb" secondAttribute="bottom" id="0lw-zP-bCh"/>
                             <constraint firstItem="GcL-iI-otd" firstAttribute="top" secondItem="eNn-hZ-8UW" secondAttribute="bottom" id="2Jz-MF-DGz"/>
+                            <constraint firstItem="675-kB-eg9" firstAttribute="top" secondItem="GcL-iI-otd" secondAttribute="bottom" id="2uT-cQ-B9c"/>
                             <constraint firstAttribute="trailing" secondItem="Bvi-9i-jfb" secondAttribute="trailing" id="6UN-X8-PZG"/>
                             <constraint firstItem="Bvi-9i-jfb" firstAttribute="top" secondItem="GcL-iI-otd" secondAttribute="bottom" id="78R-E6-Iuc"/>
                             <constraint firstItem="GcL-iI-otd" firstAttribute="leading" secondItem="4Vg-7A-FCX" secondAttribute="leading" id="9I6-OQ-ZCJ"/>
+                            <constraint firstItem="07X-0X-1Yb" firstAttribute="top" secondItem="675-kB-eg9" secondAttribute="bottom" id="Hej-iI-YHY"/>
+                            <constraint firstItem="675-kB-eg9" firstAttribute="leading" secondItem="4Vg-7A-FCX" secondAttribute="leading" id="PuS-de-yxL"/>
+                            <constraint firstAttribute="trailing" secondItem="675-kB-eg9" secondAttribute="trailing" id="Tdd-rK-xdu"/>
                             <constraint firstAttribute="trailing" secondItem="GcL-iI-otd" secondAttribute="trailing" id="lrs-cG-fs8"/>
                             <constraint firstItem="Bvi-9i-jfb" firstAttribute="leading" secondItem="4Vg-7A-FCX" secondAttribute="leading" id="nxB-0n-2Dt"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="loadingView" destination="675-kB-eg9" id="qFU-OK-Dkl"/>
                         <outlet property="topbarView" destination="GcL-iI-otd" id="u3e-ou-s7t"/>
                         <outlet property="tourCollectionView" destination="Bvi-9i-jfb" id="chQ-Vf-LmH"/>
                     </connections>
@@ -2840,19 +2849,28 @@
                                     <constraint firstAttribute="height" constant="65" id="KXr-9X-s4E"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sOt-7F-jmh" customClass="LoadingView" customModule="QatarMuseums" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="85" width="414" height="651"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="WPJ-3d-4Sz" firstAttribute="top" secondItem="sOt-7F-jmh" secondAttribute="bottom" id="10k-kR-ch6"/>
                             <constraint firstAttribute="bottom" secondItem="84K-6W-Hd7" secondAttribute="bottom" id="3xo-oE-YWw"/>
+                            <constraint firstAttribute="trailing" secondItem="sOt-7F-jmh" secondAttribute="trailing" id="9pj-s0-qho"/>
                             <constraint firstItem="S9u-ED-oOD" firstAttribute="top" secondItem="RN7-dd-vvH" secondAttribute="bottom" id="Eee-GN-4Lt"/>
                             <constraint firstAttribute="trailing" secondItem="84K-6W-Hd7" secondAttribute="trailing" id="FmK-tr-Id9"/>
                             <constraint firstAttribute="trailing" secondItem="S9u-ED-oOD" secondAttribute="trailing" id="RdA-hQ-iiE"/>
+                            <constraint firstItem="sOt-7F-jmh" firstAttribute="leading" secondItem="zao-tZ-Ewz" secondAttribute="leading" id="SaS-Vx-R6x"/>
                             <constraint firstItem="S9u-ED-oOD" firstAttribute="leading" secondItem="zao-tZ-Ewz" secondAttribute="leading" id="UNS-XG-BIp"/>
                             <constraint firstItem="84K-6W-Hd7" firstAttribute="leading" secondItem="zao-tZ-Ewz" secondAttribute="leading" id="nYl-U4-yEr"/>
+                            <constraint firstItem="sOt-7F-jmh" firstAttribute="top" secondItem="S9u-ED-oOD" secondAttribute="bottom" id="wiq-OT-X2K"/>
                             <constraint firstItem="84K-6W-Hd7" firstAttribute="top" secondItem="S9u-ED-oOD" secondAttribute="bottom" id="zkG-tC-qk5"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="loadingView" destination="sOt-7F-jmh" id="ZbL-0y-I5B"/>
                         <outlet property="miaTourCollectionView" destination="84K-6W-Hd7" id="6iQ-Bx-hNy"/>
                         <outlet property="topbarView" destination="S9u-ED-oOD" id="tqA-pn-Pfu"/>
                     </connections>
