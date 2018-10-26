@@ -247,6 +247,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     //MARK: SideMenu Delegates
     func exhibitionButtonPressed() {
         let exhibitionView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        exhibitionView.fromSideMenu = true
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionFade
@@ -321,7 +322,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     func diningButtonPressed() {
         let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "diningViewId") as! DiningViewController
-         diningView.fromHome = true
+        diningView.fromHome = true
+        diningView.fromSideMenu = true
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionFade
@@ -419,6 +421,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         self.culturePassButton.transform = CGAffineTransform(scaleX: 1, y: 1)
         let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "diningViewId") as! DiningViewController
          diningView.fromHome = true
+         diningView.fromSideMenu = false
          let transition = CATransition()
          transition.duration = 0.25
          transition.type = kCATransitionPush
