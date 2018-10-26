@@ -26,6 +26,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     var i = 0
     var museumId :String = "63"
     var tourGuide: [TourGuide] = []
+    var tourGuideDetail : TourGuide?
     var totalImgCount = Int()
     var sliderImgCount : Int? = 0
     var sliderImgArray = NSMutableArray()
@@ -36,11 +37,12 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
         loadingView.isHidden = false
         loadingView.loadingViewDelegate = self
         loadingView.showLoading()
-        if  (networkReachability?.isReachable)! {
-            getTourGuideDataFromServer()
-        } else {
-            self.showNoNetwork()
-        }
+        setDetails()
+//        if  (networkReachability?.isReachable)! {
+//            getTourGuideDataFromServer()
+//        } else {
+//            self.showNoNetwork()
+//        }
         setupUI()
         setGradientLayer()
     }
@@ -60,7 +62,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
         } else {
             headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
-        self.scienceTourTitle.text = titleString?.uppercased()
+       // self.scienceTourTitle.text = titleString?.uppercased()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -223,7 +225,15 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
             }
         }
     }
-    
+    func setDetails () {
+        loadingView.stopLoading()
+        loadingView.isHidden = true
+        if(tourGuideDetail != nil) {
+            self.scienceTourTitle.text = tourGuideDetail?.title
+            self.tourGuideDescription.text = tourGuideDetail?.tourGuideDescription
+            self.setImageArray(tourGuideImgDict: tourGuideDetail)
+        }
+    }
     func setImageArray(tourGuideImgDict : TourGuide?) {
         self.sliderImgArray[0] = UIImage(named: "sliderPlaceholder")!
         self.sliderImgArray[1] = UIImage(named: "sliderPlaceholder")!
