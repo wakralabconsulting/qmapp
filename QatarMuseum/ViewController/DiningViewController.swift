@@ -108,7 +108,7 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
             transition.type = kCATransitionPush
             transition.subtype = kCATransitionFromLeft
             self.view.window!.layer.add(transition, forKey: kCATransition)
-            if (fromSideMenu == false  && fromHome == true) {
+            if (fromHome == true) {
                 let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
                 
                 let appDelegate = UIApplication.shared.delegate

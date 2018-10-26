@@ -42,9 +42,6 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
     var firstLoad: Bool = true
     var bottomSheetVC:MapDetailView = MapDetailView()
     var playerItem: AVPlayerItem?
-    var playbackLikelyToKeepUpKeyPathObserver: NSKeyValueObservation?
-    var playbackBufferEmptyObserver: NSKeyValueObservation?
-    var playbackBufferFullObserver: NSKeyValueObservation?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -209,7 +206,7 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
                 let targetTime:CMTime = CMTimeMake(seconds, 1)
                 avPlayer!.seek(to: targetTime)
                 if(isPaused == false){
-//                    seekLoadingLabel.alpha = 1
+                    seekLoadingLabel.alpha = 1
                 }
     }
     //    @IBAction func sliderTapped(_ sender: UILongPressGestureRecognizer) {
@@ -234,43 +231,23 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
         RunLoop.current.add(timer!, forMode: RunLoopMode.commonModes)
     }
     
-    private func observeBuffering() {
-        let playbackBufferEmptyKeyPath = \AVPlayerItem.playbackBufferEmpty
-        playbackBufferEmptyObserver = playerItem?.observe(playbackBufferEmptyKeyPath, options: [.new]) { [weak self] (_, _) in
-            // show buffering
-            self?.seekLoadingLabel.alpha = 0
-        }
-        
-        let playbackLikelyToKeepUpKeyPath = \AVPlayerItem.playbackLikelyToKeepUp
-        playbackLikelyToKeepUpKeyPathObserver = playerItem?.observe(playbackLikelyToKeepUpKeyPath, options: [.new]) { [weak self] (_, _) in
-            // hide buffering
-            self?.seekLoadingLabel.alpha = 1
-        }
-        
-        let playbackBufferFullKeyPath = \AVPlayerItem.playbackBufferFull
-        playbackBufferFullObserver = playerItem?.observe(playbackBufferFullKeyPath, options: [.new]) { [weak self] (_, _) in
-            // hide buffering
-            self?.seekLoadingLabel.alpha = 1
-        }
-    }
-    
     @objc func didPlayToEnd() {
         // self.nextTrack()
     }
     
     @objc func tick(){
         if(avPlayer.currentTime().seconds == 0.0){
-//            seekLoadingLabel.alpha = 1
+            seekLoadingLabel.alpha = 1
         }else{
-//            seekLoadingLabel.alpha = 0
+            seekLoadingLabel.alpha = 0
         }
         
         if(isPaused == false){
             if(avPlayer.rate == 0){
                 avPlayer.play()
-//                seekLoadingLabel.alpha = 1
+                seekLoadingLabel.alpha = 1
             }else{
-//                seekLoadingLabel.alpha = 0
+                seekLoadingLabel.alpha = 0
             }
         }
         
@@ -310,9 +287,6 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
     func closeAudio() {
         self.avPlayer = nil
         self.timer?.invalidate()
-        playbackBufferEmptyObserver = nil
-        playbackLikelyToKeepUpKeyPathObserver = nil
-        playbackBufferFullObserver = nil
     }
     func dismissOvelay() {
         print("hi")
