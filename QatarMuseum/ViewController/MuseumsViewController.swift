@@ -331,6 +331,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "diningViewId") as! DiningViewController
             diningView.museumId = museumId
             diningView.fromHome = false
+            diningView.fromSideMenu = false
             let transition = CATransition()
             transition.duration = 0.25
             transition.type = kCATransitionPush

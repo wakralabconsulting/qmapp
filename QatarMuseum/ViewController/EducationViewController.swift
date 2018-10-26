@@ -25,7 +25,8 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
     @IBOutlet weak var discoverButton: UIButton!
     
     var player = AVPlayer()
-    
+    var fromSideMenu : Bool = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -81,13 +82,19 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
     func headerCloseButtonPressed() {
         let transition = CATransition()
         transition.duration = 0.3
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromLeft
-        self.view.window!.layer.add(transition, forKey: kCATransition)
+        if (fromSideMenu == true) {
+            transition.type = kCATransitionFade
+            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            dismiss(animated: false, completion: nil)
+        } else {
+            transition.type = kCATransitionPush
+            transition.subtype = kCATransitionFromLeft
+            self.view.window!.layer.add(transition, forKey: kCATransition)
             let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
             let appDelegate = UIApplication.shared.delegate
             appDelegate?.window??.rootViewController = homeViewController
-        
+        }
     }
     
     @IBAction func didTapPlayPauseButton(_ sender: UIButton) {

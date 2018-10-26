@@ -17,7 +17,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var fromHome : Bool = false
     var museumsList: [Home]! = []
-    
+    var fromSideMenu : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -112,13 +112,19 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
     func headerCloseButtonPressed() {
         let transition = CATransition()
         transition.duration = 0.25
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromLeft
-        self.view.window!.layer.add(transition, forKey: kCATransition)
-            let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
-            let appDelegate = UIApplication.shared.delegate
-            appDelegate?.window??.rootViewController = homeViewController
-       
+        if (fromSideMenu == true) {
+            transition.type = kCATransitionFade
+            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            dismiss(animated: false, completion: nil)
+        } else {
+            transition.type = kCATransitionPush
+            transition.subtype = kCATransitionFromLeft
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+                let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
+                let appDelegate = UIApplication.shared.delegate
+                appDelegate?.window??.rootViewController = homeViewController
+        }
     }
     //MARK: Service call
     func getTourGuideMuseumsList() {
@@ -149,7 +155,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
             }
         }
     }
-    
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

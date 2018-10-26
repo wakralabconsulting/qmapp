@@ -19,6 +19,7 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
     var diningListArray : [Dining]! = []
     var popUpView : ComingSoonPopUp = ComingSoonPopUp()
     var fromHome : Bool = false
+    var fromSideMenu : Bool = false
     let networkReachability = NetworkReachabilityManager()
     var museumId : String? = nil
     override func viewDidLoad() {
@@ -98,20 +99,26 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
     func headerCloseButtonPressed() {
         let transition = CATransition()
         transition.duration = 0.3
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromLeft
-        self.view.window!.layer.add(transition, forKey: kCATransition)
-        if (fromHome == true) {
-            let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
-            
-            let appDelegate = UIApplication.shared.delegate
-            appDelegate?.window??.rootViewController = homeViewController
+        if (fromSideMenu == true) {
+            transition.type = kCATransitionFade
+            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            dismiss(animated: false, completion: nil)
+        } else {
+            transition.type = kCATransitionPush
+            transition.subtype = kCATransitionFromLeft
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            if (fromHome == true) {
+                let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
+                
+                let appDelegate = UIApplication.shared.delegate
+                appDelegate?.window??.rootViewController = homeViewController
+            } else {
+                self.dismiss(animated: false, completion: nil)
+            }
         }
-        else {
-            self.dismiss(animated: false, completion: nil)
-        }
-        
     }
+    
     func loadDiningDetailAnimation(idValue: String) {
         let diningDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "diningDetailId") as! DiningDetailViewController
        diningDetailView.diningDetailId = idValue

@@ -25,6 +25,8 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
     var exhibitionsPageNameString : ExhbitionPageName?
     let networkReachability = NetworkReachabilityManager()
     var museumId : String? = nil
+    var fromSideMenu : Bool = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpExhibitionPageUi()
@@ -216,18 +218,25 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
     func headerCloseButtonPressed() {
         let transition = CATransition()
         transition.duration = 0.25
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromLeft
-        self.view.window!.layer.add(transition, forKey: kCATransition)
-        switch exhibitionsPageNameString {
-        case .homeExhibition?:
-            let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
-            let appDelegate = UIApplication.shared.delegate
-            appDelegate?.window??.rootViewController = homeViewController
-        case .museumExhibition?:
-            self.dismiss(animated: false, completion: nil)
-        default:
-            break
+        if (fromSideMenu == true) {
+            transition.type = kCATransitionFade
+            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            dismiss(animated: false, completion: nil)
+        } else {
+            transition.type = kCATransitionPush
+            transition.subtype = kCATransitionFromLeft
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            switch exhibitionsPageNameString {
+            case .homeExhibition?:
+                let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
+                let appDelegate = UIApplication.shared.delegate
+                appDelegate?.window??.rootViewController = homeViewController
+            case .museumExhibition?:
+                self.dismiss(animated: false, completion: nil)
+            default:
+                break
+            }
         }
     }
 
