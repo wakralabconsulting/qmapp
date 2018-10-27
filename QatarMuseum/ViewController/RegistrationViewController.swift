@@ -71,6 +71,7 @@ class RegistrationViewController: UIViewController,HeaderViewProtocol,UIPickerVi
         headerView.headerBackButton.setImage(UIImage(named: "closeX1"), for: .normal)
         self.headerView.headerBackButton.contentEdgeInsets = UIEdgeInsets(top: 13, left: 18, bottom: 13, right: 18)
         headerView.headerTitle.text = NSLocalizedString("CULTURE_BECOME_A_MEMBER", comment: "CULTURE_BECOME_A_MEMBER in the Registration page")
+        mainTitleLabel.font = UIFont.startTourFont
         titleLabel.font = UIFont.startTourFont
         userNameLabel.font = UIFont.headerFont
         userNameText.font = UIFont.settingsUpdateLabelFont
@@ -94,6 +95,27 @@ class RegistrationViewController: UIViewController,HeaderViewProtocol,UIPickerVi
         mobileNumberLabel.font = UIFont.headerFont
         mobileNumberText.font = UIFont.settingsUpdateLabelFont
         createAccountButton.titleLabel?.font = UIFont.startTourFont
+        
+        let placeholderSelectValue = NSLocalizedString("SELECT_A_VALUE", comment: "SELECT_A_VALUE in the Registration page")
+        userNameLabel.text = NSLocalizedString("USERNAME", comment: "USERNAME in the Registration page")
+        mainTitleLabel.text = NSLocalizedString("CREATE_YOUR_ACCOUNT", comment: "CREATE_YOUR_ACCOUNT in the Registration page")
+        emailLabel.text = NSLocalizedString("EMAIL", comment: "EMAIL in the Registration page")
+        passwordLabel.text = NSLocalizedString("PASSWORD", comment: "PASSWORD in the Registration page")
+        confirmPasswordLabel.text = NSLocalizedString("CONFIRM_PASSWORD", comment: "CONFIRM_PASSWORD in the Registration page")
+        tellUsLabel.text = NSLocalizedString("TELL_US_MORE", comment: "TELL_US_MORE in the Registration page")
+        titleLabel.text = NSLocalizedString("TITLE", comment: "TITLE in the Registration page")
+        firstNameLabel.text = NSLocalizedString("FIRST_NAME", comment: "FIRST_NAME in the Registration page")
+        lastNameLabel.text = NSLocalizedString("LAST_NAME", comment: "LAST_NAME in the Registration page")
+        countryLabel.text = NSLocalizedString("COUNTRY", comment: "COUNTRY in the Registration page")
+        nationalityLabel.text = NSLocalizedString("NATIONALITY", comment: "NATIONALITY in the Registration page")
+        mobileNumberLabel.text = NSLocalizedString("MOBILE_NUMBER", comment: "MOBILE_NUMBER in the Registration page")
+        createAccountButton.setTitle(NSLocalizedString("CREATE_ACCOUNT", comment: "CREATE_ACCOUNT in the Registration page"), for: .normal)
+        
+        titleText.placeholder = placeholderSelectValue
+        countryText.placeholder = placeholderSelectValue
+        nationalityText.placeholder = placeholderSelectValue
+        
+       
         
         userNameView.layer.borderWidth = 1
         userNameView.layer.borderColor = UIColor.lightGray.cgColor

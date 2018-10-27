@@ -53,6 +53,12 @@ class LoginPopupPage: UIView {
         loginButton.titleLabel?.font = UIFont.startTourFont
         forgotButton.titleLabel?.font = UIFont.discoverButtonFont
         passwordText.isSecureTextEntry = true
+        
+        titleLabel.text = NSLocalizedString("CULTUREPASS_LOGIN", comment: "CULTUREPASS_LOGIN in the Login page")
+        loginButton .setTitle(NSLocalizedString("LOGIN", comment: "LOGIN in the Login page"), for: .normal)
+        forgotButton .setTitle(NSLocalizedString("FORGOT_PASSWORD", comment: "FORGOT_PASSWORD in the Login page"), for: .normal)
+        userNameText.placeholder = NSLocalizedString("LOGIN_USERNAME", comment: "LOGIN_USERNAME in the Login page")
+        passwordText.placeholder = NSLocalizedString("LOGIN_PASSWORD", comment: "LOGIN_PASSWORD in the Login page")
     }
     @IBAction func didTapForgotPwd(_ sender: UIButton) {
         self.forgotButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)

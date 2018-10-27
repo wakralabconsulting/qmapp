@@ -955,12 +955,17 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="812"/>
                     <connections>
+                        <outlet property="countryKeyLabel" destination="hhi-2u-nlo" id="cEl-eN-XOZ"/>
                         <outlet property="countryText" destination="4uW-Ss-YH8" id="c2f-pP-6oH"/>
+                        <outlet property="dateOfBirthKeyLabel" destination="nVU-Ba-GKf" id="ENR-xU-B2U"/>
                         <outlet property="dateOfBirthText" destination="2UI-b1-sTC" id="dVc-Vb-FWu"/>
                         <outlet property="editButton" destination="mfX-9x-xSX" id="uMl-ZE-2qm"/>
+                        <outlet property="emailKeyLabel" destination="Lym-ZP-73a" id="ZwK-6B-2eW"/>
                         <outlet property="emailText" destination="gDR-WP-9bc" id="cyf-N2-13h"/>
                         <outlet property="headerView" destination="SI5-a7-Lx7" id="bp9-jS-gTJ"/>
+                        <outlet property="membershipNumKeyLabel" destination="79B-BY-9Ry" id="6oS-ja-KpW"/>
                         <outlet property="membershipNumText" destination="lPn-jv-PJy" id="Qmb-np-mKY"/>
+                        <outlet property="nationalityKeyLabel" destination="UvI-u6-GWI" id="hkk-KX-unN"/>
                         <outlet property="nationalityText" destination="4CI-08-8Ue" id="PVC-IE-0PD"/>
                         <outlet property="profileImageView" destination="TGk-HX-5Ub" id="4tc-1W-Okl"/>
                         <outlet property="userNameText" destination="J8i-IN-aza" id="cH5-6L-mvt"/>
