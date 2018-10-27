@@ -13,7 +13,7 @@ extension UIFont {
             return UIFont.init(name: "DINNextLTPro-Bold", size: 20)!
         }
         else {
-            return UIFont.init(name: "DINNextLTArabic-Bold", size: 22)!
+            return UIFont.init(name: "DINNextLTArabic-Bold", size: 20)!
         }
     }
     static var heritageTitleFont: UIFont {

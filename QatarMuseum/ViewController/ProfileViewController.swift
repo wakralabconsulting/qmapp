@@ -26,6 +26,13 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     @IBOutlet weak var nationalityText: UILabel!
     @IBOutlet weak var userNameText: UITextView!
     
+    @IBOutlet weak var membershipNumKeyLabel: UILabel!
+    @IBOutlet weak var emailKeyLabel: UILabel!
+    
+    @IBOutlet weak var dateOfBirthKeyLabel: UILabel!
+    @IBOutlet weak var countryKeyLabel: UILabel!
+    @IBOutlet weak var nationalityKeyLabel: UILabel!
+    
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var fromHome : Bool = false
     var loginInfo : LoginData?
@@ -48,6 +55,31 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         } else {
             headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
+        userNameText.font = UIFont.collectionSubTitleFont
+        membershipNumKeyLabel.font = UIFont.settingResetButtonFont
+        emailKeyLabel.font = UIFont.settingResetButtonFont
+        dateOfBirthKeyLabel.font = UIFont.settingResetButtonFont
+        countryKeyLabel.font = UIFont.settingResetButtonFont
+        nationalityKeyLabel.font = UIFont.settingResetButtonFont
+        
+        
+        membershipNumText.font = UIFont.sideMenuLabelFont
+        emailText.font = UIFont.sideMenuLabelFont
+        dateOfBirthText.font = UIFont.sideMenuLabelFont
+        countryText.font = UIFont.sideMenuLabelFont
+        nationalityText.font = UIFont.sideMenuLabelFont
+        nationalityText.font = UIFont.sideMenuLabelFont
+        
+        viewmyCulturePassButton.titleLabel?.font = UIFont.settingResetButtonFont
+        viewMyFavoriteButton.titleLabel?.font = UIFont.settingResetButtonFont
+        
+        membershipNumKeyLabel.text =  NSLocalizedString("MEMBERSHIP_NUMBER", comment: "MEMBERSHIP_NUMBER in the Profile page")
+        emailKeyLabel.text =  NSLocalizedString("EMAIL", comment: "EMAIL in the Profile page")
+        dateOfBirthKeyLabel.text =  NSLocalizedString("DATE_OF_BIRTH", comment: "DATE_OF_BIRTH in the Profile page")
+        countryKeyLabel.text =  NSLocalizedString("COUNTRY", comment: "COUNTRY in the Profile page")
+        nationalityKeyLabel.text =  NSLocalizedString("NATIONALITY", comment: "NATIONALITY in the Profile page")
+        viewmyCulturePassButton.setTitle(NSLocalizedString("VIEW_MY_CULTUREPASS_CARD", comment: "VIEW_MY_CULTUREPASS_CARD in the Profile page"), for: .normal)
+        
         if (loginInfo != nil) {
             
             if(loginInfo?.user != nil) {
