@@ -13,7 +13,7 @@ import EventKit
 import UIKit
 
 
-class EventViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource, HeaderViewProtocol,FSCalendarDelegate,FSCalendarDataSource,UICollectionViewDelegateFlowLayout,EventPopUpProtocol,UIViewControllerTransitioningDelegate,UIGestureRecognizerDelegate,comingSoonPopUpProtocol {
+class EventViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource, HeaderViewProtocol,FSCalendarDelegate,FSCalendarDataSource,UICollectionViewDelegateFlowLayout,EventPopUpProtocol,UIViewControllerTransitioningDelegate,UIGestureRecognizerDelegate,comingSoonPopUpProtocol,LoadingViewProtocol {
     
     @IBOutlet weak var eventCollectionView: UICollectionView!
     @IBOutlet weak var calendarView: FSCalendar!
@@ -35,6 +35,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     var eventPopup : EventPopupView = EventPopupView()
     var selectedDateForEvent : Date = Date()
     var fromHome : Bool = false
+    var fromSideMenu : Bool = false
     var isLoadEventPage : Bool = false
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var educationEventArray: [EducationEvent] = []
@@ -76,11 +77,12 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     func setUpUiContent() {
         loadingView.isHidden = false
         loadingView.showLoading()
+        loadingView.loadingViewDelegate = self
         self.educationEventArray = [EducationEvent]()
         headerView.headerViewDelegate = self
         headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         self.view.addGestureRecognizer(self.scopeGesture)
-        listTitleLabel.font = UIFont.diningHeaderFont
+        listTitleLabel.font = UIFont.eventPopupTitleFont
         self.eventCollectionView.panGestureRecognizer.require(toFail: self.scopeGesture)
         calendarView.appearance.headerMinimumDissolvedAlpha = -1
         
@@ -203,20 +205,26 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     func headerCloseButtonPressed() {
         let transition = CATransition()
         transition.duration = 0.3
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromLeft
-        self.view.window!.layer.add(transition, forKey: kCATransition)
-        if (fromHome == true) {
-            let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
-            
-            let appDelegate = UIApplication.shared.delegate
-            appDelegate?.window??.rootViewController = homeViewController
+        if (fromSideMenu == true) {
+            transition.type = kCATransitionFade
+            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            dismiss(animated: false, completion: nil)
+        } else {
+            transition.type = kCATransitionPush
+            transition.subtype = kCATransitionFromLeft
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            if (fromHome == true) {
+                let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
+                
+                let appDelegate = UIApplication.shared.delegate
+                appDelegate?.window??.rootViewController = homeViewController
+            } else {
+                self.dismiss(animated: false, completion: nil)
+            }
         }
-        else {
-            self.dismiss(animated: false, completion: nil)
-        }
-        
     }
+    
     @objc func filterButtonPressed() {
         let filterView =  self.storyboard?.instantiateViewController(withIdentifier: "filterVcId") as! FilterViewController
         
@@ -970,12 +978,12 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                         self.educationEventArray.insert(EducationEvent(itemId: educationArray[i].itemId, introductionText: educationArray[i].introductionText, register: educationArray[i].register, fieldRepeatDate: dateArray, title: educationArray[i].title, programType: educationArray[i].pgmType, mainDescription: educationArray[i].mainDesc, ageGroup: ageGrpArray, associatedTopics: topicsArray, museumDepartMent: educationArray[i].museumDepartMent, startDate: startDateArray, endDate: endDateArray), at: i)
                     }
                     if(educationEventArray.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                         self.eventCollectionView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
             else {
@@ -1016,12 +1024,12 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                         
                     }
                     if(educationEventArray.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     eventCollectionView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
@@ -1378,12 +1386,12 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                         self.educationEventArray.insert(EducationEvent(itemId: educationArray[i].itemId, introductionText: educationArray[i].introductionText, register: educationArray[i].register, fieldRepeatDate: dateArray, title: educationArray[i].title, programType: educationArray[i].pgmType, mainDescription: educationArray[i].mainDesc, ageGroup: ageGrpArray, associatedTopics: topicsArray, museumDepartMent: educationArray[i].museumDepartMent, startDate: startDateArray, endDate: endDateArray), at: i)
                     }
                     if(educationEventArray.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     eventCollectionView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
             else {
@@ -1427,12 +1435,12 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                        
                     }
                     if(educationEventArray.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     eventCollectionView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
@@ -1486,5 +1494,16 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         self.view.addSubview(eventPopup)
     }
     
-    
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            self.getEducationEventFromServer()
+        }
+    }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
+    }
 }

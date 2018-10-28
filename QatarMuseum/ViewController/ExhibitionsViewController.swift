@@ -15,7 +15,7 @@ enum ExhbitionPageName {
     case homeExhibition
     case museumExhibition
 }
-class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol {
+class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol,LoadingViewProtocol {
     @IBOutlet weak var exhibitionHeaderView: CommonHeaderView!
     @IBOutlet weak var exhibitionCollectionView: UICollectionView!
     @IBOutlet weak var exbtnLoadingView: LoadingView!
@@ -25,6 +25,8 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
     var exhibitionsPageNameString : ExhbitionPageName?
     let networkReachability = NetworkReachabilityManager()
     var museumId : String? = nil
+    var fromSideMenu : Bool = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpExhibitionPageUi()
@@ -49,6 +51,7 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
     func setUpExhibitionPageUi() {
         exbtnLoadingView.isHidden = false
         exbtnLoadingView.showLoading()
+        exbtnLoadingView.loadingViewDelegate = self
         exhibitionHeaderView.headerViewDelegate = self
         //exhibitionHeaderView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         
@@ -215,18 +218,25 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
     func headerCloseButtonPressed() {
         let transition = CATransition()
         transition.duration = 0.25
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromLeft
-        self.view.window!.layer.add(transition, forKey: kCATransition)
-        switch exhibitionsPageNameString {
-        case .homeExhibition?:
-            let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
-            let appDelegate = UIApplication.shared.delegate
-            appDelegate?.window??.rootViewController = homeViewController
-        case .museumExhibition?:
-            self.dismiss(animated: false, completion: nil)
-        default:
-            break
+        if (fromSideMenu == true) {
+            transition.type = kCATransitionFade
+            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            dismiss(animated: false, completion: nil)
+        } else {
+            transition.type = kCATransitionPush
+            transition.subtype = kCATransitionFromLeft
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            switch exhibitionsPageNameString {
+            case .homeExhibition?:
+                let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
+                let appDelegate = UIApplication.shared.delegate
+                appDelegate?.window??.rootViewController = homeViewController
+            case .museumExhibition?:
+                self.dismiss(animated: false, completion: nil)
+            default:
+                break
+            }
         }
     }
 
@@ -358,12 +368,12 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
                         
                     }
                     if(exhibition.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     exhibitionCollectionView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
             else {
@@ -378,12 +388,12 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
                         
                     }
                     if(exhibition.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     exhibitionCollectionView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
@@ -404,12 +414,12 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
                         
                     }
                     if(exhibition.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     exhibitionCollectionView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
             else {
@@ -422,12 +432,12 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
                         
                     }
                     if(exhibition.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     exhibitionCollectionView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
@@ -464,6 +474,22 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
         self.exbtnLoadingView.isHidden = false
         self.exbtnLoadingView.showNoDataView()
         self.exbtnLoadingView.noDataLabel.text = errorMessage
+    }
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            if (exhibitionsPageNameString == ExhbitionPageName.homeExhibition) {
+                self.getExhibitionDataFromServer()
+            } else {
+                self.getMuseumExhibitionDataFromServer()
+            }
+        }
+    }
+    func showNoNetwork() {
+        self.exbtnLoadingView.stopLoading()
+        self.exbtnLoadingView.noDataView.isHidden = false
+        self.exbtnLoadingView.isHidden = false
+        self.exbtnLoadingView.showNoNetworkView()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -11,7 +11,7 @@ import CoreData
 import Crashlytics
 import UIKit
 
-class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,comingSoonPopUpProtocol {
+class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,comingSoonPopUpProtocol,LoadingViewProtocol {
     
     
     
@@ -37,6 +37,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     func setupUIContents() {
         loadingView.isHidden = false
         loadingView.showLoading()
+        loadingView.loadingViewDelegate = self
         setTopbarImage()
         
         
@@ -387,13 +388,13 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
 
                     }
                     if(parksListArray.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     self.setTopbarImage()
                     parksTableView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
             else {
@@ -406,13 +407,13 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                         self.parksListArray.insert(ParksList(title: parksArray[i].titleArabic, description: parksArray[i].descriptionArabic, sortId: parksArray[i].sortIdArabic, image: parksArray[i].imageArabic), at: i)
                     }
                     if(parksArray.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     self.setTopbarImage()
                     parksTableView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
@@ -450,6 +451,18 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
      //MARK: Poup Delegate
     func closeButtonPressed() {
         self.popupView.removeFromSuperview()
+    }
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            self.getParksDataFromServer()
+        }
+    }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

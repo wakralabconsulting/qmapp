@@ -5,26 +5,37 @@
 //  Created by Exalture on 17/07/18.
 //  Copyright © 2018 Exalture. All rights reserved.
 //
+
+import Alamofire
 import Crashlytics
 import UIKit
 
-class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,HeaderViewProtocol,comingSoonPopUpProtocol,UICollectionViewDelegateFlowLayout,MiaTourProtocol {
+class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,HeaderViewProtocol,comingSoonPopUpProtocol,UICollectionViewDelegateFlowLayout,MiaTourProtocol,LoadingViewProtocol {
     @IBOutlet weak var miaTourCollectionView: UICollectionView!
     @IBOutlet weak var topbarView: CommonHeaderView!
     
+    @IBOutlet weak var loadingView: LoadingView!
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
-    var miaTourImageArray = NSArray()
-    var miaTourDataFullArray : NSArray!
-    
+ 
+    let networkReachability = NetworkReachabilityManager()
+    var museumId :String = "63"
+    var miaTourDataFullArray: [TourGuide] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUI()
         registerNib()
-        getMiaTourGuideDataFromJson()
     }
 
     func setUpUI() {
-        miaTourImageArray = ["science_tour","museum_of_islamic_art"];
+        loadingView.isHidden = false
+        loadingView.loadingViewDelegate = self
+        loadingView.showLoading()
+        if  (networkReachability?.isReachable)! {
+            getTourGuideDataFromServer()
+        } else {
+            self.showNoNetwork()
+        }
+        
         topbarView.headerViewDelegate = self
         topbarView.headerTitle.isHidden = true
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -43,15 +54,6 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
         miaTourCollectionView?.register(nib, forCellWithReuseIdentifier: "homeCellId")
         
     }
-    //MARK: Service call
-    func getMiaTourGuideDataFromJson(){
-        let url = Bundle.main.url(forResource: "MiaTourGuideJson", withExtension: "json")
-        let dataObject = NSData(contentsOf: url!)
-        if let jsonObj = try? JSONSerialization.jsonObject(with: dataObject! as Data, options: .allowFragments) as? NSDictionary {
-            miaTourDataFullArray = jsonObj!.value(forKey: "items")
-                as! NSArray
-        }
-    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return miaTourDataFullArray.count
@@ -59,17 +61,12 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell : HomeCollectionViewCell = miaTourCollectionView.dequeueReusableCell(withReuseIdentifier: "homeCellId", for: indexPath) as! HomeCollectionViewCell
-        let homeDataDict = miaTourDataFullArray.object(at: indexPath.row) as! NSDictionary
-        cell.setScienceTourGuideCellData(homeCellData: homeDataDict, imageName: miaTourImageArray.object(at: indexPath.row) as! String)
+        cell.setScienceTourGuideCellData(homeCellData: miaTourDataFullArray[indexPath.row])
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if (indexPath.row == 0) {
-            loadMiaTourDetail()
-        } else {
-            loadPreviewPage()
-        }
+        loadMiaTourDetail(currentRow: indexPath.row)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -80,31 +77,21 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let miaTourHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "miaTourHeader", for: indexPath) as! MiaCollectionReusableView
         miaTourHeaderView.miaTourDelegate = self
-        //miaTourHeaderView.miaTourGuideText.text = "Welcome to Qatar Museum Premises. \n Explore the architrcture and the objects on display. \n Scan the QR codes available on the galleries for more information."
-        //miaTourHeaderView.selfGuidedText.text = "You may also try our self guided tours. \n Immerse yourself into the journeys curated specially for you by our experts."
-        
         return miaTourHeaderView
     }
 
-    func loadMiaTourDetail() {
+    func loadMiaTourDetail(currentRow: Int?) {
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        
         let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "miaDetailId") as! MiaTourDetailViewController
-        miaView.titleString = NSLocalizedString("SCIENCE_TOUR_TITLE",comment: "SCIENCE_TOUR_TITLE in Mia Tour Guide Page")
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromRight
-        view.window!.layer.add(transition, forKey: kCATransition)
+        if (miaTourDataFullArray != nil) {
+            miaView.tourGuideDetail = miaTourDataFullArray[currentRow!]
+        }
         self.present(miaView, animated: false, completion: nil)
-    }
-    func loadPreviewPage() {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromRight
-        view.window!.layer.add(transition, forKey: kCATransition)
-        let shortDetailsView =  self.storyboard?.instantiateViewController(withIdentifier: "previewContainerId") as! PreviewContainerViewController
-        shortDetailsView.fromScienceTour = false
-        self.present(shortDetailsView, animated: false, completion: nil)
     }
     func loadComingSoonPopup() {
         popupView  = ComingSoonPopUp(frame: self.view.frame)
@@ -129,15 +116,62 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     
     //MARK: Mia Tour Guide Delegate
     func exploreButtonTapAction(miaHeader: MiaCollectionReusableView) {
-        let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "miaExploreId") as! MiaTourGuideExploreViewController
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromRight
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(miaView, animated: false, completion: nil)
+        var searchstring = String()
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            searchstring = "12476"
+        } else {
+            searchstring = "12476"
+        }
+        let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "miaDetailId") as! MiaTourDetailViewController
+        
+        if (miaTourDataFullArray != nil) {
+            if let arrayOffset = miaTourDataFullArray.index(where: {$0.nid == searchstring}) {
+                miaView.tourGuideDetail = miaTourDataFullArray[arrayOffset]
+                let transition = CATransition()
+                transition.duration = 0.3
+                transition.type = kCATransitionPush
+                transition.subtype = kCATransitionFromRight
+                view.window!.layer.add(transition, forKey: kCATransition)
+                self.present(miaView, animated: false, completion: nil)
+            }
+            
+        }
+        
     }
-    
+    //MARK: WebServiceCall
+    func getTourGuideDataFromServer() {
+        _ = Alamofire.request(QatarMuseumRouter.MuseumTourGuide(["museum_id": museumId])).responseObject { (response: DataResponse<TourGuides>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.miaTourDataFullArray = data.tourGuide!
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
+                self.miaTourCollectionView.reloadData()
+            case .failure(let error):
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
+                print(error)
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
+            }
+        }
+    }
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            self.getTourGuideDataFromServer()
+        }
+    }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

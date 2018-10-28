@@ -26,7 +26,7 @@ enum fromTour{
 }
 //fetchTourGuideFromCoredata
 
-class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpProtocol, HeaderViewProtocol,UIGestureRecognizerDelegate,MapDetailProtocol {
+class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpProtocol, HeaderViewProtocol,UIGestureRecognizerDelegate,MapDetailProtocol,LoadingViewProtocol {
     
     
     @IBOutlet weak var viewForMap: GMSMapView!
@@ -50,6 +50,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var playerSlider: UISlider!
     
+    @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var seekLoadingLabel: UILabel!
     var bottomSheetVC:MapDetailView = MapDetailView()
     var floorMapArray: [TourGuideFloorMap]! = []
@@ -225,6 +226,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         bottomSheetVC.dismiss(animated: false, completion: nil)
     }
     func initialSetUp() {
+        loadingView.isHidden = false
+        self.loadingView.showLoading()
+        self.loadingView.loadingViewDelegate = self
         overlayView.isHidden = true
         bottomSheetVC.mapdetailDelegate = self
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
@@ -1735,6 +1739,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             switch response.result {
             case .success(let data):
                 self.floorMapArray = data.tourGuideFloorMap
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
                 if (self.floorMapArray.count > 0) {
                     self.saveOrUpdateTourGuideCoredata()
                     if (self.fromTourString == fromTour.HighlightTour) {
@@ -1759,7 +1765,14 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                 }
                 
             case .failure(let error):
-                print("error")
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
 
             }
         }
@@ -2092,6 +2105,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                     }
                     
                     if (self.floorMapArray.count > 0) {
+                        self.loadingView.stopLoading()
+                        self.loadingView.isHidden = true
                         if (self.fromTourString == fromTour.HighlightTour) {
                             if(self.selectedScienceTourLevel == "2" ) {
                                 self.showOrHideLevelTwoHighlightTour()
@@ -2112,8 +2127,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                                 self.addBottomSheetView(index: arrayOffset)
                             }
                         }
+                    } else {
+                        self.showNoNetwork()
                     }
                    
+                } else {
+                    self.showNoNetwork()
                 }
                 
                 
@@ -2139,6 +2158,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                         
                     }
                     if (self.floorMapArray.count > 0) {
+                        self.loadingView.stopLoading()
+                        self.loadingView.isHidden = true
                         if (self.fromTourString == fromTour.HighlightTour) {
                             if(self.selectedScienceTourLevel == "2" ) {
                                 self.showOrHideLevelTwoHighlightTour()
@@ -2158,7 +2179,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                                 self.addBottomSheetView(index: arrayOffset)
                             }
                         }
+                    } else {
+                        self.showNoNetwork()
                     }
+                } else {
+                    self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
@@ -2192,7 +2217,18 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
 
     }
     
-    
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            self.getFloorMapDataFromServer()
+        }
+    }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
+    }
     
 }
 extension AVPlayer {

@@ -170,6 +170,34 @@
 "ALREADY_LOGGEDIN" = "Already logged in";
 "PASSWORD_REQUIRED" = "Password field is required";
 "WRONG_USERNAME_OR_PWD" = "Wrong username or password.";
+"LOGOUT_SUCCESSFULLY" = "You have been successfully logged out!";
+"OK" = "OK";
+"MEMBERSHIP_NUMBER" = "Membership Number:";
+"NO_INTERNET" = "There is no Internet connection";
+"CHECK_INTERNET" = "Please check your Internet connection";
+"TRY_AGAIN" = "Try again";
+"OOPS_MESSAGE" = "Oops!";
+"CHECK_NETWORK" = "Check your internet connections";
 
-
+"USERNAME" = "Username *";
+"LOGIN_USERNAME" = "Username";
+"EMAIL" = "E-mail address *";
+"PASSWORD" = "Password *";
+"LOGIN_PASSWORD" = "Password";
+"CONFIRM_PASSWORD" = "Confirm Password *";
+"TELL_US_MORE" = "TELL US MORE ABOUT YOU";
+"TITLE" = "Title *";
+"SELECT_A_VALUE" = "- Select A Value -";
+"FIRST_NAME" = "First name *";
+"LAST_NAME" = "Last name *";
+"COUNTRY" = "Country of Residence *";
+"NATIONALITY" = "Nationality *";
+"MOBILE_NUMBER" = "Mobile number *";
+"CREATE_ACCOUNT" = "Create Account";
+"CULTUREPASS_LOGIN" = "CULTURE PASS LOGIN";
+"LOGIN" = "Login";
+"FORGOT_PASSWORD" = "forgot password";
+"DATE_OF_BIRTH" = "Date of Birth:";
+"VIEW_MY_CULTUREPASS_CARD" = "VIEW MY CULTURE PASS CARD";
+"CREATE_YOUR_ACCOUNT" = "CREATE YOUR ACCOUNT";
 

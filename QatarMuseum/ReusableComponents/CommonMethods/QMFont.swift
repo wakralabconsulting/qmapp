@@ -13,7 +13,7 @@ extension UIFont {
             return UIFont.init(name: "DINNextLTPro-Bold", size: 20)!
         }
         else {
-            return UIFont.init(name: "DINNextLTArabic-Bold", size: 22)!
+            return UIFont.init(name: "DINNextLTArabic-Bold", size: 20)!
         }
     }
     static var heritageTitleFont: UIFont {
@@ -83,8 +83,7 @@ extension UIFont {
     static var sideMenuLabelFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             return UIFont.init(name: "DINNextLTPro-Regular", size: 15)!
-        }
-        else{
+        } else{
             return UIFont.init(name: "DINNextLTArabic-Regular", size:15)!
         }
         
@@ -92,8 +91,7 @@ extension UIFont {
     static var collectionFirstDescriptionFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             return UIFont.init(name: "DINNextLTPro-Regular", size: 16)!
-        }
-        else{
+        } else{
             return UIFont.init(name: "DINNextLTArabic-Regular", size:16)!
         }
         
@@ -101,8 +99,7 @@ extension UIFont {
     static var popupProductionFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             return UIFont.init(name: "DINNextLTPro-Bold", size: 16)!
-        }
-        else{
+        } else{
             return UIFont.init(name: "DINNextLTArabic-Bold", size:16)!
         }
         
@@ -110,8 +107,7 @@ extension UIFont {
     static var collectionSubTitleFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             return UIFont.init(name: "DINNextLTPro-Light", size: 19)!
-        }
-        else{
+        } else{
             return UIFont.init(name: "DINNextLTArabic-Light", size:19)!
         }
         
@@ -119,8 +115,7 @@ extension UIFont {
     static var museumTitleFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             return UIFont.init(name: "DINNextLTPro-Bold", size: 37)!
-        }
-        else{
+        } else{
             return UIFont.init(name: "DINNextLTArabic-Bold", size:37)!
         }
         
@@ -128,8 +123,7 @@ extension UIFont {
     static var exhibitionDateLabelFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             return UIFont.init(name: "DINNextLTPro-Regular", size: 12)!
-        }
-        else{
+        } else{
             return UIFont.init(name: "DINNextLTArabic-Regular", size:13)!
         }
         
@@ -137,74 +131,78 @@ extension UIFont {
     static var eventCellTitleFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             return UIFont.init(name: "DINNextLTPro-Bold", size: 13)!
-        }
-        else{
+        } else{
             return UIFont.init(name: "DINNextLTArabic-Bold", size:14)!
         }
     }
     static var clearButtonFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             return UIFont.init(name: "DINNextLTPro-Bold", size: 14)!
-        }
-        else{
+        } else{
             return UIFont.init(name: "DINNextLTArabic-Bold", size:14)!
         }
     }
     static var homeTitleFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             return UIFont.init(name: "DINNextLTPro-Regular", size: 21)!
-        }
-        else{
+        } else{
             return UIFont.init(name: "DINNextLTArabic-Regular", size:21)!
         }
     }
     static var diningHeaderFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            return UIFont.init(name: "DINNextLTPro-Bold", size: 23)!
-        }
-        else {
-            return UIFont.init(name: "DINNextLTArabic-Bold", size: 23)!
+            return UIFont.init(name: "DINNextLTPro-Regular", size: 23)!
+        } else {
+            return UIFont.init(name: "DINNextLTArabic-Regular", size: 23)!
         }
     }
     static var artifactNumberFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             return UIFont.init(name: "DINNextLTPro-Regular", size: 30)!
-        }
-        else{
+        } else{
             return UIFont.init(name: "DINNextLTArabic-Regular", size:30)!
         }
     }
     static var tourGuidesFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             return UIFont.init(name: "DINNextLTPro-Bold", size: 34)!
-        }
-        else{
+        } else{
             return UIFont.init(name: "DINNextLTArabic-Bold", size:34)!
         }
     }
     static var selfGuidedFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             return UIFont.init(name: "DINNextLTPro-Bold", size: 26)!
-        }
-        else{
+        } else{
             return UIFont.init(name: "DINNextLTArabic-Bold", size:26)!
         }
     }
     static var miatourGuideFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             return UIFont.init(name: "DINNextLTPro-Bold", size: 38)!
-        }
-        else{
+        } else{
             return UIFont.init(name: "DINNextLTArabic-Bold", size:38)!
         }
     }
     static var startTourFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             return UIFont.init(name: "DINNextLTPro-Bold", size: 19)!
-        }
-        else{
+        } else{
             return UIFont.init(name: "DINNextLTArabic-Bold", size:19)!
         }
-        
+    }
+    static var oopsTitleFont: UIFont {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            return UIFont.init(name: "DINNextLTPro-Bold", size: 32)!
+        } else{
+            return UIFont.init(name: "DINNextLTArabic-Bold", size:32)!
+        }
+    }
+    static var tryAgainFont: UIFont {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            return UIFont.init(name: "DINNextLTPro-Bold", size: 22)!
+        } else{
+            return UIFont.init(name: "DINNextLTArabic-Bold", size:22)!
+        }
     }
 }

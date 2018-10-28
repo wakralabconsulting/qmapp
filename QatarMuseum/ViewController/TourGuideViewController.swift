@@ -6,33 +6,36 @@
 //  Copyright © 2018 Exalture. All rights reserved.
 //
 
+import Alamofire
 import Crashlytics
 import UIKit
 
-class TourGuideViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,HeaderViewProtocol,comingSoonPopUpProtocol,UICollectionViewDelegateFlowLayout {
+class TourGuideViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,HeaderViewProtocol,comingSoonPopUpProtocol,UICollectionViewDelegateFlowLayout,LoadingViewProtocol {
     @IBOutlet weak var tourCollectionView: UICollectionView!
     @IBOutlet weak var topbarView: CommonHeaderView!
     
+    @IBOutlet weak var loadingView: LoadingView!
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
-    var tourImageArray = NSArray()
-    var tourDataFullArray : NSArray!
     var fromHome : Bool = false
-    
+    var museumsList: [Home]! = []
+    var fromSideMenu : Bool = false
+    let networkReachability = NetworkReachabilityManager()
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setUpUI()
         registerNib()
-        getTourGuideDataFromJson()
     }
 
     func setUpUI() {
-        let imagName1 = NSLocalizedString("MUSEUM_TITLE", comment: "MUSEUM_TITLE  in the Tour Guide page")
-        let imagName2 = NSLocalizedString("TOUR_GUIDE_IMG_NAME_2", comment: "TOUR_GUIDE_IMG_NAME_2  in the Tour Guide page")
-        let imagName3 = NSLocalizedString("TOUR_GUIDE_IMG_NAME_3", comment: "TOUR_GUIDE_IMG_NAME_3  in the Tour Guide page")
-        let imagName4 = NSLocalizedString("TOUR_GUIDE_IMG_NAME_4", comment: "TOUR_GUIDE_IMG_NAME_4  in the Tour Guide page")
-        let imagName5 = NSLocalizedString("TOUR_GUIDE_IMG_NAME_5", comment: "TOUR_GUIDE_IMG_NAME_5  in the Tour Guide page")
-        tourImageArray = ["museum_of_islamic_art","mathaf_arab_museum","firestation","coming_soon_1","national_museum_of_qatar"];
+        self.loadingView.isHidden = false
+        self.loadingView.showLoading()
+        self.loadingView.loadingViewDelegate = self
+        if  (networkReachability?.isReachable)! {
+            getTourGuideMuseumsList()
+        } else {
+            showNoNetwork()
+        }
         topbarView.headerViewDelegate = self
         topbarView.headerTitle.isHidden = true
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
@@ -50,38 +53,27 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
     func registerNib() {
         let nib = UINib(nibName: "HomeCollectionCell", bundle: nil)
         tourCollectionView?.register(nib, forCellWithReuseIdentifier: "homeCellId")
-        
-        //tourCollectionView.registerClass(, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "tourHeader")
     }
-    //MARK: Service call
-    func getTourGuideDataFromJson(){
-            let url = Bundle.main.url(forResource: "TourGuideJson", withExtension: "json")
-            let dataObject = NSData(contentsOf: url!)
-            if let jsonObj = try? JSONSerialization.jsonObject(with: dataObject! as Data, options: .allowFragments) as? NSDictionary {
-                
-                tourDataFullArray = jsonObj!.value(forKey: "items")
-                    as! NSArray
-            }
-   
-        
-    }
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tourDataFullArray.count
+        return museumsList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell : HomeCollectionViewCell = tourCollectionView.dequeueReusableCell(withReuseIdentifier: "homeCellId", for: indexPath) as! HomeCollectionViewCell
-        let homeDataDict = tourDataFullArray.object(at: indexPath.row) as! NSDictionary
+        
         cell.tourGuideImage.image = UIImage(named: "location")
-        cell.setTourGuideCellData(homeCellData: homeDataDict, imageName: tourImageArray.object(at: indexPath.row) as! String)
+        cell.setTourGuideCellData(museumsListData: museumsList[indexPath.row])
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if (indexPath.row == 0) {
-            loadMiaTour() 
-        } else {
-            loadComingSoonPopup()
+        if (museumsList != nil) {
+            if(((museumsList[indexPath.row].id) == "63") || ((museumsList[indexPath.row].id) == "96") || ((museumsList[indexPath.row].id) == "61") || ((museumsList[indexPath.row].id) == "635")) {
+                loadMiaTour(currentRow: indexPath.row)
+            } else {
+                loadComingSoonPopup()
+            }
         }
     }
     
@@ -98,15 +90,19 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         
         return tourHeaderView
     }
-    func loadMiaTour() {
-        let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "miaTourGuideId") as! MiaTourGuideViewController
-        
+    func loadMiaTour(currentRow: Int?) {
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(miaView, animated: false, completion: nil)
+        let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "miaTourGuideId") as! MiaTourGuideViewController
+        if (museumsList != nil) {
+            miaView.museumId = museumsList[currentRow!].id!
+            self.present(miaView, animated: false, completion: nil)
+        }
+        
+        
     }
     
     func loadComingSoonPopup() {
@@ -125,17 +121,64 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
     func headerCloseButtonPressed() {
         let transition = CATransition()
         transition.duration = 0.25
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromLeft
-        self.view.window!.layer.add(transition, forKey: kCATransition)
-            let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
-            let appDelegate = UIApplication.shared.delegate
-            appDelegate?.window??.rootViewController = homeViewController
-       
+        if (fromSideMenu == true) {
+            transition.type = kCATransitionFade
+            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            dismiss(animated: false, completion: nil)
+        } else {
+            transition.type = kCATransitionPush
+            transition.subtype = kCATransitionFromLeft
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+                let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
+                let appDelegate = UIApplication.shared.delegate
+                appDelegate?.window??.rootViewController = homeViewController
+        }
     }
-    
-    
+    //MARK: Service call
+    func getTourGuideMuseumsList() {
+        var searchstring = String()
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            searchstring = "12181"
+        } else {
+            searchstring = "12186"
+        }
+        _ = Alamofire.request(QatarMuseumRouter.HomeList()).responseObject { (response: DataResponse<HomeList>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.museumsList = data.homeList
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
+                if let arrayOffset = self.museumsList.index(where: {$0.id == searchstring}) {
+                    self.museumsList.remove(at: arrayOffset)
+                }
+                //self.saveOrUpdateHomeCoredata()
+                self.tourCollectionView.reloadData()
+            case .failure(let error):
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
+            }
+        }
+    }
 
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            self.getTourGuideMuseumsList()
+        }
+    }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         

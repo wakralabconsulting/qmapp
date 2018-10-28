@@ -12,7 +12,8 @@ import Crashlytics
 import Firebase
 import UIKit
 
-class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol {
+class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol,LoadingViewProtocol {
+    
     @IBOutlet weak var heritageHeader: CommonHeaderView!
     @IBOutlet weak var heritageCollectionView: UICollectionView!
     @IBOutlet weak var loadingView: LoadingView!
@@ -20,7 +21,8 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
     var popUpView : ComingSoonPopUp = ComingSoonPopUp()
     var heritageListArray: [Heritage]! = []
     let networkReachability = NetworkReachabilityManager()
-    
+    var fromSideMenu : Bool = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -35,6 +37,7 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
    
     func setupUI() {
         loadingView.isHidden = false
+        loadingView.loadingViewDelegate = self
         loadingView.showLoading()
         
         heritageHeader.headerViewDelegate = self
@@ -106,11 +109,18 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
         let transition = CATransition()
         transition.duration = 0.3
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromLeft
-        self.view.window!.layer.add(transition, forKey: kCATransition)
-        let appDelegate = UIApplication.shared.delegate
-        appDelegate?.window??.rootViewController = homeViewController
+        if (fromSideMenu == true) {
+            transition.type = kCATransitionFade
+            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            dismiss(animated: false, completion: nil)
+        } else {
+            transition.type = kCATransitionPush
+            transition.subtype = kCATransitionFromLeft
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            let appDelegate = UIApplication.shared.delegate
+            appDelegate?.window??.rootViewController = homeViewController
+        }
     }
     //MARK: WebServiceCall
     func getHeritageDataFromServer()
@@ -267,11 +277,11 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
                         
                     }
                     if(heritageListArray.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     heritageCollectionView.reloadData()
                 } else {
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             } else {
                 var heritageArray = [HeritageEntityArabic]()
@@ -284,11 +294,11 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
                         
                     }
                     if(heritageListArray.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     heritageCollectionView.reloadData()
                 } else {
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
@@ -339,5 +349,18 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         }
         let screenClass = classForCoder.description()
         Analytics.setScreenName(screenName, screenClass: screenClass)
+    }
+    
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            self.getHeritageDataFromServer()
+        }
+    }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
     }
 }

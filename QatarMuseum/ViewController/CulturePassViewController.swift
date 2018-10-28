@@ -24,6 +24,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     @IBOutlet weak var alreadyMemberLabel: UILabel!
     @IBOutlet weak var benefitsDiscountLabel: UILabel!
     var fromHome: Bool = false
+    var fromProfile : Bool = false
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var loginPopUpView : LoginPopupPage = LoginPopupPage()
     let benefitList = ["15% Discount at QM Cafe's across all venues",
@@ -34,9 +35,19 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
                        "Get exclusive invitation to QM open house access to our world class call center 8AM to 8PM daily"]
     var accessToken : String? = nil
     var loginArray : LoginData?
+    let networkReachability = NetworkReachabilityManager()
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(false)
+        if(fromProfile) {
+            popupView  = ComingSoonPopUp(frame: self.view.frame)
+            popupView.comingSoonPopupDelegate = self
+            popupView.loadLogoutMessage()
+            self.view.addSubview(popupView)
+        }
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -47,8 +58,6 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     
     func setupUI() {
-        //loadingView.isHidden = false
-       // loadingView.showLoading()
         headerView.headerViewDelegate = self
         headerView.headerTitle.text = NSLocalizedString("CULTUREPASS_TITLE", comment: "CULTUREPASS_TITLE in the Culture Pass page").uppercased()
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
@@ -141,7 +150,15 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         self.loadingView.isHidden = false
         self.loadingView.bringSubview(toFront: self.loadingView)
         self.loadingView.showLoading()
-        getCulturePassTokenFromServer()
+        if  (networkReachability?.isReachable)! {
+            self.getCulturePassTokenFromServer()
+        } else {
+            self.loadingView.stopLoading()
+            self.loadingView.isHidden = true
+            self.view.hideAllToasts()
+            let eventAddedMessage =  NSLocalizedString("CHECK_NETWORK", comment: "CHECK_NETWORK") 
+            self.view.makeToast(eventAddedMessage)
+        }
     }
     func loadProfilepage (loginInfo : LoginData?) {
         UserDefaults.standard.setValue(self.loginPopUpView.userNameText.text!, forKey: "name")

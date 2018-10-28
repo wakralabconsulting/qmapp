@@ -11,7 +11,7 @@ import CoreData
 import UIKit
 import Firebase
 
-class HomeViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,TopBarProtocol,comingSoonPopUpProtocol,SideMenuProtocol,UIViewControllerTransitioningDelegate {
+class HomeViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,TopBarProtocol,comingSoonPopUpProtocol,SideMenuProtocol,UIViewControllerTransitioningDelegate,LoadingViewProtocol {
 
     @IBOutlet weak var restaurantButton: UIButton!
     @IBOutlet weak var giftShopButton: UIButton!
@@ -71,6 +71,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         visualEffectView.effect = nil
         visualEffectView.isHidden = true
         loadingView.isHidden = false
+        loadingView.loadingViewDelegate = self
         loadingView.showLoading()
         moreLabel.text = NSLocalizedString("MORE",comment: "MORE in Home Page")
         culturePassLabel.text = NSLocalizedString("CULTUREPASS_TITLE",comment: "CULTUREPASS_TITLE in Home Page")
@@ -246,6 +247,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     //MARK: SideMenu Delegates
     func exhibitionButtonPressed() {
         let exhibitionView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        exhibitionView.fromSideMenu = true
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionFade
@@ -259,6 +261,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         let eventView =  self.storyboard?.instantiateViewController(withIdentifier: "eventPageID") as! EventViewController
         eventView.fromHome = true
         eventView.isLoadEventPage = true
+        eventView.fromSideMenu = true
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionFade
@@ -269,6 +272,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     func educationButtonPressed() {
         let educationView =  self.storyboard?.instantiateViewController(withIdentifier: "educationPageID") as! EducationViewController
+        educationView.fromSideMenu = true
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionFade
@@ -280,6 +284,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     func tourGuideButtonPressed() {
         let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "tourGuidId") as! TourGuideViewController
         //tourGuideView.fromHome = true
+        tourGuideView.fromSideMenu = true
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush
@@ -290,6 +295,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     func heritageButtonPressed() {
         let heritageView =  self.storyboard?.instantiateViewController(withIdentifier: "heritageViewId") as! HeritageListViewController
+        heritageView.fromSideMenu = true
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionFade
@@ -300,6 +306,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     func publicArtsButtonPressed() {
         let publicArtsView =  self.storyboard?.instantiateViewController(withIdentifier: "publicArtsViewId") as! PublicArtsViewController
+        publicArtsView.fromSideMenu = true
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionFade
@@ -320,7 +327,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     func diningButtonPressed() {
         let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "diningViewId") as! DiningViewController
-         diningView.fromHome = true
+        diningView.fromHome = true
+        diningView.fromSideMenu = true
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionFade
@@ -418,6 +426,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         self.culturePassButton.transform = CGAffineTransform(scaleX: 1, y: 1)
         let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "diningViewId") as! DiningViewController
          diningView.fromHome = true
+         diningView.fromSideMenu = false
          let transition = CATransition()
          transition.duration = 0.25
          transition.type = kCATransitionPush
@@ -623,12 +632,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                                              at: i)
                 }
                 if(homeList.count == 0){
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
                 homeCollectionView.reloadData()
             }
             else{
-                self.showNodata()
+                self.showNoNetwork()
             }
         }
             else {
@@ -643,12 +652,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                                              at: i)
                     }
                     if(homeList.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     homeCollectionView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
@@ -686,4 +695,17 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         self.loadingView.showNoDataView()
         self.loadingView.noDataLabel.text = errorMessage
     }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
+    }
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            self.getHomeList()
+        }
+    }
+
 }

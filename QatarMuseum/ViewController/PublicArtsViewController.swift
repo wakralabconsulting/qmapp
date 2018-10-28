@@ -12,7 +12,7 @@ import Firebase
 
 import UIKit
 
-class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol {
+class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol,LoadingViewProtocol {
     @IBOutlet weak var pulicArtsHeader: CommonHeaderView!
     @IBOutlet weak var publicArtsCollectionView: UICollectionView!
     @IBOutlet weak var loadingView: LoadingView!
@@ -21,7 +21,8 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
     var popUpView : ComingSoonPopUp = ComingSoonPopUp()
     var publicArtsListArray: [PublicArtsList]! = []
     let networkReachability = NetworkReachabilityManager()
-    
+    var fromSideMenu : Bool = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupPublicArtsUi()
@@ -38,7 +39,7 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
     func setupPublicArtsUi() {
         loadingView.isHidden = false
         loadingView.showLoading()
-        
+        loadingView.loadingViewDelegate = self
         pulicArtsHeader.headerViewDelegate = self
         pulicArtsHeader.headerTitle.text = NSLocalizedString("PUBLIC_ARTS_TITLE", comment: "PUBLIC_ARTS_TITLE Label in the PublicArts page")
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
@@ -108,11 +109,18 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
         let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
         let transition = CATransition()
         transition.duration = 0.3
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromLeft
-        self.view.window!.layer.add(transition, forKey: kCATransition)
-        let appDelegate = UIApplication.shared.delegate
-        appDelegate?.window??.rootViewController = homeViewController
+        if (fromSideMenu == true) {
+            transition.type = kCATransitionFade
+            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            dismiss(animated: false, completion: nil)
+        } else {
+            transition.type = kCATransitionPush
+            transition.subtype = kCATransitionFromLeft
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            let appDelegate = UIApplication.shared.delegate
+            appDelegate?.window??.rootViewController = homeViewController
+        }
     }
     //MARK: WebServiceCall
     func getPublicArtsListDataFromServer()
@@ -272,12 +280,12 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
                         
                     }
                     if(publicArtsListArray.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     publicArtsCollectionView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
             else {
@@ -292,12 +300,12 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
                         
                     }
                     if(publicArtsListArray.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     publicArtsCollectionView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
@@ -347,6 +355,18 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
         }
         let screenClass = classForCoder.description()
         Analytics.setScreenName(screenName, screenClass: screenClass)
+    }
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            self.getPublicArtsListDataFromServer()
+        }
+    }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
     }
 
 

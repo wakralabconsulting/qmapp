@@ -29,6 +29,8 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
     @IBOutlet weak var playerSlider: UISlider!
     @IBOutlet weak var sliderBottomPadding: NSLayoutConstraint!
     @IBOutlet weak var sliderTopPadding: NSLayoutConstraint!
+    @IBOutlet weak var seekLoadingLabel: UILabel!
+
     
     var favBtnTapAction : (()->())?
     var shareBtnTapAction : (()->())?
@@ -39,6 +41,8 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
     var isPaused: Bool!
     var firstLoad: Bool = true
     var bottomSheetVC:MapDetailView = MapDetailView()
+    var playerItem: AVPlayerItem?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         setupCellUI()
@@ -58,7 +62,7 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
         detailSecondLabel.textAlignment = .left
         imageDetailLabel.textAlignment = .left
 
-        titleLabel.font = UIFont.diningHeaderFont
+        titleLabel.font = UIFont.eventPopupTitleFont
         descriptionLabel.font = UIFont.englishTitleFont
         detailSecondLabel.font = UIFont.englishTitleFont
         imageDetailLabel.font = UIFont.sideMenuLabelFont
@@ -202,7 +206,7 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
                 let targetTime:CMTime = CMTimeMake(seconds, 1)
                 avPlayer!.seek(to: targetTime)
                 if(isPaused == false){
-                    //seekLoadingLabel.alpha = 1
+                    seekLoadingLabel.alpha = 1
                 }
     }
     //    @IBAction func sliderTapped(_ sender: UILongPressGestureRecognizer) {
@@ -226,23 +230,24 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
         timer = Timer(timeInterval: 0.001, target: self, selector: #selector(ObjectDetailTableViewCell.tick), userInfo: nil, repeats: true)
         RunLoop.current.add(timer!, forMode: RunLoopMode.commonModes)
     }
+    
     @objc func didPlayToEnd() {
         // self.nextTrack()
     }
     
     @objc func tick(){
         if(avPlayer.currentTime().seconds == 0.0){
-            // loadingLabel.alpha = 1
+            seekLoadingLabel.alpha = 1
         }else{
-            //loadingLabel.alpha = 0
+            seekLoadingLabel.alpha = 0
         }
         
         if(isPaused == false){
             if(avPlayer.rate == 0){
                 avPlayer.play()
-                // seekLoadingLabel.alpha = 1
+                seekLoadingLabel.alpha = 1
             }else{
-                //seekLoadingLabel.alpha = 0
+                seekLoadingLabel.alpha = 0
             }
         }
         
@@ -275,9 +280,13 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
     
     @IBAction func backButtonClicked(_ sender: Any) {
         //self.dismiss(animated: true) {
-            self.avPlayer = nil
-            self.timer?.invalidate()
+        closeAudio()
        // }
+    }
+    
+    func closeAudio() {
+        self.avPlayer = nil
+        self.timer?.invalidate()
     }
     func dismissOvelay() {
         print("hi")

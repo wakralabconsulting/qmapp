@@ -5,11 +5,10 @@
 //  Created by Exalture on 17/07/18.
 //  Copyright © 2018 Exalture. All rights reserved.
 //
-
-import Crashlytics
-import UIKit
 import Alamofire
+import Crashlytics
 import Kingfisher
+import UIKit
 
 class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingSoonPopUpProtocol, KASlideShowDelegate {
     @IBOutlet weak var tourGuideDescription: UITextView!
@@ -20,19 +19,24 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var scienceTourTitle: UILabel!
     
+    @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var overlayView: UIView!
     var slideshowImages : NSArray!
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var i = 0
     var museumId :String = "63"
     var tourGuide: [TourGuide] = []
+    var tourGuideDetail : TourGuide?
     var totalImgCount = Int()
     var sliderImgCount : Int? = 0
     var sliderImgArray = NSMutableArray()
     var titleString : String? = ""
+    let networkReachability = NetworkReachabilityManager()
     override func viewDidLoad() {
         super.viewDidLoad()
-        getTourGuideDataFromServer()
+        loadingView.isHidden = false
+        loadingView.showLoading()
+        setDetails()
         setupUI()
         setGradientLayer()
     }
@@ -52,7 +56,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
         } else {
             headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
-        self.scienceTourTitle.text = titleString?.uppercased()
+       // self.scienceTourTitle.text = titleString?.uppercased()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -135,9 +139,22 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
-        let shortDetailsView =  self.storyboard?.instantiateViewController(withIdentifier: "previewContainerId") as! PreviewContainerViewController
-        shortDetailsView.fromScienceTour = true
-        self.present(shortDetailsView, animated: false, completion: nil)
+        if ((tourGuideDetail?.nid == "12216") || (tourGuideDetail?.nid == "12226")) {
+            let shortDetailsView =  self.storyboard?.instantiateViewController(withIdentifier: "previewContainerId") as! PreviewContainerViewController
+            shortDetailsView.fromScienceTour = true
+            self.present(shortDetailsView, animated: false, completion: nil)
+        } else if (tourGuideDetail?.nid == "12471") {
+            let shortDetailsView =  self.storyboard?.instantiateViewController(withIdentifier: "previewContainerId") as! PreviewContainerViewController
+            shortDetailsView.fromScienceTour = false
+            self.present(shortDetailsView, animated: false, completion: nil)
+        }
+        else {
+            let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as! FloorMapViewController
+            //floorMapView.fromScienceTour = false
+            floorMapView.fromTourString = fromTour.exploreTour
+            self.present(floorMapView, animated: false, completion: nil)
+        }
+       
 
     }
     
@@ -180,33 +197,16 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
         // Dispose of any resources that can be recreated.
     }
     
-    //MARK: WebServiceCall
-    func getTourGuideDataFromServer() {
-        _ = Alamofire.request(QatarMuseumRouter.MuseumTourGuide(["museum_id": museumId])).responseObject { (response: DataResponse<TourGuides>) -> Void in
-            switch response.result {
-            case .success(let data):
-                self.tourGuide = data.tourGuide!
-                if(self.tourGuide.count > 0) {
-                    
-                    if let searchDict = self.tourGuide.first(where: {$0.nid == "12216"}) {
-                        self.tourGuideDescription.text = searchDict.tourGuideDescription
-                        self.setImageArray(tourGuideImgDict: searchDict)
-                    } else {
-                        if let searchDict = self.tourGuide.first(where: {$0.nid == "12226"}) {
-                            self.tourGuideDescription.text = searchDict.tourGuideDescription
-                            self.setImageArray(tourGuideImgDict: searchDict)
-                        }
-                    }
-
-                   // self.scienceTourTitle.text = self.tourGuide[0].title?.uppercased()
-                   // self.tourGuideDescription.text = self.tourGuide[0].tourGuideDescription
-                }
-            case .failure(let error):
-                print(error)
-            }
+   
+    func setDetails () {
+        loadingView.stopLoading()
+        loadingView.isHidden = true
+        if(tourGuideDetail != nil) {
+            self.scienceTourTitle.text = tourGuideDetail?.title
+            self.tourGuideDescription.text = tourGuideDetail?.tourGuideDescription
+            self.setImageArray(tourGuideImgDict: tourGuideDetail)
         }
     }
-    
     func setImageArray(tourGuideImgDict : TourGuide?) {
         self.sliderImgArray[0] = UIImage(named: "sliderPlaceholder")!
         self.sliderImgArray[1] = UIImage(named: "sliderPlaceholder")!

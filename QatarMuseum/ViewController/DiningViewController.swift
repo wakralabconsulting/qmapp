@@ -11,7 +11,7 @@ import CoreData
 import Crashlytics
 import UIKit
 
-class DiningViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, HeaderViewProtocol,comingSoonPopUpProtocol {
+class DiningViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, HeaderViewProtocol,comingSoonPopUpProtocol,LoadingViewProtocol {
     @IBOutlet weak var diningHeader: CommonHeaderView!
     @IBOutlet weak var diningCollectionView: UICollectionView!
     @IBOutlet weak var loadingView: LoadingView!
@@ -19,6 +19,7 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
     var diningListArray : [Dining]! = []
     var popUpView : ComingSoonPopUp = ComingSoonPopUp()
     var fromHome : Bool = false
+    var fromSideMenu : Bool = false
     let networkReachability = NetworkReachabilityManager()
     var museumId : String? = nil
     override func viewDidLoad() {
@@ -44,6 +45,7 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
     func setupDiningArtsUi() {
         loadingView.isHidden = false
         loadingView.showLoading()
+        loadingView.loadingViewDelegate = self
         diningHeader.headerViewDelegate = self
         diningHeader.headerTitle.text = NSLocalizedString("DINING_TITLE", comment: "DINING_TITLE in the Dining page")
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
@@ -97,20 +99,26 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
     func headerCloseButtonPressed() {
         let transition = CATransition()
         transition.duration = 0.3
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromLeft
-        self.view.window!.layer.add(transition, forKey: kCATransition)
-        if (fromHome == true) {
-            let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
-            
-            let appDelegate = UIApplication.shared.delegate
-            appDelegate?.window??.rootViewController = homeViewController
+        if (fromSideMenu == true) {
+            transition.type = kCATransitionFade
+            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            dismiss(animated: false, completion: nil)
+        } else {
+            transition.type = kCATransitionPush
+            transition.subtype = kCATransitionFromLeft
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            if (fromHome == true) {
+                let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
+                
+                let appDelegate = UIApplication.shared.delegate
+                appDelegate?.window??.rootViewController = homeViewController
+            } else {
+                self.dismiss(animated: false, completion: nil)
+            }
         }
-        else {
-            self.dismiss(animated: false, completion: nil)
-        }
-        
     }
+    
     func loadDiningDetailAnimation(idValue: String) {
         let diningDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "diningDetailId") as! DiningDetailViewController
        diningDetailView.diningDetailId = idValue
@@ -308,12 +316,12 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
                         self.diningListArray.insert(Dining(id: diningArray[i].id, name: diningArray[i].name, location: diningArray[i].location, description: diningArray[i].diningdescription, image: diningArray[i].image, openingtime: diningArray[i].openingtime, closetime: diningArray[i].closetime, sortid: diningArray[i].sortid,museumId: diningArray[i].museumId), at: i)
                     }
                     if(diningListArray.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     diningCollectionView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
             else {
@@ -327,12 +335,12 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
                         
                     }
                     if(diningListArray.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     diningCollectionView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
@@ -353,12 +361,12 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
 
                     }
                     if(diningListArray.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     diningCollectionView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
             else {
@@ -374,12 +382,12 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
 
                     }
                     if(diningListArray.count == 0){
-                        self.showNodata()
+                        self.showNoNetwork()
                     }
                     diningCollectionView.reloadData()
                 }
                 else{
-                    self.showNodata()
+                    self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
@@ -417,7 +425,22 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
         self.loadingView.showNoDataView()
         self.loadingView.noDataLabel.text = errorMessage
     }
-    
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            if(fromHome == true) {
+                self.getDiningListFromServer()
+            } else {
+                self.getMuseumDiningListFromServer()
+            }
+        }
+    }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

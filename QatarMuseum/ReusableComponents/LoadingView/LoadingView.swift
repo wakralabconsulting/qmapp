@@ -7,17 +7,22 @@
 //
 
 import UIKit
-
+@objc protocol LoadingViewProtocol {
+    func tryAgainButtonPressed()
+}
 class LoadingView: UIView {
 
     @IBOutlet var loadingView: UIView!
-    
     @IBOutlet weak var noDataLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
     @IBOutlet weak var noDataView: UIView!
+    @IBOutlet weak var oopsLabel: UILabel!
+    @IBOutlet weak var tryAgainButton: UIButton!
+    @IBOutlet weak var noNetworkText: UITextView!
+    
     var isNoDataDisplayed : Bool = false
     var noDataFontSize =  CGFloat()
+    var loadingViewDelegate : LoadingViewProtocol?
     override func awakeFromNib()
     {
         loadView()
@@ -42,6 +47,7 @@ class LoadingView: UIView {
        // loadingView.autoresizingMask = [.flexibleHeight,.flexibleWidth]
         loadingView.translatesAutoresizingMaskIntoConstraints = false
         noDataLabel.font = UIFont.closeButtonFont
+        
     }
     
     fileprivate func loadView() {
@@ -67,6 +73,8 @@ class LoadingView: UIView {
     func showLoading() {
         // self.isHidden = false
         self.noDataLabel.isHidden = true
+        oopsLabel.isHidden = true
+        tryAgainButton.isHidden = true
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         // self.isHidden = false
@@ -110,5 +118,43 @@ class LoadingView: UIView {
         self.noDataView.isHidden = true
         //self.activityIndicatorControl.stopAnimating()
         self.noDataLabel.isHidden = true
+        self.oopsLabel.isHidden = true
+        self.tryAgainButton.isHidden = true
     }
+    func showNoNetworkView()  {
+        let nonetworkMsg = NSLocalizedString("NO_INTERNET", comment: "NO_INTERNET message") + "\n" + NSLocalizedString("CHECK_INTERNET", comment: "CHECK_INTERNET message")
+        self.oopsLabel.text = NSLocalizedString("OOPS_MESSAGE", comment: "OOPS_MESSAGE")
+        self.tryAgainButton.setTitle(NSLocalizedString("TRY_AGAIN", comment: "TRY_AGAIN message"), for: .normal)
+        self.noNetworkText.text = nonetworkMsg
+        self.noDataView.isHidden = false
+        self.noDataView.backgroundColor = UIColor.noDataViewGray
+        self.activityIndicator.stopAnimating()
+        self.activityIndicator.isHidden = true
+        self.noDataLabel.isHidden = true
+        self.noNetworkText.isHidden = false
+        self.oopsLabel.isHidden = false
+        self.tryAgainButton.isHidden = false
+        self.noNetworkText.font = UIFont.heritageTitleFont
+        self.oopsLabel.font = UIFont.oopsTitleFont
+        self.tryAgainButton.titleLabel?.font = UIFont.tryAgainFont
+        self.tryAgainButton.layer.cornerRadius = 24
+    }
+    @IBAction func didTapTryAgain(_ sender: UIButton) {
+        UIButton.animate(withDuration: 0.2,
+                         animations: {
+                            self.tryAgainButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        },
+                         completion: { finish in
+                            UIButton.animate(withDuration: 0.1, animations: {
+                                self.tryAgainButton.transform = CGAffineTransform.identity
+                                
+                            })
+                            self.loadingViewDelegate?.tryAgainButtonPressed()
+        })
+        
+    }
+    @IBAction func tryAgainButtonTouchDown(_ sender: UIButton) {
+    }
+    
+    
 }

@@ -56,12 +56,21 @@ class ComingSoonPopUp: UIView {
         let buttonTitle = NSLocalizedString("CLOSEBUTTON_TITLE", comment: "CLOSEBUTTON_TITLE Label in the Popup")
         closeButton.setTitle(buttonTitle, for: .normal)
     }
+    func loadLogoutMessage() {
+        titleLabel.text = ""
+        messageLabel.text = NSLocalizedString("LOGOUT_SUCCESSFULLY", comment: "LOGOUT_SUCCESSFULLY Label in the Popup")
+        stayTunedLabel.text = ""
+        messageLabel.font = UIFont.diningHeaderFont
+        let buttonTitle = NSLocalizedString("OK", comment: "OK Label in the Popup")
+        closeButton.setTitle(buttonTitle, for: .normal)
+    }
     
     func loadLocationErrorPopup() {
         titleLabel.text = NSLocalizedString("SOMETHING_WENT_WRONG_TITLE", comment: "SOMETHING_WENT_WRONG_TITLE Label in the Popup")
         messageLabel.text = NSLocalizedString("LOCATION_ERROR_MESSAGE", comment: "LOCATION_ERROR_MESSAGE Label in the Popup")
         stayTunedLabel.text = ""
         let buttonTitle = NSLocalizedString("CLOSEBUTTON_TITLE", comment: "CLOSEBUTTON_TITLE Label in the Popup")
+        
         closeButton.setTitle(buttonTitle, for: .normal)
     }
     func loadTourGuidePopup() {

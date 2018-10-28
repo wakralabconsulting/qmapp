@@ -11,7 +11,7 @@ import CoreData
 import Crashlytics
 import UIKit
 
-class PreviewContainerViewController: UIViewController,UIPageViewControllerDelegate,UIPageViewControllerDataSource,HeaderViewProtocol,UIGestureRecognizerDelegate {
+class PreviewContainerViewController: UIViewController,UIPageViewControllerDelegate,UIPageViewControllerDataSource,HeaderViewProtocol,UIGestureRecognizerDelegate,LoadingViewProtocol {
     
     @IBOutlet weak var loadingView: LoadingView!
     
@@ -68,6 +68,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     func loadUI() {
         loadingView.isHidden = false
         loadingView.showLoading()
+        loadingView.loadingViewDelegate = self
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             if (fromScienceTour) {
                 tourGuideId = "12216"
@@ -1044,15 +1045,18 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                     self.loadingView.stopLoading()
                     self.loadingView.isHidden = true
                     if (self.tourGuideArray.count > 0) {
-                        print(self.tourGuideArray.count)
                         self.headerView.settingsButton.isHidden = false
                         self.headerView.settingsButton.setImage(UIImage(named: "locationImg"), for: .normal)
                         self.headerView.settingsButton.contentEdgeInsets = UIEdgeInsets(top: 9, left: 10, bottom:9, right: 10)
                         self.setUpPageControl()
                         self.showOrHidePageControlView(countValue: self.tourGuideArray.count, scrolling: false)
                         self.showPageControlAtFirstTime()
+                    } else {
+                        self.showNoNetwork()
                     }
                     
+                } else {
+                    self.showNoNetwork()
                 }
                 
                 
@@ -1086,7 +1090,11 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                         self.setUpPageControl()
                         self.showOrHidePageControlView(countValue: self.tourGuideArray.count, scrolling: false)
                         self.showPageControlAtFirstTime()
+                    } else {
+                        self.showNoNetwork()
                     }
+                } else {
+                    self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
@@ -1118,6 +1126,18 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     }
     func showNodata() {
         
+    }
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            self.getTourGuideDataFromServer()
+        }
+    }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

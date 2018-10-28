@@ -6,29 +6,35 @@
 //  Copyright © 2018 Exalture. All rights reserved.
 //
 
+import Alamofire
 import UIKit
 import WebKit
 import Crashlytics
-class WebViewController: UIViewController,UIWebViewDelegate {
+class WebViewController: UIViewController,UIWebViewDelegate,LoadingViewProtocol {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var webView: UIWebView!
     
     @IBOutlet weak var loadingView: LoadingView!
     var webViewUrl: URL? = nil
     var titleString: String? = nil
+    let networkReachability = NetworkReachabilityManager()
+    
     override func viewDidLoad() {
     loadingView.isHidden = false
     loadingView.showLoading()
+        loadingView.loadingViewDelegate = self
         super.viewDidLoad()
         if ((titleString != nil) && (titleString != "")) {
             self.titleLabel.text = titleString
         }
         titleLabel.font = UIFont.headerFont
-        let requestObj = URLRequest(url: webViewUrl!)
-        self.webView.loadRequest(requestObj)
+        if  (networkReachability?.isReachable)! {
+            let requestObj = URLRequest(url: webViewUrl!)
+            self.webView.loadRequest(requestObj)
+        } else {
+            self.showNoNetwork()
+        }
         webView.delegate = self
-        loadingView.isHidden = false
-        loadingView.showLoading()
         webView.backgroundColor = UIColor.whiteColor
         webView.scrollView.bounces = false
         
@@ -65,6 +71,22 @@ class WebViewController: UIViewController,UIWebViewDelegate {
     @IBAction func didTapClose(_ sender: UIButton) {
         self.dismiss(animated: false, completion: nil)
     }
-    
+    //MARK: LoadingView Delegate
+    func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            loadingView.isHidden = false
+            self.loadingView.hideNoDataView()
+            
+            loadingView.showLoading()
+            let requestObj = URLRequest(url: webViewUrl!)
+            self.webView.loadRequest(requestObj)
+        }
+    }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
+    }
 
 }
