@@ -289,6 +289,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             if((museumId == "63") || (museumId == "96")) {
                 let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "miaTourGuideId") as! MiaTourGuideViewController
                 // tourGuideView.fromHome = false
+                tourGuideView.museumId = museumId!
                 let transition = CATransition()
                 transition.duration = 0.3
                 transition.type = kCATransitionPush
