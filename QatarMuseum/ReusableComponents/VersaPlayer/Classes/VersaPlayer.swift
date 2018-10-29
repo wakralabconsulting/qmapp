@@ -129,11 +129,13 @@ open class VersaPlayer: UIView, AVPictureInPictureControllerDelegate {
     /// - Parameters:
     ///     - enabled: Whether or not to enable
     public func setFullscreen(enabled: Bool) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         if enabled {
             if let window = UIApplication.shared.keyWindow {
                 nonFullscreenContainer = superview
                 removeFromSuperview()
                 layout(view: self, into: window)
+                appDelegate.shouldRotate = true
                 let value = UIInterfaceOrientation.landscapeLeft.rawValue
                 UIDevice.current.setValue(value, forKey: "orientation")
                 UIViewController.attemptRotationToDeviceOrientation()
@@ -141,6 +143,7 @@ open class VersaPlayer: UIView, AVPictureInPictureControllerDelegate {
         } else {
             removeFromSuperview()
             layout(view: self, into: nonFullscreenContainer)
+            appDelegate.shouldRotate = false
             let value = UIInterfaceOrientation.portrait.rawValue
             UIDevice.current.setValue(value, forKey: "orientation")
             UIViewController.attemptRotationToDeviceOrientation()
