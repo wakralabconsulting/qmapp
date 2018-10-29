@@ -297,30 +297,30 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         }
     }
     func setNewPassword() {
-        let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
-        if(accessToken != nil) {
-            
-            _ = Alamofire.request(QatarMuseumRouter.NewPasswordrequest(String: accessToken!, String: "application/json",["name" : loginPopUpView.userNameText.text!])).responseObject { (response : [Bool]) -> Void in
-                switch response.result {
-                case .success(let data):
-                    self.loadingView.stopLoading()
-                    self.loadingView.isHidden = true
-                    if(response.response?.statusCode == 200) {
-                        print(data)
-                        
-                    } else if(response.response?.statusCode == 406) {
-                        
-                        showAlertView(title: titleString, message: NSLocalizedString("WRONG_USERNAME_OR_PWD",comment: "Set the message for wrong username or password"), viewController: self)
-                    }
-                    
-                case .failure(let error):
-                    self.loadingView.stopLoading()
-                    self.loadingView.isHidden = true
-                    
-                }
-            }
-            
-        }
+//        let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
+//        if(accessToken != nil) {
+//            
+//            _ = Alamofire.request(QatarMuseumRouter.NewPasswordrequest(String: accessToken!, String: "application/json",["name" : loginPopUpView.userNameText.text!])).responseObject { (response : [Bool]) -> Void in
+//                switch response.result {
+//                case .success(let data):
+//                    self.loadingView.stopLoading()
+//                    self.loadingView.isHidden = true
+//                    if(response.response?.statusCode == 200) {
+//                        print(data)
+//                        
+//                    } else if(response.response?.statusCode == 406) {
+//                        
+//                        showAlertView(title: titleString, message: NSLocalizedString("WRONG_USERNAME_OR_PWD",comment: "Set the message for wrong username or password"), viewController: self)
+//                    }
+//                    
+//                case .failure(let error):
+//                    self.loadingView.stopLoading()
+//                    self.loadingView.isHidden = true
+//                    
+//                }
+//            }
+//            
+//        }
     }
 
 }

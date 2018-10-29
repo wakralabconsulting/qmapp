@@ -39,11 +39,12 @@ class EventCollectionViewCell: UICollectionViewCell {
         
         firstTitle.text = event.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
         let dateValue = event.fieldRepeatDate
-        if(dateValue != nil) {
-        if((dateValue?.count)! > 0) {
-            descriptionLabel.text = event.fieldRepeatDate?[0].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
-        }
-        }
+//        if(dateValue != nil) {
+//        if((dateValue?.count)! > 0) {
+//            descriptionLabel.text = event.fieldRepeatDate?[0].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+//        }
+//        }
+        descriptionLabel.text = event.introductionText?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         //secondTitleLabel.text = event.title?.uppercased()
        // descriptionLabel.text = event.shortDesc
 //        if ((event.startTime != nil) && (event.endtime != nil)) {
@@ -51,6 +52,7 @@ class EventCollectionViewCell: UICollectionViewCell {
 //            let eTime = setTimeFormat(timeString: event.endtime!)
 //            timingLabel.text = "Timimgs:" + sTime! + "\n" + eTime!
 //        }
+        viewDetails.setTitle(NSLocalizedString("VIEW_DETAIL_BUTTON_TITLE", comment: "VIEW_DETAIL_BUTTON_TITLE  in the event view"), for: .normal)
     }
     func setEducationCalendarValues(educationEvent: EducationEvent) {
         firstTitle.font = UIFont.eventCellTitleFont
@@ -77,12 +79,13 @@ class EventCollectionViewCell: UICollectionViewCell {
 //        }
         firstTitle.text = educationEvent.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
         let dateValue = educationEvent.fieldRepeatDate
-        if(dateValue != nil) {
-        if((dateValue?.count)! > 0) {
-            descriptionLabel.text = educationEvent.fieldRepeatDate?[0].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
-        }
-        }
-        
+//        if(dateValue != nil) {
+//        if((dateValue?.count)! > 0) {
+//            descriptionLabel.text = educationEvent.fieldRepeatDate?[0].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+//        }
+//        }
+        descriptionLabel.text = educationEvent.introductionText?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        viewDetails.setTitle(NSLocalizedString("VIEW_DETAIL_BUTTON_TITLE", comment: "VIEW_DETAIL_BUTTON_TITLE  in the event view"), for: .normal)
     }
     
     @IBAction func didTapViewDetails(_ sender: UIButton) {
