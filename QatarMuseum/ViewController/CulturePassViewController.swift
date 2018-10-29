@@ -254,36 +254,36 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     //MARK: WebServiceCall
     func getCulturePassTokenFromServer(login: Bool? = false) {
-        _ = Alamofire.request(QatarMuseumRouter.GetToken(String: "application/json",["name": loginPopUpView.userNameText.text!,"pass":loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<TokenData>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.GetToken(["name": loginPopUpView.userNameText.text!,"pass":loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<TokenData>) -> Void in
             switch response.result {
             case .success(let data):
                 self.accessToken = data.accessToken
+                UserDefaults.standard.set(data.accessToken, forKey: "accessToken")
                 if(login == true) {
                     self.getCulturePassLoginFromServer()
                 } else {
                     self.setNewPassword()
                 }
                 
-            case .failure(let error):
+            case .failure( _):
                 self.loadingView.stopLoading()
                 self.loadingView.isHidden = true
             }
         }
     }
+    
     func getCulturePassLoginFromServer() {
         let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
         if(accessToken != nil) {
-            _ = Alamofire.request(QatarMuseumRouter.Login(String: accessToken!, String: "application/json",["name" : loginPopUpView.userNameText.text!,"pass": loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<LoginData>) -> Void in
+            _ = Alamofire.request(QatarMuseumRouter.Login(["name" : loginPopUpView.userNameText.text!,"pass": loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<LoginData>) -> Void in
                 switch response.result {
                 case .success(let data):
                     self.loadingView.stopLoading()
                     self.loadingView.isHidden = true
                     if(response.response?.statusCode == 200) {
                         self.loginArray = data
-                        
                         self.loadProfilepage(loginInfo: self.loginArray)
                     } else if(response.response?.statusCode == 401) {
-                        
                         showAlertView(title: titleString, message: NSLocalizedString("WRONG_USERNAME_OR_PWD",comment: "Set the message for wrong username or password"), viewController: self)
                     } else if(response.response?.statusCode == 406) {
                         showAlertView(title: titleString, message: NSLocalizedString("ALREADY_LOGGEDIN",comment: "Set the message for Already Logged in"), viewController: self)
@@ -303,7 +303,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
         if(accessToken != nil) {
             
-            _ = Alamofire.request(QatarMuseumRouter.NewPasswordrequest(String: accessToken!, String: "application/json",["name" : loginPopUpView.userNameText.text!])).responseData { (response) -> Void in
+            _ = Alamofire.request(QatarMuseumRouter.NewPasswordRequest(["name" : loginPopUpView.userNameText.text!])).responseData { (response) -> Void in
                 switch response.result {
                 case .success( _):
                     self.loadingView.stopLoading()
