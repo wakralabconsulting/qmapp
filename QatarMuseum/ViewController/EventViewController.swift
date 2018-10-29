@@ -167,7 +167,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let heightValue = UIScreen.main.bounds.height/100
         
-        return CGSize(width: eventCollectionView.frame.width, height: heightValue*17)
+        return CGSize(width: eventCollectionView.frame.width, height: heightValue*18)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
             return educationEventArray.count
