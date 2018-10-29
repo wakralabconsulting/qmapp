@@ -145,8 +145,9 @@ enum QatarMuseumRouter: URLRequestConvertible {
         if let accessToken = UserDefaults.standard.value(forKey: "accessToken")
             as? String {
             mutableURLRequest.setValue("Bearer " + accessToken,
-                                       forHTTPHeaderField: "Authorization")
+                                       forHTTPHeaderField: "x-csrf-token")
         }
+
         switch self {
         case .ExhibitionList():
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
@@ -215,9 +216,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             var passwordMutableURLReq = URLRequest(url: newPasswordURL.appendingPathComponent(path)!)
             passwordMutableURLReq.httpMethod = method.rawValue
             passwordMutableURLReq.setValue(token as? String, forHTTPHeaderField: "x-csrf-token")
-            passwordMutableURLReq.setValue(contentType as? String, forHTTPHeaderField: "Content-Type")
+            passwordMutableURLReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
             return try! Alamofire.JSONEncoding.default.encode(passwordMutableURLReq, with: parameters)
-            
             
         }
         

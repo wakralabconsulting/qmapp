@@ -200,4 +200,6 @@
 "DATE_OF_BIRTH" = "تاريخ الميلاد";
 "VIEW_MY_CULTUREPASS_CARD" = "عرض بطاقة بطاقتك إلى الثقافة";
 "CREATE_YOUR_ACCOUNT" = "إنشاء حساب جديد";
+"INVALID_USERNAME" = "Invalid username";
+"FORGOT_PASSWORD_SENT_SUCCESSFULLY" = "New password link sent to your email";
 
