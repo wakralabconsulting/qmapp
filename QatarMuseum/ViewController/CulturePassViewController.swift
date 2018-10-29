@@ -11,8 +11,6 @@ import Crashlytics
 import UIKit
 
 class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoonPopUpProtocol,LoginPopUpProtocol,UITextFieldDelegate {
-    
-    
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var introLabel: UILabel!
@@ -23,6 +21,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     @IBOutlet weak var notMemberLabel: UILabel!
     @IBOutlet weak var alreadyMemberLabel: UILabel!
     @IBOutlet weak var benefitsDiscountLabel: UILabel!
+    
     var fromHome: Bool = false
     var fromProfile : Bool = false
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
@@ -45,7 +44,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         if(fromProfile) {
             popupView  = ComingSoonPopUp(frame: self.view.frame)
             popupView.comingSoonPopupDelegate = self
-            popupView.loadLogoutMessage()
+            popupView.loadLogoutMessage(message : NSLocalizedString("LOGOUT_SUCCESSFULLY", comment: "LOGOUT_SUCCESSFULLY Label in the Popup"))
             self.view.addSubview(popupView)
         }
     }
@@ -79,12 +78,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         benefitLabel.text = NSLocalizedString("BENEFIT_TITLE", comment: "BENEFIT_TITLE in the Culture Pass page")
         introLabel.text = NSLocalizedString("CULTURE_PASS_INTRO", comment: "CULTURE_PASS_INTRO in the Culture Pass page")
         secondIntroLabel.text = NSLocalizedString("CULTURE_PASS_SECONDDESC", comment: "CULTURE_PASS_SECONDDESC in the Culture Pass page")
-//        var benefitString = String()
-//        for i in 0 ... benefitList.count-1 {
-//            benefitString = benefitString + "\n\n" + "-" + benefitList[i]
-//            benefitsDiscountLabel.text = benefitString
-//            benefitsDiscountLabel.font = UIFont.settingsUpdateLabelFont
-//        }
+
         benefitsDiscountLabel.text = NSLocalizedString("CULTURE_DISCOUNT_LABEL", comment: "CULTURE_DISCOUNT_LABEL in the Culture Pass page")
         notMemberLabel.text = NSLocalizedString("CULTURE_NOT_A_MEMBER", comment: "CULTURE_NOT_A_MEMBER in the Culture Pass page")
         registerButton.setTitle(NSLocalizedString("CULTURE_BECOME_A_MEMBER", comment: "CULTURE_BECOME_A_MEMBER in the Culture Pass page"), for: .normal)
@@ -95,8 +89,6 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         logInButton.titleLabel?.font = UIFont.discoverButtonFont
     }
     
-    
-
     func loadComingSoonPopup() {
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
@@ -106,6 +98,13 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     
     func closeButtonPressed() {
         self.popupView.removeFromSuperview()
+    }
+    
+    func loadSuccessMessage() {
+        popupView  = ComingSoonPopUp(frame: self.view.frame)
+        popupView.comingSoonPopupDelegate = self
+        popupView.loadLogoutMessage(message : NSLocalizedString("FORGOT_PASSWORD_SENT_SUCCESSFULLY", comment: "FORGOT_PASSWORD_SENT_SUCCESSFULLY Label in the Popup"))
+        self.view.addSubview(popupView)
     }
     
     @IBAction func didTapRegisterButton(_ sender: UIButton) {
@@ -150,8 +149,22 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         self.loadingView.isHidden = false
         self.loadingView.bringSubview(toFront: self.loadingView)
         self.loadingView.showLoading()
+        let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
         if  (networkReachability?.isReachable)! {
-            self.getCulturePassTokenFromServer()
+            if ((loginPopUpView.userNameText.text != "") && (loginPopUpView.passwordText.text != "")) {
+                self.getCulturePassTokenFromServer(login: true)
+            }  else {
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
+                if ((loginPopUpView.userNameText.text == "") && (loginPopUpView.passwordText.text == "")) {
+                    showAlertView(title: titleString, message: NSLocalizedString("USERNAME_REQUIRED",comment: "Set the message for user name required")+"\n"+NSLocalizedString("PASSWORD_REQUIRED",comment: "Set the message for password required"), viewController: self)
+                    
+                } else if ((loginPopUpView.userNameText.text == "") && (loginPopUpView.passwordText.text != "")) {
+                    showAlertView(title: titleString, message: NSLocalizedString("USERNAME_REQUIRED",comment: "Set the message for user name required"), viewController: self)
+                } else if ((loginPopUpView.userNameText.text != "") && (loginPopUpView.passwordText.text == "")) {
+                    showAlertView(title: titleString, message: NSLocalizedString("PASSWORD_REQUIRED",comment: "Set the message for password required"), viewController: self)
+                }
+            }
         } else {
             self.loadingView.stopLoading()
             self.loadingView.isHidden = true
@@ -205,7 +218,12 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         self.present(profileView, animated: false, completion: nil)
     }
     func forgotButtonPressed() {
-        
+        let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
+        if (loginPopUpView.userNameText.text != "") {
+            self.getCulturePassTokenFromServer(login: false)
+        } else {
+            showAlertView(title: titleString, message: NSLocalizedString("USERNAME_REQUIRED",comment: "Set the message for user name required"), viewController: self)
+        }
     }
     //MARK:TextField Delegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -235,60 +253,73 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         
     }
     //MARK: WebServiceCall
-    func getCulturePassTokenFromServer()
-    {
-        let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
-        if ((loginPopUpView.userNameText.text != "") && (loginPopUpView.passwordText.text != "")) {
-            _ = Alamofire.request(QatarMuseumRouter.GetToken(String: "application/json",["name": loginPopUpView.userNameText.text!,"pass":loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<TokenData>) -> Void in
-                switch response.result {
-                case .success(let data):
-                    self.accessToken = data.accessToken
+    func getCulturePassTokenFromServer(login: Bool? = false) {
+        _ = Alamofire.request(QatarMuseumRouter.GetToken(["name": loginPopUpView.userNameText.text!,"pass":loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<TokenData>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.accessToken = data.accessToken
+                UserDefaults.standard.set(data.accessToken, forKey: "accessToken")
+                if(login == true) {
                     self.getCulturePassLoginFromServer()
-                case .failure(let error):
-                    self.loadingView.stopLoading()
-                    self.loadingView.isHidden = true
+                } else {
+                    self.setNewPassword()
                 }
-            }
-        } else {
-            self.loadingView.stopLoading()
-            self.loadingView.isHidden = true
-            if ((loginPopUpView.userNameText.text == "") && (loginPopUpView.passwordText.text == "")) {
-                showAlertView(title: titleString, message: NSLocalizedString("USERNAME_REQUIRED",comment: "Set the message for user name required")+"\n"+NSLocalizedString("PASSWORD_REQUIRED",comment: "Set the message for password required"), viewController: self)
                 
-            } else if ((loginPopUpView.userNameText.text == "") && (loginPopUpView.passwordText.text != "")) {
-                showAlertView(title: titleString, message: NSLocalizedString("USERNAME_REQUIRED",comment: "Set the message for user name required"), viewController: self)
-            } else if ((loginPopUpView.userNameText.text != "") && (loginPopUpView.passwordText.text == "")) {
-                showAlertView(title: titleString, message: NSLocalizedString("PASSWORD_REQUIRED",comment: "Set the message for password required"), viewController: self)
+            case .failure( _):
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
             }
         }
     }
-    func getCulturePassLoginFromServer()
-    {
+    
+    func getCulturePassLoginFromServer() {
         let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
         if(accessToken != nil) {
-            _ = Alamofire.request(QatarMuseumRouter.Login(String: accessToken!, String: "application/json",["name" : loginPopUpView.userNameText.text!,"pass": loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<LoginData>) -> Void in
+            _ = Alamofire.request(QatarMuseumRouter.Login(["name" : loginPopUpView.userNameText.text!,"pass": loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<LoginData>) -> Void in
                 switch response.result {
                 case .success(let data):
                     self.loadingView.stopLoading()
                     self.loadingView.isHidden = true
                     if(response.response?.statusCode == 200) {
                         self.loginArray = data
-                        
                         self.loadProfilepage(loginInfo: self.loginArray)
                     } else if(response.response?.statusCode == 401) {
-                        
                         showAlertView(title: titleString, message: NSLocalizedString("WRONG_USERNAME_OR_PWD",comment: "Set the message for wrong username or password"), viewController: self)
                     } else if(response.response?.statusCode == 406) {
                         showAlertView(title: titleString, message: NSLocalizedString("ALREADY_LOGGEDIN",comment: "Set the message for Already Logged in"), viewController: self)
                     }
                     
-                case .failure(let error):
+                case .failure( _):
                     self.loadingView.stopLoading()
                     self.loadingView.isHidden = true
                     
                 }
             }
 
+        }
+    }
+    
+    func setNewPassword() {
+        let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
+        if(accessToken != nil) {
+            
+            _ = Alamofire.request(QatarMuseumRouter.NewPasswordRequest(["name" : loginPopUpView.userNameText.text!])).responseData { (response) -> Void in
+                switch response.result {
+                case .success( _):
+                    self.loadingView.stopLoading()
+                    self.loadingView.isHidden = true
+                    if(response.response?.statusCode == 200) {
+                        self.loadSuccessMessage()
+                    } else if(response.response?.statusCode == 406) {
+                        showAlertView(title: titleString, message: NSLocalizedString("INVALID_USERNAME",comment: "Set the message for invalid username or email id"), viewController: self)
+                    }
+                case .failure( _):
+                    self.loadingView.stopLoading()
+                    self.loadingView.isHidden = true
+                    
+                }
+            }
+            
         }
     }
 

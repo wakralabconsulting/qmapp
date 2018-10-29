@@ -217,9 +217,8 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     }
     
     //MARK: WebServiceCall
-    func getCulturePassTokenFromServer()
-    {
-        _ = Alamofire.request(QatarMuseumRouter.GetToken(String: "application/json",["name": "haithembahri","pass":"saliha"])).responseObject { (response: DataResponse<TokenData>) -> Void in
+    func getCulturePassTokenFromServer() {
+        _ = Alamofire.request(QatarMuseumRouter.GetToken(["name": "haithembahri","pass":"saliha"])).responseObject { (response: DataResponse<TokenData>) -> Void in
             switch response.result {
             case .success(let data):
                 self.logoutToken = data.accessToken
@@ -237,7 +236,7 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         if((logoutToken != nil) && (logoutToken != "") && (UserDefaults.standard.value(forKey: "name") as? String != nil) && (UserDefaults.standard.value(forKey: "name") as! String != "") && (UserDefaults.standard.value(forKey: "password") as? String != nil) && (UserDefaults.standard.value(forKey: "password") as! String != "")) {
             let userName = UserDefaults.standard.value(forKey: "name") as! String
             let pwd = UserDefaults.standard.value(forKey: "password") as! String
-                _ = Alamofire.request(QatarMuseumRouter.Logout(String: logoutToken!, String: "application/json",["name" : userName,"pass": pwd])).responseObject { (response: DataResponse<LogoutData>) -> Void in
+                _ = Alamofire.request(QatarMuseumRouter.Logout(["name" : userName,"pass": pwd])).responseObject { (response: DataResponse<LogoutData>) -> Void in
                     switch response.result {
                     case .success(let data):
                         print(data)
@@ -251,6 +250,7 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
                             UserDefaults.standard.setValue("", forKey: "country")
                             UserDefaults.standard.setValue("" , forKey: "nationality")
                             UserDefaults.standard.setValue("" , forKey: "profilePic")
+                            UserDefaults.standard.removeObject(forKey: "accessToken")
                             if let presenter = self.presentingViewController as? CulturePassViewController {
                                 presenter.fromHome = true
                                 presenter.fromProfile = true

@@ -29,9 +29,10 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case CollectionDetail([String: Any])
     case MuseumTourGuide([String: Any])
     case CollectionByTourGuide([String: Any])
-    case GetToken(String: Any,[String: Any])
-    case Login(String: Any, String: Any,[String: Any])
-    case Logout(String: Any, String: Any,[String: Any])
+    case GetToken([String: Any])
+    case Login([String: Any])
+    case Logout([String: Any])
+    case NewPasswordRequest([String: String])
 
     var method: Alamofire.HTTPMethod {
         switch self {
@@ -79,6 +80,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return .post
         case .Logout:
             return .post
+        case .NewPasswordRequest:
+            return .post
         
         }
     }
@@ -123,12 +126,14 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "tour_guide_list_museums.json"
         case .CollectionByTourGuide( _):
             return "collection_by_tour_guide.json"
-        case .GetToken( _,_):
+        case .GetToken( _):
             return "user/token.json"
-        case .Login( _,_,_):
+        case .Login( _):
             return "user/login.json"
-        case .Logout( _,_,_):
+        case .Logout( _):
             return "user/logout.json"
+        case .NewPasswordRequest( _):
+            return "user/request_new_password.json"
         }
     }
 
@@ -139,9 +144,10 @@ enum QatarMuseumRouter: URLRequestConvertible {
         mutableURLRequest.httpMethod = method.rawValue
         if let accessToken = UserDefaults.standard.value(forKey: "accessToken")
             as? String {
-            mutableURLRequest.setValue("Bearer " + accessToken,
-                                       forHTTPHeaderField: "Authorization")
+            mutableURLRequest.setValue(accessToken,
+                                       forHTTPHeaderField: "x-csrf-token")
         }
+
         switch self {
         case .ExhibitionList():
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
@@ -184,27 +190,40 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return try! Alamofire.URLEncoding.default.encode(mutableURLReq, with: parameters)
         case .MuseumTourGuide(let parameters):
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
-        case .GetToken(let contentType,let parameters):
+        case .GetToken(let parameters):
             let tokenURL = NSURL(string: Config.secureBaseURL + lang() + Config.mobileApiURL)!
             var tokenMutableURLReq = URLRequest(url: tokenURL.appendingPathComponent(path)!)
             tokenMutableURLReq.httpMethod = method.rawValue
-            tokenMutableURLReq.setValue(contentType as? String, forHTTPHeaderField: "Content-Type")
+            tokenMutableURLReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
             return try! Alamofire.JSONEncoding.default.encode(tokenMutableURLReq, with: parameters)
-        case .Login(let token, let contentType, let parameters):
+        case .Login(let parameters):
             let loginURL = NSURL(string: Config.secureBaseURL + lang() + Config.mobileApiURL)!
             var loginMutableURLReq = URLRequest(url: loginURL.appendingPathComponent(path)!)
             loginMutableURLReq.httpMethod = method.rawValue
-            loginMutableURLReq.setValue(token as? String, forHTTPHeaderField: "x-csrf-token")
-            loginMutableURLReq.setValue(contentType as? String, forHTTPHeaderField: "Content-Type")
+            if let accessToken = UserDefaults.standard.value(forKey: "accessToken") as? String {
+                loginMutableURLReq.setValue(accessToken, forHTTPHeaderField: "x-csrf-token")
+            }
+            loginMutableURLReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
             return try! Alamofire.JSONEncoding.default.encode(loginMutableURLReq, with: parameters)
-        case .Logout(let token, let contentType, let parameters):
+        case .Logout(let parameters):
             let logoutURL = NSURL(string: Config.secureBaseURL + lang() + Config.mobileApiURL)!
             var logoutMutableURLReq = URLRequest(url: logoutURL.appendingPathComponent(path)!)
             logoutMutableURLReq.httpMethod = method.rawValue
-            logoutMutableURLReq.setValue(token as? String, forHTTPHeaderField: "x-csrf-token")
-            logoutMutableURLReq.setValue(contentType as? String, forHTTPHeaderField: "Content-Type")
+            if let accessToken = UserDefaults.standard.value(forKey: "accessToken") as? String {
+                logoutMutableURLReq.setValue(accessToken, forHTTPHeaderField: "x-csrf-token")
+            }
+            logoutMutableURLReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
             return try! Alamofire.JSONEncoding.default.encode(logoutMutableURLReq, with: parameters)
-            
+        case .NewPasswordRequest(let parameters):
+            print(parameters)
+            let newPasswordURL = NSURL(string: Config.secureBaseURL + lang() + Config.mobileApiURL)!
+            var passwordMutableURLReq = URLRequest(url: newPasswordURL.appendingPathComponent(path)!)
+            passwordMutableURLReq.httpMethod = method.rawValue
+            if let accessToken = UserDefaults.standard.value(forKey: "accessToken") as? String {
+                passwordMutableURLReq.setValue(accessToken, forHTTPHeaderField: "x-csrf-token")
+            }
+            passwordMutableURLReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            return try! Alamofire.JSONEncoding.default.encode(passwordMutableURLReq, with: parameters)
             
         }
         

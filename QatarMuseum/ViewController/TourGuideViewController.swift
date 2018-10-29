@@ -149,6 +149,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                 self.museumsList = data.homeList
                 self.loadingView.stopLoading()
                 self.loadingView.isHidden = true
+                //Removed Exhibition from Tour List
                 if let arrayOffset = self.museumsList.index(where: {$0.id == searchstring}) {
                     self.museumsList.remove(at: arrayOffset)
                 }

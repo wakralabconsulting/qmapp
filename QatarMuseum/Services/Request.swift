@@ -59,7 +59,7 @@ extension DataRequest {
         let responseSerializer = DataResponseSerializer<T> { request, response, data, error in
             guard error == nil || !(error is AFError) else {
                 return .failure(BackendError.AlamofireError(error: error as! AFError)) }
-            
+            print(request)
             guard error == nil || !(error is NSError) else {
                 return .failure(BackendError.Network(error: error as! NSError)) }
             
