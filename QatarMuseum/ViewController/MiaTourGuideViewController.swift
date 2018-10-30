@@ -122,7 +122,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     func exploreButtonTapAction(miaHeader: MiaCollectionReusableView) {
         var searchstring = String()
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            searchstring = "12476"
+            searchstring = "12471"
         } else {
             searchstring = "12476"
         }
