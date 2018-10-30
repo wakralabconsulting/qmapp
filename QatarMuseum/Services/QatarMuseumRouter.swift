@@ -32,7 +32,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case GetToken([String: Any])
     case Login([String: Any])
     case Logout()
-    case NewPasswordRequest([String: String])
+    case NewPasswordRequest([String: Any])
 
     var method: Alamofire.HTTPMethod {
         switch self {
