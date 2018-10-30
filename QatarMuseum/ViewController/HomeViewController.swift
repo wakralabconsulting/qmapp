@@ -344,13 +344,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
         view.window!.layer.add(transition, forKey: kCATransition)
         
-        if ((UserDefaults.standard.value(forKey: "name")  as? String != nil) && (UserDefaults.standard.value(forKey: "name")  as! String != "") && (UserDefaults.standard.value(forKey: "password")  as? String != nil) && (UserDefaults.standard.value(forKey: "password")  as! String != "")) {
+        if (UserDefaults.standard.value(forKey: "accessToken") as? String != nil) {
             let profileView =  self.storyboard?.instantiateViewController(withIdentifier: "profileViewId") as! ProfileViewController
             self.present(profileView, animated: false, completion: nil)
         } else {
             let culturePassView =  self.storyboard?.instantiateViewController(withIdentifier: "culturePassViewId") as! CulturePassViewController
             culturePassView.fromHome = true
-            
             self.present(culturePassView, animated: false, completion: nil)
         }
     }
