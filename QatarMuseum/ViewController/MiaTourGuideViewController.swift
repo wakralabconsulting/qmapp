@@ -120,27 +120,14 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     
     //MARK: Mia Tour Guide Delegate
     func exploreButtonTapAction(miaHeader: MiaCollectionReusableView) {
-        var searchstring = String()
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            searchstring = "12476"
-        } else {
-            searchstring = "12476"
-        }
-        
-        
-        if (miaTourDataFullArray != nil) {
-            if let arrayOffset = miaTourDataFullArray.index(where: {$0.nid == searchstring}) {
-                let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "miaDetailId") as! MiaTourDetailViewController
-                miaView.tourGuideDetail = miaTourDataFullArray[arrayOffset]
-                let transition = CATransition()
-                transition.duration = 0.3
-                transition.type = kCATransitionPush
-                transition.subtype = kCATransitionFromRight
-                view.window!.layer.add(transition, forKey: kCATransition)
-                self.present(miaView, animated: false, completion: nil)
-            }
-            
-        }
+        let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as! FloorMapViewController
+        floorMapView.fromTourString = fromTour.exploreTour
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(floorMapView, animated: false, completion: nil)
         
     }
     //MARK: WebServiceCall

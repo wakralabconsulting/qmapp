@@ -12,6 +12,9 @@ class HeritageDetailCell: UITableViewCell {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var titleLabel: UITextView!
+    
+    @IBOutlet weak var locationLine: UIView!
+    @IBOutlet weak var titleLineView: UIView!
     @IBOutlet weak var subTitleLabel: UILabel!
     @IBOutlet weak var middleTitleLabel: UILabel!
     @IBOutlet weak var titleDescriptionLabel: UITextView!
@@ -65,20 +68,23 @@ class HeritageDetailCell: UITableViewCell {
     
     func setHeritageDetailData(heritageDetail: Heritage) {
         titleBottomOnlyConstraint.isActive = false
-        //titleBottomOnlyConstraint.constant = 45
-        locationTotalTopConstraint.isActive = false
-        locationTotalBottomConstraint.isActive = false
         middleTitleLabel.isHidden = false
         midTitleDescriptionLabel.isHidden = false
         middleLabelLine.isHidden = true
         openingTimeTitleLabel.isHidden = false
-        openingTimeLine.isHidden = false
         sundayTimeLabel.isHidden = false
         fridayTimeLabel.isHidden = false
         contactTitleLabel.isHidden = false
-        contactLine.isHidden = false
-        contactLabel.isHidden = false
         locationFirstLabelHeight.constant = 0
+        titleLineView.isHidden = false
+        openingTimeLine.isHidden = true
+        contactLine.isHidden = true
+        locationLine.isHidden = false
+        locationTotalBottomConstraint.isActive = true
+        locationTotalBottomConstraint.constant = 40
+        locationTotalTopConstraint.isActive = true
+        locationTotalTopConstraint.constant = 40
+        
         titleLabel.text = heritageDetail.name?.uppercased()
         if (heritageDetail.shortdescription != nil) {
             let shortDesc = replaceString(originalString: heritageDetail.shortdescription!, expression: "<[^>]+>|&nbsp;")
@@ -91,10 +97,12 @@ class HeritageDetailCell: UITableViewCell {
         
         locationTitleLabel.text = NSLocalizedString("LOCATION_TITLE",
                                                     comment: "LOCATION_TITLE in the Heritage detail")
-        openingTimeTitleLabel.text = NSLocalizedString("OPENING_TIME_TITLE",
+        /* Hide bcz no opening time  and contectattribute in api*/
+      /*  openingTimeTitleLabel.text = NSLocalizedString("OPENING_TIME_TITLE",
                                                     comment: "OPENING_TIME_TITLE in the Heritage detail")
         contactTitleLabel.text = NSLocalizedString("CONTACT_TITLE",
-                                                       comment: "CONTACT_TITLE in the Heritage detail")
+                                                       comment: "CONTACT_TITLE in the Heritage detail") */
+        
         let mapRedirectionMessage = NSLocalizedString("MAP_REDIRECTION_MESSAGE",
                                                       comment: "MAP_REDIRECTION_MESSAGE in the Dining detail")
         locationButton.setTitle(mapRedirectionMessage, for: .normal)
@@ -113,21 +121,27 @@ class HeritageDetailCell: UITableViewCell {
         sundayTimeLabel.isHidden = true
         fridayTimeLabel.isHidden = true
         contactTitleLabel.isHidden = true
+        titleLineView.isHidden = false
         contactLine.isHidden = true
         contactLabel.isHidden = true
+        locationLine.isHidden = false
+        locationFirstLabelHeight.constant = 0
         
         titleBottomOnlyConstraint.isActive = true//
-        titleBottomOnlyConstraint.constant = 45//
+        titleBottomOnlyConstraint.constant = 20//
         locationTotalTopConstraint.isActive = true
-        locationTotalTopConstraint.constant = 35
+        locationTotalTopConstraint.constant = 40
          locationTotalBottomConstraint.isActive = true
-        locationTotalBottomConstraint.constant = 50
+        locationTotalBottomConstraint.constant = 40
         
         titleDescriptionLabel.text = publicArsDetail.description?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         midTitleDescriptionLabel.text = publicArsDetail.shortdescription?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         locationTitleLabel.text = NSLocalizedString("LOCATION_TITLE",
                                                     comment: "LOCATION_TITLE in the Heritage detail")
-        //fridayLabel.text = 
+        let mapRedirectionMessage = NSLocalizedString("MAP_REDIRECTION_MESSAGE",
+                                                      comment: "MAP_REDIRECTION_MESSAGE in the Dining detail")
+        locationButton.setTitle(mapRedirectionMessage, for: .normal)
+        
     }
     
     func setMuseumAboutCellData(aboutData: Museum) {
