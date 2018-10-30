@@ -301,12 +301,12 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     func setNewPassword() {
         let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
         if(accessToken != nil) {
-            
             _ = Alamofire.request(QatarMuseumRouter.NewPasswordRequest(["name" : loginPopUpView.userNameText.text!])).responseData { (response) -> Void in
                 switch response.result {
                 case .success( _):
                     self.loadingView.stopLoading()
                     self.loadingView.isHidden = true
+                    UserDefaults.standard.removeObject(forKey: "accessToken")
                     if(response.response?.statusCode == 200) {
                         self.loadSuccessMessage()
                     } else if(response.response?.statusCode == 406) {
@@ -315,7 +315,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
                 case .failure( _):
                     self.loadingView.stopLoading()
                     self.loadingView.isHidden = true
-                    
+                    UserDefaults.standard.removeObject(forKey: "accessToken")
                 }
             }
             
