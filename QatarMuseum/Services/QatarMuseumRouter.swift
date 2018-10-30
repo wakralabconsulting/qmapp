@@ -215,7 +215,6 @@ enum QatarMuseumRouter: URLRequestConvertible {
             logoutMutableURLReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
             return try! Alamofire.JSONEncoding.default.encode(logoutMutableURLReq)
         case .NewPasswordRequest(let parameters):
-            print(parameters)
             let newPasswordURL = NSURL(string: Config.secureBaseURL + lang() + Config.mobileApiURL)!
             var passwordMutableURLReq = URLRequest(url: newPasswordURL.appendingPathComponent(path)!)
             passwordMutableURLReq.httpMethod = method.rawValue
