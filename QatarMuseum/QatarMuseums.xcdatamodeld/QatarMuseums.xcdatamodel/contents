@@ -419,11 +419,35 @@
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="publicImagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PublicArtsEntityArabic" syncable="YES"/>
     </entity>
+    <entity name="TourGuideEntity" representedClassName="TourGuideEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="museumsEntity" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tourGuideDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="tourGuideMultimediaRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TourGuideMultimediaEntity" syncable="YES"/>
+    </entity>
+    <entity name="TourGuideEntityAr" representedClassName="TourGuideEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="museumsEntity" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tourGuideDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="tourGuideMultimediaRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TourGuideMultimediaEntityAr" syncable="YES"/>
+    </entity>
+    <entity name="TourGuideMultimediaEntity" representedClassName="TourGuideMultimediaEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="multimediaFile" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="tourGuideMultimediaRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TourGuideEntity" syncable="YES"/>
+    </entity>
+    <entity name="TourGuideMultimediaEntityAr" representedClassName="TourGuideMultimediaEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="multimediaFile" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="tourGuideMultimediaRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TourGuideEntityAr" syncable="YES"/>
+    </entity>
     <elements>
         <element name="AboutDescriptionEntity" positionX="-27" positionY="135" width="128" height="75"/>
         <element name="AboutDescriptionEntityAr" positionX="-18" positionY="144" width="128" height="75"/>
         <element name="AboutEntity" positionX="-36" positionY="135" width="128" height="225"/>
         <element name="AboutEntityArabic" positionX="-27" positionY="144" width="128" height="270"/>
+        <element name="AboutMultimediaFileEntity" positionX="-9" positionY="135" width="128" height="75"/>
+        <element name="AboutMultimediaFileEntityAr" positionX="0" positionY="144" width="128" height="75"/>
         <element name="CollectionDetailsEntity" positionX="-36" positionY="135" width="128" height="120"/>
         <element name="CollectionDetailsEntityAr" positionX="-27" positionY="144" width="128" height="120"/>
         <element name="CollectionsEntity" positionX="-36" positionY="126" width="128" height="90"/>
@@ -472,7 +496,9 @@
         <element name="PublicArtsEntityArabic" positionX="-54" positionY="117" width="128" height="180"/>
         <element name="PublicArtsImagesEntity" positionX="-18" positionY="144" width="128" height="75"/>
         <element name="PublicArtsImagesEntityAr" positionX="-9" positionY="153" width="128" height="75"/>
-        <element name="AboutMultimediaFileEntity" positionX="-9" positionY="135" width="128" height="75"/>
-        <element name="AboutMultimediaFileEntityAr" positionX="0" positionY="144" width="128" height="75"/>
+        <element name="TourGuideEntity" positionX="-9" positionY="135" width="128" height="120"/>
+        <element name="TourGuideEntityAr" positionX="0" positionY="144" width="128" height="120"/>
+        <element name="TourGuideMultimediaEntity" positionX="9" positionY="153" width="128" height="75"/>
+        <element name="TourGuideMultimediaEntityAr" positionX="18" positionY="162" width="128" height="75"/>
     </elements>
 </model>

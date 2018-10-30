@@ -134,7 +134,7 @@
 "TOUR_GUIDE_TEXT" = "أهلا بك في متاحف قطر\n. يرجى اختيار المتحف لإستكشاف القطع المعروضة \n اغمر نفسك في تفاصيل القطعة التي اختيرت خصيصا لك من قبل خبرائنا";
 "EVENT_ADDED_MESSAGE" = "تم إضافة الفعالية للتقويم";
 "CULTUREPASS_TITLE" = "بطاقتك إلى الثقافة";
-"BENEFIT_TITLE" = "المزايا";
+"BENEFIT_TITLE" =  "المزايا";
 "CULTURE_PASS_INTRO" = "بطاقتك إلى الثقافة الخاصة بمتاحف قطر تمنح مجاناً وتمكنك من التمتع بعديد من الخصومات فضلًا عن فرص حصريةً في العديد من الأماكن الثقافية في قطر وأفضل ما تتيحه لك كعضو هو أنك مدعو إلى الانضمام لنا لتجربة مجموعة واسعة من الأنشطة الإبداعية المثيرة والرائعة.";
 "CULTURE_PASS_SECONDDESC" = "";
 "YET_NO_NOTIFICATION_MESSAGE" = "لا توجد إشعارات بعد";
@@ -200,4 +200,6 @@
 "DATE_OF_BIRTH" = "تاريخ الميلاد";
 "VIEW_MY_CULTUREPASS_CARD" = "عرض بطاقة بطاقتك إلى الثقافة";
 "CREATE_YOUR_ACCOUNT" = "إنشاء حساب جديد";
+"INVALID_USERNAME" = "Invalid username";
+"FORGOT_PASSWORD_SENT_SUCCESSFULLY" = "New password link sent to your email";
 

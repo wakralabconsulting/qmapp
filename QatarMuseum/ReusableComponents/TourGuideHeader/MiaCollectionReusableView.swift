@@ -28,12 +28,16 @@ class MiaCollectionReusableView: UICollectionReusableView {
         selfGuidedTitle.font = UIFont.selfGuidedFont
         selfGuidedText.font = UIFont.settingsUpdateLabelFont
         
+        
+        
+    }
+    func setHeader() {
+        exploreButton.isHidden = false
         miaTitle.text = NSLocalizedString("MIA_TOUR_GUIDE_TITLE", comment: "MIA_TOUR_GUIDE_TITLE in TourGuide page")
         miaTourGuideText.text = NSLocalizedString("TOUR_GUIDE_TEXT", comment: "TOUR_GUIDE_TEXT in TourGuide page")
         exploreButton.setTitle(NSLocalizedString("EXPLORE_BUTTON", comment: "EXPLORE_BUTTON in TourGuide page"), for: .normal)
         selfGuidedTitle.text = NSLocalizedString("SELF_GUIDED_TOUR_TITLE", comment: "SELF_GUIDED_TOUR_TITLE in TourGuide page")
         selfGuidedText.text = NSLocalizedString("SELF_GUIDED_TEXT1", comment: "SELF_GUIDED_TEXT1 in TourGuide page") + "\n" + NSLocalizedString("SELF_GUIDED_TEXT2", comment: "SELF_GUIDED_TEXT2 in TourGuide page")
-        
     }
     
     @IBAction func didTapExplore(_ sender: UIButton) {

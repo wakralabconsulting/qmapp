@@ -302,9 +302,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                     }
                 }
             }
-        }
-        
-        
+        } 
     }
     
     func loadLocationInMap(currentRow: Int) {

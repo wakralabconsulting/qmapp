@@ -205,4 +205,12 @@ extension UIFont {
             return UIFont.init(name: "DINNextLTArabic-Bold", size:22)!
         }
     }
+    static var eventDescriptionFont: UIFont {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            return UIFont.init(name: "DINNextLTPro-Regular", size: 11)!
+        } else{
+            return UIFont.init(name: "DINNextLTArabic-Regular", size:11)!
+        }
+        
+    }
 }

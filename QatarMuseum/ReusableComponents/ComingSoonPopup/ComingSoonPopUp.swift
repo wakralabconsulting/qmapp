@@ -56,9 +56,10 @@ class ComingSoonPopUp: UIView {
         let buttonTitle = NSLocalizedString("CLOSEBUTTON_TITLE", comment: "CLOSEBUTTON_TITLE Label in the Popup")
         closeButton.setTitle(buttonTitle, for: .normal)
     }
-    func loadLogoutMessage() {
+    
+    func loadLogoutMessage(message: String) {
         titleLabel.text = ""
-        messageLabel.text = NSLocalizedString("LOGOUT_SUCCESSFULLY", comment: "LOGOUT_SUCCESSFULLY Label in the Popup")
+        messageLabel.text = message
         stayTunedLabel.text = ""
         messageLabel.font = UIFont.diningHeaderFont
         let buttonTitle = NSLocalizedString("OK", comment: "OK Label in the Popup")

@@ -24,11 +24,12 @@ struct TourGuide: ResponseObjectSerializable, ResponseCollectionSerializable {
         }
     }
     
-    init(title:String?, tourGuideDescription:String?, multimediaFile:[String]?, museumsEntity:String?) {
+    init(title:String?, tourGuideDescription:String?, multimediaFile:[String]?, museumsEntity:String?,nid:String?) {
         self.title = title
         self.tourGuideDescription = tourGuideDescription
         self.multimediaFile = multimediaFile
         self.museumsEntity = museumsEntity
+        self.nid = nid
     }
 }
 
