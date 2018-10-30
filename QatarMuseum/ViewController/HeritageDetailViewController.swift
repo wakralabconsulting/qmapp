@@ -236,7 +236,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         }
         
         if latitudeString != nil && longitudeString != nil && latitudeString != "" && longitudeString != ""{
-            if (pageNameString == PageName.museumAbout) {
+            if ((pageNameString == PageName.museumAbout) || (pageNameString == PageName.publicArtsDetail)) {
                 if let lat : Double = Double(latitudeString) {
                     latitude = lat
                 }

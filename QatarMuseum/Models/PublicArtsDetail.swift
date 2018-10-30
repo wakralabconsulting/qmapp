@@ -27,8 +27,8 @@ struct PublicArtsDetail: ResponseObjectSerializable, ResponseCollectionSerializa
             self.shortdescription = representation["short_description"] as? String
             self.image = representation["Teaser_image"] as? String
             self.images = representation["images"] as? [String]
-            self.longitude = representation["longitude"] as? String
-            self.latitude = representation["latitude"] as? String
+            self.longitude = representation["longtitude"] as? String
+            self.latitude = representation["Latitude"] as? String
         }
     }
     init(id:String?,name:String?,description:String?,shortdescription:String?,image:String?,images:[String]?,longitude:String?,latitude:String? ) {
