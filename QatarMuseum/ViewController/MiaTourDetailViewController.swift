@@ -148,14 +148,6 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
             shortDetailsView.fromScienceTour = false
             self.present(shortDetailsView, animated: false, completion: nil)
         }
-        else {
-            let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as! FloorMapViewController
-            //floorMapView.fromScienceTour = false
-            floorMapView.fromTourString = fromTour.exploreTour
-            self.present(floorMapView, animated: false, completion: nil)
-        }
-       
-
     }
     
     @IBAction func startTourButtonTouchDown(_ sender: UIButton) {
@@ -205,6 +197,8 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
             self.scienceTourTitle.text = tourGuideDetail?.title
             self.tourGuideDescription.text = tourGuideDetail?.tourGuideDescription
             self.setImageArray(tourGuideImgDict: tourGuideDetail)
+        } else if((titleString != nil) && (titleString != "")){
+            self.scienceTourTitle.text = titleString
         }
     }
     func setImageArray(tourGuideImgDict : TourGuide?) {

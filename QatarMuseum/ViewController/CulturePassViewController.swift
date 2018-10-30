@@ -42,6 +42,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         if(fromProfile) {
+             fromProfile = false
             popupView  = ComingSoonPopUp(frame: self.view.frame)
             popupView.comingSoonPopupDelegate = self
             popupView.loadLogoutMessage(message : NSLocalizedString("LOGOUT_SUCCESSFULLY", comment: "LOGOUT_SUCCESSFULLY Label in the Popup"))
