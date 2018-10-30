@@ -39,9 +39,7 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     var logoutToken : String? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
-        getCulturePassTokenFromServer()
         setUpProfileUI()
-        
     }
 
     func setUpProfileUI() {
@@ -50,11 +48,12 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         profileImageView.image = UIImage(named: "profile_pic_round")
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            
             headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         } else {
             headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
+        headerView.settingsButton.isHidden = false
+        headerView.settingsButton.setImage(UIImage(named: "logoutX1"), for: .normal)
         userNameText.font = UIFont.collectionSubTitleFont
         membershipNumKeyLabel.font = UIFont.settingResetButtonFont
         emailKeyLabel.font = UIFont.settingResetButtonFont
@@ -122,7 +121,6 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
                 }
         }
         } else {
-            
             if((UserDefaults.standard.value(forKey: "displayName") as? String != nil) && (UserDefaults.standard.value(forKey: "displayName") as? String != "")) {
                 userNameText.text = (UserDefaults.standard.value(forKey: "displayName") as? String)?.uppercased()
             }
@@ -217,59 +215,41 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     }
     
     //MARK: WebServiceCall
-    func getCulturePassTokenFromServer() {
-        _ = Alamofire.request(QatarMuseumRouter.GetToken(["name": "haithembahri","pass":"saliha"])).responseObject { (response: DataResponse<TokenData>) -> Void in
-            switch response.result {
-            case .success(let data):
-                self.logoutToken = data.accessToken
-                self.headerView.settingsButton.isHidden = false
-                self.headerView.settingsButton.setImage(UIImage(named: "logoutX1"), for: .normal)
-
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
     /* logout when click on the logout button */
     func filterButtonPressed() {
-        
-        if((logoutToken != nil) && (logoutToken != "") && (UserDefaults.standard.value(forKey: "name") as? String != nil) && (UserDefaults.standard.value(forKey: "name") as! String != "") && (UserDefaults.standard.value(forKey: "password") as? String != nil) && (UserDefaults.standard.value(forKey: "password") as! String != "")) {
-            let userName = UserDefaults.standard.value(forKey: "name") as! String
-            let pwd = UserDefaults.standard.value(forKey: "password") as! String
-                _ = Alamofire.request(QatarMuseumRouter.Logout(["name" : userName,"pass": pwd])).responseObject { (response: DataResponse<LogoutData>) -> Void in
-                    switch response.result {
-                    case .success(let data):
-                        print(data)
-                        if(response.response?.statusCode == 200) {
-                            UserDefaults.standard.setValue("", forKey: "name")
-                            UserDefaults.standard.setValue("", forKey: "password")
-                            UserDefaults.standard.setValue("", forKey: "uid")
-                            UserDefaults.standard.setValue("", forKey: "mail")
-                            UserDefaults.standard.setValue("", forKey: "displayName")
-                            UserDefaults.standard.setValue("", forKey: "fieldDateOfBirth")
-                            UserDefaults.standard.setValue("", forKey: "country")
-                            UserDefaults.standard.setValue("" , forKey: "nationality")
-                            UserDefaults.standard.setValue("" , forKey: "profilePic")
-                            UserDefaults.standard.removeObject(forKey: "accessToken")
-                            if let presenter = self.presentingViewController as? CulturePassViewController {
-                                presenter.fromHome = true
-                                presenter.fromProfile = true
-                                self.dismiss(animated: false, completion: nil)
-                            } else {
-                                let culturePassView =  self.storyboard?.instantiateViewController(withIdentifier: "culturePassViewId") as! CulturePassViewController
-                                culturePassView.fromHome = true
-                                culturePassView.fromProfile = true
-                                self.present(culturePassView, animated: false, completion: nil)
-                            }
-                            
+        if(UserDefaults.standard.value(forKey: "accessToken") as? String != nil) {
+            _ = Alamofire.request(QatarMuseumRouter.Logout()).responseObject { (response: DataResponse<LogoutData>) -> Void in
+                switch response.result {
+                case .success(let data):
+                    print(data)
+                    if(response.response?.statusCode == 200) {
+                        UserDefaults.standard.setValue("", forKey: "uid")
+                        UserDefaults.standard.setValue("", forKey: "mail")
+                        UserDefaults.standard.setValue("", forKey: "displayName")
+                        UserDefaults.standard.setValue("", forKey: "fieldDateOfBirth")
+                        UserDefaults.standard.setValue("", forKey: "country")
+                        UserDefaults.standard.setValue("" , forKey: "nationality")
+                        UserDefaults.standard.setValue("" , forKey: "profilePic")
+                        UserDefaults.standard.removeObject(forKey: "accessToken")
+                        if let presenter = self.presentingViewController as? CulturePassViewController {
+                            presenter.fromHome = true
+                            presenter.fromProfile = true
+                            self.dismiss(animated: false, completion: nil)
                         } else {
-                            showAlertView(title: "Qatar Museums", message: "Can not log out", viewController: self)
+                            let culturePassView =  self.storyboard?.instantiateViewController(withIdentifier: "culturePassViewId") as! CulturePassViewController
+                            culturePassView.fromHome = true
+                            culturePassView.fromProfile = true
+                            self.present(culturePassView, animated: false, completion: nil)
                         }
-                    case .failure(let error):
-                        print(error)
                         
+                    } else {
+                        showAlertView(title: "Qatar Museums", message: "Can not log out", viewController: self)
                     }
+                case .failure(let error):
+                    print(error)
+                    
                 }
+            }
         } else {
             showAlertView(title: "Qatar Museums", message: "Can not log out", viewController: self)
         }
