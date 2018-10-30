@@ -435,7 +435,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         transition.type = kCATransitionFade
         transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
         view.window!.layer.add(transition, forKey: kCATransition)
-        if ((UserDefaults.standard.value(forKey: "name")  as? String != nil) && (UserDefaults.standard.value(forKey: "name")  as! String != "") && (UserDefaults.standard.value(forKey: "password")  as? String != nil) && (UserDefaults.standard.value(forKey: "password")  as! String != "")) {
+        if (UserDefaults.standard.value(forKey: "accessToken") as? String != nil) {
             let profileView =  self.storyboard?.instantiateViewController(withIdentifier: "profileViewId") as! ProfileViewController
             self.present(profileView, animated: false, completion: nil)
         } else {

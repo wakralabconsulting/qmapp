@@ -31,8 +31,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case CollectionByTourGuide([String: Any])
     case GetToken([String: Any])
     case Login([String: Any])
-    case Logout([String: Any])
-    case NewPasswordRequest([String: String])
+    case Logout()
+    case NewPasswordRequest([String: Any])
 
     var method: Alamofire.HTTPMethod {
         switch self {
@@ -130,7 +130,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "user/token.json"
         case .Login( _):
             return "user/login.json"
-        case .Logout( _):
+        case .Logout:
             return "user/logout.json"
         case .NewPasswordRequest( _):
             return "user/request_new_password.json"
@@ -205,7 +205,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
             }
             loginMutableURLReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
             return try! Alamofire.JSONEncoding.default.encode(loginMutableURLReq, with: parameters)
-        case .Logout(let parameters):
+        case .Logout():
             let logoutURL = NSURL(string: Config.secureBaseURL + lang() + Config.mobileApiURL)!
             var logoutMutableURLReq = URLRequest(url: logoutURL.appendingPathComponent(path)!)
             logoutMutableURLReq.httpMethod = method.rawValue
@@ -213,9 +213,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
                 logoutMutableURLReq.setValue(accessToken, forHTTPHeaderField: "x-csrf-token")
             }
             logoutMutableURLReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            return try! Alamofire.JSONEncoding.default.encode(logoutMutableURLReq, with: parameters)
+            return try! Alamofire.JSONEncoding.default.encode(logoutMutableURLReq)
         case .NewPasswordRequest(let parameters):
-            print(parameters)
             let newPasswordURL = NSURL(string: Config.secureBaseURL + lang() + Config.mobileApiURL)!
             var passwordMutableURLReq = URLRequest(url: newPasswordURL.appendingPathComponent(path)!)
             passwordMutableURLReq.httpMethod = method.rawValue

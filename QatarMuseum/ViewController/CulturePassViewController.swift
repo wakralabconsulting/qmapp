@@ -175,8 +175,6 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         }
     }
     func loadProfilepage (loginInfo : LoginData?) {
-        UserDefaults.standard.setValue(self.loginPopUpView.userNameText.text!, forKey: "name")
-        UserDefaults.standard.setValue(self.loginPopUpView.passwordText.text!, forKey: "password")
         if (loginInfo != nil) {
             let userData = loginInfo?.user
             UserDefaults.standard.setValue(userData?.uid, forKey: "uid")
@@ -283,6 +281,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
                     self.loadingView.isHidden = true
                     if(response.response?.statusCode == 200) {
                         self.loginArray = data
+                        UserDefaults.standard.setValue(self.loginArray?.token, forKey: "accessToken")
                         self.loadProfilepage(loginInfo: self.loginArray)
                     } else if(response.response?.statusCode == 401) {
                         showAlertView(title: titleString, message: NSLocalizedString("WRONG_USERNAME_OR_PWD",comment: "Set the message for wrong username or password"), viewController: self)
@@ -303,12 +302,12 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     func setNewPassword() {
         let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
         if(accessToken != nil) {
-            
             _ = Alamofire.request(QatarMuseumRouter.NewPasswordRequest(["name" : loginPopUpView.userNameText.text!])).responseData { (response) -> Void in
                 switch response.result {
                 case .success( _):
                     self.loadingView.stopLoading()
                     self.loadingView.isHidden = true
+                    UserDefaults.standard.removeObject(forKey: "accessToken")
                     if(response.response?.statusCode == 200) {
                         self.loadSuccessMessage()
                     } else if(response.response?.statusCode == 406) {
@@ -317,7 +316,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
                 case .failure( _):
                     self.loadingView.stopLoading()
                     self.loadingView.isHidden = true
-                    
+                    UserDefaults.standard.removeObject(forKey: "accessToken")
                 }
             }
             
