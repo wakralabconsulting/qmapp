@@ -174,8 +174,6 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         }
     }
     func loadProfilepage (loginInfo : LoginData?) {
-        UserDefaults.standard.setValue(self.loginPopUpView.userNameText.text!, forKey: "name")
-        UserDefaults.standard.setValue(self.loginPopUpView.passwordText.text!, forKey: "password")
         if (loginInfo != nil) {
             let userData = loginInfo?.user
             UserDefaults.standard.setValue(userData?.uid, forKey: "uid")
@@ -282,6 +280,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
                     self.loadingView.isHidden = true
                     if(response.response?.statusCode == 200) {
                         self.loginArray = data
+                        UserDefaults.standard.setValue(self.loginArray?.token, forKey: "accessToken")
                         self.loadProfilepage(loginInfo: self.loginArray)
                     } else if(response.response?.statusCode == 401) {
                         showAlertView(title: titleString, message: NSLocalizedString("WRONG_USERNAME_OR_PWD",comment: "Set the message for wrong username or password"), viewController: self)
