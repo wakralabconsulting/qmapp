@@ -96,6 +96,8 @@ class RegistrationViewController: UIViewController,HeaderViewProtocol,UIPickerVi
         mobileNumberText.font = UIFont.settingsUpdateLabelFont
         createAccountButton.titleLabel?.font = UIFont.startTourFont
         
+        passwordText.isSecureTextEntry = true
+        confirmPasswordText.isSecureTextEntry = true
         let placeholderSelectValue = NSLocalizedString("SELECT_A_VALUE", comment: "SELECT_A_VALUE in the Registration page")
         userNameLabel.text = NSLocalizedString("USERNAME", comment: "USERNAME in the Registration page")
         mainTitleLabel.text = NSLocalizedString("CREATE_YOUR_ACCOUNT", comment: "CREATE_YOUR_ACCOUNT in the Registration page")
@@ -138,9 +140,9 @@ class RegistrationViewController: UIViewController,HeaderViewProtocol,UIPickerVi
         mobileNumberView.layer.borderWidth = 1
         mobileNumberView.layer.borderColor = UIColor.lightGray.cgColor
         
-        titleArray = ["A","B","C"]
-        countryArray = ["India","France","Iran","Iraq"]
-        nationalityArray = ["Indian","French","Iranian","Iraqi"]
+        titleArray = ["MRS","MR","MS","MISS","MASTER","DR","PROFESSOR",]
+        countryArray = ["QATAR","AFGHANISTAN","ALAND ISLANDS","ALBANIA"]
+        nationalityArray = ["QATAR","AFGHANISTAN","ALAND ISLANDS","ALBANIA"]
         
         userNameText.delegate = self
         emailText.delegate = self

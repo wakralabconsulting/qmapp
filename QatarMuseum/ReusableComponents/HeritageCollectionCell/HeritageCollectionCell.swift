@@ -29,16 +29,6 @@ class HeritageCollectionCell: UICollectionViewCell {
     //MARK: HeritageList data
     func setHeritageListCellValues(heritageList: Heritage) {
         titleLabel.text = heritageList.name?.uppercased()
-       // if  (networkReachability?.isReachable == false) {
-           // if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-                titleLabel.text = heritageList.name?.uppercased()
-//            }
-//            else {
-//                titleLabel.text = heritageList.listarabicname
-//            }
-        //}
-        
-        //subTitle.text = heritageList..uppercased()
         lineLabel.isHidden = true
         //lineLabelHeight.constant = 2
         titleBottomConstraint.constant = 2

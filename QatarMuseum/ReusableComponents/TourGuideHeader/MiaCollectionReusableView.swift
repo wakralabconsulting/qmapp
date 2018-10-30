@@ -41,13 +41,20 @@ class MiaCollectionReusableView: UICollectionReusableView {
     }
     
     @IBAction func didTapExplore(_ sender: UIButton) {
-        miaTourDelegate?.exploreButtonTapAction(miaHeader: self)
-        self.exploreButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        self.audioCircleImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        UIButton.animate(withDuration: 0.2,
+                         animations: {
+                            self.exploreButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        },
+                         completion: { finish in
+                            UIButton.animate(withDuration: 0.1, animations: {
+                                self.exploreButton.transform = CGAffineTransform.identity
+                                
+                            })
+                            self.miaTourDelegate?.exploreButtonTapAction(miaHeader: self)
+        })
     }
     
     @IBAction func exploreButtonTouchDown(_ sender: UIButton) {
-        self.exploreButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-        self.audioCircleImage.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+
     }
 }
