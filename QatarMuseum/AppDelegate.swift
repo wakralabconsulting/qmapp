@@ -10,6 +10,7 @@ import CoreData
 import Firebase
 import GoogleMaps
 import UIKit
+import UserNotifications
 
 //var selectedEventDate : Date = Date()
 var languageKey = 1
@@ -22,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // GMSPlacesClient.provideAPIKey("YOUR_API_KEY")
         AppLocalizer.DoTheMagic()
         FirebaseApp.configure()
+        registerForPushNotifications()
 //        let title = "Analytics Title"
 //        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
 //            AnalyticsParameterItemID: "id-\(title)",
@@ -29,6 +31,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            AnalyticsParameterContentType: "cont"
 //            ])
         return true
+    }
+    
+    
+    func registerForPushNotifications() {
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
+        } else {
+            // Fallback on earlier versions
+        }
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+                (granted, error) in
+                print("Permission granted: \(granted)")
+                // 1. Check if permission granted
+                guard granted else { return }
+                // 2. Attempt registration for remote notifications on the main thread
+                DispatchQueue.main.async {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        // 1. Convert device token to string
+        let tokenParts = deviceToken.map { data -> String in
+            return String(format: "%02.2hhx", data)
+        }
+        let token = tokenParts.joined()
+        // 2. Print device token to use for PNs payloads
+        print("Device Token: \(token)")
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        // 1. Print out error if PNs registration not successful
+        print("Failed to register for remote notifications with error: \(error)")
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
