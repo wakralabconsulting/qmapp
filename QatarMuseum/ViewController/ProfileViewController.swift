@@ -38,9 +38,12 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     var fromHome : Bool = false
     var loginInfo : LoginData?
     var logoutToken : String? = nil
+    var countryListsArray : NSArray!
     override func viewDidLoad() {
         super.viewDidLoad()
+        getCountryListsFromJson()
         setUpProfileUI()
+        
     }
 
     func setUpProfileUI() {
@@ -79,52 +82,6 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         countryKeyLabel.text =  NSLocalizedString("COUNTRY", comment: "COUNTRY in the Profile page")
         nationalityKeyLabel.text =  NSLocalizedString("NATIONALITY", comment: "NATIONALITY in the Profile page")
         viewmyCulturePassButton.setTitle(NSLocalizedString("VIEW_MY_CULTUREPASS_CARD", comment: "VIEW_MY_CULTUREPASS_CARD in the Profile page"), for: .normal)
-        
-        /*if (loginInfo != nil) {
-            
-            if(loginInfo?.user != nil) {
-                let userData = loginInfo?.user
-                
-                if(userData?.uid != nil) {
-                    membershipNumText.text = userData?.uid
-                }
-                if(userData?.mail != nil) {
-                    emailText.text = userData?.mail
-                }
-                if(userData?.name != nil) {
-                    userNameText.text = userData?.name?.uppercased()
-                }
-                if let imageUrl = userData?.picture {
-                    profileImageView.kf.setImage(with: URL(string: imageUrl))
-                }
-                if (profileImageView.image == nil){
-                    profileImageView.image = UIImage(named: "profile_pic_round")
-                }
-                
-                if(userData?.fieldDateOfBirth != nil) {
-                    if((userData?.fieldDateOfBirth?.count)! > 0) {
-                        dateOfBirthText.text = userData?.fieldDateOfBirth![0]
-                    }
-                }
-                let locationData = userData?.fieldLocation["und"] as! NSArray
-                if(locationData.count > 0) {
-                    let iso = locationData[0] as! NSDictionary
-                    if(iso["iso2"] != nil) {
-                        countryText.text = iso["iso2"] as? String
-                    }
-                    
-                }
-                
-                let nationalityData = userData?.fieldNationality["und"] as! NSArray
-                if(nationalityData.count > 0) {
-                    let nation = nationalityData[0] as! NSDictionary
-                    if(nation["iso2"] != nil) {
-                        nationalityText.text = nation["iso2"] as? String
-                    }
-                    
-                }
-        }
-        } else { */
             
             if((UserDefaults.standard.value(forKey: "displayName") as? String != nil) && (UserDefaults.standard.value(forKey: "displayName") as? String != "")) {
                 userNameText.text = (UserDefaults.standard.value(forKey: "displayName") as? String)?.uppercased()
@@ -150,14 +107,43 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
                 dateOfBirthText.text = UserDefaults.standard.value(forKey: "fieldDateOfBirth") as? String
             }
             if((UserDefaults.standard.value(forKey: "country") as? String != nil) && (UserDefaults.standard.value(forKey: "country") as? String != "")) {
-                countryText.text = UserDefaults.standard.value(forKey: "country") as? String
+                //countryText.text = UserDefaults.standard.value(forKey: "country") as? String
+                let countryKey = UserDefaults.standard.value(forKey: "country") as? String
+                if(countryListsArray != nil) {
+                    for country in countryListsArray {
+                        let countryDict = country as! NSDictionary
+                        if(countryDict["alpha-2"] as? String == countryKey) {
+                            countryText.text = countryDict["name"] as? String
+                        }
+                    }
+                }
             }
             if((UserDefaults.standard.value(forKey: "nationality") as? String != nil) && (UserDefaults.standard.value(forKey: "nationality") as? String != "")) {
-                nationalityText.text = UserDefaults.standard.value(forKey: "nationality") as? String
+                //nationalityText.text = UserDefaults.standard.value(forKey: "nationality") as? String
+                let nationalityKey = UserDefaults.standard.value(forKey: "nationality") as? String
+                if(countryListsArray != nil) {
+                    for country in countryListsArray {
+                        let countryDict = country as! NSDictionary
+                        if(countryDict["alpha-2"] as? String == nationalityKey) {
+                            nationalityText.text = countryDict["name"] as? String
+                        }
+                    }
+                }
             }
         //}
     }
-    
+    //MARK: Service call
+    func getCountryListsFromJson(){
+        let url = Bundle.main.url(forResource: "CountryList", withExtension: "json")
+        let dataObject = NSData(contentsOf: url!)
+        if let jsonObj = try? JSONSerialization.jsonObject(with: dataObject! as Data, options: .allowFragments) as? NSDictionary {
+            
+            countryListsArray = jsonObj!.value(forKey: "countryLists")
+                as! NSArray
+        }
+        
+        
+    }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
