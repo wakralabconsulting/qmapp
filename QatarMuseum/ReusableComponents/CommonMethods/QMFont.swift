@@ -195,14 +195,14 @@ extension UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             return UIFont.init(name: "DINNextLTPro-Bold", size: 32)!
         } else{
-            return UIFont.init(name: "DINNextLTArabic-Bold", size:32)!
+            return UIFont.init(name: "DINNextLTArabic-Bold", size:30)!
         }
     }
     static var tryAgainFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             return UIFont.init(name: "DINNextLTPro-Bold", size: 22)!
         } else{
-            return UIFont.init(name: "DINNextLTArabic-Bold", size:22)!
+            return UIFont.init(name: "DINNextLTArabic-Bold", size:21)!
         }
     }
     static var eventDescriptionFont: UIFont {

@@ -284,12 +284,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             //numberSerchBtn.setImage(UIImage(named: "side_menu_blackX1"), for: .normal)
            // self.numberSerchBtn.contentEdgeInsets = UIEdgeInsets(top: 11, left: 5, bottom: 11, right: 5)
             numberSerchBtn.isHidden = true
-            headerView.headerBackButton.isHidden = true
-            headerView.settingsButton.isHidden = false
-            headerView.settingsButton.setImage(UIImage(named: "side_menu_iconX1"), for: .normal)
-            
-            headerView.settingsButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 10, bottom:11, right: 8)
-            
+            headerView.headerBackButton.isHidden = false
+            headerView.settingsButton.isHidden = true
             
             levelTwoPositionArray = ["l2_g1_sc3","l2_g8","l2_g8_sc1","l2_g8_sc6_1","l2_g8_sc6_2","l2_g8_sc5","l2_g8_sc4_1","l2_g8_sc4_2","l2_g9_sc7","l2_g9_sc5_1","l2_g9_sc5_2","l2_g5_sc6","l2_g3_sc13"]
             levelTwoMarkerArray = [l2_g1_sc3,l2_g8,l2_g8_sc1,l2_g8_sc6_1,l2_g8_sc6_2,l2_g8_sc5,l2_g8_sc4_1,l2_g8_sc4_2,l2_g9_sc7,l2_g9_sc5_1,l2_g9_sc5_2,l2_g5_sc6,l2_g3_sc13]
@@ -330,11 +326,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             //numberSerchBtn.setImage(UIImage(named: "side_menu_blackX1"), for: .normal)
             // self.numberSerchBtn.contentEdgeInsets = UIEdgeInsets(top: 11, left: 5, bottom: 11, right: 5)
             numberSerchBtn.isHidden = true
-            headerView.headerBackButton.isHidden = true
-            headerView.settingsButton.isHidden = false
-            headerView.settingsButton.setImage(UIImage(named: "side_menu_iconX1"), for: .normal)
+            headerView.headerBackButton.isHidden = false
+            headerView.settingsButton.isHidden = true
+            //headerView.settingsButton.setImage(UIImage(named: "side_menu_iconX1"), for: .normal)
             
-            headerView.settingsButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 10, bottom:11, right: 8)
+            //headerView.settingsButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 10, bottom:11, right: 8)
             
             
             
@@ -1518,14 +1514,16 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     
     //MARK:Header Protocol
     func headerCloseButtonPressed() {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromLeft
-        self.view.window!.layer.add(transition, forKey: kCATransition)
-        self.avPlayer = nil
-        self.timer?.invalidate()
-        self.dismiss(animated: false, completion: nil)
+        if (fromTourString == fromTour.exploreTour) {
+            let transition = CATransition()
+            transition.duration = 0.3
+            transition.type = kCATransitionPush
+            transition.subtype = kCATransitionFromLeft
+            self.view.window!.layer.add(transition, forKey: kCATransition)
+            self.avPlayer = nil
+            self.timer?.invalidate()
+        }
+        self.dismiss(animated: true, completion: nil)
     }
     func filterButtonPressed() {
         self.avPlayer = nil

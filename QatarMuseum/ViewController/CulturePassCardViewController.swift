@@ -21,6 +21,7 @@ class CulturePassCardViewController: UIViewController {
         
     }
     func setUI() {
+        
         membershipLabel.text = NSLocalizedString("MEMBERSHIP_NUMBER", comment: "MEMBERSHIP_NUMBER in the CulturePassCard page") + " " + membershipNumber!
         membershipLabel.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
         membershipLabel.font = UIFont.settingsUpdateLabelFont

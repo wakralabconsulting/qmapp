@@ -18,7 +18,8 @@ class WebViewController: UIViewController,UIWebViewDelegate,LoadingViewProtocol 
     var webViewUrl: URL? = nil
     var titleString: String? = nil
     let networkReachability = NetworkReachabilityManager()
-    
+    var baseUrlString : URL?
+    var content : String?
     override func viewDidLoad() {
     loadingView.isHidden = false
     loadingView.showLoading()
@@ -31,12 +32,14 @@ class WebViewController: UIViewController,UIWebViewDelegate,LoadingViewProtocol 
         if  (networkReachability?.isReachable)! {
             let requestObj = URLRequest(url: webViewUrl!)
             self.webView.loadRequest(requestObj)
+            //self.webView.loadHTMLString(content!, baseURL: baseUrlString)
         } else {
             self.showNoNetwork()
         }
         webView.delegate = self
         webView.backgroundColor = UIColor.whiteColor
         webView.scrollView.bounces = false
+        
         
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
