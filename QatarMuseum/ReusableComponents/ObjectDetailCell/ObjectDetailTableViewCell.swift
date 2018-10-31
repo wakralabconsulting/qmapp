@@ -289,7 +289,6 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
         self.timer?.invalidate()
     }
     func dismissOvelay() {
-        print("hi")
     }
 
     

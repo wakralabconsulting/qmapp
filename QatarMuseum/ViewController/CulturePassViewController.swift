@@ -109,7 +109,16 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     
     @IBAction func didTapRegisterButton(_ sender: UIButton) {
-        let registrationUrlString = "http://www.qm.org.qa/en/user/register"
+        var registrationUrlString = String()
+        
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            registrationUrlString = "http://www.qm.org.qa/en/user/register#user-register-form"
+        } else {
+            registrationUrlString = "http://www.qm.org.qa/ar/user/register#user-register-form"
+        }
+        
+        
+        
         if let registrationUrl = URL(string: registrationUrlString) {
             // show alert to choose app
             if UIApplication.shared.canOpenURL(registrationUrl as URL) {
