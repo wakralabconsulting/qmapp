@@ -333,6 +333,11 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                     }
                     if(museumsList.count == 0){
                         self.showNoNetwork()
+                    } else {
+                        //Removed Exhibition from Tour List
+                        if let arrayOffset = self.museumsList.index(where: {$0.id == searchstring}) {
+                            self.museumsList.remove(at: arrayOffset)
+                        }
                     }
                     tourCollectionView.reloadData()
                 }

@@ -79,13 +79,13 @@
 "PRODUCTION_LABEL" = "الانتاج:";
 "PRODUCTION_DATES_LABEL" = "تاريخ الإنتاج:";
 "PERIOD_STYLE_LABEL" = "الفترة/النمط:";
-"TECHNIQUES_LABEL" = "Technique & Materials:";
-"DIMENSIONS_LABEL" = "Dimensions:";
+"TECHNIQUES_LABEL" = "التقنيات والمواد:";
+"DIMENSIONS_LABEL" = "الأبعاد:";
 "FLOOR_MAP_TITLE" = "طوابق متحف الفن الإسلامي";
 "NO_EVENTS" = "لا توجد فعاليات";
 "ARTIFACT_NUMBERPAD_TITLE" = "بحث الكائن";
 "OBJECT_TITLE" = "ادخل رقم الكائن";
-"OBJECT_INFO" = "next to \t  to view the details";
+"OBJECT_INFO" = "بجانب \t  لعرض التفاصيل";
 "OR_LABEL" = "أو";
 "MUSEUM_TIMING" = "مواعيد عمل المتحف";
 "MUSEUM_TITLE" = "متحف الفن الإسلامي";
@@ -154,7 +154,7 @@
 "SOMETHING_WENT_WRONG_TITLE" = "حدث خطأ ما";
 "LOCATION_ERROR_MESSAGE" = "للأسف لقد تعذر فتح خرائط جوجل";
 "ANYSTRING" = "All";
-"LEVEL_STRING" = "Level";
+"LEVEL_STRING" = "المستوى";
 "MIA_HIGHLIGHTS_TOUR" = "جولة مختارات متحف الفن الإسلامي";
 "CULTURE_DISCOUNT_LABEL" = "- خصم بنسبة 15٪ في QM CAFÉ'S على جميع المنتجات \n\n- خصم بنسبة 10٪ على العناصر في جميع متاجر هدايا QM (بدون حد أدنى من الشراء) \n\n - خصم بنسبة 10٪ في مطعم IDAM في وقت الغداء \n\n- استلام النشرة الإخبارية الشهرية للبقاء على إطلاع على عروض متاحف قطر والشركاء \n\n- الحصول على وصول أولي إلى مناقشات وحلقات الأعضاء فقط \n\n- الحصول على دعوات حصرية إلى مركز اتصال متاحف قطر ذو المواصفات العالمية من 8 صباحًا إلى 8 مساءً يوميًا";
 "CULTURE_NOT_A_MEMBER" = "لست عضواً بعد؟";
@@ -165,18 +165,18 @@
 "RESET_TO_DEFAULT" = "إعداة تعيين للوضع الإفتراضي";
 "MORE" = "المزيد";
 "GIFT_SHOP" = "محل الهدايا";
-"LOCATION_MISSING_MESSAGE" = "No Location Data";
-"USERNAME_REQUIRED" = "Username or e-mail field is required.";
-"ALREADY_LOGGEDIN" = "Already logged in";
-"PASSWORD_REQUIRED" = "Password field is required";
-"WRONG_USERNAME_OR_PWD" = "Wrong username or password.";
+"LOCATION_MISSING_MESSAGE" = "لا توجد بيانات للموقع";
+"USERNAME_REQUIRED" = "اسم المستخدم أوالبريد الإلكتروني مطلوب";
+"ALREADY_LOGGEDIN" = "تم تسجيل الدخول بالفعل";
+"PASSWORD_REQUIRED" = "حقل كلمة المرور مطلوب";
+"WRONG_USERNAME_OR_PWD" = "اسم مستخدم أو كلمة مرور غير صحيح.";
 "LOGOUT_SUCCESSFULLY" = "You have been successfully logged out!";
-"OK" = "OK";
+"OK" = "تم ";
 "MEMBERSHIP_NUMBER" = "رقم العضوية";
-"NO_INTERNET" = "There is no Internet connection";
-"CHECK_INTERNET" = "Please check your Internet connection";
-"TRY_AGAIN" = "Try again";
-"OOPS_MESSAGE" = "Oops!";
+"NO_INTERNET" = "لا يوجد اتصال بالانترنت";
+"CHECK_INTERNET" = "الرجاء التحقق من اتصال الانترنت الخاص بك";
+"TRY_AGAIN" = "حاول مرة اخى";
+"OOPS_MESSAGE" = "خطأ!";
 "CHECK_NETWORK" = "تفقد اتصالك بالانترنت";
 
 "USERNAME" = "اسم المستخدم";
@@ -202,4 +202,4 @@
 "CREATE_YOUR_ACCOUNT" = "إنشاء حساب جديد";
 "INVALID_USERNAME" = "Invalid username";
 "FORGOT_PASSWORD_SENT_SUCCESSFULLY" = "New password link sent to your email";
-
+"LOGOUT_ERROR" = "Error in logging out!";
