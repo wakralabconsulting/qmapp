@@ -10,11 +10,13 @@ import CoreData
 import Firebase
 import GoogleMaps
 import UIKit
+import UserNotifications
+import Alamofire
 
 //var selectedEventDate : Date = Date()
 var languageKey = 1
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     var window: UIWindow?
     var shouldRotate = false
     
@@ -22,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey("AIzaSyBXEzUfmsi5BidKqR1eY999pj0APP2N0k0")
         // GMSPlacesClient.provideAPIKey("YOUR_API_KEY")
         AppLocalizer.DoTheMagic()
+//        notificationHandler(application)
         FirebaseApp.configure()
 //        let title = "Analytics Title"
 //        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
@@ -29,9 +32,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            AnalyticsParameterItemName: title,
 //            AnalyticsParameterContentType: "cont"
 //            ])
+        
+        // Configure the user interactions first.
+//        self.configureUserInteractions()
+//        registerForPushNotifications()
+        
+        // Register with APNs
+        let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+        
+        application.registerUserNotificationSettings(settings)
+        application.registerForRemoteNotifications()
+        
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().delegate = self
+        } else {
+            // Fallback on earlier versions
+        }
+
+//        UIApplication.shared.registerForRemoteNotifications()
         return true
     }
-
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
@@ -58,6 +79,121 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         return shouldRotate ? .allButUpsideDown : .portrait
     }
+    
+//    func notificationHandler(_ application: UIApplication) {
+//        if #available(iOS 10.0, *) {
+//            let center = UNUserNotificationCenter.current()
+//            center.getNotificationSettings(){ (settings) in
+//                switch settings.authorizationStatus {
+//                case .authorized:
+//                    print("Authorized Push Notifications by User")
+//                    self.registerPushNotifications()
+//                case .denied:
+//                    print("show user a view explaining why it's better to enable")
+//                    self.registerPushNotifications()
+//                case .notDetermined:
+//                    self.requestPushNotifications(center: center, { (granted) in
+//                        if granted {
+//                            self.registerPushNotifications()
+//                            return
+//                        }
+//                        print("User did not grant Remote Notifications Authorizations")
+//                    })
+//                }
+//            }
+//        } else {
+//            print("App does not meet minimum OS Requirements")
+//            return
+//        }
+//    }
+    
+//    fileprivate func requestPushNotifications(center: UNUserNotificationCenter,_ result: @escaping(Bool)->Void) {
+//        center.requestAuthorization(options:[.badge, .alert, .sound]) { (granted, error) in
+//            if error != nil {
+//                print("Could not request Authorization for Notifications - Yet is undetermined")
+//            } else {
+//                result(granted)
+//            }
+//        }
+//    }
+    
+    func registerPushNotifications() {
+        if #available(iOS 10.0, *) {
+            
+            UIApplication.shared.registerForRemoteNotifications()
+            
+        } else {
+            print("App does not meet base OS requirements")
+        }
+    }
+    
+    // Handle remote notification registration.
+//    func application(_ application: UIApplication,
+//                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data){
+//        // Forward the token to your provider, using a custom method.
+//        self.enableRemoteNotificationFeatures()
+//        self.forwardTokenToServer(token: deviceToken)
+//    }
+//
+//    func application(_ application: UIApplication,
+//                     didFailToRegisterForRemoteNotificationsWithError error: Error) {
+//        // The token is not currently available.
+//        print("Remote notification support is unavailable due to error: \(error.localizedDescription)")
+//        self.disableRemoteNotificationFeatures()
+//    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let tokenParts = deviceToken.map { data -> String in
+            return String(format: "%02.2hhx", data)
+        }
+        
+        let token = tokenParts.joined()
+        print("Device Token: \(token) ")
+        self.sendDeviceTokenToServer(deviceToken: token)
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError
+        error: Error) {
+        // Try again later.
+    }
+    
+    // This method will be called when app received push notifications in foreground
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void)
+    {
+        completionHandler([.alert, .badge, .sound])
+    }
+    
+    func registerForPushNotifications() {
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+                (granted, error) in
+                print("Permission granted: \(granted)")
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+    
+    //MARK: WebServiceCall
+    func sendDeviceTokenToServer(deviceToken: String) {
+        _ = Alamofire.request(QatarMuseumRouter.GetToken(["name": "","pass":""])).responseObject { (response: DataResponse<TokenData>) -> Void in
+            switch response.result {
+            case .success(let data):
+                _ = Alamofire.request(QatarMuseumRouter.SendDeviceToken(data.accessToken, ["token": deviceToken, "type":"ios"])).responseObject { (response: DataResponse<DeviceToken>) -> Void in
+                    switch response.result {
+                    case .success( _):
+                        print("This token is successfully sent to server")
+                    case .failure( _):
+                        print("Fail to update device token")
+                    }
+                }
+            case .failure( _):
+                print("Failed to generating token ")
+            }
+        }
+    }
+    
     // MARK: - Core Data stack
     
     @available(iOS 10.0, *)

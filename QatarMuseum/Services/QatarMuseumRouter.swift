@@ -33,7 +33,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case Login([String: Any])
     case Logout()
     case NewPasswordRequest([String: Any])
-
+    case SendDeviceToken(String, [String: Any])
+    
     var method: Alamofire.HTTPMethod {
         switch self {
         case .ExhibitionList:
@@ -82,7 +83,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return .post
         case .NewPasswordRequest:
             return .post
-        
+        case .SendDeviceToken:
+            return .post
         }
     }
     
@@ -134,6 +136,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "user/logout.json"
         case .NewPasswordRequest( _):
             return "user/request_new_password.json"
+        case .SendDeviceToken( _, _):
+            return "push_notifications.json"
         }
     }
 
@@ -223,7 +227,10 @@ enum QatarMuseumRouter: URLRequestConvertible {
             }
             passwordMutableURLReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
             return try! Alamofire.JSONEncoding.default.encode(passwordMutableURLReq, with: parameters)
-            
+        case .SendDeviceToken(let accessToken, let parameters):
+            mutableURLRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            mutableURLRequest.setValue(accessToken, forHTTPHeaderField: "x-csrf-token")
+            return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest, with: parameters)
         }
         
     }
