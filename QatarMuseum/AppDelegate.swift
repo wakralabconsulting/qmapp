@@ -19,7 +19,7 @@ var languageKey = 1
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     var window: UIWindow?
     var shouldRotate = false
-    
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         GMSServices.provideAPIKey("AIzaSyBXEzUfmsi5BidKqR1eY999pj0APP2N0k0")
         // GMSPlacesClient.provideAPIKey("YOUR_API_KEY")
@@ -84,6 +84,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
     
+    //MARK: Push notification receive delegates
+    func application(_ application: UIApplication,
+                     didReceiveRemoteNotification userInfo: [AnyHashable : Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        application.applicationIconBadgeNumber = 0
+        print("Recived: \(userInfo)")
+        if (application.applicationState == .active) {
+            UserDefaults.standard.setValue(1, forKey: "notificationBadgeCount")
+            if let topController = UIApplication.topViewController() {
+                print(topController)
+            }
+        }
+        completionHandler(.newData)
+        
+    }
+
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenParts = deviceToken.map { data -> String in
             return String(format: "%02.2hhx", data)
@@ -99,6 +115,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Try again later.
     }
     
+    // This method will be called when we click push notifications in background
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        let userInfo = response.notification.request.content.userInfo
+    }
+    
     // This method will be called when app received push notifications in foreground
     @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
@@ -106,7 +129,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // Print full message.
         print(userInfo)
-        completionHandler([.alert, .badge, .sound])
+        let info = self.extractUserInfo(userInfo: userInfo)
+        print(info.title)
+        if let badgeCount = UserDefaults.standard.value(forKey: "notificationBadgeCount") as?
+            Int {
+            UserDefaults.standard.setValue(badgeCount + 1, forKey: "notificationBadgeCount")
+        } else {
+            UserDefaults.standard.setValue(1, forKey: "notificationBadgeCount")
+        }
+        if UserDefaults.standard.value(forKey: "pushNotificationList") as?
+            [Notification] != nil {
+            var notificationArray = UserDefaults.standard.value(forKey: "pushNotificationList") as!
+            [Notification]
+            notificationArray.insert(Notification(title: info.title, sortId: ""), at: 0)
+            UserDefaults.standard.setValue(notificationArray, forKey: "pushNotificationList")
+        } else {
+            UserDefaults.standard.setValue(Notification(title: info.title, sortId: ""), forKey: "pushNotificationList")
+        }
+        if let topController = UIApplication.topViewController() {
+            print(topController)
+            if topController is HomeViewController {
+                (topController as! HomeViewController).updateNotificationBadge()
+            } else if topController is MuseumsViewController {
+                (topController as! MuseumsViewController).updateNotificationBadge()
+            } else if topController is NotificationsViewController {
+                (topController as! NotificationsViewController).updateNotificationTableView()
+            }
+        }
+//        completionHandler([.alert, .badge, .sound])
     }
     
     //MARK: WebServiceCall
@@ -123,9 +173,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     }
                 }
             case .failure( _):
-                print("Failed to generating token ")
+                print("Failed to generate token ")
             }
         }
+    }
+    
+    func extractUserInfo(userInfo: [AnyHashable : Any]) -> (title: String, body: String) {
+        var info = (title: "", body: "")
+        guard let aps = userInfo["aps"] as? [String: Any] else { return info }
+//        guard let alert = aps["alert"] as? [String: Any] else { return info }
+        let title = aps["alert"] as? String ?? ""
+        let body = "" //alert["body"] as? String ?? ""
+        info = (title: title, body: body)
+        return info
     }
     
     // MARK: - Core Data stack
@@ -235,5 +295,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
 
+}
+
+extension UIApplication {
+    class func topViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+        if let navigationController = controller as? UINavigationController {
+            return topViewController(controller: navigationController.visibleViewController)
+        }
+        if let tabController = controller as? UITabBarController {
+            if let selected = tabController.selectedViewController {
+                return topViewController(controller: selected)
+            }
+        }
+        if let presented = controller?.presentedViewController {
+            return topViewController(controller: presented)
+        }
+        return controller
+    }
 }
 

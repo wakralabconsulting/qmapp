@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TopBarView" customModule="QatarMuseums" customModuleProvider="target">
             <connections>
                 <outlet property="backButton" destination="EkF-Wd-T5j" id="34y-M5-3zB"/>
+                <outlet property="badgeLabel" destination="sVi-OG-uHM" id="G04-fh-tE7"/>
                 <outlet property="eventButton" destination="LdD-fj-9o6" id="g0M-KO-u5D"/>
                 <outlet property="menuButton" destination="Tqa-pJ-sUL" id="N32-vj-WfW"/>
                 <outlet property="notificationButton" destination="HGD-WJ-BiC" id="L5c-7y-Yal"/>
@@ -86,9 +87,27 @@
                                 <action selector="notificationButtonTouchDown:" destination="-1" eventType="touchDown" id="y0g-1o-BAM"/>
                             </connections>
                         </button>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVi-OG-uHM">
+                            <rect key="frame" x="41" y="10.5" width="24" height="24"/>
+                            <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="24" id="JSr-h1-Fcd"/>
+                                <constraint firstAttribute="width" constant="24" id="vgX-QE-ANn"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="12"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstItem="sVi-OG-uHM" firstAttribute="centerY" secondItem="lhw-Xn-pwa" secondAttribute="centerY" constant="-10" id="80C-Zy-PoI"/>
+                        <constraint firstItem="sVi-OG-uHM" firstAttribute="centerX" secondItem="lhw-Xn-pwa" secondAttribute="centerX" constant="10" id="DMY-kn-bnJ"/>
                         <constraint firstItem="HGD-WJ-BiC" firstAttribute="centerX" secondItem="lhw-Xn-pwa" secondAttribute="centerX" id="cF6-k7-Dz2"/>
                         <constraint firstItem="HGD-WJ-BiC" firstAttribute="centerY" secondItem="lhw-Xn-pwa" secondAttribute="centerY" id="kkI-vh-pdb"/>
                     </constraints>

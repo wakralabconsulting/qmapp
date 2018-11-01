@@ -89,6 +89,7 @@ class LoadingView: UIView {
     func showNoDataView() {
         self.isNoDataDisplayed = true
         //self.isHidden = false
+        self.oopsLabel.isHidden = true
         let noDataText = NSLocalizedString("NO_RESULT_MESSAGE", comment: "No result message")
         self.noDataLabel.font = UIFont.closeButtonFont
         self.noDataLabel.text = noDataText

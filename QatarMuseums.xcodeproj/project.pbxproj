@@ -16,6 +16,7 @@
 		1B51B3D021214853002B84AA /* ObjectPopupXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B51B3CF21214853002B84AA /* ObjectPopupXib.xib */; };
 		1B51B3D221219367002B84AA /* ObjectDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51B3D121219366002B84AA /* ObjectDetailViewController.swift */; };
 		1B51B3D52121B6A9002B84AA /* ObjectDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51B3D42121B6A9002B84AA /* ObjectDetailTableViewCell.swift */; };
+		1B7031EE218AFDB200B0E05B /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7031ED218AFDB200B0E05B /* Notification.swift */; };
 		1B902C00212D56EC00D3055B /* BenefitLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B902BFF212D56EC00D3055B /* BenefitLabelCell.swift */; };
 		1BAA2FCB2125FCC600D785DD /* ObjectImageXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BAA2FCA2125FCC500D785DD /* ObjectImageXib.xib */; };
 		1BAA2FCD2125FD8200D785DD /* ObjectImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAA2FCC2125FD8200D785DD /* ObjectImageView.swift */; };
@@ -227,6 +228,7 @@
 		1B51B3CF21214853002B84AA /* ObjectPopupXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ObjectPopupXib.xib; sourceTree = "<group>"; };
 		1B51B3D121219366002B84AA /* ObjectDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectDetailViewController.swift; sourceTree = "<group>"; };
 		1B51B3D42121B6A9002B84AA /* ObjectDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectDetailTableViewCell.swift; sourceTree = "<group>"; };
+		1B7031ED218AFDB200B0E05B /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		1B902BFF212D56EC00D3055B /* BenefitLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitLabelCell.swift; sourceTree = "<group>"; };
 		1BAA2FCA2125FCC500D785DD /* ObjectImageXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ObjectImageXib.xib; sourceTree = "<group>"; };
 		1BAA2FCC2125FD8200D785DD /* ObjectImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectImageView.swift; sourceTree = "<group>"; };
@@ -569,6 +571,7 @@
 				B84BA05F217EE3C000FD2C0D /* TokenData.swift */,
 				B84BA061217F1A6300FD2C0D /* LoginData.swift */,
 				B82E1B3221808229006623A6 /* LogoutData.swift */,
+				1B7031ED218AFDB200B0E05B /* Notification.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1483,6 +1486,7 @@
 				B8294CF220CBF265002AFF72 /* FSCalendarCell.m in Sources */,
 				B85BA4AC20D01BC900E7F4D1 /* ExhibitionDetailTableViewCell.swift in Sources */,
 				1B902C00212D56EC00D3055B /* BenefitLabelCell.swift in Sources */,
+				1B7031EE218AFDB200B0E05B /* Notification.swift in Sources */,
 				B8DC478B20DD05BA0007B426 /* ParksViewController.swift in Sources */,
 				B8DC40A720C9A33A0044134D /* CommonHeaderView.swift in Sources */,
 				B891D06020DBC6BA00919F30 /* HeritageListViewController.swift in Sources */,

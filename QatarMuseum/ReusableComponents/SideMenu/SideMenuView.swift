@@ -87,7 +87,8 @@ class SideMenuView: UIView,TopBarProtocol {
         topBarView.eventButton.isHidden = true
         topBarView.notificationButton.isHidden = true
         topBarView.profileButton.isHidden = true
-        
+        topBarView.badgeLabel.isHidden = true
+
         exhibitionsLabel.text = NSLocalizedString("EXHIBITIONS_LABEL", comment: "EXHIBITIONS_LABEL Label in the SideMenu page")
         eventsLabel.text = NSLocalizedString("EVENTS_LABEL", comment: "EVENTS_LABEL Label in the SideMenu page")
         educationLabel.text = NSLocalizedString("EDUCATION_LABEL", comment: "EDUCATION_LABEL Label in the SideMenu page")
