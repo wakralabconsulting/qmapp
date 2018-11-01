@@ -10,11 +10,13 @@ import CoreData
 import Firebase
 import GoogleMaps
 import UIKit
+import UserNotifications
+import Alamofire
 
 //var selectedEventDate : Date = Date()
 var languageKey = 1
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     var window: UIWindow?
     var shouldRotate = false
     
@@ -29,9 +31,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            AnalyticsParameterItemName: title,
 //            AnalyticsParameterContentType: "cont"
 //            ])
+        
+        // Register with APNs
+        let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+        
+        application.registerUserNotificationSettings(settings)
+        application.registerForRemoteNotifications()
+        
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().delegate = self
+        } else {
+            // Fallback on earlier versions
+        }
+
         return true
     }
-
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
@@ -58,6 +73,61 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         return shouldRotate ? .allButUpsideDown : .portrait
     }
+    
+    func registerPushNotifications() {
+        if #available(iOS 10.0, *) {
+            
+            UIApplication.shared.registerForRemoteNotifications()
+            
+        } else {
+            print("App does not meet base OS requirements")
+        }
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let tokenParts = deviceToken.map { data -> String in
+            return String(format: "%02.2hhx", data)
+        }
+        
+        let token = tokenParts.joined()
+        print("Device Token: \(token) ")
+        self.sendDeviceTokenToServer(deviceToken: token)
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError
+        error: Error) {
+        // Try again later.
+    }
+    
+    // This method will be called when app received push notifications in foreground
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        let userInfo = notification.request.content.userInfo
+        
+        // Print full message.
+        print(userInfo)
+        completionHandler([.alert, .badge, .sound])
+    }
+    
+    //MARK: WebServiceCall
+    func sendDeviceTokenToServer(deviceToken: String) {
+        _ = Alamofire.request(QatarMuseumRouter.GetToken(["name":"","pass":""])).responseObject { (response: DataResponse<TokenData>) -> Void in
+            switch response.result {
+            case .success(let data):
+                _ = Alamofire.request(QatarMuseumRouter.SendDeviceToken(data.accessToken!, ["token": deviceToken, "type":"ios"])).responseObject { (response: DataResponse<DeviceToken>) -> Void in
+                    switch response.result {
+                    case .success( _):
+                        print("This token is successfully sent to server")
+                    case .failure( _):
+                        print("Fail to update device token")
+                    }
+                }
+            case .failure( _):
+                print("Failed to generating token ")
+            }
+        }
+    }
+    
     // MARK: - Core Data stack
     
     @available(iOS 10.0, *)
