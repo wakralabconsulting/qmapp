@@ -49,6 +49,12 @@
 		B806B7CB2124536F00F9F338 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7CA2124536E00F9F338 /* Accelerate.framework */; };
 		B806B7CD21247FB400F9F338 /* MapStyle.json in Resources */ = {isa = PBXBuildFile; fileRef = B806B7CC21247FB400F9F338 /* MapStyle.json */; };
 		B806B7D72152BE6A00F9534F /* CollectionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B806B7D62152BE6A00F9534F /* CollectionDetail.swift */; };
+		B80B76AA218AD6AC00190967 /* AcceptDeclinePopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80B76A4218AD6AC00190967 /* AcceptDeclinePopup.swift */; };
+		B80B76AB218AD6AC00190967 /* GreetingsPopupPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80B76A5218AD6AC00190967 /* GreetingsPopupPage.swift */; };
+		B80B76AC218AD6AC00190967 /* AcceptDeclinePopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = B80B76A6218AD6AC00190967 /* AcceptDeclinePopup.xib */; };
+		B80B76AD218AD6AC00190967 /* InvitationAcceptedPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80B76A7218AD6AC00190967 /* InvitationAcceptedPopup.swift */; };
+		B80B76AE218AD6AC00190967 /* GreetingsPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B80B76A8218AD6AC00190967 /* GreetingsPopupView.xib */; };
+		B80B76AF218AD6AC00190967 /* InvitationAcceptedPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = B80B76A9218AD6AC00190967 /* InvitationAcceptedPopup.xib */; };
 		B80DC05920C792E400E28034 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80DC05820C792E400E28034 /* AppDelegate.swift */; };
 		B80DC05E20C792E400E28034 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B80DC05C20C792E400E28034 /* Main.storyboard */; };
 		B80DC06020C792E600E28034 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B80DC05F20C792E600E28034 /* Assets.xcassets */; };
@@ -263,6 +269,12 @@
 		B806B7CA2124536E00F9F338 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		B806B7CC21247FB400F9F338 /* MapStyle.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MapStyle.json; sourceTree = "<group>"; };
 		B806B7D62152BE6A00F9534F /* CollectionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionDetail.swift; sourceTree = "<group>"; };
+		B80B76A4218AD6AC00190967 /* AcceptDeclinePopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcceptDeclinePopup.swift; sourceTree = "<group>"; };
+		B80B76A5218AD6AC00190967 /* GreetingsPopupPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreetingsPopupPage.swift; sourceTree = "<group>"; };
+		B80B76A6218AD6AC00190967 /* AcceptDeclinePopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AcceptDeclinePopup.xib; sourceTree = "<group>"; };
+		B80B76A7218AD6AC00190967 /* InvitationAcceptedPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvitationAcceptedPopup.swift; sourceTree = "<group>"; };
+		B80B76A8218AD6AC00190967 /* GreetingsPopupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GreetingsPopupView.xib; sourceTree = "<group>"; };
+		B80B76A9218AD6AC00190967 /* InvitationAcceptedPopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InvitationAcceptedPopup.xib; sourceTree = "<group>"; };
 		B80DC05520C792E400E28034 /* QatarMuseums.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QatarMuseums.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B80DC05820C792E400E28034 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B80DC05D20C792E400E28034 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -613,6 +625,19 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		B80B76A3218AD6AC00190967 /* RsvpPopups */ = {
+			isa = PBXGroup;
+			children = (
+				B80B76A4218AD6AC00190967 /* AcceptDeclinePopup.swift */,
+				B80B76A5218AD6AC00190967 /* GreetingsPopupPage.swift */,
+				B80B76A6218AD6AC00190967 /* AcceptDeclinePopup.xib */,
+				B80B76A7218AD6AC00190967 /* InvitationAcceptedPopup.swift */,
+				B80B76A8218AD6AC00190967 /* GreetingsPopupView.xib */,
+				B80B76A9218AD6AC00190967 /* InvitationAcceptedPopup.xib */,
+			);
+			path = RsvpPopups;
+			sourceTree = "<group>";
+		};
 		B80DC04C20C792E400E28034 = {
 			isa = PBXGroup;
 			children = (
@@ -728,6 +753,7 @@
 		B80DC08720C7943100E28034 /* ReusableComponents */ = {
 			isa = PBXGroup;
 			children = (
+				B80B76A3218AD6AC00190967 /* RsvpPopups */,
 				B8F00C8121787CD300320DF1 /* LoginPopup */,
 				B827299321778B2F0017EC71 /* VersaPlayer */,
 				B8C31CDC2162435B00AE7788 /* iCarousel */,
@@ -1280,12 +1306,14 @@
 				B80DC06320C792E600E28034 /* LaunchScreen.storyboard in Resources */,
 				B8EAB7C020CA67CD00C001B2 /* EventPopUp.xib in Resources */,
 				B891D06520DBCC5200919F30 /* HeritageCell.xib in Resources */,
+				B80B76AF218AD6AC00190967 /* InvitationAcceptedPopup.xib in Resources */,
 				B8EAA3592158D4520060D168 /* GoogleService-Info.plist in Resources */,
 				B82729B721778B2F0017EC71 /* .gitkeep in Resources */,
 				B8DC40A520C9A3230044134D /* CommonHeader.xib in Resources */,
 				B8DC478720DCF8CE0007B426 /* ParkTableCellXib.xib in Resources */,
 				B806B7AD212452DC00F9F338 /* GoogleMaps.bundle in Resources */,
 				B811FBC62103406100960246 /* Localizable.strings in Resources */,
+				B80B76AE218AD6AC00190967 /* GreetingsPopupView.xib in Resources */,
 				B806B7CD21247FB400F9F338 /* MapStyle.json in Resources */,
 				B8E2C00E20C7E9CA00F3CE41 /* ComingSoonpopup.xib in Resources */,
 				B8AFA2EC20E78BA9008838A6 /* DINNextLTArabic-Light.ttf in Resources */,
@@ -1301,6 +1329,7 @@
 				B8B54D6C20FF514E00B21348 /* CollectionDetailView.xib in Resources */,
 				B8D827ED216239DC0092262A /* DetailPageStoryboard.storyboard in Resources */,
 				1B51B3D021214853002B84AA /* ObjectPopupXib.xib in Resources */,
+				B80B76AC218AD6AC00190967 /* AcceptDeclinePopup.xib in Resources */,
 				B8CA08E42146D38400783642 /* ObjectPopupView.xib in Resources */,
 				1B3C505C212AB3460034E560 /* ArtifactNumberPadCell.xib in Resources */,
 				B8AFA2F120E78E09008838A6 /* DINNextLTPro-Light.otf in Resources */,
@@ -1425,6 +1454,7 @@
 				B8B368BE20DD4B6200B1CDA4 /* MuseumCollectionsViewController.swift in Sources */,
 				B8D7BF452101A12E0085EF49 /* EducationViewController.swift in Sources */,
 				1B51B3D221219367002B84AA /* ObjectDetailViewController.swift in Sources */,
+				B80B76AB218AD6AC00190967 /* GreetingsPopupPage.swift in Sources */,
 				1BAA2FCF2126D15D00D785DD /* Collection.swift in Sources */,
 				B82729B521778B2F0017EC71 /* VPlayer.swift in Sources */,
 				B8C31CE2216243F800AE7788 /* iCarousel.m in Sources */,
@@ -1439,6 +1469,7 @@
 				B8294CEE20CBF265002AFF72 /* FSCalendarScopeHandle.m in Sources */,
 				B811FBCC2103811400960246 /* QMColours.swift in Sources */,
 				B8F3A940212728EE005360AD /* CommonStrings.swift in Sources */,
+				B80B76AA218AD6AC00190967 /* AcceptDeclinePopup.swift in Sources */,
 				1BE526D72107896600C8CD51 /* Exhibition.swift in Sources */,
 				B82729B821778B2F0017EC71 /* VersaPlayerControlsBehaviour.swift in Sources */,
 				B85BA4B020D01D1C00E7F4D1 /* SplashViewController.swift in Sources */,
@@ -1455,6 +1486,7 @@
 				B8BA80BC20CD831D007E880A /* ExhibitionsCollectionCell.swift in Sources */,
 				B8B49561212DBAD8006F509B /* Museum.swift in Sources */,
 				B82729B021778B2F0017EC71 /* VPlayerLayer.swift in Sources */,
+				B80B76AD218AD6AC00190967 /* InvitationAcceptedPopup.swift in Sources */,
 				B8DC478220DCC1080007B426 /* PublicArtsViewController.swift in Sources */,
 				B8C31CE62162821300AE7788 /* MuseumAboutCell.swift in Sources */,
 				B8294CEB20CBF265002AFF72 /* FSCalendarExtensions.m in Sources */,

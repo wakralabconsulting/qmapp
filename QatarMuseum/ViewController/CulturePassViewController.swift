@@ -34,6 +34,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
                        "Get exclusive invitation to QM open house access to our world class call center 8AM to 8PM daily"]
     var accessToken : String? = nil
     var loginArray : LoginData?
+    var userInfoArray : UserInfoData?
     let networkReachability = NetworkReachabilityManager()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -231,6 +232,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         
         let profileView =  self.storyboard?.instantiateViewController(withIdentifier: "profileViewId") as! ProfileViewController
         profileView.loginInfo = loginArray
+        profileView.fromCulturePass = true
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionFade
@@ -304,7 +306,14 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
                     if(response.response?.statusCode == 200) {
                         self.loginArray = data
                         UserDefaults.standard.setValue(self.loginArray?.token, forKey: "accessToken")
-                        self.loadProfilepage(loginInfo: self.loginArray)
+                        if(self.loginArray != nil) {
+                            if(self.loginArray?.user != nil) {
+                                if(self.loginArray?.user?.uid != nil) {
+                                    self.checkRSVPUserFromServer(userId: self.loginArray?.user?.uid )
+                                }
+                            }
+                        }
+                        //self.loadProfilepage(loginInfo: self.loginArray)
                     } else if(response.response?.statusCode == 401) {
                         showAlertView(title: titleString, message: NSLocalizedString("WRONG_USERNAME_OR_PWD",comment: "Set the message for wrong username or password"), viewController: self)
                     } else if(response.response?.statusCode == 406) {
@@ -342,6 +351,42 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
                 }
             }
             
+        }
+    }
+    //RSVP Service call
+    func checkRSVPUserFromServer(userId: String?) {
+        _ = Alamofire.request(QatarMuseumRouter.GetUser(userId!)).responseObject { (response: DataResponse<UserInfoData>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
+                if(response.response?.statusCode == 200) {
+                    self.userInfoArray = data
+                    
+                    if(self.userInfoArray != nil) {
+                        if(self.userInfoArray?.fieldRsvpAttendance != nil) {
+                            let undData = self.userInfoArray?.fieldRsvpAttendance!["und"] as! NSArray
+                            if(undData != nil) {
+                                print(self.userInfoArray?.fieldRsvpAttendance!["und"])
+                                if(undData.count > 0) {
+                                    let value = undData[0] as! NSDictionary
+                                    if(value["value"] != nil) {
+                                        print(value["value"]  as! String)
+                                        UserDefaults.standard.setValue(value["value"], forKey: "acceptOrDecline")
+                                    }
+                                }
+                                
+                            }
+                        }
+                    }
+                    
+                    self.loadProfilepage(loginInfo: self.loginArray)
+                }
+            case .failure( _):
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
+                
+            }
         }
     }
 

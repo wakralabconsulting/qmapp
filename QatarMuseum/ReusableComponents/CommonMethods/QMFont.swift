@@ -191,6 +191,13 @@ extension UIFont {
             return UIFont.init(name: "DINNextLTArabic-Bold", size:19)!
         }
     }
+    static var invitationTextFont: UIFont {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            return UIFont.init(name: "DINNextLTPro-Regular", size: 19)!
+        } else{
+            return UIFont.init(name: "DINNextLTArabic-Regular", size:19)!
+        }
+    }
     static var oopsTitleFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             return UIFont.init(name: "DINNextLTPro-Bold", size: 32)!
