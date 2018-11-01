@@ -38,6 +38,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     let networkReachability = NetworkReachabilityManager()
     var homeDBArray:[HomeEntity]?
     var homeDBArrayArabic:[HomeEntityArabic]?
+    var apnDelegate : APNProtocol?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -175,6 +177,10 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         popupView.comingSoonPopupDelegate = self
         popupView.loadPopup()
         self.view.addSubview(popupView)
+    }
+    
+    func updateNotificationBadge() {
+        topbarView.updateNotificationBadgeCount()
     }
     
     //MARK: Service call

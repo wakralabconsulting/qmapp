@@ -35,7 +35,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case NewPasswordRequest([String: Any])
     case GetUser(String)
     case UpdateUser(String,[String: Any])
-
+    case SendDeviceToken(String, [String: Any])
     var method: Alamofire.HTTPMethod {
         switch self {
         case .ExhibitionList:
@@ -88,7 +88,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return .get
         case .UpdateUser:
             return .put
-        
+        case .SendDeviceToken:
+            return .post
         }
     }
     
@@ -144,6 +145,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/user/\(userId).json"
         case .UpdateUser(let userId,_):
             return "/user/\(userId).json"
+        case .SendDeviceToken( _, _):
+            return "push_notifications.json"
         }
     }
 
@@ -247,6 +250,13 @@ enum QatarMuseumRouter: URLRequestConvertible {
             }
             loginMutableURLReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
             return try! Alamofire.JSONEncoding.default.encode(loginMutableURLReq, with: parameters)
+        case .SendDeviceToken(let accessToken, let parameters):
+            let deviceTokenURL = NSURL(string: Config.secureBaseURL + lang() + Config.mobileApiURL)!
+            var tokenMutableURLReq = URLRequest(url: deviceTokenURL.appendingPathComponent(path)!)
+            tokenMutableURLReq.httpMethod = method.rawValue
+            tokenMutableURLReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            tokenMutableURLReq.setValue(accessToken, forHTTPHeaderField: "x-csrf-token")
+            return try! Alamofire.JSONEncoding.default.encode(tokenMutableURLReq, with: parameters)
         }
         
         

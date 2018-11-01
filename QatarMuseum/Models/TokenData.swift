@@ -17,3 +17,15 @@ struct TokenData: ResponseObjectSerializable {
         }
     }
 }
+
+struct DeviceToken: ResponseObjectSerializable {
+    var success: Int? = nil
+    var message: String? = nil
+
+    public init?(response: HTTPURLResponse, representation: AnyObject) {
+        if let representation = representation as? [String: Any] {
+            self.success = representation["success"] as? Int
+            self.message = representation["message"] as? String
+        }
+    }
+}

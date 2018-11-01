@@ -10,14 +10,16 @@ import CoreData
 import Firebase
 import GoogleMaps
 import UIKit
+import UserNotifications
+import Alamofire
 
 //var selectedEventDate : Date = Date()
 var languageKey = 1
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     var window: UIWindow?
     var shouldRotate = false
-    
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         GMSServices.provideAPIKey("AIzaSyBXEzUfmsi5BidKqR1eY999pj0APP2N0k0")
         // GMSPlacesClient.provideAPIKey("YOUR_API_KEY")
@@ -29,9 +31,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            AnalyticsParameterItemName: title,
 //            AnalyticsParameterContentType: "cont"
 //            ])
+        
+        // Register with APNs
+        let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+        
+        application.registerUserNotificationSettings(settings)
+        application.registerForRemoteNotifications()
+        
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().delegate = self
+        } else {
+            // Fallback on earlier versions
+        }
+
         return true
     }
-
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
@@ -58,6 +73,121 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         return shouldRotate ? .allButUpsideDown : .portrait
     }
+    
+    func registerPushNotifications() {
+        if #available(iOS 10.0, *) {
+            
+            UIApplication.shared.registerForRemoteNotifications()
+            
+        } else {
+            print("App does not meet base OS requirements")
+        }
+    }
+    
+    //MARK: Push notification receive delegates
+    func application(_ application: UIApplication,
+                     didReceiveRemoteNotification userInfo: [AnyHashable : Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        application.applicationIconBadgeNumber = 0
+        print("Recived: \(userInfo)")
+        if (application.applicationState == .active) {
+            UserDefaults.standard.setValue(1, forKey: "notificationBadgeCount")
+            if let topController = UIApplication.topViewController() {
+                print(topController)
+            }
+        }
+        completionHandler(.newData)
+        
+    }
+
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let tokenParts = deviceToken.map { data -> String in
+            return String(format: "%02.2hhx", data)
+        }
+        
+        let token = tokenParts.joined()
+        print("Device Token: \(token) ")
+        self.sendDeviceTokenToServer(deviceToken: token)
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError
+        error: Error) {
+        // Try again later.
+    }
+    
+    // This method will be called when we click push notifications in background
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        let userInfo = response.notification.request.content.userInfo
+    }
+    
+    // This method will be called when app received push notifications in foreground
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        let userInfo = notification.request.content.userInfo
+        
+        // Print full message.
+        print(userInfo)
+        let info = self.extractUserInfo(userInfo: userInfo)
+        print(info.title)
+        if let badgeCount = UserDefaults.standard.value(forKey: "notificationBadgeCount") as?
+            Int {
+            UserDefaults.standard.setValue(badgeCount + 1, forKey: "notificationBadgeCount")
+        } else {
+            UserDefaults.standard.setValue(1, forKey: "notificationBadgeCount")
+        }
+        if UserDefaults.standard.value(forKey: "pushNotificationList") as?
+            [Notification] != nil {
+            var notificationArray = UserDefaults.standard.value(forKey: "pushNotificationList") as!
+            [Notification]
+            notificationArray.insert(Notification(title: info.title, sortId: ""), at: 0)
+            UserDefaults.standard.setValue(notificationArray, forKey: "pushNotificationList")
+        } else {
+            UserDefaults.standard.setValue(Notification(title: info.title, sortId: ""), forKey: "pushNotificationList")
+        }
+        if let topController = UIApplication.topViewController() {
+            print(topController)
+            if topController is HomeViewController {
+                (topController as! HomeViewController).updateNotificationBadge()
+            } else if topController is MuseumsViewController {
+                (topController as! MuseumsViewController).updateNotificationBadge()
+            } else if topController is NotificationsViewController {
+                (topController as! NotificationsViewController).updateNotificationTableView()
+            }
+        }
+//        completionHandler([.alert, .badge, .sound])
+    }
+    
+    //MARK: WebServiceCall
+    func sendDeviceTokenToServer(deviceToken: String) {
+        _ = Alamofire.request(QatarMuseumRouter.GetToken(["name":"","pass":""])).responseObject { (response: DataResponse<TokenData>) -> Void in
+            switch response.result {
+            case .success(let data):
+                _ = Alamofire.request(QatarMuseumRouter.SendDeviceToken(data.accessToken!, ["token": deviceToken, "type":"ios"])).responseObject { (response: DataResponse<DeviceToken>) -> Void in
+                    switch response.result {
+                    case .success( _):
+                        print("This token is successfully sent to server")
+                    case .failure( _):
+                        print("Fail to update device token")
+                    }
+                }
+            case .failure( _):
+                print("Failed to generate token ")
+            }
+        }
+    }
+    
+    func extractUserInfo(userInfo: [AnyHashable : Any]) -> (title: String, body: String) {
+        var info = (title: "", body: "")
+        guard let aps = userInfo["aps"] as? [String: Any] else { return info }
+//        guard let alert = aps["alert"] as? [String: Any] else { return info }
+        let title = aps["alert"] as? String ?? ""
+        let body = "" //alert["body"] as? String ?? ""
+        info = (title: title, body: body)
+        return info
+    }
+    
     // MARK: - Core Data stack
     
     @available(iOS 10.0, *)
@@ -165,5 +295,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+}
+
+extension UIApplication {
+    class func topViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+        if let navigationController = controller as? UINavigationController {
+            return topViewController(controller: navigationController.visibleViewController)
+        }
+        if let tabController = controller as? UITabBarController {
+            if let selected = tabController.selectedViewController {
+                return topViewController(controller: selected)
+            }
+        }
+        if let presented = controller?.presentedViewController {
+            return topViewController(controller: presented)
+        }
+        return controller
+    }
 }
 
