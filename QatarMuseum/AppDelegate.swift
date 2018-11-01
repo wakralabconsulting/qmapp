@@ -24,7 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         GMSServices.provideAPIKey("AIzaSyBXEzUfmsi5BidKqR1eY999pj0APP2N0k0")
         // GMSPlacesClient.provideAPIKey("YOUR_API_KEY")
         AppLocalizer.DoTheMagic()
-//        notificationHandler(application)
         FirebaseApp.configure()
 //        let title = "Analytics Title"
 //        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
@@ -32,10 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //            AnalyticsParameterItemName: title,
 //            AnalyticsParameterContentType: "cont"
 //            ])
-        
-        // Configure the user interactions first.
-//        self.configureUserInteractions()
-//        registerForPushNotifications()
         
         // Register with APNs
         let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
@@ -49,7 +44,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             // Fallback on earlier versions
         }
 
-//        UIApplication.shared.registerForRemoteNotifications()
         return true
     }
     
@@ -80,43 +74,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return shouldRotate ? .allButUpsideDown : .portrait
     }
     
-//    func notificationHandler(_ application: UIApplication) {
-//        if #available(iOS 10.0, *) {
-//            let center = UNUserNotificationCenter.current()
-//            center.getNotificationSettings(){ (settings) in
-//                switch settings.authorizationStatus {
-//                case .authorized:
-//                    print("Authorized Push Notifications by User")
-//                    self.registerPushNotifications()
-//                case .denied:
-//                    print("show user a view explaining why it's better to enable")
-//                    self.registerPushNotifications()
-//                case .notDetermined:
-//                    self.requestPushNotifications(center: center, { (granted) in
-//                        if granted {
-//                            self.registerPushNotifications()
-//                            return
-//                        }
-//                        print("User did not grant Remote Notifications Authorizations")
-//                    })
-//                }
-//            }
-//        } else {
-//            print("App does not meet minimum OS Requirements")
-//            return
-//        }
-//    }
-    
-//    fileprivate func requestPushNotifications(center: UNUserNotificationCenter,_ result: @escaping(Bool)->Void) {
-//        center.requestAuthorization(options:[.badge, .alert, .sound]) { (granted, error) in
-//            if error != nil {
-//                print("Could not request Authorization for Notifications - Yet is undetermined")
-//            } else {
-//                result(granted)
-//            }
-//        }
-//    }
-    
     func registerPushNotifications() {
         if #available(iOS 10.0, *) {
             
@@ -126,38 +83,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             print("App does not meet base OS requirements")
         }
     }
-    
-    // Handle remote notification registration.
-//    func application(_ application: UIApplication,
-//                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data){
-//        // Forward the token to your provider, using a custom method.
-//        self.enableRemoteNotificationFeatures()
-//        self.forwardTokenToServer(token: deviceToken)
-//    }
-//
-//    func application(_ application: UIApplication,
-//                     didFailToRegisterForRemoteNotificationsWithError error: Error) {
-//        // The token is not currently available.
-//        print("Remote notification support is unavailable due to error: \(error.localizedDescription)")
-//        self.disableRemoteNotificationFeatures()
-//    }
-    
-//    private func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-//        
-//        
-//        // You can determine your application state by
-//        if UIApplication.shared.applicationState == .active {
-//            // Do something you want when the app is active
-//            
-//        } else {
-//
-//            
-//            
-//            // Do something else when your app is in the background
-//            
-//            
-//        }
-//    }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenParts = deviceToken.map { data -> String in
@@ -182,17 +107,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Print full message.
         print(userInfo)
         completionHandler([.alert, .badge, .sound])
-    }
-    
-    func registerForPushNotifications() {
-        if #available(iOS 10.0, *) {
-            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
-                (granted, error) in
-                print("Permission granted: \(granted)")
-            }
-        } else {
-            // Fallback on earlier versions
-        }
     }
     
     //MARK: WebServiceCall
