@@ -142,6 +142,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //        self.disableRemoteNotificationFeatures()
 //    }
     
+//    private func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+//        
+//        
+//        // You can determine your application state by
+//        if UIApplication.shared.applicationState == .active {
+//            // Do something you want when the app is active
+//            
+//        } else {
+//
+//            
+//            
+//            // Do something else when your app is in the background
+//            
+//            
+//        }
+//    }
+    
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenParts = deviceToken.map { data -> String in
             return String(format: "%02.2hhx", data)
@@ -159,8 +176,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     // This method will be called when app received push notifications in foreground
     @available(iOS 10.0, *)
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void)
-    {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        let userInfo = notification.request.content.userInfo
+        
+        // Print full message.
+        print(userInfo)
         completionHandler([.alert, .badge, .sound])
     }
     
@@ -177,10 +197,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     //MARK: WebServiceCall
     func sendDeviceTokenToServer(deviceToken: String) {
-        _ = Alamofire.request(QatarMuseumRouter.GetToken(["name": "","pass":""])).responseObject { (response: DataResponse<TokenData>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.GetToken(["name":"","pass":""])).responseObject { (response: DataResponse<TokenData>) -> Void in
             switch response.result {
             case .success(let data):
-                _ = Alamofire.request(QatarMuseumRouter.SendDeviceToken(data.accessToken, ["token": deviceToken, "type":"ios"])).responseObject { (response: DataResponse<DeviceToken>) -> Void in
+                _ = Alamofire.request(QatarMuseumRouter.SendDeviceToken(data.accessToken!, ["token": deviceToken, "type":"ios"])).responseObject { (response: DataResponse<DeviceToken>) -> Void in
                     switch response.result {
                     case .success( _):
                         print("This token is successfully sent to server")

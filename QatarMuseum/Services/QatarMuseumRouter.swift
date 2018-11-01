@@ -228,9 +228,12 @@ enum QatarMuseumRouter: URLRequestConvertible {
             passwordMutableURLReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
             return try! Alamofire.JSONEncoding.default.encode(passwordMutableURLReq, with: parameters)
         case .SendDeviceToken(let accessToken, let parameters):
-            mutableURLRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            mutableURLRequest.setValue(accessToken, forHTTPHeaderField: "x-csrf-token")
-            return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest, with: parameters)
+            let deviceTokenURL = NSURL(string: Config.secureBaseURL + lang() + Config.mobileApiURL)!
+            var tokenMutableURLReq = URLRequest(url: deviceTokenURL.appendingPathComponent(path)!)
+            tokenMutableURLReq.httpMethod = method.rawValue
+            tokenMutableURLReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            tokenMutableURLReq.setValue(accessToken, forHTTPHeaderField: "x-csrf-token")
+            return try! Alamofire.JSONEncoding.default.encode(tokenMutableURLReq, with: parameters)
         }
         
     }
