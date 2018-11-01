@@ -17,7 +17,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var slideshowView: KASlideShow!
     @IBOutlet weak var pageControl: UIPageControl!
-    @IBOutlet weak var scienceTourTitle: UILabel!
+    @IBOutlet weak var scienceTourTitle: UITextView!
     
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var overlayView: UIView!
@@ -151,9 +151,6 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     }
     
     @IBAction func startTourButtonTouchDown(_ sender: UIButton) {
-       
-       // self.startTourButton.setTitleColor(UIColor.viewMyculTitleBlue, for: .normal)
-        
         self.startTourButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
@@ -195,24 +192,18 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
         loadingView.isHidden = true
         if(tourGuideDetail != nil) {
             self.scienceTourTitle.text = tourGuideDetail?.title
+            self.scienceTourTitle.textContainer.lineBreakMode = .byTruncatingTail;
             self.tourGuideDescription.text = tourGuideDetail?.tourGuideDescription
             self.setImageArray(tourGuideImgDict: tourGuideDetail)
         } else if((titleString != nil) && (titleString != "")){
             self.scienceTourTitle.text = titleString
+            self.scienceTourTitle.textContainer.lineBreakMode = .byTruncatingTail;
         }
     }
     func setImageArray(tourGuideImgDict : TourGuide?) {
         self.sliderImgArray[0] = UIImage(named: "sliderPlaceholder")!
         self.sliderImgArray[1] = UIImage(named: "sliderPlaceholder")!
         self.sliderImgArray[2] = UIImage(named: "sliderPlaceholder")!
-        
-//        if ((tourGuideImgDict?.multimediaFile?.count)! >= 3) {
-//            totalImgCount = 3
-//        } else if ((tourGuideImgDict?.multimediaFile?.count)! > 1){
-//            totalImgCount = (tourGuideImgDict?.multimediaFile?.count)!-1
-//        } else {
-//            totalImgCount = 0
-//        }
         if ((tourGuideImgDict?.multimediaFile?.count)! > 0) {
             for  var i in 0 ... (tourGuideImgDict?.multimediaFile?.count)!-1 {
                 let imageUrlString = tourGuideImgDict?.multimediaFile![i]

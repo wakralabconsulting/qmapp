@@ -69,7 +69,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="252" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3om-vv-ART">
-                                <rect key="frame" x="179" y="70" width="205" height="0.0"/>
+                                <rect key="frame" x="179" y="70" width="220" height="0.0"/>
                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -103,7 +103,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czc-Kh-k6x">
-                                <rect key="frame" x="179" y="11" width="205" height="54"/>
+                                <rect key="frame" x="179" y="11" width="220" height="54"/>
                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -124,7 +124,7 @@
                             <constraint firstItem="czc-Kh-k6x" firstAttribute="leading" secondItem="3om-vv-ART" secondAttribute="leading" id="DBx-ME-kHR"/>
                             <constraint firstItem="rvT-BX-xxz" firstAttribute="leading" secondItem="Te5-jC-pHj" secondAttribute="leading" constant="163.5" id="DEx-Mr-Cxr"/>
                             <constraint firstAttribute="bottom" secondItem="ICe-ec-O9m" secondAttribute="bottom" constant="10" id="FHE-XT-blE"/>
-                            <constraint firstAttribute="trailing" secondItem="czc-Kh-k6x" secondAttribute="trailing" constant="7" id="Gvb-Rc-U7T"/>
+                            <constraint firstAttribute="trailing" secondItem="czc-Kh-k6x" secondAttribute="trailing" constant="1" id="Gvb-Rc-U7T"/>
                             <constraint firstItem="enr-gf-94c" firstAttribute="top" secondItem="oFG-iA-zIj" secondAttribute="bottom" id="LXd-1k-X2c"/>
                             <constraint firstItem="enr-gf-94c" firstAttribute="leading" secondItem="ICe-ec-O9m" secondAttribute="leading" id="LtU-W1-5mm"/>
                             <constraint firstItem="LWA-4N-Z9r" firstAttribute="top" secondItem="dRF-RK-8Dz" secondAttribute="bottom" constant="8" id="NFH-Ew-nSw"/>

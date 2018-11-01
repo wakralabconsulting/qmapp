@@ -76,7 +76,9 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
                                                 comment: "LOCATION_TITLE in the Exhibition detail")
         contactTitle.text = NSLocalizedString("CONTACT_TITLE",
                                               comment: "CONTACT_TITLE in the Exhibition detail")
-        
+        let mapRedirectionMessage = NSLocalizedString("MAP_REDIRECTION_MESSAGE",
+                                                      comment: "MAP_REDIRECTION_MESSAGE in the Dining detail")
+        locationButton.setTitle(mapRedirectionMessage, for: .normal)
     }
     
     func setMuseumExhibitionDetail() {

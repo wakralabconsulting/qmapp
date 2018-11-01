@@ -44,6 +44,8 @@ class DiningDetailTableViewCell: UITableViewCell,UITextViewDelegate {
         titleLineView.isHidden = false
         locationsTitleLabel.isHidden = false
         locationButton.isHidden = false
+        timeTitleLabel.text = NSLocalizedString("OPENING_TIME_TITLE",
+                                                comment: "OPENING_TIME_TITLE in the Heritage detail")
         locationsTitleLabel.text = NSLocalizedString("LOCATION_TITLE",
                                                      comment: "LOCATION_TITLE in the Dining detail")
         titleLabel.font = UIFont.eventPopupTitleFont

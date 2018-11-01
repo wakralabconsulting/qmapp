@@ -109,6 +109,27 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     
     @IBAction func didTapRegisterButton(_ sender: UIButton) {
+        var registrationUrlString = String()
+        
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            registrationUrlString = "http://www.qm.org.qa/en/user/register#user-register-form"
+        } else {
+            registrationUrlString = "http://www.qm.org.qa/ar/user/register#user-register-form"
+        }
+        
+        
+        
+        if let registrationUrl = URL(string: registrationUrlString) {
+            // show alert to choose app
+            if UIApplication.shared.canOpenURL(registrationUrl as URL) {
+                let webViewVc:WebViewController = self.storyboard?.instantiateViewController(withIdentifier: "webViewId") as! WebViewController
+                webViewVc.webViewUrl = registrationUrl
+                webViewVc.titleString = NSLocalizedString("CULTURE_BECOME_A_MEMBER", comment: "CULTURE_BECOME_A_MEMBER in the Registration page")
+                //webViewVc.titleString = NSLocalizedString("WEBVIEW_TITLE", comment: "WEBVIEW_TITLE  in the Webview")
+                self.present(webViewVc, animated: false, completion: nil)
+            }
+        }
+        /* Commented Bcz Now loading webview
         let registrationView =  self.storyboard?.instantiateViewController(withIdentifier: "registerViewId") as! RegistrationViewController
         let transition = CATransition()
         transition.duration = 0.3
@@ -117,6 +138,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(registrationView, animated: false, completion: nil)
         self.registerButton.transform = CGAffineTransform(scaleX: 1, y: 1)
+ */
     }
     
     @IBAction func registerButtonTouchDown(_ sender: UIButton) {

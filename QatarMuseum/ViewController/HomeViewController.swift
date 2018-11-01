@@ -355,7 +355,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func giftShopButtonPressed() {
-        let aboutUrlString = "https://www.qm.org.qa/en/gift-shops"
+        let aboutUrlString = "https://inq-online.com/"
         //"https://inq-online.com/?SID=k36n3od6ovtc5jn5hlf8o54g64"
         if let aboutUrl = URL(string: aboutUrlString) {
             // show alert to choose app

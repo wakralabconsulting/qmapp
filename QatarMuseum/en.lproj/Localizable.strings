@@ -202,4 +202,4 @@
 "CREATE_YOUR_ACCOUNT" = "CREATE YOUR ACCOUNT";
 "INVALID_USERNAME" = "Invalid username";
 "FORGOT_PASSWORD_SENT_SUCCESSFULLY" = "New password link sent to your email";
-
+"LOGOUT_ERROR" = "Error in logging out!";

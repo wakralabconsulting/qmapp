@@ -690,7 +690,6 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                 self.tourGuideArray = data.tourGuideFloorMap
                 self.countValue = self.tourGuideArray.count
                 if(self.tourGuideArray.count != 0) {
-                    print(self.tourGuideArray.count)
                     self.headerView.settingsButton.isHidden = false
                     self.headerView.settingsButton.setImage(UIImage(named: "locationImg"), for: .normal)
                     self.headerView.settingsButton.contentEdgeInsets = UIEdgeInsets(top: 9, left: 10, bottom:9, right: 10)

@@ -136,7 +136,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
             switch response.result {
             case .success(let data):
                 self.miaTourDataFullArray = data.tourGuide!
-                self.saveOrUpdateDiningCoredata()
+                self.saveOrUpdateTourGuideCoredata()
                 self.loadingView.stopLoading()
                 self.loadingView.isHidden = true
                 if(self.miaTourDataFullArray.count == 0) {
@@ -162,7 +162,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     }
    
     //MARK: Coredata Method
-    func saveOrUpdateDiningCoredata() {
+    func saveOrUpdateTourGuideCoredata() {
         if (miaTourDataFullArray.count > 0) {
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                 let fetchData = checkAddedToCoredata(entityName: "TourGuideEntity", idKey: "museumsEntity", idValue: museumId) as! [TourGuideEntity]
@@ -229,7 +229,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
                     for i in 0 ... miaTourDataFullArray.count-1 {
                         let managedContext = getContext()
                         let tourGuideListDict = miaTourDataFullArray[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "DiningEntityArabic", idKey: "nid" , idValue: miaTourDataFullArray[i].nid)
+                        let fetchResult = checkAddedToCoredata(entityName: "TourGuideEntityAr", idKey: "nid" , idValue: miaTourDataFullArray[i].nid)
                         //update
                         if(fetchResult.count != 0) {
                             let tourguidedbDict = fetchResult[0] as! TourGuideEntityAr
