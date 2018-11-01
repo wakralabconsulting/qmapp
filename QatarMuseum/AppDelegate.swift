@@ -19,12 +19,11 @@ var languageKey = 1
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     var window: UIWindow?
     var shouldRotate = false
-    
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         GMSServices.provideAPIKey("AIzaSyBXEzUfmsi5BidKqR1eY999pj0APP2N0k0")
         // GMSPlacesClient.provideAPIKey("YOUR_API_KEY")
         AppLocalizer.DoTheMagic()
-//        notificationHandler(application)
         FirebaseApp.configure()
 //        let title = "Analytics Title"
 //        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
@@ -32,10 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //            AnalyticsParameterItemName: title,
 //            AnalyticsParameterContentType: "cont"
 //            ])
-        
-        // Configure the user interactions first.
-//        self.configureUserInteractions()
-//        registerForPushNotifications()
         
         // Register with APNs
         let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
@@ -80,42 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return shouldRotate ? .allButUpsideDown : .portrait
     }
     
-//    func notificationHandler(_ application: UIApplication) {
-//        if #available(iOS 10.0, *) {
-//            let center = UNUserNotificationCenter.current()
-//            center.getNotificationSettings(){ (settings) in
-//                switch settings.authorizationStatus {
-//                case .authorized:
-//                    print("Authorized Push Notifications by User")
-//                    self.registerPushNotifications()
-//                case .denied:
-//                    print("show user a view explaining why it's better to enable")
-//                    self.registerPushNotifications()
-//                case .notDetermined:
-//                    self.requestPushNotifications(center: center, { (granted) in
-//                        if granted {
-//                            self.registerPushNotifications()
-//                            return
-//                        }
-//                        print("User did not grant Remote Notifications Authorizations")
-//                    })
-//                }
-//            }
-//        } else {
-//            print("App does not meet minimum OS Requirements")
-//            return
-//        }
-//    }
-    
-//    fileprivate func requestPushNotifications(center: UNUserNotificationCenter,_ result: @escaping(Bool)->Void) {
-//        center.requestAuthorization(options:[.badge, .alert, .sound]) { (granted, error) in
-//            if error != nil {
-//                print("Could not request Authorization for Notifications - Yet is undetermined")
-//            } else {
-//                result(granted)
-//            }
-//        }
-//    }
+
     
     func registerPushNotifications() {
         if #available(iOS 10.0, *) {
@@ -141,6 +101,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //        print("Remote notification support is unavailable due to error: \(error.localizedDescription)")
 //        self.disableRemoteNotificationFeatures()
 //    }
+    
+    //MARK: Push notification receive delegates
+    func application(_ application: UIApplication,
+                     didReceiveRemoteNotification userInfo: [AnyHashable : Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        application.applicationIconBadgeNumber = 0
+        print("Recived: \(userInfo)")
+        if (application.applicationState == .active) {
+            UserDefaults.standard.setValue(1, forKey: "notificationBadgeCount")
+            if let topController = UIApplication.topViewController() {
+                print(topController)
+            }
+        }
+        completionHandler(.newData)
+        
+    }
     
 //    private func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
 //        
@@ -174,6 +150,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Try again later.
     }
     
+    // This method will be called when we click push notifications in background
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        let userInfo = response.notification.request.content.userInfo
+    }
+    
     // This method will be called when app received push notifications in foreground
     @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
@@ -181,18 +164,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // Print full message.
         print(userInfo)
-        completionHandler([.alert, .badge, .sound])
-    }
-    
-    func registerForPushNotifications() {
-        if #available(iOS 10.0, *) {
-            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
-                (granted, error) in
-                print("Permission granted: \(granted)")
-            }
+        let info = self.extractUserInfo(userInfo: userInfo)
+        print(info.title)
+        if let badgeCount = UserDefaults.standard.value(forKey: "notificationBadgeCount") as?
+            Int {
+            UserDefaults.standard.setValue(badgeCount + 1, forKey: "notificationBadgeCount")
         } else {
-            // Fallback on earlier versions
+            UserDefaults.standard.setValue(1, forKey: "notificationBadgeCount")
         }
+        if UserDefaults.standard.value(forKey: "pushNotificationList") as?
+            [Notification] != nil {
+            var notificationArray = UserDefaults.standard.value(forKey: "pushNotificationList") as!
+            [Notification]
+            notificationArray.insert(Notification(title: info.title, sortId: ""), at: 0)
+            UserDefaults.standard.setValue(notificationArray, forKey: "pushNotificationList")
+        } else {
+            UserDefaults.standard.setValue(Notification(title: info.title, sortId: ""), forKey: "pushNotificationList")
+        }
+        if let topController = UIApplication.topViewController() {
+            print(topController)
+            if topController is HomeViewController {
+                (topController as! HomeViewController).updateNotificationBadge()
+            } else if topController is MuseumsViewController {
+                (topController as! MuseumsViewController).updateNotificationBadge()
+            } else if topController is NotificationsViewController {
+                (topController as! NotificationsViewController).updateNotificationTableView()
+            }
+        }
+//        completionHandler([.alert, .badge, .sound])
     }
     
     //MARK: WebServiceCall
@@ -209,9 +208,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     }
                 }
             case .failure( _):
-                print("Failed to generating token ")
+                print("Failed to generate token ")
             }
         }
+    }
+    
+    func extractUserInfo(userInfo: [AnyHashable : Any]) -> (title: String, body: String) {
+        var info = (title: "", body: "")
+        guard let aps = userInfo["aps"] as? [String: Any] else { return info }
+//        guard let alert = aps["alert"] as? [String: Any] else { return info }
+        let title = aps["alert"] as? String ?? ""
+        let body = alert["body"] as? String ?? ""
+        info = (title: title, body: body)
+        return info
     }
     
     // MARK: - Core Data stack
@@ -321,5 +330,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
 
+}
+
+extension UIApplication {
+    class func topViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+        if let navigationController = controller as? UINavigationController {
+            return topViewController(controller: navigationController.visibleViewController)
+        }
+        if let tabController = controller as? UITabBarController {
+            if let selected = tabController.selectedViewController {
+                return topViewController(controller: selected)
+            }
+        }
+        if let presented = controller?.presentedViewController {
+            return topViewController(controller: presented)
+        }
+        return controller
+    }
 }
 
