@@ -46,17 +46,15 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         registerNib()
         setUpUI()
        
-        if  (networkReachability?.isReachable)! {
+        if (networkReachability?.isReachable)! {
             getHomeList()
-        }
-        else {
+        } else {
             self.fetchHomeInfoFromCoredata()
-           
         }
-
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.receivedNotification(notification:)), name: NSNotification.Name("NotificationIdentifier"), object: nil)
     }
     
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
     }
@@ -65,6 +63,11 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @objc func receivedNotification(notification: Notification) {
+        notificationbuttonPressed()
+    }
+
     
     func setUpUI() {
         topbarView.topbarDelegate = self
@@ -218,7 +221,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     //MARK: Topbar Delegate
     func backButtonPressed() {
-        
+    
     }
     
     func eventButtonPressed() {

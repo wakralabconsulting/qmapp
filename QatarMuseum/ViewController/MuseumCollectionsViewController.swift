@@ -15,6 +15,7 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
     @IBOutlet weak var museumCollectionView: UICollectionView!
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var collectionsHeader: CommonHeaderView!
+    
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var collection: [Collection] = []
     let networkReachability = NetworkReachabilityManager()
@@ -24,13 +25,11 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
         super.viewDidLoad()
         setUpUI()
         registerNib()
-        if  (networkReachability?.isReachable)! {
+        if (networkReachability?.isReachable)! {
             getCollectionList()
-        }
-        else {
+        } else {
             self.fetchCollectionListFromCoredata()
         }
-        
     }
     
     func setUpUI() {

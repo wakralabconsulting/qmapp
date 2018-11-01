@@ -26,7 +26,8 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
     
     func updateNotificationTableView(){
         UserDefaults.standard.removeObject(forKey: "notificationBadgeCount")
-        if let notifications = UserDefaults.standard.value(forKey: "pushNotificationList") as?
+        let notificationData = UserDefaults.standard.object(forKey: "pushNotificationList") as? NSData
+        if let notificationData = notificationData, let notifications = NSKeyedUnarchiver.unarchiveObject(with: notificationData as Data) as?
             [Notification] {
             fetchNotificationsFromCoredata()
             for notification in notifications {
@@ -34,6 +35,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
             }
             saveOrUpdateNotificationsCoredata()
             UserDefaults.standard.removeObject(forKey: "pushNotificationList")
+            notificationsTableView.reloadData()
         } else {
             fetchNotificationsFromCoredata()
         }
@@ -116,7 +118,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
                         if(fetchResult.count != 0) {
                             let dbDict = fetchResult[0] as! NotificationsEntity
                             dbDict.title = notificationDict.title
-                            dbDict.sortId = String(i + 1)
+                            dbDict.sortId = notificationDict.title! + "" + String(i + 1)
                             
                             do{
                                 try managedContext.save()
@@ -150,7 +152,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
                         if(fetchResult.count != 0) {
                             let dbDict = fetchResult[0] as! NotificationsEntityArabic
                             dbDict.titleArabic = notificationsDict.title
-                            dbDict.sortIdArabic =  String(i + 1)
+                            dbDict.sortIdArabic = notificationsDict.title! + "" + String(i + 1)
                             do{
                                 try managedContext.save()
                             }

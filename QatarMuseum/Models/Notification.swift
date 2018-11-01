@@ -7,20 +7,23 @@
 //
 
 import Foundation
-struct Notification: ResponseObjectSerializable, ResponseCollectionSerializable {
+class Notification:  NSObject, NSCoding {
     var title: String? = nil
     var sortId: String? = nil
-    
-    public init?(response: HTTPURLResponse, representation: AnyObject) {
-        if let representation = representation as? [String: Any] {
-            self.title = representation["Title"] as? String
-            self.sortId = representation["sort_id"] as? String
-        }
-    }
     
     init(title:String?, sortId: String?) {
         self.title = title
         self.sortId = sortId
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        self.title = aDecoder.decodeObject(forKey: "title") as? String ?? ""
+        self.sortId = aDecoder.decodeObject(forKey: "sortId") as? String ?? ""
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(title, forKey: "title")
+        aCoder.encode(sortId, forKey: "sortId")
     }
 }
 
@@ -29,7 +32,7 @@ struct Notifications: ResponseObjectSerializable {
     
     public init?(response: HTTPURLResponse, representation: AnyObject) {
         if let data = representation as? [[String: Any]] {
-            self.notification = Notification.collection(response: response, representation: data as AnyObject)
+//            self.notification = Notification.collection(response: response, representation: data as AnyObject)
         }
     }
 }
