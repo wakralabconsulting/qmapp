@@ -218,7 +218,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         guard let aps = userInfo["aps"] as? [String: Any] else { return info }
 //        guard let alert = aps["alert"] as? [String: Any] else { return info }
         let title = aps["alert"] as? String ?? ""
-        let body = alert["body"] as? String ?? ""
+        let body = "" //alert["body"] as? String ?? ""
         info = (title: title, body: body)
         return info
     }
