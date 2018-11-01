@@ -125,11 +125,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             [Notification] != nil {
             var notificationArray = UserDefaults.standard.value(forKey: "pushNotificationList") as!
             [Notification]
-            notificationArray.insert(Notification(title: info.title, sortId: ""), at: 0)
+            notificationArray.insert(Notification(title: info.title, sortId: info.title), at: 0)
             let notificationData = NSKeyedArchiver.archivedData(withRootObject: notificationArray)
             UserDefaults.standard.set(notificationData, forKey: "pushNotificationList")
         } else {
-            let notificationData = NSKeyedArchiver.archivedData(withRootObject: [Notification(title: info.title, sortId: "")])
+            let notificationData = NSKeyedArchiver.archivedData(withRootObject: [Notification(title: info.title, sortId: info.title)])
             UserDefaults.standard.set(notificationData, forKey: "pushNotificationList")
         }
         
@@ -160,11 +160,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             [Notification] != nil {
             var notificationArray = UserDefaults.standard.value(forKey: "pushNotificationList") as!
             [Notification]
-            notificationArray.insert(Notification(title: info.title, sortId: ""), at: 0)
+            notificationArray.insert(Notification(title: info.title, sortId: info.title), at: 0)
             let notificationData = NSKeyedArchiver.archivedData(withRootObject: notificationArray)
             UserDefaults.standard.set(notificationData, forKey: "pushNotificationList")
         } else {
-            let notificationData = NSKeyedArchiver.archivedData(withRootObject: [Notification(title: info.title, sortId: "")])
+            let notificationData = NSKeyedArchiver.archivedData(withRootObject: [Notification(title: info.title, sortId: info.title)])
             UserDefaults.standard.set(notificationData, forKey: "pushNotificationList")
         }
         if let topController = UIApplication.topViewController() {

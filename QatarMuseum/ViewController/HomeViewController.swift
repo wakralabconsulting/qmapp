@@ -65,10 +65,11 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     @objc func receivedNotification(notification: Notification) {
-        notificationbuttonPressed()
+        let notificationsView =  self.storyboard?.instantiateViewController(withIdentifier: "notificationId") as! NotificationsViewController
+        notificationsView.fromHome = true
+        self.present(notificationsView, animated: false, completion: nil)
     }
 
-    
     func setUpUI() {
         topbarView.topbarDelegate = self
         topbarView.backButton.isHidden = true
