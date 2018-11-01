@@ -44,7 +44,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             // Fallback on earlier versions
         }
 
-//        UIApplication.shared.registerForRemoteNotifications()
         return true
     }
     
@@ -75,8 +74,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return shouldRotate ? .allButUpsideDown : .portrait
     }
     
-
-    
     func registerPushNotifications() {
         if #available(iOS 10.0, *) {
             
@@ -86,21 +83,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             print("App does not meet base OS requirements")
         }
     }
-    
-    // Handle remote notification registration.
-//    func application(_ application: UIApplication,
-//                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data){
-//        // Forward the token to your provider, using a custom method.
-//        self.enableRemoteNotificationFeatures()
-//        self.forwardTokenToServer(token: deviceToken)
-//    }
-//
-//    func application(_ application: UIApplication,
-//                     didFailToRegisterForRemoteNotificationsWithError error: Error) {
-//        // The token is not currently available.
-//        print("Remote notification support is unavailable due to error: \(error.localizedDescription)")
-//        self.disableRemoteNotificationFeatures()
-//    }
     
     //MARK: Push notification receive delegates
     func application(_ application: UIApplication,
@@ -117,24 +99,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         completionHandler(.newData)
         
     }
-    
-//    private func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-//        
-//        
-//        // You can determine your application state by
-//        if UIApplication.shared.applicationState == .active {
-//            // Do something you want when the app is active
-//            
-//        } else {
-//
-//            
-//            
-//            // Do something else when your app is in the background
-//            
-//            
-//        }
-//    }
-    
+
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenParts = deviceToken.map { data -> String in
             return String(format: "%02.2hhx", data)
