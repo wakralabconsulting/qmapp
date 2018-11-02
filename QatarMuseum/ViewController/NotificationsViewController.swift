@@ -26,7 +26,8 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
     
     func updateNotificationTableView(){
         UserDefaults.standard.removeObject(forKey: "notificationBadgeCount")
-        if let notifications = UserDefaults.standard.value(forKey: "pushNotificationList") as?
+        let notificationData = UserDefaults.standard.object(forKey: "pushNotificationList") as? NSData
+        if let notificationData = notificationData, let notifications = NSKeyedUnarchiver.unarchiveObject(with: notificationData as Data) as?
             [Notification] {
             fetchNotificationsFromCoredata()
             for notification in notifications {
@@ -34,6 +35,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
             }
             saveOrUpdateNotificationsCoredata()
             UserDefaults.standard.removeObject(forKey: "pushNotificationList")
+            notificationsTableView.reloadData()
         } else {
             fetchNotificationsFromCoredata()
         }
@@ -106,17 +108,17 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
     func saveOrUpdateNotificationsCoredata() {
         if (notificationArray.count > 0) {
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-                let fetchData = checkAddedToCoredata(entityName: "NotificationsEntity", notificationId: nil) as! [NotificationsEntity]
+                let fetchData = checkAddedToCoredata(entityName: "NotificationsEntity", idKey: "sortId", idValue: nil) as! [NotificationsEntity]
                 if (fetchData.count > 0) {
                     for i in 0 ... notificationArray.count-1 {
                         let managedContext = getContext()
                         let notificationDict = notificationArray[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "NotificationsEntity", notificationId: nil)
+                        let fetchResult = checkAddedToCoredata(entityName: "NotificationsEntity", idKey: "sortId", idValue: notificationDict.title)
                         //update
                         if(fetchResult.count != 0) {
                             let dbDict = fetchResult[0] as! NotificationsEntity
                             dbDict.title = notificationDict.title
-                            dbDict.sortId = String(i + 1)
+                            dbDict.sortId = notificationDict.title
                             
                             do{
                                 try managedContext.save()
@@ -140,17 +142,17 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
                 }
             }
             else {
-                let fetchData = checkAddedToCoredata(entityName: "NotificationsEntityArabic", notificationId: nil) as! [NotificationsEntityArabic]
+                let fetchData = checkAddedToCoredata(entityName: "NotificationsEntityArabic", idKey: "sortId", idValue: nil) as! [NotificationsEntityArabic]
                 if (fetchData.count > 0) {
                     for i in 0 ... notificationArray.count-1 {
                         let managedContext = getContext()
                         let notificationsDict = notificationArray[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "NotificationsEntityArabic", notificationId: nil)
+                        let fetchResult = checkAddedToCoredata(entityName: "NotificationsEntityArabic", idKey: "sortId", idValue: notificationsDict.title)
                         //update
                         if(fetchResult.count != 0) {
                             let dbDict = fetchResult[0] as! NotificationsEntityArabic
                             dbDict.titleArabic = notificationsDict.title
-                            dbDict.sortIdArabic =  String(i + 1)
+                            dbDict.sortIdArabic = notificationsDict.title
                             do{
                                 try managedContext.save()
                             }
@@ -260,12 +262,15 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
             return appDelegate!.managedObjectContext
         }
     }
-    func checkAddedToCoredata(entityName: String?,notificationId: String?) -> [NSManagedObject]
+    func checkAddedToCoredata(entityName: String?,idKey:String?, idValue: String?) -> [NSManagedObject]
     {
         let managedContext = getContext()
         var fetchResults : [NSManagedObject] = []
-        let homeFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
-        fetchResults = try! managedContext.fetch(homeFetchRequest)
+        let notificationFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
+        if (idValue != nil) {
+            notificationFetchRequest.predicate = NSPredicate.init(format: "\(idKey!) == \(idValue!)")
+        }
+        fetchResults = try! managedContext.fetch(notificationFetchRequest)
         return fetchResults
     }
     

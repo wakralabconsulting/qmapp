@@ -44,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             // Fallback on earlier versions
         }
 
+        application.applicationIconBadgeNumber = 0
         return true
     }
     
@@ -74,16 +75,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return shouldRotate ? .allButUpsideDown : .portrait
     }
     
-    func registerPushNotifications() {
-        if #available(iOS 10.0, *) {
-            
-            UIApplication.shared.registerForRemoteNotifications()
-            
-        } else {
-            print("App does not meet base OS requirements")
-        }
-    }
-    
     //MARK: Push notification receive delegates
     func application(_ application: UIApplication,
                      didReceiveRemoteNotification userInfo: [AnyHashable : Any],
@@ -91,10 +82,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         application.applicationIconBadgeNumber = 0
         print("Recived: \(userInfo)")
         if (application.applicationState == .active) {
-            UserDefaults.standard.setValue(1, forKey: "notificationBadgeCount")
             if let topController = UIApplication.topViewController() {
                 print(topController)
             }
+            // Do something you want when the app is active
+            
+        } else {
+            
+            // Do something else when your app is in the background
+            
+            
         }
         completionHandler(.newData)
         
@@ -120,6 +117,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         
         let userInfo = response.notification.request.content.userInfo
+        print(userInfo)
+        let info = self.extractUserInfo(userInfo: userInfo)
+        print(info.title)
+
+        if UserDefaults.standard.value(forKey: "pushNotificationList") as?
+            [Notification] != nil {
+            var notificationArray = UserDefaults.standard.value(forKey: "pushNotificationList") as!
+            [Notification]
+            notificationArray.insert(Notification(title: info.title, sortId: info.title), at: 0)
+            let notificationData = NSKeyedArchiver.archivedData(withRootObject: notificationArray)
+            UserDefaults.standard.set(notificationData, forKey: "pushNotificationList")
+        } else {
+            let notificationData = NSKeyedArchiver.archivedData(withRootObject: [Notification(title: info.title, sortId: info.title)])
+            UserDefaults.standard.set(notificationData, forKey: "pushNotificationList")
+        }
+        
+//        let notificationsView =  self.storyboard?.instantiateViewController(withIdentifier: "notificationId") as! NotificationsViewController
+//        notificationsView.fromHome = true
+//        self.window?.rootViewController = notificationsView
+//        self.window?.makeKeyAndVisible()
+
+        NotificationCenter.default.post(name: NSNotification.Name("NotificationIdentifier"), object: nil)
     }
     
     // This method will be called when app received push notifications in foreground
@@ -141,10 +160,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             [Notification] != nil {
             var notificationArray = UserDefaults.standard.value(forKey: "pushNotificationList") as!
             [Notification]
-            notificationArray.insert(Notification(title: info.title, sortId: ""), at: 0)
-            UserDefaults.standard.setValue(notificationArray, forKey: "pushNotificationList")
+            notificationArray.insert(Notification(title: info.title, sortId: info.title), at: 0)
+            let notificationData = NSKeyedArchiver.archivedData(withRootObject: notificationArray)
+            UserDefaults.standard.set(notificationData, forKey: "pushNotificationList")
         } else {
-            UserDefaults.standard.setValue(Notification(title: info.title, sortId: ""), forKey: "pushNotificationList")
+            let notificationData = NSKeyedArchiver.archivedData(withRootObject: [Notification(title: info.title, sortId: info.title)])
+            UserDefaults.standard.set(notificationData, forKey: "pushNotificationList")
         }
         if let topController = UIApplication.topViewController() {
             print(topController)
