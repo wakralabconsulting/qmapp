@@ -143,7 +143,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
             let shortDetailsView =  self.storyboard?.instantiateViewController(withIdentifier: "previewContainerId") as! PreviewContainerViewController
             shortDetailsView.fromScienceTour = true
             self.present(shortDetailsView, animated: false, completion: nil)
-        } else if (tourGuideDetail?.nid == "12471") {
+        } else if (tourGuideDetail?.nid == "12471") || (tourGuideDetail?.nid == "12916") {
             let shortDetailsView =  self.storyboard?.instantiateViewController(withIdentifier: "previewContainerId") as! PreviewContainerViewController
             shortDetailsView.fromScienceTour = false
             self.present(shortDetailsView, animated: false, completion: nil)

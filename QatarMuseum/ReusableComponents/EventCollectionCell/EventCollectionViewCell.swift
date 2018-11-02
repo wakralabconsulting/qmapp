@@ -36,15 +36,17 @@ class EventCollectionViewCell: UICollectionViewCell {
         timingLabel.isHidden = false
         titleLineView.isHidden = true
         groupSizeLabel.isHidden = false
-        
-        firstTitle.text = event.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
+        let eventTitle = event.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
+        firstTitle.text = eventTitle?.replacingOccurrences(of: "&#039;", with: "'", options: .regularExpression, range: nil)
         let dateValue = event.fieldRepeatDate
 //        if(dateValue != nil) {
 //        if((dateValue?.count)! > 0) {
 //            descriptionLabel.text = event.fieldRepeatDate?[0].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
 //        }
 //        }
-        descriptionLabel.text = event.introductionText?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        let eventDesc = event.introductionText?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        descriptionLabel.text = eventDesc?.replacingOccurrences(of: "&#039;", with: "'", options: .regularExpression, range: nil)
+
         //secondTitleLabel.text = event.title?.uppercased()
        // descriptionLabel.text = event.shortDesc
 //        if ((event.startTime != nil) && (event.endtime != nil)) {
@@ -77,14 +79,16 @@ class EventCollectionViewCell: UICollectionViewCell {
 //        if (educationEvent.maxGroupSize != nil) {
 //            groupSizeLabel.text = "Max. group size " + educationEvent.maxGroupSize!
 //        }
-        firstTitle.text = educationEvent.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
+        let eventTitle = educationEvent.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
+        firstTitle.text = eventTitle?.replacingOccurrences(of: "&#039;", with: "'", options: .regularExpression, range: nil)
         let dateValue = educationEvent.fieldRepeatDate
 //        if(dateValue != nil) {
 //        if((dateValue?.count)! > 0) {
 //            descriptionLabel.text = educationEvent.fieldRepeatDate?[0].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
 //        }
 //        }
-        descriptionLabel.text = educationEvent.introductionText?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        let eventDesc = educationEvent.introductionText?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        descriptionLabel.text = eventDesc?.replacingOccurrences(of: "&#039;", with: "'", options: .regularExpression, range: nil)
         viewDetails.setTitle(NSLocalizedString("VIEW_DETAIL_BUTTON_TITLE", comment: "VIEW_DETAIL_BUTTON_TITLE  in the event view"), for: .normal)
     }
     
