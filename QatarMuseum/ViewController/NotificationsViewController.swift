@@ -113,7 +113,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
                     for i in 0 ... notificationArray.count-1 {
                         let managedContext = getContext()
                         let notificationDict = notificationArray[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "NotificationsEntity", idKey: "sortId", idValue: notificationDict.title)
+                        let fetchResult = checkAddedToCoredata(entityName: "NotificationsEntity", idKey: "sortId", idValue: nil)
                         //update
                         if(fetchResult.count != 0) {
                             let dbDict = fetchResult[0] as! NotificationsEntity
@@ -147,7 +147,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
                     for i in 0 ... notificationArray.count-1 {
                         let managedContext = getContext()
                         let notificationsDict = notificationArray[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "NotificationsEntityArabic", idKey: "sortId", idValue: notificationsDict.title)
+                        let fetchResult = checkAddedToCoredata(entityName: "NotificationsEntityArabic", idKey: "sortId", idValue: nil)
                         //update
                         if(fetchResult.count != 0) {
                             let dbDict = fetchResult[0] as! NotificationsEntityArabic
