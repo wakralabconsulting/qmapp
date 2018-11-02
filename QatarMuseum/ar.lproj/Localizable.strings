@@ -170,7 +170,7 @@
 "ALREADY_LOGGEDIN" = "تم تسجيل الدخول بالفعل";
 "PASSWORD_REQUIRED" = "حقل كلمة المرور مطلوب";
 "WRONG_USERNAME_OR_PWD" = "اسم مستخدم أو كلمة مرور غير صحيح.";
-"LOGOUT_SUCCESSFULLY" = "You have been successfully logged out!";
+"LOGOUT_SUCCESSFULLY" = "تم تسجيل الخروج بنجاح";
 "OK" = "تم ";
 "MEMBERSHIP_NUMBER" = "رقم العضوية";
 "NO_INTERNET" = "لا يوجد اتصال بالانترنت";
@@ -201,7 +201,7 @@
 "VIEW_MY_CULTUREPASS_CARD" = "عرض بطاقة بطاقتك إلى الثقافة";
 "CREATE_YOUR_ACCOUNT" = "إنشاء حساب جديد";
 "INVALID_USERNAME" = "Invalid username";
-"FORGOT_PASSWORD_SENT_SUCCESSFULLY" = "New password link sent to your email";
+"FORGOT_PASSWORD_SENT_SUCCESSFULLY" = "لقد تم إرسال الرمز السري الجديد الى بريدك الإلكتروني";
 "LOGOUT_ERROR" = "Error in logging out!";
 "CONFIRMATION" = "CONFIRMATION!";
 "ACCEPT_DESCRIPTION" = "Thank you for accepting the invitation. You will receive further details on your email. For any quries, please contact Qatar Museums Authority via:\n info@qm.org.qa \n +974 4452 5555";

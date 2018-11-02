@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,6 +23,7 @@
                 <outlet property="closeButton" destination="YSf-E0-3gD" id="HvD-jB-xIk"/>
                 <outlet property="comingSoonPopup" destination="iN0-l3-epB" id="j6e-n7-zCh"/>
                 <outlet property="messageLabel" destination="vCI-kq-e2D" id="u9T-Qh-wf6"/>
+                <outlet property="popUpInnerViewHeight" destination="9bY-Rx-Ffi" id="R4t-gT-NY6"/>
                 <outlet property="popupInnerView" destination="v1z-Zu-cHZ" id="hXL-7p-dRF"/>
                 <outlet property="stayTunedLabel" destination="z5L-O5-wM8" id="2DX-sX-ddm"/>
                 <outlet property="titleLabel" destination="l52-3C-5Dw" id="XqC-op-OXk"/>

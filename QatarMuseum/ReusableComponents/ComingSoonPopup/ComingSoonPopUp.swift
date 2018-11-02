@@ -20,7 +20,8 @@ class ComingSoonPopUp: UIView {
     @IBOutlet weak var stayTunedLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var closeButton: UIButton!
-    
+    @IBOutlet weak var popUpInnerViewHeight: NSLayoutConstraint!
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -62,6 +63,8 @@ class ComingSoonPopUp: UIView {
         messageLabel.text = message
         stayTunedLabel.text = ""
         messageLabel.font = UIFont.diningHeaderFont
+        let newMultiplier:CGFloat = 0.30
+        popUpInnerViewHeight = popUpInnerViewHeight.setMultiplier(newMultiplier)
         let buttonTitle = NSLocalizedString("OK", comment: "OK Label in the Popup")
         closeButton.setTitle(buttonTitle, for: .normal)
     }
@@ -94,4 +97,33 @@ class ComingSoonPopUp: UIView {
         comingSoonPopupDelegate?.closeButtonPressed()
     }
     
+}
+
+extension NSLayoutConstraint {
+    /**
+     Change multiplier constraint
+     
+     - parameter multiplier: CGFloat
+     - returns: NSLayoutConstraint
+     */
+    func setMultiplier(multiplier:CGFloat) -> NSLayoutConstraint {
+        
+        NSLayoutConstraint.deactivate([self])
+        
+        let newConstraint = NSLayoutConstraint(
+            item: firstItem,
+            attribute: firstAttribute,
+            relatedBy: relation,
+            toItem: secondItem,
+            attribute: secondAttribute,
+            multiplier: multiplier,
+            constant: constant)
+        
+        newConstraint.priority = priority
+        newConstraint.shouldBeArchived = self.shouldBeArchived
+        newConstraint.identifier = self.identifier
+        
+        NSLayoutConstraint.activate([newConstraint])
+        return newConstraint
+    }
 }

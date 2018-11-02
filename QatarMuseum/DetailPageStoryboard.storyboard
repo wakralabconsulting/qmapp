@@ -646,14 +646,12 @@
                             <constraint firstItem="sDt-Mm-84p" firstAttribute="top" secondItem="LnX-M7-NGo" secondAttribute="bottom" constant="15" id="1Fe-Wq-Bgc"/>
                             <constraint firstItem="g3C-1p-7g2" firstAttribute="leading" secondItem="0YN-5y-x0j" secondAttribute="leading" id="3bo-98-D1I"/>
                             <constraint firstAttribute="trailing" secondItem="TJw-Tg-BOA" secondAttribute="trailing" id="9vi-lW-ZbP"/>
-                            <constraint firstItem="TJw-Tg-BOA" firstAttribute="leading" secondItem="0YN-5y-x0j" secondAttribute="leading" id="Fen-Va-4po"/>
                             <constraint firstItem="TJw-Tg-BOA" firstAttribute="leading" secondItem="0YN-5y-x0j" secondAttribute="leading" id="G2F-7Q-yEi"/>
                             <constraint firstItem="g3C-1p-7g2" firstAttribute="top" secondItem="KcW-LI-VhG" secondAttribute="bottom" id="M94-MM-CaR"/>
+                            <constraint firstAttribute="bottom" secondItem="TJw-Tg-BOA" secondAttribute="bottom" id="SsV-KA-pVp"/>
                             <constraint firstAttribute="trailing" secondItem="g3C-1p-7g2" secondAttribute="trailing" id="Ym2-Oh-Ky8"/>
                             <constraint firstItem="LnX-M7-NGo" firstAttribute="centerX" secondItem="0YN-5y-x0j" secondAttribute="centerX" id="cyL-DO-L9c"/>
-                            <constraint firstItem="sDt-Mm-84p" firstAttribute="top" secondItem="TJw-Tg-BOA" secondAttribute="bottom" id="oYr-tK-BCB"/>
                             <constraint firstItem="TJw-Tg-BOA" firstAttribute="top" secondItem="g3C-1p-7g2" secondAttribute="bottom" constant="-1" id="vpe-Au-xZW"/>
-                            <constraint firstAttribute="trailing" secondItem="TJw-Tg-BOA" secondAttribute="trailing" id="y2y-YJ-RTv"/>
                         </constraints>
                     </view>
                     <connections>
