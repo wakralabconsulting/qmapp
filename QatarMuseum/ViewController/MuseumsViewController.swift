@@ -30,7 +30,8 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     var totalImgCount = Int()
     var sliderImgCount : Int? = 0
     var sliderImgArray = NSMutableArray()
-    
+    var apnDelegate : APNProtocol?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -151,6 +152,10 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             }
     }
 
+    func updateNotificationBadge() {
+        museumsTopbar.updateNotificationBadgeCount()
+    }
+    
     //KASlideShow delegate
     func kaSlideShowWillShowNext(_ slideshow: KASlideShow) {
         

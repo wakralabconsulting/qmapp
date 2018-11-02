@@ -8,6 +8,7 @@
 
 import Crashlytics
 import UIKit
+import CoreData
 
 class NotificationsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,HeaderViewProtocol {
     @IBOutlet weak var notificationsTableView: UITableView!
@@ -15,19 +16,39 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
     @IBOutlet weak var loadingView: LoadingView!
     
     var fromHome : Bool = false
-    
+    var notificationArray: [Notification]! = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
+        updateNotificationTableView()
+    }
+    
+    func updateNotificationTableView(){
+        UserDefaults.standard.removeObject(forKey: "notificationBadgeCount")
+        let notificationData = UserDefaults.standard.object(forKey: "pushNotificationList") as? NSData
+        if let notificationData = notificationData, let notifications = NSKeyedUnarchiver.unarchiveObject(with: notificationData as Data) as?
+            [Notification] {
+            fetchNotificationsFromCoredata()
+            for notification in notifications {
+                notificationArray.insert(notification, at: 0)
+            }
+            saveOrUpdateNotificationsCoredata()
+            UserDefaults.standard.removeObject(forKey: "pushNotificationList")
+            notificationsTableView.reloadData()
+        } else {
+            fetchNotificationsFromCoredata()
+        }
     }
 
     func setUI() {
-        //loadingView.isHidden = false
-        //loadingView.showLoading()
-        self.loadingView.noDataView.isHidden = false
-        self.loadingView.isHidden = false
-        self.loadingView.showNoDataView()
+        loadingView.isHidden = false
+        loadingView.showLoading()
+        
+//        self.loadingView.noDataView.isHidden = false
+//        self.loadingView.showNoDataView()
         //self.loadingView.noDataLabel.text = errorMessage
+        
         notificationsHeader.headerTitle.text = NSLocalizedString("NOTIFICATIONS_TITLE", comment: "NOTIFICATIONS_TITLE in the Notification page")
         notificationsHeader.headerViewDelegate = self
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
@@ -35,7 +56,6 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
         } else {
             notificationsHeader.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
-        emptyNotificationData()
     }
     
     func emptyNotificationData() {
@@ -51,7 +71,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
     
     //MARK:- TableView Delegate Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return notificationArray.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -71,6 +91,8 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
         } else {
             cell.innerView.backgroundColor = UIColor.white
         }
+        
+        cell.notificationLabel.text = notificationArray[indexPath.row].title
         cell.notificationDetailSelection = {
             () in
             self.loadNotificationDetail(cellObj: cell)
@@ -80,6 +102,176 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
     
     func loadNotificationDetail(cellObj: NotificationsTableViewCell) {
        
+    }
+    
+    //    //MARK: Coredata Method
+    func saveOrUpdateNotificationsCoredata() {
+        if (notificationArray.count > 0) {
+            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                let fetchData = checkAddedToCoredata(entityName: "NotificationsEntity", idKey: "sortId", idValue: nil) as! [NotificationsEntity]
+                if (fetchData.count > 0) {
+                    for i in 0 ... notificationArray.count-1 {
+                        let managedContext = getContext()
+                        let notificationDict = notificationArray[i]
+                        let fetchResult = checkAddedToCoredata(entityName: "NotificationsEntity", idKey: "sortId", idValue: notificationDict.title)
+                        //update
+                        if(fetchResult.count != 0) {
+                            let dbDict = fetchResult[0] as! NotificationsEntity
+                            dbDict.title = notificationDict.title
+                            dbDict.sortId = notificationDict.title
+                            
+                            do{
+                                try managedContext.save()
+                            }
+                            catch{
+                                print(error)
+                            }
+                        } else {
+                            //save
+                            self.saveToCoreData(notificationsDict: notificationDict, managedObjContext: managedContext)
+                        }
+                    }
+                } else {
+                    for i in 0 ... notificationArray.count-1 {
+                        let managedContext = getContext()
+                        let notificationDict : Notification?
+                        notificationDict = notificationArray[i]
+                        self.saveToCoreData(notificationsDict: notificationDict!, managedObjContext: managedContext)
+                        
+                    }
+                }
+            }
+            else {
+                let fetchData = checkAddedToCoredata(entityName: "NotificationsEntityArabic", idKey: "sortId", idValue: nil) as! [NotificationsEntityArabic]
+                if (fetchData.count > 0) {
+                    for i in 0 ... notificationArray.count-1 {
+                        let managedContext = getContext()
+                        let notificationsDict = notificationArray[i]
+                        let fetchResult = checkAddedToCoredata(entityName: "NotificationsEntityArabic", idKey: "sortId", idValue: notificationsDict.title)
+                        //update
+                        if(fetchResult.count != 0) {
+                            let dbDict = fetchResult[0] as! NotificationsEntityArabic
+                            dbDict.titleArabic = notificationsDict.title
+                            dbDict.sortIdArabic = notificationsDict.title
+                            do{
+                                try managedContext.save()
+                            }
+                            catch{
+                                print(error)
+                            }
+                        }
+                        else {
+                            //save
+                            self.saveToCoreData(notificationsDict: notificationsDict, managedObjContext: managedContext)
+                            
+                        }
+                    }
+                }
+                else {
+                    for i in 0 ... notificationArray.count-1 {
+                        let managedContext = getContext()
+                        let notificationsDict : Notification?
+                        notificationsDict = notificationArray[i]
+                        self.saveToCoreData(notificationsDict: notificationsDict!, managedObjContext: managedContext)
+                        
+                    }
+                }
+            }
+        }
+    }
+    
+    func saveToCoreData(notificationsDict: Notification, managedObjContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            let notificationInfo: NotificationsEntity = NSEntityDescription.insertNewObject(forEntityName: "NotificationsEntity", into: managedObjContext) as! NotificationsEntity
+            notificationInfo.title = notificationsDict.title
+            if(notificationsDict.sortId != nil) {
+                notificationInfo.sortId = notificationsDict.sortId
+            }
+        }
+        else {
+            let notificationInfo: NotificationsEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "NotificationsEntityArabic", into: managedObjContext) as! NotificationsEntityArabic
+            notificationInfo.titleArabic = notificationsDict.title
+            if(notificationsDict.sortId != nil) {
+                notificationInfo.sortIdArabic = notificationsDict.sortId
+            }
+        }
+        do {
+            try managedObjContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func fetchNotificationsFromCoredata() {
+        do {
+            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                var listArray = [NotificationsEntity]()
+                let managedContext = getContext()
+                let notificationsFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "NotificationsEntity")
+                listArray = (try managedContext.fetch(notificationsFetchRequest) as? [NotificationsEntity])!
+                
+                if (listArray.count > 0) {
+                    for i in 0 ... listArray.count-1 {
+                        self.notificationArray.insert(Notification(title: listArray[i].title, sortId: listArray[i].sortId), at: i)
+                        
+                    }
+                    if(notificationArray.count == 0){
+                        self.emptyNotificationData()
+                    } else {
+                        self.loadingView.stopLoading()
+                        self.loadingView.isHidden = true
+                    }
+                    notificationsTableView.reloadData()
+                }
+                else{
+                    self.emptyNotificationData()
+                }
+            }
+            else {
+                var listArray = [NotificationsEntityArabic]()
+                let managedContext = getContext()
+                let notificationsFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "NotificationsEntityArabic")
+                listArray = (try managedContext.fetch(notificationsFetchRequest) as? [NotificationsEntityArabic])!
+                if (listArray.count > 0) {
+                    for i in 0 ... listArray.count-1 {
+                        self.notificationArray.insert(Notification(title: listArray[i].titleArabic, sortId: listArray[i].sortIdArabic), at: i)
+                    }
+                    if(listArray.count == 0){
+                        self.emptyNotificationData()
+                    } else {
+                        self.loadingView.stopLoading()
+                        self.loadingView.isHidden = true
+                    }
+                    notificationsTableView.reloadData()
+                }
+                else{
+                    self.emptyNotificationData()
+                }
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    func getContext() -> NSManagedObjectContext{
+        
+        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+        if #available(iOS 10.0, *) {
+            return
+                appDelegate!.persistentContainer.viewContext
+        } else {
+            return appDelegate!.managedObjectContext
+        }
+    }
+    func checkAddedToCoredata(entityName: String?,idKey:String?, idValue: String?) -> [NSManagedObject]
+    {
+        let managedContext = getContext()
+        var fetchResults : [NSManagedObject] = []
+        let notificationFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
+        if (idValue != nil) {
+            notificationFetchRequest.predicate = NSPredicate.init(format: "\(idKey!) == \(idValue!)")
+        }
+        fetchResults = try! managedContext.fetch(notificationFetchRequest)
+        return fetchResults
     }
     
     //MARK: header delegate

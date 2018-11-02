@@ -38,23 +38,23 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     let networkReachability = NetworkReachabilityManager()
     var homeDBArray:[HomeEntity]?
     var homeDBArrayArabic:[HomeEntityArabic]?
+    var apnDelegate : APNProtocol?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         registerNib()
         setUpUI()
        
-        if  (networkReachability?.isReachable)! {
+        if (networkReachability?.isReachable)! {
             getHomeList()
-        }
-        else {
+        } else {
             self.fetchHomeInfoFromCoredata()
-           
         }
-
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.receivedNotification(notification:)), name: NSNotification.Name("NotificationIdentifier"), object: nil)
     }
     
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
     }
@@ -64,6 +64,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         // Dispose of any resources that can be recreated.
     }
     
+    @objc func receivedNotification(notification: Notification) {
+        let notificationsView =  self.storyboard?.instantiateViewController(withIdentifier: "notificationId") as! NotificationsViewController
+        notificationsView.fromHome = true
+        self.present(notificationsView, animated: false, completion: nil)
+    }
+
     func setUpUI() {
         topbarView.topbarDelegate = self
         topbarView.backButton.isHidden = true
@@ -177,6 +183,10 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         self.view.addSubview(popupView)
     }
     
+    func updateNotificationBadge() {
+        topbarView.updateNotificationBadgeCount()
+    }
+    
     //MARK: Service call
     func getHomeList() {
         _ = Alamofire.request(QatarMuseumRouter.HomeList()).responseObject { (response: DataResponse<HomeList>) -> Void in
@@ -212,7 +222,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     //MARK: Topbar Delegate
     func backButtonPressed() {
-        
+    
     }
     
     func eventButtonPressed() {

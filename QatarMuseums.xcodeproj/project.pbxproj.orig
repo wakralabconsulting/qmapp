@@ -642,7 +642,11 @@
 		B80DC04C20C792E400E28034 = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				49273F602185A74800D3057A /* QatarMuseums.entitlements */,
+=======
+				1B3666312189B204007102C8 /* QatarMuseums.entitlements */,
+>>>>>>> b3f926ed2503e654c7eb5e556a712dd11faa4f96
 				B8EAA3582158D4520060D168 /* GoogleService-Info.plist */,
 				B80DC05720C792E400E28034 /* QatarMuseum */,
 				B80DC06C20C792E600E28034 /* QatarMuseumTests */,

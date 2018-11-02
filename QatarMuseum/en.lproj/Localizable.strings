@@ -203,3 +203,15 @@
 "INVALID_USERNAME" = "Invalid username";
 "FORGOT_PASSWORD_SENT_SUCCESSFULLY" = "New password link sent to your email";
 "LOGOUT_ERROR" = "Error in logging out!";
+"CONFIRMATION" = "CONFIRMATION!";
+"ACCEPT_DESCRIPTION" = "Thank you for accepting the invitation. You will receive further details on your email. For any quries, please contact Qatar Museums Authority via:\n info@qm.org.qa \n +974 4452 5555";
+"DECLINE_DESCRIPTION" = "Are you sure you want to decline the invitation?";
+"GREETINGS" = "GREETINGS!";
+"GREETINGS_DESCRIPTION" = "You have been invited for the launch event of National Museum of Qatar.";
+"ACCEPT_NOW" = "Accept Now";
+"ACCEPT_LATER" = "Accept Later";
+"ACCEPT" = "ACCEPT";
+"DECLINE" = "DECLINE";
+"INVITATION_TEXT" = "Invitation for National Museum of Qatar Launch Event";
+
+
