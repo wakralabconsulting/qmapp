@@ -384,7 +384,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             if (fromTourString == fromTour.scienceTour) {
                 tourGuideId = "12226"
             } else if ((fromTourString == fromTour.HighlightTour) || (fromTourString == fromTour.exploreTour)){
-                tourGuideId = "12471"
+                tourGuideId = "12916"
             }
         }
         if  (networkReachability?.isReachable)! {

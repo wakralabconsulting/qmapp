@@ -255,8 +255,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             eventPopup.addToCalendarButton.setTitle(buttonTitle, for: .normal)
         }
         if (isLoadEventPage == true) {
-            
-            eventPopup.eventTitle.text = educationEventArray[currentRow].title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
+            let title = educationEventArray[currentRow].title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
+            eventPopup.eventTitle.text = title?.replacingOccurrences(of: "&#039;", with: "'", options: .regularExpression, range: nil)
            // eventPopup.eventDescription.text = educationEventArray[currentRow].longDesc
             var mainDesc = String()
             if let maindescr = educationEventArray[currentRow].mainDescription {
