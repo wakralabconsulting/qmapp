@@ -150,5 +150,40 @@ class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UIC
         self.view.window!.layer.add(transition, forKey: kCATransition)
         dismiss(animated: false, completion: nil)
     }
+    //MARK: Service call
+//    func getSerchListFromServer() {
+//        var searchstring = String()
+//        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+//            searchstring = "12181"
+//        } else {
+//            searchstring = "12186"
+//        }
+//        _ = Alamofire.request(QatarMuseumRouter.HomeList()).responseObject { (response: DataResponse<HomeList>) -> Void in
+//            switch response.result {
+//            case .success(let data):
+//                self.museumsList = data.homeList
+//                self.saveOrUpdateMuseumsCoredata()
+//                self.loadingView.stopLoading()
+//                self.loadingView.isHidden = true
+//                if(self.museumsList.count > 0) {
+//                    //Removed Exhibition from Tour List
+//                    if let arrayOffset = self.museumsList.index(where: {$0.id == searchstring}) {
+//                        self.museumsList.remove(at: arrayOffset)
+//                    }
+//                }
+//                //self.saveOrUpdateHomeCoredata()
+//                self.tourCollectionView.reloadData()
+//            case .failure(let error):
+//                var errorMessage: String
+//                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+//                                                                comment: "Setting the content of the alert"))
+//                self.loadingView.stopLoading()
+//                self.loadingView.noDataView.isHidden = false
+//                self.loadingView.isHidden = false
+//                self.loadingView.showNoDataView()
+//                self.loadingView.noDataLabel.text = errorMessage
+//            }
+//        }
+//    }
 }
 

@@ -283,7 +283,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             
             //numberSerchBtn.setImage(UIImage(named: "side_menu_blackX1"), for: .normal)
            // self.numberSerchBtn.contentEdgeInsets = UIEdgeInsets(top: 11, left: 5, bottom: 11, right: 5)
-            numberSerchBtn.isHidden = true
+            //numberSerchBtn.isHidden = true
             headerView.headerBackButton.isHidden = false
             headerView.settingsButton.isHidden = true
             
@@ -325,7 +325,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             
             //numberSerchBtn.setImage(UIImage(named: "side_menu_blackX1"), for: .normal)
             // self.numberSerchBtn.contentEdgeInsets = UIEdgeInsets(top: 11, left: 5, bottom: 11, right: 5)
-            numberSerchBtn.isHidden = true
+            //numberSerchBtn.isHidden = true
             headerView.headerBackButton.isHidden = false
             headerView.settingsButton.isHidden = true
             //headerView.settingsButton.setImage(UIImage(named: "side_menu_iconX1"), for: .normal)
@@ -338,8 +338,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             firstLevelView.backgroundColor = UIColor.white
             secondLevelView.backgroundColor = UIColor.mapLevelColor
             thirdLevelView.backgroundColor = UIColor.mapLevelColor
-            numberSerchBtn.isHidden = true
-            numberSerchBtn.setImage(UIImage(named: "number_padX1"), for: .normal)
+//            numberSerchBtn.isHidden = false
+//            numberSerchBtn.setImage(UIImage(named: "number_padX1"), for: .normal)
             headerView.headerBackButton.isHidden = false
             playButton.isHidden = false
             playerSlider.isHidden = false
@@ -367,7 +367,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             showLevelTwoHighlightMarker()
             showLevelThreeHighlightMarker()
         }
-        
+        numberSerchBtn.isHidden = false
+        numberSerchBtn.setImage(UIImage(named: "number_padX1"), for: .normal)
         thirdLevelLabel.text = NSLocalizedString("LEVEL_STRING", comment: "LEVEL_STRING in floor map")
         secondLevelLabel.text = NSLocalizedString("LEVEL_STRING", comment: "LEVEL_STRING in floor map")
         firstLevelLabel.text = NSLocalizedString("LEVEL_STRING", comment: "LEVEL_STRING in floor map")

@@ -36,6 +36,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case GetUser(String)
     case UpdateUser(String,[String: Any])
     case SendDeviceToken(String, [String: Any])
+    case NumberSearchList([String: Any])
     var method: Alamofire.HTTPMethod {
         switch self {
         case .ExhibitionList:
@@ -90,6 +91,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return .put
         case .SendDeviceToken:
             return .post
+        case .NumberSearchList:
+            return .get
         }
     }
     
@@ -147,6 +150,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/user/\(userId).json"
         case .SendDeviceToken( _, _):
             return "push_notifications.json"
+        case .NumberSearchList( _):
+            return "Exhibition_List_Page.json"
         }
     }
 
@@ -257,6 +262,12 @@ enum QatarMuseumRouter: URLRequestConvertible {
             tokenMutableURLReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
             tokenMutableURLReq.setValue(accessToken, forHTTPHeaderField: "x-csrf-token")
             return try! Alamofire.JSONEncoding.default.encode(tokenMutableURLReq, with: parameters)
+        case .NumberSearchList( _):
+            let searchURL = NSURL(string: Config.secureBaseURL + lang() + Config.mobileApiURL)!
+            var searchURLReq = URLRequest(url: searchURL.appendingPathComponent(path)!)
+            searchURLReq.httpMethod = method.rawValue
+            return try! Alamofire.JSONEncoding.default.encode(searchURLReq)
+
         }
         
         
