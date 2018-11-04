@@ -85,7 +85,8 @@
 "NO_EVENTS" = "No Events";
 "ARTIFACT_NUMBERPAD_TITLE" = "OBJECT SEARCH";
 "OBJECT_TITLE" = "Enter The Object Number";
-"OBJECT_INFO" = "next to \t  to view the details";
+"OBJECT_INFO" = "next to";
+"TO_VIEW_MESSAGE" = "to view the details";
 "OR_LABEL" = "OR";
 "MUSEUM_TIMING" = "MUSEUM TIMINGS";
 "ABOUT" = "About";

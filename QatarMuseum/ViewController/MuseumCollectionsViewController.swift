@@ -110,7 +110,7 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
     
     func loadCollectionDetail(currentRow: Int?) {
         let collectionDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "collectionDetailId") as! CollectionDetailViewController
-        collectionDetailView.collectionName = collection[currentRow!].name?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        collectionDetailView.collectionName = collection[currentRow!].name?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionFade
@@ -156,7 +156,7 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
                         //update
                         if(fetchResult.count != 0) {
                             let collectionsdbDict = fetchResult[0] as! CollectionsEntity
-                            collectionsdbDict.listName = collectionListDict?.name?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                            collectionsdbDict.listName = collectionListDict?.name?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                             collectionsdbDict.listImage = collectionListDict?.image
                             collectionsdbDict.museumId = collectionListDict?.museumId
                             do {
@@ -224,7 +224,7 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
         }
         else {
             let collectionInfo: CollectionsEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "CollectionsEntityArabic", into: managedObjContext) as! CollectionsEntityArabic
-            collectionInfo.listName = collectionListDict.name?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+            collectionInfo.listName = collectionListDict.name?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
             collectionInfo.listImageAr = collectionListDict.image
             collectionInfo.museumId = collectionListDict.museumId
         }
@@ -247,7 +247,7 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
                         
 //                        self.collection.insert(Collection(name: collectionArray[i].listName?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil), image: collectionArray[i].listImage, museumId: collectionArray[i].museumId, title: nil, body: nil, nid: nil, categoryCollection: nil), at: i)
                         
-                        self.collection.insert(Collection(name: collectionArray[i].listName?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil), image: collectionArray[i].listImage, museumId: collectionArray[i].museumId), at: i)
+                        self.collection.insert(Collection(name: collectionArray[i].listName?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil), image: collectionArray[i].listImage, museumId: collectionArray[i].museumId), at: i)
                         
                     }
                     if(collection.count == 0){
@@ -267,7 +267,7 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
                         
 //                        self.collection.insert(Collection(name: collectionArray[i].listName?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil), image: collectionArray[i].listImageAr, museumId: collectionArray[i].museumId, title: nil, body: nil, nid: nil, categoryCollection: nil), at: i)
                         
-                        self.collection.insert(Collection(name: collectionArray[i].listName?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil), image: collectionArray[i].listImageAr, museumId: collectionArray[i].museumId), at: i)
+                        self.collection.insert(Collection(name: collectionArray[i].listName?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil), image: collectionArray[i].listImageAr, museumId: collectionArray[i].museumId), at: i)
                     }
                     if(collection.count == 0){
                         self.showNoNetwork()

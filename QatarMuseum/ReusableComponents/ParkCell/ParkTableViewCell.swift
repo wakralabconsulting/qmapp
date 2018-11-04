@@ -47,7 +47,7 @@ class ParkTableViewCell: UITableViewCell {
         
         
         titleLabel.text = parksList.title?.uppercased()
-        let parkDesc = parksList.description?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        let parkDesc = parksList.description?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         titleDescriptionLabel.text = parkDesc?.replacingOccurrences(of: "&amp;", with: "&", options: .regularExpression, range: nil)
         
        // titleSecondDescriptionLabel.text =
