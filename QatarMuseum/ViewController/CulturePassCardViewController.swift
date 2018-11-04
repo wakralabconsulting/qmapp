@@ -9,7 +9,7 @@
 import UIKit
 
 class CulturePassCardViewController: UIViewController {
-    var membershipNumber : String? = nil
+    
     @IBOutlet weak var membershipLabel: UILabel!
     
     @IBOutlet weak var barcodeImage: UIImageView!
@@ -18,6 +18,8 @@ class CulturePassCardViewController: UIViewController {
     @IBOutlet weak var barcodeView: UIView!
     
     @IBOutlet weak var tapToFlipButton: UIButton!
+    var membershipNumber : String? = nil
+     var nameString : String? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI ()
@@ -63,14 +65,21 @@ class CulturePassCardViewController: UIViewController {
     }
     
     @IBAction func didTapTapToFlip(_ sender: UIButton) {
-//        let cardBackView =  self.storyboard?.instantiateViewController(withIdentifier: "cardBackId") as!CulturePassCardBackViewController
-//        let transition = CATransition()
-//        transition.duration = 0.9
-//        transition.type = "flip"
-//        transition.subtype = kCATransitionFromLeft
-//        view.window!.layer.add(transition, forKey: kCATransition)
-//        
-//        self.present(cardBackView, animated: true, completion: nil)
+        let cardBackView =  self.storyboard?.instantiateViewController(withIdentifier: "cardBackId") as!CulturePassCardBackViewController
+        if((UserDefaults.standard.value(forKey: "uid") as? String != nil) && (UserDefaults.standard.value(forKey: "uid") as? String != "") ) {
+           let membershipNum = Int((UserDefaults.standard.value(forKey: "uid") as? String)!)! + 006000
+            cardBackView.cardNumber = "00" + String(membershipNum)
+        }
+        if((UserDefaults.standard.value(forKey: "displayName") as? String != nil) && (UserDefaults.standard.value(forKey: "displayName") as? String != "")) {
+            cardBackView.usernameString = (UserDefaults.standard.value(forKey: "displayName") as? String)
+        }
+        let transition = CATransition()
+        transition.duration = 0.9
+        transition.type = "flip"
+        transition.subtype = kCATransitionFromLeft
+        view.window!.layer.add(transition, forKey: kCATransition)
+        
+        self.present(cardBackView, animated: true, completion: nil)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
