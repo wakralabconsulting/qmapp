@@ -180,8 +180,8 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
 //        locationTotalBottomConstraint.isActive = true
 //        locationTotalBottomConstraint.constant = 50
         
-        titleDescriptionLabel.text = publicArsDetail.description?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
-        midTitleDescriptionLabel.text = publicArsDetail.shortdescription?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        titleDescriptionLabel.text = publicArsDetail.description?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+        midTitleDescriptionLabel.text = publicArsDetail.shortdescription?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         locationTitleLabel.text = NSLocalizedString("LOCATION_TITLE",
                                                     comment: "LOCATION_TITLE in the Heritage detail")
         //fridayLabel.text =
@@ -212,9 +212,9 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
             if ((descriptionArray.count) > 0) {
                 for i in 0 ... (aboutData.mobileDescription?.count)!-1 {
                     if(i == 0) {
-                        titleDescriptionLabel.text = aboutData.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
+                        titleDescriptionLabel.text = aboutData.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     } else {
-                        subDesc = subDesc! + aboutData.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
+                        subDesc = subDesc! + aboutData.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                         midTitleDescriptionLabel.text = subDesc
                     }
                 }

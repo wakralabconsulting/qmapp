@@ -136,7 +136,7 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
                             let collectiondbDict = fetchResult[0]
                             collectiondbDict.title = collectionDetailDict.title
                             collectiondbDict.body = collectionDetailDict.body
-                            collectiondbDict.categoryCollection =  collectionDetailDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                            collectiondbDict.categoryCollection =  collectionDetailDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                             collectiondbDict.nid = collectionDetailDict.nid
                             collectiondbDict.image = collectionDetailDict.image
                             
@@ -173,7 +173,7 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
                             let collectiondbDict = fetchResult[0]
                             collectiondbDict.titleAr = collectionDetailDict.title
                             collectiondbDict.bodyAr = collectionDetailDict.body
-                            collectiondbDict.categoryCollection =  collectionDetailDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                            collectiondbDict.categoryCollection =  collectionDetailDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                             collectiondbDict.imageAr = collectionDetailDict.image
                             
                             do{
@@ -205,7 +205,7 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
             collectiondbDict.title = collectionDetailDict.title
             collectiondbDict.body = collectionDetailDict.body
             collectiondbDict.nid = collectionDetailDict.nid
-            collectiondbDict.categoryCollection =  collectionDetailDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+            collectiondbDict.categoryCollection =  collectionDetailDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
             collectiondbDict.image = collectionDetailDict.image
         
         }
@@ -214,7 +214,7 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
             collectiondbDict.titleAr = collectionDetailDict.title
             collectiondbDict.bodyAr = collectionDetailDict.body
             collectiondbDict.nid = collectionDetailDict.nid
-            collectiondbDict.categoryCollection =  collectionDetailDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+            collectiondbDict.categoryCollection =  collectionDetailDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
             collectiondbDict.imageAr = collectionDetailDict.image
         }
         do {
@@ -238,7 +238,7 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
                                 self.showNodata()
                                 
                             } else {
-                                self.collectionDetailArray.insert(CollectionDetail(title: collectionDict.title, image: collectionDict.image, body: collectionDict.body, nid: collectionDict.nid, categoryCollection: collectionDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)), at: 0)
+                                self.collectionDetailArray.insert(CollectionDetail(title: collectionDict.title, image: collectionDict.image, body: collectionDict.body, nid: collectionDict.nid, categoryCollection: collectionDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)), at: 0)
                                 }
                            
                         }
@@ -262,7 +262,7 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
                         if((collectionDict.titleAr == nil) && (collectionDict.bodyAr == nil)) {
                             self.showNoNetwork()
                         } else {
-                           self.collectionDetailArray.insert(CollectionDetail(title: collectionDict.titleAr, image: collectionDict.imageAr, body: collectionDict.bodyAr, nid: collectionDict.nid, categoryCollection: collectionDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)), at: 0)
+                           self.collectionDetailArray.insert(CollectionDetail(title: collectionDict.titleAr, image: collectionDict.imageAr, body: collectionDict.bodyAr, nid: collectionDict.nid, categoryCollection: collectionDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)), at: 0)
                         
                         }
                     }

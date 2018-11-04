@@ -326,7 +326,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 var startDt = Date()
                 var endDt = Date()
                 if((selectedEvent?.startDate?.count)! > 0) {
-                    let dateArray = selectedEvent?.startDate![0].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil).components(separatedBy: " ")
+                    let dateArray = selectedEvent?.startDate![0].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil).components(separatedBy: " ")
                     if((dateArray?.count)! > 0) {
                         
                         let time = dateArray![(dateArray?.count)!-1]
@@ -342,7 +342,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     }
             }
                 if((selectedEvent?.endDate?.count)! > 0) {
-                    let dateArray2 = selectedEvent?.endDate![0].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil).components(separatedBy: " ")
+                    let dateArray2 = selectedEvent?.endDate![0].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil).components(separatedBy: " ")
                     if((dateArray2?.count)! > 0) {
                         
                         let time = dateArray2![(dateArray2?.count)!-1]
@@ -739,7 +739,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 for i in 0 ... (educationEventDict.fieldRepeatDate?.count)!-1 {
                     var eventDateEntity: EdEventDateEntity!
                     let edEventDate: EdEventDateEntity = NSEntityDescription.insertNewObject(forEntityName: "EdEventDateEntity", into: managedObjContext) as! EdEventDateEntity
-                    edEventDate.fieldRepeatDate = educationEventDict.fieldRepeatDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    edEventDate.fieldRepeatDate = educationEventDict.fieldRepeatDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
                     eventDateEntity = edEventDate
                     edducationInfo.addToFieldRepeatDates(eventDateEntity)
@@ -760,7 +760,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 for i in 0 ... (educationEventDict.ageGroup?.count)!-1 {
                     var eventAgeEntity: EdAgeGroupEntity!
                     let eventAge: EdAgeGroupEntity = NSEntityDescription.insertNewObject(forEntityName: "EdAgeGroupEntity", into: managedObjContext) as! EdAgeGroupEntity
-                    eventAge.ageGroup = educationEventDict.ageGroup![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    eventAge.ageGroup = educationEventDict.ageGroup![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
                     eventAgeEntity = eventAge
                     edducationInfo.addToAgeGroupRelation(eventAgeEntity)
@@ -778,7 +778,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 for i in 0 ... (educationEventDict.associatedTopics?.count)!-1 {
                     var eventSubEntity: EdEventTopicsEntity!
                     let event: EdEventTopicsEntity = NSEntityDescription.insertNewObject(forEntityName: "EdEventTopicsEntity", into: managedObjContext) as! EdEventTopicsEntity
-                    event.associatedTopic = educationEventDict.associatedTopics![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    event.associatedTopic = educationEventDict.associatedTopics![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
                     eventSubEntity = event
                     edducationInfo.addToAssTopicRelation(eventSubEntity)
@@ -796,7 +796,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 for i in 0 ... (educationEventDict.startDate?.count)!-1 {
                     var eventSubEntity: EdStartDateEntity!
                     let event: EdStartDateEntity = NSEntityDescription.insertNewObject(forEntityName: "EdStartDateEntity", into: managedObjContext) as! EdStartDateEntity
-                    event.startDate = educationEventDict.startDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    event.startDate = educationEventDict.startDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
                     eventSubEntity = event
                     edducationInfo.addToStartDateRelation(eventSubEntity)
@@ -814,7 +814,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 for i in 0 ... (educationEventDict.endDate?.count)!-1 {
                     var eventSubEntity: EdEndDateEntity!
                     let event: EdEndDateEntity = NSEntityDescription.insertNewObject(forEntityName: "EdEndDateEntity", into: managedObjContext) as! EdEndDateEntity
-                    event.endDate = educationEventDict.endDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    event.endDate = educationEventDict.endDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
                     eventSubEntity = event
                     edducationInfo.addToEndDateRelation(eventSubEntity)
@@ -850,7 +850,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 for i in 0 ... (educationEventDict.fieldRepeatDate?.count)!-1 {
                     var eventDateEntity: EdEventDateEntityAr!
                     let edEventDate: EdEventDateEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EdEventDateEntityAr", into: managedObjContext) as! EdEventDateEntityAr
-                    edEventDate.fieldRepeatDate = educationEventDict.fieldRepeatDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    edEventDate.fieldRepeatDate = educationEventDict.fieldRepeatDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
                     eventDateEntity = edEventDate
                     edducationInfo.addToFieldRepeatDates(eventDateEntity)
@@ -871,7 +871,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 for i in 0 ... (educationEventDict.ageGroup?.count)!-1 {
                     var eventAgeEntity: EdAgeGroupEntityAr!
                     let eventAge: EdAgeGroupEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EdAgeGroupEntityAr", into: managedObjContext) as! EdAgeGroupEntityAr
-                    eventAge.ageGroup = educationEventDict.ageGroup![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    eventAge.ageGroup = educationEventDict.ageGroup![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
                     eventAgeEntity = eventAge
                     edducationInfo.addToAgeGroupRelation(eventAgeEntity)
@@ -889,7 +889,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 for i in 0 ... (educationEventDict.associatedTopics?.count)!-1 {
                     var eventSubEntity: EdEventTopicsEntityAr!
                     let event: EdEventTopicsEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EdEventTopicsEntityAr", into: managedObjContext) as! EdEventTopicsEntityAr
-                    event.associatedTopic = educationEventDict.associatedTopics![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    event.associatedTopic = educationEventDict.associatedTopics![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
                     eventSubEntity = event
                     edducationInfo.addToAssTopicRelation(eventSubEntity)
@@ -907,7 +907,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 for i in 0 ... (educationEventDict.startDate?.count)!-1 {
                     var eventSubEntity: EdStartDateEntityAr!
                     let event: EdStartDateEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EdStartDateEntityAr", into: managedObjContext) as! EdStartDateEntityAr
-                    event.startDate = educationEventDict.startDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    event.startDate = educationEventDict.startDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
                     eventSubEntity = event
                     edducationInfo.addToStartDateRelation(eventSubEntity)
@@ -925,7 +925,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 for i in 0 ... (educationEventDict.endDate?.count)!-1 {
                     var eventSubEntity: EdEndDateEntityAr!
                     let event: EdEndDateEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EdEndDateEntityAr", into: managedObjContext) as! EdEndDateEntityAr
-                    event.endDate = educationEventDict.endDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    event.endDate = educationEventDict.endDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
                     eventSubEntity = event
                     edducationInfo.addToEndDateRelation(eventSubEntity)
@@ -1149,7 +1149,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 for i in 0 ... (educationEventDict.fieldRepeatDate?.count)!-1 {
                     var eventDateEntity: EventDateEntity!
                     let edEventDate: EventDateEntity = NSEntityDescription.insertNewObject(forEntityName: "EventDateEntity", into: managedObjContext) as! EventDateEntity
-                    edEventDate.fieldRepeatDate = educationEventDict.fieldRepeatDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    edEventDate.fieldRepeatDate = educationEventDict.fieldRepeatDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
                     eventDateEntity = edEventDate
                     edducationInfo.addToFieldRepeatDates(eventDateEntity)
@@ -1169,7 +1169,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 for i in 0 ... (educationEventDict.ageGroup?.count)!-1 {
                     var eventAgeEntity: EventAgeGroupEntity!
                     let eventAge: EventAgeGroupEntity = NSEntityDescription.insertNewObject(forEntityName: "EventAgeGroupEntity", into: managedObjContext) as! EventAgeGroupEntity
-                    eventAge.ageGroup = educationEventDict.ageGroup![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    eventAge.ageGroup = educationEventDict.ageGroup![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
 
                     eventAgeEntity = eventAge
                     edducationInfo.addToAgeGroupRelation(eventAgeEntity)
@@ -1187,7 +1187,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 for i in 0 ... (educationEventDict.associatedTopics?.count)!-1 {
                     var eventSubEntity: EventTopicsEntity!
                     let event: EventTopicsEntity = NSEntityDescription.insertNewObject(forEntityName: "EventTopicsEntity", into: managedObjContext) as! EventTopicsEntity
-                    event.associatedTopic = educationEventDict.associatedTopics![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    event.associatedTopic = educationEventDict.associatedTopics![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
                     eventSubEntity = event
                     edducationInfo.addToAssTopicRelation(eventSubEntity)
@@ -1205,7 +1205,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 for i in 0 ... (educationEventDict.startDate?.count)!-1 {
                     var eventSubEntity: EventStartDateEntity!
                     let event: EventStartDateEntity = NSEntityDescription.insertNewObject(forEntityName: "EventStartDateEntity", into: managedObjContext) as! EventStartDateEntity
-                    event.startDate = educationEventDict.startDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    event.startDate = educationEventDict.startDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
                     eventSubEntity = event
                     edducationInfo.addToStartDateRelation(eventSubEntity)
@@ -1223,7 +1223,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 for i in 0 ... (educationEventDict.endDate?.count)!-1 {
                     var eventSubEntity: EventEndDateEntity!
                     let event: EventEndDateEntity = NSEntityDescription.insertNewObject(forEntityName: "EventEndDateEntity", into: managedObjContext) as! EventEndDateEntity
-                    event.endDate = educationEventDict.endDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    event.endDate = educationEventDict.endDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
                     eventSubEntity = event
                     edducationInfo.addToEndDateRelation(eventSubEntity)
@@ -1256,7 +1256,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 for i in 0 ... (educationEventDict.fieldRepeatDate?.count)!-1 {
                     var eventDateEntity: EventDateEntityAr!
                     let edEventDate: EventDateEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EventDateEntityAr", into: managedObjContext) as! EventDateEntityAr
-                    edEventDate.fieldRepeatDate = educationEventDict.fieldRepeatDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    edEventDate.fieldRepeatDate = educationEventDict.fieldRepeatDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
                     eventDateEntity = edEventDate
                     edducationInfo.addToFieldRepeatDates(eventDateEntity)
@@ -1278,7 +1278,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 for i in 0 ... (educationEventDict.ageGroup?.count)!-1 {
                     var eventAgeEntity: EventAgeGroupEntityAr!
                     let eventAge: EventAgeGroupEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EventAgeGroupEntityAr", into: managedObjContext) as! EventAgeGroupEntityAr
-                    eventAge.ageGroup = educationEventDict.ageGroup![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    eventAge.ageGroup = educationEventDict.ageGroup![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
                     eventAgeEntity = eventAge
                     edducationInfo.addToAgeGroupRelation(eventAgeEntity)
@@ -1296,7 +1296,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 for i in 0 ... (educationEventDict.associatedTopics?.count)!-1 {
                     var eventSubEntity: EventTopicsEntityAr!
                     let event: EventTopicsEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EventTopicsEntityAr", into: managedObjContext) as! EventTopicsEntityAr
-                    event.associatedTopic = educationEventDict.associatedTopics![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    event.associatedTopic = educationEventDict.associatedTopics![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
                     eventSubEntity = event
                     edducationInfo.addToAssTopicRelation(eventSubEntity)
@@ -1314,7 +1314,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 for i in 0 ... (educationEventDict.startDate?.count)!-1 {
                     var eventSubEntity: EventStartDateEntityAr!
                     let event: EventStartDateEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EventStartDateEntityAr", into: managedObjContext) as! EventStartDateEntityAr
-                    event.startDate = educationEventDict.startDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    event.startDate = educationEventDict.startDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
                     eventSubEntity = event
                     edducationInfo.addToStartDateRelation(eventSubEntity)
@@ -1332,7 +1332,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 for i in 0 ... (educationEventDict.endDate?.count)!-1 {
                     var eventSubEntity: EventEndDateEntityAr!
                     let event: EventEndDateEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EventEndDateEntityAr", into: managedObjContext) as! EventEndDateEntityAr
-                    event.endDate = educationEventDict.endDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    event.endDate = educationEventDict.endDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
                     eventSubEntity = event
                     edducationInfo.addToEndDateRelation(eventSubEntity)

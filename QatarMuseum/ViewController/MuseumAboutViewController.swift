@@ -863,7 +863,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                         for i in 0 ... (aboutDetailDict.mobileDescription?.count)!-1 {
                             var aboutDescEntity: AboutDescriptionEntity!
                             let aboutDesc: AboutDescriptionEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutDescriptionEntity", into: managedContext) as! AboutDescriptionEntity
-                            aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                            aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                             
                             aboutDescEntity = aboutDesc
                             aboutdbDict.addToMobileDescRelation(aboutDescEntity)
@@ -939,7 +939,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                         for i in 0 ... (aboutDetailDict.mobileDescription?.count)!-1 {
                             var aboutDescEntity: AboutDescriptionEntityAr!
                             let aboutDesc: AboutDescriptionEntityAr = NSEntityDescription.insertNewObject(forEntityName: "AboutDescriptionEntityAr", into: managedContext) as! AboutDescriptionEntityAr
-                            aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                            aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                             
                             aboutDescEntity = aboutDesc
                             aboutdbDict.addToMobileDescRelation(aboutDescEntity)
@@ -1009,7 +1009,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                 for i in 0 ... (aboutDetailDict.mobileDescription?.count)!-1 {
                     var aboutDescEntity: AboutDescriptionEntity!
                     let aboutDesc: AboutDescriptionEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutDescriptionEntity", into: managedObjContext) as! AboutDescriptionEntity
-                    aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
                     aboutDescEntity = aboutDesc
                     aboutdbDict.addToMobileDescRelation(aboutDescEntity)
@@ -1061,7 +1061,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                 for i in 0 ... (aboutDetailDict.mobileDescription?.count)!-1 {
                     var aboutDescEntity: AboutDescriptionEntityAr!
                     let aboutDesc: AboutDescriptionEntityAr = NSEntityDescription.insertNewObject(forEntityName: "AboutDescriptionEntityAr", into: managedObjContext) as! AboutDescriptionEntityAr
-                    aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+                    aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
                     aboutDescEntity = aboutDesc
                     aboutdbDict.addToMobileDescRelation(aboutDescEntity)
