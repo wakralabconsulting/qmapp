@@ -17,5 +17,6 @@ struct Config {
     static let mobileApiURL = "/mobile_api"
     static let tempBaseIP = "http://moushtarayatapp.com/xmltojson/"
     static let secureBaseURL = "https://" + baseIP
+    static let engLang = "en"
     
 }

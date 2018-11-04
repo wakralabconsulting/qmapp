@@ -27,6 +27,12 @@ class PreviewContentViewController: UIViewController {
     @IBOutlet weak var dimensionsText: UILabel!
     
     @IBOutlet weak var imageViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var productionHeight: NSLayoutConstraint!
+    @IBOutlet weak var productionDateHeight: NSLayoutConstraint!
+    @IBOutlet weak var periodHeight: NSLayoutConstraint!
+    @IBOutlet weak var techniqueHeight: NSLayoutConstraint!
+    @IBOutlet weak var dimensionHeight: NSLayoutConstraint!
+    
     var tourGuideDict : TourGuideFloorMap!
     var pageIndex = Int()
     override func viewDidLoad() {
@@ -49,18 +55,52 @@ class PreviewContentViewController: UIViewController {
 
     func setPreviewData() {
         let tourGuideData = tourGuideDict
-        productionTitle.text = NSLocalizedString("PRODUCTION_LABEL", comment: "PRODUCTION_LABEL  in the Popup")
-        productionDateTitle.text = NSLocalizedString("PRODUCTION_DATES_LABEL", comment: "PRODUCTION_DATES_LABEL  in the Popup")
-        periodTitle.text = NSLocalizedString("PERIOD_STYLE_LABEL", comment: "PERIOD_STYLE_LABEL  in the Popup")
-        techniqueTitle.text = NSLocalizedString("TECHNIQUES_LABEL", comment: "TECHNIQUES_LABEL  in the Popup")
-        dimensionsTitle.text = NSLocalizedString("DIMENSIONS_LABEL", comment: "DIMENSIONS_LABEL  in the Popup")
+       
+        
+        
+        
+        
         titleLabel.text = tourGuideData?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&#039;", with: "", options: .regularExpression, range: nil)
         accessNumberLabel.text = tourGuideData?.accessionNumber?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&#039;", with: "", options: .regularExpression, range: nil)
-        productionText.text = tourGuideData?.production
-        productionDateText.text = tourGuideData?.productionDates
-        periodText.text = tourGuideData?.periodOrStyle
-        techniqueText.text = tourGuideData?.techniqueAndMaterials
-        dimensionsText.text = tourGuideData?.dimensions
+        if((tourGuideData?.production != nil) && (tourGuideData?.production != "")) {
+             productionTitle.text = NSLocalizedString("PRODUCTION_LABEL", comment: "PRODUCTION_LABEL  in the Popup")
+            productionText.text = tourGuideData?.production
+            productionHeight.constant = 33
+        } else {
+            productionHeight.constant = 0
+        }
+        if((tourGuideData?.productionDates != nil) && (tourGuideData?.productionDates != "")) {
+            productionDateTitle.text = NSLocalizedString("PRODUCTION_DATES_LABEL", comment: "PRODUCTION_DATES_LABEL  in the Popup")
+            productionDateText.text = tourGuideData?.productionDates
+            productionDateHeight.constant = 33
+        } else {
+            productionDateHeight.constant = 0
+        }
+        if((tourGuideData?.periodOrStyle != nil) && (tourGuideData?.periodOrStyle != "")) {
+            periodTitle.text = NSLocalizedString("PERIOD_STYLE_LABEL", comment: "PERIOD_STYLE_LABEL  in the Popup")
+            periodText.text = tourGuideData?.periodOrStyle
+            periodHeight.constant = 33
+        }else {
+            periodHeight.constant = 0
+        }
+        if((tourGuideData?.techniqueAndMaterials != nil) && (tourGuideData?.techniqueAndMaterials != "")) {
+            techniqueTitle.text = NSLocalizedString("TECHNIQUES_LABEL", comment: "TECHNIQUES_LABEL  in the Popup")
+            techniqueText.text = tourGuideData?.techniqueAndMaterials
+            techniqueHeight.constant = 50
+        }else {
+            techniqueHeight.constant = 0
+        }
+        if((tourGuideData?.dimensions != nil) && (tourGuideData?.dimensions != "")) {
+            dimensionsTitle.text = NSLocalizedString("DIMENSIONS_LABEL", comment: "DIMENSIONS_LABEL  in the Popup")
+            dimensionsText.text = tourGuideData?.dimensions
+            dimensionHeight.constant = 33
+        }else {
+            dimensionHeight.constant = 0
+        }
+        
+        
+        
+        
         
         titleLabel.font = UIFont.discoverButtonFont
         accessNumberLabel.font = UIFont.sideMenuLabelFont

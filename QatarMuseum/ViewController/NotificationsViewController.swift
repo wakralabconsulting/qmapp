@@ -30,12 +30,15 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
         if let notificationData = notificationData, let notifications = NSKeyedUnarchiver.unarchiveObject(with: notificationData as Data) as?
             [Notification] {
             fetchNotificationsFromCoredata()
+            notificationArray = []
             for notification in notifications {
-                notificationArray.insert(notification, at: 0)
+               // notificationArray.insert(notification, at: 0)
+                notificationArray.append(notification)
             }
-            saveOrUpdateNotificationsCoredata()
-            UserDefaults.standard.removeObject(forKey: "pushNotificationList")
             notificationsTableView.reloadData()
+            saveOrUpdateNotificationsCoredata()
+            //UserDefaults.standard.removeObject(forKey: "pushNotificationList")
+            
         } else {
             fetchNotificationsFromCoredata()
         }
@@ -97,6 +100,8 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
             () in
             self.loadNotificationDetail(cellObj: cell)
         }
+        loadingView.stopLoading()
+        loadingView.isHidden = true
         return cell
     }
     

@@ -13,7 +13,8 @@ import UIKit
 import UserNotifications
 import Alamofire
 
-//var selectedEventDate : Date = Date()
+var tokenValue : String? = nil
+
 var languageKey = 1
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -104,6 +105,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         let token = tokenParts.joined()
         print("Device Token: \(token) ")
+        tokenValue = token
         self.sendDeviceTokenToServer(deviceToken: token)
     }
     
@@ -121,10 +123,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let info = self.extractUserInfo(userInfo: userInfo)
         print(info.title)
 
-        if UserDefaults.standard.value(forKey: "pushNotificationList") as?
-            [Notification] != nil {
-            var notificationArray = UserDefaults.standard.value(forKey: "pushNotificationList") as!
-            [Notification]
+//        if UserDefaults.standard.value(forKey: "pushNotificationList") as?
+//            [Notification] != nil {
+//            var notificationArray = UserDefaults.standard.value(forKey: "pushNotificationList") as!
+//            [Notification]
+//            notificationArray.insert(Notification(title: info.title, sortId: info.title), at: 0)
+//            let notificationData = NSKeyedArchiver.archivedData(withRootObject: notificationArray)
+//            UserDefaults.standard.set(notificationData, forKey: "pushNotificationList")
+//        } else {
+//            let notificationData = NSKeyedArchiver.archivedData(withRootObject: [Notification(title: info.title, sortId: info.title)])
+//            UserDefaults.standard.set(notificationData, forKey: "pushNotificationList")
+//        }
+        let notificationData = UserDefaults.standard.object(forKey: "pushNotificationList") as? NSData
+        if let notificationData = notificationData, let notifications = NSKeyedUnarchiver.unarchiveObject(with: notificationData as Data) as?
+            [Notification] {
+            var notificationArray = notifications
             notificationArray.insert(Notification(title: info.title, sortId: info.title), at: 0)
             let notificationData = NSKeyedArchiver.archivedData(withRootObject: notificationArray)
             UserDefaults.standard.set(notificationData, forKey: "pushNotificationList")
@@ -156,10 +169,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         } else {
             UserDefaults.standard.setValue(1, forKey: "notificationBadgeCount")
         }
-        if UserDefaults.standard.value(forKey: "pushNotificationList") as?
-            [Notification] != nil {
-            var notificationArray = UserDefaults.standard.value(forKey: "pushNotificationList") as!
-            [Notification]
+        
+//        if UserDefaults.standard.value(forKey: "pushNotificationList") as?
+//            [Notification] != nil {
+//            var notificationArray = UserDefaults.standard.value(forKey: "pushNotificationList") as!
+//            [Notification]
+//            notificationArray.insert(Notification(title: info.title, sortId: info.title), at: 0)
+//            let notificationData = NSKeyedArchiver.archivedData(withRootObject: notificationArray)
+//            UserDefaults.standard.set(notificationData, forKey: "pushNotificationList")
+//        } else {
+//            let notificationData = NSKeyedArchiver.archivedData(withRootObject: [Notification(title: info.title, sortId: info.title)])
+//            UserDefaults.standard.set(notificationData, forKey: "pushNotificationList")
+//        }
+        let notificationData = UserDefaults.standard.object(forKey: "pushNotificationList") as? NSData
+        if let notificationData = notificationData, let notifications = NSKeyedUnarchiver.unarchiveObject(with: notificationData as Data) as?
+            [Notification] {
+           var notificationArray = notifications
             notificationArray.insert(Notification(title: info.title, sortId: info.title), at: 0)
             let notificationData = NSKeyedArchiver.archivedData(withRootObject: notificationArray)
             UserDefaults.standard.set(notificationData, forKey: "pushNotificationList")

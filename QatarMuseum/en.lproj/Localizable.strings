@@ -213,5 +213,7 @@
 "ACCEPT" = "ACCEPT";
 "DECLINE" = "DECLINE";
 "INVITATION_TEXT" = "Invitation for National Museum of Qatar Launch Event";
-
+"NO_ARTIFACTS" = "No Artefact available";
+"USE_QR_SCANNER" = "Use the QR Scanner";
+"ENTER_ARTIFACT_NUMBER" = "Please enter the artefact number";
 

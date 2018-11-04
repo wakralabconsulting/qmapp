@@ -36,6 +36,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case GetUser(String)
     case UpdateUser(String,[String: Any])
     case SendDeviceToken(String, [String: Any])
+    case NumberSearchList([String: Any])
     var method: Alamofire.HTTPMethod {
         switch self {
         case .ExhibitionList:
@@ -90,6 +91,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return .put
         case .SendDeviceToken:
             return .post
+        case .NumberSearchList:
+            return .get
         }
     }
     
@@ -147,6 +150,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/user/\(userId).json"
         case .SendDeviceToken( _, _):
             return "push_notifications.json"
+        case .NumberSearchList( _):
+            return "/collection_by_tour_guide.json"
         }
     }
 
@@ -242,7 +247,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
             passwordMutableURLReq.httpMethod = method.rawValue
             return try! Alamofire.JSONEncoding.default.encode(passwordMutableURLReq)
         case .UpdateUser(_,let parameters):
-            let loginURL = NSURL(string: Config.secureBaseURL + lang() + Config.mobileApiURL)!
+            let loginURL = NSURL(string: Config.secureBaseURL + Config.engLang + Config.mobileApiURL)!
             var loginMutableURLReq = URLRequest(url: loginURL.appendingPathComponent(path)!)
             loginMutableURLReq.httpMethod = method.rawValue
             if let accessToken = UserDefaults.standard.value(forKey: "accessToken") as? String {
@@ -257,6 +262,12 @@ enum QatarMuseumRouter: URLRequestConvertible {
             tokenMutableURLReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
             tokenMutableURLReq.setValue(accessToken, forHTTPHeaderField: "x-csrf-token")
             return try! Alamofire.JSONEncoding.default.encode(tokenMutableURLReq, with: parameters)
+        case .NumberSearchList( _):
+            let searchURL = NSURL(string: Config.secureBaseURL + lang() + Config.mobileApiURL)!
+            var searchURLReq = URLRequest(url: searchURL.appendingPathComponent(path)!)
+            searchURLReq.httpMethod = method.rawValue
+            return try! Alamofire.JSONEncoding.default.encode(searchURLReq)
+
         }
         
         

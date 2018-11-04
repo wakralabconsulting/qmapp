@@ -14,6 +14,7 @@ class CulturePassCardViewController: UIViewController {
     
     @IBOutlet weak var barcodeImage: UIImageView!
     
+    @IBOutlet weak var numberTrailing: NSLayoutConstraint!
     @IBOutlet weak var barcodeView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,11 @@ class CulturePassCardViewController: UIViewController {
         barcodeImage.image = image
         barcodeView.layer.cornerRadius = 9
         barcodeView.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            numberTrailing.constant = -90
+        } else {
+            numberTrailing.constant = 50
+        }
     }
     func generateBarcode(from string: String) -> UIImage? {
         let data = string.data(using: String.Encoding.ascii)

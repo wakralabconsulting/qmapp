@@ -81,7 +81,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
             if (fromScienceTour) {
                 tourGuideId = "12226"
             } else {
-                tourGuideId = "12471"
+                tourGuideId = "12916"
             }
         }
         if  (networkReachability?.isReachable)! {
