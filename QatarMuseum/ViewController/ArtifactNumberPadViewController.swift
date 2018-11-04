@@ -19,6 +19,7 @@ class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UIC
     @IBOutlet weak var orLabel: UILabel!
     @IBOutlet weak var qrScannerLabel: UILabel!
 
+    @IBOutlet weak var toViewLabel: UILabel!
     let NUMBER_CELL_WIDTH: CGFloat = 100.0
     var artifactValue: String = ""
     var tourGuideId : String? = nil
@@ -41,6 +42,7 @@ class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UIC
    override  func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         artifactTextField.text = ""
+    artifactValue = ""
     }
     func setupUI() {
         artifactHeader.headerViewDelegate = self
@@ -52,8 +54,14 @@ class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UIC
         
         objectTitleLabel.text = NSLocalizedString("OBJECT_TITLE", comment: "OBJECT_TITLE  in the Artifact Number Pad page")
         objectInfoLabel.text = NSLocalizedString("OBJECT_INFO", comment: "OBJECT_INFO  in the Artifact Number Pad page")
+        toViewLabel.text = NSLocalizedString("TO_VIEW_MESSAGE", comment: "TO_VIEW_MESSAGE  in the Artifact Number Pad page")
         orLabel.text = NSLocalizedString("OR_LABEL", comment: "OR_LABEL  in the Artifact Number Pad page")
         qrScannerLabel.text = NSLocalizedString("USE_QR_SCANNER", comment: "USE_QR_SCANNER  in the Artifact Number Pad page")
+        objectTitleLabel.font = UIFont.englishTitleFont
+        objectInfoLabel.font = UIFont.englishTitleFont
+        toViewLabel.font = UIFont.englishTitleFont
+        orLabel.font = UIFont.englishTitleFont
+        qrScannerLabel.font = UIFont.englishTitleFont
         
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -66,7 +74,10 @@ class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UIC
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell : ArtifactNumberPadCell = numberPadCollectionView.dequeueReusableCell(withReuseIdentifier: "artifactNumberPadCellId", for: indexPath) as! ArtifactNumberPadCell
-        cell.innerView.layer.cornerRadius = (NUMBER_CELL_WIDTH-10)/2
+       // cell.innerView.layer.cornerRadius = (NUMBER_CELL_WIDTH-10)/2
+        let cellWidth = numberPadCollectionView.frame.width/3
+        let corner = (cellWidth)/2-15
+        cell.innerView.layer.cornerRadius = CGFloat(Int(floorf(Float(corner))))
         if (indexPath.row == 11) {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 cell.imageView.image = UIImage(named: "back_mirrorX1")
@@ -96,7 +107,9 @@ class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: NUMBER_CELL_WIDTH, height: NUMBER_CELL_WIDTH)
+        //return CGSize(width: NUMBER_CELL_WIDTH, height: NUMBER_CELL_WIDTH)
+        let heightValue = UIScreen.main.bounds.height/100
+        return CGSize(width: numberPadCollectionView.frame.width/3-20, height:numberPadCollectionView.frame.width/3-20)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

@@ -50,11 +50,11 @@ class CollectionDetailCell: UITableViewCell {
         thirdDescription.font = UIFont.englishTitleFont
         fourthDescription.font = UIFont.englishTitleFont
         
-        firstTitle.text = collectionValues.categoryCollection?.uppercased().replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        firstTitle.text = collectionValues.categoryCollection?.uppercased().replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         //firstDescription.text = collectionValues.collectionDescription?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
-        secondTitle.text = collectionValues.title?.uppercased().replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        secondTitle.text = collectionValues.title?.uppercased().replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         //secondSubTitle.text = collectionValues.about?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
-        secondDescription.text = collectionValues.body?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        secondDescription.text = collectionValues.body?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         //thirdDescription.text = collectionValues.shortDesc?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         //fourthDescription.text = collectionValues.longDesc?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         if let imageUrl = collectionValues.image {

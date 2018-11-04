@@ -44,7 +44,7 @@ class EventCollectionViewCell: UICollectionViewCell {
 //            descriptionLabel.text = event.fieldRepeatDate?[0].replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
 //        }
 //        }
-        let eventDesc = event.introductionText?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        let eventDesc = event.introductionText?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         descriptionLabel.text = eventDesc?.replacingOccurrences(of: "&#039;", with: "'", options: .regularExpression, range: nil)
 
         //secondTitleLabel.text = event.title?.uppercased()

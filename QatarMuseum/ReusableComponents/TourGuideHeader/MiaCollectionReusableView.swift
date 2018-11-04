@@ -17,7 +17,7 @@ class MiaCollectionReusableView: UICollectionReusableView {
     @IBOutlet weak var audioCircleImage: UIImageView!
     @IBOutlet weak var selfGuidedTitle: UILabel!
     
-    @IBOutlet weak var miaTitle: UILabel!
+    @IBOutlet weak var miaTitle: UITextView!
     var miaTourDelegate : MiaTourProtocol?
     
     override func awakeFromNib() {

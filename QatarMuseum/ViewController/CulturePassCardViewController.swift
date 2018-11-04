@@ -16,6 +16,8 @@ class CulturePassCardViewController: UIViewController {
     
     @IBOutlet weak var numberTrailing: NSLayoutConstraint!
     @IBOutlet weak var barcodeView: UIView!
+    
+    @IBOutlet weak var tapToFlipButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI ()
@@ -36,6 +38,7 @@ class CulturePassCardViewController: UIViewController {
         } else {
             numberTrailing.constant = 50
         }
+        tapToFlipButton.layer.cornerRadius = 25
     }
     func generateBarcode(from string: String) -> UIImage? {
         let data = string.data(using: String.Encoding.ascii)
@@ -57,6 +60,17 @@ class CulturePassCardViewController: UIViewController {
     }
     @IBAction func didTapClose(_ sender: UIButton) {
         self.dismiss(animated: false, completion: nil)
+    }
+    
+    @IBAction func didTapTapToFlip(_ sender: UIButton) {
+//        let cardBackView =  self.storyboard?.instantiateViewController(withIdentifier: "cardBackId") as!CulturePassCardBackViewController
+//        let transition = CATransition()
+//        transition.duration = 0.9
+//        transition.type = "flip"
+//        transition.subtype = kCATransitionFromLeft
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        
+//        self.present(cardBackView, animated: true, completion: nil)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

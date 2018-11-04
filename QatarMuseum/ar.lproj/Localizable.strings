@@ -85,7 +85,8 @@
 "NO_EVENTS" = "لا توجد فعاليات";
 "ARTIFACT_NUMBERPAD_TITLE" = "بحث الكائن";
 "OBJECT_TITLE" = "ادخل رقم الكائن";
-"OBJECT_INFO" = "بجانب \t  لعرض التفاصيل";
+"OBJECT_INFO" = "بجانب";
+"TO_VIEW_MESSAGE" = "لعرض التفاصيل";
 "OR_LABEL" = "أو";
 "MUSEUM_TIMING" = "مواعيد عمل المتحف";
 "MUSEUM_TITLE" = "متحف الفن الإسلامي";

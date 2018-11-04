@@ -217,15 +217,17 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         loadMap()
         initialSetUp()
         
-        
-        
     }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         bottomSheetVC.removeFromParentViewController()
         bottomSheetVC.dismiss(animated: false, completion: nil)
         isPaused = true
-        
+    
+       // self.playButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        //self.playerSlider.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+
     }
     func initialSetUp() {
         loadingView.isHidden = false
@@ -1519,6 +1521,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             transition.subtype = kCATransitionFromLeft
             self.view.window!.layer.add(transition, forKey: kCATransition)
             
+        }else {
+            let transition = CATransition()
+            transition.duration = 0.9
+            transition.type = "flip"
+            transition.subtype = kCATransitionFromRight
+            view.window!.layer.add(transition, forKey: kCATransition)
         }
         self.avPlayer = nil
         self.timer?.invalidate()

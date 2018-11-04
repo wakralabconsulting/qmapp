@@ -732,7 +732,12 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                 } else {
                     floorMapView.fromTourString = fromTour.HighlightTour
                 }
-                floorMapView.modalTransitionStyle = .flipHorizontal
+                let transition = CATransition()
+                transition.duration = 0.9
+                transition.type = "flip"
+                transition.subtype = kCATransitionFromLeft
+                view.window!.layer.add(transition, forKey: kCATransition)
+                //floorMapView.modalTransitionStyle = .flipHorizontal
                 self.present(floorMapView, animated: true, completion: nil)
             } else {
                 self.view.hideAllToasts()
