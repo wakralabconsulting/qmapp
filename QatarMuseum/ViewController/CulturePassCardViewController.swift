@@ -26,7 +26,8 @@ class CulturePassCardViewController: UIViewController {
         
     }
     func setUI() {
-        
+        tapToFlipButton.setTitle(NSLocalizedString("TAP_TO_FLIP", comment: "TAP_TO_FLIP"), for: .normal)
+        tapToFlipButton.titleLabel?.font = UIFont.tryAgainFont
         membershipLabel.text = NSLocalizedString("MEMBERSHIP_NUMBER", comment: "MEMBERSHIP_NUMBER in the CulturePassCard page") + " " + membershipNumber!
         membershipLabel.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
         membershipLabel.font = UIFont.settingsUpdateLabelFont

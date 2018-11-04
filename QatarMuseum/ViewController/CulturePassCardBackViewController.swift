@@ -17,7 +17,7 @@ class CulturePassCardBackViewController: UIViewController {
     @IBOutlet weak var closeButton: UIButton!
     
     @IBOutlet weak var nameCenter: NSLayoutConstraint!
-    @IBOutlet weak var nameLeading: NSLayoutConstraint!
+    
     var cardNumber : String? = nil
     var usernameString : String? = nil
     override func viewDidLoad() {
@@ -33,6 +33,8 @@ class CulturePassCardBackViewController: UIViewController {
     }
     
     func setUI() {
+        tapToFlipButton.setTitle(NSLocalizedString("TAP_TO_FLIP", comment: "TAP_TO_FLIP"), for: .normal)
+        tapToFlipButton.titleLabel?.font = UIFont.tryAgainFont
         tapToFlipButton.layer.cornerRadius = 25
         numberLabel.font = UIFont.discoverButtonFont
         nameLabel.font = UIFont.discoverButtonFont
