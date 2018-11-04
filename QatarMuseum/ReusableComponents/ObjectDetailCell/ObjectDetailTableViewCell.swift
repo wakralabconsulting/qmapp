@@ -66,6 +66,7 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
         descriptionLabel.font = UIFont.englishTitleFont
         detailSecondLabel.font = UIFont.englishTitleFont
         imageDetailLabel.font = UIFont.sideMenuLabelFont
+        isPaused = true
     }
     
     func setObjectDetail(objectDetail:TourGuideFloorMap) {
@@ -143,6 +144,7 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
     }
     //MARK: Audio SetUp
     func play(url:URL) {
+        
         self.avPlayer = AVPlayer(playerItem: AVPlayerItem(url: url))
         if #available(iOS 10.0, *) {
             self.avPlayer.automaticallyWaitsToMinimizeStalling = false

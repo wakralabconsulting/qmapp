@@ -170,16 +170,16 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     func loginButtonPressed() {
         loginPopUpView.userNameText.resignFirstResponder()
         loginPopUpView.passwordText.resignFirstResponder()
-        self.loadingView.isHidden = false
-        self.loadingView.bringSubview(toFront: self.loadingView)
-        self.loadingView.showLoading()
+        self.loginPopUpView.loadingView.isHidden = false
+        self.loginPopUpView.loadingView.showLoading()
+        
         let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
         if  (networkReachability?.isReachable)! {
             if ((loginPopUpView.userNameText.text != "") && (loginPopUpView.passwordText.text != "")) {
                 self.getCulturePassTokenFromServer(login: true)
             }  else {
-                self.loadingView.stopLoading()
-                self.loadingView.isHidden = true
+                self.loginPopUpView.loadingView.stopLoading()
+                self.loginPopUpView.loadingView.isHidden = true
                 if ((loginPopUpView.userNameText.text == "") && (loginPopUpView.passwordText.text == "")) {
                     showAlertView(title: titleString, message: NSLocalizedString("USERNAME_REQUIRED",comment: "Set the message for user name required")+"\n"+NSLocalizedString("PASSWORD_REQUIRED",comment: "Set the message for password required"), viewController: self)
                     
@@ -190,8 +190,8 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
                 }
             }
         } else {
-            self.loadingView.stopLoading()
-            self.loadingView.isHidden = true
+            self.loginPopUpView.loadingView.stopLoading()
+            self.loginPopUpView.loadingView.isHidden = true
             self.view.hideAllToasts()
             let eventAddedMessage =  NSLocalizedString("CHECK_NETWORK", comment: "CHECK_NETWORK") 
             self.view.makeToast(eventAddedMessage)
@@ -241,10 +241,14 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         self.present(profileView, animated: false, completion: nil)
     }
     func forgotButtonPressed() {
+        self.loginPopUpView.loadingView.isHidden = false
+        self.loginPopUpView.loadingView.showLoading()
         let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
         if (loginPopUpView.userNameText.text != "") {
             self.getCulturePassTokenFromServer(login: false)
         } else {
+            self.loginPopUpView.loadingView.stopLoading()
+            self.loginPopUpView.loadingView.isHidden = true
             showAlertView(title: titleString, message: NSLocalizedString("USERNAME_REQUIRED",comment: "Set the message for user name required"), viewController: self)
         }
     }
@@ -281,7 +285,9 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
             switch response.result {
             case .success(let data):
                 self.accessToken = data.accessToken
-                UserDefaults.standard.set(data.accessToken, forKey: "accessToken")
+//                UserDefaults.standard.set(data.accessToken, forKey: "accessToken")
+                //self.loginPopUpView.loadingView.stopLoading()
+               // self.loginPopUpView.loadingView.isHidden = true
                 if(login == true) {
                     self.getCulturePassLoginFromServer()
                 } else {
@@ -289,8 +295,8 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
                 }
                 
             case .failure( _):
-                self.loadingView.stopLoading()
-                self.loadingView.isHidden = true
+                self.loginPopUpView.loadingView.stopLoading()
+                self.loginPopUpView.loadingView.isHidden = true
             }
         }
     }
@@ -301,8 +307,8 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
             _ = Alamofire.request(QatarMuseumRouter.Login(["name" : loginPopUpView.userNameText.text!,"pass": loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<LoginData>) -> Void in
                 switch response.result {
                 case .success(let data):
-                    self.loadingView.stopLoading()
-                    self.loadingView.isHidden = true
+                    self.loginPopUpView.loadingView.stopLoading()
+                    self.loginPopUpView.loadingView.isHidden = true
                     if(response.response?.statusCode == 200) {
                         self.loginArray = data
                         UserDefaults.standard.setValue(self.loginArray?.token, forKey: "accessToken")
@@ -321,8 +327,8 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
                     }
                     
                 case .failure( _):
-                    self.loadingView.stopLoading()
-                    self.loadingView.isHidden = true
+                    self.loginPopUpView.loadingView.stopLoading()
+                    self.loginPopUpView.loadingView.isHidden = true
                     
                 }
             }
@@ -336,8 +342,8 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
             _ = Alamofire.request(QatarMuseumRouter.NewPasswordRequest(["name" : loginPopUpView.userNameText.text!])).responseData { (response) -> Void in
                 switch response.result {
                 case .success( _):
-                    self.loadingView.stopLoading()
-                    self.loadingView.isHidden = true
+                    self.loginPopUpView.loadingView.stopLoading()
+                    self.loginPopUpView.loadingView.isHidden = true
                     UserDefaults.standard.removeObject(forKey: "accessToken")
                     if(response.response?.statusCode == 200) {
                         self.loadSuccessMessage()
@@ -345,8 +351,8 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
                         showAlertView(title: titleString, message: NSLocalizedString("INVALID_USERNAME",comment: "Set the message for invalid username or email id"), viewController: self)
                     }
                 case .failure( _):
-                    self.loadingView.stopLoading()
-                    self.loadingView.isHidden = true
+                    self.loginPopUpView.loadingView.stopLoading()
+                    self.loginPopUpView.loadingView.isHidden = true
                     UserDefaults.standard.removeObject(forKey: "accessToken")
                 }
             }
@@ -358,8 +364,8 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         _ = Alamofire.request(QatarMuseumRouter.GetUser(userId!)).responseObject { (response: DataResponse<UserInfoData>) -> Void in
             switch response.result {
             case .success(let data):
-                self.loadingView.stopLoading()
-                self.loadingView.isHidden = true
+                self.loginPopUpView.loadingView.stopLoading()
+                self.loginPopUpView.loadingView.isHidden = true
                 if(response.response?.statusCode == 200) {
                     self.userInfoArray = data
                     
@@ -383,8 +389,8 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
                     self.loadProfilepage(loginInfo: self.loginArray)
                 }
             case .failure( _):
-                self.loadingView.stopLoading()
-                self.loadingView.isHidden = true
+                self.loginPopUpView.loadingView.stopLoading()
+                self.loginPopUpView.loadingView.isHidden = true
                 
             }
         }

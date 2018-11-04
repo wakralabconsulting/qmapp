@@ -35,7 +35,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-     
+       
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

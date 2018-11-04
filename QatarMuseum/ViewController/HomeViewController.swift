@@ -45,7 +45,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
 
         registerNib()
         setUpUI()
-       
+        
         if (networkReachability?.isReachable)! {
             getHomeList()
         } else {
@@ -58,7 +58,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

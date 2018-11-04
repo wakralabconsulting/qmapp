@@ -78,7 +78,7 @@ class AcceptDeclinePopup: UIView {
         self.noButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     @IBAction func yesButtonTouchDown(_ sender: UIButton) {
-        self.noButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        self.yesButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
 }

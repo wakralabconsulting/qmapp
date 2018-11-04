@@ -78,6 +78,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         loadingView.isHidden = false
         loadingView.showLoading()
         loadingView.loadingViewDelegate = self
+        headerView.settingsButton.isEnabled = false
+        headerView.settingsButton.isUserInteractionEnabled = false
         self.educationEventArray = [EducationEvent]()
         headerView.headerViewDelegate = self
         headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
@@ -253,8 +255,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             eventPopup.addToCalendarButton.setTitle(buttonTitle, for: .normal)
         }
         if (isLoadEventPage == true) {
-            
-            eventPopup.eventTitle.text = educationEventArray[currentRow].title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
+            let title = educationEventArray[currentRow].title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
+            eventPopup.eventTitle.text = title?.replacingOccurrences(of: "&#039;", with: "'", options: .regularExpression, range: nil)
            // eventPopup.eventDescription.text = educationEventArray[currentRow].longDesc
             var mainDesc = String()
             if let maindescr = educationEventArray[currentRow].mainDescription {
@@ -263,6 +265,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
 //                        mainDesc = mainDesc + educationEventArray[currentRow].mainDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
 //                         eventPopup.eventDescription.text = mainDesc
                 mainDesc = educationEventArray[currentRow].mainDescription!.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
+                mainDesc =  mainDesc.replacingOccurrences(of: "&#039;", with: "'", options: .regularExpression, range: nil)
                 eventPopup.eventDescription.text = mainDesc
                    // }
                     
@@ -272,7 +275,9 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
            // eventPopup.addToCalendarButton.setTitle(buttonTitle, for: .normal)
         }
         else {
-            eventPopup.eventTitle.text = educationEventArray[currentRow].title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
+            let title = educationEventArray[currentRow].title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
+            eventPopup.eventTitle.text = title?.replacingOccurrences(of: "&#039;", with: "'", options: .regularExpression, range: nil)
+            
             //eventPopup.eventDescription.text = educationEventArray[currentRow].longDesc
             var mainDesc = String()
             if let maindescr = educationEventArray[currentRow].mainDescription {
@@ -283,7 +288,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
 //                    }
 //
 //                }
-                mainDesc =  educationEventArray[currentRow].mainDescription!.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
+                mainDesc = educationEventArray[currentRow].mainDescription!.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
+                mainDesc = mainDesc.replacingOccurrences(of: "&#039;", with: "'", options: .regularExpression, range: nil)
                 eventPopup.eventDescription.text = mainDesc
             }
             
@@ -386,11 +392,13 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 if (granted) && (error == nil) {
                     DispatchQueue.main.async {
                     let event = EKEvent.init(eventStore: self.store)
-                    event.title = title.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
+                    var eventTitle = title.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
+                    event.title = eventTitle.replacingOccurrences(of: "&#039;", with: "'", options: .regularExpression, range: nil)
                     event.calendar = self.store.defaultCalendarForNewEvents
                     event.startDate = startDate
                     event.endDate = endDate
-                        event.notes = description?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
+                    let notes = description?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
+                    event.notes = notes?.replacingOccurrences(of: "&#039;", with: "'", options: .regularExpression, range: nil)
                         
                     // let alarm = EKAlarm.init(absoluteDate: Date.init(timeInterval: -3600, since: event.startDate))
                     // event.addAlarm(alarm)
@@ -413,12 +421,13 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             })
         case EKAuthorizationStatus.authorized:
             let event = EKEvent.init(eventStore: self.store)
-            event.title = title.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
+            let eventTitle = title.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
+            event.title = eventTitle.replacingOccurrences(of: "&#039;", with: "'", options: .regularExpression, range: nil)
             event.calendar = self.store.defaultCalendarForNewEvents
             event.startDate = startDate
             event.endDate = endDate
-            event.notes = description?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
-            
+            let notes = description?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
+            event.notes = notes?.replacingOccurrences(of: "&#039;", with: "'", options: .regularExpression, range: nil)
             do {
                 try self.store.save(event, span: .thisEvent)
                 self.view.hideAllToasts()

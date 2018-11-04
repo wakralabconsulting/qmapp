@@ -81,7 +81,7 @@ struct TourGuideFloorMap: ResponseObjectSerializable, ResponseCollectionSerializ
         self.production = production
         self.productionDates = productionDates
         self.image = image
-        self.tourGuideId = tourGuideId
+        self.tourGuideId = tourGuideId //
         self.artifactNumber = artifactNumber
         self.artifactPosition = artifactPosition
         self.audioDescriptif = audioDescriptif

@@ -52,9 +52,17 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     var logoutToken : String? = nil
     var countryListsArray : NSArray!
     var fromCulturePass : Bool = false
+    var userId: String? = nil
+    var countryDictArabic : NSDictionary!
     override func viewDidLoad() {
         super.viewDidLoad()
-        getCountryListsFromJson()
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            getCountryListsFromJson()
+        } else {
+           getCountryListsArabicFromJson()
+        }
+        
+        
         setUpProfileUI()
         
     }
@@ -89,6 +97,9 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         viewmyCulturePassButton.titleLabel?.font = UIFont.settingResetButtonFont
         viewMyFavoriteButton.titleLabel?.font = UIFont.settingResetButtonFont
         
+        invitationMessageLabel.font = UIFont.englishTitleFont
+        acceptLabel.font = UIFont.discoverButtonFont
+        declineLabel.font = UIFont.discoverButtonFont
         membershipNumKeyLabel.text =  NSLocalizedString("MEMBERSHIP_NUMBER", comment: "MEMBERSHIP_NUMBER in the Profile page")
         emailKeyLabel.text =  NSLocalizedString("EMAIL", comment: "EMAIL in the Profile page")
         dateOfBirthKeyLabel.text =  NSLocalizedString("DATE_OF_BIRTH", comment: "DATE_OF_BIRTH in the Profile page")
@@ -101,6 +112,9 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     }
     func setProfileInfo() {
         if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")) {
+            invitationMessageLabel.text = NSLocalizedString("INVITATION_TEXT", comment: "INVITATION_TEXT")
+            declineLabel.text = NSLocalizedString("DECLINE", comment: "DECLINE")
+            acceptLabel.text = NSLocalizedString("ACCEPT", comment: "ACCEPT")
             let acceptOrDeclineString = (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String)
             if(fromCulturePass) {
                  self.loadGreetingsPopup()
@@ -109,13 +123,19 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
                 acceptLabel.isHidden = false
                 declineLabel.isHidden = false
                 accepetDeclineSwitch.isHidden = false
-                accepetDeclineSwitch.onTintColor = UIColor.green
+                let offColor = UIColor.settingsSwitchOnTint
+                accepetDeclineSwitch.tintColor = offColor
+                accepetDeclineSwitch.layer.cornerRadius = 16
+                accepetDeclineSwitch.backgroundColor = offColor
+                accepetDeclineSwitch.isOn = false
+                
             } else if(acceptOrDeclineString == "0") {
                 invitationMessageLabel.isHidden = false
                 acceptLabel.isHidden = false
                 declineLabel.isHidden = false
                 accepetDeclineSwitch.isHidden = false
                 accepetDeclineSwitch.onTintColor = UIColor.red
+                accepetDeclineSwitch.isOn = true
             }
         
         }
@@ -135,6 +155,7 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
             // membershipNumText.text = UserDefaults.standard.value(forKey: "uid") as? String
             membershipNum = Int((UserDefaults.standard.value(forKey: "uid") as? String)!)! + 006000
             membershipNumText.text = "00" + String(membershipNum)
+            userId = UserDefaults.standard.value(forKey: "uid") as? String
         }
         if((UserDefaults.standard.value(forKey: "mail") as? String != nil) && (UserDefaults.standard.value(forKey: "mail") as? String != "")) {
             emailText.text = UserDefaults.standard.value(forKey: "mail") as? String
@@ -145,18 +166,28 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         if((UserDefaults.standard.value(forKey: "country") as? String != nil) && (UserDefaults.standard.value(forKey: "country") as? String != "")) {
             //countryText.text = UserDefaults.standard.value(forKey: "country") as? String
             let countryKey = UserDefaults.standard.value(forKey: "country") as? String
-            if(countryListsArray != nil) {
-                for country in countryListsArray {
-                    let countryDict = country as! NSDictionary
-                    if(countryDict["alpha-2"] as? String == countryKey) {
-                        countryText.text = countryDict["name"] as? String
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                if(countryListsArray != nil) {
+                    for country in countryListsArray {
+                        let countryDict = country as! NSDictionary
+                        if(countryDict["alpha-2"] as? String == countryKey) {
+                            countryText.text = countryDict["name"] as? String
+                        }
+                    }
+                }
+            } else {
+                if(countryDictArabic != nil) {
+                    if( countryDictArabic[countryKey!] != nil) {
+                        countryText.text = countryDictArabic[countryKey!] as? String
                     }
                 }
             }
+           
         }
         if((UserDefaults.standard.value(forKey: "nationality") as? String != nil) && (UserDefaults.standard.value(forKey: "nationality") as? String != "")) {
             //nationalityText.text = UserDefaults.standard.value(forKey: "nationality") as? String
             let nationalityKey = UserDefaults.standard.value(forKey: "nationality") as? String
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             if(countryListsArray != nil) {
                 for country in countryListsArray {
                     let countryDict = country as! NSDictionary
@@ -165,6 +196,14 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
                     }
                 }
             }
+            } else {
+                if(countryDictArabic != nil) {
+                    if( countryDictArabic[nationalityKey!] != nil) {
+                        nationalityText.text = countryDictArabic[nationalityKey!] as? String
+                    }
+                }
+            }
+            
         }
         //}
     }
@@ -177,8 +216,14 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
             countryListsArray = jsonObj!.value(forKey: "countryLists")
                 as! NSArray
         }
-        
-        
+    }
+    func getCountryListsArabicFromJson(){
+        let url = Bundle.main.url(forResource: "CountryListArabic", withExtension: "json")
+        let dataObject = NSData(contentsOf: url!)
+        if let jsonObj = try? JSONSerialization.jsonObject(with: dataObject! as Data, options: .allowFragments) as? NSDictionary {
+            countryDictArabic = jsonObj
+            
+        }
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -305,6 +350,7 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         declineLabel.isHidden = false
         accepetDeclineSwitch.isHidden = false
         accepetDeclineSwitch.onTintColor = UIColor.red
+        UserDefaults.standard.set("0", forKey: "acceptOrDecline")
         self.invitationAcceptedPopUpView.removeFromSuperview()
         
     }
@@ -326,7 +372,7 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         acceptLabel.isHidden = false
         declineLabel.isHidden = false
         accepetDeclineSwitch.isHidden = false
-        //self.updateRSVPUser(statusValue: "1")
+        self.updateRSVPUser(statusValue: "1")
         
     }
     func declinePopupCloseButtonPressed() {
@@ -336,7 +382,7 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     func yesButtonPressed() {
         accepetDeclineSwitch.onTintColor = UIColor.red
         accepetDeclineSwitch.isOn = true
-        //updateRSVPUser(statusValue: "0")
+        updateRSVPUser(statusValue: "0")
         self.acceptDeclinePopupView.removeFromSuperview()
     }
     
@@ -379,29 +425,27 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         
     }
     //MARK: RSVP Service call
-    //RSVP Service call
     func updateRSVPUser(statusValue : String?) {
-        let userId: String?
+        if((userId != nil) && (userId != "")) {
         let params =
              [
                 "und":[[
-                "value": "0"
+                "value": statusValue
             ]]
         ]
-        
-        let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
-        _ = Alamofire.request(QatarMuseumRouter.UpdateUser("138386",["field_rsvp_attendance": params])).responseObject { (response: DataResponse<UserInfoData>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.UpdateUser(userId!,["field_rsvp_attendance": params])).responseObject { (response: DataResponse<UserInfoData>) -> Void in
             switch response.result {
             case .success(let data):
-                print(data)
                 if(response.response?.statusCode == 200) {
-                    
+                    UserDefaults.standard.set(statusValue, forKey: "acceptOrDecline")
                 }
+                print("")
             case .failure( _):
                 print("error")
                 
             }
         }
+    }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

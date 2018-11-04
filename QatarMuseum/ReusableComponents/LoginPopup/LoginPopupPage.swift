@@ -17,6 +17,7 @@ class LoginPopupPage: UIView {
     
     @IBOutlet var loginPopup: UIView!
     
+    @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var userNameText: UITextField!
     @IBOutlet weak var passwordText: UITextField!

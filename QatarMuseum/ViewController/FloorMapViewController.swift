@@ -224,6 +224,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         super.viewWillAppear(false)
         bottomSheetVC.removeFromParentViewController()
         bottomSheetVC.dismiss(animated: false, completion: nil)
+        isPaused = true
+        
     }
     func initialSetUp() {
         loadingView.isHidden = false
@@ -283,7 +285,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             
             //numberSerchBtn.setImage(UIImage(named: "side_menu_blackX1"), for: .normal)
            // self.numberSerchBtn.contentEdgeInsets = UIEdgeInsets(top: 11, left: 5, bottom: 11, right: 5)
-            numberSerchBtn.isHidden = true
+            //numberSerchBtn.isHidden = true
             headerView.headerBackButton.isHidden = false
             headerView.settingsButton.isHidden = true
             
@@ -325,7 +327,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             
             //numberSerchBtn.setImage(UIImage(named: "side_menu_blackX1"), for: .normal)
             // self.numberSerchBtn.contentEdgeInsets = UIEdgeInsets(top: 11, left: 5, bottom: 11, right: 5)
-            numberSerchBtn.isHidden = true
+            //numberSerchBtn.isHidden = true
             headerView.headerBackButton.isHidden = false
             headerView.settingsButton.isHidden = true
             //headerView.settingsButton.setImage(UIImage(named: "side_menu_iconX1"), for: .normal)
@@ -338,20 +340,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             firstLevelView.backgroundColor = UIColor.white
             secondLevelView.backgroundColor = UIColor.mapLevelColor
             thirdLevelView.backgroundColor = UIColor.mapLevelColor
-            numberSerchBtn.isHidden = true
-            numberSerchBtn.setImage(UIImage(named: "number_padX1"), for: .normal)
+//            numberSerchBtn.isHidden = false
+//            numberSerchBtn.setImage(UIImage(named: "number_padX1"), for: .normal)
             headerView.headerBackButton.isHidden = false
             playButton.isHidden = false
             playerSlider.isHidden = false
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-                
-                headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
-                
-            }
-            else {
-                headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
-                
-            }
+            
         }
             
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -367,7 +361,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             showLevelTwoHighlightMarker()
             showLevelThreeHighlightMarker()
         }
-        
+       
+        numberSerchBtn.isHidden = false
+        numberSerchBtn.setImage(UIImage(named: "number_padX1"), for: .normal)
         thirdLevelLabel.text = NSLocalizedString("LEVEL_STRING", comment: "LEVEL_STRING in floor map")
         secondLevelLabel.text = NSLocalizedString("LEVEL_STRING", comment: "LEVEL_STRING in floor map")
         firstLevelLabel.text = NSLocalizedString("LEVEL_STRING", comment: "LEVEL_STRING in floor map")
@@ -375,16 +371,18 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         headerView.headerTitle.text = NSLocalizedString("FLOOR_MAP_TITLE", comment: "FLOOR_MAP_TITLE  in the Floormap page")
         
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+             headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
             if (fromTourString == fromTour.scienceTour) {
                 tourGuideId = "12216"
             } else if ((fromTourString == fromTour.HighlightTour) || (fromTourString == fromTour.exploreTour)){
                 tourGuideId = "12471"
             }
         } else {
+            headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
             if (fromTourString == fromTour.scienceTour) {
                 tourGuideId = "12226"
             } else if ((fromTourString == fromTour.HighlightTour) || (fromTourString == fromTour.exploreTour)){
-                tourGuideId = "12471"
+                tourGuideId = "12916"
             }
         }
         if  (networkReachability?.isReachable)! {
@@ -1520,9 +1518,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             transition.type = kCATransitionPush
             transition.subtype = kCATransitionFromLeft
             self.view.window!.layer.add(transition, forKey: kCATransition)
-            self.avPlayer = nil
-            self.timer?.invalidate()
+            
         }
+        self.avPlayer = nil
+        self.timer?.invalidate()
         self.dismiss(animated: true, completion: nil)
     }
     func filterButtonPressed() {
@@ -1604,12 +1603,15 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     @IBAction func playButtonClicked(_ sender: UIButton) {
         if (firstLoad == true) {
+            playButton.setImage(UIImage(named:"pause_blackX1"), for: .normal)
             self.playList = "http://www.qm.org.qa/sites/default/files/floors.mp3"
             self.play(url: URL(string:self.playList)!)
             self.setupTimer()
+        } else {
+            self.togglePlayPause()
         }
         firstLoad = false
-        self.togglePlayPause()
+        
     }
     
     func togglePlayPause() {
@@ -1683,6 +1685,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     @objc func tick(){
         if(avPlayer.currentTime().seconds == 0.0){
             seekLoadingLabel.alpha = 1
+
         }else{
             seekLoadingLabel.alpha = 0
         }

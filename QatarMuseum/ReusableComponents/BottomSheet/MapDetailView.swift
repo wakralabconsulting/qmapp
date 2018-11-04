@@ -125,6 +125,8 @@ class MapDetailView: UIViewController,ObjectImageViewProtocol {
                 
             }, completion: { [weak self] _ in
                 if ( velocity.y < 0 ) {
+//                    self?.firstLoad = true
+//                    self?.selectedCell?.playerSlider.value = 0
                     self?.tableView.isScrollEnabled = true
                     self?.viewMoveUp = true
                 }
@@ -147,8 +149,11 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if (indexPath.row == 0) {
             if( viewMoveUp == true) {
+
                 return 0
             } else {
+//                selectedCell?.avPlayer = nil
+//                selectedCell?.timer?.invalidate()
                 return 200
             }
             
@@ -256,12 +261,15 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
             if(popUpArray.count > 0) {
                 if((popUpArray[index].audioFile != nil) && (popUpArray[index].audioFile != "")){
                     if (firstLoad == true) {
+                        cellObj.playButton.setImage(UIImage(named:"pause_blackX1"), for: .normal)
                         cellObj.playList = popUpArray[index].audioFile!
                         cellObj.play(url: URL(string:cellObj.playList)!)
                         cellObj.setupTimer()
+                    } else {
+                        cellObj.togglePlayPause()
                     }
                     firstLoad = false
-                    cellObj.togglePlayPause()
+                    
                 }
             }
         

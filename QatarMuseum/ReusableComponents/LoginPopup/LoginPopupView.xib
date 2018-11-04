@@ -19,6 +19,7 @@
             <connections>
                 <outlet property="closeButton" destination="Lj9-ac-Kdz" id="tcL-ke-yfu"/>
                 <outlet property="forgotButton" destination="SVQ-Tf-7TW" id="ibC-OH-srK"/>
+                <outlet property="loadingView" destination="dg9-a4-RlB" id="Sc7-hd-9RG"/>
                 <outlet property="loginButton" destination="mwb-dE-MFN" id="OnI-jj-O35"/>
                 <outlet property="loginPopup" destination="iN0-l3-epB" id="PMF-FN-G1S"/>
                 <outlet property="loginPopupInnerView" destination="iKo-SS-FRg" id="zJ9-GO-dKx"/>
@@ -35,8 +36,8 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iKo-SS-FRg">
                     <rect key="frame" x="41.5" y="133.5" width="292.5" height="400"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CULTURE PASS LOGIN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HxL-o0-pNE">
-                            <rect key="frame" x="45" y="27" width="203" height="21"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CULTURE PASS LOGIN" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HxL-o0-pNE">
+                            <rect key="frame" x="45.5" y="27" width="202.5" height="21"/>
                             <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="21"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -178,6 +179,10 @@
                         <action selector="popupCloseTouchDown:" destination="-1" eventType="touchDown" id="8fw-ex-DFH"/>
                     </connections>
                 </button>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dg9-a4-RlB" customClass="LoadingView" customModule="QatarMuseums" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
@@ -186,6 +191,10 @@
                 <constraint firstItem="iKo-SS-FRg" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Kab-2A-gtr"/>
                 <constraint firstItem="iKo-SS-FRg" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Oe6-OI-fmc"/>
                 <constraint firstItem="Lj9-ac-Kdz" firstAttribute="trailing" secondItem="iKo-SS-FRg" secondAttribute="trailing" constant="22" id="PlC-sO-558"/>
+                <constraint firstItem="dg9-a4-RlB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Zts-AO-4CB"/>
+                <constraint firstItem="dg9-a4-RlB" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="u8a-jo-XnA"/>
+                <constraint firstAttribute="trailing" secondItem="dg9-a4-RlB" secondAttribute="trailing" id="umA-bc-siO"/>
+                <constraint firstAttribute="bottom" secondItem="dg9-a4-RlB" secondAttribute="bottom" id="vVX-eK-fIl"/>
             </constraints>
             <point key="canvasLocation" x="34.5" y="132.5"/>
         </view>
