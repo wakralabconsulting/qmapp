@@ -727,6 +727,14 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                 floorMapView.selectedScienceTour = selectedItem.artifactPosition
                 floorMapView.selectedScienceTourLevel = selectedItem.floorLevel
                 floorMapView.selectednid = selectedItem.nid
+                if let imageUrl = selectedItem.image{
+                    if let data = try? Data(contentsOf: URL(string: imageUrl)!)
+                    {
+                        let image: UIImage = UIImage(data: data)!
+                        floorMapView.selectedImageFromPreview = image
+                    }
+                }
+                
                 if(fromScienceTour) {
                     floorMapView.fromTourString = fromTour.scienceTour
                 } else {

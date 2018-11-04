@@ -67,6 +67,10 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
         detailSecondLabel.font = UIFont.englishTitleFont
         imageDetailLabel.font = UIFont.sideMenuLabelFont
         isPaused = true
+        if ((LocalizationLanguage.currentAppleLanguage()) != ENG_LANGUAGE) {
+            self.playerSlider.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
+
     }
     
     func setObjectDetail(objectDetail:TourGuideFloorMap) {
@@ -91,11 +95,9 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
             playButton.isHidden = true
             playerSlider.isHidden = true
         }
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+        
             playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
-        } else {
-            playButton.setImage(UIImage(named:"play_black-mirror"), for: .normal)
-        }
+        
         
     }
     
@@ -171,11 +173,8 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
     func togglePlayPause() {
         if #available(iOS 10.0, *) {
             if avPlayer.timeControlStatus == .playing  {
-                if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                     playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
-                } else {
-                    playButton.setImage(UIImage(named:"play_black-mirror"), for: .normal)
-                }
+                
                 avPlayer.pause()
                 isPaused = true
             } else {
@@ -185,11 +184,7 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
             }
         } else {
             if((avPlayer.rate != 0) && (avPlayer.error == nil)) {
-                if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                     playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
-                } else {
-                    playButton.setImage(UIImage(named:"play_black-mirror"), for: .normal)
-                }
                 avPlayer.pause()
                 isPaused = true
             } else {

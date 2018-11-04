@@ -13,23 +13,37 @@ class CulturePassCardBackViewController: UIViewController {
     @IBOutlet weak var tapToFlipButton: UIButton!
     
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var numberLabel: UILabel!
     @IBOutlet weak var closeButton: UIButton!
+    
+    @IBOutlet weak var nameCenter: NSLayoutConstraint!
+    
+    var cardNumber : String? = nil
+    var usernameString : String? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setUI()
-//        var label = UILabel(frame: CGRect(x: <#T##CGFloat#>, y: <#T##CGFloat#>, width: <#T##CGFloat#>, height: <#T##CGFloat#>))
-//        label.center = CGPointMake(160, 284)
-//        label.textAlignment = NSTextAlignment.Center
-//        label.text = "I'am a test label"
-//        self.view.addSubview(label)
-        nameLabel.isHidden = true
+        
+        
        nameLabel.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
+        numberLabel.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
+       
+        
     }
     
     func setUI() {
+        tapToFlipButton.setTitle(NSLocalizedString("TAP_TO_FLIP", comment: "TAP_TO_FLIP"), for: .normal)
+        tapToFlipButton.titleLabel?.font = UIFont.tryAgainFont
         tapToFlipButton.layer.cornerRadius = 25
-        
+        numberLabel.font = UIFont.discoverButtonFont
+        nameLabel.font = UIFont.discoverButtonFont
+        if (usernameString != nil) {
+            nameLabel.text = usernameString
+        }
+        if (cardNumber != nil) {
+            numberLabel.text = cardNumber
+        }
         
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
