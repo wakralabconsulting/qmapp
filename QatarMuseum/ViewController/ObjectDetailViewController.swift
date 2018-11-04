@@ -37,7 +37,9 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
         
 
     }
-    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     func setupUIContents() {
        // loadingView.isHidden = false
        // loadingView.showLoading()
@@ -220,12 +222,15 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
         if(detailArray.count > 0) {
             if((detailArray[0].audioFile != nil) && (detailArray[0].audioFile != "")){
                 if (firstLoad == true) {
+                    cellObj.playButton.setImage(UIImage(named:"pause_blackX1"), for: .normal)
                     cellObj.playList = detailArray[0].audioFile!
                     cellObj.play(url: URL(string:cellObj.playList)!)
                     cellObj.setupTimer()
+                } else {
+                    cellObj.togglePlayPause()
                 }
                 firstLoad = false
-                cellObj.togglePlayPause()
+                
             }
         }
     }

@@ -151,7 +151,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .SendDeviceToken( _, _):
             return "push_notifications.json"
         case .NumberSearchList( _):
-            return "Exhibition_List_Page.json"
+            return "/collection_by_tour_guide.json"
         }
     }
 
@@ -247,7 +247,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
             passwordMutableURLReq.httpMethod = method.rawValue
             return try! Alamofire.JSONEncoding.default.encode(passwordMutableURLReq)
         case .UpdateUser(_,let parameters):
-            let loginURL = NSURL(string: Config.secureBaseURL + lang() + Config.mobileApiURL)!
+            let loginURL = NSURL(string: Config.secureBaseURL + Config.engLang + Config.mobileApiURL)!
             var loginMutableURLReq = URLRequest(url: loginURL.appendingPathComponent(path)!)
             loginMutableURLReq.httpMethod = method.rawValue
             if let accessToken = UserDefaults.standard.value(forKey: "accessToken") as? String {
