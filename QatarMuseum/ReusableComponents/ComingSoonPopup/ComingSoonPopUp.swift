@@ -63,7 +63,7 @@ class ComingSoonPopUp: UIView {
         messageLabel.text = message
         stayTunedLabel.text = ""
         messageLabel.font = UIFont.diningHeaderFont
-        let newMultiplier:CGFloat = 0.34
+        let newMultiplier:CGFloat = 0.42
         popUpInnerViewHeight = popUpInnerViewHeight.setMultiplier(multiplier: newMultiplier)
         let buttonTitle = NSLocalizedString("OK", comment: "OK Label in the Popup")
         closeButton.setTitle(buttonTitle, for: .normal)

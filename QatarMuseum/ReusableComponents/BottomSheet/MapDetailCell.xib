@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -139,7 +139,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="Lks-Lf-4dr" secondAttribute="trailing" constant="25" id="2FO-Zl-FrW"/>
+                            <constraint firstAttribute="right" secondItem="Lks-Lf-4dr" secondAttribute="right" constant="25" id="2FO-Zl-FrW"/>
                             <constraint firstItem="hsA-sE-ZjT" firstAttribute="centerX" secondItem="ufY-1D-YLg" secondAttribute="centerX" id="2hM-Qw-9re"/>
                             <constraint firstItem="VRd-aa-gdf" firstAttribute="leading" secondItem="Gud-rz-Wjq" secondAttribute="leading" id="2sd-fd-ADs"/>
                             <constraint firstItem="hsA-sE-ZjT" firstAttribute="top" secondItem="Lks-Lf-4dr" secondAttribute="bottom" id="38e-IZ-yTd"/>
@@ -149,7 +149,7 @@
                             <constraint firstItem="OPW-Tt-9cd" firstAttribute="centerY" secondItem="Lks-Lf-4dr" secondAttribute="centerY" id="JV6-ki-LjS"/>
                             <constraint firstItem="VRd-aa-gdf" firstAttribute="top" secondItem="GRf-yS-kRR" secondAttribute="bottom" constant="15" id="KWS-b3-Lbm"/>
                             <constraint firstItem="VRd-aa-gdf" firstAttribute="leading" secondItem="ufY-1D-YLg" secondAttribute="leading" constant="25" id="L2y-Fz-dn8"/>
-                            <constraint firstItem="OPW-Tt-9cd" firstAttribute="leading" secondItem="ufY-1D-YLg" secondAttribute="leading" constant="19" id="Lzn-MU-zRs"/>
+                            <constraint firstItem="OPW-Tt-9cd" firstAttribute="left" secondItem="ufY-1D-YLg" secondAttribute="left" constant="19" id="Lzn-MU-zRs"/>
                             <constraint firstItem="Gud-rz-Wjq" firstAttribute="top" secondItem="6hy-Q4-BR9" secondAttribute="bottom" id="MUq-mK-vBe"/>
                             <constraint firstItem="OPW-Tt-9cd" firstAttribute="top" secondItem="ufY-1D-YLg" secondAttribute="top" constant="30" id="NAG-t4-RH7"/>
                             <constraint firstAttribute="bottom" secondItem="SVT-qA-CDh" secondAttribute="bottom" id="NPg-lJ-yMm"/>
@@ -158,7 +158,7 @@
                             <constraint firstAttribute="trailing" secondItem="VRd-aa-gdf" secondAttribute="trailing" constant="25" id="SBb-WJ-YKP"/>
                             <constraint firstItem="SVT-qA-CDh" firstAttribute="top" secondItem="Gud-rz-Wjq" secondAttribute="bottom" id="XvL-kO-Nfc"/>
                             <constraint firstItem="jzw-OW-L65" firstAttribute="centerY" secondItem="SVT-qA-CDh" secondAttribute="centerY" id="aps-Fp-BgI"/>
-                            <constraint firstItem="Lks-Lf-4dr" firstAttribute="leading" secondItem="OPW-Tt-9cd" secondAttribute="trailing" constant="12" id="cNQ-D7-KKe"/>
+                            <constraint firstItem="Lks-Lf-4dr" firstAttribute="left" secondItem="OPW-Tt-9cd" secondAttribute="right" constant="12" id="cNQ-D7-KKe"/>
                             <constraint firstItem="VRd-aa-gdf" firstAttribute="leading" secondItem="6hy-Q4-BR9" secondAttribute="leading" id="fg2-hO-JU6"/>
                             <constraint firstItem="VRd-aa-gdf" firstAttribute="trailing" secondItem="6hy-Q4-BR9" secondAttribute="trailing" id="grK-Sb-Z3N"/>
                             <constraint firstItem="GRf-yS-kRR" firstAttribute="centerX" secondItem="ufY-1D-YLg" secondAttribute="centerX" id="jVL-XZ-KdW"/>

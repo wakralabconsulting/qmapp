@@ -251,7 +251,9 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
             if((UserDefaults.standard.value(forKey: "uid") as? String != nil) && (UserDefaults.standard.value(forKey: "uid") as? String != "") ) {
                 cardView.membershipNumber = "00" + String(membershipNum)
             }
-        
+        if((UserDefaults.standard.value(forKey: "displayName") as? String != nil) && (UserDefaults.standard.value(forKey: "displayName") as? String != "")) {
+            cardView.nameString = (UserDefaults.standard.value(forKey: "displayName") as? String)
+        }
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionFade
