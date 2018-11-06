@@ -33,6 +33,7 @@ struct TourGuideFloorMap: ResponseObjectSerializable, ResponseCollectionSerializ
     var artistOrCreatorOrAuthor: String? = nil
     var periodOrStyle: String? = nil
     var techniqueAndMaterials : String? = nil
+    var thumbImage : String? = nil
     
     public init?(response: HTTPURLResponse, representation: AnyObject) {
         if let representation = representation as? [String: Any] {
@@ -63,11 +64,12 @@ struct TourGuideFloorMap: ResponseObjectSerializable, ResponseCollectionSerializ
             self.artistOrCreatorOrAuthor = representation["Artist/Creator/Author"] as? String
             self.periodOrStyle = representation["Period/Style"] as? String
             self.techniqueAndMaterials = representation["Technique_&_Materials"] as? String
+            self.thumbImage = representation["thumb_Image"] as? String
             
             
         }
     }
-    init(title:String?,accessionNumber:String?,nid:String?,curatorialDescription:String?,diam:String?,dimensions:String?,mainTitle:String?,objectENGSummary:String?,objectHistory:String?,production:String?,productionDates:String?,image:String?,tourGuideId:String?,artifactNumber:String?,artifactPosition:String?,audioDescriptif:String?,images:[String]?,audioFile:String?,floorLevel:String?,galleyNumber:String?,artistOrCreatorOrAuthor:String?,periodOrStyle:String?,techniqueAndMaterials:String?) {
+    init(title:String?,accessionNumber:String?,nid:String?,curatorialDescription:String?,diam:String?,dimensions:String?,mainTitle:String?,objectENGSummary:String?,objectHistory:String?,production:String?,productionDates:String?,image:String?,tourGuideId:String?,artifactNumber:String?,artifactPosition:String?,audioDescriptif:String?,images:[String]?,audioFile:String?,floorLevel:String?,galleyNumber:String?,artistOrCreatorOrAuthor:String?,periodOrStyle:String?,techniqueAndMaterials:String?,thumbImage:String?) {
         self.title = title
         self.accessionNumber = accessionNumber
         self.nid = nid
@@ -93,6 +95,7 @@ struct TourGuideFloorMap: ResponseObjectSerializable, ResponseCollectionSerializ
         
         self.periodOrStyle = periodOrStyle
         self.techniqueAndMaterials = techniqueAndMaterials
+        self.thumbImage = thumbImage
         
     }
 }
