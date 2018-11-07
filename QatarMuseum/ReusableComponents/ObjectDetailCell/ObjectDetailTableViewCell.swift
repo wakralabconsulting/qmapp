@@ -96,8 +96,7 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
             playerSlider.isHidden = true
         }
         
-            playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
-        
+          //  playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
         
     }
     
@@ -233,7 +232,7 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
     }
     
     @objc func tick(){
-        if(avPlayer.currentTime().seconds == 0.0){
+        if((avPlayer.currentTime().seconds == 0.0) && (isPaused == false)){
             seekLoadingLabel.alpha = 1
         }else{
             seekLoadingLabel.alpha = 0
@@ -242,9 +241,9 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
         if(isPaused == false){
             if(avPlayer.rate == 0){
                 avPlayer.play()
-                seekLoadingLabel.alpha = 1
+                //seekLoadingLabel.alpha = 1
             }else{
-                seekLoadingLabel.alpha = 0
+                //seekLoadingLabel.alpha = 0
             }
         }
         
