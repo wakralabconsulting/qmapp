@@ -17,10 +17,10 @@ struct Heritage: ResponseObjectSerializable, ResponseCollectionSerializable {
     var shortdescription: String? = nil
     var longdescription: String? = nil
     var images: [String]? = []
+
     //HeritageListList
     var sortid: String? = nil
     var isFavourite : Bool = false
-    
     
     public init?(response: HTTPURLResponse, representation: AnyObject) {
         if let representation = representation as? [String: Any] {
@@ -35,10 +35,10 @@ struct Heritage: ResponseObjectSerializable, ResponseCollectionSerializable {
             self.images = representation["images"] as? [String]
             //HeritageListList
             self.sortid = representation["SORT_ID"] as? String
-            
         }
     }
-init(id:String?,name:String?,location:String?,latitude:String?,longitude:String?,image:String?,shortdescription:String?,longdescription:String?,images:[String]?,sortid:String?) {
+
+    init(id:String?, name:String?, location:String?, latitude:String?, longitude:String?, image:String?, shortdescription:String?, longdescription:String?, images:[String]?, sortid:String?) {
         self.id = id
         self.name = name
         self.location = location
