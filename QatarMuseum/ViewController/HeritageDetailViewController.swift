@@ -15,7 +15,7 @@ enum PageName{
     case publicArtsDetail
     case museumAbout
 }
-class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,LoadingViewProtocol {
+class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,LoadingViewProtocol, iCarouselDelegate,iCarouselDataSource {
     @IBOutlet weak var heritageDetailTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
     
@@ -32,7 +32,9 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     let networkReachability = NetworkReachabilityManager()
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var museumId : String? = nil
-
+    var carousel = iCarousel()
+    var transparentView = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -124,6 +126,10 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         view.addSubview(imageView)
+        
+        imageView.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imgButtonPressed))
+        imageView.addGestureRecognizer(tapGesture)
         
         let darkBlur = UIBlurEffect(style: UIBlurEffectStyle.light)
         blurView = UIVisualEffectView(effect: darkBlur)
@@ -309,6 +315,70 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         sender.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
+    //MARK: iCarousel Delegate
+    func numberOfItems(in carousel: iCarousel) -> Int {
+        if(self.heritageDetailtArray.count != 0) {
+            if(self.heritageDetailtArray[0].images != nil) {
+                if((self.heritageDetailtArray[0].images?.count)! > 0) {
+                    return (self.heritageDetailtArray[0].images?.count)!
+                }
+            }
+        }
+        return 0
+    }
+    
+    func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
+        var itemView: UIImageView
+        itemView = UIImageView(frame: CGRect(x: 0, y: 0, width: carousel.frame.width, height: 300))
+        itemView.contentMode = .scaleAspectFit
+        let carouselImg = self.heritageDetailtArray[0].images
+        let imageUrl = carouselImg![index]
+        if(imageUrl != nil){
+            itemView.kf.setImage(with: URL(string: imageUrl))
+        }
+        return itemView
+    }
+    func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
+        if (option == .spacing) {
+            return value * 1.4
+        }
+        return value
+    }
+    
+    func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
+        
+    }
+    
+    func setiCarouselView() {
+        if (carousel.tag == 0) {
+            transparentView.frame = self.view.frame
+            transparentView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.75)
+            transparentView.isUserInteractionEnabled = true
+            let recognizer = UITapGestureRecognizer(target: self, action: #selector(closeCarouselView))
+            transparentView.addGestureRecognizer(recognizer)
+            self.view.addSubview(transparentView)
+            
+            carousel = iCarousel(frame: CGRect(x: (self.view.frame.width - 320)/2, y: 200, width: 350, height: 300))
+            carousel.delegate = self
+            carousel.dataSource = self
+            carousel.type = .rotary
+            carousel.tag = 1
+            view.addSubview(carousel)
+        }
+    }
+    
+    @objc func closeCarouselView() {
+        transparentView.removeFromSuperview()
+        carousel.tag = 0
+        carousel.removeFromSuperview()
+    }
+    
+    @objc func imgButtonPressed() {
+        if((imageView.image != nil) && (imageView.image != UIImage(named: "default_imageX2"))) {
+            setiCarouselView()
+        }
+    }
+    
     //MARK: WebServiceCall
     func getHeritageDetailsFromServer() {
         _ = Alamofire.request(QatarMuseumRouter.HeritageDetail(["nid": heritageDetailId!])).responseObject { (response: DataResponse<Heritages>) -> Void in
@@ -453,12 +523,9 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                         heritagedbDict.addToImagesRelation(heritageImagesEntity)
                         do {
                             try managedContext.save()
-                            
-                            
                         } catch let error as NSError {
                             print("Could not save. \(error), \(error.userInfo)")
                         }
-                        
                     }
                 }
                 

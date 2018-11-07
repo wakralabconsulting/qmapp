@@ -1223,6 +1223,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         let screenClass = classForCoder.description()
         Analytics.setScreenName(screenName, screenClass: screenClass)
     }
+    
     //MARK: iCarousel Delegate
     func numberOfItems(in carousel: iCarousel) -> Int {
         if(self.aboutDetailtArray.count != 0) {
@@ -1286,6 +1287,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             setiCarouselView()
         }
     }
+    
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
         if  (networkReachability?.isReachable)! {
