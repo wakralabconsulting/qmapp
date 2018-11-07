@@ -263,6 +263,7 @@ extension MapDetailView: UITableViewDelegate, UITableViewDataSource {
                     if (firstLoad == true) {
                         cellObj.playButton.setImage(UIImage(named:"pause_blackX1"), for: .normal)
                         cellObj.playList = popUpArray[index].audioFile!
+                        cellObj.isPaused = false
                         cellObj.play(url: URL(string:cellObj.playList)!)
                         cellObj.setupTimer()
                     } else {
