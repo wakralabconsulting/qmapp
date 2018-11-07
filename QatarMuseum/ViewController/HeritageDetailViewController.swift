@@ -317,10 +317,20 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     
     //MARK: iCarousel Delegate
     func numberOfItems(in carousel: iCarousel) -> Int {
-        if(self.heritageDetailtArray.count != 0) {
-            if(self.heritageDetailtArray[0].images != nil) {
-                if((self.heritageDetailtArray[0].images?.count)! > 0) {
-                    return (self.heritageDetailtArray[0].images?.count)!
+        if (pageNameString == PageName.heritageDetail) {
+            if(self.heritageDetailtArray.count != 0) {
+                if(self.heritageDetailtArray[0].images != nil) {
+                    if((self.heritageDetailtArray[0].images?.count)! > 0) {
+                        return (self.heritageDetailtArray[0].images?.count)!
+                    }
+                }
+            }
+        } else if (pageNameString == PageName.publicArtsDetail) {
+            if(self.publicArtsDetailtArray.count != 0) {
+                if(self.publicArtsDetailtArray[0].images != nil) {
+                    if((self.publicArtsDetailtArray[0].images?.count)! > 0) {
+                        return (self.publicArtsDetailtArray[0].images?.count)!
+                    }
                 }
             }
         }
@@ -331,13 +341,21 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         var itemView: UIImageView
         itemView = UIImageView(frame: CGRect(x: 0, y: 0, width: carousel.frame.width, height: 300))
         itemView.contentMode = .scaleAspectFit
-        let carouselImg = self.heritageDetailtArray[0].images
-        let imageUrl = carouselImg![index]
-        if(imageUrl != nil){
-            itemView.kf.setImage(with: URL(string: imageUrl))
+        var carouselImg: [String]?
+        if (pageNameString == PageName.heritageDetail) {
+            carouselImg = self.heritageDetailtArray[0].images
+        } else if (pageNameString == PageName.publicArtsDetail) {
+            carouselImg = self.publicArtsDetailtArray[0].images
+        }
+        if (carouselImg != nil) {
+            let imageUrl = carouselImg![index]
+            if(imageUrl != nil){
+                itemView.kf.setImage(with: URL(string: imageUrl))
+            }
         }
         return itemView
     }
+    
     func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
         if (option == .spacing) {
             return value * 1.4

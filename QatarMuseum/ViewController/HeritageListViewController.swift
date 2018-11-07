@@ -123,10 +123,8 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         }
     }
     //MARK: WebServiceCall
-    func getHeritageDataFromServer()
-    {
-       
-            _ = Alamofire.request(QatarMuseumRouter.HeritageList()).responseObject { (response: DataResponse<Heritages>) -> Void in
+    func getHeritageDataFromServer() {
+        _ = Alamofire.request(QatarMuseumRouter.HeritageList()).responseObject { (response: DataResponse<Heritages>) -> Void in
                 switch response.result {
                 case .success(let data):
                     self.heritageListArray = data.heritage
@@ -157,44 +155,39 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
     func saveOrUpdateHeritageCoredata() {
         if (heritageListArray.count > 0) {
          if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-        let fetchData = checkAddedToCoredata(entityName: "HeritageEntity", heritageId: nil) as! [HeritageEntity]
-        if (fetchData.count > 0) {
-            for i in 0 ... heritageListArray.count-1 {
-                let managedContext = getContext()
-                let heritageListDict = heritageListArray[i]
-                let fetchResult = checkAddedToCoredata(entityName: "HeritageEntity", heritageId: heritageListArray[i].id)
-                //update
-                if(fetchResult.count != 0) {
-                    let heritagedbDict = fetchResult[0] as! HeritageEntity
-                    
+            let fetchData = checkAddedToCoredata(entityName: "HeritageEntity", heritageId: nil) as! [HeritageEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... heritageListArray.count-1 {
+                    let managedContext = getContext()
+                    let heritageListDict = heritageListArray[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "HeritageEntity", heritageId: heritageListArray[i].id)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let heritagedbDict = fetchResult[0] as! HeritageEntity
                         heritagedbDict.listname = heritageListDict.name
-                    
-                    heritagedbDict.listimage = heritageListDict.image
-                    heritagedbDict.listsortid =  heritageListDict.sortid
-                    
-                    do{
-                        try managedContext.save()
-                    }
-                    catch{
-                        print(error)
+                        heritagedbDict.listimage = heritageListDict.image
+                        heritagedbDict.listsortid =  heritageListDict.sortid
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    } else {
+                        //save
+                        self.saveToCoreData(heritageListDict: heritageListDict, managedObjContext: managedContext)
+                        
                     }
                 }
-                else {
-                    //save
-                    self.saveToCoreData(heritageListDict: heritageListDict, managedObjContext: managedContext)
-                    
+            } else {
+                for i in 0 ... heritageListArray.count-1 {
+                    let managedContext = getContext()
+                    let heritageListDict : Heritage?
+                    heritageListDict = heritageListArray[i]
+                    self.saveToCoreData(heritageListDict: heritageListDict!, managedObjContext: managedContext)
                 }
             }
-        }
-        else {
-            for i in 0 ... heritageListArray.count-1 {
-                let managedContext = getContext()
-                let heritageListDict : Heritage?
-                heritageListDict = heritageListArray[i]
-                self.saveToCoreData(heritageListDict: heritageListDict!, managedObjContext: managedContext)
-                
-            }
-        }
         } else {
             let fetchData = checkAddedToCoredata(entityName: "HeritageEntityArabic", heritageId: nil) as! [HeritageEntityArabic]
             if (fetchData.count > 0) {
