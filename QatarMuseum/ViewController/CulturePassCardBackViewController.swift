@@ -9,27 +9,21 @@
 import UIKit
 
 class CulturePassCardBackViewController: UIViewController {
-
     @IBOutlet weak var tapToFlipButton: UIButton!
-    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var numberLabel: UILabel!
     @IBOutlet weak var closeButton: UIButton!
-    
     @IBOutlet weak var nameCenter: NSLayoutConstraint!
     
     var cardNumber : String? = nil
     var usernameString : String? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setUI()
-        
-        
-       nameLabel.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
+        nameLabel.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
         numberLabel.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
-       
-        
     }
     
     func setUI() {
@@ -46,6 +40,7 @@ class CulturePassCardBackViewController: UIViewController {
         }
         
     }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -63,9 +58,9 @@ class CulturePassCardBackViewController: UIViewController {
         view.window!.layer.add(transition, forKey: kCATransition)
         self.dismiss(animated: true, completion: nil)
     }
+    
     @IBAction func didTapClose(_ sender: UIButton) {
         self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
-        
     }
     
     

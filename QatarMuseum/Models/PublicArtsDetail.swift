@@ -17,8 +17,6 @@ struct PublicArtsDetail: ResponseObjectSerializable, ResponseCollectionSerializa
     var longitude: String? = nil
     var latitude: String? = nil
     
-    
-    
     public init?(response: HTTPURLResponse, representation: AnyObject) {
         if let representation = representation as? [String: Any] {
             self.id = representation["ID"] as? String
@@ -31,6 +29,7 @@ struct PublicArtsDetail: ResponseObjectSerializable, ResponseCollectionSerializa
             self.latitude = representation["Latitude"] as? String
         }
     }
+    
     init(id:String?,name:String?,description:String?,shortdescription:String?,image:String?,images:[String]?,longitude:String?,latitude:String? ) {
         self.id = id
         self.name = name
