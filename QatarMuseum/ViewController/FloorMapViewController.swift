@@ -1309,9 +1309,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                 (self.levelTwoMarkerArray[i] as! GMSMarker).map = nil
             }
         }
-        self.loadingView.stopLoading()
-        self.loadingView.isHidden = true
+        self.stopLoadingView()
     }
+    
     func showOrHideLevelThreeScienceTour() {
         for i in 0 ... self.levelThreePositionArray.count-1 {
             if let searchResult = self.floorMapArray.first(where: {$0.artifactPosition! == self.levelThreePositionArray[i] as! String}) {
@@ -1328,9 +1328,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                 (self.levelThreeMarkerArray[i] as! GMSMarker).map = nil
             }
         }
-        self.loadingView.stopLoading()
-        self.loadingView.isHidden = true
+        self.stopLoadingView()
     }
+    
     //MARK: TourGuide DataBase
     func saveOrUpdateTourGuideCoredata() {
         if (floorMapArray.count > 0) {
