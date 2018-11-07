@@ -275,7 +275,13 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     
     @objc func imgButtonPressed() {
         if((imageView.image != nil) && (imageView.image != UIImage(named: "default_imageX2"))) {
-            setiCarouselView()
+            if(self.diningDetailtArray.count != 0) {
+                if(self.diningDetailtArray[0].images != nil) {
+                    if((self.diningDetailtArray[0].images?.count)! > 0) {
+                        setiCarouselView()
+                    }
+                }
+            }
         }
     }
     
