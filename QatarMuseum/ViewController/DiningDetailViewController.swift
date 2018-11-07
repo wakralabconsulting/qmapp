@@ -11,7 +11,7 @@ import CoreData
 import Crashlytics
 import UIKit
 
-class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,LoadingViewProtocol {
+class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,LoadingViewProtocol, iCarouselDelegate,iCarouselDataSource {
     @IBOutlet weak var diningTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
     
