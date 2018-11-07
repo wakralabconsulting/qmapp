@@ -825,6 +825,15 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
 
     }
     
+    func stopLoadingView() {
+        let delayInSeconds = 3.0
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayInSeconds) {
+            self.loadingView.stopLoading()
+            self.loadingView.isHidden = true
+            
+        }
+    }
+    
     //MARK: map delegate
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         
@@ -1262,8 +1271,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                 (self.levelTwoMarkerArray[i] as! GMSMarker).map = nil
             }
         }
-        self.loadingView.stopLoading()
-        self.loadingView.isHidden = true
+        self.stopLoadingView()
     }
     func showOrHideLevelThreeHighlightTour() {
         for i in 0 ... self.levelThreePositionArray.count-1 {
@@ -1281,9 +1289,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                 (self.levelThreeMarkerArray[i] as! GMSMarker).map = nil
             }
         }
-        self.loadingView.stopLoading()
-        self.loadingView.isHidden = true
+        self.stopLoadingView()
     }
+    
     func showOrHideLevelTwoScienceTour() {
         
         for i in 0 ... self.levelTwoPositionArray.count-1 {
