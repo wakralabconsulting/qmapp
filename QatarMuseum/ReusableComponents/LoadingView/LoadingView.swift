@@ -90,6 +90,8 @@ class LoadingView: UIView {
         self.isNoDataDisplayed = true
         //self.isHidden = false
         self.oopsLabel.isHidden = true
+        self.noNetworkText.isHidden = true
+        self.tryAgainButton.isHidden = true
         let noDataText = NSLocalizedString("NO_RESULT_MESSAGE", comment: "No result message")
         self.noDataLabel.font = UIFont.closeButtonFont
         self.noDataLabel.text = noDataText
@@ -102,7 +104,9 @@ class LoadingView: UIView {
     
     func showYetNoNotificationDataView() {
         self.isNoDataDisplayed = true
-        //self.isHidden = false
+        self.oopsLabel.isHidden = true
+        self.noNetworkText.isHidden = true
+        self.tryAgainButton.isHidden = true
         let noDataText = NSLocalizedString("YET_NO_NOTIFICATION_MESSAGE", comment: "Yet no notification message")
         self.noDataLabel.font = UIFont.closeButtonFont
         self.noDataLabel.text = noDataText
@@ -119,6 +123,7 @@ class LoadingView: UIView {
         self.noDataView.isHidden = true
         //self.activityIndicatorControl.stopAnimating()
         self.noDataLabel.isHidden = true
+        self.noNetworkText.isHidden = true
         self.oopsLabel.isHidden = true
         self.tryAgainButton.isHidden = true
     }
