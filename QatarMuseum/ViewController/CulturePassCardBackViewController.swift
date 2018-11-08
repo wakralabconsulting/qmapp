@@ -22,8 +22,8 @@ class CulturePassCardBackViewController: UIViewController {
         super.viewDidLoad()
 
         setUI()
-        nameLabel.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
-        numberLabel.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
+        nameLabel.transform = CGAffineTransform(rotationAngle: (CGFloat.pi * 3) / 2)
+        numberLabel.transform = CGAffineTransform(rotationAngle: (CGFloat.pi * 3) / 2)
     }
     
     func setUI() {
