@@ -34,6 +34,7 @@ struct TourGuideFloorMap: ResponseObjectSerializable, ResponseCollectionSerializ
     var periodOrStyle: String? = nil
     var techniqueAndMaterials : String? = nil
     var thumbImage : String? = nil
+    var artifactImg : Data? = nil
     
     public init?(response: HTTPURLResponse, representation: AnyObject) {
         if let representation = representation as? [String: Any] {
@@ -69,7 +70,7 @@ struct TourGuideFloorMap: ResponseObjectSerializable, ResponseCollectionSerializ
             
         }
     }
-    init(title:String?,accessionNumber:String?,nid:String?,curatorialDescription:String?,diam:String?,dimensions:String?,mainTitle:String?,objectENGSummary:String?,objectHistory:String?,production:String?,productionDates:String?,image:String?,tourGuideId:String?,artifactNumber:String?,artifactPosition:String?,audioDescriptif:String?,images:[String]?,audioFile:String?,floorLevel:String?,galleyNumber:String?,artistOrCreatorOrAuthor:String?,periodOrStyle:String?,techniqueAndMaterials:String?,thumbImage:String?) {
+    init(title:String?,accessionNumber:String?,nid:String?,curatorialDescription:String?,diam:String?,dimensions:String?,mainTitle:String?,objectENGSummary:String?,objectHistory:String?,production:String?,productionDates:String?,image:String?,tourGuideId:String?,artifactNumber:String?,artifactPosition:String?,audioDescriptif:String?,images:[String]?,audioFile:String?,floorLevel:String?,galleyNumber:String?,artistOrCreatorOrAuthor:String?,periodOrStyle:String?,techniqueAndMaterials:String?,thumbImage:String?,artifactImg : Data?) {
         self.title = title
         self.accessionNumber = accessionNumber
         self.nid = nid
@@ -96,6 +97,7 @@ struct TourGuideFloorMap: ResponseObjectSerializable, ResponseCollectionSerializ
         self.periodOrStyle = periodOrStyle
         self.techniqueAndMaterials = techniqueAndMaterials
         self.thumbImage = thumbImage
+        self.artifactImg = artifactImg
         
     }
 }
