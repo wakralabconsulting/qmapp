@@ -77,13 +77,18 @@ class LoadingView: UIView {
         tryAgainButton.isHidden = true
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
-        // self.isHidden = false
+        oopsLabel.isHidden = true
+        noNetworkText.isHidden = true
+        tryAgainButton.isHidden = true
     }
     
     func stopLoading() {
         self.isNoDataDisplayed = true
         activityIndicator.stopAnimating()
         activityIndicator.isHidden = true
+        oopsLabel.isHidden = true
+        noNetworkText.isHidden = true
+        tryAgainButton.isHidden = true
     }
     
     func showNoDataView() {
