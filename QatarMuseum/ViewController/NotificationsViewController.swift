@@ -38,7 +38,6 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
             notificationsTableView.reloadData()
             saveOrUpdateNotificationsCoredata()
             //UserDefaults.standard.removeObject(forKey: "pushNotificationList")
-            
         } else {
             fetchNotificationsFromCoredata()
         }
