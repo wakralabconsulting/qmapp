@@ -20,13 +20,8 @@ struct Dining: ResponseObjectSerializable, ResponseCollectionSerializable {
     //for detail
     var latitude: String? = nil
     var longitude: String? = nil
-    
-    
-    
-    
-    
-    
-    
+    var images: [String]? = []
+
     public init?(response: HTTPURLResponse, representation: AnyObject) {
         if let representation = representation as? [String: Any] {
             self.id = representation["ID"] as? String
@@ -40,9 +35,10 @@ struct Dining: ResponseObjectSerializable, ResponseCollectionSerializable {
             self.closetime = representation["close_time"] as? String
             self.sortid = representation["sort_id"] as? String
             self.museumId = representation["museums"] as? String
+            self.images = representation["images"] as? [String]
         }
     }
-    init(id:String?, name: String?,location:String?,description:String?,image:String?,openingtime:String?,closetime:String?, sortid:String?, museumId:String?) {
+    init(id:String?, name: String?, location:String?, description:String?, image:String?, openingtime:String?, closetime:String?, sortid:String?, museumId:String?, images:[String]?) {
         self.id = id
         self.name = name
         self.location = location
@@ -52,6 +48,7 @@ struct Dining: ResponseObjectSerializable, ResponseCollectionSerializable {
         self.closetime = closetime
         self.sortid = sortid
         self.museumId = museumId
+        self.images = images
     }
 }
 

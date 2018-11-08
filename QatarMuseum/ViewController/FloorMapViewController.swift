@@ -1023,6 +1023,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
 
     @objc func handleTap(sender: UITapGestureRecognizer? = nil) {
+        bottomSheetVC.selectedCell?.avPlayer = nil
+        bottomSheetVC.selectedCell?.timer?.invalidate()
         bottomSheetVC.removeFromParentViewController()
         bottomSheetVC.dismiss(animated: false, completion: nil)
         selectedMarker.icon = self.imageWithImage(image: selectedMarkerImage, scaledToSize: CGSize(width:38, height: 44))
@@ -1046,6 +1048,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                 self.showOrHideLevelThreeScienceTour()
             }
         }
+        
     }
     func dismissOvelay() {
         overlayView.isHidden = true
@@ -1083,6 +1086,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             self.playList = "http://www.qm.org.qa/sites/default/files/floors.mp3"
             self.play(url: URL(string:self.playList)!)
             self.setupTimer()
+            self.isPaused = false
         } else {
             self.togglePlayPause()
         }
@@ -1093,11 +1097,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     func togglePlayPause() {
         if #available(iOS 10.0, *) {
             if avPlayer.timeControlStatus == .playing  {
-                //if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-                    playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
-//                } else {
-//                    playButton.setImage(UIImage(named:"play_black-mirror"), for: .normal)
-//                }
+                playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
                 avPlayer.pause()
                 isPaused = true
             } else {
@@ -1107,11 +1107,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
         } else {
             if((avPlayer.rate != 0) && (avPlayer.error == nil)) {
-                //if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-                    playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
-//                } else {
-//                    playButton.setImage(UIImage(named:"play_black-mirror"), for: .normal)
-//                }
+                playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
                 avPlayer.pause()
                 isPaused = true
             } else {
@@ -1159,7 +1155,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     
     @objc func tick(){
-        if(avPlayer.currentTime().seconds == 0.0){
+        if((avPlayer.currentTime().seconds == 0.0) && (isPaused == false)){
             seekLoadingLabel.alpha = 1
 
         }else{
@@ -1169,9 +1165,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         if(isPaused == false){
             if(avPlayer.rate == 0){
                 avPlayer.play()
-                seekLoadingLabel.alpha = 1
+                //seekLoadingLabel.alpha = 1
             }else{
-                seekLoadingLabel.alpha = 0
+                //seekLoadingLabel.alpha = 0
             }
         }
         
@@ -1309,9 +1305,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                 (self.levelTwoMarkerArray[i] as! GMSMarker).map = nil
             }
         }
-        self.loadingView.stopLoading()
-        self.loadingView.isHidden = true
+        self.stopLoadingView()
     }
+    
     func showOrHideLevelThreeScienceTour() {
         for i in 0 ... self.levelThreePositionArray.count-1 {
             if let searchResult = self.floorMapArray.first(where: {$0.artifactPosition! == self.levelThreePositionArray[i] as! String}) {
@@ -1328,9 +1324,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                 (self.levelThreeMarkerArray[i] as! GMSMarker).map = nil
             }
         }
-        self.loadingView.stopLoading()
-        self.loadingView.isHidden = true
+        self.stopLoadingView()
     }
+    
     //MARK: TourGuide DataBase
     func saveOrUpdateTourGuideCoredata() {
         if (floorMapArray.count > 0) {

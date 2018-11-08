@@ -123,7 +123,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
     }
     
     func setHeritageDetailData(heritageDetail: Heritage) {
-        titleBottomOnlyConstraint.isActive = false
+       // titleBottomOnlyConstraint.isActive = false
         //titleBottomOnlyConstraint.constant = 45
 //        locationTotalTopConstraint.isActive = false
 //        locationTotalBottomConstraint.isActive = false
@@ -173,8 +173,8 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         contactLine.isHidden = true
         contactLabel.isHidden = true
         
-        titleBottomOnlyConstraint.isActive = true//
-        titleBottomOnlyConstraint.constant = 45//
+       // titleBottomOnlyConstraint.isActive = true//
+        //titleBottomOnlyConstraint.constant = 45//
 //        locationTotalTopConstraint.isActive = true
 //        locationTotalTopConstraint.constant = 35
 //        locationTotalBottomConstraint.isActive = true
@@ -188,7 +188,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
     }
     
     func setMuseumAboutCellData(aboutData: Museum) {
-        titleBottomOnlyConstraint.isActive = false
+       // titleBottomOnlyConstraint.isActive = false
 //        locationTotalTopConstraint.isActive = false
 //        locationTotalBottomConstraint.isActive = false
         middleTitleLabel.isHidden = false
@@ -202,7 +202,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         //contactLine.isHidden = false
         contactLabel.isHidden = false
         subTitleLabel.isHidden = true
-        subTitleHeight.constant = 0
+       // subTitleHeight.constant = 0
         titleLabel.text = aboutData.name?.uppercased()
         middleTitleLabel.text = aboutData.subtitle?.uppercased()
         fridayLabel.isHidden = true

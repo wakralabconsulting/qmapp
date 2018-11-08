@@ -224,6 +224,7 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
                 if (firstLoad == true) {
                     cellObj.playButton.setImage(UIImage(named:"pause_blackX1"), for: .normal)
                     cellObj.playList = detailArray[0].audioFile!
+                    cellObj.isPaused = false
                     cellObj.play(url: URL(string:cellObj.playList)!)
                     cellObj.setupTimer()
                 } else {
