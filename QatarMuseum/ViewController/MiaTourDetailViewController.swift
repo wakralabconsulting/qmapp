@@ -199,6 +199,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
             self.scienceTourTitle.text = titleString
             self.scienceTourTitle.textContainer.lineBreakMode = .byTruncatingTail;
         }
+        self.tourGuideDescription.textContainer.lineBreakMode = .byTruncatingTail;
     }
     func setImageArray(tourGuideImgDict : TourGuide?) {
         self.sliderImgArray[0] = UIImage(named: "sliderPlaceholder")!

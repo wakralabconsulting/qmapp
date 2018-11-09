@@ -56,7 +56,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     var tourGuideArray: [TourGuideFloorMap]! = []
     var countValue : Int? = 0
     var fromScienceTour : Bool = false
-    var tourGuideId : String? = ""
+    var tourGuideId : String? = nil
     let networkReachability = NetworkReachabilityManager()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -770,8 +770,8 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     func saveOrUpdateTourGuideCoredata() {
         if (tourGuideArray.count > 0) {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+               
                 let fetchData = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "tourGuideId" , idValue: tourGuideId ) as! [FloorMapTourGuideEntity]
-                
                 if (fetchData.count > 0) {
                     for i in 0 ... tourGuideArray.count-1 {
                         let managedContext = getContext()
@@ -808,11 +808,12 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                             tourguidedbDict.periodOrStyle = tourGuideDeatilDict.periodOrStyle
                             tourguidedbDict.techniqueAndMaterials = tourGuideDeatilDict.techniqueAndMaterials
                             if let imageUrl = tourGuideDeatilDict.thumbImage{
-                                if let data = try? Data(contentsOf: URL(string: imageUrl)!)
-                                {
-                                    let image: UIImage = UIImage(data: data)!
-                                    tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
-                                    
+                                
+                                if(imageUrl != "") {
+                                    if let data = try? Data(contentsOf: URL(string: imageUrl)!){
+                                        let image: UIImage = UIImage(data: data)!
+                                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
+                                    }
                                 }
                             }
                             
@@ -893,12 +894,14 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                             tourguidedbDict.periodOrStyle = tourGuideDeatilDict.periodOrStyle
                             tourguidedbDict.techniqueAndMaterials = tourGuideDeatilDict.techniqueAndMaterials
                             if let imageUrl = tourGuideDeatilDict.thumbImage{
-                                if let data = try? Data(contentsOf: URL(string: imageUrl)!)
-                                {
-                                    let image: UIImage = UIImage(data: data)!
-                                    tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
-                                    
+                                if(imageUrl != "") {
+                                    if let data = try? Data(contentsOf: URL(string: imageUrl)!)
+                                    {
+                                        let image: UIImage = UIImage(data: data)!
+                                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
+                                    }
                                 }
+                                
                             }
                             if(tourGuideDeatilDict.images != nil) {
                                 if((tourGuideDeatilDict.images?.count)! > 0) {
@@ -1160,7 +1163,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
         if (idValue != nil) {
-            //fetchRequest.predicate = NSPredicate(format: "\(idKey!) == %@", idValue!)
+            fetchRequest.predicate = NSPredicate(format: "\(idKey!) == %@", idValue!)
            // fetchRequest.predicate = NSPredicate(format: "\(idKey!) == \(idValue!)")
             
         }
