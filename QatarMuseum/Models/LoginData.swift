@@ -8,22 +8,19 @@ struct LoginData: ResponseObjectSerializable {
     var user: UserData?
     var result:  String? = nil
     
-    
     public init?(response: HTTPURLResponse, representation: AnyObject) {
             if let representation = representation as? [String: Any] {
                 self.sessid = representation["sessid"] as? String
                 self.sessionName = representation["session_name"] as? String
                 self.token = representation["token"] as? String
                 self.result = representation["result"] as? String
-                
-                
             }
         if let data = representation["user"] {
             self.user = UserData.init(response: response, representation: data as AnyObject)
         }
-        
     }
 }
+
 struct UserData: ResponseObjectSerializable {
     var uid: String? = nil
     var name: String? = nil
@@ -55,8 +52,6 @@ struct UserData: ResponseObjectSerializable {
     var twitterAccounts: [String]? = []
     var fieldRsvpAttendance :  [String]? = []
     
-    
-    
     public init?(response: HTTPURLResponse, representation: AnyObject) {
         if let representation = representation as? [String: Any] {
             self.uid = representation["uid"] as? String
@@ -64,13 +59,11 @@ struct UserData: ResponseObjectSerializable {
             self.mail = representation["mail"] as? String
             self.theme = representation["theme"] as? String
             self.signature = representation["signature"] as? String
-            
             self.signatureFormat = representation["signature_format"] as? String
             self.created = representation["created"] as? String
             self.access = representation["access"] as? String
             self.login = representation["login"] as? String
             self.status = representation["status"] as? String
-            
             self.timezone = representation["timezone"] as? String
             self.language = representation["language"] as? String
             self.picture = representation["picture"] as? String
@@ -79,7 +72,6 @@ struct UserData: ResponseObjectSerializable {
             self.roles = (representation["roles"] as? [String: Any])!
             self.fieldDateOfBirth = representation["field_date_of_birth"] as? [String]
             self.fieldFirstName = (representation["field_first_name"] as? [String: Any])!
-            
             self.fieldLastName = (representation["field_last_name"] as? [String: Any])!
             self.fieldLocation = (representation["field_location"] as? [String: Any])!
             self.fieldNationality = (representation["field_nationality"] as? [String: Any])!
@@ -92,24 +84,20 @@ struct UserData: ResponseObjectSerializable {
             self.twitterAccounts = representation["twitter_accounts"] as? [String]
             self.fieldRsvpAttendance = representation["field_rsvp_attendance"] as? [String]
             
-            
         }
     }
 }
+
 struct UserInfoData: ResponseObjectSerializable {
     var uid: String? = nil
     var roles: [String: Any]? = [:]
     var fieldRsvpAttendance : [String: Any]? = [:]
-    
-    
     
     public init?(response: HTTPURLResponse, representation: AnyObject) {
         if let representation = representation as? [String: Any] {
             self.uid = representation["uid"] as? String
             self.roles = (representation["roles"] as? [String: Any])
             self.fieldRsvpAttendance = (representation["field_rsvp_attendance"] as? [String: Any])
-            
-            
         }
     }
 }

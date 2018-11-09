@@ -197,7 +197,8 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
             self.view.makeToast(eventAddedMessage)
         }
     }
-    func loadProfilepage (loginInfo : LoginData?) {
+    
+    func loadProfilepage(loginInfo : LoginData?) {
         if (loginInfo != nil) {
             let userData = loginInfo?.user
             UserDefaults.standard.setValue(userData?.uid, forKey: "uid")
