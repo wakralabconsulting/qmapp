@@ -217,12 +217,8 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     
     //MARK: iCarousel Delegate
     func numberOfItems(in carousel: iCarousel) -> Int {
-        if(self.diningDetailtArray.count != 0) {
-            if(self.diningDetailtArray[0].images != nil) {
-                if((self.diningDetailtArray[0].images?.count)! > 0) {
-                    return (self.diningDetailtArray[0].images?.count)!
-                }
-            }
+        if (isImgArrayAvailable()) {
+            return (self.diningDetailtArray[0].images?.count)!
         }
         return 0
     }
@@ -233,11 +229,12 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         itemView.contentMode = .scaleAspectFit
         let carouselImg = self.diningDetailtArray[0].images
         let imageUrl = carouselImg![index]
-        if(imageUrl != nil){
+        if(imageUrl != nil) {
             itemView.kf.setImage(with: URL(string: imageUrl))
         }
         return itemView
     }
+
     func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
         if (option == .spacing) {
             return value * 1.4
@@ -275,14 +272,21 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     
     @objc func imgButtonPressed() {
         if((imageView.image != nil) && (imageView.image != UIImage(named: "default_imageX2"))) {
-            if(self.diningDetailtArray.count != 0) {
-                if(self.diningDetailtArray[0].images != nil) {
-                    if((self.diningDetailtArray[0].images?.count)! > 0) {
-                        setiCarouselView()
-                    }
+            if(isImgArrayAvailable()) {
+                setiCarouselView()
+            }
+        }
+    }
+    
+    func isImgArrayAvailable() -> Bool {
+        if(self.diningDetailtArray.count != 0) {
+            if(self.diningDetailtArray[0].images != nil) {
+                if((self.diningDetailtArray[0].images?.count)! > 0) {
+                    return true
                 }
             }
         }
+        return false
     }
     
     //MARK: WebServiceCall
