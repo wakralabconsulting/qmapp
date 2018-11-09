@@ -1160,7 +1160,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
         if (idValue != nil) {
-            fetchRequest.predicate = NSPredicate(format: "\(idKey!) == %@", idValue!)
+            //fetchRequest.predicate = NSPredicate(format: "\(idKey!) == %@", idValue!)
            // fetchRequest.predicate = NSPredicate(format: "\(idKey!) == \(idValue!)")
             
         }

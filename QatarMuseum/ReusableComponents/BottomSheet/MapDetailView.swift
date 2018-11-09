@@ -67,12 +67,12 @@ class MapDetailView: UIViewController,ObjectImageViewProtocol {
         // loadingView.showLoading()
         
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            closeButton.frame = CGRect(x: 10, y: 10, width: 40, height: 40)
+            closeButton.frame = CGRect(x: 10, y: 10, width: 50, height: 50)
         } else {
-            closeButton.frame = CGRect(x: self.view.frame.width-40, y: 10, width: 40, height: 40)
+            closeButton.frame = CGRect(x: self.view.frame.width-50, y: 10, width: 50, height: 50)
         }
         closeButton.setImage(UIImage(named: "closeX1"), for: .normal)
-        closeButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom:12, right: 12)
+        closeButton.contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom:16, right: 16)
         
         closeButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         closeButton.addTarget(self, action: #selector(closeButtonTouchDownAction), for: .touchDown)
