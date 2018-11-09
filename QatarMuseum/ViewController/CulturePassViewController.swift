@@ -209,6 +209,20 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
                     UserDefaults.standard.setValue(userData?.fieldDateOfBirth![0], forKey: "fieldDateOfBirth")
                 }
             }
+            let firstNameData = userData?.fieldFirstName["und"] as! NSArray
+            if(firstNameData != nil && firstNameData.count > 0) {
+                let name = firstNameData[0] as! NSDictionary
+                if(name["value"] != nil) {
+                    UserDefaults.standard.setValue(name["value"] as! String, forKey: "fieldFirstName")
+                }
+            }
+            let lastNameData = userData?.fieldLastName["und"] as! NSArray
+            if(lastNameData != nil && lastNameData.count > 0) {
+                let name = lastNameData[0] as! NSDictionary
+                if(name["value"] != nil) {
+                    UserDefaults.standard.setValue(name["value"] as! String, forKey: "fieldLastName")
+                }
+            }
             let locationData = userData?.fieldLocation["und"] as! NSArray
             if(locationData.count > 0) {
                 let iso = locationData[0] as! NSDictionary

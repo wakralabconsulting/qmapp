@@ -302,7 +302,9 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
                         UserDefaults.standard.setValue("" , forKey: "profilePic")
                         UserDefaults.standard.removeObject(forKey: "accessToken")
                         UserDefaults.standard.removeObject(forKey: "acceptOrDecline")
-                        
+                        UserDefaults.standard.removeObject(forKey: "fieldFirstName")
+                        UserDefaults.standard.removeObject(forKey: "fieldLastName")
+
                         if let presenter = self.presentingViewController as? CulturePassViewController {
                             presenter.fromHome = true
                             presenter.fromProfile = true

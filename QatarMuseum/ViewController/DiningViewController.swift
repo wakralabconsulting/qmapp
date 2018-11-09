@@ -319,12 +319,10 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
                         self.showNoNetwork()
                     }
                     diningCollectionView.reloadData()
-                }
-                else{
+                } else{
                     self.showNoNetwork()
                 }
-            }
-            else {
+            } else {
                 var diningArray = [DiningEntityArabic]()
                 diningArray = checkAddedToCoredata(entityName: "DiningEntityArabic", idKey: "museumId", idValue: museumId) as! [DiningEntityArabic]
                 if (diningArray.count > 0) {
@@ -347,8 +345,8 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
+    
     func fetchDiningListFromCoredata() {
-
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                 var diningArray = [DiningEntity]()
@@ -364,19 +362,16 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
                         self.showNoNetwork()
                     }
                     diningCollectionView.reloadData()
-                }
-                else{
+                } else {
                     self.showNoNetwork()
                 }
-            }
-            else {
+            } else {
                 var diningArray = [DiningEntityArabic]()
                 let managedContext = getContext()
                 let diningFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "DiningEntityArabic")
                 diningArray = (try managedContext.fetch(diningFetchRequest) as? [DiningEntityArabic])!
                 if (diningArray.count > 0) {
                     for i in 0 ... diningArray.count-1 {
-
                         self.diningListArray.insert(Dining(id: diningArray[i].id, name: diningArray[i].namearabic, location: diningArray[i].locationarabic, description: diningArray[i].descriptionarabic, image: diningArray[i].imagearabic, openingtime: diningArray[i].openingtimearabic, closetime: diningArray[i].closetimearabic, sortid: diningArray[i].sortidarabic,museumId: diningArray[i].museumId, images: nil), at: i)
                     }
                     if(diningListArray.count == 0){
