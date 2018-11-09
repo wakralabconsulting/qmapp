@@ -74,6 +74,11 @@ class CulturePassCardViewController: UIViewController {
         if((UserDefaults.standard.value(forKey: "displayName") as? String != nil) && (UserDefaults.standard.value(forKey: "displayName") as? String != "")) {
             cardBackView.usernameString = (UserDefaults.standard.value(forKey: "displayName") as? String)
         }
+        if (UserDefaults.standard.value(forKey: "fieldFirstName") as? String != nil) && (UserDefaults.standard.value(forKey: "fieldLastName") as? String != nil) {
+            let firstName = UserDefaults.standard.value(forKey: "fieldFirstName") as! String
+            let lastName = UserDefaults.standard.value(forKey: "fieldLastName") as! String
+            cardBackView.displayName = firstName + " "  + lastName
+        }
         let transition = CATransition()
         transition.duration = 0.9
         transition.type = "flip"

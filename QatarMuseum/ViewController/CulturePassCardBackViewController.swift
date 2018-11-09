@@ -17,6 +17,7 @@ class CulturePassCardBackViewController: UIViewController {
     
     var cardNumber : String? = nil
     var usernameString : String? = nil
+    var displayName : String? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,13 +33,12 @@ class CulturePassCardBackViewController: UIViewController {
         tapToFlipButton.layer.cornerRadius = 25
         numberLabel.font = UIFont.discoverButtonFont
         nameLabel.font = UIFont.discoverButtonFont
-        if (usernameString != nil) {
-            nameLabel.text = usernameString
+        if (displayName != nil) {
+            nameLabel.text = displayName
         }
         if (cardNumber != nil) {
             numberLabel.text = cardNumber
         }
-        
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
