@@ -2146,7 +2146,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pML-Ib-x5b">
-                                                                    <rect key="frame" x="33.666666666666664" y="62" width="28" height="11"/>
+                                                                    <rect key="frame" x="34" y="62" width="28" height="11"/>
                                                                     <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="11"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -3979,7 +3979,7 @@
                                 <rect key="frame" x="0.0" y="85" width="414" height="651"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select App Languagel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xpE-Hz-U0H">
-                                        <rect key="frame" x="111" y="30" width="193" height="20"/>
+                                        <rect key="frame" x="111.33333333333333" y="30" width="192.33333333333337" height="20"/>
                                         <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -3991,7 +3991,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notification Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2C7-23-u7x">
-                                        <rect key="frame" x="118" y="162" width="179" height="20"/>
+                                        <rect key="frame" x="118.00000000000001" y="162" width="179.33333333333337" height="20"/>
                                         <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -4000,7 +4000,7 @@
                                         <rect key="frame" x="0.0" y="194" width="414" height="69.333333333333314"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Updates" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ew-fW-6zz">
-                                                <rect key="frame" x="25.000000000000007" y="26" width="111.66666666666669" height="18"/>
+                                                <rect key="frame" x="25.000000000000007" y="26.333333333333314" width="111.66666666666669" height="18"/>
                                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -4026,7 +4026,7 @@
                                         <rect key="frame" x="0.0" y="264.33333333333331" width="414" height="69.666666666666686"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exhibition Updates" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ww0-0Y-4hj">
-                                                <rect key="frame" x="25" y="26" width="145" height="18"/>
+                                                <rect key="frame" x="25" y="26.333333333333371" width="144.66666666666666" height="18"/>
                                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -4051,7 +4051,7 @@
                                         <rect key="frame" x="0.0" y="334" width="414" height="69"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Museum Updates" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v08-Zy-VYf">
-                                                <rect key="frame" x="25" y="25.666666666666686" width="134.66666666666666" height="18"/>
+                                                <rect key="frame" x="25" y="26" width="134.66666666666666" height="18"/>
                                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -4076,7 +4076,7 @@
                                         <rect key="frame" x="0.0" y="403" width="414" height="69.666666666666686"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Culture Pass Updates" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ucj-3T-UwV">
-                                                <rect key="frame" x="25" y="26.333333333333371" width="167" height="18"/>
+                                                <rect key="frame" x="25" y="26.666666666666629" width="166.66666666666666" height="18"/>
                                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -4098,7 +4098,7 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Arabic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Xt-Xw-pZq">
-                                        <rect key="frame" x="240" y="67.666666666666657" width="44" height="16"/>
+                                        <rect key="frame" x="240.00000000000003" y="67.666666666666657" width="44.333333333333343" height="16"/>
                                         <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -4161,13 +4161,13 @@
                                         <rect key="frame" x="0.0" y="471.66666666666663" width="414" height="69.333333333333371"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tour Guide Updates" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="evI-OD-mvr">
-                                                <rect key="frame" x="25" y="26.333333333333371" width="153" height="18"/>
+                                                <rect key="frame" x="25" y="25.666666666666742" width="153" height="18"/>
                                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RZv-Wr-rgO">
-                                                <rect key="frame" x="350" y="19.666666666666742" width="51" height="31"/>
+                                                <rect key="frame" x="350" y="18.666666666666742" width="51" height="31"/>
                                                 <color key="onTintColor" red="0.32011085748672485" green="0.69821310043334961" blue="0.28853300213813782" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <connections>
                                                     <action selector="toggleTourGuideSwitch:" destination="GHA-qU-agt" eventType="valueChanged" id="pjZ-I6-bJS"/>
@@ -4475,6 +4475,7 @@
                                             <outlet property="seekLoadingLabel" destination="agv-iv-Q01" id="sWe-bg-MzM"/>
                                             <outlet property="shareBtnViewHeight" destination="fCx-pD-vJ8" id="SFa-I1-l5O"/>
                                             <outlet property="shareButton" destination="xIe-yt-cM3" id="WD9-YP-YZc"/>
+                                            <outlet property="sliderBottomPadding" destination="20p-17-cB5" id="WCp-Cc-CiL"/>
                                             <outlet property="sliderTopPadding" destination="qpj-re-T5u" id="xRx-9S-yDq"/>
                                             <outlet property="titleLabel" destination="GjV-1M-mrG" id="s8h-rM-GYd"/>
                                         </connections>
@@ -5019,6 +5020,7 @@
                                                     <outlet property="seekLoadingLabel" destination="KnN-Dc-4mX" id="dLk-VS-7Bd"/>
                                                     <outlet property="shareBtnViewHeight" destination="wVK-Sm-e3c" id="fZE-5S-UYk"/>
                                                     <outlet property="shareButton" destination="B0K-tc-bRj" id="gZ4-Oe-9RD"/>
+                                                    <outlet property="sliderBottomPadding" destination="bZP-mn-xkA" id="s30-n6-ns6"/>
                                                     <outlet property="sliderTopPadding" destination="9Qe-jF-Xse" id="0JI-i2-53C"/>
                                                     <outlet property="titleLabel" destination="8iC-TY-cbf" id="OID-uh-Frc"/>
                                                 </connections>

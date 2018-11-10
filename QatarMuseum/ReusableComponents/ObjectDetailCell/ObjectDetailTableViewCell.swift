@@ -11,10 +11,7 @@ import AVKit
 import UIKit
 
 class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailProtocol {
-    
-    
-    
-    
+   
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var detailSecondLabel: UILabel!
