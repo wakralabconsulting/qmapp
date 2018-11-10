@@ -73,7 +73,7 @@ class PreviewContentViewController: UIViewController, UITableViewDelegate, UITab
         let tourGuideData = tourGuideDict
         let galleryNumber = tourGuideData?.galleyNumber?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&#039;", with: "", options: .regularExpression, range: nil)
         let floorLevel = tourGuideData?.floorLevel?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&#039;", with: "", options: .regularExpression, range: nil)
-        accessNumberLabel.text = galleryNumber + ", " + floorLevel
+        accessNumberLabel.text = galleryNumber! + ", " + floorLevel!
 //        if((tourGuideData?.production != nil) && (tourGuideData?.production != "")) {
 //             productionTitle.text = NSLocalizedString("PRODUCTION_LABEL", comment: "PRODUCTION_LABEL  in the Popup")
 //            productionText.text = tourGuideData?.production
