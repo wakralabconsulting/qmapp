@@ -317,22 +317,10 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     
     //MARK: iCarousel Delegate
     func numberOfItems(in carousel: iCarousel) -> Int {
-        if (pageNameString == PageName.heritageDetail) {
-            if(self.heritageDetailtArray.count != 0) {
-                if(self.heritageDetailtArray[0].images != nil) {
-                    if((self.heritageDetailtArray[0].images?.count)! > 0) {
-                        return (self.heritageDetailtArray[0].images?.count)!
-                    }
-                }
-            }
-        } else if (pageNameString == PageName.publicArtsDetail) {
-            if(self.publicArtsDetailtArray.count != 0) {
-                if(self.publicArtsDetailtArray[0].images != nil) {
-                    if((self.publicArtsDetailtArray[0].images?.count)! > 0) {
-                        return (self.publicArtsDetailtArray[0].images?.count)!
-                    }
-                }
-            }
+        if (isHeritageImgArrayAvailable()) {
+            return (self.heritageDetailtArray[0].images?.count)!
+        } else if (isPublicArtImgArrayAvailable()) {
+            return (self.publicArtsDetailtArray[0].images?.count)!
         }
         return 0
     }
@@ -393,10 +381,37 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     
     @objc func imgButtonPressed() {
         if((imageView.image != nil) && (imageView.image != UIImage(named: "default_imageX2"))) {
-            setiCarouselView()
+            if (isHeritageImgArrayAvailable() || isPublicArtImgArrayAvailable()) {
+                setiCarouselView()
+            }
         }
     }
     
+    func isHeritageImgArrayAvailable() -> Bool {
+        if (pageNameString == PageName.heritageDetail) {
+            if(self.heritageDetailtArray.count != 0) {
+                if(self.heritageDetailtArray[0].images != nil) {
+                    if((self.heritageDetailtArray[0].images?.count)! > 0) {
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
+    
+    func isPublicArtImgArrayAvailable() -> Bool {
+        if (pageNameString == PageName.publicArtsDetail) {
+            if(self.publicArtsDetailtArray.count != 0) {
+                if(self.publicArtsDetailtArray[0].images != nil) {
+                    if((self.publicArtsDetailtArray[0].images?.count)! > 0) {
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
     //MARK: WebServiceCall
     func getHeritageDetailsFromServer() {
         _ = Alamofire.request(QatarMuseumRouter.HeritageDetail(["nid": heritageDetailId!])).responseObject { (response: DataResponse<Heritages>) -> Void in

@@ -15,7 +15,7 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
     
     
     
-    @IBOutlet weak var titleLabel: UITextView!
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var detailSecondLabel: UILabel!
     @IBOutlet weak var centerImageView: UIImageView!

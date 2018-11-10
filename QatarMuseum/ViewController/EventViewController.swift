@@ -560,11 +560,9 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 switch response.result {
                 case .success(let data):
                     self.educationEventArray = data.educationEvent!
-                    //  let evetPosition = self.findItem(educationArray: self.educationEventArray, fixedStartTime: "14:00")
-                    //  if(self.sundayOrWednesday() == false) {
-                    //                    self.educationEventArray.insert(EducationEvent(eid: "15476", filter: nil, title: "Walk In Gallery Tours", shortDesc: "Join our Museum Guides for a tour of the Museum of Islamic Art's oustanding collection of objects, spread over 1,400 years and across three continents. No booking is required to be a part of the tour.", longDesc: "Monday - Science Tour\n Tuesday - Techniques Tour (from 1 July onwards)\n Thursday - MIA Architecture Tour\n Friday - Permanent Gallery Tour\nSaturday - Permanent Gallery Tour", location: " Museum of Islamic Art, Atrium", institution: "MIA", startTime: "14:00", endTime: "16:00", ageGroup: "adults", programType: "gallery tour", category: nil, registration: "false", date: "Every Monday, Tuesday, Thursday, Friday and Saturday",maxGroupSize: "40" ), at: evetPosition!)
                     
-                    //}
+//                    self.educationEventArray = self.educationEventArray.sorted { $0.startDate![0].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil) < $1.startDate![0].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil) }
+
                     if (self.isLoadEventPage == true) {
                         self.saveOrUpdateEventCoredata()
                     }

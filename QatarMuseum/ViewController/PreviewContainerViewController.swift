@@ -56,7 +56,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     var tourGuideArray: [TourGuideFloorMap]! = []
     var countValue : Int? = 0
     var fromScienceTour : Bool = false
-    var tourGuideId : String? = ""
+    var tourGuideId : String? = nil
     let networkReachability = NetworkReachabilityManager()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,9 +118,9 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         
         pageImageViewOne.image = UIImage(named: "selectedControl")
         showOrHidePageControlView(countValue: tourGuideArray.count, scrolling: false)
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.loadDetailPage))
-        tap.delegate = self // This is not required
-        self.view.addGestureRecognizer(tap)
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(self.loadDetailPage))
+//        tap.delegate = self // This is not required
+//        self.view.addGestureRecognizer(tap)
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -727,13 +727,14 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                 floorMapView.selectedScienceTour = selectedItem.artifactPosition
                 floorMapView.selectedScienceTourLevel = selectedItem.floorLevel
                 floorMapView.selectednid = selectedItem.nid
-                if let imageUrl = selectedItem.image{
-                    if let data = try? Data(contentsOf: URL(string: imageUrl)!)
-                    {
-                        let image: UIImage = UIImage(data: data)!
-                        floorMapView.selectedImageFromPreview = image
-                    }
-                }
+//                if let imageUrl = selectedItem.image{
+//                    if(imageUrl != "") {
+//                        if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
+//                            let image: UIImage = UIImage(data: data)!
+//                            floorMapView.selectedImageFromPreview = image
+//                        }
+//                    }
+//                }
                 
                 if(fromScienceTour) {
                     floorMapView.fromTourString = fromTour.scienceTour
@@ -770,8 +771,8 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     func saveOrUpdateTourGuideCoredata() {
         if (tourGuideArray.count > 0) {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+               
                 let fetchData = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "tourGuideId" , idValue: tourGuideId ) as! [FloorMapTourGuideEntity]
-                
                 if (fetchData.count > 0) {
                     for i in 0 ... tourGuideArray.count-1 {
                         let managedContext = getContext()
@@ -808,11 +809,12 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                             tourguidedbDict.periodOrStyle = tourGuideDeatilDict.periodOrStyle
                             tourguidedbDict.techniqueAndMaterials = tourGuideDeatilDict.techniqueAndMaterials
                             if let imageUrl = tourGuideDeatilDict.thumbImage{
-                                if let data = try? Data(contentsOf: URL(string: imageUrl)!)
-                                {
-                                    let image: UIImage = UIImage(data: data)!
-                                    tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
-                                    
+                                
+                                if(imageUrl != "") {
+                                    if let data = try? Data(contentsOf: URL(string: imageUrl)!){
+                                        let image: UIImage = UIImage(data: data)!
+                                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
+                                    }
                                 }
                             }
                             
@@ -893,12 +895,14 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                             tourguidedbDict.periodOrStyle = tourGuideDeatilDict.periodOrStyle
                             tourguidedbDict.techniqueAndMaterials = tourGuideDeatilDict.techniqueAndMaterials
                             if let imageUrl = tourGuideDeatilDict.thumbImage{
-                                if let data = try? Data(contentsOf: URL(string: imageUrl)!)
-                                {
-                                    let image: UIImage = UIImage(data: data)!
-                                    tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
-                                    
+                                if(imageUrl != "") {
+                                    if let data = try? Data(contentsOf: URL(string: imageUrl)!)
+                                    {
+                                        let image: UIImage = UIImage(data: data)!
+                                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
+                                    }
                                 }
+                                
                             }
                             if(tourGuideDeatilDict.images != nil) {
                                 if((tourGuideDeatilDict.images?.count)! > 0) {
@@ -971,12 +975,12 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
             tourguidedbDict.periodOrStyle = tourGuideDetailDict.periodOrStyle
             tourguidedbDict.techniqueAndMaterials = tourGuideDetailDict.techniqueAndMaterials
             if let imageUrl = tourGuideDetailDict.thumbImage{
-                if let data = try? Data(contentsOf: URL(string: imageUrl)!)
-                {
+                if(imageUrl != "") {
+                if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
                     let image: UIImage = UIImage(data: data)!
                     tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
-                    
                 }
+            }
             }
             if(tourGuideDetailDict.images != nil) {
                 if((tourGuideDetailDict.images?.count)! > 0) {
@@ -1027,11 +1031,11 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
             tourguidedbDict.periodOrStyle = tourGuideDetailDict.periodOrStyle
             tourguidedbDict.techniqueAndMaterials = tourGuideDetailDict.techniqueAndMaterials
             if let imageUrl = tourGuideDetailDict.thumbImage{
-                if let data = try? Data(contentsOf: URL(string: imageUrl)!)
-                {
-                    let image: UIImage = UIImage(data: data)!
-                    tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
-                    
+                if(imageUrl != "") {
+                    if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
+                        let image: UIImage = UIImage(data: data)!
+                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
+                    }
                 }
             }
             if(tourGuideDetailDict.images != nil) {
