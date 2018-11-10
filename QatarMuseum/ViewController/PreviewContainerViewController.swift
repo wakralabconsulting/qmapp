@@ -727,13 +727,14 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                 floorMapView.selectedScienceTour = selectedItem.artifactPosition
                 floorMapView.selectedScienceTourLevel = selectedItem.floorLevel
                 floorMapView.selectednid = selectedItem.nid
-                if let imageUrl = selectedItem.image{
-                    if let data = try? Data(contentsOf: URL(string: imageUrl)!)
-                    {
-                        let image: UIImage = UIImage(data: data)!
-                        floorMapView.selectedImageFromPreview = image
-                    }
-                }
+//                if let imageUrl = selectedItem.image{
+//                    if(imageUrl != "") {
+//                        if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
+//                            let image: UIImage = UIImage(data: data)!
+//                            floorMapView.selectedImageFromPreview = image
+//                        }
+//                    }
+//                }
                 
                 if(fromScienceTour) {
                     floorMapView.fromTourString = fromTour.scienceTour
@@ -974,12 +975,12 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
             tourguidedbDict.periodOrStyle = tourGuideDetailDict.periodOrStyle
             tourguidedbDict.techniqueAndMaterials = tourGuideDetailDict.techniqueAndMaterials
             if let imageUrl = tourGuideDetailDict.thumbImage{
-                if let data = try? Data(contentsOf: URL(string: imageUrl)!)
-                {
+                if(imageUrl != "") {
+                if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
                     let image: UIImage = UIImage(data: data)!
                     tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
-                    
                 }
+            }
             }
             if(tourGuideDetailDict.images != nil) {
                 if((tourGuideDetailDict.images?.count)! > 0) {
@@ -1030,11 +1031,11 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
             tourguidedbDict.periodOrStyle = tourGuideDetailDict.periodOrStyle
             tourguidedbDict.techniqueAndMaterials = tourGuideDetailDict.techniqueAndMaterials
             if let imageUrl = tourGuideDetailDict.thumbImage{
-                if let data = try? Data(contentsOf: URL(string: imageUrl)!)
-                {
-                    let image: UIImage = UIImage(data: data)!
-                    tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
-                    
+                if(imageUrl != "") {
+                    if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
+                        let image: UIImage = UIImage(data: data)!
+                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
+                    }
                 }
             }
             if(tourGuideDetailDict.images != nil) {
