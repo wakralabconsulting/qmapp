@@ -118,9 +118,9 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         
         pageImageViewOne.image = UIImage(named: "selectedControl")
         showOrHidePageControlView(countValue: tourGuideArray.count, scrolling: false)
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.loadDetailPage))
-        tap.delegate = self // This is not required
-        self.view.addGestureRecognizer(tap)
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(self.loadDetailPage))
+//        tap.delegate = self // This is not required
+//        self.view.addGestureRecognizer(tap)
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
