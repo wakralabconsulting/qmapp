@@ -35,9 +35,15 @@ class PreviewContentViewController: UIViewController, UITableViewDelegate, UITab
     
     func setPreviewData() {
         let tourGuideData = tourGuideDict
-        let galleryNumber = tourGuideData?.galleyNumber?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&#039;", with: "", options: .regularExpression, range: nil)
-        let floorLevel = tourGuideData?.floorLevel?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&#039;", with: "", options: .regularExpression, range: nil)
-        accessNumberLabel.text = galleryNumber! + ", " + floorLevel!
+        var galleryNumber: String = " "
+        var floorLevel: String = " "
+        if tourGuideData?.galleyNumber != nil  {
+            galleryNumber = (tourGuideData?.galleyNumber?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&#039;", with: "", options: .regularExpression, range: nil))!
+        }
+        if tourGuideData?.galleyNumber != nil  {
+            floorLevel = (tourGuideData?.floorLevel?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&#039;", with: "", options: .regularExpression, range: nil))!
+        }
+        accessNumberLabel.text =  NSLocalizedString("FLOOR", comment: "FLOOR text in the preview page") + " " + floorLevel + ", " + NSLocalizedString("GALLERY", comment: "GALLERY text in the preview page") + " " + galleryNumber
         accessNumberLabel.font = UIFont.sideMenuLabelFont
         if(UIScreen.main.bounds.height <= 568) {
             accessNumberLabel.font = UIFont.exhibitionDateLabelFont

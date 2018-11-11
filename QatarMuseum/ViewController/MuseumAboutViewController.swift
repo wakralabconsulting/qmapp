@@ -68,10 +68,6 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.fetchAboutDetailsFromCoredata()
             }
             
-            
-            
-            
-            
         }
         recordScreenView()
     }
@@ -151,7 +147,6 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         imgButton.addTarget(self, action: #selector(self.imgButtonPressed(sender:)), for: .touchUpInside)
         
         self.view.addSubview(imgButton)
-        
         
         let darkBlur = UIBlurEffect(style: UIBlurEffectStyle.light)
         blurView = UIVisualEffectView(effect: darkBlur)

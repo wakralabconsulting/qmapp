@@ -218,3 +218,5 @@
 "USE_QR_SCANNER" = "استخدم ماسح QR";
 "ENTER_ARTIFACT_NUMBER" = " برجاء إدخال رقم القطعة الأثرية";
 "TAP_TO_FLIP" = "اضغط لعرض الجهة الأخرى";
+"FLOOR" = "المستوى";
+"GALLERY" = "المعرض";
