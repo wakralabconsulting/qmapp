@@ -208,7 +208,13 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         } else {
             heritageCell.setMuseumAboutCellData(aboutData: aboutDetailtArray[indexPath.row])
             // heritageCell.setMuseumAboutCellData(aboutData: aboutDetailtArray[0])
+            if (isImgArrayAvailable()) {
+                heritageCell.pageControl.isHidden = false
+            } else {
+                heritageCell.pageControl.isHidden = true
+            }
         }
+        
         heritageCell.favBtnTapAction = {
             () in
            // self.setFavouritesAction(cellObj: heritageCell)
@@ -1281,6 +1287,17 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         if((imageView.image != nil) && (imageView.image != UIImage(named: "default_imageX2"))) {
             setiCarouselView()
         }
+    }
+    
+    func isImgArrayAvailable() -> Bool {
+        if(self.aboutDetailtArray.count != 0) {
+            if(self.aboutDetailtArray[0].multimediaFile != nil) {
+                if((self.aboutDetailtArray[0].multimediaFile?.count)! > 0) {
+                    return true
+                }
+            }
+        }
+        return false
     }
     
     //MARK: LoadingView Delegate
