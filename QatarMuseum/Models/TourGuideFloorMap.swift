@@ -61,7 +61,7 @@ struct TourGuideFloorMap: ResponseObjectSerializable, ResponseCollectionSerializ
             
             
             self.floorLevel = representation["floor_level"] as? String
-            self.galleyNumber = representation["galley_Number"] as? String
+            self.galleyNumber = representation["gallery_number"] as? String
             self.artistOrCreatorOrAuthor = representation["Artist/Creator/Author"] as? String
             self.periodOrStyle = representation["Period/Style"] as? String
             self.techniqueAndMaterials = representation["Technique_&_Materials"] as? String
