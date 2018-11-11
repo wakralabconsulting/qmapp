@@ -98,6 +98,11 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         let diningCell = tableView.dequeueReusableCell(withIdentifier: "diningDetailCellId", for: indexPath) as! DiningDetailTableViewCell
         diningCell.titleLineView.isHidden = true
         diningCell.setDiningDetailValues(diningDetail: diningDetailtArray[indexPath.row])
+        if (isImgArrayAvailable()) {
+            diningCell.pageControl.isHidden = false
+        } else {
+            diningCell.pageControl.isHidden = true
+        }
         diningCell.locationButtonAction = {
             ()in
             self.loadLocationInMap(currentRow: indexPath.row)
