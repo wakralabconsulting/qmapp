@@ -11,10 +11,7 @@ import AVKit
 import UIKit
 
 class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailProtocol {
-    
-    
-    
-    
+   
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var detailSecondLabel: UILabel!
@@ -87,11 +84,11 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
             playButton.isHidden = false
             playerSlider.isHidden = false
             sliderTopPadding.constant = 30
-            sliderBottomPadding.constant = 30
+//            sliderBottomPadding.constant = 30
             playList = objectDetail.audioFile!
         } else {
             sliderTopPadding.constant = 0
-            sliderBottomPadding.constant = 0
+//            sliderBottomPadding.constant = 0
             playButton.isHidden = true
             playerSlider.isHidden = true
         }
