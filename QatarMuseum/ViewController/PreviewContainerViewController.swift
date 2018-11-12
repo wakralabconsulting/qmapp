@@ -628,7 +628,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         if ((self.tourGuideArray.count == 0) || (index > self.tourGuideArray.count)){
             return nil
         }
-        
+        self.closeAudio()
         let pageContentViewController = self.storyboard?.instantiateViewController(withIdentifier: "PageContentViewControllerId") as! PreviewContentViewController
         pageContentViewController.pageIndex = index
         pageContentViewController.tourGuideDict = tourGuideArray[index]
