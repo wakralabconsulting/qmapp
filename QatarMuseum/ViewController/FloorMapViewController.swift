@@ -877,9 +877,13 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         marker.groundAnchor = CGPoint(x: 0.5, y: 1.0)
        
         if let arrayOffset = floorMapArray.index(where: {$0.artifactPosition == searchstring}) {
-            marker.icon = self.imageWithImage(image: markerIcon!, scaledToSize: CGSize(width:54, height: 64))
+            if(markerIcon != nil) {
+                marker.icon = self.imageWithImage(image: markerIcon!, scaledToSize: CGSize(width:54, height: 64))
+                selectedMarkerImage = markerIcon!
+            }
+            
             selectedMarker = marker
-            selectedMarkerImage = markerIcon!
+            
             addBottomSheetView(index: arrayOffset)
         }
 
@@ -1093,7 +1097,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         bottomSheetVC.removeFromParentViewController()
         bottomSheetVC.dismiss(animated: false, completion: nil)
        // selectedMarker.icon = self.imageWithImage(image: selectedMarkerImage, scaledToSize: CGSize(width:38, height: 44))
-        selectedMarker.icon = selectedMarkerImage
+        if(selectedMarkerImage != nil) {
+            selectedMarker.icon = selectedMarkerImage
+        }
+        
         selectedScienceTour = ""
         
         bounceTimerTwo.invalidate()
@@ -1147,7 +1154,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     func dismissOvelay() {
         overlayView.isHidden = true
         //selectedMarker.icon = self.imageWithImage(image: selectedMarkerImage, scaledToSize: CGSize(width:38, height: 44))
-        selectedMarker.icon = selectedMarkerImage
+        if(selectedMarkerImage != nil) {
+            selectedMarker.icon = selectedMarkerImage
+        }
         selectedScienceTour = ""
         bounceTimerTwo.invalidate()
         bounceTimerThree.invalidate()
@@ -1347,7 +1356,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                     (self.levelTwoMarkerArray[i] as! GMSMarker).map = self.viewForMap
                     
                 }
-                self.loadedLevelTwoMarkerArray.add(self.levelTwoMarkerArray[i])
+                
                 if(searchResult.artifactImg != nil) {
                     let artImg = UIImage(data: searchResult.artifactImg!)
                     if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour! == (self.levelTwoPositionArray[i] as! String))) {
@@ -1363,7 +1372,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                     if(imageUrl != "") {
                         if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
                             let image: UIImage = UIImage(data: data)!
-                            //(self.levelTwoMarkerArray[i] as! GMSMarker).icon = image
                             if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour! == (self.levelTwoPositionArray[i] as! String))) {
                                 (self.levelTwoMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: image, scaledToSize: CGSize(width:54, height: 64))
                                 selectedMarker = self.levelTwoMarkerArray[i] as! GMSMarker
@@ -1375,6 +1383,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                     }
                 }
             }
+                if((self.levelTwoMarkerArray[i] as! GMSMarker).icon == nil) {
+                    (self.levelTwoMarkerArray[i] as! GMSMarker).map = nil
+                } else {
+                    self.loadedLevelTwoMarkerArray.add(self.levelTwoMarkerArray[i])
+                }
                 
 
             } else {
@@ -1386,7 +1399,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         if (self.fromTourString == fromTour.exploreTour) {
             self.stopLoadingView(delayInSeconds: 0.4)
         }
-        //self.stopLoadingView()
     }
     func showOrHideLevelThreeHighlightTour() {
         for i in 0 ... self.levelThreePositionArray.count-1 {
@@ -1394,10 +1406,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                 if(self.selectedScienceTourLevel == "3") {
                     (self.levelThreeMarkerArray[i] as! GMSMarker).map = self.viewForMap
             }
-                self.loadedLevelThreeMarkerArray.add(self.levelThreeMarkerArray[i])
+                
                 if(searchResult.artifactImg != nil) {
                     let artImg = UIImage(data: searchResult.artifactImg!)
-                   // (self.levelThreeMarkerArray[i] as! GMSMarker).icon = artImg
                     if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour! == (self.levelThreePositionArray[i] as! String))) {
                         (self.levelThreeMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: artImg!, scaledToSize: CGSize(width:54, height: 64))
                         selectedMarker = self.levelThreeMarkerArray[i] as! GMSMarker
@@ -1410,7 +1421,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                     if(imageUrl != "") {
                         if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
                             let image: UIImage = UIImage(data: data)!
-                            //(self.levelThreeMarkerArray[i] as! GMSMarker).icon = image
                             if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour! == (self.levelThreePositionArray[i] as! String))) {
                                 (self.levelThreeMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: image, scaledToSize: CGSize(width:54, height: 64))
                                 selectedMarker = self.levelThreeMarkerArray[i] as! GMSMarker
@@ -1422,6 +1432,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                     }
                 }
                 }
+                if((self.levelThreeMarkerArray[i] as! GMSMarker).icon == nil) {
+                    (self.levelThreeMarkerArray[i] as! GMSMarker).map = nil
+                } else {
+                    self.loadedLevelThreeMarkerArray.add(self.levelThreeMarkerArray[i])
+                }
                 
             } else {
                 (self.levelThreeMarkerArray[i] as! GMSMarker).map = nil
@@ -1430,7 +1445,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         if (self.fromTourString == fromTour.exploreTour) {
             self.stopLoadingView(delayInSeconds: 0.3)
         }
-        //self.stopLoadingView()
 
     }
     
@@ -1438,13 +1452,13 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         
         for i in 0 ... self.levelTwoPositionArray.count-1 {
             if let searchResult = self.floorMapArray.first(where: {$0.artifactPosition! == self.levelTwoPositionArray[i] as! String}) {
+                if(searchResult.floorLevel != "") {
                 if(self.selectedScienceTourLevel == "2") {
                     (self.levelTwoMarkerArray[i] as! GMSMarker).map = self.viewForMap
                 }
-                self.loadedLevelTwoMarkerArray.add(self.levelTwoMarkerArray[i])
+                
                 if(searchResult.artifactImg != nil) {
                     let artImg = UIImage(data: searchResult.artifactImg!)
-                    //(self.levelTwoMarkerArray[i] as! GMSMarker).icon = artImg
                     if((fromTourString == fromTour.scienceTour) && (selectedScienceTour! == (self.levelTwoPositionArray[i] as! String))) {
                         (self.levelTwoMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: artImg!, scaledToSize: CGSize(width:54, height: 64))
                         selectedMarker = self.levelTwoMarkerArray[i] as! GMSMarker
@@ -1457,7 +1471,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                     if(imageUrl != "") {
                         if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
                             let image: UIImage = UIImage(data: data)!
-                           // (self.levelTwoMarkerArray[i] as! GMSMarker).icon = image
                             if((fromTourString == fromTour.scienceTour) && (selectedScienceTour! == (self.levelTwoPositionArray[i] as! String))) {
                                 (self.levelTwoMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: image, scaledToSize: CGSize(width:54, height: 64))
                                 selectedMarker = self.levelTwoMarkerArray[i] as! GMSMarker
@@ -1469,12 +1482,19 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                     }
                 }
                 }
-               
+                    if((self.levelTwoMarkerArray[i] as! GMSMarker).icon == nil) {
+                        (self.levelTwoMarkerArray[i] as! GMSMarker).map = nil
+                    } else {
+                        self.loadedLevelTwoMarkerArray.add(self.levelTwoMarkerArray[i])
+                    }
+            }
+                else {
+                    (self.levelTwoMarkerArray[i] as! GMSMarker).map = nil
+                }
             } else {
                 (self.levelTwoMarkerArray[i] as! GMSMarker).map = nil
             }
         }
-       // self.stopLoadingView()
 
     }
     
@@ -1484,10 +1504,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                 if(self.selectedScienceTourLevel == "3") {
                     (self.levelThreeMarkerArray[i] as! GMSMarker).map = self.viewForMap
                 }
-                self.loadedLevelThreeMarkerArray.add(self.levelThreeMarkerArray[i])
+                
                 if(searchResult.artifactImg != nil) {
                     let artImg = UIImage(data: searchResult.artifactImg!)
-                    //(self.levelThreeMarkerArray[i] as! GMSMarker).icon = artImg
                     if((fromTourString == fromTour.scienceTour) && (selectedScienceTour! == (self.levelThreePositionArray[i] as! String))) {
                         (self.levelThreeMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: artImg!, scaledToSize: CGSize(width:54, height: 64))
                         selectedMarker = self.levelThreeMarkerArray[i] as! GMSMarker
@@ -1500,7 +1519,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                      if(imageUrl != "") {
                         if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
                             let image: UIImage = UIImage(data: data)!
-                           // (self.levelThreeMarkerArray[i] as! GMSMarker).icon = image
                             if((fromTourString == fromTour.scienceTour) && (selectedScienceTour! == (self.levelThreePositionArray[i] as! String))) {
                                 (self.levelThreeMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: image, scaledToSize: CGSize(width:54, height: 64))
                                 selectedMarker = self.levelThreeMarkerArray[i] as! GMSMarker
@@ -1513,7 +1531,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                     
                 }
                 }
-                
+                if((self.levelThreeMarkerArray[i] as! GMSMarker).icon == nil) {
+                     (self.levelThreeMarkerArray[i] as! GMSMarker).map = nil
+                } else {
+                    self.loadedLevelThreeMarkerArray.add(self.levelThreeMarkerArray[i])
+                }
             } else {
                 (self.levelThreeMarkerArray[i] as! GMSMarker).map = nil
             }
@@ -1524,8 +1546,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     
     //MARK: TourGuide DataBase
     func saveOrUpdateTourGuideCoredata() {
-        //loadingView.stopLoading()
-       // loadingView.isHidden = true
         if (floorMapArray.count > 0) {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 let fetchData = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "tourGuideId" , idValue: tourGuideId ) as! [FloorMapTourGuideEntity]
