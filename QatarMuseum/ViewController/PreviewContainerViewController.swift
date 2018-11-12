@@ -390,7 +390,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         {
             return
         }
-        
+        self.closeAudio()
         if let currentViewController = pageViewController.viewControllers![0] as? PreviewContentViewController {
              let currentPageIndex = currentViewController.pageIndex
             reloaded = true
@@ -464,9 +464,6 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                 pageImageViewFour.image = UIImage(named: "unselected")
                 pageImageViewFive.image = UIImage(named: "unselected")
                 
-                
-                
-                
                 if(currentPageIndex > currentPreviewItem) {
                     remainingCount = tourGuideArray.count - ( currentPageIndex+1)
                     if ((remainingCount < 4) && (remainingCount != 0)) {
@@ -480,8 +477,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                         }
                     }
                     
-                }
-                else  {
+                } else  {
                     remainingCount = tourGuideArray.count - ( currentPageIndex+1)
                     if(remainingCount+2 == 3) {
                         pageImageViewThree.image = UIImage(named: "stripper_inactive_end")
@@ -619,6 +615,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                 pageImageOneWidth.constant = 20
             }
             currentPreviewItem = currentPageIndex
+            currentContentViewController = self.viewControllerAtIndex(index: currentPreviewItem)
         }
        
     }
@@ -628,13 +625,14 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         if ((self.tourGuideArray.count == 0) || (index > self.tourGuideArray.count)){
             return nil
         }
-        self.closeAudio()
+//        self.closeAudio()
         let pageContentViewController = self.storyboard?.instantiateViewController(withIdentifier: "PageContentViewControllerId") as! PreviewContentViewController
         pageContentViewController.pageIndex = index
         pageContentViewController.tourGuideDict = tourGuideArray[index]
-        currentContentViewController = pageContentViewController
+//        currentContentViewController = pageContentViewController
         return pageContentViewController
     }
+    
     func setPageViewVisible() {
         pageViewOne.isHidden = false
         pageViewTwo.isHidden = false
