@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -44,6 +44,11 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1lx-cw-fLc">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="1068"/>
                                                     <subviews>
+                                                        <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="znO-IB-LbI">
+                                                            <rect key="frame" x="187.66666666666666" y="0.0" width="39" height="20"/>
+                                                            <color key="pageIndicatorTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <color key="currentPageIndicatorTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </pageControl>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J58-nk-sCF">
                                                             <rect key="frame" x="15" y="20" width="384" height="187"/>
                                                             <subviews>
@@ -364,13 +369,16 @@
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.90195196870000005" green="0.90178054569999999" blue="0.89826041459999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
+                                                        <constraint firstItem="J58-nk-sCF" firstAttribute="top" secondItem="znO-IB-LbI" secondAttribute="bottom" id="7vR-Is-JNZ"/>
                                                         <constraint firstItem="J58-nk-sCF" firstAttribute="leading" secondItem="1lx-cw-fLc" secondAttribute="leading" constant="15" id="8FQ-LQ-cy4"/>
                                                         <constraint firstItem="FWa-7w-ZOM" firstAttribute="centerY" secondItem="xbK-Dh-95S" secondAttribute="centerY" id="Bt3-Td-uEg"/>
                                                         <constraint firstAttribute="trailing" secondItem="J58-nk-sCF" secondAttribute="trailing" constant="15" id="DLW-uj-LX0"/>
                                                         <constraint firstItem="DsF-np-ZdL" firstAttribute="leading" secondItem="J58-nk-sCF" secondAttribute="leading" id="Esv-6P-RQx"/>
                                                         <constraint firstItem="Pqb-39-KdR" firstAttribute="width" secondItem="sZg-6G-Zgc" secondAttribute="width" id="GKV-ie-mmE"/>
+                                                        <constraint firstItem="znO-IB-LbI" firstAttribute="top" secondItem="1lx-cw-fLc" secondAttribute="top" id="Ifs-VJ-YAC"/>
                                                         <constraint firstItem="DsF-np-ZdL" firstAttribute="top" secondItem="J58-nk-sCF" secondAttribute="bottom" constant="10" id="KJR-Hw-rGz"/>
                                                         <constraint firstItem="xbK-Dh-95S" firstAttribute="leading" secondItem="1lx-cw-fLc" secondAttribute="leading" id="Lc9-81-sQc"/>
+                                                        <constraint firstItem="znO-IB-LbI" firstAttribute="centerX" secondItem="1lx-cw-fLc" secondAttribute="centerX" id="UpA-FS-f1S"/>
                                                         <constraint firstItem="xbK-Dh-95S" firstAttribute="top" secondItem="DsF-np-ZdL" secondAttribute="bottom" constant="20" id="UrZ-5l-H09"/>
                                                         <constraint firstAttribute="trailing" secondItem="FWa-7w-ZOM" secondAttribute="trailing" id="Whq-84-Ooz"/>
                                                         <constraint firstAttribute="bottom" secondItem="FWa-7w-ZOM" secondAttribute="bottom" constant="20" id="dWO-bE-2Fm"/>
@@ -413,6 +421,7 @@
                                             <outlet property="middleTitleLabel" destination="XMg-AW-idH" id="tOB-PF-vSJ"/>
                                             <outlet property="openingTimeLine" destination="cNV-Hg-bLd" id="vZE-Jz-AnQ"/>
                                             <outlet property="openingTimeTitleLabel" destination="y91-ye-xUv" id="x1o-QV-vML"/>
+                                            <outlet property="pageControl" destination="znO-IB-LbI" id="PYr-7t-UNg"/>
                                             <outlet property="player" destination="Zcw-oW-sUO" id="DTA-Il-czC"/>
                                             <outlet property="shareButton" destination="sZg-6G-Zgc" id="Deo-tB-CZa"/>
                                             <outlet property="subTitleLabel" destination="pZP-93-HWM" id="4p3-M1-AZd"/>

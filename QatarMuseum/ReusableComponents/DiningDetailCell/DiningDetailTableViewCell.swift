@@ -21,6 +21,7 @@ class DiningDetailTableViewCell: UITableViewCell,UITextViewDelegate {
     @IBOutlet weak var visitMIAText: UITextView!
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var favoriteBtnViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var pageControl: UIPageControl!
 
     var favBtnTapAction : (()->())?
     var shareBtnTapAction : (()->())?

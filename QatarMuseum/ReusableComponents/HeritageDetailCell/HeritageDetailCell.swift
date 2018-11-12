@@ -37,6 +37,7 @@ class HeritageDetailCell: UITableViewCell {
     @IBOutlet weak var locationTotalBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var favoriteBtnViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var pageControl: UIPageControl!
 
     var favBtnTapAction : (()->())?
     var shareBtnTapAction : (()->())?
@@ -45,6 +46,7 @@ class HeritageDetailCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setUi()
+        pageControl.isHidden = true
        // setPublicArtsDetailCellData()
         //setHeritageDetailCellData()
     }

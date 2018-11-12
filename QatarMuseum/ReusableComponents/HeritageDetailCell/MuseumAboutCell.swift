@@ -42,7 +42,8 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
     @IBOutlet weak var player: VersaPlayer!
     @IBOutlet weak var controls: VersaPlayerControls!
     @IBOutlet weak var videoImageView: UIImageView!
-    
+    @IBOutlet weak var pageControl: UIPageControl!
+
     var imgArray = NSArray()
     var favBtnTapAction : (()->())?
     var shareBtnTapAction : (()->())?
@@ -55,6 +56,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         setUi()
         // setPublicArtsDetailCellData()
         //setHeritageDetailCellData()
+        pageControl.isHidden = true
         imgArray = ["default_imageX2","default_imageX2","default_imageX2","default_imageX2"]
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
         tap.delegate = self // This is not required
