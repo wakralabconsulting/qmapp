@@ -58,6 +58,8 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     var fromScienceTour : Bool = false
     var tourGuideId : String? = nil
     let networkReachability = NetworkReachabilityManager()
+    var currentContentViewController: PreviewContentViewController!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -107,7 +109,8 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
          self.pageViewController.dataSource = self;
         let startingViewController: PreviewContentViewController = self.viewControllerAtIndex(index: 0)!
         let viewControllers = [startingViewController]
-        
+        currentContentViewController = startingViewController
+
         self.pageViewController.setViewControllers(viewControllers, direction: .forward, animated: false, completion: nil)
         
         
@@ -629,7 +632,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         let pageContentViewController = self.storyboard?.instantiateViewController(withIdentifier: "PageContentViewControllerId") as! PreviewContentViewController
         pageContentViewController.pageIndex = index
         pageContentViewController.tourGuideDict = tourGuideArray[index]
-        
+        currentContentViewController = pageContentViewController
         return pageContentViewController
     }
     func setPageViewVisible() {
@@ -673,6 +676,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     }
     //MARK: Header Delegate
     func headerCloseButtonPressed() {
+        self.closeAudio()
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush
@@ -680,6 +684,13 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         self.view.window!.layer.add(transition, forKey: kCATransition)
         self.dismiss(animated: false, completion: nil)
     }
+    
+    func closeAudio() {
+        if (currentContentViewController != nil) {
+            currentContentViewController.stopAudio()
+        }
+    }
+    
     //MARK: WebServiceCall
     func getTourGuideDataFromServer()
     {
@@ -719,6 +730,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         }
     }
     func filterButtonPressed() {
+        self.closeAudio()
         if (tourGuideArray.count != 0) {
             let selectedItem = tourGuideArray[currentPreviewItem]
             if((selectedItem.artifactPosition != nil) && (selectedItem.artifactPosition != "") && (selectedItem.floorLevel != nil) && (selectedItem.floorLevel != "")) {

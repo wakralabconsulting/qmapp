@@ -168,4 +168,12 @@ class PreviewContentViewController: UIViewController, UITableViewDelegate, UITab
             }
         }
     }
+    
+    func stopAudio() {
+        if (selectedCell != nil) {
+            selectedCell?.avPlayer = nil
+            selectedCell?.timer?.invalidate()
+            selectedCell?.closeAudio()
+        }
+    }
 }
