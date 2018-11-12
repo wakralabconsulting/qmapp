@@ -1115,7 +1115,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                     for i in 0 ... tourGuideArray.count-1 {
                         let tourGuideDict = tourGuideArray[i]
                         var imgsArray : [String] = []
-                        let imgInfoArray = (tourGuideDict.imagesRelation?.allObjects) as! [FloorMapImagesEntity]
+                        let imgInfoArray = (tourGuideDict.imagesRelation?.allObjects) as! [FloorMapImagesEntityAr]
                         if(imgInfoArray != nil) {
                             if(imgInfoArray.count > 0) {
                                 for i in 0 ... imgInfoArray.count-1 {
