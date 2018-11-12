@@ -877,9 +877,13 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         marker.groundAnchor = CGPoint(x: 0.5, y: 1.0)
        
         if let arrayOffset = floorMapArray.index(where: {$0.artifactPosition == searchstring}) {
-            marker.icon = self.imageWithImage(image: markerIcon!, scaledToSize: CGSize(width:54, height: 64))
+            if(markerIcon != nil) {
+                marker.icon = self.imageWithImage(image: markerIcon!, scaledToSize: CGSize(width:54, height: 64))
+                selectedMarkerImage = markerIcon!
+            }
+            
             selectedMarker = marker
-            selectedMarkerImage = markerIcon!
+            
             addBottomSheetView(index: arrayOffset)
         }
 
@@ -1375,6 +1379,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                     }
                 }
             }
+                if((self.levelTwoMarkerArray[i] as! GMSMarker).icon == nil) {
+                    //(self.levelTwoMarkerArray[i] as! GMSMarker).icon =  self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:28, height: 33))
+                    (self.levelTwoMarkerArray[i] as! GMSMarker).map = nil
+                }
                 
 
             } else {
@@ -1422,6 +1430,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                     }
                 }
                 }
+                if((self.levelThreeMarkerArray[i] as! GMSMarker).icon == nil) {
+                    //(self.levelThreeMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:28, height: 33))
+                    (self.levelThreeMarkerArray[i] as! GMSMarker).map = nil
+                }
                 
             } else {
                 (self.levelThreeMarkerArray[i] as! GMSMarker).map = nil
@@ -1438,6 +1450,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         
         for i in 0 ... self.levelTwoPositionArray.count-1 {
             if let searchResult = self.floorMapArray.first(where: {$0.artifactPosition! == self.levelTwoPositionArray[i] as! String}) {
+                if(searchResult.floorLevel != "") {
                 if(self.selectedScienceTourLevel == "2") {
                     (self.levelTwoMarkerArray[i] as! GMSMarker).map = self.viewForMap
                 }
@@ -1469,7 +1482,15 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                     }
                 }
                 }
-               
+                    if((self.levelTwoMarkerArray[i] as! GMSMarker).icon == nil) {
+                       // (self.levelTwoMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:28, height: 33))
+                        (self.levelTwoMarkerArray[i] as! GMSMarker).map = nil
+                        
+                    }
+            }
+                else {
+                    (self.levelTwoMarkerArray[i] as! GMSMarker).map = nil
+                }
             } else {
                 (self.levelTwoMarkerArray[i] as! GMSMarker).map = nil
             }
@@ -1513,7 +1534,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                     
                 }
                 }
-                
+                if((self.levelThreeMarkerArray[i] as! GMSMarker).icon == nil) {
+                    //(self.levelThreeMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: UIImage(named: "default_map_marker")!, scaledToSize: CGSize(width:28, height: 33))
+                     (self.levelThreeMarkerArray[i] as! GMSMarker).map = nil
+                    
+                }
             } else {
                 (self.levelThreeMarkerArray[i] as! GMSMarker).map = nil
             }
