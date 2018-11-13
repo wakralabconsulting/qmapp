@@ -6356,8 +6356,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="culturepass_card" translatesAutoresizingMaskIntoConstraints="NO" id="tzN-4n-Pfh">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="culturepass_card" translatesAutoresizingMaskIntoConstraints="NO" id="tzN-4n-Pfh">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xlh-Tg-vPR">
                                 <rect key="frame" x="12" y="40" width="40" height="40"/>
@@ -6414,7 +6414,6 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="83n-4v-2I2" firstAttribute="centerY" secondItem="9WX-Lh-Vin" secondAttribute="centerY" id="0NY-EQ-Z3K"/>
-                            <constraint firstItem="tzN-4n-Pfh" firstAttribute="top" secondItem="6QP-cD-Hgf" secondAttribute="top" constant="20" symbolic="YES" id="3eK-bu-mz1"/>
                             <constraint firstItem="tzN-4n-Pfh" firstAttribute="leading" secondItem="6QP-cD-Hgf" secondAttribute="leading" id="9Qf-pf-fqU"/>
                             <constraint firstItem="dsG-fd-jH2" firstAttribute="leading" secondItem="6QP-cD-Hgf" secondAttribute="leading" constant="20" id="A4d-jU-bHq"/>
                             <constraint firstItem="83n-4v-2I2" firstAttribute="trailing" secondItem="9WX-Lh-Vin" secondAttribute="trailing" constant="-90" id="HGA-7p-Ces"/>
@@ -6425,6 +6424,7 @@
                             <constraint firstItem="xlh-Tg-vPR" firstAttribute="top" secondItem="6QP-cD-Hgf" secondAttribute="top" constant="40" id="kGF-UZ-EBT"/>
                             <constraint firstAttribute="trailing" secondItem="dsG-fd-jH2" secondAttribute="trailing" constant="20" id="l6O-Az-HEa"/>
                             <constraint firstItem="xlh-Tg-vPR" firstAttribute="leading" secondItem="6QP-cD-Hgf" secondAttribute="leading" constant="12" id="p1G-nJ-WAC"/>
+                            <constraint firstItem="tzN-4n-Pfh" firstAttribute="top" secondItem="6QP-cD-Hgf" secondAttribute="top" id="qyb-OJ-1a9"/>
                             <constraint firstItem="9WX-Lh-Vin" firstAttribute="centerY" secondItem="6QP-cD-Hgf" secondAttribute="centerY" id="udN-pu-ygr"/>
                         </constraints>
                     </view>
