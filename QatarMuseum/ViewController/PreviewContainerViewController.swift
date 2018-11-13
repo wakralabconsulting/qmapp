@@ -350,10 +350,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         if ((index == 0) || (index == NSNotFound)) {
             return nil
         }
-        currentContentViewController = self.viewControllerAtIndex(index: index!)
-        self.closeAudio()
         index = index! - 1
-        currentContentViewController = self.viewControllerAtIndex(index: index!)
 
         return self.viewControllerAtIndex(index: index!)
     }
@@ -363,15 +360,11 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         if (index == NSNotFound) {
             return nil
         }
-        currentContentViewController = self.viewControllerAtIndex(index: index!)
-        self.closeAudio()
         index = index! + 1
         
         if (index == self.tourGuideArray.count) {
             return nil
         }
-        currentContentViewController = self.viewControllerAtIndex(index: index!)
-
         return self.viewControllerAtIndex(index: index!)
     }
     
@@ -604,11 +597,9 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         if ((self.tourGuideArray.count == 0) || (index > self.tourGuideArray.count)){
             return nil
         }
-        self.closeAudio()
         let pageContentViewController = self.storyboard?.instantiateViewController(withIdentifier: "PageContentViewControllerId") as! PreviewContentViewController
         pageContentViewController.pageIndex = index
         pageContentViewController.tourGuideDict = tourGuideArray[index]
-//        currentContentViewController = pageContentViewController
         return pageContentViewController
     }
     
