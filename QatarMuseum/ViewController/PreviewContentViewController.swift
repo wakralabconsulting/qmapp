@@ -33,6 +33,11 @@ class PreviewContentViewController: UIViewController, UITableViewDelegate, UITab
         setPreviewData()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+        self.stopAudio()
+    }
+    
     func setPreviewData() {
         let tourGuideData = tourGuideDict
         var galleryNumber: String = " "
@@ -43,7 +48,7 @@ class PreviewContentViewController: UIViewController, UITableViewDelegate, UITab
         if tourGuideData?.galleyNumber != nil  {
             floorLevel = (tourGuideData?.floorLevel?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&#039;", with: "", options: .regularExpression, range: nil))!
         }
-        accessNumberLabel.text =  NSLocalizedString("FLOOR", comment: "FLOOR text in the preview page") + " " + floorLevel + ", " + NSLocalizedString("GALLERY", comment: "GALLERY text in the preview page") + " " + galleryNumber
+        accessNumberLabel.text = NSLocalizedString("FLOOR", comment: "FLOOR text in the preview page") + " " + floorLevel + ", " + NSLocalizedString("GALLERY", comment: "GALLERY text in the preview page") + " " + galleryNumber
         accessNumberLabel.font = UIFont.sideMenuLabelFont
         if(UIScreen.main.bounds.height <= 568) {
             accessNumberLabel.font = UIFont.exhibitionDateLabelFont
@@ -166,6 +171,17 @@ class PreviewContentViewController: UIViewController, UITableViewDelegate, UITab
                 }
                 firstLoad = false
             }
+        }
+    }
+    
+    func stopAudio() {
+        if (selectedCell != nil) {
+            selectedCell?.playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
+            selectedCell?.playerSlider.value = 0
+            selectedCell?.avPlayer = nil
+            selectedCell?.timer?.invalidate()
+            selectedCell?.closeAudio()
+            firstLoad = true
         }
     }
 }
