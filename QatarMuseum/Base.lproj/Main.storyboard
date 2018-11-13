@@ -4491,7 +4491,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.90196078430000004" green="0.90178054569999999" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <outlet property="accessNumberLabel" destination="5Nt-9N-3V0" id="iPj-mN-mXI"/>
+                                            <outlet property="accessNumberLabel" destination="5Nt-9N-3V0" id="yTR-lH-n1F"/>
                                             <outlet property="bottomPadding" destination="pWK-RJ-SKf" id="aa9-j3-D5g"/>
                                             <outlet property="centerImageView" destination="AGn-Ug-XhB" id="tbk-Ge-Xx4"/>
                                             <outlet property="descriptionLabel" destination="4kc-O3-PLp" id="6hT-C0-lWW"/>
@@ -5047,7 +5047,7 @@
                                                 </tableViewCellContentView>
                                                 <color key="backgroundColor" red="0.90196078430000004" green="0.90178054569999999" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <connections>
-                                                    <outlet property="accessNumberLabel" destination="50M-sO-bAc" id="Odu-a2-GXe"/>
+                                                    <outlet property="accessNumberLabel" destination="50M-sO-bAc" id="LXA-Cc-JE0"/>
                                                     <outlet property="bottomPadding" destination="KTd-Xw-HMs" id="Zl5-1d-0aD"/>
                                                     <outlet property="centerImageView" destination="RZO-9I-QyZ" id="hRV-3m-lIO"/>
                                                     <outlet property="descriptionLabel" destination="dUr-4I-tLY" id="FFM-uh-RJc"/>

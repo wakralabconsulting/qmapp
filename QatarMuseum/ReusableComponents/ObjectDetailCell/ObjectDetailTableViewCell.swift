@@ -196,12 +196,15 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
 //            self.playList = "http://www.qm.org.qa/sites/default/files/floors.mp3"
 //            self.avPlayer = AVPlayer(playerItem: AVPlayerItem(url: URL(string: playList)!))
 //        }
-                let seconds : Int64 = Int64(sender.value)
-                let targetTime:CMTime = CMTimeMake(seconds, 1)
-                avPlayer!.seek(to: targetTime)
-                if(isPaused == false){
-                    seekLoadingLabel.alpha = 1
-                }
+        if(firstLoad) {
+            self.avPlayer = AVPlayer(playerItem: AVPlayerItem(url: URL(string: playList)!))
+        }
+        let seconds : Int64 = Int64(sender.value)
+        let targetTime:CMTime = CMTimeMake(seconds, 1)
+        avPlayer!.seek(to: targetTime)
+        if(isPaused == false){
+            seekLoadingLabel.alpha = 1
+        }
     }
     //    @IBAction func sliderTapped(_ sender: UILongPressGestureRecognizer) {
     //        if let slider = sender.view as? UISlider {
