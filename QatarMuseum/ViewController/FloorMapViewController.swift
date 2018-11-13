@@ -210,11 +210,14 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     var objectPopupView : ObjectPopupView = ObjectPopupView()
     var level : levelNumber?
     var zoomValue = Float()
-   
     var fromTourString : fromTour?
+    let playLists = ["http://www.qm.org.qa/sites/default/files/floors.mp3",
+                    "http://www.qm.org.qa/sites/default/files/floor2.mp3",
+                    "http://www.qm.org.qa/sites/default/files/floor3.mp3"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         viewForMap.delegate = self
         loadMap()
         initialSetUp()
@@ -261,6 +264,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         if (fromTourString == fromTour.scienceTour) {
             
             if (selectedScienceTourLevel == "1"){
+                self.playList = self.playLists[0]
                 playButton.isHidden = false
                 playerSlider.isHidden = false
             }
@@ -268,18 +272,18 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                 firstLevelView.backgroundColor = UIColor.mapLevelColor
                 secondLevelView.backgroundColor = UIColor.white
                 thirdLevelView.backgroundColor = UIColor.mapLevelColor
-                
-                playButton.isHidden = true
-                playerSlider.isHidden = true
+                self.playList = self.playLists[1]
+                playButton.isHidden = false
+                playerSlider.isHidden = false
             } else {
                 firstLevelView.backgroundColor = UIColor.mapLevelColor
                 secondLevelView.backgroundColor = UIColor.mapLevelColor
                 thirdLevelView.backgroundColor = UIColor.white
-                
-                playButton.isHidden = true
-                playerSlider.isHidden = true
+                self.playList = self.playLists[2]
+                playButton.isHidden = false
+                playerSlider.isHidden = false
             }
-                playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
+            playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
             headerView.headerBackButton.isHidden = false
             headerView.settingsButton.isHidden = true
             
@@ -296,6 +300,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             if (selectedScienceTourLevel == "1"){
                 playButton.isHidden = false
                 playerSlider.isHidden = false
+                self.playList = self.playLists[0]
+
                 firstLevelView.backgroundColor = UIColor.white
                 secondLevelView.backgroundColor = UIColor.mapLevelColor
                 thirdLevelView.backgroundColor = UIColor.mapLevelColor
@@ -304,16 +310,18 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
                 firstLevelView.backgroundColor = UIColor.mapLevelColor
                 secondLevelView.backgroundColor = UIColor.white
                 thirdLevelView.backgroundColor = UIColor.mapLevelColor
-                
-                playButton.isHidden = true
-                playerSlider.isHidden = true
+                self.playList = self.playLists[1]
+
+                playButton.isHidden = false
+                playerSlider.isHidden = false
             } else {
                 firstLevelView.backgroundColor = UIColor.mapLevelColor
                 secondLevelView.backgroundColor = UIColor.mapLevelColor
                 thirdLevelView.backgroundColor = UIColor.white
-                
-                playButton.isHidden = true
-                playerSlider.isHidden = true
+                self.playList = self.playLists[2]
+
+                playButton.isHidden = false
+                playerSlider.isHidden = false
             }
             
             headerView.headerBackButton.isHidden = false
@@ -326,11 +334,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             headerView.headerBackButton.isHidden = false
             playButton.isHidden = false
             playerSlider.isHidden = false
-            
+            self.playList = self.playLists[0]
         }
-            
-           
-                playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
+            playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
 
             
             levelTwoPositionArray = ["l2_g1_sc2","l2_g1_sc7","l2_g1_sc8","l2_g1_sc13","l2_g1_sc14","l2_g2_2","l2_g3_sc14_1","l2_g3_sc14_2","l2_g3_wr4","l2_g4_sc5","l2_g3_sc3","l2_g5_sc5","l2_g5_sc11","l2_g7_sc13","l2_g7_sc8","l2_g7_sc4","l2_g1_sc3","l2_g8_sc1","l2_g8_sc5","l2_g9_sc7"]
@@ -754,11 +760,13 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     //MARK: Floor Levels
     @IBAction func didTapThirdLevel(_ sender: UIButton) {
         if(level != levelNumber.three) {
+            self.closeAudio()
             self.loadingView.isHidden = false
             self.loadingView.showLoading()
             self.stopLoadingView(delayInSeconds: 0.3)
-            playButton.isHidden = true
-            playerSlider.isHidden = true
+            self.playList = self.playLists[2]
+            playButton.isHidden = false
+            playerSlider.isHidden = false
             level = levelNumber.three
             firstLevelView.backgroundColor = UIColor.mapLevelColor
             secondLevelView.backgroundColor = UIColor.mapLevelColor
@@ -794,18 +802,20 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     
     @IBAction func didtapSecondbutton(_ sender: UIButton) {
        if(level != levelNumber.two) {
+        self.closeAudio()
         self.loadingView.isHidden = false
         self.loadingView.showLoading()
         self.stopLoadingView(delayInSeconds: 0.3)
-            playButton.isHidden = true
-            playerSlider.isHidden = true
-            level = levelNumber.two
-            firstLevelView.backgroundColor = UIColor.mapLevelColor
-            secondLevelView.backgroundColor = UIColor.white
-            thirdLevelView.backgroundColor = UIColor.mapLevelColor
-            overlay.icon = UIImage(named: "qm_level_2")
-        
-            removeMarkers()
+        self.playList = self.playLists[1]
+        playButton.isHidden = false
+        playerSlider.isHidden = false
+        level = levelNumber.two
+        firstLevelView.backgroundColor = UIColor.mapLevelColor
+        secondLevelView.backgroundColor = UIColor.white
+        thirdLevelView.backgroundColor = UIColor.mapLevelColor
+        overlay.icon = UIImage(named: "qm_level_2")
+    
+        removeMarkers()
             //if (zoomValue > 18)  {
                 
                 if((fromTourString == fromTour.HighlightTour) || (fromTourString == fromTour.exploreTour)) {
@@ -833,8 +843,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     
     @IBAction func didTapFirstButton(_ sender: UIButton) {
         if(level != levelNumber.one) {
+            self.closeAudio()
             playButton.isHidden = false
             playerSlider.isHidden = false
+            self.playList = self.playLists[0]
             level = levelNumber.one
             firstLevelView.backgroundColor = UIColor.white
             secondLevelView.backgroundColor = UIColor.mapLevelColor
@@ -1203,10 +1215,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         avPlayer!.volume = 1.0
         avPlayer.play()
     }
+    
     @IBAction func playButtonClicked(_ sender: UIButton) {
         if (firstLoad == true) {
             playButton.setImage(UIImage(named:"pause_blackX1"), for: .normal)
-            self.playList = "http://www.qm.org.qa/sites/default/files/floors.mp3"
             self.play(url: URL(string:self.playList)!)
             self.setupTimer()
             self.isPaused = false
@@ -1214,7 +1226,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             self.togglePlayPause()
         }
         firstLoad = false
-        
     }
     
     func togglePlayPause() {
@@ -1240,9 +1251,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
             }
         }
     }
+    
     @IBAction func sliderValueChange(_ sender: UISlider) {
         if(firstLoad) {
-            self.playList = "http://www.qm.org.qa/sites/default/files/floors.mp3"
             self.avPlayer = AVPlayer(playerItem: AVPlayerItem(url: URL(string: playList)!))
         }
         let seconds : Int64 = Int64(sender.value)
@@ -1303,6 +1314,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         return String(format: "%02d:%02d:%02d", hours,minutes,seconds)
     }
     
+    func closeAudio() {
+        self.avPlayer = nil
+        self.timer?.invalidate()
+        self.firstLoad = true
+    }
+    
     @IBAction func backButtonClicked(_ sender: Any) {
         self.dismiss(animated: true) {
             self.avPlayer = nil
@@ -1311,8 +1328,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     
     //MARK: WebServiceCall
-    func getFloorMapDataFromServer()
-    {
+    func getFloorMapDataFromServer() {
          let queue = DispatchQueue(label: "", qos: .background, attributes: .concurrent)
         _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": tourGuideId!])).responseObject(queue: queue) { (response: DataResponse<TourGuideFloorMaps>) -> Void in
             switch response.result {

@@ -64,9 +64,8 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         super.viewDidLoad()
         
         loadUI()
-        
-        
     }
+    
     func loadUI() {
         loadingView.isHidden = false
         loadingView.showLoading()
@@ -86,14 +85,11 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                 tourGuideId = "12916"
             }
         }
-        if  (networkReachability?.isReachable)! {
+        if (networkReachability?.isReachable)! {
             getTourGuideDataFromServer()
-        }  else {
+        } else {
             fetchTourGuideFromCoredata()
         }
-        
-        
-        
         
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
@@ -102,6 +98,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         }
         headerView.headerViewDelegate = self
     }
+    
     func setUpPageControl() {
        
         pageViewController = storyboard?.instantiateViewController(withIdentifier: "PageViewControllerId") as! UIPageViewController
@@ -164,7 +161,6 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
             pageImageViewThree.isHidden = true
             pageImageViewFour.isHidden = true
             pageImageViewFive.isHidden = true
-            
             
             viewOneLineOne.isHidden = false
             if(scrolling)! {
@@ -348,40 +344,37 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         }
         viewOneLineOne.isHidden = true
     }
+    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        
-        
         var index: Int? = (viewController as? PreviewContentViewController)?.pageIndex
         if ((index == 0) || (index == NSNotFound)) {
             return nil
         }
+        currentContentViewController = self.viewControllerAtIndex(index: index!)
+        self.closeAudio()
         index = index! - 1
-      
-        
-        
-        
+        currentContentViewController = self.viewControllerAtIndex(index: index!)
+
         return self.viewControllerAtIndex(index: index!)
     }
+    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        
-        
-        
         var index: Int? = (viewController as? PreviewContentViewController)?.pageIndex
         if (index == NSNotFound) {
             return nil
         }
+        currentContentViewController = self.viewControllerAtIndex(index: index!)
+        self.closeAudio()
         index = index! + 1
         
         if (index == self.tourGuideArray.count) {
             return nil
         }
-        
-        
-        
-        
-        
+        currentContentViewController = self.viewControllerAtIndex(index: index!)
+
         return self.viewControllerAtIndex(index: index!)
     }
+    
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool)
     {
         loadingView.stopLoading()
@@ -390,6 +383,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         {
             return
         }
+        currentContentViewController = self.viewControllerAtIndex(index: currentPreviewItem)
         self.closeAudio()
         if let currentViewController = pageViewController.viewControllers![0] as? PreviewContentViewController {
              let currentPageIndex = currentViewController.pageIndex
@@ -421,9 +415,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                             pageImageViewFive.image = UIImage(named: "stripper_inactive_end")
                         }
                     }
-                    
-                }
-                else  {
+                } else  {
                     //remainingCount = pageCount! - ( indexPath.row+1)
                     if(remainingCount+1 == 2) {
                         pageImageViewTwo.image = UIImage(named: "stripper_inactive_end")
@@ -450,13 +442,8 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                     viewOneLineOne.isHidden = false
                     pageImageOneHeight.constant = 20
                     pageImageOneWidth.constant = 20
-                    
                 }
-                
-                
             } else if(currentPageIndex%5 == 1) {
-                
-                
                 pageImageTwoHeight.constant = 20
                 pageImageTwoWidth.constant = 20
                 pageImageViewTwo.image = UIImage(named: "selectedControl")
@@ -476,8 +463,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                             pageImageViewFive.image = UIImage(named: "stripper_inactive_end")
                         }
                     }
-                    
-                } else  {
+                } else {
                     remainingCount = tourGuideArray.count - ( currentPageIndex+1)
                     if(remainingCount+2 == 3) {
                         pageImageViewThree.image = UIImage(named: "stripper_inactive_end")
@@ -513,10 +499,6 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                 pageImageViewThree.image = UIImage(named: "selectedControl")
                 pageImageViewFour.image = UIImage(named: "unselected")
                 pageImageViewFive.image = UIImage(named: "unselected")
-                
-                
-                
-                
                 if(currentPageIndex > currentPreviewItem) {
                     remainingCount = tourGuideArray.count - ( currentPageIndex+1)
                     if ((remainingCount < 3) && (remainingCount != 0)) {
@@ -527,9 +509,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                             pageImageViewFive.image = UIImage(named: "stripper_inactive_end")
                         }
                     }
-                    
-                }
-                else  {
+                } else  {
                     remainingCount = tourGuideArray.count - ( currentPageIndex+1)
                     if(remainingCount+3 == 4) {
                         pageImageViewFour.image = UIImage(named: "stripper_inactive_end")
@@ -621,11 +601,10 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     }
    
     func viewControllerAtIndex(index : Int) -> PreviewContentViewController? {
-        
         if ((self.tourGuideArray.count == 0) || (index > self.tourGuideArray.count)){
             return nil
         }
-//        self.closeAudio()
+        self.closeAudio()
         let pageContentViewController = self.storyboard?.instantiateViewController(withIdentifier: "PageContentViewControllerId") as! PreviewContentViewController
         pageContentViewController.pageIndex = index
         pageContentViewController.tourGuideDict = tourGuideArray[index]
