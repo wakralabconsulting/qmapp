@@ -43,7 +43,11 @@ class HomeCollectionViewCell: UICollectionViewCell {
         homeTitleLabel.font = UIFont.homeTitleFont
         homeTitleLabel.text = homeCellData.title
         tourGuideImage.isHidden = false
-        
+        if (homeCellData.nid == "12216") || (homeCellData.nid == "12226") {
+            tourGuideImage.isHidden = true
+        } else {
+            tourGuideImage.isHidden = false
+        }
         if let multimedia = homeCellData.multimediaFile{
             if (multimedia.count > 0) {
                 if (homeCellData.multimediaFile![0] != nil) {
