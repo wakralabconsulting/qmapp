@@ -1315,6 +1315,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     }
     
     func closeAudio() {
+        playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
+        playerSlider.value = 0
         self.avPlayer = nil
         self.timer?.invalidate()
         self.firstLoad = true

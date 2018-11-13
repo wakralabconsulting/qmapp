@@ -33,6 +33,11 @@ class PreviewContentViewController: UIViewController, UITableViewDelegate, UITab
         setPreviewData()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+        self.stopAudio()
+    }
+    
     func setPreviewData() {
         let tourGuideData = tourGuideDict
         var galleryNumber: String = " "
