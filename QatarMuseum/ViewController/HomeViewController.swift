@@ -39,11 +39,23 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     var homeDBArray:[HomeEntity]?
     var homeDBArrayArabic:[HomeEntityArabic]?
     var apnDelegate : APNProtocol?
+    
+    var headerView:QMStickyView!
+    var headerHeightConstraint:NSLayoutConstraint!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        let acceptOrDeclineString = (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String)
+       if(acceptOrDeclineString == "1") {
+        setUpHeader()
+            
+        } else if(acceptOrDeclineString == "0") {
+        
+        }
+        
         registerNib()
+        
         setUpUI()
         
         if (networkReachability?.isReachable)! {
@@ -55,6 +67,44 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         NotificationCenter.default.addObserver(self, selector: #selector(self.receivedNotification(notification:)), name: NSNotification.Name("NotificationIdentifier"), object: nil)
     }
     
+    func setUpHeader() {
+        headerView = QMStickyView(frame: CGRect.zero, title: "NMOQ")
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        headerView.addGestureRecognizer(tap)
+        headerView.isUserInteractionEnabled = true
+        homeCollectionView.addSubview(headerView)
+        
+        headerHeightConstraint = headerView.heightAnchor.constraint(equalToConstant: 80)
+        headerHeightConstraint.isActive = true
+        
+        let constraints:[NSLayoutConstraint] = [
+            headerView.topAnchor.constraint(equalTo: topbarView.bottomAnchor),
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ]
+        NSLayoutConstraint.activate(constraints)
+        
+    }
+    
+    // function which is triggered when handleTap is called
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        // handling code
+        
+        let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
+
+        let heritageDtlView = detailStoryboard.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
+        heritageDtlView.pageNameString = PageName2.museumAbout
+        
+        let transition = CATransition()
+        transition.duration = 0.25
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        
+        self.present(heritageDtlView, animated: false, completion: nil)
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
     }
@@ -119,6 +169,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         return cell
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
@@ -149,6 +200,20 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let heightValue = UIScreen.main.bounds.height/100
         return CGSize(width: homeCollectionView.frame.width, height: heightValue*27)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        //top, left, bottom, right
+        
+        let acceptOrDeclineString = (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String)
+        if(acceptOrDeclineString == "1") {
+            return UIEdgeInsets(top: 80, left: 0, bottom: 0, right: 0)
+            
+        } else if(acceptOrDeclineString == "0") {
+            
+        }
+        
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     
     func loadMuseumsPage(curretRow:Int) {
@@ -716,5 +781,44 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             self.getHomeList()
         }
     }
+    
+//    func animateHeader() {
+//        self.headerHeightConstraint.constant = 150
+//        UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [], animations: {
+//            self.view.layoutIfNeeded()
+//        }, completion: nil)
+//    }
 
 }
+
+//extension HomeViewController:UIScrollViewDelegate {
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if scrollView.contentOffset.y < 0 {
+//            self.headerHeightConstraint.constant += abs(scrollView.contentOffset.y)
+//            headerView.incrementColorAlpha(offset: self.headerHeightConstraint.constant)
+//            headerView.incrementArticleAlpha(offset: self.headerHeightConstraint.constant)
+//        } else if scrollView.contentOffset.y > 0 && self.headerHeightConstraint.constant >= 65 {
+//            self.headerHeightConstraint.constant -= scrollView.contentOffset.y/100
+//            headerView.decrementColorAlpha(offset: scrollView.contentOffset.y)
+//            headerView.decrementArticleAlpha(offset: self.headerHeightConstraint.constant)
+//
+//            if self.headerHeightConstraint.constant < 65 {
+//                self.headerHeightConstraint.constant = 65
+//            }
+//        }
+//    }
+//
+//    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//        if self.headerHeightConstraint.constant > 150 {
+//            animateHeader()
+//        }
+//    }
+//
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        if self.headerHeightConstraint.constant > 150 {
+//            animateHeader()
+//        }
+//    }
+//}
+
+
