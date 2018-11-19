@@ -280,4 +280,18 @@ enum QatarMuseumRouter: URLRequestConvertible {
     public func lang() -> String {
         return LocalizationLanguage.currentAppleLanguage()
     }
+    
+    func stopAllRequests(){
+        if #available(iOS 9.0, *) {
+            Alamofire.SessionManager.default.session.getAllTasks { (tasks) in
+                tasks.forEach{ $0.cancel() }
+            }
+        } else {
+            Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { (sessionDataTask, uploadData, downloadData) in
+                sessionDataTask.forEach { $0.cancel() }
+                uploadData.forEach { $0.cancel() }
+                downloadData.forEach { $0.cancel() }
+            }
+        }
+    }
 }

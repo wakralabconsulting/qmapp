@@ -8,10 +8,7 @@
 
 import UIKit
 
-class RegistrationViewController: UIViewController,HeaderViewProtocol,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate {
-    
-    
-
+class RegistrationViewController: UIViewController, HeaderViewProtocol, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var mainTitleLabel: UILabel!
@@ -48,9 +45,9 @@ class RegistrationViewController: UIViewController,HeaderViewProtocol,UIPickerVi
     @IBOutlet weak var mobileNumberText: UITextField!
     @IBOutlet weak var createAccountButton: UIButton!
     @IBOutlet var pickerToolBar: UIView!
-    
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var contentView: UIView!
+    
     var picker = UIPickerView()
     var titleArray = NSArray()
     var countryArray = NSArray()
@@ -61,11 +58,12 @@ class RegistrationViewController: UIViewController,HeaderViewProtocol,UIPickerVi
     var selectedTitle = String()
     var selectedCountry = String()
     var selectedNationality = String()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUi()
-       
     }
+    
     func setUpUi() {
         headerView.headerViewDelegate = self
         headerView.headerBackButton.setImage(UIImage(named: "closeX1"), for: .normal)
@@ -117,8 +115,6 @@ class RegistrationViewController: UIViewController,HeaderViewProtocol,UIPickerVi
         countryText.placeholder = placeholderSelectValue
         nationalityText.placeholder = placeholderSelectValue
         
-       
-        
         userNameView.layer.borderWidth = 1
         userNameView.layer.borderColor = UIColor.lightGray.cgColor
         emailView.layer.borderWidth = 1
@@ -156,6 +152,7 @@ class RegistrationViewController: UIViewController,HeaderViewProtocol,UIPickerVi
         mobileNumberText.delegate = self
         addPickerView()
     }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -173,12 +170,15 @@ class RegistrationViewController: UIViewController,HeaderViewProtocol,UIPickerVi
     
     @IBAction func createAccountTouchDown(_ sender: UIButton) {
     }
+    
     @IBAction func didTapTitleButton(_ sender: UIButton) {
         self.titleText.becomeFirstResponder()
     }
+    
     @IBAction func didTapCountryButton(_ sender: UIButton) {
         self.countryText.becomeFirstResponder()
     }
+    
     @IBAction func didTapNationality(_ sender: UIButton) {
          self.nationalityText.becomeFirstResponder()
     }
@@ -255,6 +255,7 @@ class RegistrationViewController: UIViewController,HeaderViewProtocol,UIPickerVi
         
         return true
     }
+    
     //MARK: PickerView
     func addPickerView() {
         picker.translatesAutoresizingMaskIntoConstraints = false
@@ -270,6 +271,7 @@ class RegistrationViewController: UIViewController,HeaderViewProtocol,UIPickerVi
         nationalityText.inputView = picker
         nationalityText.inputAccessoryView = pickerToolBar
     }
+    
     //MARK: Pickerview delegates
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -339,10 +341,12 @@ class RegistrationViewController: UIViewController,HeaderViewProtocol,UIPickerVi
         countryText.resignFirstResponder()
         nationalityText.resignFirstResponder()
     }
+    
     //MARK: Header delegate
     func headerCloseButtonPressed() {
         self.dismiss(animated: false, completion: nil)
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
