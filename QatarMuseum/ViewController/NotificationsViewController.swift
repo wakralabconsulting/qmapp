@@ -111,53 +111,64 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
     //    //MARK: Coredata Method
     func saveOrUpdateNotificationsCoredata() {
         if (notificationArray.count > 0) {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-                let fetchData = checkAddedToCoredata(entityName: "NotificationsEntity", idKey: "sortId", idValue: nil) as! [NotificationsEntity]
-                let managedContext = getContext()
-                if (fetchData.count > 0) {
-                    for i in 0 ... notificationArray.count-1 {
-                        let notificationDict = notificationArray[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "NotificationsEntity", idKey: "sortId", idValue: nil) as! [NotificationsEntity]
-                        if(fetchResult.count > 0) {
-                            let isDeleted = self.deleteExistingNotification(managedContext: managedContext, entityName: "NotificationsEntity")
-                            if(isDeleted == true) {
-                                self.saveToCoreData(notificationsDict: notificationDict, managedObjContext: managedContext)
-                            }
-                        } else {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.coreDataInBackgroundThread(managedContext: managedContext)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.coreDataInBackgroundThread(managedContext : managedContext)
+                }
+            }
+        }
+    }
+    
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            let fetchData = checkAddedToCoredata(entityName: "NotificationsEntity", idKey: "sortId", idValue: nil, managedContext: managedContext) as! [NotificationsEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... notificationArray.count-1 {
+                    let notificationDict = notificationArray[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "NotificationsEntity", idKey: "sortId", idValue: nil, managedContext: managedContext) as! [NotificationsEntity]
+                    if(fetchResult.count > 0) {
+                        let isDeleted = self.deleteExistingNotification(managedContext: managedContext, entityName: "NotificationsEntity")
+                        if(isDeleted == true) {
                             self.saveToCoreData(notificationsDict: notificationDict, managedObjContext: managedContext)
                         }
-                    }
-                } else {
-                    for i in 0 ... notificationArray.count-1 {
-                        let managedContext = getContext()
-                        let notificationDict : Notification?
-                        notificationDict = notificationArray[i]
-                        self.saveToCoreData(notificationsDict: notificationDict!, managedObjContext: managedContext)
+                    } else {
+                        self.saveToCoreData(notificationsDict: notificationDict, managedObjContext: managedContext)
                     }
                 }
             } else {
-                let fetchData = checkAddedToCoredata(entityName: "NotificationsEntityArabic", idKey: "sortId", idValue: nil) as! [NotificationsEntityArabic]
-                let managedContext = getContext()
-                if (fetchData.count > 0) {
-                    for i in 0 ... notificationArray.count-1 {
-                        let notificationDict = notificationArray[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "NotificationsEntityArabic", idKey: "sortId", idValue: nil) as! [NotificationsEntityArabic]
-                        if(fetchResult.count > 0) {
-                            let isDeleted = self.deleteExistingNotification(managedContext: managedContext, entityName: "NotificationsEntityArabic")
-                            if(isDeleted == true) {
-                                self.saveToCoreData(notificationsDict: notificationDict, managedObjContext: managedContext)
-                            }
-                        } else {
+                for i in 0 ... notificationArray.count-1 {
+                    let notificationDict : Notification?
+                    notificationDict = notificationArray[i]
+                    self.saveToCoreData(notificationsDict: notificationDict!, managedObjContext: managedContext)
+                }
+            }
+        } else {
+            let fetchData = checkAddedToCoredata(entityName: "NotificationsEntityArabic", idKey: "sortId", idValue: nil, managedContext: managedContext) as! [NotificationsEntityArabic]
+            if (fetchData.count > 0) {
+                for i in 0 ... notificationArray.count-1 {
+                    let notificationDict = notificationArray[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "NotificationsEntityArabic", idKey: "sortId", idValue: nil, managedContext: managedContext) as! [NotificationsEntityArabic]
+                    if(fetchResult.count > 0) {
+                        let isDeleted = self.deleteExistingNotification(managedContext: managedContext, entityName: "NotificationsEntityArabic")
+                        if(isDeleted == true) {
                             self.saveToCoreData(notificationsDict: notificationDict, managedObjContext: managedContext)
                         }
+                    } else {
+                        self.saveToCoreData(notificationsDict: notificationDict, managedObjContext: managedContext)
                     }
-                } else {
-                    for i in 0 ... notificationArray.count-1 {
-                        let managedContext = getContext()
-                        let notificationsDict : Notification?
-                        notificationsDict = notificationArray[i]
-                        self.saveToCoreData(notificationsDict: notificationsDict!, managedObjContext: managedContext)
-                    }
+                }
+            } else {
+                for i in 0 ... notificationArray.count-1 {
+                    let notificationsDict : Notification?
+                    notificationsDict = notificationArray[i]
+                    self.saveToCoreData(notificationsDict: notificationsDict!, managedObjContext: managedContext)
                 }
             }
         }
@@ -198,10 +209,10 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
     }
     
     func fetchNotificationsFromCoredata() {
+        let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                 var listArray = [NotificationsEntity]()
-                let managedContext = getContext()
                 let notificationsFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "NotificationsEntity")
                 listArray = (try managedContext.fetch(notificationsFetchRequest) as? [NotificationsEntity])!
                 
@@ -224,7 +235,6 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
             }
             else {
                 var listArray = [NotificationsEntityArabic]()
-                let managedContext = getContext()
                 let notificationsFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "NotificationsEntityArabic")
                 listArray = (try managedContext.fetch(notificationsFetchRequest) as? [NotificationsEntityArabic])!
                 if (listArray.count > 0) {
@@ -247,19 +257,8 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-    func getContext() -> NSManagedObjectContext{
-        
-        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
-        if #available(iOS 10.0, *) {
-            return
-                appDelegate!.persistentContainer.viewContext
-        } else {
-            return appDelegate!.managedObjectContext
-        }
-    }
-    func checkAddedToCoredata(entityName: String?,idKey:String?, idValue: String?) -> [NSManagedObject]
-    {
-        let managedContext = getContext()
+    
+    func checkAddedToCoredata(entityName: String?,idKey:String?, idValue: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
         var fetchResults : [NSManagedObject] = []
         let notificationFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
         if (idValue != nil) {

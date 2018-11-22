@@ -264,88 +264,100 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             }
         }
     }
-//    //MARK: Coredata Method
+    //MARK: Coredata Method
     func saveOrUpdateParksCoredata() {
         if (parksListArray.count > 0) {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-                let fetchData = checkAddedToCoredata(entityName: "ParksEntity", parksId: nil) as! [ParksEntity]
-                if (fetchData.count > 0) {
-                    for i in 0 ... parksListArray.count-1 {
-                        let managedContext = getContext()
-                        let parksDict = parksListArray[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "ParksEntity", parksId: nil)
-                        //update
-                        if(fetchResult.count != 0) {
-                            let parksdbDict = fetchResult[0] as! ParksEntity
-                            parksdbDict.title = parksDict.title
-                            parksdbDict.parksDescription = parksDict.description
-                            parksdbDict.sortId =  parksDict.sortId
-                            parksdbDict.image =  parksDict.image
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.coreDataInBackgroundThread(managedContext: managedContext)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.coreDataInBackgroundThread(managedContext : managedContext)
+                }
+            }
+        }
+    }
+    
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            let fetchData = checkAddedToCoredata(entityName: "ParksEntity", parksId: nil, managedContext: managedContext) as! [ParksEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... parksListArray.count-1 {
+                    let parksDict = parksListArray[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "ParksEntity", parksId: nil, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let parksdbDict = fetchResult[0] as! ParksEntity
+                        parksdbDict.title = parksDict.title
+                        parksdbDict.parksDescription = parksDict.description
+                        parksdbDict.sortId =  parksDict.sortId
+                        parksdbDict.image =  parksDict.image
 
-                            do{
-                                try managedContext.save()
-                            }
-                            catch{
-                                print(error)
-                            }
+                        do{
+                            try managedContext.save()
                         }
-                        else {
-                            //save
-                            self.saveToCoreData(parksDict: parksDict, managedObjContext: managedContext)
-
+                        catch{
+                            print(error)
                         }
                     }
-                }
-                else {
-                    for i in 0 ... parksListArray.count-1 {
-                        let managedContext = getContext()
-                        let parksDict : ParksList?
-                        parksDict = parksListArray[i]
-                        self.saveToCoreData(parksDict: parksDict!, managedObjContext: managedContext)
+                    else {
+                        //save
+                        self.saveToCoreData(parksDict: parksDict, managedObjContext: managedContext)
 
                     }
                 }
             }
             else {
-                let fetchData = checkAddedToCoredata(entityName: "ParksEntityArabic", parksId: nil) as! [ParksEntityArabic]
-                if (fetchData.count > 0) {
-                    for i in 0 ... parksListArray.count-1 {
-                        let managedContext = getContext()
-                        let parksDict = parksListArray[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "ParksEntityArabic", parksId: nil)
-                        //update
-                        if(fetchResult.count != 0) {
-                            let parksdbDict = fetchResult[0] as! ParksEntityArabic
-                            parksdbDict.titleArabic = parksDict.title
-                            parksdbDict.descriptionArabic = parksDict.description
-                            parksdbDict.sortIdArabic =  parksDict.sortId
-                            parksdbDict.imageArabic =  parksDict.image
-                            do{
-                                try managedContext.save()
-                            }
-                            catch{
-                                print(error)
-                            }
-                        }
-                        else {
-                            //save
-                            self.saveToCoreData(parksDict: parksDict, managedObjContext: managedContext)
+                for i in 0 ... parksListArray.count-1 {
+                    let parksDict : ParksList?
+                    parksDict = parksListArray[i]
+                    self.saveToCoreData(parksDict: parksDict!, managedObjContext: managedContext)
 
+                }
+            }
+        }
+        else {
+            let fetchData = checkAddedToCoredata(entityName: "ParksEntityArabic", parksId: nil, managedContext: managedContext) as! [ParksEntityArabic]
+            if (fetchData.count > 0) {
+                for i in 0 ... parksListArray.count-1 {
+                    let parksDict = parksListArray[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "ParksEntityArabic", parksId: nil, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let parksdbDict = fetchResult[0] as! ParksEntityArabic
+                        parksdbDict.titleArabic = parksDict.title
+                        parksdbDict.descriptionArabic = parksDict.description
+                        parksdbDict.sortIdArabic =  parksDict.sortId
+                        parksdbDict.imageArabic =  parksDict.image
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
                         }
                     }
-                }
-                else {
-                    for i in 0 ... parksListArray.count-1 {
-                        let managedContext = getContext()
-                        let parksDict : ParksList?
-                        parksDict = parksListArray[i]
-                        self.saveToCoreData(parksDict: parksDict!, managedObjContext: managedContext)
+                    else {
+                        //save
+                        self.saveToCoreData(parksDict: parksDict, managedObjContext: managedContext)
 
                     }
                 }
             }
+            else {
+                for i in 0 ... parksListArray.count-1 {
+                    let parksDict : ParksList?
+                    parksDict = parksListArray[i]
+                    self.saveToCoreData(parksDict: parksDict!, managedObjContext: managedContext)
+
+                }
+            }
         }
     }
+    
     func saveToCoreData(parksDict: ParksList, managedObjContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             let parksInfo: ParksEntity = NSEntityDescription.insertNewObject(forEntityName: "ParksEntity", into: managedObjContext) as! ParksEntity
@@ -373,12 +385,12 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    
     func fetchParksFromCoredata() {
-
+        let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                 var parksArray = [ParksEntity]()
-                let managedContext = getContext()
                 let parksFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ParksEntity")
                 parksArray = (try managedContext.fetch(parksFetchRequest) as? [ParksEntity])!
                 
@@ -399,7 +411,6 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             }
             else {
                 var parksArray = [ParksEntityArabic]()
-                let managedContext = getContext()
                 let parksFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ParksEntityArabic")
                 parksArray = (try managedContext.fetch(parksFetchRequest) as? [ParksEntityArabic])!
                 if (parksArray.count > 0) {
@@ -420,24 +431,14 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-    func getContext() -> NSManagedObjectContext{
 
-        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
-        if #available(iOS 10.0, *) {
-            return
-                appDelegate!.persistentContainer.viewContext
-        } else {
-            return appDelegate!.managedObjectContext
-        }
-    }
-    func checkAddedToCoredata(entityName: String?,parksId: String?) -> [NSManagedObject]
-    {
-        let managedContext = getContext()
+    func checkAddedToCoredata(entityName: String?, parksId: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
         var fetchResults : [NSManagedObject] = []
         let homeFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
         fetchResults = try! managedContext.fetch(homeFetchRequest)
         return fetchResults
     }
+
     func showNodata() {
         var errorMessage: String
         errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",

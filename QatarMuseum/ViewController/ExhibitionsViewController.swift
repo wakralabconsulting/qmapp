@@ -243,82 +243,91 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
     func closeButtonPressed() {
         self.popupView.removeFromSuperview()
     }
+    
     //MARK: Coredata Method
     func saveOrUpdateExhibitionsCoredata() {
         if (exhibition.count > 0) {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-                let fetchData = checkAddedToCoredata(entityName: "ExhibitionsEntity", idKey: "id", idValue: nil) as! [ExhibitionsEntity]
-                if (fetchData.count > 0) {
-                    for i in 0 ... exhibition.count-1 {
-                        let managedContext = getContext()
-                        let exhibitionsListDict = exhibition[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "ExhibitionsEntity", idKey: "id", idValue: exhibition[i].id)
-                        //update
-                        if(fetchResult.count != 0) {
-                            let exhibitionsdbDict = fetchResult[0] as! ExhibitionsEntity
-                            exhibitionsdbDict.name = exhibitionsListDict.name
-                            exhibitionsdbDict.image = exhibitionsListDict.image
-                            exhibitionsdbDict.startDate =  exhibitionsListDict.startDate
-                            exhibitionsdbDict.endDate = exhibitionsListDict.endDate
-                            exhibitionsdbDict.location =  exhibitionsListDict.location
-                            exhibitionsdbDict.museumId = exhibitionsListDict.museumId
-                            
-                            do {
-                                try managedContext.save()
-                            }
-                            catch {
-                                print(error)
-                            }
-                        } else {
-                            //save
-                            self.saveToCoreData(exhibitionDict: exhibitionsListDict, managedObjContext: managedContext)
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.coreDataInBackgroundThread(managedContext: managedContext)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.coreDataInBackgroundThread(managedContext : managedContext)
+                }
+            }
+        }
+    }
+    
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let fetchData = self.checkAddedToCoredata(entityName: "ExhibitionsEntity", idKey: "id", idValue: nil, managedContext: managedContext) as! [ExhibitionsEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... self.exhibition.count-1 {
+                    let exhibitionsListDict = self.exhibition[i]
+                    let fetchResult = self.checkAddedToCoredata(entityName: "ExhibitionsEntity", idKey: "id", idValue: self.exhibition[i].id, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let exhibitionsdbDict = fetchResult[0] as! ExhibitionsEntity
+                        exhibitionsdbDict.name = exhibitionsListDict.name
+                        exhibitionsdbDict.image = exhibitionsListDict.image
+                        exhibitionsdbDict.startDate =  exhibitionsListDict.startDate
+                        exhibitionsdbDict.endDate = exhibitionsListDict.endDate
+                        exhibitionsdbDict.location =  exhibitionsListDict.location
+                        exhibitionsdbDict.museumId = exhibitionsListDict.museumId
+                        do {
+                            try managedContext.save()
                         }
-                    }//for
-                } else {
-                    for i in 0 ... exhibition.count-1 {
-                        let managedContext = getContext()
-                        let exhibitionListDict : Exhibition?
-                        exhibitionListDict = exhibition[i]
-                        self.saveToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext)
+                        catch {
+                            print(error)
+                        }
+                    } else {
+                        //save
+                        self.saveToCoreData(exhibitionDict: exhibitionsListDict, managedObjContext: managedContext)
+                    }
+                }//for
+            } else {
+                for i in 0 ... self.exhibition.count-1 {
+                    let exhibitionListDict : Exhibition?
+                    exhibitionListDict = self.exhibition[i]
+                    self.saveToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext)
+                }
+            }
+        } else {
+            let fetchData = self.checkAddedToCoredata(entityName: "ExhibitionsEntityArabic", idKey: "id", idValue: nil, managedContext: managedContext) as! [ExhibitionsEntityArabic]
+            if (fetchData.count > 0) {
+                for i in 0 ... self.exhibition.count-1 {
+                    let exhibitionListDict = self.exhibition[i]
+                    let fetchResult = self.checkAddedToCoredata(entityName: "ExhibitionsEntityArabic", idKey: "id", idValue: self.exhibition[i].id, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let exhibitiondbDict = fetchResult[0] as! ExhibitionsEntityArabic
+                        exhibitiondbDict.nameArabic = exhibitionListDict.name
+                        exhibitiondbDict.imageArabic = exhibitionListDict.image
+                        exhibitiondbDict.startDateArabic =  exhibitionListDict.startDate
+                        exhibitiondbDict.endDateArabic = exhibitionListDict.endDate
+                        exhibitiondbDict.locationArabic =  exhibitionListDict.location
+                        exhibitiondbDict.museumId =  exhibitionListDict.museumId
+                        
+                        do {
+                            try managedContext.save()
+                        }
+                        catch {
+                            print(error)
+                        }
+                    } else {
+                        //save
+                        self.saveToCoreData(exhibitionDict: exhibitionListDict, managedObjContext: managedContext)
                     }
                 }
             } else {
-                let fetchData = checkAddedToCoredata(entityName: "ExhibitionsEntityArabic", idKey: "id", idValue: nil) as! [ExhibitionsEntityArabic]
-                if (fetchData.count > 0) {
-                    for i in 0 ... exhibition.count-1 {
-                        let managedContext = getContext()
-                        let exhibitionListDict = exhibition[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "ExhibitionsEntityArabic", idKey: "id", idValue: exhibition[i].id)
-                        //update
-                        if(fetchResult.count != 0) {
-                            let exhibitiondbDict = fetchResult[0] as! ExhibitionsEntityArabic
-                            exhibitiondbDict.nameArabic = exhibitionListDict.name
-                            exhibitiondbDict.imageArabic = exhibitionListDict.image
-                            exhibitiondbDict.startDateArabic =  exhibitionListDict.startDate
-                            exhibitiondbDict.endDateArabic = exhibitionListDict.endDate
-                            exhibitiondbDict.locationArabic =  exhibitionListDict.location
-                            exhibitiondbDict.museumId =  exhibitionListDict.museumId
-                            
-                            do {
-                                try managedContext.save()
-                            }
-                            catch {
-                                print(error)
-                            }
-                        } else {
-                            //save
-                            self.saveToCoreData(exhibitionDict: exhibitionListDict, managedObjContext: managedContext)
-                            
-                        }
-                    }
-                } else {
-                    for i in 0 ... exhibition.count-1 {
-                        let managedContext = getContext()
-                        let exhibitionListDict : Exhibition?
-                        exhibitionListDict = exhibition[i]
-                        self.saveToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext)
-                        
-                    }
+                for i in 0 ... self.exhibition.count-1 {
+                    let exhibitionListDict : Exhibition?
+                    exhibitionListDict = self.exhibition[i]
+                    self.saveToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext)
                 }
             }
         }
@@ -335,8 +344,7 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
             exhibitionInfo.endDate = exhibitionDict.endDate
             exhibitionInfo.location =  exhibitionDict.location
             exhibitionInfo.museumId =  exhibitionDict.museumId
-        }
-        else {
+        } else {
             let exhibitionInfo: ExhibitionsEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "ExhibitionsEntityArabic", into: managedObjContext) as! ExhibitionsEntityArabic
             exhibitionInfo.id = exhibitionDict.id
             exhibitionInfo.nameArabic = exhibitionDict.name
@@ -349,17 +357,16 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
         do {
             try managedObjContext.save()
             
-            
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    
     func fetchExhibitionsListFromCoredata() {
-        
+        let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                 var exhibitionArray = [ExhibitionsEntity]()
-                let managedContext = getContext()
                 let exhibitionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ExhibitionsEntity")
                 exhibitionArray = (try managedContext.fetch(exhibitionFetchRequest) as? [ExhibitionsEntity])!
                 if (exhibitionArray.count > 0) {
@@ -371,14 +378,11 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
                         self.showNoNetwork()
                     }
                     exhibitionCollectionView.reloadData()
-                }
-                else{
+                } else {
                     self.showNoNetwork()
                 }
-            }
-            else {
+            } else {
                 var exhibitionArray = [ExhibitionsEntityArabic]()
-                let managedContext = getContext()
                 let exhibitionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ExhibitionsEntityArabic")
                 exhibitionArray = (try managedContext.fetch(exhibitionFetchRequest) as? [ExhibitionsEntityArabic])!
                 if (exhibitionArray.count > 0) {
@@ -391,8 +395,7 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
                         self.showNoNetwork()
                     }
                     exhibitionCollectionView.reloadData()
-                }
-                else{
+                } else {
                     self.showNoNetwork()
                 }
             }
@@ -402,12 +405,12 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
     }
     //MARK: MuseumExhibitionDatabase Fetch
     func fetchMuseumExhibitionsListFromCoredata() {
-        
+        let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var exhibitionArray = [ExhibitionsEntity]()
                 
-                exhibitionArray = checkAddedToCoredata(entityName: "ExhibitionsEntity", idKey: "museumId", idValue: museumId) as! [ExhibitionsEntity]
+                exhibitionArray = checkAddedToCoredata(entityName: "ExhibitionsEntity", idKey: "museumId", idValue: museumId, managedContext: managedContext) as! [ExhibitionsEntity]
                 if (exhibitionArray.count > 0) {
                     for i in 0 ... exhibitionArray.count-1 {
                         self.exhibition.insert(Exhibition(id: exhibitionArray[i].id, name: exhibitionArray[i].name, image: exhibitionArray[i].image,detailImage:nil, startDate: exhibitionArray[i].startDate, endDate: exhibitionArray[i].endDate, location: exhibitionArray[i].location, latitude: nil, longitude: nil, shortDescription: nil, longDescription: nil,museumId :exhibitionArray[i].museumId), at: i)
@@ -417,14 +420,12 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
                         self.showNoNetwork()
                     }
                     exhibitionCollectionView.reloadData()
-                }
-                else{
+                } else{
                     self.showNoNetwork()
                 }
-            }
-            else {
+            } else {
                 var exhibitionArray = [ExhibitionsEntityArabic]()
-                exhibitionArray = checkAddedToCoredata(entityName: "ExhibitionsEntityArabic", idKey: "museumId", idValue: museumId) as! [ExhibitionsEntityArabic]
+                exhibitionArray = checkAddedToCoredata(entityName: "ExhibitionsEntityArabic", idKey: "museumId", idValue: museumId, managedContext: managedContext) as! [ExhibitionsEntityArabic]
                 if (exhibitionArray.count > 0) {
                     for i in 0 ... exhibitionArray.count-1 {
                         
@@ -444,19 +445,8 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-    func getContext() -> NSManagedObjectContext{
-        
-        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
-        if #available(iOS 10.0, *) {
-            return
-                appDelegate!.persistentContainer.viewContext
-        } else {
-            return appDelegate!.managedObjectContext
-        }
-    }
-    func checkAddedToCoredata(entityName: String?,idKey:String?, idValue: String?) -> [NSManagedObject]
-    {
-        let managedContext = getContext()
+    
+    func checkAddedToCoredata(entityName: String?,idKey:String?, idValue: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
         var fetchResults : [NSManagedObject] = []
         let homeFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
         if (idValue != nil) {
@@ -465,6 +455,7 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
         fetchResults = try! managedContext.fetch(homeFetchRequest)
         return fetchResults
     }
+    
     func showNodata() {
         var errorMessage: String
         errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",

@@ -268,77 +268,87 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         }
     }
     
-    //MARK: Heritage Coredata Method
+    //MARK: Coredata Method
     func saveOrUpdateExhibitionsCoredata() {
         if (exhibition.count > 0) {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-                let fetchData = checkAddedToCoredata(entityName: "ExhibitionsEntity", idKey: "id" , idValue: exhibition[0].id) as! [ExhibitionsEntity]
-                if (fetchData.count > 0) {
-                    let managedContext = getContext()
-                    let exhibitionDetailDict = exhibition[0]
-                    
-                    //update
-                    let exhibitiondbDict = fetchData[0]
-                    
-                    exhibitiondbDict.detailName = exhibitionDetailDict.name
-                    exhibitiondbDict.detailImage = exhibitionDetailDict.detailImage
-                    exhibitiondbDict.detailStartDate =  exhibitionDetailDict.startDate
-                    exhibitiondbDict.detailEndDate = exhibitionDetailDict.endDate
-                    exhibitiondbDict.detailShortDesc = exhibitionDetailDict.shortDescription
-                    exhibitiondbDict.detailLongDesc =  exhibitionDetailDict.longDescription
-                    exhibitiondbDict.detailLocation =  exhibitionDetailDict.location
-                    exhibitiondbDict.detailLatitude = exhibitionDetailDict.latitude
-                    exhibitiondbDict.detailLongitude = exhibitionDetailDict.longitude
-                    
-                    do{
-                        try managedContext.save()
-                    }
-                    catch{
-                        print(error)
-                    }
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.coreDataInBackgroundThread(managedContext: managedContext)
                 }
-                else {
-                    let managedContext = getContext()
-                    let exhibitionListDict : Exhibition?
-                    exhibitionListDict = exhibition[0]
-                    self.saveToCoreData(exhibitionDetailDict: exhibitionListDict!, managedObjContext: managedContext)
-                }
-            }
-            else {
-                let fetchData = checkAddedToCoredata(entityName: "ExhibitionsEntityArabic", idKey:"id" , idValue: exhibition[0].id) as! [ExhibitionsEntityArabic]
-                if (fetchData.count > 0) {
-                    let managedContext = getContext()
-                    let exhibitionDetailDict = exhibition[0]
-                    
-                    //update
-                    
-                    let exhibitiondbDict = fetchData[0]
-                    exhibitiondbDict.detailNameAr = exhibitionDetailDict.name
-                    exhibitiondbDict.detailImgeAr = exhibitionDetailDict.detailImage
-                    exhibitiondbDict.detailStartDateAr =  exhibitionDetailDict.startDate
-                    exhibitiondbDict.detailendDateAr = exhibitionDetailDict.endDate
-                    exhibitiondbDict.detailShortDescAr = exhibitionDetailDict.shortDescription
-                    exhibitiondbDict.detailLongDescAr =  exhibitionDetailDict.longDescription
-                    exhibitiondbDict.detailLocationAr =  exhibitionDetailDict.location
-                    exhibitiondbDict.detailLatituedeAr = exhibitionDetailDict.latitude
-                    exhibitiondbDict.detailLongitudeAr = exhibitionDetailDict.longitude
-                    
-                    do{
-                        try managedContext.save()
-                    }
-                    catch{
-                        print(error)
-                    }
-                }
-                else {
-                    let managedContext = getContext()
-                    let exhibitionListDict : Exhibition?
-                    exhibitionListDict = exhibition[0]
-                    self.saveToCoreData(exhibitionDetailDict: exhibitionListDict!, managedObjContext: managedContext)
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.coreDataInBackgroundThread(managedContext : managedContext)
                 }
             }
         }
     }
+    
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "ExhibitionsEntity", idKey: "id" , idValue: exhibition[0].id, managedContext: managedContext) as! [ExhibitionsEntity]
+            if (fetchData.count > 0) {
+                let exhibitionDetailDict = exhibition[0]
+                
+                //update
+                let exhibitiondbDict = fetchData[0]
+                exhibitiondbDict.detailName = exhibitionDetailDict.name
+                exhibitiondbDict.detailImage = exhibitionDetailDict.detailImage
+                exhibitiondbDict.detailStartDate =  exhibitionDetailDict.startDate
+                exhibitiondbDict.detailEndDate = exhibitionDetailDict.endDate
+                exhibitiondbDict.detailShortDesc = exhibitionDetailDict.shortDescription
+                exhibitiondbDict.detailLongDesc =  exhibitionDetailDict.longDescription
+                exhibitiondbDict.detailLocation =  exhibitionDetailDict.location
+                exhibitiondbDict.detailLatitude = exhibitionDetailDict.latitude
+                exhibitiondbDict.detailLongitude = exhibitionDetailDict.longitude
+                
+                do{
+                    try managedContext.save()
+                }
+                catch{
+                    print(error)
+                }
+            }
+            else {
+                let exhibitionListDict : Exhibition?
+                exhibitionListDict = exhibition[0]
+                self.saveToCoreData(exhibitionDetailDict: exhibitionListDict!, managedObjContext: managedContext)
+            }
+        }
+        else {
+            let fetchData = checkAddedToCoredata(entityName: "ExhibitionsEntityArabic", idKey:"id" , idValue: exhibition[0].id, managedContext: managedContext) as! [ExhibitionsEntityArabic]
+            if (fetchData.count > 0) {
+                let exhibitionDetailDict = exhibition[0]
+                
+                //update
+                
+                let exhibitiondbDict = fetchData[0]
+                exhibitiondbDict.detailNameAr = exhibitionDetailDict.name
+                exhibitiondbDict.detailImgeAr = exhibitionDetailDict.detailImage
+                exhibitiondbDict.detailStartDateAr =  exhibitionDetailDict.startDate
+                exhibitiondbDict.detailendDateAr = exhibitionDetailDict.endDate
+                exhibitiondbDict.detailShortDescAr = exhibitionDetailDict.shortDescription
+                exhibitiondbDict.detailLongDescAr =  exhibitionDetailDict.longDescription
+                exhibitiondbDict.detailLocationAr =  exhibitionDetailDict.location
+                exhibitiondbDict.detailLatituedeAr = exhibitionDetailDict.latitude
+                exhibitiondbDict.detailLongitudeAr = exhibitionDetailDict.longitude
+                
+                do{
+                    try managedContext.save()
+                }
+                catch{
+                    print(error)
+                }
+            } else {
+                let exhibitionListDict : Exhibition?
+                exhibitionListDict = exhibition[0]
+                self.saveToCoreData(exhibitionDetailDict: exhibitionListDict!, managedObjContext: managedContext)
+            }
+        }
+    }
+
     func saveToCoreData(exhibitionDetailDict: Exhibition, managedObjContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let exhibitionInfo: ExhibitionsEntity = NSEntityDescription.insertNewObject(forEntityName: "ExhibitionsEntity", into: managedObjContext) as! ExhibitionsEntity
@@ -375,12 +385,12 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+
     func fetchExhibitionDetailsFromCoredata() {
-        
+        let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var exhibitionArray = [ExhibitionsEntity]()
-                let managedContext = getContext()
                 let exhibitionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ExhibitionsEntity")
                 if(exhibitionId != nil) {
                     exhibitionFetchRequest.predicate = NSPredicate.init(format: "id == \(exhibitionId!)")
@@ -403,7 +413,6 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
             }
             else {
                 var exhibitionArray = [ExhibitionsEntityArabic]()
-                let managedContext = getContext()
                 let exhibitionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ExhibitionsEntityArabic")
                 if(exhibitionId != nil) {
                     exhibitionFetchRequest.predicate = NSPredicate.init(format: "id == \(exhibitionId!)")
@@ -429,19 +438,8 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-    func getContext() -> NSManagedObjectContext{
-        
-        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
-        if #available(iOS 10.0, *) {
-            return
-                appDelegate!.persistentContainer.viewContext
-        } else {
-            return appDelegate!.managedObjectContext
-        }
-    }
-    func checkAddedToCoredata(entityName: String?,idKey:String?, idValue: String?) -> [NSManagedObject]
-    {
-        let managedContext = getContext()
+    
+    func checkAddedToCoredata(entityName: String?,idKey:String?, idValue: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
         var fetchResults : [NSManagedObject] = []
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
         if (idValue != nil) {
@@ -450,6 +448,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         fetchResults = try! managedContext.fetch(fetchRequest)
         return fetchResults
     }
+    
     func showNodata() {
         var errorMessage: String
         errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",

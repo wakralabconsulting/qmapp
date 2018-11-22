@@ -123,9 +123,7 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
         }
     }
     //MARK: WebServiceCall
-    func getPublicArtsListDataFromServer()
-    {
-        
+    func getPublicArtsListDataFromServer() {
         _ = Alamofire.request(QatarMuseumRouter.PublicArtsList()).responseObject { (response: DataResponse<PublicArtsLists>) -> Void in
             switch response.result {
             case .success(let data):
@@ -152,91 +150,104 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
             }
         }
     }
+    
     //MARK: Coredata Method
     func saveOrUpdatePublicArtsCoredata() {
         if (publicArtsListArray.count > 0) {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-                let fetchData = checkAddedToCoredata(entityName: "PublicArtsEntity", publicArtsId: nil) as! [PublicArtsEntity]
-                if (fetchData.count > 0) {
-                    for i in 0 ... publicArtsListArray.count-1 {
-                        let managedContext = getContext()
-                        let publicArtsListDict = publicArtsListArray[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "PublicArtsEntity", publicArtsId: publicArtsListArray[i].id)
-                        //update
-                        if(fetchResult.count != 0) {
-                            let publicArtsdbDict = fetchResult[0] as! PublicArtsEntity
-                            
-                            publicArtsdbDict.name = publicArtsListDict.name
-                            publicArtsdbDict.image = publicArtsListDict.image
-                            publicArtsdbDict.latitude =  publicArtsListDict.latitude
-                            publicArtsdbDict.longitude = publicArtsListDict.longitude
-                            publicArtsdbDict.sortcoefficient = publicArtsListDict.sortcoefficient
-                            
-                            do{
-                                try managedContext.save()
-                            }
-                            catch{
-                                print(error)
-                            }
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.coreDataInBackgroundThread(managedContext: managedContext)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.coreDataInBackgroundThread(managedContext : managedContext)
+                }
+            }
+        }
+    }
+    
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            let fetchData = checkAddedToCoredata(entityName: "PublicArtsEntity", publicArtsId: nil, managedContext: managedContext) as! [PublicArtsEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... publicArtsListArray.count-1 {
+                    let publicArtsListDict = publicArtsListArray[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "PublicArtsEntity", publicArtsId: publicArtsListArray[i].id, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let publicArtsdbDict = fetchResult[0] as! PublicArtsEntity
+                        
+                        publicArtsdbDict.name = publicArtsListDict.name
+                        publicArtsdbDict.image = publicArtsListDict.image
+                        publicArtsdbDict.latitude =  publicArtsListDict.latitude
+                        publicArtsdbDict.longitude = publicArtsListDict.longitude
+                        publicArtsdbDict.sortcoefficient = publicArtsListDict.sortcoefficient
+                        
+                        do{
+                            try managedContext.save()
                         }
-                        else {
-                            //save
-                            self.saveToCoreData(publicArtsListDict: publicArtsListDict, managedObjContext: managedContext)
-                            
+                        catch{
+                            print(error)
                         }
                     }
-                }
-                else {
-                    for i in 0 ... publicArtsListArray.count-1 {
-                        let managedContext = getContext()
-                        let publicArtsListDict : PublicArtsList?
-                        publicArtsListDict = publicArtsListArray[i]
-                        self.saveToCoreData(publicArtsListDict: publicArtsListDict!, managedObjContext: managedContext)
+                    else {
+                        //save
+                        self.saveToCoreData(publicArtsListDict: publicArtsListDict, managedObjContext: managedContext)
                         
                     }
                 }
             }
             else {
-                let fetchData = checkAddedToCoredata(entityName: "PublicArtsEntityArabic", publicArtsId: nil) as! [PublicArtsEntityArabic]
-                if (fetchData.count > 0) {
-                    for i in 0 ... publicArtsListArray.count-1 {
-                        let managedContext = getContext()
-                        let publicArtsListDict = publicArtsListArray[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "PublicArtsEntityArabic", publicArtsId: publicArtsListArray[i].id)
-                        //update
-                        if(fetchResult.count != 0) {
-                            let publicArtsdbDict = fetchResult[0] as! PublicArtsEntityArabic
-                            publicArtsdbDict.namearabic = publicArtsListDict.name
-                            publicArtsdbDict.imagearabic = publicArtsListDict.image
-                            publicArtsdbDict.latitudearabic =  publicArtsListDict.latitude
-                            publicArtsdbDict.longitudearabic = publicArtsListDict.longitude
-                            publicArtsdbDict.sortcoefficientarabic = publicArtsListDict.sortcoefficient
-                            do{
-                                try managedContext.save()
-                            }
-                            catch{
-                                print(error)
-                            }
+                for i in 0 ... publicArtsListArray.count-1 {
+                    let publicArtsListDict : PublicArtsList?
+                    publicArtsListDict = publicArtsListArray[i]
+                    self.saveToCoreData(publicArtsListDict: publicArtsListDict!, managedObjContext: managedContext)
+                    
+                }
+            }
+        }
+        else {
+            let fetchData = checkAddedToCoredata(entityName: "PublicArtsEntityArabic", publicArtsId: nil, managedContext: managedContext) as! [PublicArtsEntityArabic]
+            if (fetchData.count > 0) {
+                for i in 0 ... publicArtsListArray.count-1 {
+                    let publicArtsListDict = publicArtsListArray[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "PublicArtsEntityArabic", publicArtsId: publicArtsListArray[i].id, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let publicArtsdbDict = fetchResult[0] as! PublicArtsEntityArabic
+                        publicArtsdbDict.namearabic = publicArtsListDict.name
+                        publicArtsdbDict.imagearabic = publicArtsListDict.image
+                        publicArtsdbDict.latitudearabic =  publicArtsListDict.latitude
+                        publicArtsdbDict.longitudearabic = publicArtsListDict.longitude
+                        publicArtsdbDict.sortcoefficientarabic = publicArtsListDict.sortcoefficient
+                        do{
+                            try managedContext.save()
                         }
-                        else {
-                            //save
-                            self.saveToCoreData(publicArtsListDict: publicArtsListDict, managedObjContext: managedContext)
-                            
+                        catch{
+                            print(error)
                         }
                     }
-                }
-                else {
-                    for i in 0 ... publicArtsListArray.count-1 {
-                        let managedContext = getContext()
-                        let publicArtsListDict : PublicArtsList?
-                        publicArtsListDict = publicArtsListArray[i]
-                        self.saveToCoreData(publicArtsListDict: publicArtsListDict!, managedObjContext: managedContext)
+                    else {
+                        //save
+                        self.saveToCoreData(publicArtsListDict: publicArtsListDict, managedObjContext: managedContext)
                         
                     }
                 }
             }
+            else {
+                for i in 0 ... publicArtsListArray.count-1 {
+                    let publicArtsListDict : PublicArtsList?
+                    publicArtsListDict = publicArtsListArray[i]
+                    self.saveToCoreData(publicArtsListDict: publicArtsListDict!, managedObjContext: managedContext)
+                    
+                }
+            }
         }
     }
+    
     func saveToCoreData(publicArtsListDict: PublicArtsList, managedObjContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             let publicArtsInfo: PublicArtsEntity = NSEntityDescription.insertNewObject(forEntityName: "PublicArtsEntity", into: managedObjContext) as! PublicArtsEntity
@@ -265,12 +276,12 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    
     func fetchPublicArtsListFromCoredata() {
-        
+        let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                 var publicArtsArray = [PublicArtsEntity]()
-                let managedContext = getContext()
                 let publicArtsFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "PublicArtsEntity")
                 publicArtsArray = (try managedContext.fetch(publicArtsFetchRequest) as? [PublicArtsEntity])!
                 if (publicArtsArray.count > 0) {
@@ -290,7 +301,6 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
             }
             else {
                 var publicArtsArray = [PublicArtsEntityArabic]()
-                let managedContext = getContext()
                 let publicArtsFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "PublicArtsEntityArabic")
                 publicArtsArray = (try managedContext.fetch(publicArtsFetchRequest) as? [PublicArtsEntityArabic])!
                 if (publicArtsArray.count > 0) {
@@ -312,19 +322,8 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-    func getContext() -> NSManagedObjectContext{
-        
-        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
-        if #available(iOS 10.0, *) {
-            return
-                appDelegate!.persistentContainer.viewContext
-        } else {
-            return appDelegate!.managedObjectContext
-        }
-    }
-    func checkAddedToCoredata(entityName: String?,publicArtsId: String?) -> [NSManagedObject]
-    {
-        let managedContext = getContext()
+    
+    func checkAddedToCoredata(entityName: String?, publicArtsId: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
         var fetchResults : [NSManagedObject] = []
         let publicArtsFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
         if (publicArtsId != nil) {
@@ -333,6 +332,7 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
         fetchResults = try! managedContext.fetch(publicArtsFetchRequest)
         return fetchResults
     }
+    
     func showNodata() {
         var errorMessage: String
         errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",

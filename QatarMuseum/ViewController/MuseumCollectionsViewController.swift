@@ -145,75 +145,87 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
     //MARK: Coredata Method
     func saveOrUpdateCollectionCoredata() {
         if (collection.count > 0) {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-                let fetchData = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: nil) as! [CollectionsEntity]
-                if (fetchData.count > 0) {
-                    for i in 0 ... collection.count-1 {
-                        let managedContext = getContext()
-                        let collectionListDict : Collection?
-                        collectionListDict = collection[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: museumId)
-                        //update
-                        if(fetchResult.count != 0) {
-                            let collectionsdbDict = fetchResult[0] as! CollectionsEntity
-                            collectionsdbDict.listName = collectionListDict?.name?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-                            collectionsdbDict.listImage = collectionListDict?.image
-                            collectionsdbDict.museumId = collectionListDict?.museumId
-                            do {
-                                try managedContext.save()
-                            }
-                            catch {
-                                print(error)
-                            }
-                        } else {
-                        self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
-                        }
-                    }
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.coreDataInBackgroundThread(managedContext: managedContext)
                 }
-                else {
-                    for i in 0 ... collection.count-1 {
-                        let managedContext = getContext()
-                        let collectionListDict : Collection?
-                        collectionListDict = collection[i]
-                        self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
-                    }
-                }
-            } else { // For Arabic Database
-                let fetchData = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "museumId", idValue: nil) as! [CollectionsEntityArabic]
-                if (fetchData.count > 0) {
-                    for i in 0 ... collection.count-1 {
-                        let managedContext = getContext()
-                        let collectionListDict : Collection?
-                        collectionListDict = collection[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "museumId", idValue: museumId)
-                        //update
-                        if(fetchResult.count != 0) {
-                            let collectionsdbDict = fetchResult[0] as! CollectionsEntityArabic
-                            //collectionsdbDict.listNameAr = collectionListDict?.name
-                            collectionsdbDict.listImageAr = collectionListDict?.image
-                            collectionsdbDict.museumId = collectionListDict?.museumId
-                            do {
-                                try managedContext.save()
-                            }
-                            catch {
-                                print(error)
-                            }
-                        } else {
-                            self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
-                        }
-                    }
-                }
-                else {
-                    for i in 0 ... collection.count-1 {
-                        let managedContext = getContext()
-                        let collectionListDict : Collection?
-                        collectionListDict = collection[i]
-                        self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
-                    }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.coreDataInBackgroundThread(managedContext : managedContext)
                 }
             }
         }
     }
+    
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: nil, managedContext: managedContext) as! [CollectionsEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... collection.count-1 {
+                    let collectionListDict : Collection?
+                    collectionListDict = collection[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: museumId, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let collectionsdbDict = fetchResult[0] as! CollectionsEntity
+                        collectionsdbDict.listName = collectionListDict?.name?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+                        collectionsdbDict.listImage = collectionListDict?.image
+                        collectionsdbDict.museumId = collectionListDict?.museumId
+                        do {
+                            try managedContext.save()
+                        }
+                        catch {
+                            print(error)
+                        }
+                    } else {
+                    self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
+                    }
+                }
+            }
+            else {
+                for i in 0 ... collection.count-1 {
+                    let collectionListDict : Collection?
+                    collectionListDict = collection[i]
+                    self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
+                }
+            }
+        } else { // For Arabic Database
+            let fetchData = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "museumId", idValue: nil, managedContext: managedContext) as! [CollectionsEntityArabic]
+            if (fetchData.count > 0) {
+                for i in 0 ... collection.count-1 {
+                    let collectionListDict : Collection?
+                    collectionListDict = collection[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "museumId", idValue: museumId, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let collectionsdbDict = fetchResult[0] as! CollectionsEntityArabic
+                        //collectionsdbDict.listNameAr = collectionListDict?.name
+                        collectionsdbDict.listImageAr = collectionListDict?.image
+                        collectionsdbDict.museumId = collectionListDict?.museumId
+                        do {
+                            try managedContext.save()
+                        }
+                        catch {
+                            print(error)
+                        }
+                    } else {
+                        self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
+                    }
+                }
+            }
+            else {
+                for i in 0 ... collection.count-1 {
+                    let collectionListDict : Collection?
+                    collectionListDict = collection[i]
+                    self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
+                }
+            }
+        }
+    }
+    
     func saveToCoreData(collectionListDict: Collection, managedObjContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let collectionInfo: CollectionsEntity = NSEntityDescription.insertNewObject(forEntityName: "CollectionsEntity", into: managedObjContext) as! CollectionsEntity
@@ -237,11 +249,11 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
         }
     }
     func fetchCollectionListFromCoredata() {
-        
+        let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var collectionArray = [CollectionsEntity]()
-                collectionArray = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: museumId) as! [CollectionsEntity]
+                collectionArray = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: museumId, managedContext: managedContext) as! [CollectionsEntity]
                 if (collectionArray.count > 0) {
                     for i in 0 ... collectionArray.count-1 {
                         
@@ -261,7 +273,7 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
             }
             else {
                 var collectionArray = [CollectionsEntityArabic]()
-                collectionArray = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "museumId", idValue: museumId) as! [CollectionsEntityArabic]
+                collectionArray = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "museumId", idValue: museumId, managedContext: managedContext) as! [CollectionsEntityArabic]
                 if (collectionArray.count > 0) {
                     for i in 0 ... collectionArray.count-1 {
                         
@@ -282,19 +294,8 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-    func getContext() -> NSManagedObjectContext{
-        
-        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
-        if #available(iOS 10.0, *) {
-            return
-                appDelegate!.persistentContainer.viewContext
-        } else {
-            return appDelegate!.managedObjectContext
-        }
-    }
-    func checkAddedToCoredata(entityName: String?,idKey:String?, idValue: String?) -> [NSManagedObject]
-    {
-        let managedContext = getContext()
+
+    func checkAddedToCoredata(entityName: String?,idKey:String?, idValue: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
         var fetchResults : [NSManagedObject] = []
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
         if (idValue != nil) {
@@ -303,6 +304,7 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
         fetchResults = try! managedContext.fetch(fetchRequest)
         return fetchResults
     }
+
     func showNodata() {
         var errorMessage: String
         errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
