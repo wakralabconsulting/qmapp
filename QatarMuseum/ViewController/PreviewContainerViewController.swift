@@ -83,10 +83,9 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                 tourGuideId = "12916"
             }
         }
+        fetchTourGuideFromCoredata()
         if (networkReachability?.isReachable)! {
-            getTourGuideDataFromServer()
-        } else {
-            fetchTourGuideFromCoredata()
+            getTourGuideDataFromServerInBackgound()
         }
         
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -640,6 +639,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         pageImageViewThree.image = UIImage(named: "unselected")
         pageImageViewFour.image = UIImage(named: "unselected")
     }
+    
     //MARK: Header Delegate
     func headerCloseButtonPressed() {
         self.closeAudio()
@@ -658,9 +658,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     }
     
     //MARK: WebServiceCall
-    func getTourGuideDataFromServer()
-    {
-        
+    func getTourGuideDataFromServer() {
         _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": tourGuideId!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
             switch response.result {
             case .success(let data):
@@ -675,8 +673,6 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                     self.showPageControlAtFirstTime()
                     self.saveOrUpdateTourGuideCoredata()
                 }
-                
-               
                 self.loadingView.stopLoading()
                 self.loadingView.isHidden = true
                 
@@ -687,14 +683,32 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                     self.loadingView.showNoDataView()
                 }
             case .failure(let error):
-                
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
                 self.loadingView.stopLoading()
                 self.loadingView.noDataView.isHidden = false
                 self.loadingView.isHidden = false
                 self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
             }
         }
     }
+    
+    func getTourGuideDataFromServerInBackgound() {
+        let queue = DispatchQueue(label: "", qos: .background, attributes: .concurrent)
+        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": tourGuideId!])).responseObject(queue: queue) { (response: DataResponse<TourGuideFloorMaps>) -> Void in
+            switch response.result {
+            case .success(let data):
+                if(data.tourGuideFloorMap?.count != 0) {
+                    self.saveOrUpdateTourGuideCoredata()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
     func filterButtonPressed() {
         self.closeAudio()
         if (tourGuideArray.count != 0) {
@@ -1050,15 +1064,12 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         }
         do {
             try managedObjContext.save()
-            
-            
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    
     func fetchTourGuideFromCoredata() {
-        self.loadingView.stopLoading()
-        self.loadingView.isHidden = true
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -1088,18 +1099,20 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                         self.setUpPageControl()
                         self.showOrHidePageControlView(countValue: self.tourGuideArray.count, scrolling: false)
                         self.showPageControlAtFirstTime()
+                    } else if (networkReachability?.isReachable)! {
+                        self.showNoData()
                     } else {
                         self.showNoNetwork()
                     }
                     
+                } else if (networkReachability?.isReachable)! && self.tourGuideArray.count == 0 {
+                    self.getTourGuideDataFromServer()
                 } else {
+                    self.loadingView.stopLoading()
+                    self.loadingView.isHidden = true
                     self.showNoNetwork()
                 }
-                
-                
-                
-            }
-            else {
+            } else {
                 var tourGuideArray = [FloorMapTourGuideEntityAr]()
                 tourGuideArray = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey: "tourGuideId", idValue: tourGuideId, managedContext: managedContext) as! [FloorMapTourGuideEntityAr]
                 if(tourGuideArray.count > 0) {
@@ -1115,8 +1128,6 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                             }
                         }
                         self.tourGuideArray.insert(TourGuideFloorMap(title: tourGuideDict.title, accessionNumber: tourGuideDict.accessionNumber, nid: tourGuideDict.nid, curatorialDescription: tourGuideDict.curatorialDescription, diam: tourGuideDict.diam, dimensions: tourGuideDict.dimensions, mainTitle: tourGuideDict.mainTitle, objectENGSummary: tourGuideDict.objectEngSummary, objectHistory: tourGuideDict.objectHistory, production: tourGuideDict.production, productionDates: tourGuideDict.productionDates, image: tourGuideDict.image, tourGuideId: tourGuideDict.tourGuideId,artifactNumber: tourGuideDict.artifactNumber, artifactPosition: tourGuideDict.artifactPosition, audioDescriptif: tourGuideDict.audioDescriptif, images: imgsArray, audioFile: tourGuideDict.audioFile, floorLevel: tourGuideDict.floorLevel, galleyNumber: tourGuideDict.galleyNumber, artistOrCreatorOrAuthor: tourGuideDict.artistOrCreatorOrAuthor, periodOrStyle: tourGuideDict.periodOrStyle, techniqueAndMaterials: tourGuideDict.techniqueAndMaterials,thumbImage: tourGuideDict.thumbImage,artifactImg: tourGuideDict.artifactImg), at: 0)
-                        
-                        
                     }
                     self.loadingView.stopLoading()
                     self.loadingView.isHidden = true
@@ -1127,10 +1138,16 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                         self.setUpPageControl()
                         self.showOrHidePageControlView(countValue: self.tourGuideArray.count, scrolling: false)
                         self.showPageControlAtFirstTime()
+                    } else if (networkReachability?.isReachable)! {
+                        self.showNoData()
                     } else {
                         self.showNoNetwork()
                     }
+                } else if (networkReachability?.isReachable)! && self.tourGuideArray.count == 0 {
+                    self.getTourGuideDataFromServer()
                 } else {
+                    self.loadingView.stopLoading()
+                    self.loadingView.isHidden = true
                     self.showNoNetwork()
                 }
             }
@@ -1160,18 +1177,23 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
             self.getTourGuideDataFromServer()
         }
     }
+    
     func showNoNetwork() {
         self.loadingView.stopLoading()
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
     }
+    
+    func showNoData() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoDataView()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    
-
 }
