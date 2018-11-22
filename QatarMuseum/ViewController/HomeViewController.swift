@@ -512,83 +512,86 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         self.present(profileView, animated: false, completion: nil)
         
     }
+    
     //MARK: Coredata Method
     func saveOrUpdateHomeCoredata() {
         if (homeList.count > 0) {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.coreDataInBackgroundThread(managedContext: managedContext)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.coreDataInBackgroundThread(managedContext : managedContext)
+                }
+            }
+        }
+    }
+    
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            let fetchData = checkAddedToCoredata(entityName: "HomeEntity", homeId: nil) as! [HomeEntity]
-        if (fetchData.count > 0) {
-            for i in 0 ... homeList.count-1 {
-                let managedContext = getContext()
-                let homeListDict = homeList[i]
-                let fetchResult = checkAddedToCoredata(entityName: "HomeEntity", homeId: homeList[i].id)
-                //update
-                if(fetchResult.count != 0) {
-                    let homedbDict = fetchResult[0] as! HomeEntity
-                   
+            let fetchData = checkAddedToCoredata(entityName: "HomeEntity", homeId: nil, managedContext: managedContext) as! [HomeEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... homeList.count-1 {
+                    let homeListDict = homeList[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntity", homeId: homeList[i].id, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let homedbDict = fetchResult[0] as! HomeEntity
                         homedbDict.name = homeListDict.name
                         homedbDict.image = homeListDict.image
                         homedbDict.sortid =  homeListDict.sortId
                         homedbDict.tourguideavailable = homeListDict.isTourguideAvailable
-                    
-                    
-                    do{
-                        try managedContext.save()
-                    }
-                    catch{
-                        print(error)
-                    }
-                }
-                else {
-                    //save
-                    self.saveToCoreData(homeListDict: homeListDict, managedObjContext: managedContext)
-                
-                }
-            }
-        }
-        else {
-        for i in 0 ... homeList.count-1 {
-            let managedContext = getContext()
-            let homeListDict : Home?
-             homeListDict = homeList[i]
-            self.saveToCoreData(homeListDict: homeListDict!, managedObjContext: managedContext)
-
-        }
-        }
-        }
-        else {
-            let fetchData = checkAddedToCoredata(entityName: "HomeEntityArabic", homeId: nil) as! [HomeEntityArabic]
-            if (fetchData.count > 0) {
-                for i in 0 ... homeList.count-1 {
-                    let managedContext = getContext()
-                    let homeListDict = homeList[i]
-                    
-                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntityArabic", homeId: homeList[i].id)
-                    //update
-                    if(fetchResult.count != 0) {
-                        let homedbDict = fetchResult[0] as! HomeEntityArabic
                         
-                            homedbDict.arabicname = homeListDict.name
-                            homedbDict.arabicimage = homeListDict.image
-                            homedbDict.arabicsortid =  homeListDict.sortId
-                            homedbDict.arabictourguideavailable = homeListDict.isTourguideAvailable
                         do{
                             try managedContext.save()
                         }
                         catch{
                             print(error)
                         }
+                    } else {
+                        //save
+                        self.saveToCoreData(homeListDict: homeListDict, managedObjContext: managedContext)
                     }
-                    else {
+                }
+            } else {
+                for i in 0 ... homeList.count-1 {
+                    let homeListDict : Home?
+                    homeListDict = homeList[i]
+                    self.saveToCoreData(homeListDict: homeListDict!, managedObjContext: managedContext)
+                }
+            }
+        } else {
+            let fetchData = checkAddedToCoredata(entityName: "HomeEntityArabic", homeId: nil, managedContext: managedContext) as! [HomeEntityArabic]
+            if (fetchData.count > 0) {
+                for i in 0 ... homeList.count-1 {
+                    let homeListDict = homeList[i]
+                    
+                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntityArabic", homeId: homeList[i].id, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let homedbDict = fetchResult[0] as! HomeEntityArabic
+                        homedbDict.arabicname = homeListDict.name
+                        homedbDict.arabicimage = homeListDict.image
+                        homedbDict.arabicsortid =  homeListDict.sortId
+                        homedbDict.arabictourguideavailable = homeListDict.isTourguideAvailable
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    } else {
                         //save
                         self.saveToCoreData(homeListDict: homeListDict, managedObjContext: managedContext)
                         
                     }
                 }
-            }
-            else {
+            } else {
                 for i in 0 ... homeList.count-1 {
-                    let managedContext = getContext()
                     let homeListDict : Home?
                     homeListDict = homeList[i]
                     self.saveToCoreData(homeListDict: homeListDict!, managedObjContext: managedContext)
@@ -596,7 +599,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 }
             }
         }
-    }
     }
     
     func saveToCoreData(homeListDict: Home, managedObjContext: NSManagedObjectContext) {
@@ -608,8 +610,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             homeInfo.tourguideavailable = homeListDict.isTourguideAvailable
             homeInfo.image = homeListDict.image
             homeInfo.sortid = homeListDict.sortId
-        }
-        else{
+        } else{
             let homeInfo: HomeEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "HomeEntityArabic", into: managedObjContext) as! HomeEntityArabic
             homeInfo.id = homeListDict.id
             homeInfo.arabicname = homeListDict.name
@@ -619,18 +620,16 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         }
         do {
             try managedObjContext.save()
-            
-            
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    
     func fetchHomeInfoFromCoredata() {
-        
+        let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                 var homeArray = [HomeEntity]()
-                let managedContext = getContext()
                 let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntity")
             homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntity])!
             if (homeArray.count > 0) {
@@ -644,14 +643,11 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     self.showNoNetwork()
                 }
                 homeCollectionView.reloadData()
-            }
-            else{
+            } else{
                 self.showNoNetwork()
             }
-        }
-            else {
+        } else {
                 var homeArray = [HomeEntityArabic]()
-                let managedContext = getContext()
                 let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntityArabic")
                 homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntityArabic])!
                 if (homeArray.count > 0) {
@@ -664,8 +660,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                         self.showNoNetwork()
                     }
                     homeCollectionView.reloadData()
-                }
-                else{
+                } else{
                     self.showNoNetwork()
                 }
             }
@@ -673,19 +668,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-    func getContext() -> NSManagedObjectContext{
-        
-        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
-        if #available(iOS 10.0, *) {
-            return
-                appDelegate!.persistentContainer.viewContext
-        } else {
-            return appDelegate!.managedObjectContext
-        }
-    }
-    func checkAddedToCoredata(entityName: String?, homeId: String?) -> [NSManagedObject]
-    {
-        let managedContext = getContext()
+    
+    func checkAddedToCoredata(entityName: String?, homeId: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
         var fetchResults : [NSManagedObject] = []
         let homeFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
         if (homeId != nil) {
@@ -694,6 +678,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         fetchResults = try! managedContext.fetch(homeFetchRequest)
         return fetchResults
     }
+    
     func showNodata() {
         var errorMessage: String
         errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",

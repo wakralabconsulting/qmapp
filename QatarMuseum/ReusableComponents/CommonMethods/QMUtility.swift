@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import CoreData
 
 // Utility method for presenting alert without any completion handler
 func presentAlert(_ viewController: UIViewController, title: String, message: String) {
@@ -107,9 +108,18 @@ func convertDMSToDDCoordinate(latLongString : String) -> Double {
     let ddCoordinate = degree + (min / 60) + (sec / 3600)
     return ddCoordinate
 }
+
 func showAlertView(title: String ,message: String, viewController : UIViewController) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
     viewController.present(alert, animated: true, completion: nil)
 }
 
+func getContext() -> NSManagedObjectContext {
+    let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+    if #available(iOS 10.0, *) {
+        return appDelegate!.persistentContainer.viewContext
+    } else {
+        return appDelegate!.managedObjectContext
+    }
+}

@@ -90,8 +90,7 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     //MARK: WebServiceCall
-    func getCollectioDetailsFromServer()
-    {
+    func getCollectioDetailsFromServer() {
         _ = Alamofire.request(QatarMuseumRouter.CollectionDetail(["category": collectionName!])).responseObject { (response: DataResponse<CollectionDetails>) -> Void in
             switch response.result {
             case .success(let data):
@@ -118,87 +117,99 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
             }
         }
     }
+    
     //MARK: CollectionDetail Coredata Method
     func saveOrUpdateCollectionDetailCoredata() {
         if (collectionDetailArray.count > 0) {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-                let fetchData = checkAddedToCoredata(entityName: "CollectionDetailsEntity", idKey: "categoryCollection" , idValue: collectionName) as! [CollectionDetailsEntity]
-                
-                if (fetchData.count > 0) {
-                    for i in 0 ... collectionDetailArray.count-1 {
-                        let managedContext = getContext()
-                        let collectionDetailDict = collectionDetailArray[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "CollectionDetailsEntity", idKey: "nid", idValue: collectionDetailArray[i].nid) as! [CollectionDetailsEntity]
-                        
-                        if(fetchResult.count != 0) {
-                            
-                            //update
-                            let collectiondbDict = fetchResult[0]
-                            collectiondbDict.title = collectionDetailDict.title
-                            collectiondbDict.body = collectionDetailDict.body
-                            collectiondbDict.categoryCollection =  collectionDetailDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-                            collectiondbDict.nid = collectionDetailDict.nid
-                            collectiondbDict.image = collectionDetailDict.image
-                            
-                            do{
-                                try managedContext.save()
-                            }
-                            catch{
-                                print(error)
-                            }
-                        }else {
-                            self.saveToCoreData(collectionDetailDict: collectionDetailDict, managedObjContext: managedContext)
-                        }
-                    }//for
-                }//if
-                else {
-                    for i in 0 ... collectionDetailArray.count-1 {
-                        let managedContext = getContext()
-                        let collectionDetailDict : CollectionDetail?
-                        collectionDetailDict = collectionDetailArray[i]
-                        self.saveToCoreData(collectionDetailDict: collectionDetailDict!, managedObjContext: managedContext)
-                    }
-
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.coreDataInBackgroundThread(managedContext: managedContext)
                 }
-            }
-            else {
-                let fetchData = checkAddedToCoredata(entityName: "CollectionDetailsEntityAr", idKey:"categoryCollection" , idValue: collectionName) as! [CollectionDetailsEntityAr]
-                if (fetchData.count > 0) {
-                    for i in 0 ... collectionDetailArray.count-1 {
-                        let managedContext = getContext()
-                        let collectionDetailDict = collectionDetailArray[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "CollectionDetailsEntityAr", idKey: "nid", idValue: collectionDetailArray[i].nid) as! [CollectionDetailsEntityAr]
-                        //update
-                        if(fetchResult.count != 0) {
-                            let collectiondbDict = fetchResult[0]
-                            collectiondbDict.titleAr = collectionDetailDict.title
-                            collectiondbDict.bodyAr = collectionDetailDict.body
-                            collectiondbDict.categoryCollection =  collectionDetailDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-                            collectiondbDict.imageAr = collectionDetailDict.image
-                            
-                            do{
-                                try managedContext.save()
-                            }
-                            catch{
-                                print(error)
-                            }
-                        } else {
-                            self.saveToCoreData(collectionDetailDict: collectionDetailDict, managedObjContext: managedContext)
-                        }
-                    }//for
-                } //if
-                else {
-                    for i in 0 ... collectionDetailArray.count-1 {
-                        let managedContext = getContext()
-                        let collectionDetailDict : CollectionDetail?
-                        collectionDetailDict = collectionDetailArray[i]
-                        self.saveToCoreData(collectionDetailDict: collectionDetailDict!, managedObjContext: managedContext)
-                }
-                    
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.coreDataInBackgroundThread(managedContext : managedContext)
                 }
             }
         }
     }
+    
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "CollectionDetailsEntity", idKey: "categoryCollection" , idValue: collectionName, managedContext: managedContext) as! [CollectionDetailsEntity]
+            
+            if (fetchData.count > 0) {
+                for i in 0 ... collectionDetailArray.count-1 {
+                    let collectionDetailDict = collectionDetailArray[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "CollectionDetailsEntity", idKey: "nid", idValue: collectionDetailArray[i].nid, managedContext: managedContext) as! [CollectionDetailsEntity]
+                    
+                    if(fetchResult.count != 0) {
+                        
+                        //update
+                        let collectiondbDict = fetchResult[0]
+                        collectiondbDict.title = collectionDetailDict.title
+                        collectiondbDict.body = collectionDetailDict.body
+                        collectiondbDict.categoryCollection =  collectionDetailDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+                        collectiondbDict.nid = collectionDetailDict.nid
+                        collectiondbDict.image = collectionDetailDict.image
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    }else {
+                        self.saveToCoreData(collectionDetailDict: collectionDetailDict, managedObjContext: managedContext)
+                    }
+                }//for
+            }//if
+            else {
+                for i in 0 ... collectionDetailArray.count-1 {
+                    let collectionDetailDict : CollectionDetail?
+                    collectionDetailDict = collectionDetailArray[i]
+                    self.saveToCoreData(collectionDetailDict: collectionDetailDict!, managedObjContext: managedContext)
+                }
+
+            }
+        }
+        else {
+            let fetchData = checkAddedToCoredata(entityName: "CollectionDetailsEntityAr", idKey:"categoryCollection" , idValue: collectionName, managedContext: managedContext) as! [CollectionDetailsEntityAr]
+            if (fetchData.count > 0) {
+                for i in 0 ... collectionDetailArray.count-1 {
+                    let collectionDetailDict = collectionDetailArray[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "CollectionDetailsEntityAr", idKey: "nid", idValue: collectionDetailArray[i].nid, managedContext: managedContext) as! [CollectionDetailsEntityAr]
+                    //update
+                    if(fetchResult.count != 0) {
+                        let collectiondbDict = fetchResult[0]
+                        collectiondbDict.titleAr = collectionDetailDict.title
+                        collectiondbDict.bodyAr = collectionDetailDict.body
+                        collectiondbDict.categoryCollection =  collectionDetailDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+                        collectiondbDict.imageAr = collectionDetailDict.image
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    } else {
+                        self.saveToCoreData(collectionDetailDict: collectionDetailDict, managedObjContext: managedContext)
+                    }
+                }//for
+            } //if
+            else {
+                for i in 0 ... collectionDetailArray.count-1 {
+                    let collectionDetailDict : CollectionDetail?
+                    collectionDetailDict = collectionDetailArray[i]
+                    self.saveToCoreData(collectionDetailDict: collectionDetailDict!, managedObjContext: managedContext)
+                }
+            }
+        }
+    }
+    
     func saveToCoreData(collectionDetailDict: CollectionDetail, managedObjContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let collectiondbDict: CollectionDetailsEntity = NSEntityDescription.insertNewObject(forEntityName: "CollectionDetailsEntity", into: managedObjContext) as! CollectionDetailsEntity
@@ -225,12 +236,13 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    
     func fetchCollectionDetailsFromCoredata() {
-        
+        let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var collectionArray = [CollectionDetailsEntity]()
-                collectionArray = checkAddedToCoredata(entityName: "CollectionDetailsEntity", idKey: "categoryCollection", idValue: collectionName) as! [CollectionDetailsEntity]
+                collectionArray = checkAddedToCoredata(entityName: "CollectionDetailsEntity", idKey: "categoryCollection", idValue: collectionName, managedContext: managedContext) as! [CollectionDetailsEntity]
                     if (collectionArray.count > 0) {
                         for i in 0 ... collectionArray.count-1 {
                             let collectionDict = collectionArray[i]
@@ -255,7 +267,7 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
             }
             else {
                 var collectionArray = [CollectionDetailsEntityAr]()
-                collectionArray = checkAddedToCoredata(entityName: "CollectionDetailsEntityAr", idKey: "categoryCollection", idValue: collectionName) as! [CollectionDetailsEntityAr]
+                collectionArray = checkAddedToCoredata(entityName: "CollectionDetailsEntityAr", idKey: "categoryCollection", idValue: collectionName, managedContext: managedContext) as! [CollectionDetailsEntityAr]
                 if(collectionArray.count > 0) {
                     for i in 0 ... collectionArray.count-1 {
                         let collectionDict = collectionArray[i]
@@ -278,21 +290,9 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-    func getContext() -> NSManagedObjectContext{
-        
-        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
-        if #available(iOS 10.0, *) {
-            return
-                appDelegate!.persistentContainer.viewContext
-        } else {
-            return appDelegate!.managedObjectContext
-        }
-    }
-    func checkAddedToCoredata(entityName: String?,idKey:String?, idValue: String?) -> [NSManagedObject]
-    {
-        let managedContext = getContext()
+    
+    func checkAddedToCoredata(entityName: String?, idKey:String?, idValue: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
         var fetchResults : [NSManagedObject] = []
-        
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
         if (idValue != nil) {
              fetchRequest.predicate = NSPredicate(format: "\(idKey!) == %@", idValue!)
@@ -301,6 +301,7 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
         fetchResults = try! managedContext.fetch(fetchRequest)
         return fetchResults
     }
+    
     func showNodata() {
         var errorMessage: String
         errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
