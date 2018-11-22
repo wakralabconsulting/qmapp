@@ -5334,7 +5334,7 @@
                                 </connections>
                             </button>
                             <view alpha="0.34999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IAj-ZQ-CZE">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="85" width="414" height="651"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xQg-HM-YTp" customClass="LoadingView" customModule="QatarMuseums" customModuleProvider="target">
@@ -5356,6 +5356,7 @@
                             <constraint firstItem="yeH-gg-PZs" firstAttribute="top" secondItem="84D-I2-0Ka" secondAttribute="bottom" constant="37" id="MXn-Fg-8Nd"/>
                             <constraint firstItem="jf5-dA-4V6" firstAttribute="leading" secondItem="6iC-kF-Ins" secondAttribute="leading" id="PaE-4h-M6s"/>
                             <constraint firstItem="w9A-t9-cCC" firstAttribute="top" secondItem="jf5-dA-4V6" secondAttribute="bottom" constant="15" id="TUI-pX-Kfk"/>
+                            <constraint firstItem="IAj-ZQ-CZE" firstAttribute="top" secondItem="jf5-dA-4V6" secondAttribute="bottom" id="Tpj-wH-7Wq"/>
                             <constraint firstAttribute="trailing" secondItem="Pnd-PY-Kwv" secondAttribute="trailing" constant="18" id="Wfc-Mq-kRw"/>
                             <constraint firstAttribute="bottom" secondItem="9pI-Wu-eS8" secondAttribute="bottom" id="XhT-14-1GI"/>
                             <constraint firstAttribute="right" secondItem="Wq6-bK-3gi" secondAttribute="right" constant="25" id="aG0-cV-xRh"/>
@@ -5363,7 +5364,6 @@
                             <constraint firstItem="eW7-6Q-nVu" firstAttribute="top" secondItem="jf5-dA-4V6" secondAttribute="bottom" constant="15" id="eHk-mM-pta"/>
                             <constraint firstAttribute="trailing" secondItem="IAj-ZQ-CZE" secondAttribute="trailing" id="eiU-z0-dgv"/>
                             <constraint firstItem="9pI-Wu-eS8" firstAttribute="top" secondItem="jf5-dA-4V6" secondAttribute="bottom" id="lIC-tK-dQ4"/>
-                            <constraint firstItem="IAj-ZQ-CZE" firstAttribute="top" secondItem="V3s-Ss-ezC" secondAttribute="bottom" id="myp-wo-Z62"/>
                             <constraint firstItem="84D-I2-0Ka" firstAttribute="left" secondItem="6iC-kF-Ins" secondAttribute="left" constant="21" id="o0Y-FM-Cdk"/>
                             <constraint firstItem="yeH-gg-PZs" firstAttribute="top" secondItem="Pnd-PY-Kwv" secondAttribute="bottom" constant="85" id="oJl-qU-ysg"/>
                             <constraint firstItem="Wq6-bK-3gi" firstAttribute="left" secondItem="84D-I2-0Ka" secondAttribute="right" constant="12" id="sJ9-qj-5OK"/>
