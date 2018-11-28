@@ -479,10 +479,25 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     //MARK: Heritage Coredata Method
     func saveOrUpdateHeritageCoredata() {
         if (heritageDetailtArray.count > 0) {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.heritageCoreDataInBackgroundThread(managedContext: managedContext)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.heritageCoreDataInBackgroundThread(managedContext : managedContext)
+                }
+            }
+        }
+    }
+    
+    func heritageCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            let fetchData = checkAddedToCoredata(entityName: "HeritageEntity", idKey: "listid" , idValue: heritageDetailtArray[0].id) as! [HeritageEntity]
+            let fetchData = checkAddedToCoredata(entityName: "HeritageEntity", idKey: "listid" , idValue: heritageDetailtArray[0].id, managedContext: managedContext) as! [HeritageEntity]
            if (fetchData.count > 0) {
-                let managedContext = getContext()
                 let heritageDetailDict = heritageDetailtArray[0]
             
                 //update
@@ -517,26 +532,21 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 }
             }
             
-            
-            
                 do{
                     try managedContext.save()
                 }
                 catch{
                     print(error)
                 }
-           }
-            else {
-            let managedContext = getContext()
+           } else {
             let heritageListDict : Heritage?
             heritageListDict = heritageDetailtArray[0]
             self.saveToCoreData(heritageDetailDict: heritageListDict!, managedObjContext: managedContext)
             }
         }
         else {
-            let fetchData = checkAddedToCoredata(entityName: "HeritageEntityArabic", idKey:"listid" , idValue: heritageDetailtArray[0].id) as! [HeritageEntityArabic]
+            let fetchData = checkAddedToCoredata(entityName: "HeritageEntityArabic", idKey:"listid" , idValue: heritageDetailtArray[0].id, managedContext: managedContext) as! [HeritageEntityArabic]
             if (fetchData.count > 0) {
-                let managedContext = getContext()
                 let heritageDetailDict = heritageDetailtArray[0]
                 
                 //update
@@ -575,14 +585,13 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 }
             }
             else {
-                let managedContext = getContext()
                 let heritageListDict : Heritage?
                 heritageListDict = heritageDetailtArray[0]
                 self.saveToCoreData(heritageDetailDict: heritageListDict!, managedObjContext: managedContext)
             }
         }
-        }
     }
+    
     func saveToCoreData(heritageDetailDict: Heritage, managedObjContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let heritageInfo: HeritageEntity = NSEntityDescription.insertNewObject(forEntityName: "HeritageEntity", into: managedObjContext) as! HeritageEntity
@@ -662,12 +671,12 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    
     func fetchHeritageDetailsFromCoredata() {
-        
+        let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var heritageArray = [HeritageEntity]()
-                let managedContext = getContext()
                 let heritageFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HeritageEntity")
                 if(heritageDetailId != nil) {
                     heritageFetchRequest.predicate = NSPredicate.init(format: "listid == \(heritageDetailId!)")
@@ -704,7 +713,6 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             }
             else {
                 var heritageArray = [HeritageEntityArabic]()
-                let managedContext = getContext()
                 let heritageFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HeritageEntityArabic")
                 if(heritageDetailId != nil) {
                     heritageFetchRequest.predicate = NSPredicate.init(format: "listid == \(heritageDetailId!)")
@@ -747,101 +755,113 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     //MARK: PublicArts Coredata Method
     func saveOrUpdatePublicArtsCoredata() {
         if (publicArtsDetailtArray.count > 0) {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-                let fetchData = checkAddedToCoredata(entityName: "PublicArtsEntity", idKey: "id" , idValue: publicArtsDetailtArray[0].id) as! [PublicArtsEntity]
-                if (fetchData.count > 0) {
-                    let managedContext = getContext()
-                    let publicArtsDetailDict = publicArtsDetailtArray[0]
-                    
-                    //update
-                    let publicArtsbDict = fetchData[0]
-                    publicArtsbDict.name = publicArtsDetailDict.name
-                    publicArtsbDict.detaildescription = publicArtsDetailDict.description
-                    publicArtsbDict.shortdescription = publicArtsDetailDict.shortdescription
-                    publicArtsbDict.image = publicArtsDetailDict.image
-                    publicArtsbDict.latitude = publicArtsDetailDict.latitude
-                    publicArtsbDict.longitude = publicArtsDetailDict.longitude
-                    if(publicArtsDetailDict.images != nil) {
-                    if((publicArtsDetailDict.images?.count)! > 0) {
-                        for i in 0 ... (publicArtsDetailDict.images?.count)!-1 {
-                            var publicArtsImagesEntity: PublicArtsImagesEntity!
-                            let publicArtsImage: PublicArtsImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "PublicArtsImagesEntity", into: managedContext) as! PublicArtsImagesEntity
-                            publicArtsImage.images = publicArtsDetailDict.images![i]
-                            publicArtsImagesEntity = publicArtsImage
-                            publicArtsbDict.addToPublicImagesRelation(publicArtsImagesEntity)
-                            do {
-                                try managedContext.save()
-                                
-                                
-                            } catch let error as NSError {
-                                print("Could not save. \(error), \(error.userInfo)")
-                            }
-                            
-                        }
-                    }
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.publicArtCoreDataInBackgroundThread(managedContext: managedContext)
                 }
-                    do{
-                        try managedContext.save()
-                    }
-                    catch{
-                        print(error)
-                    }
-                }
-                else {
-                    let managedContext = getContext()
-                    let publicArtsDetailDict : PublicArtsDetail?
-                    publicArtsDetailDict = publicArtsDetailtArray[0]
-                    self.saveToCoreData(publicArtseDetailDict: publicArtsDetailDict!, managedObjContext: managedContext)
-                }
-            }
-            else {
-                let fetchData = checkAddedToCoredata(entityName: "PublicArtsEntityArabic", idKey:"id" , idValue: publicArtsDetailtArray[0].id) as! [PublicArtsEntityArabic]
-                if (fetchData.count > 0) {
-                    let managedContext = getContext()
-                    let publicArtsDetailDict = publicArtsDetailtArray[0]
-                    
-                    //update
-                    
-                    let publicArtsdbDict = fetchData[0]
-                    publicArtsdbDict.namearabic = publicArtsDetailDict.name
-                    publicArtsdbDict.descriptionarabic = publicArtsDetailDict.description
-                    publicArtsdbDict.shortdescriptionarabic = publicArtsDetailDict.shortdescription
-                    publicArtsdbDict.imagearabic = publicArtsDetailDict.image
-                    publicArtsdbDict.latitudearabic = publicArtsDetailDict.latitude
-                    publicArtsdbDict.longitudearabic = publicArtsDetailDict.longitude
-                    if((publicArtsDetailDict.images?.count)! > 0) {
-                        for i in 0 ... (publicArtsDetailDict.images?.count)!-1 {
-                            var publicArtsImagesEntity: PublicArtsImagesEntityAr!
-                            let publicArtsImage: PublicArtsImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "PublicArtsImagesEntityAr", into: managedContext) as! PublicArtsImagesEntityAr
-                            publicArtsImage.images = publicArtsDetailDict.images![i]
-                            publicArtsImagesEntity = publicArtsImage
-                            publicArtsdbDict.addToPublicImagesRelation(publicArtsImagesEntity)
-                            do {
-                                try managedContext.save()
-                                
-                                
-                            } catch let error as NSError {
-                                print("Could not save. \(error), \(error.userInfo)")
-                            }
-                            
-                        }
-                    }
-                    do{
-                        try managedContext.save()
-                    }
-                    catch{
-                        print(error)
-                    }
-                }
-                else {
-                    let managedContext = getContext()
-                    let publicArtsListDict : PublicArtsDetail?
-                    publicArtsListDict = publicArtsDetailtArray[0]
-                    self.saveToCoreData(publicArtseDetailDict: publicArtsListDict!, managedObjContext: managedContext)
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.publicArtCoreDataInBackgroundThread(managedContext : managedContext)
                 }
             }
         }
     }
+    
+    func publicArtCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "PublicArtsEntity", idKey: "id" , idValue: publicArtsDetailtArray[0].id, managedContext: managedContext) as! [PublicArtsEntity]
+            if (fetchData.count > 0) {
+                let publicArtsDetailDict = publicArtsDetailtArray[0]
+                
+                //update
+                let publicArtsbDict = fetchData[0]
+                publicArtsbDict.name = publicArtsDetailDict.name
+                publicArtsbDict.detaildescription = publicArtsDetailDict.description
+                publicArtsbDict.shortdescription = publicArtsDetailDict.shortdescription
+                publicArtsbDict.image = publicArtsDetailDict.image
+                publicArtsbDict.latitude = publicArtsDetailDict.latitude
+                publicArtsbDict.longitude = publicArtsDetailDict.longitude
+                if(publicArtsDetailDict.images != nil) {
+                if((publicArtsDetailDict.images?.count)! > 0) {
+                    for i in 0 ... (publicArtsDetailDict.images?.count)!-1 {
+                        var publicArtsImagesEntity: PublicArtsImagesEntity!
+                        let publicArtsImage: PublicArtsImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "PublicArtsImagesEntity", into: managedContext) as! PublicArtsImagesEntity
+                        publicArtsImage.images = publicArtsDetailDict.images![i]
+                        publicArtsImagesEntity = publicArtsImage
+                        publicArtsbDict.addToPublicImagesRelation(publicArtsImagesEntity)
+                        do {
+                            try managedContext.save()
+                            
+                            
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                        
+                    }
+                }
+            }
+                do{
+                    try managedContext.save()
+                }
+                catch{
+                    print(error)
+                }
+            }
+            else {
+                let publicArtsDetailDict : PublicArtsDetail?
+                publicArtsDetailDict = publicArtsDetailtArray[0]
+                self.saveToCoreData(publicArtseDetailDict: publicArtsDetailDict!, managedObjContext: managedContext)
+            }
+        }
+        else {
+            let fetchData = checkAddedToCoredata(entityName: "PublicArtsEntityArabic", idKey:"id" , idValue: publicArtsDetailtArray[0].id, managedContext: managedContext) as! [PublicArtsEntityArabic]
+            if (fetchData.count > 0) {
+                let publicArtsDetailDict = publicArtsDetailtArray[0]
+                
+                //update
+                
+                let publicArtsdbDict = fetchData[0]
+                publicArtsdbDict.namearabic = publicArtsDetailDict.name
+                publicArtsdbDict.descriptionarabic = publicArtsDetailDict.description
+                publicArtsdbDict.shortdescriptionarabic = publicArtsDetailDict.shortdescription
+                publicArtsdbDict.imagearabic = publicArtsDetailDict.image
+                publicArtsdbDict.latitudearabic = publicArtsDetailDict.latitude
+                publicArtsdbDict.longitudearabic = publicArtsDetailDict.longitude
+                if((publicArtsDetailDict.images?.count)! > 0) {
+                    for i in 0 ... (publicArtsDetailDict.images?.count)!-1 {
+                        var publicArtsImagesEntity: PublicArtsImagesEntityAr!
+                        let publicArtsImage: PublicArtsImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "PublicArtsImagesEntityAr", into: managedContext) as! PublicArtsImagesEntityAr
+                        publicArtsImage.images = publicArtsDetailDict.images![i]
+                        publicArtsImagesEntity = publicArtsImage
+                        publicArtsdbDict.addToPublicImagesRelation(publicArtsImagesEntity)
+                        do {
+                            try managedContext.save()
+                            
+                            
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                        
+                    }
+                }
+                do{
+                    try managedContext.save()
+                }
+                catch{
+                    print(error)
+                }
+            }
+            else {
+                let publicArtsListDict : PublicArtsDetail?
+                publicArtsListDict = publicArtsDetailtArray[0]
+                self.saveToCoreData(publicArtseDetailDict: publicArtsListDict!, managedObjContext: managedContext)
+            }
+        }
+    }
+    
     func saveToCoreData(publicArtseDetailDict: PublicArtsDetail, managedObjContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let publicArtsInfo: PublicArtsEntity = NSEntityDescription.insertNewObject(forEntityName: "PublicArtsEntity", into: managedObjContext) as! PublicArtsEntity
@@ -908,12 +928,12 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    
     func fetchPublicArtsDetailsFromCoredata() {
-        
+        let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var publicArtsArray = [PublicArtsEntity]()
-                let managedContext = getContext()
                 let publicArtsFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "PublicArtsEntity")
                 if(publicArtsDetailId != nil) {
                     publicArtsFetchRequest.predicate = NSPredicate.init(format: "id == \(publicArtsDetailId!)")
@@ -949,7 +969,6 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             }
             else {
                 var publicArtsArray = [PublicArtsEntityArabic]()
-                let managedContext = getContext()
                 let publicArtsFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "PublicArtsEntityArabic")
                 if(publicArtsDetailId != nil) {
                     publicArtsFetchRequest.predicate = NSPredicate.init(format: "id == \(publicArtsDetailId!)")
@@ -1050,165 +1069,178 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             }
         }
     }
+    
     //MARK: About CoreData
     func saveOrUpdateAboutCoredata() {
         if (aboutDetailtArray.count > 0) {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-                let fetchData = checkAddedToCoredata(entityName: "AboutEntity", idKey: "id" , idValue: aboutDetailtArray[0].id) as! [AboutEntity]
-               
-                if (fetchData.count > 0) {
-                    let managedContext = getContext()
-                    let aboutDetailDict = aboutDetailtArray[0]
-                    
-                    //update
-                    let aboutdbDict = fetchData[0]
-
-                    aboutdbDict.name = aboutDetailDict.name
-                    aboutdbDict.id = aboutDetailDict.id
-                    aboutdbDict.tourguideAvailable = aboutDetailDict.tourguideAvailable
-                    aboutdbDict.contactNumber = aboutDetailDict.contactNumber
-                    aboutdbDict.contactEmail = aboutDetailDict.contactEmail
-                    aboutdbDict.mobileLongtitude = aboutDetailDict.mobileLongtitude
-                    aboutdbDict.subtitle = aboutDetailDict.subtitle
-                    aboutdbDict.openingTime = aboutDetailDict.openingTime
-
-                    aboutdbDict.mobileLatitude = aboutDetailDict.mobileLatitude
-                    aboutdbDict.tourGuideAvailability = aboutDetailDict.tourGuideAvailability
-                    
-                    
-                    if((aboutDetailDict.mobileDescription?.count)! > 0) {
-                        for i in 0 ... (aboutDetailDict.mobileDescription?.count)!-1 {
-                            var aboutDescEntity: AboutDescriptionEntity!
-                            let aboutDesc: AboutDescriptionEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutDescriptionEntity", into: managedContext) as! AboutDescriptionEntity
-                            aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-                            
-                            aboutDescEntity = aboutDesc
-                            aboutdbDict.addToMobileDescRelation(aboutDescEntity)
-
-                            do {
-                                try managedContext.save()
-                                
-                                
-                            } catch let error as NSError {
-                                print("Could not save. \(error), \(error.userInfo)")
-                            }
-                            
-                        }
-                    }
-                    
-                    //MultimediaFile
-                    if(aboutDetailDict.multimediaFile != nil){
-                        if((aboutDetailDict.multimediaFile?.count)! > 0) {
-                            for i in 0 ... (aboutDetailDict.multimediaFile?.count)!-1 {
-                                var aboutImage: AboutMultimediaFileEntity!
-                                let aboutImgaeArray: AboutMultimediaFileEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutMultimediaFileEntity", into: managedContext) as! AboutMultimediaFileEntity
-                                aboutImgaeArray.image = aboutDetailDict.multimediaFile![i]
-                                
-                                aboutImage = aboutImgaeArray
-                                aboutdbDict.addToMultimediaRelation(aboutImage)
-                                do {
-                                    try managedContext.save()
-                                    
-                                } catch let error as NSError {
-                                    print("Could not save. \(error), \(error.userInfo)")
-                                }
-                                
-                            }
-                        }
-                    }
-                    
-                    do{
-                        try managedContext.save()
-                    }
-                    catch{
-                        print(error)
-                    }
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.aboutCoreDataInBackgroundThread(managedContext: managedContext)
                 }
-                else {
-                    let managedContext = getContext()
-                    let aboutDetailDict : Museum?
-                    aboutDetailDict = aboutDetailtArray[0]
-                    self.saveToCoreData(aboutDetailDict: aboutDetailDict!, managedObjContext: managedContext)
-                }
-            }
-            else {
-                let fetchData = checkAddedToCoredata(entityName: "AboutEntityArabic", idKey:"id" , idValue: aboutDetailtArray[0].id) as! [AboutEntityArabic]
-                if (fetchData.count > 0) {
-                    let managedContext = getContext()
-                    let aboutDetailDict = aboutDetailtArray[0]
-                    
-                    //update
-                    
-                    let aboutdbDict = fetchData[0]
-                    aboutdbDict.nameAr = aboutDetailDict.name
-                    aboutdbDict.id = aboutDetailDict.id
-                    aboutdbDict.tourguideAvailableAr = aboutDetailDict.tourguideAvailable
-                    aboutdbDict.contactNumberAr = aboutDetailDict.contactNumber
-                    aboutdbDict.contactEmailAr = aboutDetailDict.contactEmail
-                    aboutdbDict.mobileLongtitudeAr = aboutDetailDict.mobileLongtitude
-                    aboutdbDict.subtitleAr = aboutDetailDict.subtitle
-                    aboutdbDict.openingTimeAr = aboutDetailDict.openingTime
-
-                    aboutdbDict.mobileLatitudear = aboutDetailDict.mobileLatitude
-                    aboutdbDict.tourGuideAvlblyAr = aboutDetailDict.tourGuideAvailability
-                    
-                    
-                    if((aboutDetailDict.mobileDescription?.count)! > 0) {
-                        for i in 0 ... (aboutDetailDict.mobileDescription?.count)!-1 {
-                            var aboutDescEntity: AboutDescriptionEntityAr!
-                            let aboutDesc: AboutDescriptionEntityAr = NSEntityDescription.insertNewObject(forEntityName: "AboutDescriptionEntityAr", into: managedContext) as! AboutDescriptionEntityAr
-                            aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-                            
-                            aboutDescEntity = aboutDesc
-                            aboutdbDict.addToMobileDescRelation(aboutDescEntity)
-                            
-                            do {
-                                try managedContext.save()
-                                
-                                
-                            } catch let error as NSError {
-                                print("Could not save. \(error), \(error.userInfo)")
-                            }
-                            
-                        }
-                    }
-                    
-                    //MultimediaFile
-                    if(aboutDetailDict.multimediaFile != nil){
-                        if((aboutDetailDict.multimediaFile?.count)! > 0) {
-                            for i in 0 ... (aboutDetailDict.multimediaFile?.count)!-1 {
-                                var aboutImage: AboutMultimediaFileEntityAr!
-                                let aboutImgaeArray: AboutMultimediaFileEntityAr = NSEntityDescription.insertNewObject(forEntityName: "AboutMultimediaFileEntityAr", into: managedContext) as! AboutMultimediaFileEntityAr
-                                aboutImgaeArray.image = aboutDetailDict.multimediaFile![i]
-                                
-                                aboutImage = aboutImgaeArray
-                                aboutdbDict.addToMultimediaRelation(aboutImage)
-                                do {
-                                    try managedContext.save()
-                                    
-                                } catch let error as NSError {
-                                    print("Could not save. \(error), \(error.userInfo)")
-                                }
-                                
-                            }
-                        }
-                    }
-                    do{
-                        try managedContext.save()
-                    }
-                    catch{
-                        print(error)
-                    }
-                }
-                else {
-                    let managedContext = getContext()
-                    let aboutDetailDict : Museum?
-                    aboutDetailDict = aboutDetailtArray[0]
-                    self.saveToCoreData(aboutDetailDict: aboutDetailDict!, managedObjContext: managedContext)
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.aboutCoreDataInBackgroundThread(managedContext : managedContext)
                 }
             }
         }
     }
+    
+    func aboutCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "AboutEntity", idKey: "id" , idValue: aboutDetailtArray[0].id, managedContext: managedContext) as! [AboutEntity]
+           
+            if (fetchData.count > 0) {
+                let aboutDetailDict = aboutDetailtArray[0]
+                
+                //update
+                let aboutdbDict = fetchData[0]
+
+                aboutdbDict.name = aboutDetailDict.name
+                aboutdbDict.id = aboutDetailDict.id
+                aboutdbDict.tourguideAvailable = aboutDetailDict.tourguideAvailable
+                aboutdbDict.contactNumber = aboutDetailDict.contactNumber
+                aboutdbDict.contactEmail = aboutDetailDict.contactEmail
+                aboutdbDict.mobileLongtitude = aboutDetailDict.mobileLongtitude
+                aboutdbDict.subtitle = aboutDetailDict.subtitle
+                aboutdbDict.openingTime = aboutDetailDict.openingTime
+
+                aboutdbDict.mobileLatitude = aboutDetailDict.mobileLatitude
+                aboutdbDict.tourGuideAvailability = aboutDetailDict.tourGuideAvailability
+                
+                
+                if((aboutDetailDict.mobileDescription?.count)! > 0) {
+                    for i in 0 ... (aboutDetailDict.mobileDescription?.count)!-1 {
+                        var aboutDescEntity: AboutDescriptionEntity!
+                        let aboutDesc: AboutDescriptionEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutDescriptionEntity", into: managedContext) as! AboutDescriptionEntity
+                        aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+                        
+                        aboutDescEntity = aboutDesc
+                        aboutdbDict.addToMobileDescRelation(aboutDescEntity)
+
+                        do {
+                            try managedContext.save()
+                            
+                            
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                        
+                    }
+                }
+                
+                //MultimediaFile
+                if(aboutDetailDict.multimediaFile != nil){
+                    if((aboutDetailDict.multimediaFile?.count)! > 0) {
+                        for i in 0 ... (aboutDetailDict.multimediaFile?.count)!-1 {
+                            var aboutImage: AboutMultimediaFileEntity!
+                            let aboutImgaeArray: AboutMultimediaFileEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutMultimediaFileEntity", into: managedContext) as! AboutMultimediaFileEntity
+                            aboutImgaeArray.image = aboutDetailDict.multimediaFile![i]
+                            
+                            aboutImage = aboutImgaeArray
+                            aboutdbDict.addToMultimediaRelation(aboutImage)
+                            do {
+                                try managedContext.save()
+                                
+                            } catch let error as NSError {
+                                print("Could not save. \(error), \(error.userInfo)")
+                            }
+                            
+                        }
+                    }
+                }
+                
+                do{
+                    try managedContext.save()
+                }
+                catch{
+                    print(error)
+                }
+            }
+            else {
+                let aboutDetailDict : Museum?
+                aboutDetailDict = aboutDetailtArray[0]
+                self.saveToCoreData(aboutDetailDict: aboutDetailDict!, managedObjContext: managedContext)
+            }
+        }
+        else {
+            let fetchData = checkAddedToCoredata(entityName: "AboutEntityArabic", idKey:"id" , idValue: aboutDetailtArray[0].id, managedContext: managedContext) as! [AboutEntityArabic]
+            if (fetchData.count > 0) {
+                let aboutDetailDict = aboutDetailtArray[0]
+                
+                //update
+                
+                let aboutdbDict = fetchData[0]
+                aboutdbDict.nameAr = aboutDetailDict.name
+                aboutdbDict.id = aboutDetailDict.id
+                aboutdbDict.tourguideAvailableAr = aboutDetailDict.tourguideAvailable
+                aboutdbDict.contactNumberAr = aboutDetailDict.contactNumber
+                aboutdbDict.contactEmailAr = aboutDetailDict.contactEmail
+                aboutdbDict.mobileLongtitudeAr = aboutDetailDict.mobileLongtitude
+                aboutdbDict.subtitleAr = aboutDetailDict.subtitle
+                aboutdbDict.openingTimeAr = aboutDetailDict.openingTime
+
+                aboutdbDict.mobileLatitudear = aboutDetailDict.mobileLatitude
+                aboutdbDict.tourGuideAvlblyAr = aboutDetailDict.tourGuideAvailability
+                
+                
+                if((aboutDetailDict.mobileDescription?.count)! > 0) {
+                    for i in 0 ... (aboutDetailDict.mobileDescription?.count)!-1 {
+                        var aboutDescEntity: AboutDescriptionEntityAr!
+                        let aboutDesc: AboutDescriptionEntityAr = NSEntityDescription.insertNewObject(forEntityName: "AboutDescriptionEntityAr", into: managedContext) as! AboutDescriptionEntityAr
+                        aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+                        
+                        aboutDescEntity = aboutDesc
+                        aboutdbDict.addToMobileDescRelation(aboutDescEntity)
+                        
+                        do {
+                            try managedContext.save()
+                            
+                            
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                        
+                    }
+                }
+                
+                //MultimediaFile
+                if(aboutDetailDict.multimediaFile != nil){
+                    if((aboutDetailDict.multimediaFile?.count)! > 0) {
+                        for i in 0 ... (aboutDetailDict.multimediaFile?.count)!-1 {
+                            var aboutImage: AboutMultimediaFileEntityAr!
+                            let aboutImgaeArray: AboutMultimediaFileEntityAr = NSEntityDescription.insertNewObject(forEntityName: "AboutMultimediaFileEntityAr", into: managedContext) as! AboutMultimediaFileEntityAr
+                            aboutImgaeArray.image = aboutDetailDict.multimediaFile![i]
+                            
+                            aboutImage = aboutImgaeArray
+                            aboutdbDict.addToMultimediaRelation(aboutImage)
+                            do {
+                                try managedContext.save()
+                                
+                            } catch let error as NSError {
+                                print("Could not save. \(error), \(error.userInfo)")
+                            }
+                            
+                        }
+                    }
+                }
+                do{
+                    try managedContext.save()
+                }
+                catch{
+                    print(error)
+                }
+            }
+            else {
+                let aboutDetailDict : Museum?
+                aboutDetailDict = aboutDetailtArray[0]
+                self.saveToCoreData(aboutDetailDict: aboutDetailDict!, managedObjContext: managedContext)
+            }
+        }
+    }
+    
     func saveToCoreData(aboutDetailDict: Museum, managedObjContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let aboutdbDict: AboutEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutEntity", into: managedObjContext) as! AboutEntity
@@ -1333,12 +1365,12 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    
     func fetchAboutDetailsFromCoredata() {
-        
+        let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var aboutArray = [AboutEntity]()
-                let managedContext = getContext()
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "AboutEntity")
                 
                 if(museumId != nil) {
@@ -1383,7 +1415,6 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             }
             else {
                 var aboutArray = [AboutEntityArabic]()
-                let managedContext = getContext()
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "AboutEntityArabic")
                 if(museumId != nil) {
                     fetchRequest.predicate = NSPredicate.init(format: "id == \(museumId!)")
@@ -1425,19 +1456,8 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-    func getContext() -> NSManagedObjectContext{
-        
-        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
-        if #available(iOS 10.0, *) {
-            return
-                appDelegate!.persistentContainer.viewContext
-        } else {
-            return appDelegate!.managedObjectContext
-        }
-    }
-    func checkAddedToCoredata(entityName: String?,idKey:String?, idValue: String?) -> [NSManagedObject]
-    {
-        let managedContext = getContext()
+    
+    func checkAddedToCoredata(entityName: String?,idKey:String?, idValue: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
         var fetchResults : [NSManagedObject] = []
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
         if (idValue != nil) {
@@ -1446,6 +1466,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         fetchResults = try! managedContext.fetch(fetchRequest)
         return fetchResults
     }
+    
     func showNodata() {
         var errorMessage: String
         errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",

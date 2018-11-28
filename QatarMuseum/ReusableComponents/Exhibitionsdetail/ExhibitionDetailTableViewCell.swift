@@ -16,7 +16,7 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var detailSecondLabel: UITextView!
     @IBOutlet weak var exbtnDateLabel: UILabel!
     @IBOutlet weak var exbtnTimeLabel: UITextView!
-    @IBOutlet weak var locationLabel: UITextView!
+    @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var exhibitionTimingTitle: UILabel!
     @IBOutlet weak var locationsTitle: UILabel!
     @IBOutlet weak var contactTitle: UILabel!
@@ -67,7 +67,7 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
         detailSecondLabel.text = exhibition.longDescription?.replacingOccurrences(of: "&nbsp;", with: " ", options: .regularExpression, range: nil)
         exbtnDateLabel.text = ""
         exbtnTimeLabel.text = exhibition.startDate!.replacingOccurrences(of: "<[^>]+>|&|#039;", with: "", options: .regularExpression, range: nil) + "\n" + exhibition.endDate!.replacingOccurrences(of: "<[^>]+>|&|#039;", with: "", options: .regularExpression, range: nil)
-        locationLabel.text = exhibition.location?.uppercased()
+//        locationLabel.text = exhibition.location?.uppercased()
         centerImgHeight.constant = 0
         centerImageView.isHidden = true
         exhibitionTimingTitle.text = NSLocalizedString("EXHIBITION_TIME_TITLE",

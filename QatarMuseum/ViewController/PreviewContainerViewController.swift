@@ -12,9 +12,7 @@ import Crashlytics
 import UIKit
 
 class PreviewContainerViewController: UIViewController,UIPageViewControllerDelegate,UIPageViewControllerDataSource,HeaderViewProtocol,UIGestureRecognizerDelegate,LoadingViewProtocol {
-    
     @IBOutlet weak var loadingView: LoadingView!
-    
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var pageViewOne: UIView!
@@ -37,7 +35,6 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     @IBOutlet weak var viewFourLineTwo: UIView!
     @IBOutlet weak var viewFiveLineOne: UIView!
     @IBOutlet weak var viewFiveLineTwo: UIView!
-    
     @IBOutlet weak var pageImageOneHeight: NSLayoutConstraint!
     @IBOutlet weak var pageImageOneWidth: NSLayoutConstraint!
     @IBOutlet weak var pageImageTwoHeight: NSLayoutConstraint!
@@ -48,6 +45,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     @IBOutlet weak var pageImageFourWidth: NSLayoutConstraint!
     @IBOutlet weak var pageImageFiveHeight: NSLayoutConstraint!
     @IBOutlet weak var pageImageFiveWidth: NSLayoutConstraint!
+    
     var pageViewController = UIPageViewController()
     var pageImages = NSArray()
     var currentPreviewItem = Int()
@@ -59,6 +57,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     var tourGuideId : String? = nil
     let networkReachability = NetworkReachabilityManager()
     var currentContentViewController: PreviewContentViewController!
+    let appDelegate =  UIApplication.shared.delegate as? AppDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,10 +84,9 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                 tourGuideId = "12916"
             }
         }
+        fetchTourGuideFromCoredata()
         if (networkReachability?.isReachable)! {
-            getTourGuideDataFromServer()
-        } else {
-            fetchTourGuideFromCoredata()
+            getTourGuideDataFromServerInBackgound()
         }
         
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -642,6 +640,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         pageImageViewThree.image = UIImage(named: "unselected")
         pageImageViewFour.image = UIImage(named: "unselected")
     }
+    
     //MARK: Header Delegate
     func headerCloseButtonPressed() {
         self.closeAudio()
@@ -660,9 +659,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     }
     
     //MARK: WebServiceCall
-    func getTourGuideDataFromServer()
-    {
-        
+    func getTourGuideDataFromServer() {
         _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": tourGuideId!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
             switch response.result {
             case .success(let data):
@@ -677,8 +674,6 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                     self.showPageControlAtFirstTime()
                     self.saveOrUpdateTourGuideCoredata()
                 }
-                
-               
                 self.loadingView.stopLoading()
                 self.loadingView.isHidden = true
                 
@@ -689,14 +684,32 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                     self.loadingView.showNoDataView()
                 }
             case .failure(let error):
-                
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
                 self.loadingView.stopLoading()
                 self.loadingView.noDataView.isHidden = false
                 self.loadingView.isHidden = false
                 self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
             }
         }
     }
+    
+    func getTourGuideDataFromServerInBackgound() {
+        let queue = DispatchQueue(label: "", qos: .background, attributes: .concurrent)
+        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": tourGuideId!])).responseObject(queue: queue) { (response: DataResponse<TourGuideFloorMaps>) -> Void in
+            switch response.result {
+            case .success(let data):
+                if(data.tourGuideFloorMap?.count != 0) {
+                    self.saveOrUpdateTourGuideCoredata()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
     func filterButtonPressed() {
         self.closeAudio()
         if (tourGuideArray.count != 0) {
@@ -747,185 +760,196 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                 view.window!.layer.add(transition, forKey: kCATransition)
         self.present(objectDetailView, animated: false, completion: nil)
     }
+    
     //MARK: TourGuide DataBase
     func saveOrUpdateTourGuideCoredata() {
         if (tourGuideArray.count > 0) {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-               
-                let fetchData = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "tourGuideId" , idValue: tourGuideId ) as! [FloorMapTourGuideEntity]
-                if (fetchData.count > 0) {
-                    for i in 0 ... tourGuideArray.count-1 {
-                        let managedContext = getContext()
-                        let tourGuideDeatilDict = tourGuideArray[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "nid", idValue: tourGuideArray[i].nid) as! [FloorMapTourGuideEntity]
-                        
-                        if(fetchResult.count != 0) {
-                            
-                            //update
-                            let tourguidedbDict = fetchResult[0]
-                            tourguidedbDict.title = tourGuideDeatilDict.title
-                            tourguidedbDict.accessionNumber = tourGuideDeatilDict.accessionNumber
-                            tourguidedbDict.nid =  tourGuideDeatilDict.nid
-                            tourguidedbDict.curatorialDescription = tourGuideDeatilDict.curatorialDescription
-                            tourguidedbDict.diam = tourGuideDeatilDict.diam
-                            
-                            tourguidedbDict.dimensions = tourGuideDeatilDict.dimensions
-                            tourguidedbDict.mainTitle = tourGuideDeatilDict.mainTitle
-                            tourguidedbDict.objectEngSummary =  tourGuideDeatilDict.objectENGSummary
-                            tourguidedbDict.objectHistory = tourGuideDeatilDict.objectHistory
-                            tourguidedbDict.production = tourGuideDeatilDict.production
-                            
-                            tourguidedbDict.productionDates = tourGuideDeatilDict.productionDates
-                            tourguidedbDict.image = tourGuideDeatilDict.image
-                            tourguidedbDict.tourGuideId =  tourGuideDeatilDict.tourGuideId
-                            tourguidedbDict.artifactNumber = tourGuideDeatilDict.artifactNumber
-                            tourguidedbDict.artifactPosition = tourGuideDeatilDict.artifactPosition
-                            
-                            tourguidedbDict.audioDescriptif = tourGuideDeatilDict.audioDescriptif
-                            tourguidedbDict.audioFile = tourGuideDeatilDict.audioFile
-                            tourguidedbDict.floorLevel =  tourGuideDeatilDict.floorLevel
-                            tourguidedbDict.galleyNumber = tourGuideDeatilDict.galleyNumber
-                            tourguidedbDict.artistOrCreatorOrAuthor = tourGuideDeatilDict.artistOrCreatorOrAuthor
-                            tourguidedbDict.periodOrStyle = tourGuideDeatilDict.periodOrStyle
-                            tourguidedbDict.techniqueAndMaterials = tourGuideDeatilDict.techniqueAndMaterials
-                            if let imageUrl = tourGuideDeatilDict.thumbImage{
-                                
-                                if(imageUrl != "") {
-                                    if let data = try? Data(contentsOf: URL(string: imageUrl)!){
-                                        let image: UIImage = UIImage(data: data)!
-                                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
-                                    }
-                                }
-                            }
-                            
-                            if(tourGuideDeatilDict.images != nil) {
-                                if((tourGuideDeatilDict.images?.count)! > 0) {
-                                    for i in 0 ... (tourGuideDeatilDict.images?.count)!-1 {
-                                        var tourGuideImgEntity: FloorMapImagesEntity!
-                                        let tourGuideImg: FloorMapImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "FloorMapImagesEntity", into: managedContext) as! FloorMapImagesEntity
-                                        tourGuideImg.image = tourGuideDeatilDict.images?[i]
-                                        
-                                        tourGuideImgEntity = tourGuideImg
-                                        tourguidedbDict.addToImagesRelation(tourGuideImgEntity)
-                                        do {
-                                            try managedContext.save()
-                                            
-                                        } catch let error as NSError {
-                                            print("Could not save. \(error), \(error.userInfo)")
-                                        }
-                                        
-                                    }
-                                }
-                            }
-                            
-                            do{
-                                try managedContext.save()
-                            }
-                            catch{
-                                print(error)
-                            }
-                        }else {
-                            self.saveToCoreData(tourGuideDetailDict: tourGuideDeatilDict, managedObjContext: managedContext)
-                        }
-                    }//for
-                }//if
-                else {
-                    for i in 0 ... tourGuideArray.count-1 {
-                        let managedContext = getContext()
-                        let tourGuideDetailDict : TourGuideFloorMap?
-                        tourGuideDetailDict = tourGuideArray[i]
-                        self.saveToCoreData(tourGuideDetailDict: tourGuideDetailDict!, managedObjContext: managedContext)
-                    }
-                    
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.coreDataInBackgroundThread(managedContext: managedContext)
                 }
-            }
-            else {
-                let fetchData = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey:"tourGuideId" , idValue: tourGuideId) as! [FloorMapTourGuideEntityAr]
-                if (fetchData.count > 0) {
-                    for i in 0 ... tourGuideArray.count-1 {
-                        let managedContext = getContext()
-                        let tourGuideDeatilDict = tourGuideArray[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey: "nid", idValue: tourGuideArray[i].nid) as! [FloorMapTourGuideEntityAr]
-                        //update
-                        if(fetchResult.count != 0) {
-                            let tourguidedbDict = fetchResult[0]
-                            tourguidedbDict.title = tourGuideDeatilDict.title
-                            tourguidedbDict.accessionNumber = tourGuideDeatilDict.accessionNumber
-                            tourguidedbDict.nid =  tourGuideDeatilDict.nid
-                            tourguidedbDict.curatorialDescription = tourGuideDeatilDict.curatorialDescription
-                            tourguidedbDict.diam = tourGuideDeatilDict.diam
-                            
-                            tourguidedbDict.dimensions = tourGuideDeatilDict.dimensions
-                            tourguidedbDict.mainTitle = tourGuideDeatilDict.mainTitle
-                            tourguidedbDict.objectEngSummary =  tourGuideDeatilDict.objectENGSummary
-                            tourguidedbDict.objectHistory = tourGuideDeatilDict.objectHistory
-                            tourguidedbDict.production = tourGuideDeatilDict.production
-                            
-                            tourguidedbDict.productionDates = tourGuideDeatilDict.productionDates
-                            tourguidedbDict.image = tourGuideDeatilDict.image
-                            tourguidedbDict.tourGuideId =  tourGuideDeatilDict.tourGuideId
-                            tourguidedbDict.artifactNumber = tourGuideDeatilDict.artifactNumber
-                            tourguidedbDict.artifactPosition = tourGuideDeatilDict.artifactPosition
-                            
-                            tourguidedbDict.audioDescriptif = tourGuideDeatilDict.audioDescriptif
-                            tourguidedbDict.audioFile = tourGuideDeatilDict.audioFile
-                            tourguidedbDict.floorLevel =  tourGuideDeatilDict.floorLevel
-                            tourguidedbDict.galleyNumber = tourGuideDeatilDict.galleyNumber
-                            tourguidedbDict.artistOrCreatorOrAuthor = tourGuideDeatilDict.artistOrCreatorOrAuthor
-                            tourguidedbDict.periodOrStyle = tourGuideDeatilDict.periodOrStyle
-                            tourguidedbDict.techniqueAndMaterials = tourGuideDeatilDict.techniqueAndMaterials
-                            if let imageUrl = tourGuideDeatilDict.thumbImage{
-                                if(imageUrl != "") {
-                                    if let data = try? Data(contentsOf: URL(string: imageUrl)!)
-                                    {
-                                        let image: UIImage = UIImage(data: data)!
-                                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
-                                    }
-                                }
-                                
-                            }
-                            if(tourGuideDeatilDict.images != nil) {
-                                if((tourGuideDeatilDict.images?.count)! > 0) {
-                                    for i in 0 ... (tourGuideDeatilDict.images?.count)!-1 {
-                                        var tourGuideImgEntity: FloorMapImagesEntityAr!
-                                        let tourGuideImg: FloorMapImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FloorMapImagesEntityAr", into: managedContext) as! FloorMapImagesEntityAr
-                                        tourGuideImg.image = tourGuideDeatilDict.images?[i]
-                                        
-                                        tourGuideImgEntity = tourGuideImg
-                                        tourguidedbDict.addToImagesRelation(tourGuideImgEntity)
-                                        do {
-                                            try managedContext.save()
-                                            
-                                        } catch let error as NSError {
-                                            print("Could not save. \(error), \(error.userInfo)")
-                                        }
-                                        
-                                    }
-                                }
-                            }
-                            do{
-                                try managedContext.save()
-                            }
-                            catch{
-                                print(error)
-                            }
-                        } else {
-                            self.saveToCoreData(tourGuideDetailDict: tourGuideDeatilDict, managedObjContext: managedContext)
-                        }
-                    }//for
-                } //if
-                else {
-                    for i in 0 ... tourGuideArray.count-1 {
-                        let managedContext = getContext()
-                        let tourGuideDetailDict : TourGuideFloorMap?
-                        tourGuideDetailDict = tourGuideArray[i]
-                        self.saveToCoreData(tourGuideDetailDict: tourGuideDetailDict!, managedObjContext: managedContext)
-                    }
-                    
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.coreDataInBackgroundThread(managedContext : managedContext)
                 }
             }
         }
     }
+    
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "tourGuideId" , idValue: tourGuideId, managedContext: managedContext) as! [FloorMapTourGuideEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... tourGuideArray.count-1 {
+                    let tourGuideDeatilDict = tourGuideArray[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "nid", idValue: tourGuideArray[i].nid, managedContext: managedContext) as! [FloorMapTourGuideEntity]
+                    
+                    if(fetchResult.count != 0) {
+                        
+                        //update
+                        let tourguidedbDict = fetchResult[0]
+                        tourguidedbDict.title = tourGuideDeatilDict.title
+                        tourguidedbDict.accessionNumber = tourGuideDeatilDict.accessionNumber
+                        tourguidedbDict.nid =  tourGuideDeatilDict.nid
+                        tourguidedbDict.curatorialDescription = tourGuideDeatilDict.curatorialDescription
+                        tourguidedbDict.diam = tourGuideDeatilDict.diam
+                        
+                        tourguidedbDict.dimensions = tourGuideDeatilDict.dimensions
+                        tourguidedbDict.mainTitle = tourGuideDeatilDict.mainTitle
+                        tourguidedbDict.objectEngSummary =  tourGuideDeatilDict.objectENGSummary
+                        tourguidedbDict.objectHistory = tourGuideDeatilDict.objectHistory
+                        tourguidedbDict.production = tourGuideDeatilDict.production
+                        
+                        tourguidedbDict.productionDates = tourGuideDeatilDict.productionDates
+                        tourguidedbDict.image = tourGuideDeatilDict.image
+                        tourguidedbDict.tourGuideId =  tourGuideDeatilDict.tourGuideId
+                        tourguidedbDict.artifactNumber = tourGuideDeatilDict.artifactNumber
+                        tourguidedbDict.artifactPosition = tourGuideDeatilDict.artifactPosition
+                        
+                        tourguidedbDict.audioDescriptif = tourGuideDeatilDict.audioDescriptif
+                        tourguidedbDict.audioFile = tourGuideDeatilDict.audioFile
+                        tourguidedbDict.floorLevel =  tourGuideDeatilDict.floorLevel
+                        tourguidedbDict.galleyNumber = tourGuideDeatilDict.galleyNumber
+                        tourguidedbDict.artistOrCreatorOrAuthor = tourGuideDeatilDict.artistOrCreatorOrAuthor
+                        tourguidedbDict.periodOrStyle = tourGuideDeatilDict.periodOrStyle
+                        tourguidedbDict.techniqueAndMaterials = tourGuideDeatilDict.techniqueAndMaterials
+                        if let imageUrl = tourGuideDeatilDict.thumbImage{
+                            
+                            if(imageUrl != "") {
+                                if let data = try? Data(contentsOf: URL(string: imageUrl)!){
+                                    let image: UIImage = UIImage(data: data)!
+                                    tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
+                                }
+                            }
+                        }
+                        
+                        if(tourGuideDeatilDict.images != nil) {
+                            if((tourGuideDeatilDict.images?.count)! > 0) {
+                                for i in 0 ... (tourGuideDeatilDict.images?.count)!-1 {
+                                    var tourGuideImgEntity: FloorMapImagesEntity!
+                                    let tourGuideImg: FloorMapImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "FloorMapImagesEntity", into: managedContext) as! FloorMapImagesEntity
+                                    tourGuideImg.image = tourGuideDeatilDict.images?[i]
+                                    
+                                    tourGuideImgEntity = tourGuideImg
+                                    tourguidedbDict.addToImagesRelation(tourGuideImgEntity)
+                                    do {
+                                        try managedContext.save()
+                                        
+                                    } catch let error as NSError {
+                                        print("Could not save. \(error), \(error.userInfo)")
+                                    }
+                                    
+                                }
+                            }
+                        }
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    }else {
+                        self.saveToCoreData(tourGuideDetailDict: tourGuideDeatilDict, managedObjContext: managedContext)
+                    }
+                }//for
+            }//if
+            else {
+                for i in 0 ... tourGuideArray.count-1 {
+                    let tourGuideDetailDict : TourGuideFloorMap?
+                    tourGuideDetailDict = tourGuideArray[i]
+                    self.saveToCoreData(tourGuideDetailDict: tourGuideDetailDict!, managedObjContext: managedContext)
+                }
+                
+            }
+        }
+        else {
+            let fetchData = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey:"tourGuideId" , idValue: tourGuideId, managedContext: managedContext) as! [FloorMapTourGuideEntityAr]
+            if (fetchData.count > 0) {
+                for i in 0 ... tourGuideArray.count-1 {
+                    let tourGuideDeatilDict = tourGuideArray[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey: "nid", idValue: tourGuideArray[i].nid, managedContext: managedContext) as! [FloorMapTourGuideEntityAr]
+                    //update
+                    if(fetchResult.count != 0) {
+                        let tourguidedbDict = fetchResult[0]
+                        tourguidedbDict.title = tourGuideDeatilDict.title
+                        tourguidedbDict.accessionNumber = tourGuideDeatilDict.accessionNumber
+                        tourguidedbDict.nid =  tourGuideDeatilDict.nid
+                        tourguidedbDict.curatorialDescription = tourGuideDeatilDict.curatorialDescription
+                        tourguidedbDict.diam = tourGuideDeatilDict.diam
+                        
+                        tourguidedbDict.dimensions = tourGuideDeatilDict.dimensions
+                        tourguidedbDict.mainTitle = tourGuideDeatilDict.mainTitle
+                        tourguidedbDict.objectEngSummary =  tourGuideDeatilDict.objectENGSummary
+                        tourguidedbDict.objectHistory = tourGuideDeatilDict.objectHistory
+                        tourguidedbDict.production = tourGuideDeatilDict.production
+                        
+                        tourguidedbDict.productionDates = tourGuideDeatilDict.productionDates
+                        tourguidedbDict.image = tourGuideDeatilDict.image
+                        tourguidedbDict.tourGuideId =  tourGuideDeatilDict.tourGuideId
+                        tourguidedbDict.artifactNumber = tourGuideDeatilDict.artifactNumber
+                        tourguidedbDict.artifactPosition = tourGuideDeatilDict.artifactPosition
+                        
+                        tourguidedbDict.audioDescriptif = tourGuideDeatilDict.audioDescriptif
+                        tourguidedbDict.audioFile = tourGuideDeatilDict.audioFile
+                        tourguidedbDict.floorLevel =  tourGuideDeatilDict.floorLevel
+                        tourguidedbDict.galleyNumber = tourGuideDeatilDict.galleyNumber
+                        tourguidedbDict.artistOrCreatorOrAuthor = tourGuideDeatilDict.artistOrCreatorOrAuthor
+                        tourguidedbDict.periodOrStyle = tourGuideDeatilDict.periodOrStyle
+                        tourguidedbDict.techniqueAndMaterials = tourGuideDeatilDict.techniqueAndMaterials
+                        if let imageUrl = tourGuideDeatilDict.thumbImage{
+                            if(imageUrl != "") {
+                                if let data = try? Data(contentsOf: URL(string: imageUrl)!)
+                                {
+                                    let image: UIImage = UIImage(data: data)!
+                                    tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
+                                }
+                            }
+                            
+                        }
+                        if(tourGuideDeatilDict.images != nil) {
+                            if((tourGuideDeatilDict.images?.count)! > 0) {
+                                for i in 0 ... (tourGuideDeatilDict.images?.count)!-1 {
+                                    var tourGuideImgEntity: FloorMapImagesEntityAr!
+                                    let tourGuideImg: FloorMapImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FloorMapImagesEntityAr", into: managedContext) as! FloorMapImagesEntityAr
+                                    tourGuideImg.image = tourGuideDeatilDict.images?[i]
+                                    
+                                    tourGuideImgEntity = tourGuideImg
+                                    tourguidedbDict.addToImagesRelation(tourGuideImgEntity)
+                                    do {
+                                        try managedContext.save()
+                                        
+                                    } catch let error as NSError {
+                                        print("Could not save. \(error), \(error.userInfo)")
+                                    }
+                                    
+                                }
+                            }
+                        }
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    } else {
+                        self.saveToCoreData(tourGuideDetailDict: tourGuideDeatilDict, managedObjContext: managedContext)
+                    }
+                }//for
+            } //if
+            else {
+                for i in 0 ... tourGuideArray.count-1 {
+                    let tourGuideDetailDict : TourGuideFloorMap?
+                    tourGuideDetailDict = tourGuideArray[i]
+                    self.saveToCoreData(tourGuideDetailDict: tourGuideDetailDict!, managedObjContext: managedContext)
+                }
+                
+            }
+        }
+    }
+    
     func saveToCoreData(tourGuideDetailDict: TourGuideFloorMap, managedObjContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let tourguidedbDict: FloorMapTourGuideEntity = NSEntityDescription.insertNewObject(forEntityName: "FloorMapTourGuideEntity", into: managedObjContext) as! FloorMapTourGuideEntity
@@ -1040,19 +1064,17 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         }
         do {
             try managedObjContext.save()
-            
-            
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    
     func fetchTourGuideFromCoredata() {
-        self.loadingView.stopLoading()
-        self.loadingView.isHidden = true
+        let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var tourGuideArray = [FloorMapTourGuideEntity]()
-                tourGuideArray = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "tourGuideId", idValue: tourGuideId) as! [FloorMapTourGuideEntity]
+                tourGuideArray = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "tourGuideId", idValue: tourGuideId, managedContext: managedContext) as! [FloorMapTourGuideEntity]
                 if (tourGuideArray.count > 0) {
                     for i in 0 ... tourGuideArray.count-1 {
                         let tourGuideDict = tourGuideArray[i]
@@ -1065,7 +1087,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                                 }
                             }
                         }
-                        self.tourGuideArray.insert(TourGuideFloorMap(title: tourGuideDict.title, accessionNumber: tourGuideDict.accessionNumber, nid: tourGuideDict.nid, curatorialDescription: tourGuideDict.curatorialDescription, diam: tourGuideDict.diam, dimensions: tourGuideDict.dimensions, mainTitle: tourGuideDict.mainTitle, objectENGSummary: tourGuideDict.objectEngSummary, objectHistory: tourGuideDict.objectHistory, production: tourGuideDict.production, productionDates: tourGuideDict.productionDates, image: tourGuideDict.image, tourGuideId: tourGuideDict.tourGuideId,artifactNumber: tourGuideDict.artifactNumber, artifactPosition: tourGuideDict.artifactPosition, audioDescriptif: tourGuideDict.audioDescriptif, images: imgsArray, audioFile: tourGuideDict.audioFile, floorLevel: tourGuideDict.floorLevel, galleyNumber: tourGuideDict.galleyNumber, artistOrCreatorOrAuthor: tourGuideDict.artistOrCreatorOrAuthor, periodOrStyle: tourGuideDict.periodOrStyle, techniqueAndMaterials: tourGuideDict.techniqueAndMaterials,thumbImage: tourGuideDict.thumbImage,artifactImg: tourGuideDict.artifactImg), at: 0)
+                        self.tourGuideArray.insert(TourGuideFloorMap(title: tourGuideDict.title, accessionNumber: tourGuideDict.accessionNumber, nid: tourGuideDict.nid, curatorialDescription: tourGuideDict.curatorialDescription, diam: tourGuideDict.diam, dimensions: tourGuideDict.dimensions, mainTitle: tourGuideDict.mainTitle, objectENGSummary: tourGuideDict.objectEngSummary, objectHistory: tourGuideDict.objectHistory, production: tourGuideDict.production, productionDates: tourGuideDict.productionDates, image: tourGuideDict.image, tourGuideId: tourGuideDict.tourGuideId,artifactNumber: tourGuideDict.artifactNumber, artifactPosition: tourGuideDict.artifactPosition, audioDescriptif: tourGuideDict.audioDescriptif, images: imgsArray, audioFile: tourGuideDict.audioFile, floorLevel: tourGuideDict.floorLevel, galleyNumber: tourGuideDict.galleyNumber, artistOrCreatorOrAuthor: tourGuideDict.artistOrCreatorOrAuthor, periodOrStyle: tourGuideDict.periodOrStyle, techniqueAndMaterials: tourGuideDict.techniqueAndMaterials,thumbImage: tourGuideDict.thumbImage,artifactImg: tourGuideDict.artifactImg), at: i)
                         
                     }
                     self.loadingView.stopLoading()
@@ -1077,20 +1099,22 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                         self.setUpPageControl()
                         self.showOrHidePageControlView(countValue: self.tourGuideArray.count, scrolling: false)
                         self.showPageControlAtFirstTime()
+                    } else if (networkReachability?.isReachable)! {
+                        self.showNoData()
                     } else {
                         self.showNoNetwork()
                     }
                     
+                } else if (networkReachability?.isReachable)! && self.tourGuideArray.count == 0 {
+                    self.getTourGuideDataFromServer()
                 } else {
+                    self.loadingView.stopLoading()
+                    self.loadingView.isHidden = true
                     self.showNoNetwork()
                 }
-                
-                
-                
-            }
-            else {
+            } else {
                 var tourGuideArray = [FloorMapTourGuideEntityAr]()
-                tourGuideArray = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey: "tourGuideId", idValue: tourGuideId) as! [FloorMapTourGuideEntityAr]
+                tourGuideArray = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey: "tourGuideId", idValue: tourGuideId, managedContext: managedContext) as! [FloorMapTourGuideEntityAr]
                 if(tourGuideArray.count > 0) {
                     for i in 0 ... tourGuideArray.count-1 {
                         let tourGuideDict = tourGuideArray[i]
@@ -1103,9 +1127,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                                 }
                             }
                         }
-                        self.tourGuideArray.insert(TourGuideFloorMap(title: tourGuideDict.title, accessionNumber: tourGuideDict.accessionNumber, nid: tourGuideDict.nid, curatorialDescription: tourGuideDict.curatorialDescription, diam: tourGuideDict.diam, dimensions: tourGuideDict.dimensions, mainTitle: tourGuideDict.mainTitle, objectENGSummary: tourGuideDict.objectEngSummary, objectHistory: tourGuideDict.objectHistory, production: tourGuideDict.production, productionDates: tourGuideDict.productionDates, image: tourGuideDict.image, tourGuideId: tourGuideDict.tourGuideId,artifactNumber: tourGuideDict.artifactNumber, artifactPosition: tourGuideDict.artifactPosition, audioDescriptif: tourGuideDict.audioDescriptif, images: imgsArray, audioFile: tourGuideDict.audioFile, floorLevel: tourGuideDict.floorLevel, galleyNumber: tourGuideDict.galleyNumber, artistOrCreatorOrAuthor: tourGuideDict.artistOrCreatorOrAuthor, periodOrStyle: tourGuideDict.periodOrStyle, techniqueAndMaterials: tourGuideDict.techniqueAndMaterials,thumbImage: tourGuideDict.thumbImage,artifactImg: tourGuideDict.artifactImg), at: 0)
-                        
-                        
+                        self.tourGuideArray.insert(TourGuideFloorMap(title: tourGuideDict.title, accessionNumber: tourGuideDict.accessionNumber, nid: tourGuideDict.nid, curatorialDescription: tourGuideDict.curatorialDescription, diam: tourGuideDict.diam, dimensions: tourGuideDict.dimensions, mainTitle: tourGuideDict.mainTitle, objectENGSummary: tourGuideDict.objectEngSummary, objectHistory: tourGuideDict.objectHistory, production: tourGuideDict.production, productionDates: tourGuideDict.productionDates, image: tourGuideDict.image, tourGuideId: tourGuideDict.tourGuideId,artifactNumber: tourGuideDict.artifactNumber, artifactPosition: tourGuideDict.artifactPosition, audioDescriptif: tourGuideDict.audioDescriptif, images: imgsArray, audioFile: tourGuideDict.audioFile, floorLevel: tourGuideDict.floorLevel, galleyNumber: tourGuideDict.galleyNumber, artistOrCreatorOrAuthor: tourGuideDict.artistOrCreatorOrAuthor, periodOrStyle: tourGuideDict.periodOrStyle, techniqueAndMaterials: tourGuideDict.techniqueAndMaterials,thumbImage: tourGuideDict.thumbImage,artifactImg: tourGuideDict.artifactImg), at: i)
                     }
                     self.loadingView.stopLoading()
                     self.loadingView.isHidden = true
@@ -1116,10 +1138,16 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                         self.setUpPageControl()
                         self.showOrHidePageControlView(countValue: self.tourGuideArray.count, scrolling: false)
                         self.showPageControlAtFirstTime()
+                    } else if (networkReachability?.isReachable)! {
+                        self.showNoData()
                     } else {
                         self.showNoNetwork()
                     }
+                } else if (networkReachability?.isReachable)! && self.tourGuideArray.count == 0 {
+                    self.getTourGuideDataFromServer()
                 } else {
+                    self.loadingView.stopLoading()
+                    self.loadingView.isHidden = true
                     self.showNoNetwork()
                 }
             }
@@ -1127,21 +1155,9 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-    func getContext() -> NSManagedObjectContext{
-        
-        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
-        if #available(iOS 10.0, *) {
-            return
-                appDelegate!.persistentContainer.viewContext
-        } else {
-            return appDelegate!.managedObjectContext
-        }
-    }
-    func checkAddedToCoredata(entityName: String?,idKey:String?, idValue: String?) -> [NSManagedObject]
-    {
-        let managedContext = getContext()
+    
+    func checkAddedToCoredata(entityName: String?, idKey:String?, idValue: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
         var fetchResults : [NSManagedObject] = []
-        
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
         if (idValue != nil) {
             fetchRequest.predicate = NSPredicate(format: "\(idKey!) == %@", idValue!)
@@ -1151,6 +1167,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         fetchResults = try! managedContext.fetch(fetchRequest)
         return fetchResults
     }
+    
     func showNodata() {
         
     }
@@ -1160,18 +1177,23 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
             self.getTourGuideDataFromServer()
         }
     }
+    
     func showNoNetwork() {
         self.loadingView.stopLoading()
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
     }
+    
+    func showNoData() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoDataView()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    
-
 }

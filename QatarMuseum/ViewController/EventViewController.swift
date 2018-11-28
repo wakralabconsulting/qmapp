@@ -446,7 +446,6 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     }
     
     // MARK:- UIGestureRecognizerDelegate
-    
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         let shouldBegin = self.eventCollectionView.contentOffset.y <= -self.eventCollectionView.contentInset.top
         if shouldBegin {
@@ -514,8 +513,6 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
         return UIColor.red
     }
-    
-  
     
     @IBAction func previoudDateSelected(_ sender: UIButton) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -659,61 +656,89 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     //MARK: Coredata Method
     func saveOrUpdateEducationEventCoredata() {
         if (educationEventArray.count > 0) {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-                let dateID = getUniqueDate()
-                let fetchData = checkAddedToCoredata(entityName: "EducationEventEntity", idKey: "dateId", idValue: dateID) as! [EducationEventEntity]
-                let managedContext = getContext()
-                if (fetchData.count > 0) {
-                    for i in 0 ... educationEventArray.count-1 {
-                        let educationDict = educationEventArray[i]
-                        let fetchResultData = checkAddedToCoredata(entityName: "EducationEventEntity", idKey: "itemId", idValue: educationDict.itemId) as! [EducationEventEntity]
-                        if ( fetchResultData.count > 0) {
-                            let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "EducationEventEntity")
-                            if(isDeleted == true) {
-                                self.saveToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
-                            }
-                        } else {
-                            self.saveToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
-                        }
-                    }
-                    
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.educationEventCoreDataInBackgroundThread(managedContext: managedContext)
                 }
-                else {
-                    for i in 0 ... educationEventArray.count-1 {
-                        let educationEvent = educationEventArray[i]
-                        self.saveToCoreData(educationEventDict: educationEvent, dateId: dateID, managedObjContext: managedContext)
-                    }
-                }
-            }
-            else {
-                let dateID = getUniqueDate()
-                let fetchData = checkAddedToCoredata(entityName: "EducationEventEntityAr", idKey: "dateId", idValue: dateID) as! [EducationEventEntityAr]
-                let managedContext = getContext()
-                if (fetchData.count > 0) {
-                    for i in 0 ... educationEventArray.count-1 {
-                        let educationDict = educationEventArray[i]
-                        let fetchResultData = checkAddedToCoredata(entityName: "EducationEventEntityAr", idKey: "itemId", idValue: educationDict.itemId) as! [EducationEventEntityAr]
-                        if ( fetchResultData.count > 0) {
-                            let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "EducationEventEntityAr")
-                            if(isDeleted == true) {
-                                self.saveToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
-                            }
-                        } else {
-                            self.saveToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
-                        }
-                    }
-                    
-                   
-                }
-                else {
-                   for i in 0 ... educationEventArray.count-1 {
-                        let educationEvent = educationEventArray[i]
-                    self.saveToCoreData(educationEventDict: educationEvent, dateId: dateID, managedObjContext: managedContext)
-                    }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.educationEventCoreDataInBackgroundThread(managedContext : managedContext)
                 }
             }
         }
     }
+    
+    func saveOrUpdateEventCoredata() {
+        if (educationEventArray.count > 0) {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.eventCoreDataInBackgroundThread(managedContext: managedContext)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.eventCoreDataInBackgroundThread(managedContext : managedContext)
+                }
+            }
+        }
+    }
+    
+    func educationEventCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let dateID = getUniqueDate()
+            let fetchData = checkAddedToCoredata(entityName: "EducationEventEntity", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EducationEventEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... educationEventArray.count-1 {
+                    let educationDict = educationEventArray[i]
+                    let fetchResultData = checkAddedToCoredata(entityName: "EducationEventEntity", idKey: "itemId", idValue: educationDict.itemId, managedContext: managedContext) as! [EducationEventEntity]
+                    if ( fetchResultData.count > 0) {
+                        let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "EducationEventEntity")
+                        if(isDeleted == true) {
+                            self.saveToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
+                        }
+                    } else {
+                        self.saveToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
+                    }
+                }
+            } else {
+                for i in 0 ... educationEventArray.count-1 {
+                    let educationEvent = educationEventArray[i]
+                    self.saveToCoreData(educationEventDict: educationEvent, dateId: dateID, managedObjContext: managedContext)
+                }
+            }
+        } else {
+            let dateID = getUniqueDate()
+            let fetchData = checkAddedToCoredata(entityName: "EducationEventEntityAr", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EducationEventEntityAr]
+            if (fetchData.count > 0) {
+                for i in 0 ... educationEventArray.count-1 {
+                    let educationDict = educationEventArray[i]
+                    let fetchResultData = checkAddedToCoredata(entityName: "EducationEventEntityAr", idKey: "itemId", idValue: educationDict.itemId, managedContext: managedContext) as! [EducationEventEntityAr]
+                    if ( fetchResultData.count > 0) {
+                        let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "EducationEventEntityAr")
+                        if(isDeleted == true) {
+                            self.saveToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
+                        }
+                    } else {
+                        self.saveToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
+                    }
+                }
+                
+               
+            }
+            else {
+               for i in 0 ... educationEventArray.count-1 {
+                    let educationEvent = educationEventArray[i]
+                self.saveToCoreData(educationEventDict: educationEvent, dateId: dateID, managedObjContext: managedContext)
+                }
+            }
+        }
+    }
+        
     func saveToCoreData(educationEventDict: EducationEvent,dateId: String?, managedObjContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             //for i in 0...educationArray.count-1 {
@@ -946,12 +971,12 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     }
     
     func fetchEducationEventFromCoredata() {
-        
+        let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var educationArray = [EducationEventEntity]()
                 let dateID = getUniqueDate()
-                educationArray = checkAddedToCoredata(entityName: "EducationEventEntity", idKey: "dateId", idValue: dateID) as! [EducationEventEntity]
+                educationArray = checkAddedToCoredata(entityName: "EducationEventEntity", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EducationEventEntity]
                 if (educationArray.count > 0) {
                     for i in 0 ... educationArray.count-1 {
                         var dateArray : [String] = []
@@ -988,15 +1013,13 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                         self.showNoNetwork()
                     }
                         self.eventCollectionView.reloadData()
-                }
-                else{
+                } else{
                     self.showNoNetwork()
                 }
-            }
-            else {
+            } else {
                 var educationArray = [EducationEventEntityAr]()
                 let dateID = getUniqueDate()
-                educationArray = checkAddedToCoredata(entityName: "EducationEventEntityAr", idKey: "dateId", idValue: dateID) as! [EducationEventEntityAr]
+                educationArray = checkAddedToCoredata(entityName: "EducationEventEntityAr", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EducationEventEntityAr]
                 if (educationArray.count > 0) {
                     for i in 0 ... educationArray.count-1 {
                         var dateArray : [String] = []
@@ -1045,66 +1068,56 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     }
     
     //MARK: EVENT DB
- 
-    func saveOrUpdateEventCoredata() {
-        if (educationEventArray.count > 0) {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-                let dateID = getUniqueDate()
-                let fetchData = checkAddedToCoredata(entityName: "EventEntity", idKey: "dateId", idValue: dateID) as! [EventEntity]
-                let managedContext = getContext()
-                if (fetchData.count > 0) {
-                    for i in 0 ... educationEventArray.count-1 {
-                        let educationDict = educationEventArray[i]
-                        let fetchResultData = checkAddedToCoredata(entityName: "EventEntity", idKey: "itemId", idValue: educationDict.itemId) as! [EventEntity]
-                        if ( fetchResultData.count > 0) {
-                            let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "EventEntity")
-                            if(isDeleted == true) {
-                                self.saveEventToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
-                            }
-                        } else {
+    func eventCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let dateID = getUniqueDate()
+            let fetchData = checkAddedToCoredata(entityName: "EventEntity", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EventEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... educationEventArray.count-1 {
+                    let educationDict = educationEventArray[i]
+                    let fetchResultData = checkAddedToCoredata(entityName: "EventEntity", idKey: "itemId", idValue: educationDict.itemId, managedContext: managedContext) as! [EventEntity]
+                    if ( fetchResultData.count > 0) {
+                        let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "EventEntity")
+                        if(isDeleted == true) {
                             self.saveEventToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
                         }
+                    } else {
+                        self.saveEventToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
                     }
                 }
-                else {
-                    for i in 0 ... educationEventArray.count-1 {
-                        let managedContext = getContext()
-                        let educationEvent = educationEventArray[i]
-                        self.saveEventToCoreData(educationEventDict: educationEvent, dateId: dateID, managedObjContext: managedContext)
-                    }
-                }
-            }
-            else {
-                let dateID = getUniqueDate()
-                let fetchData = checkAddedToCoredata(entityName: "EventEntityArabic", idKey: "dateId", idValue: dateID) as! [EventEntityArabic]
-                
-                let managedContext = getContext()
-                //Anything in Db
-                if (fetchData.count > 0) {
-                    for i in 0 ... educationEventArray.count-1 {
-                        let educationDict = educationEventArray[i]
-                        let fetchResultData = checkAddedToCoredata(entityName: "EventEntity", idKey: "itemId", idValue: educationDict.itemId) as! [EventEntity]
-                        if ( fetchResultData.count > 0) {
-                            let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "EventEntityArabic")
-                            if(isDeleted == true) {
-                                self.saveEventToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
-                            }
-                        } else {
-                            self.saveEventToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
-                        }
-                    }
-                  
-                }else {
-                    for i in 0 ... educationEventArray.count-1 {
-                        let educationEvent = educationEventArray[i]
+            } else {
+                for i in 0 ... educationEventArray.count-1 {
+                    let educationEvent = educationEventArray[i]
                     self.saveEventToCoreData(educationEventDict: educationEvent, dateId: dateID, managedObjContext: managedContext)
+                }
+            }
+        } else {
+            let dateID = getUniqueDate()
+            let fetchData = checkAddedToCoredata(entityName: "EventEntityArabic", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EventEntityArabic]
+            
+            //Anything in Db
+            if (fetchData.count > 0) {
+                for i in 0 ... educationEventArray.count-1 {
+                    let educationDict = educationEventArray[i]
+                    let fetchResultData = checkAddedToCoredata(entityName: "EventEntity", idKey: "itemId", idValue: educationDict.itemId, managedContext: managedContext) as! [EventEntity]
+                    if ( fetchResultData.count > 0) {
+                        let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "EventEntityArabic")
+                        if(isDeleted == true) {
+                            self.saveEventToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
+                        }
+                    } else {
+                        self.saveEventToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
                     }
                 }
-
-                }//Anything in Db
-            
+            } else {
+                for i in 0 ... educationEventArray.count-1 {
+                    let educationEvent = educationEventArray[i]
+                self.saveEventToCoreData(educationEventDict: educationEvent, dateId: dateID, managedObjContext: managedContext)
+                }
             }
+        }//Anything in Db
     }
+    
     func deleteExistingEvent(managedContext:NSManagedObjectContext,entityName : String?) ->Bool? {
         let dateID = getUniqueDate()
         
@@ -1354,12 +1367,12 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     }
     
     func fetchEventFromCoredata() {
-        
+        let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var educationArray = [EventEntity]()
                 let dateID = getUniqueDate()
-                educationArray = checkAddedToCoredata(entityName: "EventEntity", idKey: "dateId", idValue: dateID) as! [EventEntity]
+                educationArray = checkAddedToCoredata(entityName: "EventEntity", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EventEntity]
                 if (educationArray.count > 0) {
                     for i in 0 ... educationArray.count-1 {
                         var dateArray : [String] = []
@@ -1404,7 +1417,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             else {
                 var educationArray = [EventEntityArabic]()
                 let dateID = getUniqueDate()
-                educationArray = checkAddedToCoredata(entityName: "EventEntityArabic", idKey: "dateId", idValue: dateID) as! [EventEntityArabic]
+                educationArray = checkAddedToCoredata(entityName: "EventEntityArabic", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EventEntityArabic]
                 if (educationArray.count > 0) {
                     for i in 0 ... educationArray.count-1 {
                         var dateArray : [String] = []
@@ -1454,20 +1467,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
- 
-    func getContext() -> NSManagedObjectContext{
-        
-        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
-        if #available(iOS 10.0, *) {
-            return
-                appDelegate!.persistentContainer.viewContext
-        } else {
-            return appDelegate!.managedObjectContext
-        }
-    }
-    func checkAddedToCoredata(entityName: String?,idKey:String?,idValue: String?) -> [NSManagedObject]
-    {
-        let managedContext = getContext()
+    
+    func checkAddedToCoredata(entityName: String?,idKey:String?,idValue: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
         var fetchResults : [NSManagedObject] = []
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
         if (idValue != nil) {
@@ -1476,6 +1477,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         fetchResults = try! managedContext.fetch(fetchRequest)
         return fetchResults
     }
+    
     func showNodata() {
         var errorMessage: String
         errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",

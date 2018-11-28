@@ -154,13 +154,28 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
     //MARK: Coredata Method
     func saveOrUpdateHeritageCoredata() {
         if (heritageListArray.count > 0) {
-         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            let fetchData = checkAddedToCoredata(entityName: "HeritageEntity", heritageId: nil) as! [HeritageEntity]
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.coreDataInBackgroundThread(managedContext: managedContext)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.coreDataInBackgroundThread(managedContext : managedContext)
+                }
+            }
+        }
+    }
+    
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "HeritageEntity", heritageId: nil, managedContext: managedContext) as! [HeritageEntity]
             if (fetchData.count > 0) {
                 for i in 0 ... heritageListArray.count-1 {
-                    let managedContext = getContext()
                     let heritageListDict = heritageListArray[i]
-                    let fetchResult = checkAddedToCoredata(entityName: "HeritageEntity", heritageId: heritageListArray[i].id)
+                    let fetchResult = checkAddedToCoredata(entityName: "HeritageEntity", heritageId: heritageListArray[i].id, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
                         let heritagedbDict = fetchResult[0] as! HeritageEntity
@@ -182,19 +197,17 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
                 }
             } else {
                 for i in 0 ... heritageListArray.count-1 {
-                    let managedContext = getContext()
                     let heritageListDict : Heritage?
                     heritageListDict = heritageListArray[i]
                     self.saveToCoreData(heritageListDict: heritageListDict!, managedObjContext: managedContext)
                 }
             }
         } else {
-            let fetchData = checkAddedToCoredata(entityName: "HeritageEntityArabic", heritageId: nil) as! [HeritageEntityArabic]
+            let fetchData = checkAddedToCoredata(entityName: "HeritageEntityArabic", heritageId: nil, managedContext: managedContext) as! [HeritageEntityArabic]
             if (fetchData.count > 0) {
                 for i in 0 ... heritageListArray.count-1 {
-                    let managedContext = getContext()
                     let heritageListDict = heritageListArray[i]
-                    let fetchResult = checkAddedToCoredata(entityName: "HeritageEntityArabic", heritageId: heritageListArray[i].id)
+                    let fetchResult = checkAddedToCoredata(entityName: "HeritageEntityArabic", heritageId: heritageListArray[i].id, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
                         let heritagedbDict = fetchResult[0] as! HeritageEntityArabic
@@ -218,14 +231,12 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
             }
             else {
                 for i in 0 ... heritageListArray.count-1 {
-                    let managedContext = getContext()
                     let heritageListDict : Heritage?
                     heritageListDict = heritageListArray[i]
                     self.saveToCoreData(heritageListDict: heritageListDict!, managedObjContext: managedContext)
                     
                 }
             }
-        }
         }
     }
     
@@ -257,10 +268,10 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
     }
     
     func fetchHeritageListFromCoredata() {
+        let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var heritageArray = [HeritageEntity]()
-                let managedContext = getContext()
                 let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HeritageEntity")
                 heritageArray = (try managedContext.fetch(homeFetchRequest) as? [HeritageEntity])!
                 if (heritageArray.count > 0) {
@@ -278,7 +289,6 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
                 }
             } else {
                 var heritageArray = [HeritageEntityArabic]()
-                let managedContext = getContext()
                 let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HeritageEntityArabic")
                 heritageArray = (try managedContext.fetch(homeFetchRequest) as? [HeritageEntityArabic])!
                 if (heritageArray.count > 0) {
@@ -299,17 +309,7 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         }
     }
     
-    func getContext() -> NSManagedObjectContext {
-        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
-        if #available(iOS 10.0, *) {
-            return appDelegate!.persistentContainer.viewContext
-        } else {
-            return appDelegate!.managedObjectContext
-        }
-    }
-    
-    func checkAddedToCoredata(entityName: String?,heritageId: String?) -> [NSManagedObject] {
-        let managedContext = getContext()
+    func checkAddedToCoredata(entityName: String?, heritageId: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
         var fetchResults : [NSManagedObject] = []
         let homeFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
         if (heritageId != nil) {

@@ -37,6 +37,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case UpdateUser(String,[String: Any])
     case SendDeviceToken(String, [String: Any])
     case NumberSearchList([String: Any])
+    case GetHomeBanner()
     var method: Alamofire.HTTPMethod {
         switch self {
         case .ExhibitionList:
@@ -92,6 +93,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .SendDeviceToken:
             return .post
         case .NumberSearchList:
+            return .get
+        case .GetHomeBanner:
             return .get
         }
     }
@@ -152,6 +155,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "push_notifications.json"
         case .NumberSearchList( _):
             return "/collection_by_tour_guide.json"
+        case .GetHomeBanner:
+            return "/nmoq_banner_banner.json"
         }
     }
 
@@ -267,6 +272,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             var searchURLReq = URLRequest(url: searchURL.appendingPathComponent(path)!)
             searchURLReq.httpMethod = method.rawValue
             return try! Alamofire.JSONEncoding.default.encode(searchURLReq)
+        case .GetHomeBanner():
+            return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
 
         }
         
@@ -279,5 +286,19 @@ enum QatarMuseumRouter: URLRequestConvertible {
     
     public func lang() -> String {
         return LocalizationLanguage.currentAppleLanguage()
+    }
+    
+    func stopAllRequests(){
+        if #available(iOS 9.0, *) {
+            Alamofire.SessionManager.default.session.getAllTasks { (tasks) in
+                tasks.forEach{ $0.cancel() }
+            }
+        } else {
+            Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { (sessionDataTask, uploadData, downloadData) in
+                sessionDataTask.forEach { $0.cancel() }
+                uploadData.forEach { $0.cancel() }
+                downloadData.forEach { $0.cancel() }
+            }
+        }
     }
 }

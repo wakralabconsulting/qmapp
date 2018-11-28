@@ -327,92 +327,103 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     //MARK: Coredata Method
     func saveOrUpdateDiningDetailCoredata() {
         if (diningDetailtArray.count > 0) {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-                let fetchData = checkAddedToCoredata(entityName: "DiningEntity", diningId: diningDetailtArray[0].id) as! [DiningEntity]
-                if (fetchData.count > 0) {
-                    let managedContext = getContext()
-                    let diningDetailDict = diningDetailtArray[0]
-                
-                    //update
-                    let diningdbDict = fetchData[0] as! DiningEntity
-                    diningdbDict.name = diningDetailDict.name
-                    diningdbDict.image = diningDetailDict.image
-                    diningdbDict.diningdescription = diningDetailDict.description
-                    diningdbDict.closetime = diningDetailDict.closetime
-                    diningdbDict.openingtime =  diningDetailDict.openingtime
-                    diningdbDict.sortid =  diningDetailDict.sortid
-                    diningdbDict.location =  diningDetailDict.location
-                    if((diningDetailDict.images?.count)! > 0) {
-                        for i in 0 ... (diningDetailDict.images?.count)!-1 {
-                            var diningImagesEntity: DiningImagesEntity!
-                            let diningImage: DiningImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "DiningImagesEntity", into: managedContext) as! DiningImagesEntity
-                            diningImage.images = diningDetailDict.images![i]
-                            
-                            diningImagesEntity = diningImage
-                            diningdbDict.addToImagesRelation(diningImagesEntity)
-                            do {
-                                try managedContext.save()
-                            } catch let error as NSError {
-                                print("Could not save. \(error), \(error.userInfo)")
-                            }
-                            
-                        }
-                    }
-                    do{
-                        try managedContext.save()
-                    }
-                    catch{
-                        print(error)
-                    }
-                } else {
-                    let managedContext = getContext()
-                    let diningListDict : Dining?
-                    diningListDict = diningDetailtArray[0]
-                    self.saveToCoreData(diningDetailDict: diningListDict!, managedObjContext: managedContext)
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.coreDataInBackgroundThread(managedContext: managedContext)
                 }
             } else {
-                let fetchData = checkAddedToCoredata(entityName: "DiningEntityArabic", diningId: diningDetailtArray[0].id) as! [DiningEntityArabic]
-                if (fetchData.count > 0) {
-                    let managedContext = getContext()
-                    let diningDetailDict = diningDetailtArray[0]
-                    
-                    //update
-                    let diningdbDict = fetchData[0]
-                    diningdbDict.namearabic = diningDetailDict.name
-                    diningdbDict.imagearabic = diningDetailDict.image
-                    diningdbDict.sortidarabic =  diningDetailDict.sortid
-                    diningdbDict.descriptionarabic = diningDetailDict.description
-                    diningdbDict.closetimearabic = diningDetailDict.closetime
-                    diningdbDict.openingtimearabic =  diningDetailDict.openingtime
-                    diningdbDict.locationarabic =  diningDetailDict.location
-                    if((diningDetailDict.images?.count)! > 0) {
-                        for i in 0 ... (diningDetailDict.images?.count)!-1 {
-                            var diningImagesEntity: DiningImagesEntityAr!
-                            let diningImage: DiningImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "DiningImagesEntityAr", into: managedContext) as! DiningImagesEntityAr
-                            diningImage.images = diningDetailDict.images![i]
-                            
-                            diningImagesEntity = diningImage
-                            diningdbDict.addToImagesRelation(diningImagesEntity)
-                            do {
-                                try managedContext.save()
-                            } catch let error as NSError {
-                                print("Could not save. \(error), \(error.userInfo)")
-                            }
-                            
-                        }
-                    }
-                    do{
-                        try managedContext.save()
-                    }
-                    catch{
-                        print(error)
-                    }
-                } else {
-                    let managedContext = getContext()
-                    let diningListDict : Dining?
-                    diningListDict = diningDetailtArray[0]
-                    self.saveToCoreData(diningDetailDict: diningListDict!, managedObjContext: managedContext)
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.coreDataInBackgroundThread(managedContext : managedContext)
                 }
+            }
+        }
+    }
+    
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            let fetchData = checkAddedToCoredata(entityName: "DiningEntity", diningId: diningDetailtArray[0].id, managedContext: managedContext) as! [DiningEntity]
+            if (fetchData.count > 0) {
+                let diningDetailDict = diningDetailtArray[0]
+            
+                //update
+                let diningdbDict = fetchData[0] as! DiningEntity
+                diningdbDict.name = diningDetailDict.name
+                diningdbDict.image = diningDetailDict.image
+                diningdbDict.diningdescription = diningDetailDict.description
+                diningdbDict.closetime = diningDetailDict.closetime
+                diningdbDict.openingtime =  diningDetailDict.openingtime
+                diningdbDict.sortid =  diningDetailDict.sortid
+                diningdbDict.location =  diningDetailDict.location
+                if((diningDetailDict.images?.count)! > 0) {
+                    for i in 0 ... (diningDetailDict.images?.count)!-1 {
+                        var diningImagesEntity: DiningImagesEntity!
+                        let diningImage: DiningImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "DiningImagesEntity", into: managedContext) as! DiningImagesEntity
+                        diningImage.images = diningDetailDict.images![i]
+                        
+                        diningImagesEntity = diningImage
+                        diningdbDict.addToImagesRelation(diningImagesEntity)
+                        do {
+                            try managedContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                        
+                    }
+                }
+                do{
+                    try managedContext.save()
+                }
+                catch{
+                    print(error)
+                }
+            } else {
+                let diningListDict : Dining?
+                diningListDict = diningDetailtArray[0]
+                self.saveToCoreData(diningDetailDict: diningListDict!, managedObjContext: managedContext)
+            }
+        } else {
+            let fetchData = checkAddedToCoredata(entityName: "DiningEntityArabic", diningId: diningDetailtArray[0].id, managedContext: managedContext) as! [DiningEntityArabic]
+            if (fetchData.count > 0) {
+                let diningDetailDict = diningDetailtArray[0]
+                
+                //update
+                let diningdbDict = fetchData[0]
+                diningdbDict.namearabic = diningDetailDict.name
+                diningdbDict.imagearabic = diningDetailDict.image
+                diningdbDict.sortidarabic =  diningDetailDict.sortid
+                diningdbDict.descriptionarabic = diningDetailDict.description
+                diningdbDict.closetimearabic = diningDetailDict.closetime
+                diningdbDict.openingtimearabic =  diningDetailDict.openingtime
+                diningdbDict.locationarabic =  diningDetailDict.location
+                if((diningDetailDict.images?.count)! > 0) {
+                    for i in 0 ... (diningDetailDict.images?.count)!-1 {
+                        var diningImagesEntity: DiningImagesEntityAr!
+                        let diningImage: DiningImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "DiningImagesEntityAr", into: managedContext) as! DiningImagesEntityAr
+                        diningImage.images = diningDetailDict.images![i]
+                        
+                        diningImagesEntity = diningImage
+                        diningdbDict.addToImagesRelation(diningImagesEntity)
+                        do {
+                            try managedContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                        
+                    }
+                }
+                do{
+                    try managedContext.save()
+                }
+                catch{
+                    print(error)
+                }
+            } else {
+                let diningListDict : Dining?
+                diningListDict = diningDetailtArray[0]
+                self.saveToCoreData(diningDetailDict: diningListDict!, managedObjContext: managedContext)
             }
         }
     }
@@ -484,11 +495,10 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     func fetchDiningDetailsFromCoredata() {
-        
+        let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                 var diningArray = [DiningEntity]()
-                let managedContext = getContext()
                 let diningFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "DiningEntity")
                 if(diningDetailId != nil) {
                     diningFetchRequest.predicate = NSPredicate.init(format: "id == \(diningDetailId!)")
@@ -515,7 +525,6 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
             }
             else {
                 var diningArray = [DiningEntityArabic]()
-                let managedContext = getContext()
                 let diningFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "DiningEntityArabic")
                 if(diningDetailId != nil) {
                     diningFetchRequest.predicate = NSPredicate.init(format: "id == \(diningDetailId!)")
@@ -544,19 +553,8 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-    func getContext() -> NSManagedObjectContext{
-        
-        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
-        if #available(iOS 10.0, *) {
-            return
-                appDelegate!.persistentContainer.viewContext
-        } else {
-            return appDelegate!.managedObjectContext
-        }
-    }
-    func checkAddedToCoredata(entityName: String?,diningId: String?) -> [NSManagedObject]
-    {
-        let managedContext = getContext()
+
+    func checkAddedToCoredata(entityName: String?, diningId: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
         var fetchResults : [NSManagedObject] = []
         let diningFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
         if (diningId != nil) {
@@ -565,6 +563,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         fetchResults = try! managedContext.fetch(diningFetchRequest)
         return fetchResults
     }
+
     func showNodata() {
         var errorMessage: String
         errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",

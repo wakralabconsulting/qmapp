@@ -11,7 +11,7 @@ import CoreData
 import UIKit
 import Firebase
 
-class HomeViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,TopBarProtocol,comingSoonPopUpProtocol,SideMenuProtocol,UIViewControllerTransitioningDelegate,LoadingViewProtocol {
+class HomeViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,TopBarProtocol,comingSoonPopUpProtocol,SideMenuProtocol,UIViewControllerTransitioningDelegate,LoadingViewProtocol,LoginPopUpProtocol,UITextFieldDelegate {
 
     @IBOutlet weak var restaurantButton: UIButton!
     @IBOutlet weak var giftShopButton: UIButton!
@@ -27,6 +27,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     @IBOutlet weak var culturePassLabel: UILabel!
     @IBOutlet weak var diningLabel: UILabel!
     
+    
     var homeDataFullArray : NSArray!
     var effect:UIVisualEffect!
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
@@ -39,6 +40,17 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     var homeDBArray:[HomeEntity]?
     var homeDBArrayArabic:[HomeEntityArabic]?
     var apnDelegate : APNProtocol?
+    let imageView = UIImageView()
+    //let closeButton = UIButton()
+    var blurView = UIVisualEffectView()
+    var imgButton = UIButton()
+    var imgLabel = UITextView()
+    var homeBannerList: [HomeBanner]! = []
+    var loginPopUpView : LoginPopupPage = LoginPopupPage()
+    var accessToken : String? = nil
+    var loginArray : LoginData?
+    var userInfoArray : UserInfoData?
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +65,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.receivedNotification(notification:)), name: NSNotification.Name("NotificationIdentifier"), object: nil)
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,7 +77,102 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+    func setTopImageUI() {
+       
+        homeCollectionView.contentInset = UIEdgeInsetsMake(120, 0, 0, 0)
+        //exhibitionDetailTableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0)
+        
+        imageView.frame = CGRect(x: 0, y: 85, width: UIScreen.main.bounds.size.width, height: 120)
+        //imageView.image = UIImage(named: "default_imageX2")
+        imageView.backgroundColor = UIColor.white
+            if homeBannerList.count > 0 {
+
+                if let imageUrl = homeBannerList[0].bannerLink {
+                    if(imageUrl != "") {
+                        imageView.kf.setImage(with: URL(string: imageUrl))
+                    }else {
+                        imageView.image = UIImage(named: "default_imageX2")
+                    }
+
+                }
+                else {
+                    imageView.image = UIImage(named: "default_imageX2")
+                }
+            }
+            else {
+                imageView.image = nil
+            }
+        
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        view.addSubview(imageView)
+        
+        
+        if(homeBannerList[0].bannerTitle != nil) {
+            imgLabel.text = homeBannerList[0].bannerTitle
+        }
+        //imgLabel.numberOfLines = 2
+        imgLabel.textAlignment = .center
+        imgLabel.scrollsToTop = false
+        imgLabel.isEditable = false
+        imgLabel.isScrollEnabled = false
+        imgLabel.isSelectable = false
+        imgLabel.backgroundColor = UIColor.clear
+        imgLabel.font = UIFont.eventPopupTitleFont
+        imgLabel.frame = CGRect(x: 0, y: 95, width: UIScreen.main.bounds.size.width, height: 90)
+        self.view.addSubview(imgLabel)
+        
+        imgButton.setTitle("", for: .normal)
+        imgButton.setTitleColor(UIColor.blue, for: .normal)
+        imgButton.frame = imageView.frame
+        imgButton.addTarget(self, action: #selector(self.imgButtonPressed(sender:)), for: .touchUpInside)
+        self.view.addSubview(imgButton)
+        
+        let darkBlur = UIBlurEffect(style: UIBlurEffectStyle.light)
+        blurView = UIVisualEffectView(effect: darkBlur)
+        blurView.frame = imageView.bounds
+        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurView.alpha = 0
+        imageView.addSubview(blurView)
+        self.view.layoutIfNeeded()
+    }
+   
+    @objc func imgButtonPressed(sender: UIButton!) {
+      //  if((imageView.image != nil) && (imageView.image != UIImage(named: "default_imageX2"))) {
+            //loadMuseumsPage()
+        let museumsView =  self.storyboard?.instantiateViewController(withIdentifier: "museumViewId") as! MuseumsViewController
+        museumsView.fromHomeBanner = true
+        museumsView.museumTitleString = homeBannerList[0].bannerTitle
+        let transition = CATransition()
+        transition.duration = 0.25
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(museumsView, animated: false, completion: nil)
+        
+        //}
+    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let y = 120 - (scrollView.contentOffset.y + 120)
+        let height = min(max(y, 0), 120)
+        imageView.frame = CGRect(x: 0, y: 85, width: UIScreen.main.bounds.size.width, height: height)
+        imgButton.frame = imageView.frame
+        imgLabel.frame = CGRect(x: 0, y: 95, width: UIScreen.main.bounds.size.width, height: height-10)
+
+        if (imageView.frame.height >= 120 ){
+            blurView.alpha  = 0.0
+        } else if (imageView.frame.height >= 100 ){
+            blurView.alpha  = 0.2
+        } else if (imageView.frame.height >= 80 ){
+            blurView.alpha  = 0.4
+        } else if (imageView.frame.height >= 60 ){
+            blurView.alpha  = 0.6
+        } else if (imageView.frame.height >= 40 ){
+            blurView.alpha  = 0.8
+        } else if (imageView.frame.height >= 20 ){
+            blurView.alpha  = 0.9
+        }
+    }
     @objc func receivedNotification(notification: Notification) {
         let notificationsView =  self.storyboard?.instantiateViewController(withIdentifier: "notificationId") as! NotificationsViewController
         notificationsView.fromHome = true
@@ -88,7 +197,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         culturePassLabel.font = UIFont.exhibitionDateLabelFont
         giftShopLabel.font = UIFont.exhibitionDateLabelFont
         diningLabel.font = UIFont.exhibitionDateLabelFont
-        
+        if(UserDefaults.standard.value(forKey: "firstTimeLaunch") as? String == nil) {
+           loadLoginPopup()
+            UserDefaults.standard.set("false", forKey: "firstTimeLaunch")
+        } else {
+            getHomeBanner()
+        }
     }
     
     func registerNib() {
@@ -151,10 +265,16 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         return CGSize(width: homeCollectionView.frame.width, height: heightValue*27)
     }
     
-    func loadMuseumsPage(curretRow:Int) {
+    func loadMuseumsPage(curretRow:Int? = 0) {
         let museumsView =  self.storyboard?.instantiateViewController(withIdentifier: "museumViewId") as! MuseumsViewController
-        museumsView.museumId = homeList[curretRow].id
-        museumsView.museumTitleString = homeList[curretRow].name
+//        if (homeBannerList.count > 0) {
+//            museumsView.fromHomeBanner = true
+//            museumsView.museumTitleString = homeBannerList[0].bannerTitle
+//        } else {
+        museumsView.museumId = homeList[curretRow!].id
+        museumsView.museumTitleString = homeList[curretRow!].name
+        museumsView.fromHomeBanner = false
+        //}
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionPush
@@ -193,18 +313,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             switch response.result {
             case .success(let data):
                 self.homeList = data.homeList
-//                let exhibitionName = NSLocalizedString("EXHIBITIONS_LABEL",
-//                                                       comment: "EXHIBITIONS_LABEL in exhibition cell")
-//                if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-//                    self.homeList.insert(Home(id: "1",name: exhibitionName ,  image: "exhibition",
-//                                          tourguide_available: "false", sort_id: nil),
-//                                     at: self.homeList.endIndex - 1)
-//                }
-//                else {
-//                    self.homeList.insert(Home(id: "01",name: exhibitionName ,  image: "exhibition",
-//                                              tourguide_available: "false", sort_id: nil),
-//                                         at: self.homeList.endIndex - 1)
-//                }
                 self.saveOrUpdateHomeCoredata()
                 self.homeCollectionView.reloadData()
             case .failure(let error):
@@ -219,7 +327,33 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             }
         }
     }
-    
+    func getHomeBanner() {
+        _ = Alamofire.request(QatarMuseumRouter.GetHomeBanner()).responseObject { (response: DataResponse<HomeBannerList>) -> Void in
+            switch response.result {
+            case .success(let data):
+                
+                self.homeBannerList = data.homeBannerList
+                if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")  && (self.homeBannerList.count > 0)) {
+                    self.setTopImageUI()
+                }
+//                else if (UserDefaults.standard.value(forKey: "accessToken") as? String == nil){
+//                    self.loadLoginPopup()
+//                }
+                //self.saveOrUpdateHomeCoredata()
+                //self.homeCollectionView.reloadData()
+                print(self.homeBannerList)
+            case .failure(let error):
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
+            }
+        }
+    }
     //MARK: Topbar Delegate
     func backButtonPressed() {
     
@@ -486,7 +620,9 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             self.sideView.transform = CGAffineTransform.identity
             self.sideView.topBarView.menuButton.contentEdgeInsets = UIEdgeInsets(top: 14, left: 18, bottom: 14, right: 20)
         }
+        print(visualEffectView.frame)
         sideView.sideMenuDelegate = self
+        
     }
     
     func topBarEventButtonPressed() {
@@ -512,83 +648,86 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         self.present(profileView, animated: false, completion: nil)
         
     }
+    
     //MARK: Coredata Method
     func saveOrUpdateHomeCoredata() {
         if (homeList.count > 0) {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.coreDataInBackgroundThread(managedContext: managedContext)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.coreDataInBackgroundThread(managedContext : managedContext)
+                }
+            }
+        }
+    }
+    
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            let fetchData = checkAddedToCoredata(entityName: "HomeEntity", homeId: nil) as! [HomeEntity]
-        if (fetchData.count > 0) {
-            for i in 0 ... homeList.count-1 {
-                let managedContext = getContext()
-                let homeListDict = homeList[i]
-                let fetchResult = checkAddedToCoredata(entityName: "HomeEntity", homeId: homeList[i].id)
-                //update
-                if(fetchResult.count != 0) {
-                    let homedbDict = fetchResult[0] as! HomeEntity
-                   
+            let fetchData = checkAddedToCoredata(entityName: "HomeEntity", homeId: nil, managedContext: managedContext) as! [HomeEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... homeList.count-1 {
+                    let homeListDict = homeList[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntity", homeId: homeList[i].id, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let homedbDict = fetchResult[0] as! HomeEntity
                         homedbDict.name = homeListDict.name
                         homedbDict.image = homeListDict.image
                         homedbDict.sortid =  homeListDict.sortId
                         homedbDict.tourguideavailable = homeListDict.isTourguideAvailable
-                    
-                    
-                    do{
-                        try managedContext.save()
-                    }
-                    catch{
-                        print(error)
-                    }
-                }
-                else {
-                    //save
-                    self.saveToCoreData(homeListDict: homeListDict, managedObjContext: managedContext)
-                
-                }
-            }
-        }
-        else {
-        for i in 0 ... homeList.count-1 {
-            let managedContext = getContext()
-            let homeListDict : Home?
-             homeListDict = homeList[i]
-            self.saveToCoreData(homeListDict: homeListDict!, managedObjContext: managedContext)
-
-        }
-        }
-        }
-        else {
-            let fetchData = checkAddedToCoredata(entityName: "HomeEntityArabic", homeId: nil) as! [HomeEntityArabic]
-            if (fetchData.count > 0) {
-                for i in 0 ... homeList.count-1 {
-                    let managedContext = getContext()
-                    let homeListDict = homeList[i]
-                    
-                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntityArabic", homeId: homeList[i].id)
-                    //update
-                    if(fetchResult.count != 0) {
-                        let homedbDict = fetchResult[0] as! HomeEntityArabic
                         
-                            homedbDict.arabicname = homeListDict.name
-                            homedbDict.arabicimage = homeListDict.image
-                            homedbDict.arabicsortid =  homeListDict.sortId
-                            homedbDict.arabictourguideavailable = homeListDict.isTourguideAvailable
                         do{
                             try managedContext.save()
                         }
                         catch{
                             print(error)
                         }
+                    } else {
+                        //save
+                        self.saveToCoreData(homeListDict: homeListDict, managedObjContext: managedContext)
                     }
-                    else {
+                }
+            } else {
+                for i in 0 ... homeList.count-1 {
+                    let homeListDict : Home?
+                    homeListDict = homeList[i]
+                    self.saveToCoreData(homeListDict: homeListDict!, managedObjContext: managedContext)
+                }
+            }
+        } else {
+            let fetchData = checkAddedToCoredata(entityName: "HomeEntityArabic", homeId: nil, managedContext: managedContext) as! [HomeEntityArabic]
+            if (fetchData.count > 0) {
+                for i in 0 ... homeList.count-1 {
+                    let homeListDict = homeList[i]
+                    
+                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntityArabic", homeId: homeList[i].id, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let homedbDict = fetchResult[0] as! HomeEntityArabic
+                        homedbDict.arabicname = homeListDict.name
+                        homedbDict.arabicimage = homeListDict.image
+                        homedbDict.arabicsortid =  homeListDict.sortId
+                        homedbDict.arabictourguideavailable = homeListDict.isTourguideAvailable
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    } else {
                         //save
                         self.saveToCoreData(homeListDict: homeListDict, managedObjContext: managedContext)
                         
                     }
                 }
-            }
-            else {
+            } else {
                 for i in 0 ... homeList.count-1 {
-                    let managedContext = getContext()
                     let homeListDict : Home?
                     homeListDict = homeList[i]
                     self.saveToCoreData(homeListDict: homeListDict!, managedObjContext: managedContext)
@@ -596,7 +735,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 }
             }
         }
-    }
     }
     
     func saveToCoreData(homeListDict: Home, managedObjContext: NSManagedObjectContext) {
@@ -608,8 +746,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             homeInfo.tourguideavailable = homeListDict.isTourguideAvailable
             homeInfo.image = homeListDict.image
             homeInfo.sortid = homeListDict.sortId
-        }
-        else{
+        } else{
             let homeInfo: HomeEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "HomeEntityArabic", into: managedObjContext) as! HomeEntityArabic
             homeInfo.id = homeListDict.id
             homeInfo.arabicname = homeListDict.name
@@ -619,18 +756,16 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         }
         do {
             try managedObjContext.save()
-            
-            
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    
     func fetchHomeInfoFromCoredata() {
-        
+        let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                 var homeArray = [HomeEntity]()
-                let managedContext = getContext()
                 let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntity")
             homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntity])!
             if (homeArray.count > 0) {
@@ -644,14 +779,11 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     self.showNoNetwork()
                 }
                 homeCollectionView.reloadData()
-            }
-            else{
+            } else{
                 self.showNoNetwork()
             }
-        }
-            else {
+        } else {
                 var homeArray = [HomeEntityArabic]()
-                let managedContext = getContext()
                 let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntityArabic")
                 homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntityArabic])!
                 if (homeArray.count > 0) {
@@ -664,8 +796,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                         self.showNoNetwork()
                     }
                     homeCollectionView.reloadData()
-                }
-                else{
+                } else{
                     self.showNoNetwork()
                 }
             }
@@ -673,19 +804,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-    func getContext() -> NSManagedObjectContext{
-        
-        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
-        if #available(iOS 10.0, *) {
-            return
-                appDelegate!.persistentContainer.viewContext
-        } else {
-            return appDelegate!.managedObjectContext
-        }
-    }
-    func checkAddedToCoredata(entityName: String?, homeId: String?) -> [NSManagedObject]
-    {
-        let managedContext = getContext()
+    
+    func checkAddedToCoredata(entityName: String?, homeId: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
         var fetchResults : [NSManagedObject] = []
         let homeFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
         if (homeId != nil) {
@@ -694,6 +814,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         fetchResults = try! managedContext.fetch(homeFetchRequest)
         return fetchResults
     }
+    
     func showNodata() {
         var errorMessage: String
         errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
@@ -714,6 +835,137 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     func tryAgainButtonPressed() {
         if  (networkReachability?.isReachable)! {
             self.getHomeList()
+        }
+    }
+    //MARK: Login Details
+    func loadLoginPopup() {
+        loginPopUpView  = LoginPopupPage(frame: self.view.frame)
+        loginPopUpView.loginPopupDelegate = self
+        loginPopUpView.userNameText.delegate = self
+        loginPopUpView.passwordText.delegate = self
+        self.view.addSubview(loginPopUpView)
+    }
+    func popupCloseButtonPressed() {
+        self.loginPopUpView.removeFromSuperview()
+    }
+    func loginButtonPressed() {
+        loginPopUpView.userNameText.resignFirstResponder()
+        loginPopUpView.passwordText.resignFirstResponder()
+        self.loginPopUpView.loadingView.isHidden = false
+        self.loginPopUpView.loadingView.showLoading()
+        
+        let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
+        if  (networkReachability?.isReachable)! {
+            if ((loginPopUpView.userNameText.text != "") && (loginPopUpView.passwordText.text != "")) {
+                self.getCulturePassTokenFromServer(login: true)
+            }  else {
+                self.loginPopUpView.loadingView.stopLoading()
+                self.loginPopUpView.loadingView.isHidden = true
+                if ((loginPopUpView.userNameText.text == "") && (loginPopUpView.passwordText.text == "")) {
+                    showAlertView(title: titleString, message: NSLocalizedString("USERNAME_REQUIRED",comment: "Set the message for user name required")+"\n"+NSLocalizedString("PASSWORD_REQUIRED",comment: "Set the message for password required"), viewController: self)
+                    
+                } else if ((loginPopUpView.userNameText.text == "") && (loginPopUpView.passwordText.text != "")) {
+                    showAlertView(title: titleString, message: NSLocalizedString("USERNAME_REQUIRED",comment: "Set the message for user name required"), viewController: self)
+                } else if ((loginPopUpView.userNameText.text != "") && (loginPopUpView.passwordText.text == "")) {
+                    showAlertView(title: titleString, message: NSLocalizedString("PASSWORD_REQUIRED",comment: "Set the message for password required"), viewController: self)
+                }
+            }
+        } else {
+            self.loginPopUpView.loadingView.stopLoading()
+            self.loginPopUpView.loadingView.isHidden = true
+            self.view.hideAllToasts()
+            let eventAddedMessage =  NSLocalizedString("CHECK_NETWORK", comment: "CHECK_NETWORK")
+            self.view.makeToast(eventAddedMessage)
+        }
+    }
+    //MARK: WebServiceCall
+    func getCulturePassTokenFromServer(login: Bool? = false) {
+        _ = Alamofire.request(QatarMuseumRouter.GetToken(["name": loginPopUpView.userNameText.text!,"pass":loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<TokenData>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.accessToken = data.accessToken
+                if(login == true) {
+                    self.getCulturePassLoginFromServer()
+                } else {
+                    //self.setNewPassword()
+                }
+                
+            case .failure( _):
+                self.loginPopUpView.loadingView.stopLoading()
+                self.loginPopUpView.loadingView.isHidden = true
+            }
+        }
+    }
+    func getCulturePassLoginFromServer() {
+        let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
+        if(accessToken != nil) {
+            _ = Alamofire.request(QatarMuseumRouter.Login(["name" : loginPopUpView.userNameText.text!,"pass": loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<LoginData>) -> Void in
+                switch response.result {
+                case .success(let data):
+                    self.loginPopUpView.loadingView.stopLoading()
+                    self.loginPopUpView.loadingView.isHidden = true
+                    self.loginPopUpView.removeFromSuperview()
+                    if(response.response?.statusCode == 200) {
+                        self.loginArray = data
+                        UserDefaults.standard.setValue(self.loginArray?.token, forKey: "accessToken")
+                        if(self.loginArray != nil) {
+                            if(self.loginArray?.user != nil) {
+                                if(self.loginArray?.user?.uid != nil) {
+                                    self.checkRSVPUserFromServer(userId: self.loginArray?.user?.uid )
+                                }
+                            }
+                        }
+                    } else if(response.response?.statusCode == 401) {
+                        showAlertView(title: titleString, message: NSLocalizedString("WRONG_USERNAME_OR_PWD",comment: "Set the message for wrong username or password"), viewController: self)
+                    } else if(response.response?.statusCode == 406) {
+                        showAlertView(title: titleString, message: NSLocalizedString("ALREADY_LOGGEDIN",comment: "Set the message for Already Logged in"), viewController: self)
+                    }
+                    
+                case .failure( _):
+                    self.loginPopUpView.removeFromSuperview()
+                    self.loginPopUpView.loadingView.stopLoading()
+                    self.loginPopUpView.loadingView.isHidden = true
+                    
+                }
+            }
+            
+        }
+    }
+    //RSVP Service call
+    func checkRSVPUserFromServer(userId: String?) {
+        _ = Alamofire.request(QatarMuseumRouter.GetUser(userId!)).responseObject { (response: DataResponse<UserInfoData>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.loginPopUpView.loadingView.stopLoading()
+                self.loginPopUpView.loadingView.isHidden = true
+                if(response.response?.statusCode == 200) {
+                    self.userInfoArray = data
+                    
+                    if(self.userInfoArray != nil) {
+                        if(self.userInfoArray?.fieldRsvpAttendance != nil) {
+                            let undData = self.userInfoArray?.fieldRsvpAttendance!["und"] as! NSArray
+                            if(undData != nil) {
+                                if(undData.count > 0) {
+                                    let value = undData[0] as! NSDictionary
+                                    if(value["value"] != nil) {
+                                        UserDefaults.standard.setValue(value["value"], forKey: "acceptOrDecline")
+                                        self.getHomeBanner()
+//                                        if(self.homeBannerList.count > 0) {
+//                                            self.setTopImageUI()
+//                                        }
+                                    }
+                                }
+                                
+                            }
+                        }
+                    }
+                    
+                }
+            case .failure( _):
+                self.loginPopUpView.loadingView.stopLoading()
+                self.loginPopUpView.loadingView.isHidden = true
+                
+            }
         }
     }
 
