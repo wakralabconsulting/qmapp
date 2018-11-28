@@ -620,7 +620,9 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             self.sideView.transform = CGAffineTransform.identity
             self.sideView.topBarView.menuButton.contentEdgeInsets = UIEdgeInsets(top: 14, left: 18, bottom: 14, right: 20)
         }
+        print(visualEffectView.frame)
         sideView.sideMenuDelegate = self
+        
     }
     
     func topBarEventButtonPressed() {

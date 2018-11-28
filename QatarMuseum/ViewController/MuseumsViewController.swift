@@ -312,6 +312,14 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             if (selectedItem == "About Event") {
                 
             } else if (selectedItem == "Tours") {
+                let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "tourAndPanelId") as! TourAndPanelListViewController
+                tourView.pageNameString = NMoQPageName.Tours
+                let transition = CATransition()
+                transition.duration = 0.25
+                transition.type = kCATransitionPush
+                transition.subtype = kCATransitionFromRight
+                view.window!.layer.add(transition, forKey: kCATransition)
+                self.present(tourView, animated: false, completion: nil)
                 
             } else if (selectedItem == "Travel Arrangements") {
                 let travelView =  self.storyboard?.instantiateViewController(withIdentifier: "travelId") as! TravelArrangementsViewController
@@ -323,7 +331,14 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 self.present(travelView, animated: false, completion: nil)
             }
             else if (selectedItem == "Panel Discussion") {
-                
+                let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "tourAndPanelId") as! TourAndPanelListViewController
+                panelView.pageNameString = NMoQPageName.PanelDiscussion
+                let transition = CATransition()
+                transition.duration = 0.25
+                transition.type = kCATransitionPush
+                transition.subtype = kCATransitionFromRight
+                view.window!.layer.add(transition, forKey: kCATransition)
+                self.present(panelView, animated: false, completion: nil)
             }
         } else {
            if ((selectedItem == "About") || (selectedItem == "عن")) {
