@@ -14,6 +14,8 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
 
     @IBOutlet weak var travelHeaderView: CommonHeaderView!
     @IBOutlet weak var travelCollectionView: UICollectionView!
+    @IBOutlet weak var loadingView: LoadingView!
+    
     var travelImgArray = NSArray()
     var travelTitleArray = NSArray()
     override func viewDidLoad() {
@@ -22,6 +24,8 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
         
     }
     func setUI() {
+        loadingView.isHidden = false
+        loadingView.showLoading()
          travelHeaderView.headerViewDelegate = self
          travelHeaderView.headerTitle.text = NSLocalizedString("TRAVEL_ARRANGEMENTS", comment: "TRAVEL_ARRANGEMENTS Label in the Travel page page").uppercased()
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
@@ -47,6 +51,8 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
         let travelCell : TravelCollectionViewCell = travelCollectionView.dequeueReusableCell(withReuseIdentifier: "travelCellId", for: indexPath) as! TravelCollectionViewCell
         travelCell.titleLabel.text = travelTitleArray[indexPath.row] as! String 
         travelCell.imageView.image = UIImage(named: travelImgArray[indexPath.row] as! String)
+        loadingView.stopLoading()
+        loadingView.isHidden = true
         return travelCell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
