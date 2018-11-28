@@ -16,7 +16,7 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var detailSecondLabel: UITextView!
     @IBOutlet weak var exbtnDateLabel: UILabel!
     @IBOutlet weak var exbtnTimeLabel: UITextView!
-    @IBOutlet weak var locationLabel: UITextView!
+    @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var exhibitionTimingTitle: UILabel!
     @IBOutlet weak var locationsTitle: UILabel!
     @IBOutlet weak var contactTitle: UILabel!

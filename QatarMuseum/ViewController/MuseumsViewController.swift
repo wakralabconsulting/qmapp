@@ -31,6 +31,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     var sliderImgCount : Int? = 0
     var sliderImgArray = NSMutableArray()
     var apnDelegate : APNProtocol?
+    var fromHomeBanner : Bool? = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,17 +70,28 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             nextButton.isHidden = true
             previousButton.setImage(UIImage(named: "nextImg"), for: .normal)
         }
-        if ((museumId != nil) && ((museumId == "63") || (museumId == "96"))) {
-            collectionViewImages = ["MIA_AboutX1","Audio CircleX1","exhibition_blackX1","collectionsX1","park_blackX1","diningX1",]
-            collectionViewNames = [aboutName,tourGuideName,exhibitionsName,collectionsName,parkName,diningName]
-        }else if ((museumId == "61") || (museumId == "66") || (museumId == "635") || (museumId == "638")) {
-            collectionViewImages = ["MIA_AboutX1","Audio CircleX1","exhibition_blackX1","collectionsX1","diningX1",]
-            collectionViewNames = [aboutName,tourGuideName,exhibitionsName,collectionsName,diningName]
-        } else {
-            collectionViewImages = ["MIA_AboutX1","exhibition_blackX1","collectionsX1","diningX1",]
-            collectionViewNames = [aboutName,exhibitionsName,collectionsName,diningName]
+        if(fromHomeBanner)! {
+            let aboutBanner = NSLocalizedString("ABOUT_EVENT", comment: "ABOUT_EVENT  in the Museum")
+            let tourBanner = NSLocalizedString("TOURS", comment: "TOURS  in the Museum page")
+            let travelBanner = NSLocalizedString("TRAVEL_ARRANGEMENTS", comment: "TRAVEL_ARRANGEMENTS  in the Museum page")
+            let panelBanner = NSLocalizedString("PANEL_DISCUSSION", comment: "PANEL_DISCUSSION  in the Museum page")
+            collectionViewImages = ["about-launchX1","tours-launchX1","travel-launchX1","discussion-launchX1"]
+            collectionViewNames = [aboutBanner,tourBanner,travelBanner,panelBanner]
             previousButton.isHidden = true
             nextButton.isHidden = true
+        } else {
+            if ((museumId != nil) && ((museumId == "63") || (museumId == "96"))) {
+                collectionViewImages = ["MIA_AboutX1","Audio CircleX1","exhibition_blackX1","collectionsX1","park_blackX1","diningX1",]
+                collectionViewNames = [aboutName,tourGuideName,exhibitionsName,collectionsName,parkName,diningName]
+            }else if ((museumId == "61") || (museumId == "66") || (museumId == "635") || (museumId == "638")) {
+                collectionViewImages = ["MIA_AboutX1","Audio CircleX1","exhibition_blackX1","collectionsX1","diningX1",]
+                collectionViewNames = [aboutName,tourGuideName,exhibitionsName,collectionsName,diningName]
+            } else {
+                collectionViewImages = ["MIA_AboutX1","exhibition_blackX1","collectionsX1","diningX1",]
+                collectionViewNames = [aboutName,exhibitionsName,collectionsName,diningName]
+                previousButton.isHidden = true
+                nextButton.isHidden = true
+            }
         }
     }
     
@@ -217,23 +229,47 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         museumsCell.itemButton.setImage(UIImage(named: collectionViewImages.object(at: indexPath.row) as! String), for: .normal)
         let itemName = collectionViewNames.object(at: indexPath.row) as? String
         museumsCell.itemName.text = collectionViewNames.object(at: indexPath.row) as? String
-        if((itemName == "Tour Guide") || (itemName == "الدليل السياحي")) {
-             museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 9, bottom: 10, right: 9)
+        if (fromHomeBanner)! {
+            if((itemName == "About Event") || (itemName == "")) {
+                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 9, bottom: 12, right: 9)
+            } else if((itemName == "Tours") || (itemName == "")) {
+                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 15, left: 13, bottom: 15, right: 13)
+            } else if((itemName == "Travel Arrangements") || (itemName == "")) {
+                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 17, left: 14, bottom: 17, right: 14)
+                let itemNameArray = itemName?.components(separatedBy: " ")
+                if((itemNameArray?.count)! > 0) {
+                    museumsCell.itemName.text = itemNameArray?[0]
+                    museumsCell.itemNameSecondLine.text = itemNameArray?[1]
+                }
+            }
+            else if((itemName == "Panel Discussion") || (itemName == "")) {
+                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+                let itemNameArray = itemName?.components(separatedBy: " ")
+                if((itemNameArray?.count)! > 0) {
+                    museumsCell.itemName.text = itemNameArray?[0]
+                    museumsCell.itemNameSecondLine.text = itemNameArray?[1]
+                }
+            }
+        } else {
+            if((itemName == "Tour Guide") || (itemName == "الدليل السياحي")) {
+                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 9, bottom: 10, right: 9)
+            }
+            else if((itemName == "Exhibitions") || (itemName == "المعارض")) {
+                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 16, left: 14, bottom: 13, right: 14)
+            }
+            else if((itemName == "Collections") || (itemName == "المجموعات")) {
+                
+                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 19, left: 15, bottom: 19, right: 15)
+                
+            }
+            else if ((itemName == "Parks") || (itemName == "الحدائق"))  {
+                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 14, left: 14, bottom: 14, right: 14)
+            }
+            else if  ((itemName == "Dining") || (itemName == "العشاء")) {
+                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 18, left: 15, bottom: 18, right: 15)
+            }
         }
-        else if((itemName == "Exhibitions") || (itemName == "المعارض")) {
-            museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 16, left: 14, bottom: 13, right: 14)
-        }
-        else if((itemName == "Collections") || (itemName == "المجموعات")) {
-           
-            museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 19, left: 15, bottom: 19, right: 15)
-            
-        }
-        else if ((itemName == "Parks") || (itemName == "الحدائق"))  {
-            museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 14, left: 14, bottom: 14, right: 14)
-        }
-        else if  ((itemName == "Dining") || (itemName == "العشاء")) {
-            museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 18, left: 15, bottom: 18, right: 15)
-        }
+       
         if((museumId != nil) && ((museumId == "63") || (museumId == "96"))) {
             if (museumsBottomCollectionView.contentOffset.x <= 0.0) {
                 if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
@@ -272,81 +308,100 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         return CGSize(width: museumsBottomCollectionView.frame.width/4, height: 110)
     }
     func loadBottomCellPages(cellObj: MuseumBottomCell, selectedItem: String?) {
-       if ((selectedItem == "About") || (selectedItem == "عن")) {
-//            let heritageDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
-//            heritageDtlView.pageNameString = PageName.museumAbout
-//            heritageDtlView.museumId = museumId
-        
-        let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
-        
-        let heritageDtlView = detailStoryboard.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
-        heritageDtlView.pageNameString = PageName2.museumAbout
-        heritageDtlView.museumId = museumId
+        if(fromHomeBanner)! {
+            if (selectedItem == "About Event") {
+                
+            } else if (selectedItem == "Tours") {
+                
+            } else if (selectedItem == "Travel Arrangements") {
+                let travelView =  self.storyboard?.instantiateViewController(withIdentifier: "travelId") as! TravelArrangementsViewController
+                let transition = CATransition()
+                transition.duration = 0.25
+                transition.type = kCATransitionPush
+                transition.subtype = kCATransitionFromRight
+                view.window!.layer.add(transition, forKey: kCATransition)
+                self.present(travelView, animated: false, completion: nil)
+            }
+            else if (selectedItem == "Panel Discussion") {
+                
+            }
+        } else {
+           if ((selectedItem == "About") || (selectedItem == "عن")) {
+    //            let heritageDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
+    //            heritageDtlView.pageNameString = PageName.museumAbout
+    //            heritageDtlView.museumId = museumId
+            
+            let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
+            
+            let heritageDtlView = detailStoryboard.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
+            heritageDtlView.pageNameString = PageName2.museumAbout
+            heritageDtlView.museumId = museumId
 
-        
-            let transition = CATransition()
-            transition.duration = 0.3
-            transition.type = kCATransitionFade
-            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-            view.window!.layer.add(transition, forKey: kCATransition)
-            self.present(heritageDtlView, animated: false, completion: nil)
-       } else if ((selectedItem == "Tour Guide") || (selectedItem == "الدليل السياحي")){
-            if((museumId == "63") || (museumId == "96")) {
-                let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "miaTourGuideId") as! MiaTourGuideViewController
-                // tourGuideView.fromHome = false
-                tourGuideView.museumId = museumId!
+            
+                let transition = CATransition()
+                transition.duration = 0.3
+                transition.type = kCATransitionFade
+                transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+                view.window!.layer.add(transition, forKey: kCATransition)
+                self.present(heritageDtlView, animated: false, completion: nil)
+           } else if ((selectedItem == "Tour Guide") || (selectedItem == "الدليل السياحي")){
+                if((museumId == "63") || (museumId == "96")) {
+                    let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "miaTourGuideId") as! MiaTourGuideViewController
+                    // tourGuideView.fromHome = false
+                    tourGuideView.museumId = museumId!
+                    let transition = CATransition()
+                    transition.duration = 0.3
+                    transition.type = kCATransitionPush
+                    transition.subtype = kCATransitionFromRight
+                    view.window!.layer.add(transition, forKey: kCATransition)
+                    self.present(tourGuideView, animated: false, completion: nil)
+                } else {
+                    self.loadComingSoonPopup()
+            }
+            
+           } else if ((selectedItem == "Exhibitions") || (selectedItem == "المعارض")){
+                let exhibitionView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+                exhibitionView.museumId = museumId
                 let transition = CATransition()
                 transition.duration = 0.3
                 transition.type = kCATransitionPush
                 transition.subtype = kCATransitionFromRight
                 view.window!.layer.add(transition, forKey: kCATransition)
-                self.present(tourGuideView, animated: false, completion: nil)
-            } else {
-                self.loadComingSoonPopup()
+                exhibitionView.exhibitionsPageNameString = ExhbitionPageName.museumExhibition
+                //exhibitionView.exhibitionsPageNameString = ExhbitionPageName.homeExhibition // For now changing to homeExhibition
+                self.present(exhibitionView, animated: false, completion: nil)
+           } else if ((selectedItem == "Collections") || (selectedItem == "المجموعات")){
+                let musmCollectionnView = self.storyboard?.instantiateViewController(withIdentifier: "musmCollectionViewId") as! MuseumCollectionsViewController
+                musmCollectionnView.museumId = museumId
+                let transition = CATransition()
+                transition.duration = 0.3
+                transition.type = kCATransitionPush
+                transition.subtype = kCATransitionFromRight
+                view.window!.layer.add(transition, forKey: kCATransition)
+                self.present(musmCollectionnView, animated: false, completion: nil)
+           } else if ((selectedItem == "Parks") || (selectedItem == "الحدائق")){
+                let parkView = self.storyboard?.instantiateViewController(withIdentifier: "parkViewId") as! ParksViewController
+                let transition = CATransition()
+                transition.duration = 0.3
+                transition.type = kCATransitionFade
+                transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+                view.window!.layer.add(transition, forKey: kCATransition)
+                self.present(parkView, animated: false, completion: nil)
+           } else if((selectedItem == "Dining") || (selectedItem == "الطعام")) {
+                let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "diningViewId") as! DiningViewController
+                diningView.museumId = museumId
+                diningView.fromHome = false
+                diningView.fromSideMenu = false
+                let transition = CATransition()
+                transition.duration = 0.25
+                transition.type = kCATransitionPush
+                transition.subtype = kCATransitionFromRight
+                view.window!.layer.add(transition, forKey: kCATransition)
+                self.present(diningView, animated: false, completion: nil)
+           } else {
+                loadComingSoonPopup()
+           }
         }
-        
-       } else if ((selectedItem == "Exhibitions") || (selectedItem == "المعارض")){
-            let exhibitionView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
-            exhibitionView.museumId = museumId
-            let transition = CATransition()
-            transition.duration = 0.3
-            transition.type = kCATransitionPush
-            transition.subtype = kCATransitionFromRight
-            view.window!.layer.add(transition, forKey: kCATransition)
-            exhibitionView.exhibitionsPageNameString = ExhbitionPageName.museumExhibition
-            //exhibitionView.exhibitionsPageNameString = ExhbitionPageName.homeExhibition // For now changing to homeExhibition
-            self.present(exhibitionView, animated: false, completion: nil)
-       } else if ((selectedItem == "Collections") || (selectedItem == "المجموعات")){
-            let musmCollectionnView = self.storyboard?.instantiateViewController(withIdentifier: "musmCollectionViewId") as! MuseumCollectionsViewController
-            musmCollectionnView.museumId = museumId
-            let transition = CATransition()
-            transition.duration = 0.3
-            transition.type = kCATransitionPush
-            transition.subtype = kCATransitionFromRight
-            view.window!.layer.add(transition, forKey: kCATransition)
-            self.present(musmCollectionnView, animated: false, completion: nil)
-       } else if ((selectedItem == "Parks") || (selectedItem == "الحدائق")){
-            let parkView = self.storyboard?.instantiateViewController(withIdentifier: "parkViewId") as! ParksViewController
-            let transition = CATransition()
-            transition.duration = 0.3
-            transition.type = kCATransitionFade
-            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-            view.window!.layer.add(transition, forKey: kCATransition)
-            self.present(parkView, animated: false, completion: nil)
-       } else if((selectedItem == "Dining") || (selectedItem == "الطعام")) {
-            let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "diningViewId") as! DiningViewController
-            diningView.museumId = museumId
-            diningView.fromHome = false
-            diningView.fromSideMenu = false
-            let transition = CATransition()
-            transition.duration = 0.25
-            transition.type = kCATransitionPush
-            transition.subtype = kCATransitionFromRight
-            view.window!.layer.add(transition, forKey: kCATransition)
-            self.present(diningView, animated: false, completion: nil)
-       } else {
-            loadComingSoonPopup()
-       }
     }
     
     @IBAction func didTapPrevious(_ sender: UIButton) {

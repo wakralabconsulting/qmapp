@@ -33,13 +33,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         super.viewDidLoad()
         registerCell()
         setupUI()
-        if (pageNameString == NMoQPageName.Tours) {
-            imageArray = tourImageArray
-            titleArray = tourNameArray
-        } else if (pageNameString == NMoQPageName.PanelDiscussion) {
-            imageArray = panelImageArray
-            titleArray = panelNameArray
-        }
+        
     }
     
     func setupUI() {
@@ -47,11 +41,19 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         loadingView.showLoading()
         loadingView.loadingViewDelegate = self
         headerView.headerViewDelegate = self
-        headerView.headerTitle.text = NSLocalizedString("TOUR_TITLE", comment: "TOUR_TITLE in the NMoQ page")
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         } else {
             headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+        }
+        if (pageNameString == NMoQPageName.Tours) {
+            imageArray = tourImageArray
+            titleArray = tourNameArray
+            headerView.headerTitle.text = NSLocalizedString("TOUR_TITLE", comment: "TOUR_TITLE in the NMoQ page")
+        } else if (pageNameString == NMoQPageName.PanelDiscussion) {
+            imageArray = panelImageArray
+            titleArray = panelNameArray
+            headerView.headerTitle.text = NSLocalizedString("PANEL_DISCUSSION_TITLE", comment: "PANEL_DISCUSSION_TITLE in the NMoQ page")
         }
     }
     
