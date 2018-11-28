@@ -7,11 +7,11 @@
 //
 
 import UIKit
-protocol LoginPopUpProtocol
+@objc protocol LoginPopUpProtocol
 {
     func popupCloseButtonPressed()
     func loginButtonPressed()
-    func forgotButtonPressed()
+    @objc optional func forgotButtonPressed()
 }
 class LoginPopupPage: UIView {
     
@@ -63,7 +63,7 @@ class LoginPopupPage: UIView {
     }
     @IBAction func didTapForgotPwd(_ sender: UIButton) {
         self.forgotButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        loginPopupDelegate?.forgotButtonPressed()
+        loginPopupDelegate?.forgotButtonPressed!()
     }
     @IBAction func didTapLogin(_ sender: UIButton) {
         self.loginButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)

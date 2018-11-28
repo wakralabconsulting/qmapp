@@ -12,9 +12,13 @@ class MuseumBottomCell: UICollectionViewCell {
     
     @IBOutlet weak var itemButton: UIButton!
     @IBOutlet weak var itemName: UILabel!
+    @IBOutlet weak var itemNameSecondLine: UILabel!
     var cellItemBtnTapAction : (()->())?
     
     @IBOutlet weak var cellView: UIView!
+    override func awakeFromNib() {
+        itemName.font = UIFont.eventDescriptionFont
+    }
     @IBAction func didTapCellButton(_ sender: UIButton) {
         UIButton.animate(withDuration: 0.2,
                          animations: {
