@@ -11,6 +11,19 @@
 		1B3C505721270F260034E560 /* ArtifactNumberPadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3C505621270F260034E560 /* ArtifactNumberPadViewController.swift */; };
 		1B3C505B212AB3460034E560 /* ArtifactNumberPadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3C5059212AB3460034E560 /* ArtifactNumberPadCell.swift */; };
 		1B3C505C212AB3460034E560 /* ArtifactNumberPadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B3C505A212AB3460034E560 /* ArtifactNumberPadCell.xib */; };
+		1B444A3721AE9709009FF40F /* NMoQListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B444A3521AE9708009FF40F /* NMoQListCell.swift */; };
+		1B444A3821AE9709009FF40F /* NMoQListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B444A3621AE9708009FF40F /* NMoQListCell.xib */; };
+		1B444A3A21AE9F03009FF40F /* TourAndPanelListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B444A3921AE9F03009FF40F /* TourAndPanelListViewController.swift */; };
+		1B444A4621AEB10E009FF40F /* panel_discussion-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B444A3C21AEB089009FF40F /* panel_discussion-1.png */; };
+		1B444A4721AEB10E009FF40F /* panel_discussion-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B444A3D21AEB08F009FF40F /* panel_discussion-2.png */; };
+		1B444A4821AEB10E009FF40F /* art_culture_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B444A3E21AEB096009FF40F /* art_culture_1.png */; };
+		1B444A4921AEB10E009FF40F /* nature_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B444A3F21AEB0A0009FF40F /* nature_5.png */; };
+		1B444A4A21AEB10E009FF40F /* architecture_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B444A4021AEB0AB009FF40F /* architecture_03.png */; };
+		1B444A4B21AEB10E009FF40F /* panel_discussion-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B444A4121AEB0C1009FF40F /* panel_discussion-3.png */; };
+		1B444A4C21AEB10E009FF40F /* sports_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B444A4221AEB0D4009FF40F /* sports_2.png */; };
+		1B444A4D21AEB10E009FF40F /* fashion_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B444A4321AEB0E0009FF40F /* fashion_4.png */; };
+		1B444A4E21AEB10E009FF40F /* panel_discussion-4.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B444A4421AEB0F4009FF40F /* panel_discussion-4.png */; };
+		1B444A4F21AEB10E009FF40F /* panel_discussion-5.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B444A4521AEB105009FF40F /* panel_discussion-5.png */; };
 		1B51411E215B892E0055AAF5 /* TourGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51411D215B892D0055AAF5 /* TourGuide.swift */; };
 		1B51B3CE21214820002B84AA /* ObjectPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51B3CD21214820002B84AA /* ObjectPopupView.swift */; };
 		1B51B3D021214853002B84AA /* ObjectPopupXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B51B3CF21214853002B84AA /* ObjectPopupXib.xib */; };
@@ -231,6 +244,19 @@
 		1B3C505621270F260034E560 /* ArtifactNumberPadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactNumberPadViewController.swift; sourceTree = "<group>"; };
 		1B3C5059212AB3460034E560 /* ArtifactNumberPadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactNumberPadCell.swift; sourceTree = "<group>"; };
 		1B3C505A212AB3460034E560 /* ArtifactNumberPadCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArtifactNumberPadCell.xib; sourceTree = "<group>"; };
+		1B444A3521AE9708009FF40F /* NMoQListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQListCell.swift; sourceTree = "<group>"; };
+		1B444A3621AE9708009FF40F /* NMoQListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NMoQListCell.xib; sourceTree = "<group>"; };
+		1B444A3921AE9F03009FF40F /* TourAndPanelListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourAndPanelListViewController.swift; sourceTree = "<group>"; };
+		1B444A3C21AEB089009FF40F /* panel_discussion-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "panel_discussion-1.png"; sourceTree = "<group>"; };
+		1B444A3D21AEB08F009FF40F /* panel_discussion-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "panel_discussion-2.png"; sourceTree = "<group>"; };
+		1B444A3E21AEB096009FF40F /* art_culture_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = art_culture_1.png; sourceTree = "<group>"; };
+		1B444A3F21AEB0A0009FF40F /* nature_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nature_5.png; sourceTree = "<group>"; };
+		1B444A4021AEB0AB009FF40F /* architecture_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = architecture_03.png; sourceTree = "<group>"; };
+		1B444A4121AEB0C1009FF40F /* panel_discussion-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "panel_discussion-3.png"; sourceTree = "<group>"; };
+		1B444A4221AEB0D4009FF40F /* sports_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sports_2.png; sourceTree = "<group>"; };
+		1B444A4321AEB0E0009FF40F /* fashion_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fashion_4.png; sourceTree = "<group>"; };
+		1B444A4421AEB0F4009FF40F /* panel_discussion-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "panel_discussion-4.png"; sourceTree = "<group>"; };
+		1B444A4521AEB105009FF40F /* panel_discussion-5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "panel_discussion-5.png"; sourceTree = "<group>"; };
 		1B51411D215B892D0055AAF5 /* TourGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourGuide.swift; sourceTree = "<group>"; };
 		1B51B3CD21214820002B84AA /* ObjectPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectPopupView.swift; sourceTree = "<group>"; };
 		1B51B3CF21214853002B84AA /* ObjectPopupXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ObjectPopupXib.xib; sourceTree = "<group>"; };
@@ -514,6 +540,32 @@
 			path = ArtifactNumberPadCell;
 			sourceTree = "<group>";
 		};
+		1B444A3421AE962D009FF40F /* NMoQListCell */ = {
+			isa = PBXGroup;
+			children = (
+				1B444A3521AE9708009FF40F /* NMoQListCell.swift */,
+				1B444A3621AE9708009FF40F /* NMoQListCell.xib */,
+			);
+			path = NMoQListCell;
+			sourceTree = "<group>";
+		};
+		1B444A3B21AEAFD9009FF40F /* QmImages */ = {
+			isa = PBXGroup;
+			children = (
+				1B444A4021AEB0AB009FF40F /* architecture_03.png */,
+				1B444A3E21AEB096009FF40F /* art_culture_1.png */,
+				1B444A4321AEB0E0009FF40F /* fashion_4.png */,
+				1B444A3F21AEB0A0009FF40F /* nature_5.png */,
+				1B444A3C21AEB089009FF40F /* panel_discussion-1.png */,
+				1B444A3D21AEB08F009FF40F /* panel_discussion-2.png */,
+				1B444A4121AEB0C1009FF40F /* panel_discussion-3.png */,
+				1B444A4421AEB0F4009FF40F /* panel_discussion-4.png */,
+				1B444A4521AEB105009FF40F /* panel_discussion-5.png */,
+				1B444A4221AEB0D4009FF40F /* sports_2.png */,
+			);
+			path = QmImages;
+			sourceTree = "<group>";
+		};
 		1B51B3CC212146E7002B84AA /* ObjectPopup */ = {
 			isa = PBXGroup;
 			children = (
@@ -669,6 +721,7 @@
 		B80DC05720C792E400E28034 /* QatarMuseum */ = {
 			isa = PBXGroup;
 			children = (
+				1B444A3B21AEAFD9009FF40F /* QmImages */,
 				B8AFA2F020E78E06008838A6 /* DINNextLTPro-Bold.otf */,
 				B8AFA2EE20E78E00008838A6 /* DINNextLTPro-Light.otf */,
 				B8AFA2EF20E78E03008838A6 /* DINNextLTPro-Regular.ttf */,
@@ -752,6 +805,7 @@
 				B8F00C862178D74800320DF1 /* RegistrationViewController.swift */,
 				B88F07E7217DD5F600B16875 /* CulturePassCardViewController.swift */,
 				B807FCD0218ECFE5003CC51E /* CulturePassCardBackViewController.swift */,
+				1B444A3921AE9F03009FF40F /* TourAndPanelListViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -759,6 +813,7 @@
 		B80DC08720C7943100E28034 /* ReusableComponents */ = {
 			isa = PBXGroup;
 			children = (
+				1B444A3421AE962D009FF40F /* NMoQListCell */,
 				B80B76A3218AD6AC00190967 /* RsvpPopups */,
 				B8F00C8121787CD300320DF1 /* LoginPopup */,
 				B827299321778B2F0017EC71 /* VersaPlayer */,
@@ -1306,15 +1361,26 @@
 			files = (
 				B8AFA2EB20E78BA9008838A6 /* DINNextLTArabic-Bold.ttf in Resources */,
 				B80DC09220C7A9CE00E28034 /* TopBarView.xib in Resources */,
+				1B444A4621AEB10E009FF40F /* panel_discussion-1.png in Resources */,
 				B80DC08A20C794E100E28034 /* HomeCollectionCell.xib in Resources */,
 				B8AFA2F320E78E09008838A6 /* DINNextLTPro-Bold.otf in Resources */,
+				1B444A4E21AEB10E009FF40F /* panel_discussion-4.png in Resources */,
 				B8B2A18120D1491900E053A9 /* QMLogo.gif in Resources */,
 				B80DC06320C792E600E28034 /* LaunchScreen.storyboard in Resources */,
+				1B444A4A21AEB10E009FF40F /* architecture_03.png in Resources */,
+				1B444A3821AE9709009FF40F /* NMoQListCell.xib in Resources */,
+				1B444A4F21AEB10E009FF40F /* panel_discussion-5.png in Resources */,
+				1B444A4D21AEB10E009FF40F /* fashion_4.png in Resources */,
 				B8EAB7C020CA67CD00C001B2 /* EventPopUp.xib in Resources */,
 				B891D06520DBCC5200919F30 /* HeritageCell.xib in Resources */,
+				1B444A4C21AEB10E009FF40F /* sports_2.png in Resources */,
+				1B444A4921AEB10E009FF40F /* nature_5.png in Resources */,
 				B80B76AF218AD6AC00190967 /* InvitationAcceptedPopup.xib in Resources */,
 				B8EAA3592158D4520060D168 /* GoogleService-Info.plist in Resources */,
+				1B444A4B21AEB10E009FF40F /* panel_discussion-3.png in Resources */,
 				B82729B721778B2F0017EC71 /* .gitkeep in Resources */,
+				1B444A4721AEB10E009FF40F /* panel_discussion-2.png in Resources */,
+				1B444A4821AEB10E009FF40F /* art_culture_1.png in Resources */,
 				B8DC40A520C9A3230044134D /* CommonHeader.xib in Resources */,
 				B8DC478720DCF8CE0007B426 /* ParkTableCellXib.xib in Resources */,
 				B806B7AD212452DC00F9F338 /* GoogleMaps.bundle in Resources */,
@@ -1465,6 +1531,7 @@
 				1BAA2FCF2126D15D00D785DD /* Collection.swift in Sources */,
 				B82729B521778B2F0017EC71 /* VPlayer.swift in Sources */,
 				B8C31CE2216243F800AE7788 /* iCarousel.m in Sources */,
+				1B444A3721AE9709009FF40F /* NMoQListCell.swift in Sources */,
 				B8CA08E02146D38400783642 /* MapDetailView.swift in Sources */,
 				B8C31CE421626E9100AE7788 /* MuseumAboutViewController.swift in Sources */,
 				B8B4943A212EDDE300203C7F /* ToastView.swift in Sources */,
@@ -1478,6 +1545,7 @@
 				B8F3A940212728EE005360AD /* CommonStrings.swift in Sources */,
 				B80B76AA218AD6AC00190967 /* AcceptDeclinePopup.swift in Sources */,
 				1BE526D72107896600C8CD51 /* Exhibition.swift in Sources */,
+				1B444A3A21AE9F03009FF40F /* TourAndPanelListViewController.swift in Sources */,
 				B82729B821778B2F0017EC71 /* VersaPlayerControlsBehaviour.swift in Sources */,
 				B85BA4B020D01D1C00E7F4D1 /* SplashViewController.swift in Sources */,
 				B8294CF520CBF265002AFF72 /* FSCalendarStickyHeader.m in Sources */,
