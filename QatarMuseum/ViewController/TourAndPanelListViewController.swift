@@ -33,7 +33,8 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         super.viewDidLoad()
         registerCell()
         setupUI()
-        
+        collectionTableView.delegate = self
+        collectionTableView.dataSource = self
     }
     
     func setupUI() {

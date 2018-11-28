@@ -17,6 +17,9 @@ class NMoQListCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        titleLabel.font = UIFont.selfGuidedFont
+        dayLabel.font  = UIFont.settingsUpdateLabelFont
+        dateLabel.font = UIFont.sideMenuLabelFont
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
