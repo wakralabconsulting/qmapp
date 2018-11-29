@@ -69,7 +69,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.fetchAboutDetailsFromCoredata()
             }
         } else if (pageNameString == PageName2.museumEvent) {
-            
+                getNmoQAboutDetailsFromServer()
             }
         recordScreenView()
     }
@@ -113,7 +113,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             else {
                 imageView.image = nil
             }
-        } else if (pageNameString == PageName2.museumAbout){
+        } else if ((pageNameString == PageName2.museumAbout) || (pageNameString == PageName2.museumEvent)){
             
             if (aboutDetailtArray.count > 0)  {
                 if(aboutDetailtArray[0].multimediaFile != nil) {
@@ -184,7 +184,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             return heritageDetailtArray.count
         } else if (pageNameString == PageName2.publicArtsDetail){
             return publicArtsDetailtArray.count
-        } else if (pageNameString == PageName2.museumAbout){
+        } else if ((pageNameString == PageName2.museumAbout) || (pageNameString == PageName2.museumEvent)){
             if(aboutDetailtArray.count > 0) {
                 return aboutDetailtArray.count
                 // return 1
@@ -214,6 +214,20 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                 heritageCell.pageControl.isHidden = false
             } else {
                 heritageCell.pageControl.isHidden = true
+            }
+        } else if(pageNameString == PageName2.museumEvent){
+            heritageCell.videoOuterView.isHidden = true
+            heritageCell.videoOuterViewHeight.constant = 0
+            heritageCell.setNMoQAboutCellData(aboutData: aboutDetailtArray[indexPath.row])
+            // heritageCell.setMuseumAboutCellData(aboutData: aboutDetailtArray[0])
+            if (isImgArrayAvailable()) {
+                heritageCell.pageControl.isHidden = false
+            } else {
+                heritageCell.pageControl.isHidden = true
+            }
+            heritageCell.downloadBtnTapAction = {
+                () in
+                self.downloadButtonAction()
             }
         }
         
@@ -352,6 +366,10 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         } else {
             showLocationErrorPopup()
         }
+    }
+    func downloadButtonAction() {
+       let downloadLink = aboutDetailtArray[0].downloadable
+        print(downloadLink)
     }
     
     func showLocationErrorPopup() {
@@ -858,7 +876,42 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             }
         }
     }
-    
+    //MARK: NMoQ ABoutEvent Webservice
+    func getNmoQAboutDetailsFromServer() {
+        _ = Alamofire.request(QatarMuseumRouter.GetNMoQAboutEvent(["nid": "13376"])).responseObject { (response: DataResponse<Museums>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.aboutDetailtArray = data.museum!
+                self.setTopBarImage()
+                self.saveOrUpdateAboutCoredata()
+                self.heritageDetailTableView.reloadData()
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
+                if(self.aboutDetailtArray.count != 0) {
+                    if(self.aboutDetailtArray[0].multimediaFile != nil) {
+                        if((self.aboutDetailtArray[0].multimediaFile?.count)! > 0) {
+                            self.carousel.reloadData()
+                        }
+                    }
+                }
+                if (self.aboutDetailtArray.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
+            case .failure( _):
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
+            }
+        }
+    }
     //MARK: About CoreData
     func saveOrUpdateAboutCoredata() {
         if (aboutDetailtArray.count > 0) {
