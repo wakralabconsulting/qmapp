@@ -19,6 +19,7 @@ enum PageName2{
     case heritageDetail
     case publicArtsDetail
     case museumAbout
+    case museumEvent
 }
 class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,iCarouselDelegate,iCarouselDataSource,UIGestureRecognizerDelegate,LoadingViewProtocol {
     @IBOutlet weak var heritageDetailTableView: UITableView!
@@ -67,8 +68,9 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             } else {
                 self.fetchAboutDetailsFromCoredata()
             }
+        } else if (pageNameString == PageName2.museumEvent) {
             
-        }
+            }
         recordScreenView()
     }
     
@@ -205,7 +207,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             heritageCell.midTitleDescriptionLabel.textAlignment = .center
         } else if(pageNameString == PageName2.publicArtsDetail){
             heritageCell.setPublicArtsDetailValues(publicArsDetail: publicArtsDetailtArray[indexPath.row])
-        } else {
+        } else if(pageNameString == PageName2.museumAbout){
             heritageCell.setMuseumAboutCellData(aboutData: aboutDetailtArray[indexPath.row])
             // heritageCell.setMuseumAboutCellData(aboutData: aboutDetailtArray[0])
             if (isImgArrayAvailable()) {
