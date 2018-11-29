@@ -111,6 +111,7 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         
     }
     func setProfileInfo() {
+        /* COMMENTED BCZ RSVP IS NOT NEEDED NOW
         if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")) {
             invitationMessageLabel.text = NSLocalizedString("INVITATION_TEXT", comment: "INVITATION_TEXT")
             declineLabel.text = NSLocalizedString("DECLINE", comment: "DECLINE")
@@ -139,6 +140,7 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
             }
         
         }
+        */
         if((UserDefaults.standard.value(forKey: "displayName") as? String != nil) && (UserDefaults.standard.value(forKey: "displayName") as? String != "")) {
             userNameText.text = (UserDefaults.standard.value(forKey: "displayName") as? String)?.uppercased()
         }

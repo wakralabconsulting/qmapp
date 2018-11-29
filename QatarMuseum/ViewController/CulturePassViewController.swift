@@ -388,11 +388,9 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
                         if(self.userInfoArray?.fieldRsvpAttendance != nil) {
                             let undData = self.userInfoArray?.fieldRsvpAttendance!["und"] as! NSArray
                             if(undData != nil) {
-                                print(self.userInfoArray?.fieldRsvpAttendance!["und"])
                                 if(undData.count > 0) {
                                     let value = undData[0] as! NSDictionary
                                     if(value["value"] != nil) {
-                                        print(value["value"]  as! String)
                                         UserDefaults.standard.setValue(value["value"], forKey: "acceptOrDecline")
                                     }
                                 }
