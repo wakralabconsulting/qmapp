@@ -75,6 +75,8 @@
 		B811FBCC2103811400960246 /* QMColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = B811FBCB2103811400960246 /* QMColours.swift */; };
 		B812BA04210AF3540083E0E2 /* QMFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = B812BA03210AF3540083E0E2 /* QMFont.swift */; };
 		B816029E215A239900786F94 /* TourGuideFloorMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B816029D215A239900786F94 /* TourGuideFloorMap.swift */; };
+		B81FF06B21AFBA1B006A968B /* NMoHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B81FF06A21AFBA1B006A968B /* NMoHeaderView.xib */; };
+		B81FF06D21AFBA36006A968B /* NMoQHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81FF06C21AFBA36006A968B /* NMoQHeaderCell.swift */; };
 		B82729B021778B2F0017EC71 /* VPlayerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827299721778B2F0017EC71 /* VPlayerLayer.swift */; };
 		B82729B121778B2F0017EC71 /* VPlayerRenderingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827299821778B2F0017EC71 /* VPlayerRenderingView.swift */; };
 		B82729B221778B2F0017EC71 /* VersaPlayerPlaybackDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827299A21778B2F0017EC71 /* VersaPlayerPlaybackDelegate.swift */; };
@@ -324,6 +326,8 @@
 		B812BA03210AF3540083E0E2 /* QMFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QMFont.swift; sourceTree = "<group>"; };
 		B812BA06210B2FE20083E0E2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		B816029D215A239900786F94 /* TourGuideFloorMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourGuideFloorMap.swift; sourceTree = "<group>"; };
+		B81FF06A21AFBA1B006A968B /* NMoHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NMoHeaderView.xib; sourceTree = "<group>"; };
+		B81FF06C21AFBA36006A968B /* NMoQHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQHeaderCell.swift; sourceTree = "<group>"; };
 		B827299721778B2F0017EC71 /* VPlayerLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPlayerLayer.swift; sourceTree = "<group>"; };
 		B827299821778B2F0017EC71 /* VPlayerRenderingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPlayerRenderingView.swift; sourceTree = "<group>"; };
 		B827299A21778B2F0017EC71 /* VersaPlayerPlaybackDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersaPlayerPlaybackDelegate.swift; sourceTree = "<group>"; };
@@ -823,6 +827,7 @@
 		B80DC08720C7943100E28034 /* ReusableComponents */ = {
 			isa = PBXGroup;
 			children = (
+				B81FF06921AFB9FE006A968B /* NMoQHeader */,
 				1B444A3421AE962D009FF40F /* NMoQListCell */,
 				B860EE4C21AEA0980007F63B /* TravelCell */,
 				B80B76A3218AD6AC00190967 /* RsvpPopups */,
@@ -888,6 +893,15 @@
 				B811FBCB2103811400960246 /* QMColours.swift */,
 			);
 			path = CommonColours;
+			sourceTree = "<group>";
+		};
+		B81FF06921AFB9FE006A968B /* NMoQHeader */ = {
+			isa = PBXGroup;
+			children = (
+				B81FF06A21AFBA1B006A968B /* NMoHeaderView.xib */,
+				B81FF06C21AFBA36006A968B /* NMoQHeaderCell.swift */,
+			);
+			path = NMoQHeader;
 			sourceTree = "<group>";
 		};
 		B827299321778B2F0017EC71 /* VersaPlayer */ = {
@@ -1407,6 +1421,7 @@
 				B860EE6621AEC9030007F63B /* fashion_4.png in Resources */,
 				B8CA08E52146D38400783642 /* MapDetailCell.xib in Resources */,
 				B80DC06020C792E600E28034 /* Assets.xcassets in Resources */,
+				B81FF06B21AFBA1B006A968B /* NMoHeaderView.xib in Resources */,
 				B860EE6321AEC9030007F63B /* architecture_03.png in Resources */,
 				B8AFA2ED20E78BA9008838A6 /* DINNextLTArabic-Regular.ttf in Resources */,
 				B860EE6721AEC9030007F63B /* art_culture_1.png in Resources */,
@@ -1588,6 +1603,7 @@
 				B8DC478220DCC1080007B426 /* PublicArtsViewController.swift in Sources */,
 				B8C31CE62162821300AE7788 /* MuseumAboutCell.swift in Sources */,
 				B8294CEB20CBF265002AFF72 /* FSCalendarExtensions.m in Sources */,
+				B81FF06D21AFBA36006A968B /* NMoQHeaderCell.swift in Sources */,
 				B82729BD21778B2F0017EC71 /* VersaStatefulButton.swift in Sources */,
 				B8EAB7BA20CA424300C001B2 /* DelegateAppearanceViewController.swift in Sources */,
 				B82729B121778B2F0017EC71 /* VPlayerRenderingView.swift in Sources */,

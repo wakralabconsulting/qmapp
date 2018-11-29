@@ -54,16 +54,16 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         registerNib()
-        setUpUI()
+        
         
         if (networkReachability?.isReachable)! {
             getHomeList()
         } else {
             self.fetchHomeInfoFromCoredata()
         }
-        
+        setUpUI()
         NotificationCenter.default.addObserver(self, selector: #selector(self.receivedNotification(notification:)), name: NSNotification.Name("NotificationIdentifier"), object: nil)
         
         
@@ -80,10 +80,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     func setTopImageUI() {
        
         homeCollectionView.contentInset = UIEdgeInsetsMake(120, 0, 0, 0)
-        //exhibitionDetailTableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0)
+        if(UIScreen.main.bounds.height == 812) {
+            imageView.frame = CGRect(x: 0, y: 108, width: UIScreen.main.bounds.size.width, height: 120)
+        } else {
+            imageView.frame = CGRect(x: 0, y: 85, width: UIScreen.main.bounds.size.width, height: 120)
+        }
         
-        imageView.frame = CGRect(x: 0, y: 85, width: UIScreen.main.bounds.size.width, height: 120)
-        //imageView.image = UIImage(named: "default_imageX2")
         imageView.backgroundColor = UIColor.white
             if homeBannerList.count > 0 {
 
@@ -111,7 +113,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         if(homeBannerList[0].bannerTitle != nil) {
             imgLabel.text = homeBannerList[0].bannerTitle
         }
-        //imgLabel.numberOfLines = 2
         imgLabel.textAlignment = .center
         imgLabel.scrollsToTop = false
         imgLabel.isEditable = false
@@ -119,7 +120,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         imgLabel.isSelectable = false
         imgLabel.backgroundColor = UIColor.clear
         imgLabel.font = UIFont.eventPopupTitleFont
-        imgLabel.frame = CGRect(x: 0, y: 95, width: UIScreen.main.bounds.size.width, height: 90)
+        if(UIScreen.main.bounds.height == 812) {
+            imgLabel.frame = CGRect(x: 0, y: 130, width: UIScreen.main.bounds.size.width, height: 90)
+        } else {
+            imgLabel.frame = CGRect(x: 0, y: 95, width: UIScreen.main.bounds.size.width, height: 90)
+        }
+        
         self.view.addSubview(imgLabel)
         
         imgButton.setTitle("", for: .normal)
@@ -135,6 +141,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         blurView.alpha = 0
         imageView.addSubview(blurView)
         self.view.layoutIfNeeded()
+        
+        
     }
    
     @objc func imgButtonPressed(sender: UIButton!) {
@@ -155,9 +163,15 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = 120 - (scrollView.contentOffset.y + 120)
         let height = min(max(y, 0), 120)
-        imageView.frame = CGRect(x: 0, y: 85, width: UIScreen.main.bounds.size.width, height: height)
-        imgButton.frame = imageView.frame
-        imgLabel.frame = CGRect(x: 0, y: 95, width: UIScreen.main.bounds.size.width, height: height-10)
+        if(UIScreen.main.bounds.height == 812) {
+            imageView.frame = CGRect(x: 0, y: 108, width: UIScreen.main.bounds.size.width, height: height)
+            imgButton.frame = imageView.frame
+            imgLabel.frame = CGRect(x: 0, y: 130, width: UIScreen.main.bounds.size.width, height: height-10)
+        }else {
+            imageView.frame = CGRect(x: 0, y: 85, width: UIScreen.main.bounds.size.width, height: height)
+            imgButton.frame = imageView.frame
+            imgLabel.frame = CGRect(x: 0, y: 95, width: UIScreen.main.bounds.size.width, height: height-10)
+        }
 
         if (imageView.frame.height >= 120 ){
             blurView.alpha  = 0.0
@@ -208,6 +222,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     func registerNib() {
         let nib = UINib(nibName: "HomeCollectionCell", bundle: nil)
         homeCollectionView?.register(nib, forCellWithReuseIdentifier: "homeCellId")
+        let nib2 = UINib(nibName: "NMoHeaderView", bundle: nil)
+        homeCollectionView?.register(nib2, forCellWithReuseIdentifier: "bannerCellId")
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -224,45 +240,102 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-         let cell : HomeCollectionViewCell = homeCollectionView.dequeueReusableCell(withReuseIdentifier: "homeCellId", for: indexPath) as! HomeCollectionViewCell
-       
-        cell.setHomeCellData(home: homeList[indexPath.row])
-        
         loadingView.stopLoading()
         loadingView.isHidden = true
-        return cell
+        if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")  && (self.homeBannerList.count > 0)) {
+            if(indexPath.row == 0) {
+                let cell1 : NMoQHeaderCell = homeCollectionView.dequeueReusableCell(withReuseIdentifier: "bannerCellId", for: indexPath) as! NMoQHeaderCell
+                cell1.setBannerData(bannerData: homeBannerList[0])
+                return cell1
+            } else {
+                let cell : HomeCollectionViewCell = homeCollectionView.dequeueReusableCell(withReuseIdentifier: "homeCellId", for: indexPath) as! HomeCollectionViewCell
+                
+                cell.setHomeCellData(home: homeList[indexPath.row])
+                
+                loadingView.stopLoading()
+                loadingView.isHidden = true
+                return cell
+            }
+        }else {
+            let cell : HomeCollectionViewCell = homeCollectionView.dequeueReusableCell(withReuseIdentifier: "homeCellId", for: indexPath) as! HomeCollectionViewCell
+            
+            cell.setHomeCellData(home: homeList[indexPath.row])
+            
+            
+            return cell
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            if (homeList[indexPath.row].id == "12181") {
-                loadExhibitionPage()
+        print(homeCollectionView.frame)
+        if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")  && (self.homeBannerList.count > 0)) {
+            if(indexPath.row == 0) {
+                let museumsView =  self.storyboard?.instantiateViewController(withIdentifier: "museumViewId") as! MuseumsViewController
+                museumsView.fromHomeBanner = true
+                museumsView.museumTitleString = homeBannerList[0].bannerTitle
+                let transition = CATransition()
+                transition.duration = 0.25
+                transition.type = kCATransitionPush
+                transition.subtype = kCATransitionFromRight
+                view.window!.layer.add(transition, forKey: kCATransition)
+                self.present(museumsView, animated: false, completion: nil)
+            } else {
+                if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                    if (homeList[indexPath.row].id == "12181") {
+                        loadExhibitionPage()
+                    }
+                    else {
+                        loadMuseumsPage(curretRow: indexPath.row)
+                    }
+                }
+                else {
+                    if (homeList[indexPath.row].id == "12186") {
+                        loadExhibitionPage()
+                    }
+                    else {
+                        loadMuseumsPage(curretRow: indexPath.row)
+                    }
+                }
             }
-//            else if(homeList[indexPath.row].id == "63"){
-//                loadMuseumsPage(curretRow: indexPath.row)
-//            }
+        } else {
+            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                if (homeList[indexPath.row].id == "12181") {
+                    loadExhibitionPage()
+                }
+                else {
+                    loadMuseumsPage(curretRow: indexPath.row)
+                }
+            }
             else {
-                loadMuseumsPage(curretRow: indexPath.row)
+                if (homeList[indexPath.row].id == "12186") {
+                    loadExhibitionPage()
+                }
+                else {
+                    loadMuseumsPage(curretRow: indexPath.row)
+                }
             }
         }
-        else {
-            if (homeList[indexPath.row].id == "12186") {
-                loadExhibitionPage()
-            }
-//            else if(homeList[indexPath.row].id == "96") {
-//                loadMuseumsPage(curretRow: indexPath.row)
-//            }
-            else {
-                loadMuseumsPage(curretRow: indexPath.row)
-            }
-        }
+        
 
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let heightValue = UIScreen.main.bounds.height/100
-        return CGSize(width: homeCollectionView.frame.width, height: heightValue*27)
+        if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")  && (self.homeBannerList.count > 0)) {
+            if(indexPath.row == 0) {
+                return CGSize(width: homeCollectionView.frame.width, height: 120)
+
+            } else {
+                return CGSize(width: homeCollectionView.frame.width, height: heightValue*27)
+
+            }
+
+        }
+        else {
+            return CGSize(width: homeCollectionView.frame.width, height: heightValue*27)
+
+        }
     }
     
     func loadMuseumsPage(curretRow:Int? = 0) {
@@ -313,6 +386,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             switch response.result {
             case .success(let data):
                 self.homeList = data.homeList
+                
+                if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")  && (self.homeBannerList.count > 0)) {
+                    self.homeList.insert(Home(id:nil , name: self.homeBannerList[0].bannerTitle,image: self.homeBannerList[0].bannerLink,
+                                              tourguide_available: "false", sort_id: nil),
+                                         at: 0)
+                }
                 self.saveOrUpdateHomeCoredata()
                 self.homeCollectionView.reloadData()
             case .failure(let error):
@@ -334,13 +413,9 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 
                 self.homeBannerList = data.homeBannerList
                 if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")  && (self.homeBannerList.count > 0)) {
-                    self.setTopImageUI()
+                    //self.setTopImageUI()
                 }
-//                else if (UserDefaults.standard.value(forKey: "accessToken") as? String == nil){
-//                    self.loadLoginPopup()
-//                }
-                //self.saveOrUpdateHomeCoredata()
-                //self.homeCollectionView.reloadData()
+                self.homeCollectionView.reloadData()
                 print(self.homeBannerList)
             case .failure(let error):
                 var errorMessage: String
@@ -620,7 +695,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             self.sideView.transform = CGAffineTransform.identity
             self.sideView.topBarView.menuButton.contentEdgeInsets = UIEdgeInsets(top: 14, left: 18, bottom: 14, right: 20)
         }
-        print(visualEffectView.frame)
         sideView.sideMenuDelegate = self
         
     }
