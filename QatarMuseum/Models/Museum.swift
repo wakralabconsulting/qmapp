@@ -29,6 +29,8 @@ struct Museum: ResponseObjectSerializable, ResponseCollectionSerializable {
     var mobileLatitude: String? = nil
     var tourGuideAvailability: String? = nil
     var multimediaVideo: [String]? = []
+    var eventDate: String? = nil
+    var downloadable: [String]? = []
     
     public init?(response: HTTPURLResponse, representation: AnyObject) {
         if let representation = representation as? [String: Any] {
@@ -47,7 +49,8 @@ struct Museum: ResponseObjectSerializable, ResponseCollectionSerializable {
             self.mobileLatitude = representation["mobile_latitude"] as? String
             self.tourGuideAvailability = representation["tour_guide_availability"] as? String
             self.multimediaVideo = representation["multimedia_video"] as? [String]
-            
+            self.eventDate = representation["event_Date"] as? String
+            self.downloadable = representation["downloadable"] as? [String]
         }
     }
   
@@ -65,7 +68,6 @@ struct Museum: ResponseObjectSerializable, ResponseCollectionSerializable {
             self.mobileLatitude = mobileLatitude
             self.tourGuideAvailability = tourGuideAvailability
             self.multimediaVideo = multimediaVideo
-        
     }
 }
 

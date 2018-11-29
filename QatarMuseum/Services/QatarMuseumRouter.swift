@@ -38,6 +38,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case SendDeviceToken(String, [String: Any])
     case NumberSearchList([String: Any])
     case GetHomeBanner()
+    case GetNMoQAboutEvent([String: Any])
     var method: Alamofire.HTTPMethod {
         switch self {
         case .ExhibitionList:
@@ -95,6 +96,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .NumberSearchList:
             return .get
         case .GetHomeBanner:
+            return .get
+        case .GetNMoQAboutEvent:
             return .get
         }
     }
@@ -157,6 +160,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/collection_by_tour_guide.json"
         case .GetHomeBanner:
             return "/nmoq_banner_banner.json"
+        case .GetNMoQAboutEvent( _):
+            return "/nmoq_about_page.json"
         }
     }
 
@@ -274,7 +279,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return try! Alamofire.JSONEncoding.default.encode(searchURLReq)
         case .GetHomeBanner():
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
-
+        case .GetNMoQAboutEvent(let parameters):
+            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         }
         
         

@@ -43,13 +43,23 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
     @IBOutlet weak var controls: VersaPlayerControls!
     @IBOutlet weak var videoImageView: UIImageView!
     @IBOutlet weak var pageControl: UIPageControl!
-
+    @IBOutlet weak var videoOuterView: UIView!
+    @IBOutlet weak var videoOuterViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var downloadView: UIView!
+    @IBOutlet weak var downloadImg: UIImageView!
+    
+    @IBOutlet weak var downloadLabel: UILabel!
+    
+    @IBOutlet weak var downloadButton: UIButton!
+    @IBOutlet weak var downloadViewHeight: NSLayoutConstraint!
+    
     var imgArray = NSArray()
     var favBtnTapAction : (()->())?
     var shareBtnTapAction : (()->())?
     var locationButtonTapAction : (()->())?
     var loadMapView : (()->())?
     var loadAboutVideo : (()->())?
+    var downloadBtnTapAction : (()->())?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -122,6 +132,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         contactTitleLabel.font = UIFont.closeButtonFont
         contactLabel.font = UIFont.sideMenuLabelFont
         favoriteBtnViewHeight.constant = 0
+        downloadLabel.font = UIFont.downloadLabelFont
     }
     
     func setHeritageDetailData(heritageDetail: Heritage) {
@@ -209,6 +220,11 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         middleTitleLabel.text = aboutData.subtitle?.uppercased()
         fridayLabel.isHidden = true
         locationFirstLabelHeight.constant = 0
+        downloadViewHeight.constant = 0
+        downloadView.isHidden = true
+        downloadImg.isHidden = true
+        downloadLabel.isHidden = true
+        downloadButton.isHidden = true
         var subDesc : String? = ""
         if let descriptionArray = aboutData.mobileDescription  {
             if ((descriptionArray.count) > 0) {
@@ -277,6 +293,93 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         
        
     }
+    func setNMoQAboutCellData(aboutData: Museum) {
+        middleTitleLabel.isHidden = false
+        midTitleDescriptionLabel.isHidden = false
+        middleLabelLine.isHidden = false
+        openingTimeTitleLabel.isHidden = false
+        openingTimeLine.isHidden = false
+        sundayTimeLabel.isHidden = false
+        fridayTimeLabel.isHidden = false
+        contactTitleLabel.isHidden = false
+        contactLabel.isHidden = false
+        subTitleLabel.isHidden = true
+        titleLabel.text = aboutData.name?.uppercased()
+        middleTitleLabel.text = aboutData.subtitle?.uppercased()
+        fridayLabel.isHidden = true
+        locationFirstLabelHeight.constant = 0
+        downloadViewHeight.constant = 83
+        downloadView.isHidden = false
+        downloadImg.isHidden = false
+        downloadLabel.isHidden = false
+        downloadButton.isHidden = false
+        var subDesc : String? = ""
+        if let descriptionArray = aboutData.mobileDescription  {
+            if ((descriptionArray.count) > 0) {
+                for i in 0 ... (aboutData.mobileDescription?.count)!-1 {
+                    if(i == 0) {
+                        titleDescriptionLabel.text = aboutData.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+                    } else {
+                        subDesc = subDesc! + aboutData.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+                        midTitleDescriptionLabel.text = subDesc
+                    }
+                }
+            }
+        }
+        downloadLabel.text = NSLocalizedString("DOWNLOAD_TEXT",
+                                                    comment: "DOWNLOAD_TEXT in the Abbout detail")
+        sundayTimeLabel.text = aboutData.eventDate
+        
+        titleLabel.font = UIFont.closeButtonFont
+        middleTitleLabel.font = UIFont.closeButtonFont
+        locationTitleLabel.text = NSLocalizedString("LOCATION_TITLE",
+                                                    comment: "LOCATION_TITLE in the Heritage detail")
+        openingTimeTitleLabel.text = NSLocalizedString("EVENT_DATE",
+                                                       comment: "EVENT_DATE in the Heritage detail")
+        if ((aboutData.contactEmail != nil) && (aboutData.contactEmail != "")) {
+            contactTitleLabel.text = NSLocalizedString("CONTACT_TITLE",
+                                                       comment: "CONTACT_TITLE in the Heritage detail")
+            contactLabel.text = aboutData.contactEmail
+            contactLine.isHidden = false
+        }
+        
+        var latitudeString  = String()
+        var longitudeString = String()
+        var latitude : Double?
+        var longitude : Double?
+        
+        if (aboutData.mobileLatitude != nil && aboutData.mobileLatitude != "" && aboutData.mobileLongtitude != nil && aboutData.mobileLongtitude != "") {
+            latitudeString = aboutData.mobileLatitude!
+            longitudeString = aboutData.mobileLongtitude!
+            if let lat : Double = Double(latitudeString) {
+                latitude = lat
+            }
+            if let long : Double = Double(longitudeString) {
+                longitude = long
+            }
+            
+            let location = CLLocationCoordinate2D(latitude: latitude!,
+                                                  longitude: longitude!)
+            
+            // 2
+            let span = MKCoordinateSpanMake(0.05, 0.05)
+            let region = MKCoordinateRegion(center: location, span: span)
+            mapView.setRegion(region, animated: true)
+            //3
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = location
+            annotation.subtitle = aboutData.name
+            mapView.addAnnotation(annotation)
+        }
+//        if (aboutData.multimediaVideo != nil) {
+//            if((aboutData.multimediaVideo?.count)! > 0) {
+//                self.loadVideo(urlString: aboutData.multimediaVideo?[0])
+//            }
+//        }
+        
+        
+    }
+    
 
     @IBAction func didTapFavouriteButton(_ sender: UIButton) {
         UIButton.animate(withDuration: 0.3,
@@ -337,6 +440,10 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         itemView.image = UIImage(named: imgArray[index] as! String)
         //}
         return itemView
+    }
+    
+    @IBAction func didTapDownload(_ sender: UIButton) {
+        self.downloadBtnTapAction?()
     }
     
 }

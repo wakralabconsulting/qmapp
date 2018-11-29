@@ -220,4 +220,11 @@ extension UIFont {
         }
         
     }
+    static var downloadLabelFont: UIFont {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            return UIFont.init(name: "DINNextLTPro-Regular", size: 14)!
+        } else {
+            return UIFont.init(name: "DINNextLTArabic-Regular", size: 14)!
+        }
+    }
 }
