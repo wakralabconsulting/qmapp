@@ -310,7 +310,19 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     func loadBottomCellPages(cellObj: MuseumBottomCell, selectedItem: String?) {
         if(fromHomeBanner)! {
             if (selectedItem == "About Event") {
-                
+//                let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
+//
+//                let heritageDtlView = detailStoryboard.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
+//                heritageDtlView.pageNameString = PageName2.museumEvent
+//                //heritageDtlView.museumId = museumId
+//
+//
+//                let transition = CATransition()
+//                transition.duration = 0.3
+//                transition.type = kCATransitionFade
+//                transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//                view.window!.layer.add(transition, forKey: kCATransition)
+//                self.present(heritageDtlView, animated: false, completion: nil)
             } else if (selectedItem == "Tours") {
                 let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "tourAndPanelId") as! TourAndPanelListViewController
                 tourView.pageNameString = NMoQPageName.Tours

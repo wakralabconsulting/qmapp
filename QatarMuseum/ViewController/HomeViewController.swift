@@ -1033,7 +1033,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                             }
                         }
                     }
-                    
+                    self.setProfileDetails(loginInfo: self.loginArray)
                 }
             case .failure( _):
                 self.loginPopUpView.loadingView.stopLoading()
@@ -1041,6 +1041,63 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 
             }
         }
+    }
+    func setProfileDetails(loginInfo : LoginData?) {
+        if (loginInfo != nil) {
+            let userData = loginInfo?.user
+            UserDefaults.standard.setValue(userData?.uid, forKey: "uid")
+            UserDefaults.standard.setValue(userData?.mail, forKey: "mail")
+            UserDefaults.standard.setValue(userData?.name, forKey: "displayName")
+            UserDefaults.standard.setValue(userData?.picture, forKey: "profilePic")
+            if(userData?.fieldDateOfBirth != nil) {
+                if((userData?.fieldDateOfBirth?.count)! > 0) {
+                    UserDefaults.standard.setValue(userData?.fieldDateOfBirth![0], forKey: "fieldDateOfBirth")
+                }
+            }
+            let firstNameData = userData?.fieldFirstName["und"] as! NSArray
+            if(firstNameData != nil && firstNameData.count > 0) {
+                let name = firstNameData[0] as! NSDictionary
+                if(name["value"] != nil) {
+                    UserDefaults.standard.setValue(name["value"] as! String, forKey: "fieldFirstName")
+                }
+            }
+            let lastNameData = userData?.fieldLastName["und"] as! NSArray
+            if(lastNameData != nil && lastNameData.count > 0) {
+                let name = lastNameData[0] as! NSDictionary
+                if(name["value"] != nil) {
+                    UserDefaults.standard.setValue(name["value"] as! String, forKey: "fieldLastName")
+                }
+            }
+            let locationData = userData?.fieldLocation["und"] as! NSArray
+            if(locationData.count > 0) {
+                let iso = locationData[0] as! NSDictionary
+                if(iso["iso2"] != nil) {
+                    UserDefaults.standard.setValue(iso["iso2"] as! String, forKey: "country")
+                }
+                
+            }
+            
+            let nationalityData = userData?.fieldNationality["und"] as! NSArray
+            if(nationalityData.count > 0) {
+                let nation = nationalityData[0] as! NSDictionary
+                if(nation["iso2"] != nil) {
+                    UserDefaults.standard.setValue(nation["iso2"] as! String , forKey: "nationality")
+                }
+                
+            }
+            
+        }
+        self.loginPopUpView.removeFromSuperview()
+    }
+    //MARK:TextField Delegate
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if (textField == loginPopUpView.userNameText) {
+            loginPopUpView.passwordText.becomeFirstResponder()
+        } else {
+            loginPopUpView.userNameText.resignFirstResponder()
+            loginPopUpView.passwordText.resignFirstResponder()
+        }
+        return true
     }
 
 }
