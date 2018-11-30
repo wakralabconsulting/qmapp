@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17C88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="17C88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="AboutDescriptionEntity" representedClassName="AboutDescriptionEntity" syncable="YES" codeGenerationType="class">
         <attribute name="mobileDesc" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="mobileDescRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AboutEntity" syncable="YES"/>
