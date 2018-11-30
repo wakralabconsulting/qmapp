@@ -61,9 +61,9 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "nMoQListCellId", for: indexPath) as! NMoQListCell
-            cell.cellImageView.image = UIImage(named: imageArray[indexPath.row - 1])
+            cell.cellImageView.image = UIImage(named: tourListmageArray[indexPath.row - 1])
             cell.dateLabel.text = ""
-            if (indexPathrow == 1) {
+            if (indexPath.row == 1) {
                 cell.titleLabel.text = "Day Tour"
                 cell.dayLabel.text = "8 AM - 11 AM"
             } else {
