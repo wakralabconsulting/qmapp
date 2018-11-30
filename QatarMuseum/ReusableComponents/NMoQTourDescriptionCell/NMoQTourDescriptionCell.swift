@@ -19,7 +19,7 @@ class NMoQTourDescriptionCell: UITableViewCell {
     }
 
     func setupUI() {
-        titleLabel.font = UIFont.diningHeaderFont
+        titleLabel.font = UIFont.tourGuidesFont
         descriptionLabel.font = UIFont.englishTitleFont
     }
     

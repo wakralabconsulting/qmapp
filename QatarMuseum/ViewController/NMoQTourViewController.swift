@@ -14,7 +14,7 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var headerView: CommonHeaderView!
     
-    var tourTitle : String = ""
+    var tourTitle : String! = ""
     var tourListmageArray: [String]! = ["art_culture_1.png", "sports_2.png"]
     //    let networkReachability = NetworkReachabilityManager()
     var tourDesc: String = ""
@@ -23,8 +23,6 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
         super.viewDidLoad()
         registerCell()
         setupUI()
-//        collectionTableView.delegate = self
-//        collectionTableView.dataSource = self
     }
     
     func setupUI() {
@@ -77,6 +75,9 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return 250.0
+        }
         let heightValue = UIScreen.main.bounds.height/100
         return heightValue*27
     }
