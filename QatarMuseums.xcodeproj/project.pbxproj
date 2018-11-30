@@ -14,6 +14,9 @@
 		1B444A3721AE9709009FF40F /* NMoQListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B444A3521AE9708009FF40F /* NMoQListCell.swift */; };
 		1B444A3821AE9709009FF40F /* NMoQListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B444A3621AE9708009FF40F /* NMoQListCell.xib */; };
 		1B444A3A21AE9F03009FF40F /* TourAndPanelListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B444A3921AE9F03009FF40F /* TourAndPanelListViewController.swift */; };
+		1B444A6121B12A25009FF40F /* NMoQTourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B444A6021B12A24009FF40F /* NMoQTourViewController.swift */; };
+		1B444A6521B137DC009FF40F /* NMoQTourDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B444A6321B137DC009FF40F /* NMoQTourDescriptionCell.swift */; };
+		1B444A6621B137DC009FF40F /* NMoQTourDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B444A6421B137DC009FF40F /* NMoQTourDescriptionCell.xib */; };
 		1B51411E215B892E0055AAF5 /* TourGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51411D215B892D0055AAF5 /* TourGuide.swift */; };
 		1B51B3CE21214820002B84AA /* ObjectPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51B3CD21214820002B84AA /* ObjectPopupView.swift */; };
 		1B51B3D021214853002B84AA /* ObjectPopupXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B51B3CF21214853002B84AA /* ObjectPopupXib.xib */; };
@@ -253,6 +256,9 @@
 		1B444A3521AE9708009FF40F /* NMoQListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQListCell.swift; sourceTree = "<group>"; };
 		1B444A3621AE9708009FF40F /* NMoQListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NMoQListCell.xib; sourceTree = "<group>"; };
 		1B444A3921AE9F03009FF40F /* TourAndPanelListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourAndPanelListViewController.swift; sourceTree = "<group>"; };
+		1B444A6021B12A24009FF40F /* NMoQTourViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQTourViewController.swift; sourceTree = "<group>"; };
+		1B444A6321B137DC009FF40F /* NMoQTourDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQTourDescriptionCell.swift; sourceTree = "<group>"; };
+		1B444A6421B137DC009FF40F /* NMoQTourDescriptionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NMoQTourDescriptionCell.xib; sourceTree = "<group>"; };
 		1B51411D215B892D0055AAF5 /* TourGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourGuide.swift; sourceTree = "<group>"; };
 		1B51B3CD21214820002B84AA /* ObjectPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectPopupView.swift; sourceTree = "<group>"; };
 		1B51B3CF21214853002B84AA /* ObjectPopupXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ObjectPopupXib.xib; sourceTree = "<group>"; };
@@ -578,6 +584,15 @@
 			path = QmImages;
 			sourceTree = "<group>";
 		};
+		1B444A6221B13735009FF40F /* NMoQTourDescriptionCell */ = {
+			isa = PBXGroup;
+			children = (
+				1B444A6321B137DC009FF40F /* NMoQTourDescriptionCell.swift */,
+				1B444A6421B137DC009FF40F /* NMoQTourDescriptionCell.xib */,
+			);
+			path = NMoQTourDescriptionCell;
+			sourceTree = "<group>";
+		};
 		1B51B3CC212146E7002B84AA /* ObjectPopup */ = {
 			isa = PBXGroup;
 			children = (
@@ -820,6 +835,7 @@
 				B807FCD0218ECFE5003CC51E /* CulturePassCardBackViewController.swift */,
 				1B444A3921AE9F03009FF40F /* TourAndPanelListViewController.swift */,
 				B860EE4A21AE9F340007F63B /* TravelArrangementsViewController.swift */,
+				1B444A6021B12A24009FF40F /* NMoQTourViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -827,6 +843,7 @@
 		B80DC08720C7943100E28034 /* ReusableComponents */ = {
 			isa = PBXGroup;
 			children = (
+				1B444A6221B13735009FF40F /* NMoQTourDescriptionCell */,
 				B81FF06921AFB9FE006A968B /* NMoQHeader */,
 				1B444A3421AE962D009FF40F /* NMoQListCell */,
 				B860EE4C21AEA0980007F63B /* TravelCell */,
@@ -1422,6 +1439,7 @@
 				B8CA08E52146D38400783642 /* MapDetailCell.xib in Resources */,
 				B80DC06020C792E600E28034 /* Assets.xcassets in Resources */,
 				B81FF06B21AFBA1B006A968B /* NMoHeaderView.xib in Resources */,
+				1B444A6621B137DC009FF40F /* NMoQTourDescriptionCell.xib in Resources */,
 				B860EE6321AEC9030007F63B /* architecture_03.png in Resources */,
 				B8AFA2ED20E78BA9008838A6 /* DINNextLTArabic-Regular.ttf in Resources */,
 				B860EE6721AEC9030007F63B /* art_culture_1.png in Resources */,
@@ -1584,6 +1602,7 @@
 				1B444A3A21AE9F03009FF40F /* TourAndPanelListViewController.swift in Sources */,
 				B860EE4B21AE9F340007F63B /* TravelArrangementsViewController.swift in Sources */,
 				B82729B821778B2F0017EC71 /* VersaPlayerControlsBehaviour.swift in Sources */,
+				1B444A6521B137DC009FF40F /* NMoQTourDescriptionCell.swift in Sources */,
 				B85BA4B020D01D1C00E7F4D1 /* SplashViewController.swift in Sources */,
 				B8294CF520CBF265002AFF72 /* FSCalendarStickyHeader.m in Sources */,
 				B8EAB77D20CA3E6100C001B2 /* EventCollectionViewCell.swift in Sources */,
@@ -1594,6 +1613,7 @@
 				B82C87F620E69D4100777674 /* DiningDetailTableViewCell.swift in Sources */,
 				B8294CF120CBF265002AFF72 /* FSCalendarWeekdayView.m in Sources */,
 				1B51411E215B892E0055AAF5 /* TourGuide.swift in Sources */,
+				1B444A6121B12A25009FF40F /* NMoQTourViewController.swift in Sources */,
 				B8294CF320CBF265002AFF72 /* FSCalendar.m in Sources */,
 				B8BA80B720CD8297007E880A /* ExhibitionsViewController.swift in Sources */,
 				B8BA80BC20CD831D007E880A /* ExhibitionsCollectionCell.swift in Sources */,
