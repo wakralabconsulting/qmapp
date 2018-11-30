@@ -24,7 +24,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     var tourNameArray: [String]! = ["Art & Culture", "Sports", "Architecture", "Fashion", "Nature"]
     
     var panelImageArray: [String]! = ["panel_discussion-1.png", "panel_discussion-2.png", "panel_discussion-3.png", "panel_discussion-4.png", "panel_discussion-5.png"]
-    var panelNameArray: [String]! = ["Art & Culture", "Sports", "Architecture", "Fashion", "Nature"]
+    var panelNameArray: [String]! = ["Qatari Songs", "Artist Encounters", "QatART Art & Craft", "Join Art & Calligraphy", "Marbling Art"]
 //    let networkReachability = NetworkReachabilityManager()
     var imageArray: [String] = []
     var titleArray: [String] = []
@@ -74,7 +74,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         let cell = tableView.dequeueReusableCell(withIdentifier: "nMoQListCellId", for: indexPath) as! NMoQListCell
         cell.cellImageView.image = UIImage(named: imageArray[indexPath.row])
         cell.titleLabel.text = titleArray[indexPath.row]
-        cell.dayLabel.text = "DAY " + String(format: "%02d", indexPath.row)
+        cell.dayLabel.text = "DAY " + String(format: "%02d", indexPath.row + 1)
         cell.dateLabel.text = "28 MARCH 2018"
         loadingView.stopLoading()
         loadingView.isHidden = true
@@ -84,6 +84,23 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let heightValue = UIScreen.main.bounds.height/100
         return heightValue*27
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (pageNameString == NMoQPageName.Tours) {
+            loadTourViewPage(selectedCellTitle: titleArray[indexPath.row])
+        }
+    }
+    
+    func loadTourViewPage(selectedCellTitle: String) {
+        let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "nMoQTourId") as! NMoQTourViewController
+        tourView.tourTitle = selectedCellTitle
+        let transition = CATransition()
+        transition.duration = 0.25
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(tourView, animated: false, completion: nil)
     }
     
     func headerCloseButtonPressed() {
