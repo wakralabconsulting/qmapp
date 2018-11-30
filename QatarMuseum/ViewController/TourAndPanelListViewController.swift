@@ -94,7 +94,6 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     
     func loadTourViewPage(selectedCellTitle: String) {
         let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "nMoQTourId") as! NMoQTourViewController
-        tourView.pageNameString = NMoQPageName.Tours
         tourView.tourTitle = selectedCellTitle
         let transition = CATransition()
         transition.duration = 0.25
