@@ -20,6 +20,7 @@ enum PageName2{
     case publicArtsDetail
     case museumAbout
     case museumEvent
+    case museumTravel
 }
 class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,iCarouselDelegate,iCarouselDataSource,UIGestureRecognizerDelegate,LoadingViewProtocol {
     @IBOutlet weak var heritageDetailTableView: UITableView!
@@ -43,6 +44,9 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     var imgButton = UIButton()
     var transparentView = UIView()
     var selectedCell : MuseumAboutCell?
+    var travelImage: String!
+    var travelTitle: String!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -136,6 +140,12 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                 imageView.image = nil
             }
             
+        } else if (pageNameString == PageName2.museumTravel){
+            if(travelImage != nil) {
+                imageView.image = UIImage(named: travelImage)
+            } else {
+                imageView.image = UIImage(named: "default_imageX2")
+            }
         }
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -192,6 +202,8 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                 return 0
             }
             
+        } else  if (pageNameString == PageName2.museumTravel){
+            return 1
         }
         return 1
     }
@@ -220,15 +232,16 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             heritageCell.videoOuterViewHeight.constant = 0
             heritageCell.setNMoQAboutCellData(aboutData: aboutDetailtArray[indexPath.row])
             // heritageCell.setMuseumAboutCellData(aboutData: aboutDetailtArray[0])
-            if (isImgArrayAvailable()) {
-                heritageCell.pageControl.isHidden = false
-            } else {
-                heritageCell.pageControl.isHidden = true
-            }
+            heritageCell.pageControl.isHidden = true
             heritageCell.downloadBtnTapAction = {
                 () in
                 self.downloadButtonAction()
             }
+        } else if(pageNameString == PageName2.museumTravel){
+            heritageCell.videoOuterView.isHidden = true
+            heritageCell.videoOuterViewHeight.constant = 0
+            heritageCell.setNMoQTravelCellData(title: travelTitle)
+            heritageCell.pageControl.isHidden = true
         }
         
         heritageCell.favBtnTapAction = {

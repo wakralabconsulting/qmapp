@@ -59,6 +59,26 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
         //let heightValue = UIScreen.main.bounds.height/100
         return CGSize(width: travelCollectionView.frame.width, height: self.travelCollectionView.frame.height/2)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        loadDetailPage(selectedIndex: indexPath.row)
+    }
+
+    func loadDetailPage(selectedIndex: Int) {
+        let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
+        
+        let heritageDtlView = detailStoryboard.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
+        heritageDtlView.pageNameString = PageName2.museumTravel
+        heritageDtlView.travelImage = travelImgArray[selectedIndex]
+        heritageDtlView.travelTitle = travelTitleArray[selectedIndex]
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionFade
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(heritageDtlView, animated: false, completion: nil)
+    }
+    
     func headerCloseButtonPressed() {
         let transition = CATransition()
         transition.duration = 0.25

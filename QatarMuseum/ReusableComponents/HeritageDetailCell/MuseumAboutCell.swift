@@ -36,6 +36,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
 //    @IBOutlet weak var locationTotalTopConstraint: NSLayoutConstraint!
 //    @IBOutlet weak var locationTotalBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var locationButton: UIButton!
+    @IBOutlet weak var locationLine: UIView!
     @IBOutlet weak var favoriteBtnViewHeight: NSLayoutConstraint!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var mapOverlayView: UIView!
@@ -47,12 +48,15 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
     @IBOutlet weak var videoOuterViewHeight: NSLayoutConstraint!
     @IBOutlet weak var downloadView: UIView!
     @IBOutlet weak var downloadImg: UIImageView!
-    
     @IBOutlet weak var downloadLabel: UILabel!
-    
     @IBOutlet weak var downloadButton: UIButton!
     @IBOutlet weak var downloadViewHeight: NSLayoutConstraint!
-    
+    @IBOutlet weak var offerCodeTitleLabel: UILabel!
+    @IBOutlet weak var codeLabel: UILabel!
+    @IBOutlet weak var claimOfferButton: UIButton!
+    @IBOutlet weak var offerCodeViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var mapViewHeight: NSLayoutConstraint!
+
     var imgArray = NSArray()
     var favBtnTapAction : (()->())?
     var shareBtnTapAction : (()->())?
@@ -132,6 +136,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         contactTitleLabel.font = UIFont.closeButtonFont
         contactLabel.font = UIFont.sideMenuLabelFont
         favoriteBtnViewHeight.constant = 0
+        offerCodeViewHeight.constant = 0
         downloadLabel.font = UIFont.downloadLabelFont
     }
     
@@ -290,9 +295,8 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
                 self.loadVideo(urlString: aboutData.multimediaVideo?[0])
             }
         }
-        
-       
     }
+    
     func setNMoQAboutCellData(aboutData: Museum) {
         middleTitleLabel.isHidden = false
         midTitleDescriptionLabel.isHidden = false
@@ -380,6 +384,41 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         
     }
     
+    func setNMoQTravelCellData(title: String) {
+        middleTitleLabel.isHidden = true
+        midTitleDescriptionLabel.isHidden = true
+        middleLabelLine.isHidden = true
+        fridayTimeLabel.isHidden = true
+        contactTitleLabel.isHidden = true
+        contactLine.isHidden = true
+        contactLabel.isHidden = true
+        locationLine.isHidden = true
+        openingTimeTitleLabel.isHidden = false
+        openingTimeLine.isHidden = false
+        sundayTimeLabel.isHidden = false
+        
+        subTitleLabel.isHidden = true
+        titleLabel.text = title
+        titleDescriptionLabel.text = "We have arranged for exclusive discounts for you. Just click on 'Claim Offers' button and use the code provided below"
+
+        locationFirstLabelHeight.constant = 0
+        downloadViewHeight.constant = 0
+        mapViewHeight.constant = 0
+        offerCodeViewHeight.constant = 200.0
+        downloadView.isHidden = true
+        downloadImg.isHidden = true
+        downloadLabel.isHidden = true
+        downloadButton.isHidden = true
+        
+        sundayTimeLabel.text = "+974 4452 5555 /n info@qm.org.qa"
+        
+        titleLabel.font = UIFont.closeButtonFont
+        locationTitleLabel.isHidden = true
+        openingTimeTitleLabel.text =  NSLocalizedString("CONTACT_TITLE",
+                                                       comment: "CONTACT_TITLE in the Heritage detail")
+//            contactLabel.text = "info@qm.org.qa"
+//            contactLine.isHidden = false
+    }
 
     @IBAction func didTapFavouriteButton(_ sender: UIButton) {
         UIButton.animate(withDuration: 0.3,
