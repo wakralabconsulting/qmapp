@@ -36,6 +36,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
 //    @IBOutlet weak var locationTotalTopConstraint: NSLayoutConstraint!
 //    @IBOutlet weak var locationTotalBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var locationButton: UIButton!
+    @IBOutlet weak var locationLine: UIView!
     @IBOutlet weak var favoriteBtnViewHeight: NSLayoutConstraint!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var mapOverlayView: UIView!
