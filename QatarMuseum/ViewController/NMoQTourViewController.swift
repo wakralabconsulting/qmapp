@@ -76,7 +76,7 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            return 250.0
+            return 260.0
         }
         let heightValue = UIScreen.main.bounds.height/100
         return heightValue*27
