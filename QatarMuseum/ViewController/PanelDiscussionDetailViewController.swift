@@ -32,12 +32,9 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         loadingView.loadingViewDelegate = self
         headerView.headerViewDelegate = self
         
-        if(pageNameString == NMoQPanelPage.PanelDetailPage) {
+        
             headerView.headerBackButton.setImage(UIImage(named: "closeX1"), for: .normal)
             headerView.headerBackButton.contentEdgeInsets = UIEdgeInsets(top:12, left:17, bottom: 12, right:17)
-        } else {
-            
-        }
         
     }
     func registerCell() {
