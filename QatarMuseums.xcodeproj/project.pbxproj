@@ -198,6 +198,7 @@
 		B8DB500021B25D5B00C5DD10 /* PanelDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DB4FFF21B25D5B00C5DD10 /* PanelDetailCell.swift */; };
 		B8DB500221B25D9000C5DD10 /* PanelDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8DB500121B25D9000C5DD10 /* PanelDetailView.xib */; };
 		B8DB500421B2624500C5DD10 /* panelDetail2.png in Resources */ = {isa = PBXBuildFile; fileRef = B8DB500321B2624400C5DD10 /* panelDetail2.png */; };
+		B8DB500621B2A36E00C5DD10 /* PanelDiscussionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DB500521B2A36E00C5DD10 /* PanelDiscussionDetailViewController.swift */; };
 		B8DC40A520C9A3230044134D /* CommonHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8DC40A420C9A3230044134D /* CommonHeader.xib */; };
 		B8DC40A720C9A33A0044134D /* CommonHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DC40A620C9A33A0044134D /* CommonHeaderView.swift */; };
 		B8DC40A920C9A5760044134D /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DC40A820C9A5760044134D /* EventViewController.swift */; };
@@ -474,6 +475,7 @@
 		B8DB4FFF21B25D5B00C5DD10 /* PanelDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelDetailCell.swift; sourceTree = "<group>"; };
 		B8DB500121B25D9000C5DD10 /* PanelDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PanelDetailView.xib; sourceTree = "<group>"; };
 		B8DB500321B2624400C5DD10 /* panelDetail2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = panelDetail2.png; sourceTree = "<group>"; };
+		B8DB500521B2A36E00C5DD10 /* PanelDiscussionDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelDiscussionDetailViewController.swift; sourceTree = "<group>"; };
 		B8DC40A420C9A3230044134D /* CommonHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommonHeader.xib; sourceTree = "<group>"; };
 		B8DC40A620C9A33A0044134D /* CommonHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonHeaderView.swift; sourceTree = "<group>"; };
 		B8DC40A820C9A5760044134D /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
@@ -843,6 +845,7 @@
 				1B444A3921AE9F03009FF40F /* TourAndPanelListViewController.swift */,
 				B860EE4A21AE9F340007F63B /* TravelArrangementsViewController.swift */,
 				1B444A6021B12A24009FF40F /* NMoQTourViewController.swift */,
+				B8DB500521B2A36E00C5DD10 /* PanelDiscussionDetailViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1595,6 +1598,7 @@
 				B82729BF21778B2F0017EC71 /* VersaPlayerControls.swift in Sources */,
 				B8E01BFD21060FDC008D7F33 /* AppLocalizer.swift in Sources */,
 				B8C64C9C20FE380D00D7CD63 /* MiaTourDetailViewController.swift in Sources */,
+				B8DB500621B2A36E00C5DD10 /* PanelDiscussionDetailViewController.swift in Sources */,
 				1B51B3D52121B6A9002B84AA /* ObjectDetailTableViewCell.swift in Sources */,
 				B8294CF720CBF265002AFF72 /* FSCalendarDelegationProxy.m in Sources */,
 				B8B368BE20DD4B6200B1CDA4 /* MuseumCollectionsViewController.swift in Sources */,

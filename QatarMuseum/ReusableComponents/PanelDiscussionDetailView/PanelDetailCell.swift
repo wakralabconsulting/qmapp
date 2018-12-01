@@ -31,6 +31,7 @@ class PanelDetailCell: UITableViewCell {
     @IBOutlet weak var secondView: UIView!
     @IBOutlet weak var thirdView: UIView!
     
+    @IBOutlet weak var secondTitleLine: UILabel!
     override func awakeFromNib() {
         topTitle.font = UIFont.selfGuidedFont
         topDescription.font = UIFont.collectionFirstDescriptionFont
@@ -67,6 +68,32 @@ class PanelDetailCell: UITableViewCell {
         contactTitle.text = NSLocalizedString("CONTACT_TITLE", comment: "CONTACT_TITLE in Paneldetail Page")
         contactNumberLabel.text = "+97444525555"
         contactEmailLabel.text = "info@qm.org.qa"
+        
+    }
+    func setTourSecondDetailCellContent(titleName: String?) {
+        topImg.image = UIImage(named: "panel_discussion-1")
+        topTitle.text = titleName
+        topDescription.text = "This tour has been designed for introducing you to the exquisite art & culture of Qatar"
+        interestedLabel.text = "Interested"
+        notInterestedLabel.text = "Not Interested"
+        secondImg.isHidden = true
+        secondTitle.isHidden = true
+        secondDescription.isHidden = true
+        secondView.isHidden = true
+        secondTitleLine.isHidden = true
+        dateTitle.text = NSLocalizedString("DATE", comment: "DATE in Paneldetail Page")
+        dateText.text = "28 March 2019"
+        venueTitle.text = NSLocalizedString("LOCATION_TITLE", comment: "LOCATION_TITLE in Paneldetail Page")
+        contactTitle.text = NSLocalizedString("CONTACT_TITLE", comment: "CONTACT_TITLE in Paneldetail Page")
+        contactNumberLabel.text = "+97444525555"
+        contactEmailLabel.text = "info@qm.org.qa"
+        
+        //self.topView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let verticalSpace = NSLayoutConstraint(item: self.topView, attribute: .bottom, relatedBy: .equal, toItem: self.thirdView, attribute: .top, multiplier: 1, constant: -16)
+        
+        // activate the constraints
+        NSLayoutConstraint.activate([verticalSpace])
         
     }
 }

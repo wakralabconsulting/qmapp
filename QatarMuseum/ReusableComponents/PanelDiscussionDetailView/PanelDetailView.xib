@@ -277,6 +277,7 @@
                 <outlet property="secondDescription" destination="7Yo-0C-g3s" id="cUC-2c-KGm"/>
                 <outlet property="secondImg" destination="FTt-5w-aSx" id="Qv3-ZZ-uvB"/>
                 <outlet property="secondTitle" destination="ydL-EE-9qH" id="ox0-xg-hpc"/>
+                <outlet property="secondTitleLine" destination="l9H-t8-4hX" id="iyZ-0P-rrd"/>
                 <outlet property="secondView" destination="Um5-0B-7U7" id="mI2-V9-L0y"/>
                 <outlet property="thirdView" destination="6Dv-EH-tOV" id="jS2-fO-vB4"/>
                 <outlet property="topDescription" destination="nYN-H7-0YT" id="0NR-pS-trB"/>

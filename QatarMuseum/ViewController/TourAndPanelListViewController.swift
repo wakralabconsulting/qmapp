@@ -97,7 +97,6 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     func loadTourViewPage(selectedCellTitle: String) {
         let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "nMoQTourId") as! NMoQTourViewController
         tourView.tourTitle = selectedCellTitle
-        tourView.pageNameString = NMoQTourPage.Tour
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionPush
@@ -106,16 +105,15 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         self.present(tourView, animated: false, completion: nil)
     }
     func loadPanelDiscussionDetailPage(selectedCellTitle: String) {
-        let travelView =  self.storyboard?.instantiateViewController(withIdentifier: "nMoQTourId") as! NMoQTourViewController
-        print(selectedCellTitle)
-        travelView.tourTitle = selectedCellTitle
-        travelView.pageNameString = NMoQTourPage.PanelDetailPage
+        let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
+        panelView.panelTitle = selectedCellTitle
+        panelView.pageNameString = NMoQPanelPage.PanelDetailPage
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(travelView, animated: false, completion: nil)
+        self.present(panelView, animated: false, completion: nil)
     }
     
     func headerCloseButtonPressed() {
