@@ -69,8 +69,8 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
         
         let heritageDtlView = detailStoryboard.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
         heritageDtlView.pageNameString = PageName2.museumTravel
-        heritageDtlView.travelImage = travelImgArray[selectedIndex]
-        heritageDtlView.travelTitle = travelTitleArray[selectedIndex]
+        heritageDtlView.travelImage = travelImgArray[selectedIndex] as? String
+        heritageDtlView.travelTitle = travelTitleArray[selectedIndex] as? String
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionFade
