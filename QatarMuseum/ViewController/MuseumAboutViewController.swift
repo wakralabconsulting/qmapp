@@ -151,14 +151,16 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         imageView.clipsToBounds = true
         view.addSubview(imageView)
         
+        if (pageNameString != PageName2.museumTravel) {
+            imgButton.setTitle("", for: .normal)
+            imgButton.setTitleColor(UIColor.blue, for: .normal)
+            imgButton.frame = imageView.frame
+            
+            imgButton.addTarget(self, action: #selector(self.imgButtonPressed(sender:)), for: .touchUpInside)
+            
+            self.view.addSubview(imgButton)
+        }
         
-        imgButton.setTitle("", for: .normal)
-        imgButton.setTitleColor(UIColor.blue, for: .normal)
-        imgButton.frame = imageView.frame
-        
-        imgButton.addTarget(self, action: #selector(self.imgButtonPressed(sender:)), for: .touchUpInside)
-        
-        self.view.addSubview(imgButton)
         
         let darkBlur = UIBlurEffect(style: UIBlurEffectStyle.light)
         blurView = UIVisualEffectView(effect: darkBlur)
@@ -239,6 +241,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             }
         } else if(pageNameString == PageName2.museumTravel){
             heritageCell.videoOuterView.isHidden = true
+            heritageCell.selectionStyle = .none
             heritageCell.videoOuterViewHeight.constant = 0
             heritageCell.setNMoQTravelCellData(title: travelTitle)
             heritageCell.pageControl.isHidden = true
