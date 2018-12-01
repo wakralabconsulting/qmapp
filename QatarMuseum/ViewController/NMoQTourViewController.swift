@@ -74,6 +74,28 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
     }
     
+    func tableView(_ collectionView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //        if (museumsList != nil) {
+        //            if(((museumsList[indexPath.row].id) == "63") || ((museumsList[indexPath.row].id) == "96") || ((museumsList[indexPath.row].id) == "61") || ((museumsList[indexPath.row].id) == "635")) {
+        //                loadMiaTour(currentRow: indexPath.row)
+        //            } else {
+        //                loadComingSoonPopup()
+        //            }
+        //        }
+        
+        
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "tourtimingsdetailId") as! TourTimingsDetailController
+        self.present(miaView, animated: false, completion: nil)
+        
+        
+        //        loadComingSoonPopup()
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
             return 260.0

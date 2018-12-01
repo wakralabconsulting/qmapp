@@ -33,6 +33,10 @@
 		1BE526D22107460F00C8CD51 /* QatarMuseumRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526D12107460F00C8CD51 /* QatarMuseumRouter.swift */; };
 		1BE526D42107470700C8CD51 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526D32107470700C8CD51 /* Config.swift */; };
 		1BE526D72107896600C8CD51 /* Exhibition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526D62107896600C8CD51 /* Exhibition.swift */; };
+		4996614621B26F8900B4B186 /* TourTimingsDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4996614521B26F8900B4B186 /* TourTimingsDetailController.swift */; };
+		4996614A21B2703200B4B186 /* TourDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4996614821B2703200B4B186 /* TourDetailCell.swift */; };
+		4996614B21B2703200B4B186 /* TourDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4996614921B2703200B4B186 /* TourDetailCell.xib */; };
+		4996614D21B2705B00B4B186 /* EventToursData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4996614C21B2705B00B4B186 /* EventToursData.swift */; };
 		B806B7A5212451B200F9F338 /* FloorMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B806B7A4212451B200F9F338 /* FloorMapViewController.swift */; };
 		B806B7A8212452A200F9F338 /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7A6212452A000F9F338 /* GoogleMapsCore.framework */; };
 		B806B7A9212452A200F9F338 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B806B7A7212452A200F9F338 /* GoogleMaps.framework */; };
@@ -275,6 +279,10 @@
 		1BE526D12107460F00C8CD51 /* QatarMuseumRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QatarMuseumRouter.swift; sourceTree = "<group>"; };
 		1BE526D32107470700C8CD51 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		1BE526D62107896600C8CD51 /* Exhibition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exhibition.swift; sourceTree = "<group>"; };
+		4996614521B26F8900B4B186 /* TourTimingsDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourTimingsDetailController.swift; sourceTree = "<group>"; };
+		4996614821B2703200B4B186 /* TourDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourDetailCell.swift; sourceTree = "<group>"; };
+		4996614921B2703200B4B186 /* TourDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TourDetailCell.xib; sourceTree = "<group>"; };
+		4996614C21B2705B00B4B186 /* EventToursData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventToursData.swift; sourceTree = "<group>"; };
 		80387D6C7EDA0B5C9B3AB21C /* Pods-QatarMuseums.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QatarMuseums.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QatarMuseums/Pods-QatarMuseums.debug.xcconfig"; sourceTree = "<group>"; };
 		94F5559C89E84E914A76D7A7 /* Pods_QatarMuseums.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QatarMuseums.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B806B7A4212451B200F9F338 /* FloorMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorMapViewController.swift; sourceTree = "<group>"; };
@@ -650,6 +658,7 @@
 		1BE526D52107892900C8CD51 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4996614C21B2705B00B4B186 /* EventToursData.swift */,
 				1BE526D62107896600C8CD51 /* Exhibition.swift */,
 				1BC909D1210B277F00D6C00B /* Home.swift */,
 				B8FEC77B2112E57100648F66 /* Dining.swift */,
@@ -670,6 +679,15 @@
 				B8DDBC7C21AD78AA007B3A06 /* HomeBanner.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		4996614721B2701D00B4B186 /* EventToursCell */ = {
+			isa = PBXGroup;
+			children = (
+				4996614821B2703200B4B186 /* TourDetailCell.swift */,
+				4996614921B2703200B4B186 /* TourDetailCell.xib */,
+			);
+			path = EventToursCell;
 			sourceTree = "<group>";
 		};
 		7989B881720353361A2FCB1C /* Frameworks */ = {
@@ -836,6 +854,7 @@
 				1B444A3921AE9F03009FF40F /* TourAndPanelListViewController.swift */,
 				B860EE4A21AE9F340007F63B /* TravelArrangementsViewController.swift */,
 				1B444A6021B12A24009FF40F /* NMoQTourViewController.swift */,
+				4996614521B26F8900B4B186 /* TourTimingsDetailController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -843,6 +862,7 @@
 		B80DC08720C7943100E28034 /* ReusableComponents */ = {
 			isa = PBXGroup;
 			children = (
+				4996614721B2701D00B4B186 /* EventToursCell */,
 				1B444A6221B13735009FF40F /* NMoQTourDescriptionCell */,
 				B81FF06921AFB9FE006A968B /* NMoQHeader */,
 				1B444A3421AE962D009FF40F /* NMoQListCell */,
@@ -1436,6 +1456,7 @@
 				B8CA08E72146D38400783642 /* MapDetailView.xib in Resources */,
 				B8B79AC12189B75900370AAB /* CountryList.json in Resources */,
 				B860EE6621AEC9030007F63B /* fashion_4.png in Resources */,
+				4996614B21B2703200B4B186 /* TourDetailCell.xib in Resources */,
 				B8CA08E52146D38400783642 /* MapDetailCell.xib in Resources */,
 				B80DC06020C792E600E28034 /* Assets.xcassets in Resources */,
 				B81FF06B21AFBA1B006A968B /* NMoHeaderView.xib in Resources */,
@@ -1589,9 +1610,11 @@
 				B8CA08E02146D38400783642 /* MapDetailView.swift in Sources */,
 				B8C31CE421626E9100AE7788 /* MuseumAboutViewController.swift in Sources */,
 				B8B4943A212EDDE300203C7F /* ToastView.swift in Sources */,
+				4996614A21B2703200B4B186 /* TourDetailCell.swift in Sources */,
 				B8D52A3620E638B900E34673 /* DiningViewController.swift in Sources */,
 				B8294CEF20CBF265002AFF72 /* FSCalendarDelegationFactory.m in Sources */,
 				B8294CF020CBF265002AFF72 /* FSCalendarCollectionViewLayout.m in Sources */,
+				4996614D21B2705B00B4B186 /* EventToursData.swift in Sources */,
 				B82E1B3321808229006623A6 /* LogoutData.swift in Sources */,
 				B8BBF459211C1AC000352706 /* ParksList.swift in Sources */,
 				B8294CEE20CBF265002AFF72 /* FSCalendarScopeHandle.m in Sources */,
@@ -1653,6 +1676,7 @@
 				B8294CF220CBF265002AFF72 /* FSCalendarCell.m in Sources */,
 				B85BA4AC20D01BC900E7F4D1 /* ExhibitionDetailTableViewCell.swift in Sources */,
 				1B902C00212D56EC00D3055B /* BenefitLabelCell.swift in Sources */,
+				4996614621B26F8900B4B186 /* TourTimingsDetailController.swift in Sources */,
 				1B7031EE218AFDB200B0E05B /* Notification.swift in Sources */,
 				B8DC478B20DD05BA0007B426 /* ParksViewController.swift in Sources */,
 				B8DC40A720C9A33A0044134D /* CommonHeaderView.swift in Sources */,
