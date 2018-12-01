@@ -89,18 +89,33 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (pageNameString == NMoQPageName.Tours) {
             loadTourViewPage(selectedCellTitle: titleArray[indexPath.row])
+        } else if (pageNameString == NMoQPageName.PanelDiscussion) {
+            loadPanelDiscussionDetailPage(selectedCellTitle: titleArray[indexPath.row])
         }
     }
     
     func loadTourViewPage(selectedCellTitle: String) {
         let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "nMoQTourId") as! NMoQTourViewController
         tourView.tourTitle = selectedCellTitle
+        tourView.pageNameString = NMoQTourPage.Tour
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(tourView, animated: false, completion: nil)
+    }
+    func loadPanelDiscussionDetailPage(selectedCellTitle: String) {
+        let travelView =  self.storyboard?.instantiateViewController(withIdentifier: "nMoQTourId") as! NMoQTourViewController
+        print(selectedCellTitle)
+        travelView.tourTitle = selectedCellTitle
+        travelView.pageNameString = NMoQTourPage.PanelDetailPage
+        let transition = CATransition()
+        transition.duration = 0.25
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(travelView, animated: false, completion: nil)
     }
     
     func headerCloseButtonPressed() {

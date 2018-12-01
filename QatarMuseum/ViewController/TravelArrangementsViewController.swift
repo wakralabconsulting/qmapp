@@ -15,9 +15,10 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
     @IBOutlet weak var travelHeaderView: CommonHeaderView!
     @IBOutlet weak var travelCollectionView: UICollectionView!
     @IBOutlet weak var loadingView: LoadingView!
-    
+    var panelDiscussionTitle = String()
     var travelImgArray = NSArray()
     var travelTitleArray = NSArray()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -26,37 +27,41 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
     func setUI() {
         loadingView.isHidden = false
         loadingView.showLoading()
+        
          travelHeaderView.headerViewDelegate = self
-         travelHeaderView.headerTitle.text = NSLocalizedString("TRAVEL_ARRANGEMENTS", comment: "TRAVEL_ARRANGEMENTS Label in the Travel page page").uppercased()
+        
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             travelHeaderView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         } else {
             travelHeaderView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
-        travelImgArray = ["qatar_airways_bg","katara_bg"]
-        travelTitleArray = ["Qatar Airways","Katara Hospitality"]
+            travelHeaderView.headerTitle.text = NSLocalizedString("TRAVEL_ARRANGEMENTS", comment: "TRAVEL_ARRANGEMENTS Label in the Travel page page").uppercased()
+            travelImgArray = ["qatar_airways_bg","katara_bg"]
+            travelTitleArray = ["Qatar Airways","Katara Hospitality"]
+        
         registerNib()
     }
     func registerNib() {
-        let nib = UINib(nibName: "TravelCell", bundle: nil)
-        travelCollectionView?.register(nib, forCellWithReuseIdentifier: "travelCellId")
+            let nib = UINib(nibName: "TravelCell", bundle: nil)
+            travelCollectionView?.register(nib, forCellWithReuseIdentifier: "travelCellId")
+        
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 2
+        
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let travelCell : TravelCollectionViewCell = travelCollectionView.dequeueReusableCell(withReuseIdentifier: "travelCellId", for: indexPath) as! TravelCollectionViewCell
-        travelCell.titleLabel.text = travelTitleArray[indexPath.row] as! String 
-        travelCell.imageView.image = UIImage(named: travelImgArray[indexPath.row] as! String)
         loadingView.stopLoading()
         loadingView.isHidden = true
-        return travelCell
+            let travelCell : TravelCollectionViewCell = travelCollectionView.dequeueReusableCell(withReuseIdentifier: "travelCellId", for: indexPath) as! TravelCollectionViewCell
+            travelCell.titleLabel.text = travelTitleArray[indexPath.row] as! String
+            travelCell.imageView.image = UIImage(named: travelImgArray[indexPath.row] as! String)
+            return travelCell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        //let heightValue = UIScreen.main.bounds.height/100
         return CGSize(width: travelCollectionView.frame.width, height: self.travelCollectionView.frame.height/2)
     }
     
@@ -69,8 +74,8 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
         
         let heritageDtlView = detailStoryboard.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
         heritageDtlView.pageNameString = PageName2.museumTravel
-        heritageDtlView.travelImage = travelImgArray[selectedIndex]
-        heritageDtlView.travelTitle = travelTitleArray[selectedIndex]
+        heritageDtlView.travelImage = travelImgArray[selectedIndex] as! String
+        heritageDtlView.travelTitle = travelTitleArray[selectedIndex] as! String
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionFade
