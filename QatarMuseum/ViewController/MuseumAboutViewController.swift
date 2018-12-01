@@ -386,6 +386,27 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     func downloadButtonAction() {
        let downloadLink = aboutDetailtArray[0].downloadable
         print(downloadLink)
+        
+        var style = ToastStyle()
+        style.titleAlignment = .center
+        style.messageAlignment = .center
+        style.messageNumberOfLines = 2
+        style.maxWidthPercentage = 0.9
+        
+        if(downloadLink != nil){
+            if let link = URL(string: downloadLink![0]){
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(link, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(link)
+                }
+            }else{
+                self.view.makeToast("Brochure is currently unavailable", duration: 3.0, position: .bottom, style: style)
+            }
+        }else{
+            self.view.makeToast("Brochure is currently unavailable", duration: 3.0, position: .bottom, style: style)
+        }
+
     }
     
     func showLocationErrorPopup() {
