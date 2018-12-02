@@ -32,6 +32,10 @@ class PanelDetailCell: UITableViewCell {
     @IBOutlet weak var thirdView: UIView!
     
     @IBOutlet weak var secondTitleLine: UILabel!
+    
+    weak var detailSpecialEvent : PanelDiscussionDetailViewController?
+
+    
     override func awakeFromNib() {
         topTitle.font = UIFont.selfGuidedFont
         topDescription.font = UIFont.collectionFirstDescriptionFont
@@ -57,8 +61,8 @@ class PanelDetailCell: UITableViewCell {
         topImg.image = UIImage(named: "panel_discussion-1")
         topTitle.text = titleName
         topDescription.text = "This discussion is going to be about the grandeur and originality of Qatari Songs. The speakers will also demonstrate the various songs and the musical instruments used to create the songs."
-        interestedLabel.text = "Interested"
-        notInterestedLabel.text = "Not Interested"
+        interestedLabel.text = "Register"
+        notInterestedLabel.text = "Unregister"
         secondImg.image = UIImage(named: "panelDetail2")
         secondTitle.text = "Name of the Speaker"
         secondDescription.text = "Information of the Speaker. Information of the Speaker. Information of the Speaker."
@@ -74,8 +78,8 @@ class PanelDetailCell: UITableViewCell {
         topImg.image = UIImage(named: "panel_discussion-1")
         topTitle.text = titleName
         topDescription.text = "This tour has been designed for introducing you to the exquisite art & culture of Qatar"
-        interestedLabel.text = "Interested"
-        notInterestedLabel.text = "Not Interested"
+        interestedLabel.text = "Register"
+        notInterestedLabel.text = "Unregister"
         secondImg.isHidden = true
         secondTitle.isHidden = true
         secondDescription.isHidden = true

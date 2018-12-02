@@ -14,6 +14,7 @@ class NMoQHeaderCell: UICollectionViewCell {
     @IBOutlet weak var bannerTitle: UITextView!
     override func awakeFromNib() {
         bannerTitle.font = UIFont.eventPopupTitleFont
+        bannerTitle.textColor = UIColor.white
     }
     func setBannerData(bannerData: HomeBanner) {
         bannerTitle.text = bannerData.bannerTitle

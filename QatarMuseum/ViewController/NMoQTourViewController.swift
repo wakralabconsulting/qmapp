@@ -61,6 +61,7 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "nMoQTourDescriptionCellId", for: indexPath) as! NMoQTourDescriptionCell
                 cell.titleLabel.text = tourTitle
+                cell.descriptionLabel.textAlignment = .natural
                 cell.descriptionLabel.text = tourDesc
                 cell.selectionStyle = .none
                 return cell

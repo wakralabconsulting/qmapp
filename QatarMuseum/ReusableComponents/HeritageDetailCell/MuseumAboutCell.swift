@@ -340,10 +340,17 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
                                                     comment: "LOCATION_TITLE in the Heritage detail")
         openingTimeTitleLabel.text = NSLocalizedString("EVENT_DATE",
                                                        comment: "EVENT_DATE in the Heritage detail")
-        if ((aboutData.contactEmail != nil) && (aboutData.contactEmail != "")) {
+        if ((aboutData.contactEmail != nil) && (aboutData.contactEmail != "" && aboutData.contactNumber != nil) && (aboutData.contactNumber != "")) {
             contactTitleLabel.text = NSLocalizedString("CONTACT_TITLE",
                                                        comment: "CONTACT_TITLE in the Heritage detail")
-            contactLabel.text = aboutData.contactEmail
+            
+            let contactString:String = aboutData.contactEmail! + "\n" + aboutData.contactNumber!
+            let height = heightForView(text:contactString, font: UIFont.systemFont(ofSize: 17), width: 300)
+            contactLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: height).isActive = true
+            contactLabel.text = contactString
+            contactLabel.numberOfLines = 0
+            contactLabel.lineBreakMode = .byWordWrapping
+
             contactLine.isHidden = false
         }
         
@@ -384,6 +391,19 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         
     }
     
+    
+    //To calculate height for label based on text size and width
+    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat {
+        let label:UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.font = font
+        label.text = text
+        
+        label.sizeToFit()
+        return label.frame.height
+    }
+    
     func setNMoQTravelCellData(title: String) {
         middleTitleLabel.isHidden = true
         midTitleDescriptionLabel.isHidden = true
@@ -410,7 +430,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         downloadLabel.isHidden = true
         downloadButton.isHidden = true
         
-        sundayTimeLabel.text = "+974 4452 5555 /n info@qm.org.qa"
+        sundayTimeLabel.text = "+974 4452 5555" + "\n" + "info@qm.org.qa"
         
         titleLabel.font = UIFont.closeButtonFont
         locationTitleLabel.isHidden = true

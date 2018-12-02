@@ -58,6 +58,14 @@ class AcceptDeclinePopup: UIView {
         yesButton.setTitle(NSLocalizedString("YES", comment: "YES in accept decline popup"), for: .normal)
         noButton.setTitle(NSLocalizedString("NO", comment: "NO in accept decline popup"), for: .normal)
     }
+    
+    func showRegisterUnregisterMessage() {
+        titleLabel.text = NSLocalizedString("CONFIRMATION", comment: "CONFIRMATION in accept decline popup")
+        descriptionLabel.text = NSLocalizedString("Are you sure to register the event", comment: "DECLINE_DESCRIPTION in accept decline popup")
+        yesButton.setTitle(NSLocalizedString("YES", comment: "YES in accept decline popup"), for: .normal)
+        noButton.setTitle(NSLocalizedString("NO", comment: "NO in accept decline popup"), for: .normal)
+    }
+    
     @IBAction func didTapNoButton(_ sender: UIButton) {
         self.noButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         declinePopupDelegate?.noButtonPressed()

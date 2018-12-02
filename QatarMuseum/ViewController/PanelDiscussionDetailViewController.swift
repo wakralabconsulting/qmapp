@@ -11,13 +11,17 @@ enum NMoQPanelPage {
     case PanelDetailPage
     case TourDetailPage
 }
-class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,UITableViewDelegate,UITableViewDataSource,HeaderViewProtocol {
-
+class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,UITableViewDelegate,UITableViewDataSource,HeaderViewProtocol,DeclinePopupProtocol {
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var headerView: CommonHeaderView!
     var panelTitle : String? = ""
     var pageNameString : NMoQPanelPage?
+    
+    var acceptDeclinePopupView : AcceptDeclinePopup = AcceptDeclinePopup()
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCell()
@@ -55,9 +59,16 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         cell.selectionStyle = .none
         if(pageNameString == NMoQPanelPage.PanelDetailPage) {
             cell.setPanelDetailCellContent(titleName: panelTitle)
+            cell.detailSpecialEvent = self
             
+            cell.interestSwitch.addTarget(self, action: #selector(self.registerSwitchClicked), for: .valueChanged)
+
+
         } else if (pageNameString == NMoQPanelPage.TourDetailPage){
             cell.setTourSecondDetailCellContent(titleName: panelTitle)
+            cell.detailSpecialEvent = self
+            cell.interestSwitch.addTarget(self, action: #selector(self.registerSwitchClicked), for: .valueChanged)
+
         }
         return cell
     }
@@ -75,6 +86,50 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         transition.subtype = kCATransitionFromLeft
         self.view.window!.layer.add(transition, forKey: kCATransition)
         self.dismiss(animated: false, completion: nil)
+    }
+    
+    @objc func registerSwitchClicked(_ mySwitch: UISwitch) {
+        
+        if (mySwitch.isOn) {
+            mySwitch.onTintColor = UIColor.red
+//            loadConfirmationPopup()
+        }
+        else { // for accept
+            //            accepetDeclineSwitch.tintColor = offColor
+            //            accepetDeclineSwitch.layer.cornerRadius = 16
+            //            accepetDeclineSwitch.backgroundColor = offColor
+//            acceptNowButtonPressed()
+            loadConfirmationPopup()
+        }
+        
+    }
+    
+    func loadConfirmationPopup() {
+        acceptDeclinePopupView  = AcceptDeclinePopup(frame: self.view.frame)
+        acceptDeclinePopupView.popupViewHeight.constant = 270
+        acceptDeclinePopupView.showRegisterUnregisterMessage()
+        acceptDeclinePopupView.declinePopupDelegate = self
+        self.view.addSubview(acceptDeclinePopupView)
+    }
+    
+    func declinePopupCloseButtonPressed() {
+            self.acceptDeclinePopupView.removeFromSuperview()
+    }
+    
+    func yesButtonPressed() {
+//        accepetDeclineSwitch.onTintColor = UIColor.red
+//        accepetDeclineSwitch.isOn = true
+//        updateRSVPUser(statusValue: "0")
+        self.acceptDeclinePopupView.removeFromSuperview()
+    }
+    
+    func noButtonPressed() {
+        self.acceptDeclinePopupView.removeFromSuperview()
+//        let offColor = UIColor.settingsSwitchOnTint
+//        accepetDeclineSwitch.tintColor = offColor
+//        accepetDeclineSwitch.layer.cornerRadius = 16
+//        accepetDeclineSwitch.backgroundColor = offColor
+//        accepetDeclineSwitch.isOn = false
     }
     
     func showNodata() {

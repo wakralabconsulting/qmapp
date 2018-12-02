@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -70,7 +70,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4VR-o3-Lcg">
-                                                                    <rect key="frame" x="178" y="76.666666666666671" width="29" height="3"/>
+                                                                    <rect key="frame" x="177.66666666666666" y="76.666666666666671" width="29" height="3"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="29" id="02p-Ib-Idu"/>
@@ -88,7 +88,7 @@
                                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                 </textView>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pRy-Wq-pRg">
-                                                                    <rect key="frame" x="178" y="130.66666666666666" width="29" height="0.0"/>
+                                                                    <rect key="frame" x="177.66666666666666" y="130.66666666666666" width="29" height="0.0"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" id="C9Z-z3-1HX"/>
@@ -99,7 +99,7 @@
                                                                     <rect key="frame" x="0.0" y="186" width="384" height="83"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="download_icon" translatesAutoresizingMaskIntoConstraints="NO" id="bk2-g1-0KC">
-                                                                            <rect key="frame" x="180.33333333333334" y="0.0" width="25" height="26"/>
+                                                                            <rect key="frame" x="179.66666666666666" y="0.0" width="25" height="26"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="25" id="eNk-wE-yjh"/>
                                                                                 <constraint firstAttribute="height" constant="26" id="tgC-63-Nq4"/>
@@ -200,10 +200,10 @@
                                                                     </constraints>
                                                                 </view>
                                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qa0-nk-rek">
-                                                                    <rect key="frame" x="0.0" y="184.33333333333331" width="384" height="200"/>
+                                                                    <rect key="frame" x="0.0" y="185" width="384" height="200"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OFFER CODE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7I5-HZ-Oca">
-                                                                            <rect key="frame" x="142.33333333333334" y="20" width="100.33333333333334" height="21"/>
+                                                                            <rect key="frame" x="142" y="19.999999999999943" width="100.33333333333331" height="21"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="21" id="P7g-t3-n6j"/>
                                                                             </constraints>
@@ -212,7 +212,7 @@
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AbN-mh-4bJ" userLabel="OfferCode Line">
-                                                                            <rect key="frame" x="177" y="50" width="29" height="3"/>
+                                                                            <rect key="frame" x="177.66666666666666" y="49.999999999999943" width="29" height="3"/>
                                                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="29" id="c30-FS-c6f"/>
@@ -220,13 +220,13 @@
                                                                             </constraints>
                                                                         </view>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QANMOQ-VIP1" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ku0-TG-hSf">
-                                                                            <rect key="frame" x="100.00000000000001" y="68" width="184.33333333333337" height="47"/>
+                                                                            <rect key="frame" x="100.00000000000001" y="67.999999999999943" width="184.33333333333337" height="47"/>
                                                                             <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="30"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cVV-4I-kW9">
-                                                                            <rect key="frame" x="35" y="135" width="314" height="50"/>
+                                                                            <rect key="frame" x="35" y="134.99999999999994" width="314" height="50"/>
                                                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="50" id="70t-eX-0Zd"/>
@@ -272,7 +272,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cNV-Hg-bLd">
-                                                                    <rect key="frame" x="178" y="434.99999999999994" width="29" height="3"/>
+                                                                    <rect key="frame" x="177.66666666666666" y="434.99999999999994" width="29" height="3"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="29" id="4Ey-Me-U25"/>
@@ -292,7 +292,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOCATIONS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fBT-Ut-cGZ">
-                                                                    <rect key="frame" x="147.33333333333334" y="484.99999999999994" width="90.666666666666657" height="21"/>
+                                                                    <rect key="frame" x="146.66666666666666" y="484.99999999999994" width="90.666666666666657" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="21" id="lbR-uZ-6xs"/>
                                                                     </constraints>
@@ -301,7 +301,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hSu-dr-bze">
-                                                                    <rect key="frame" x="178" y="515" width="29" height="3"/>
+                                                                    <rect key="frame" x="177.66666666666666" y="515" width="29" height="3"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="3" id="dMg-eL-noH"/>
@@ -309,7 +309,7 @@
                                                                     </constraints>
                                                                 </view>
                                                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xOc-VW-Qtf">
-                                                                    <rect key="frame" x="178" y="852" width="29" height="3"/>
+                                                                    <rect key="frame" x="177.66666666666666" y="851.66666666666652" width="29" height="3"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="3" id="3eu-Hv-VgZ"/>
@@ -317,19 +317,19 @@
                                                                     </constraints>
                                                                 </view>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RcA-O5-1Dd">
-                                                                    <rect key="frame" x="147.33333333333334" y="518" width="90.666666666666657" height="0.0"/>
+                                                                    <rect key="frame" x="146.66666666666666" y="518" width="90.666666666666657" height="0.0"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aXK-nl-XNw">
-                                                                    <rect key="frame" x="192" y="843" width="0.0" height="0.0"/>
+                                                                    <rect key="frame" x="192" y="842.66666666666652" width="0.0" height="0.0"/>
                                                                     <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="18"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqM-56-omt">
-                                                                    <rect key="frame" x="83.333333333333314" y="798" width="218" height="35"/>
+                                                                    <rect key="frame" x="83" y="797.66666666666652" width="218" height="35"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="35" id="7hi-Dh-SeJ"/>
                                                                     </constraints>
@@ -343,9 +343,9 @@
                                                                     </connections>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZSR-Lu-lsl">
-                                                                    <rect key="frame" x="192" y="863" width="0.0" height="21"/>
+                                                                    <rect key="frame" x="192" y="862.66666666666652" width="0.0" height="42"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" constant="21" id="jMi-KI-taB"/>
+                                                                        <constraint firstAttribute="height" constant="42" id="jMi-KI-taB"/>
                                                                     </constraints>
                                                                     <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="15"/>
                                                                     <nil key="textColor"/>
@@ -438,7 +438,7 @@
                                                             <rect key="frame" x="0.0" y="1065" width="207" height="77"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pqb-39-KdR">
-                                                                    <rect key="frame" x="141" y="15" width="46" height="46"/>
+                                                                    <rect key="frame" x="141" y="15.666666666666742" width="46" height="46"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="46" id="GIQ-BS-3pH"/>
                                                                         <constraint firstAttribute="width" constant="46" id="HpL-4I-l77"/>
@@ -460,7 +460,7 @@
                                                             <rect key="frame" x="207" y="1065" width="207" height="77"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sZg-6G-Zgc">
-                                                                    <rect key="frame" x="20" y="16" width="46" height="46"/>
+                                                                    <rect key="frame" x="20" y="15.666666666666742" width="46" height="46"/>
                                                                     <inset key="contentEdgeInsets" minX="9" minY="11" maxX="9" maxY="11"/>
                                                                     <state key="normal" image="shareX1"/>
                                                                     <connections>
@@ -585,7 +585,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="crY-Cr-OL5" customClass="VersaStatefulButton" customModule="VersaPlayer">
-                            <rect key="frame" x="164" y="139" width="50" height="50"/>
+                            <rect key="frame" x="164.66666666666666" y="97" width="50" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="Klg-yG-Piw"/>
                                 <constraint firstAttribute="width" constant="50" id="ldl-YB-3cq"/>
@@ -598,7 +598,7 @@
                             </userDefinedRuntimeAttributes>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D3H-lq-nGO" customClass="VersaStatefulButton" customModule="VersaPlayer">
-                            <rect key="frame" x="268" y="139" width="30" height="50"/>
+                            <rect key="frame" x="334.66666666666669" y="97" width="30" height="50"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="image" keyPath="activeImage" value="fastforward"/>
@@ -606,7 +606,7 @@
                             </userDefinedRuntimeAttributes>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rLS-aC-dKq" customClass="VersaStatefulButton" customModule="QatarMuseums">
-                            <rect key="frame" x="226" y="139" width="30" height="50"/>
+                            <rect key="frame" x="226.66666666666663" y="97" width="96" height="50"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="image" keyPath="activeImage" value="skipForward"/>
@@ -614,7 +614,7 @@
                             </userDefinedRuntimeAttributes>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hZg-R5-df1" customClass="VersaStatefulButton" customModule="QatarMuseums">
-                            <rect key="frame" x="122" y="139" width="30" height="50"/>
+                            <rect key="frame" x="56.666666666666657" y="97" width="96" height="50"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="image" keyPath="activeImage" value="skipBackward"/>
@@ -622,7 +622,7 @@
                             </userDefinedRuntimeAttributes>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ogL-9a-CIs" customClass="VersaTimeLabel" customModule="QatarMuseums">
-                            <rect key="frame" x="20" y="209" width="70" height="30"/>
+                            <rect key="frame" x="20" y="167" width="70" height="72"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="70" id="vhD-j7-oec"/>
@@ -632,14 +632,14 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mAx-xz-nWG" customClass="VersaTimeLabel" customModule="QatarMuseums">
-                            <rect key="frame" x="205" y="209" width="70" height="30"/>
+                            <rect key="frame" x="121" y="167" width="70" height="72"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <slider opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="IH0-vD-X0I" customClass="VersaSeekbarSlider" customModule="QatarMuseums">
-                            <rect key="frame" x="100" y="209" width="95" height="31"/>
+                            <rect key="frame" x="100" y="167" width="11" height="73"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="image" keyPath="thumbImage" value="playhead"/>
@@ -650,7 +650,7 @@
                             <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </activityIndicatorView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f10-0c-7Ki" customClass="VersaStatefulButton" customModule="QatarMuseums">
-                            <rect key="frame" x="329" y="209" width="30" height="30"/>
+                            <rect key="frame" x="287" y="167" width="72" height="72"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <state key="normal">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -661,7 +661,7 @@
                             </userDefinedRuntimeAttributes>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IZ9-Oe-XhJ" customClass="VersaStatefulButton" customModule="QatarMuseums">
-                            <rect key="frame" x="287" y="209" width="30" height="30"/>
+                            <rect key="frame" x="203" y="167" width="72" height="72"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <state key="normal">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -672,7 +672,7 @@
                             </userDefinedRuntimeAttributes>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dr0-Vm-Nkt" customClass="VersaStatefulButton" customModule="QatarMuseums">
-                            <rect key="frame" x="80" y="139" width="30" height="50"/>
+                            <rect key="frame" x="-99.666666666666671" y="97" width="144.33333333333334" height="50"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="image" keyPath="activeImage" value="rewind"/>
@@ -788,19 +788,19 @@
         </scene>
     </scenes>
     <resources>
-        <image name="download_icon" width="150" height="139"/>
-        <image name="fastforward" width="48" height="48"/>
-        <image name="fullscreen" width="24" height="24"/>
-        <image name="fullscreen_disable" width="24" height="24"/>
-        <image name="heart_emptyX1" width="101" height="93"/>
-        <image name="pause" width="48" height="48"/>
-        <image name="pip" width="24" height="24"/>
-        <image name="placeholder_video" width="299" height="199"/>
-        <image name="play" width="48" height="48"/>
-        <image name="playhead" width="24" height="24"/>
-        <image name="rewind" width="48" height="48"/>
-        <image name="shareX1" width="82" height="93"/>
-        <image name="skipBackward" width="32" height="32"/>
-        <image name="skipForward" width="32" height="32"/>
+        <image name="download_icon" width="36" height="33.360000610351562"/>
+        <image name="fastforward" width="144" height="144"/>
+        <image name="fullscreen" width="72" height="72"/>
+        <image name="fullscreen_disable" width="72" height="72"/>
+        <image name="heart_emptyX1" width="54.40399169921875" height="50.094764709472656"/>
+        <image name="pause" width="144" height="144"/>
+        <image name="pip" width="72" height="72"/>
+        <image name="placeholder_video" width="71.760002136230469" height="47.759998321533203"/>
+        <image name="play" width="144" height="144"/>
+        <image name="playhead" width="72" height="72"/>
+        <image name="rewind" width="144" height="144"/>
+        <image name="shareX1" width="44.169574737548828" height="50.094764709472656"/>
+        <image name="skipBackward" width="96" height="96"/>
+        <image name="skipForward" width="96" height="96"/>
     </resources>
 </document>
