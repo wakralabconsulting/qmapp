@@ -32,6 +32,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     var sliderImgArray = NSMutableArray()
     var apnDelegate : APNProtocol?
     var fromHomeBanner : Bool? = false
+    var bannerId: String? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -314,8 +315,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
 
                 let heritageDtlView = detailStoryboard.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
                 heritageDtlView.pageNameString = PageName2.museumEvent
-                //heritageDtlView.museumId = museumId
-
+                heritageDtlView.aboutBannerId = bannerId
 
                 let transition = CATransition()
                 transition.duration = 0.3

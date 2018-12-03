@@ -121,6 +121,9 @@
 		B839831A21196E68007090C8 /* QatarMuseums.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B839831821196E68007090C8 /* QatarMuseums.xcdatamodeld */; };
 		B84BA060217EE3C000FD2C0D /* TokenData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84BA05F217EE3C000FD2C0D /* TokenData.swift */; };
 		B84BA062217F1A6300FD2C0D /* LoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84BA061217F1A6300FD2C0D /* LoginData.swift */; };
+		B84C9D8B21B5497E00DCB95C /* NMoQTour.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84C9D8A21B5497E00DCB95C /* NMoQTour.swift */; };
+		B84C9D8E21B566E300DCB95C /* architecture_03.png in Resources */ = {isa = PBXBuildFile; fileRef = B84C9D8C21B566E200DCB95C /* architecture_03.png */; };
+		B84C9D8F21B566E300DCB95C /* art_culture_1.png in Resources */ = {isa = PBXBuildFile; fileRef = B84C9D8D21B566E300DCB95C /* art_culture_1.png */; };
 		B85AE812217744D600A658A2 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85AE811217744D600A658A2 /* MapViewController.swift */; };
 		B85BA4AA20D01B2600E7F4D1 /* ExhibitionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4A920D01B2600E7F4D1 /* ExhibitionDetailViewController.swift */; };
 		B85BA4AC20D01BC900E7F4D1 /* ExhibitionDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4AB20D01BC800E7F4D1 /* ExhibitionDetailTableViewCell.swift */; };
@@ -131,11 +134,9 @@
 		B860EE5021AEA0E80007F63B /* TravelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B860EE4F21AEA0E80007F63B /* TravelCell.xib */; };
 		B860EE6121AEC9030007F63B /* sports_2.png in Resources */ = {isa = PBXBuildFile; fileRef = B860EE5721AEC8FF0007F63B /* sports_2.png */; };
 		B860EE6221AEC9030007F63B /* panel_discussion-1.png in Resources */ = {isa = PBXBuildFile; fileRef = B860EE5821AEC8FF0007F63B /* panel_discussion-1.png */; };
-		B860EE6321AEC9030007F63B /* architecture_03.png in Resources */ = {isa = PBXBuildFile; fileRef = B860EE5921AEC9000007F63B /* architecture_03.png */; };
 		B860EE6421AEC9030007F63B /* nature_5.png in Resources */ = {isa = PBXBuildFile; fileRef = B860EE5A21AEC9000007F63B /* nature_5.png */; };
 		B860EE6521AEC9030007F63B /* panel_discussion-3.png in Resources */ = {isa = PBXBuildFile; fileRef = B860EE5B21AEC9010007F63B /* panel_discussion-3.png */; };
 		B860EE6621AEC9030007F63B /* fashion_4.png in Resources */ = {isa = PBXBuildFile; fileRef = B860EE5C21AEC9010007F63B /* fashion_4.png */; };
-		B860EE6721AEC9030007F63B /* art_culture_1.png in Resources */ = {isa = PBXBuildFile; fileRef = B860EE5D21AEC9020007F63B /* art_culture_1.png */; };
 		B860EE6821AEC9030007F63B /* panel_discussion-4.png in Resources */ = {isa = PBXBuildFile; fileRef = B860EE5E21AEC9020007F63B /* panel_discussion-4.png */; };
 		B860EE6921AEC9030007F63B /* panel_discussion-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B860EE5F21AEC9020007F63B /* panel_discussion-2.png */; };
 		B860EE6A21AEC9030007F63B /* panel_discussion-5.png in Resources */ = {isa = PBXBuildFile; fileRef = B860EE6021AEC9020007F63B /* panel_discussion-5.png */; };
@@ -396,6 +397,9 @@
 		B839831921196E68007090C8 /* QatarMuseums.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QatarMuseums.xcdatamodel; sourceTree = "<group>"; };
 		B84BA05F217EE3C000FD2C0D /* TokenData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenData.swift; sourceTree = "<group>"; };
 		B84BA061217F1A6300FD2C0D /* LoginData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginData.swift; sourceTree = "<group>"; };
+		B84C9D8A21B5497E00DCB95C /* NMoQTour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQTour.swift; sourceTree = "<group>"; };
+		B84C9D8C21B566E200DCB95C /* architecture_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = architecture_03.png; sourceTree = "<group>"; };
+		B84C9D8D21B566E300DCB95C /* art_culture_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = art_culture_1.png; sourceTree = "<group>"; };
 		B85AE811217744D600A658A2 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		B85BA4A920D01B2600E7F4D1 /* ExhibitionDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExhibitionDetailViewController.swift; sourceTree = "<group>"; };
 		B85BA4AB20D01BC800E7F4D1 /* ExhibitionDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExhibitionDetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -406,11 +410,9 @@
 		B860EE4F21AEA0E80007F63B /* TravelCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TravelCell.xib; sourceTree = "<group>"; };
 		B860EE5721AEC8FF0007F63B /* sports_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sports_2.png; sourceTree = "<group>"; };
 		B860EE5821AEC8FF0007F63B /* panel_discussion-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "panel_discussion-1.png"; sourceTree = "<group>"; };
-		B860EE5921AEC9000007F63B /* architecture_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = architecture_03.png; sourceTree = "<group>"; };
 		B860EE5A21AEC9000007F63B /* nature_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nature_5.png; sourceTree = "<group>"; };
 		B860EE5B21AEC9010007F63B /* panel_discussion-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "panel_discussion-3.png"; sourceTree = "<group>"; };
 		B860EE5C21AEC9010007F63B /* fashion_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fashion_4.png; sourceTree = "<group>"; };
-		B860EE5D21AEC9020007F63B /* art_culture_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = art_culture_1.png; sourceTree = "<group>"; };
 		B860EE5E21AEC9020007F63B /* panel_discussion-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "panel_discussion-4.png"; sourceTree = "<group>"; };
 		B860EE5F21AEC9020007F63B /* panel_discussion-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "panel_discussion-2.png"; sourceTree = "<group>"; };
 		B860EE6021AEC9020007F63B /* panel_discussion-5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "panel_discussion-5.png"; sourceTree = "<group>"; };
@@ -578,8 +580,8 @@
 		1B444A3B21AEAFD9009FF40F /* QmImages */ = {
 			isa = PBXGroup;
 			children = (
-				B860EE5921AEC9000007F63B /* architecture_03.png */,
-				B860EE5D21AEC9020007F63B /* art_culture_1.png */,
+				B84C9D8C21B566E200DCB95C /* architecture_03.png */,
+				B84C9D8D21B566E300DCB95C /* art_culture_1.png */,
 				B860EE5C21AEC9010007F63B /* fashion_4.png */,
 				B860EE5A21AEC9000007F63B /* nature_5.png */,
 				B8DB500321B2624400C5DD10 /* panelDetail2.png */,
@@ -677,6 +679,7 @@
 				B82E1B3221808229006623A6 /* LogoutData.swift */,
 				1B7031ED218AFDB200B0E05B /* Notification.swift */,
 				B8DDBC7C21AD78AA007B3A06 /* HomeBanner.swift */,
+				B84C9D8A21B5497E00DCB95C /* NMoQTour.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1460,9 +1463,7 @@
 				B80DC06020C792E600E28034 /* Assets.xcassets in Resources */,
 				B81FF06B21AFBA1B006A968B /* NMoHeaderView.xib in Resources */,
 				1B444A6621B137DC009FF40F /* NMoQTourDescriptionCell.xib in Resources */,
-				B860EE6321AEC9030007F63B /* architecture_03.png in Resources */,
 				B8AFA2ED20E78BA9008838A6 /* DINNextLTArabic-Regular.ttf in Resources */,
-				B860EE6721AEC9030007F63B /* art_culture_1.png in Resources */,
 				B82729C121778B2F0017EC71 /* .gitkeep in Resources */,
 				B860EE6A21AEC9030007F63B /* panel_discussion-5.png in Resources */,
 				B8D1229020C9092D00772507 /* LoadingXib.xib in Resources */,
@@ -1480,6 +1481,7 @@
 				1B3C505C212AB3460034E560 /* ArtifactNumberPadCell.xib in Resources */,
 				B807FCCF218EA8FD003CC51E /* CountryListArabic.json in Resources */,
 				B8AFA2F120E78E09008838A6 /* DINNextLTPro-Light.otf in Resources */,
+				B84C9D8F21B566E300DCB95C /* art_culture_1.png in Resources */,
 				B8BA80BA20CD8305007E880A /* ExhibitionsCellXib.xib in Resources */,
 				B8EAB7AD20CA41ED00C001B2 /* Info.plist in Resources */,
 				B8EAB77B20CA3E2900C001B2 /* EventCellView.xib in Resources */,
@@ -1487,6 +1489,7 @@
 				1BAA2FCB2125FCC600D785DD /* ObjectImageXib.xib in Resources */,
 				B8E2C01320C7FD0000F3CE41 /* SideMenu.xib in Resources */,
 				B860EE6221AEC9030007F63B /* panel_discussion-1.png in Resources */,
+				B84C9D8E21B566E300DCB95C /* architecture_03.png in Resources */,
 				B80DC05E20C792E400E28034 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1596,6 +1599,7 @@
 				B82729B921778B2F0017EC71 /* VersaPlayerGestureRecieverView.swift in Sources */,
 				B85BA4B720D03CE500E7F4D1 /* iOSDevCenters+GIF.swift in Sources */,
 				B82729BF21778B2F0017EC71 /* VersaPlayerControls.swift in Sources */,
+				B84C9D8B21B5497E00DCB95C /* NMoQTour.swift in Sources */,
 				B8E01BFD21060FDC008D7F33 /* AppLocalizer.swift in Sources */,
 				B8C64C9C20FE380D00D7CD63 /* MiaTourDetailViewController.swift in Sources */,
 				B8DB500621B2A36E00C5DD10 /* PanelDiscussionDetailViewController.swift in Sources */,

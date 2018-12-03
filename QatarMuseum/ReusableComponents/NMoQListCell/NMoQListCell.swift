@@ -21,6 +21,18 @@ class NMoQListCell: UITableViewCell {
         dayLabel.font  = UIFont.settingsUpdateLabelFont
         dateLabel.font = UIFont.sideMenuLabelFont
     }
+    func setTourListDate(tourList: NMoQTour?) {
+        titleLabel.text = tourList?.title
+        dayLabel.text = tourList?.eventDate
+        dateLabel.text = ""
+
+        if ((tourList?.images?.count)! > 0) {
+            if let imageUrl = tourList?.images![0]{
+                cellImageView.kf.setImage(with: URL(string: imageUrl))
+            }
+        }
+        
+    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

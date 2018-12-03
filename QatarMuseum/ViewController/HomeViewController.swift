@@ -215,7 +215,11 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
            loadLoginPopup()
             UserDefaults.standard.set("false", forKey: "firstTimeLaunch")
         } else {
-            getHomeBanner()
+            if (networkReachability?.isReachable)! {
+                getHomeBanner()
+            } else {
+                
+            }
         }
     }
     
@@ -274,6 +278,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 let museumsView =  self.storyboard?.instantiateViewController(withIdentifier: "museumViewId") as! MuseumsViewController
                 museumsView.fromHomeBanner = true
                 museumsView.museumTitleString = homeBannerList[0].bannerTitle
+                museumsView.bannerId = homeBannerList[0].fullContentID
                 let transition = CATransition()
                 transition.duration = 0.25
                 transition.type = kCATransitionPush
