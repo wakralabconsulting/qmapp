@@ -46,6 +46,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     var selectedCell : MuseumAboutCell?
     var travelImage: String!
     var travelTitle: String!
+    var aboutBannerId: String? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -894,7 +895,9 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     //MARK: NMoQ ABoutEvent Webservice
     func getNmoQAboutDetailsFromServer() {
-        _ = Alamofire.request(QatarMuseumRouter.GetNMoQAboutEvent(["nid": "13376"])).responseObject { (response: DataResponse<Museums>) -> Void in
+        if(aboutBannerId != nil) {
+            
+            _ = Alamofire.request(QatarMuseumRouter.GetNMoQAboutEvent(["nid": aboutBannerId!])).responseObject { (response: DataResponse<Museums>) -> Void in
             switch response.result {
             case .success(let data):
                 self.aboutDetailtArray = data.museum!
@@ -927,6 +930,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.loadingView.noDataLabel.text = errorMessage
             }
         }
+    }
     }
     //MARK: About CoreData
     func saveOrUpdateAboutCoredata() {

@@ -6,6 +6,7 @@
 //  Copyright © 2018 Wakralab. All rights reserved.
 //
 
+import Alamofire
 import Crashlytics
 import UIKit
 
@@ -28,7 +29,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
 //    let networkReachability = NetworkReachabilityManager()
     var imageArray: [String] = []
     var titleArray: [String] = []
-
+    var nmoqTourList: [NMoQTour]! = []
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCell()
@@ -48,14 +49,16 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
             headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
         if (pageNameString == NMoQPageName.Tours) {
-            imageArray = tourImageArray
-            titleArray = tourNameArray
+            //imageArray = tourImageArray
+            //titleArray = tourNameArray
             headerView.headerTitle.text = NSLocalizedString("TOUR_TITLE", comment: "TOUR_TITLE in the NMoQ page")
+            getNMoQTourList()
         } else if (pageNameString == NMoQPageName.PanelDiscussion) {
             imageArray = panelImageArray
             titleArray = panelNameArray
             headerView.headerTitle.text = NSLocalizedString("PANEL_DISCUSSION_TITLE", comment: "PANEL_DISCUSSION_TITLE in the NMoQ page")
         }
+        
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -67,15 +70,22 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (pageNameString == NMoQPageName.Tours) {
+            return nmoqTourList.count
+        }
         return imageArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "nMoQListCellId", for: indexPath) as! NMoQListCell
-        cell.cellImageView.image = UIImage(named: imageArray[indexPath.row])
-        cell.titleLabel.text = titleArray[indexPath.row]
-        cell.dayLabel.text = "DAY " + String(format: "%02d", indexPath.row + 1)
-        cell.dateLabel.text = "28 MARCH 2018"
+        if (pageNameString == NMoQPageName.Tours) {
+            cell.setTourListDate(tourList: nmoqTourList[indexPath.row])
+        } else {
+            cell.cellImageView.image = UIImage(named: imageArray[indexPath.row])
+            cell.titleLabel.text = titleArray[indexPath.row]
+            cell.dayLabel.text = "DAY " + String(format: "%02d", indexPath.row + 1)
+            cell.dateLabel.text = "28 MARCH 2018"
+        }
         loadingView.stopLoading()
         loadingView.isHidden = true
         return cell
@@ -88,7 +98,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (pageNameString == NMoQPageName.Tours) {
-            loadTourViewPage(selectedCellTitle: titleArray[indexPath.row])
+            loadTourViewPage(selectedCellTitle: nmoqTourList[indexPath.row].title!)
         } else if (pageNameString == NMoQPageName.PanelDiscussion) {
             loadPanelDiscussionDetailPage(selectedCellTitle: titleArray[indexPath.row])
         }
@@ -146,7 +156,28 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
     }
-    
+    //MARK: Service call
+    func getNMoQTourList() {
+        _ = Alamofire.request(QatarMuseumRouter.GetNMoQTourList()).responseObject { (response: DataResponse<NMoQTourList>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.nmoqTourList = data.nmoqTourList
+                
+                
+                //self.saveOrUpdateHomeCoredata()
+                self.collectionTableView.reloadData()
+            case .failure(let error):
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
+            }
+        }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
