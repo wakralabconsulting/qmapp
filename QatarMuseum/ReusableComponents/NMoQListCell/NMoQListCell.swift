@@ -23,7 +23,7 @@ class NMoQListCell: UITableViewCell {
     }
     func setTourListDate(tourList: NMoQTour?) {
         titleLabel.text = tourList?.title
-        dayLabel.text = tourList?.eventDate
+        dayLabel.text = changeDateFormat(dateString: tourList?.eventDate)
         dateLabel.text = ""
 
         if ((tourList?.images?.count)! > 0) {
@@ -31,8 +31,8 @@ class NMoQListCell: UITableViewCell {
                 cellImageView.kf.setImage(with: URL(string: imageUrl))
             }
         }
-        
     }
+    
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

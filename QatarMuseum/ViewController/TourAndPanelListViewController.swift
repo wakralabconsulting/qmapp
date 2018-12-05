@@ -21,15 +21,11 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     @IBOutlet weak var headerView: CommonHeaderView!
     
     var pageNameString : NMoQPageName?
-    var tourImageArray: [String]! = ["art_culture_1.png", "sports_2.png", "architecture_03.png", "fashion_4.png", "nature_5.png"]
-    var tourNameArray: [String]! = ["Art & Culture", "Sports", "Architecture", "Fashion", "Nature"]
-    
-    var panelImageArray: [String]! = ["panel_discussion-1.png", "panel_discussion-2.png", "panel_discussion-3.png", "panel_discussion-4.png", "panel_discussion-5.png"]
-    var panelNameArray: [String]! = ["Qatari Songs", "Artist Encounters", "QatART Art & Craft", "Join Art & Calligraphy", "Marbling Art"]
-//    let networkReachability = NetworkReachabilityManager()
+    let networkReachability = NetworkReachabilityManager()
     var imageArray: [String] = []
     var titleArray: [String] = []
     var nmoqTourList: [NMoQTour]! = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCell()
@@ -54,9 +50,8 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
             headerView.headerTitle.text = NSLocalizedString("TOUR_TITLE", comment: "TOUR_TITLE in the NMoQ page")
             getNMoQTourList()
         } else if (pageNameString == NMoQPageName.PanelDiscussion) {
-            imageArray = panelImageArray
-            titleArray = panelNameArray
-            headerView.headerTitle.text = NSLocalizedString("PANEL_DISCUSSION_TITLE", comment: "PANEL_DISCUSSION_TITLE in the NMoQ page")
+            headerView.headerTitle.text = NSLocalizedString("PANEL_DISCUSSION", comment: "PANEL_DISCUSSION in the NMoQ page").uppercased()
+            getNMoQSpecialEventList()
         }
         
     }
@@ -70,22 +65,12 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (pageNameString == NMoQPageName.Tours) {
             return nmoqTourList.count
-        }
-        return imageArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "nMoQListCellId", for: indexPath) as! NMoQListCell
-        if (pageNameString == NMoQPageName.Tours) {
-            cell.setTourListDate(tourList: nmoqTourList[indexPath.row])
-        } else {
-            cell.cellImageView.image = UIImage(named: imageArray[indexPath.row])
-            cell.titleLabel.text = titleArray[indexPath.row]
-            cell.dayLabel.text = "DAY " + String(format: "%02d", indexPath.row + 1)
-            cell.dateLabel.text = "28 MARCH 2018"
-        }
+        cell.setTourListDate(tourList: nmoqTourList[indexPath.row])
         loadingView.stopLoading()
         loadingView.isHidden = true
         return cell
@@ -100,7 +85,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         if (pageNameString == NMoQPageName.Tours) {
             loadTourViewPage(selectedCellTitle: nmoqTourList[indexPath.row].title!)
         } else if (pageNameString == NMoQPageName.PanelDiscussion) {
-            loadPanelDiscussionDetailPage(selectedCellTitle: titleArray[indexPath.row])
+            loadPanelDiscussionDetailPage(selectedRow: indexPath.row)
         }
     }
     
@@ -114,10 +99,10 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(tourView, animated: false, completion: nil)
     }
-    func loadPanelDiscussionDetailPage(selectedCellTitle: String) {
+    func loadPanelDiscussionDetailPage(selectedRow: Int?) {
         let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
-        panelView.panelTitle = selectedCellTitle
         panelView.pageNameString = NMoQPanelPage.PanelDetailPage
+        panelView.panelDetailId = nmoqTourList[selectedRow!].nid
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionPush
@@ -164,6 +149,25 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 self.nmoqTourList = data.nmoqTourList
                 
                 
+                //self.saveOrUpdateHomeCoredata()
+                self.collectionTableView.reloadData()
+            case .failure(let error):
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
+            }
+        }
+    }
+    func getNMoQSpecialEventList() {
+        _ = Alamofire.request(QatarMuseumRouter.GetNMoQSpecialEventList()).responseObject { (response: DataResponse<NMoQTourList>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.nmoqTourList = data.nmoqTourList
                 //self.saveOrUpdateHomeCoredata()
                 self.collectionTableView.reloadData()
             case .failure(let error):

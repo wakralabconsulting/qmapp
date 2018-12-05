@@ -18,6 +18,8 @@ class MapViewController: UIViewController, HeaderViewProtocol, MKMapViewDelegate
     let locationManager = CLLocationManager()
     var userLocation: CLLocation?
     var destination: MKMapItem?
+    var latitudeString : String? = nil
+    var longiudeString : String? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,18 +107,18 @@ class MapViewController: UIViewController, HeaderViewProtocol, MKMapViewDelegate
     }
     
     func loadMapData() {
-        var latitudeString  = String()
-        var longitudeString = String()
+        var latString  = String()
+        var longString = String()
         var latitude : Double?
         var longitude : Double?
         
-        if (aboutData?.mobileLatitude != nil && aboutData?.mobileLatitude != "" && aboutData?.mobileLongtitude != nil && aboutData?.mobileLongtitude != "") {
-            latitudeString = (aboutData?.mobileLatitude!)!
-            longitudeString = (aboutData?.mobileLongtitude)!
-            if let lat : Double = Double(latitudeString) {
+        if (latitudeString != nil && latitudeString != "" && longiudeString != nil && longiudeString != "") {
+            latString = latitudeString!
+            longString = longiudeString!
+            if let lat : Double = Double(latString) {
                 latitude = lat
             }
-            if let long : Double = Double(longitudeString) {
+            if let long : Double = Double(longString) {
                 longitude = long
             }
             
