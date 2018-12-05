@@ -22,6 +22,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     var pageNameString : NMoQPanelPage?
     var panelDetailId : String? = nil
     var nmoqSpecialEventDetail: [NMoQTour]! = []
+    var nmoqTourDetail: [NMoQTourDetail]! = []
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCell()
@@ -41,6 +42,8 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             headerView.headerBackButton.contentEdgeInsets = UIEdgeInsets(top:12, left:17, bottom: 12, right:17)
         if (pageNameString == NMoQPanelPage.PanelDetailPage) {
             getNMoQSpecialEventDetail()
+        } else if (pageNameString == NMoQPanelPage.TourDetailPage) {
+            getNMoQTourDetail()
         }
         
     }
@@ -50,10 +53,10 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(pageNameString == NMoQPanelPage.PanelDetailPage) {
             return nmoqSpecialEventDetail.count
-        } else {
-            return 1
+        } else if(pageNameString == NMoQPanelPage.TourDetailPage){
+            return nmoqTourDetail.count
         }
-        
+        return 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         loadingView.stopLoading()
@@ -62,31 +65,11 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         cell.selectionStyle = .none
         if(pageNameString == NMoQPanelPage.PanelDetailPage) {
             cell.setPanelDetailCellContent(panelDetailData: nmoqSpecialEventDetail[indexPath.row])
-            cell.loadMapView = {
-                () in
-                if (self.nmoqSpecialEventDetail[indexPath.row].mobileLatitude != nil && self.nmoqSpecialEventDetail[indexPath.row].mobileLatitude != "" && self.nmoqSpecialEventDetail[indexPath.row].longitude != nil && self.nmoqSpecialEventDetail[indexPath.row].longitude != "") {
-                    let latitudeString = (self.nmoqSpecialEventDetail[indexPath.row].mobileLatitude)!
-                    let longitudeString = (self.nmoqSpecialEventDetail[indexPath.row].longitude)!
-                    var latitude : Double?
-                    var longitude : Double?
-                    if let lat : Double = Double(latitudeString) {
-                        latitude = lat
-                    }
-                    if let long : Double = Double(longitudeString) {
-                        longitude = long
-                    }
-                    
-                    let destinationLocation = CLLocationCoordinate2D(latitude: latitude!,
-                                                                     longitude: longitude!)
-                    let destinationPlacemark = MKPlacemark(coordinate: destinationLocation, addressDictionary: nil)
-                    let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
-                    self.loadLocationMap(currentRow: indexPath.row, destination: destinationMapItem)
-                }
-            }
             
         } else if (pageNameString == NMoQPanelPage.TourDetailPage){
-            cell.setTourSecondDetailCellContent(titleName: panelTitle)
+            cell.setTourSecondDetailCellContent(tourDetailData: nmoqTourDetail[indexPath.row])
         }
+        
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -141,6 +124,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
     }
+    //MARK: WebService Call
     func getNMoQSpecialEventDetail() {
         if(panelDetailId != nil) {
             _ = Alamofire.request(QatarMuseumRouter.GetNMoQSpecialEventDetail(["event_id" : panelDetailId!])).responseObject { (response: DataResponse<NMoQTourList>) -> Void in
@@ -149,6 +133,45 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                     self.nmoqSpecialEventDetail = data.nmoqTourList
                     //self.saveOrUpdateHomeCoredata()
                     self.tableView.reloadData()
+                    if(self.nmoqSpecialEventDetail.count == 0) {
+                        let noResultMsg = NSLocalizedString("NO_RESULT_MESSAGE",
+                                                            comment: "Setting the content of the alert")
+                        self.loadingView.stopLoading()
+                        self.loadingView.noDataView.isHidden = false
+                        self.loadingView.isHidden = false
+                        self.loadingView.showNoDataView()
+                        self.loadingView.noDataLabel.text = noResultMsg
+                    }
+                case .failure(let error):
+                    var errorMessage: String
+                    errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                    comment: "Setting the content of the alert"))
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                    self.loadingView.noDataLabel.text = errorMessage
+                }
+            }
+        }
+    }
+    func getNMoQTourDetail() {
+        if(panelDetailId != nil) {
+            _ = Alamofire.request(QatarMuseumRouter.GetNMoQTourDetail(["event_id" : panelDetailId!])).responseObject { (response: DataResponse<NMoQTourDetailList>) -> Void in
+                switch response.result {
+                case .success(let data):
+                    self.nmoqTourDetail = data.nmoqTourDetailList
+                    //self.saveOrUpdateHomeCoredata()
+                    self.tableView.reloadData()
+                    if(self.nmoqTourDetail.count == 0) {
+                        let noResultMsg = NSLocalizedString("NO_RESULT_MESSAGE",
+                                                            comment: "Setting the content of the alert")
+                        self.loadingView.stopLoading()
+                        self.loadingView.noDataView.isHidden = false
+                        self.loadingView.isHidden = false
+                        self.loadingView.showNoDataView()
+                        self.loadingView.noDataLabel.text = noResultMsg
+                    }
                 case .failure(let error):
                     var errorMessage: String
                     errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",

@@ -83,21 +83,34 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (pageNameString == NMoQPageName.Tours) {
-            loadTourViewPage(selectedCellTitle: nmoqTourList[indexPath.row].title!)
+            loadTourViewPage(selectedRow: indexPath.row)
         } else if (pageNameString == NMoQPageName.PanelDiscussion) {
             loadPanelDiscussionDetailPage(selectedRow: indexPath.row)
         }
     }
     
-    func loadTourViewPage(selectedCellTitle: String) {
-        let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "nMoQTourId") as! NMoQTourViewController
-        tourView.tourTitle = selectedCellTitle
+    func loadTourViewPage(selectedRow: Int?) {
+//        let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "nMoQTourId") as! NMoQTourViewController
+//        tourView.tourTitle = selectedCellTitle
+//        let transition = CATransition()
+//        transition.duration = 0.25
+//        transition.type = kCATransitionPush
+//        transition.subtype = kCATransitionFromRight
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        self.present(tourView, animated: false, completion: nil)
+        
+        let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
+        //panelView.panelTitle = selectedCellTitle
+        panelView.panelDetailId = nmoqTourList[selectedRow!].nid
+        panelView.pageNameString = NMoQPanelPage.TourDetailPage
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(tourView, animated: false, completion: nil)
+        self.present(panelView, animated: false, completion: nil)
+        
+
     }
     func loadPanelDiscussionDetailPage(selectedRow: Int?) {
         let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController

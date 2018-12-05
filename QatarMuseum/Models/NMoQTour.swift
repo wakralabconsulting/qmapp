@@ -27,7 +27,7 @@ struct NMoQTour: ResponseObjectSerializable, ResponseCollectionSerializable {
     
     public init?(response: HTTPURLResponse, representation: AnyObject) {
         if let representation = representation as? [String: Any] {
-            self.title = representation["Title"] as? String
+            self.title = representation["Day"] as? String
             self.dayDescription = representation["descriptif_day"] as? String
             self.images = representation["Images"] as? [String]
             self.subtitle = representation["subtitle"] as? String

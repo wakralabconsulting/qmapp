@@ -22,9 +22,9 @@ class NMoQListCell: UITableViewCell {
         dateLabel.font = UIFont.sideMenuLabelFont
     }
     func setTourListDate(tourList: NMoQTour?) {
-        titleLabel.text = tourList?.title
-        dayLabel.text = changeDateFormat(dateString: tourList?.eventDate)
-        dateLabel.text = ""
+        titleLabel.text = tourList?.subtitle
+        dayLabel.text = tourList?.title
+        dateLabel.text = changeDateFormat(dateString: tourList?.eventDate)
 
         if ((tourList?.images?.count)! > 0) {
             if let imageUrl = tourList?.images![0]{
