@@ -64,7 +64,7 @@ class PanelDetailCell: UITableViewCell {
         mapOverlayView.addGestureRecognizer(tap)
     }
     func setPanelDetailCellContent(panelDetailData: NMoQTour?) {
-        topTitle.text = panelDetailData?.title
+        topTitle.text = panelDetailData?.subtitle
         topDescription.text = panelDetailData?.dayDescription
         interestedLabel.text = "Registered"
         notInterestedLabel.text = "Not Registered"
@@ -132,25 +132,65 @@ class PanelDetailCell: UITableViewCell {
         }
         
     }
-    func setTourSecondDetailCellContent(titleName: String?) {
-        topImg.image = UIImage(named: "panel_discussion-1")
-        topTitle.text = titleName
-        topDescription.text = "This tour has been designed for introducing you to the exquisite art & culture of Qatar"
-        interestedLabel.text = "Interested"
-        notInterestedLabel.text = "Not Interested"
+    func setTourSecondDetailCellContent(tourDetailData: NMoQTourDetail?) {
+        topTitle.text = tourDetailData?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+        topDescription.text = tourDetailData?.body
+        interestedLabel.text = "Registered"
+        notInterestedLabel.text = "Not Registered"
         secondImg.isHidden = true
         secondTitle.isHidden = true
         secondDescription.isHidden = true
         secondView.isHidden = true
         secondTitleLine.isHidden = true
         dateTitle.text = NSLocalizedString("DATE", comment: "DATE in Paneldetail Page")
-        dateText.text = "28 March 2019"
+        dateText.text = tourDetailData?.date?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         venueTitle.text = NSLocalizedString("LOCATION_TITLE", comment: "LOCATION_TITLE in Paneldetail Page")
-        contactTitle.text = NSLocalizedString("CONTACT_TITLE", comment: "CONTACT_TITLE in Paneldetail Page")
-        contactNumberLabel.text = "+97444525555"
-        contactEmailLabel.text = "info@qm.org.qa"
+        if ((tourDetailData?.contactPhone != nil) && (tourDetailData?.contactPhone != "") || (tourDetailData?.contactEmail != nil) && (tourDetailData?.contactEmail != "")) {
+            contactTitle.text = NSLocalizedString("CONTACT_TITLE", comment: "CONTACT_TITLE in Paneldetail Page")
+            contactTitleLine.isHidden = false
+            contactTitle.isHidden = false
+        } else {
+            contactTitle.isHidden = true
+            contactTitleLine.isHidden = true
+        }
+        contactNumberLabel.text = tourDetailData?.contactPhone
+        contactEmailLabel.text = tourDetailData?.contactEmail
+        if ((tourDetailData?.imageBanner?.count)! > 0) {
+            if let imageUrl = tourDetailData?.imageBanner![0]{
+                topImg.kf.setImage(with: URL(string: imageUrl))
+            } else {
+                topImg.image = UIImage(named: "default_imageX2")
+            }
+        }
+        //Details For Map
+        var latitudeString  = String()
+        var longitudeString = String()
+        var latitude : Double?
+        var longitude : Double?
         
-        //self.topView.translatesAutoresizingMaskIntoConstraints = false
+        if (tourDetailData?.mobileLatitude != nil && tourDetailData?.mobileLatitude != "" && tourDetailData?.longitude != nil && tourDetailData?.longitude != "") {
+            latitudeString = (tourDetailData?.mobileLatitude)!
+            longitudeString = (tourDetailData?.longitude)!
+            if let lat : Double = Double(latitudeString) {
+                latitude = lat
+            }
+            if let long : Double = Double(longitudeString) {
+                longitude = long
+            }
+            
+            let location = CLLocationCoordinate2D(latitude: latitude!,
+                                                  longitude: longitude!)
+            
+            // 2
+            let span = MKCoordinateSpanMake(0.05, 0.05)
+            let region = MKCoordinateRegion(center: location, span: span)
+            mapView.setRegion(region, animated: true)
+            //3
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = location
+            mapView.addAnnotation(annotation)
+        }
+        
         
         let verticalSpace = NSLayoutConstraint(item: self.topView, attribute: .bottom, relatedBy: .equal, toItem: self.thirdView, attribute: .top, multiplier: 1, constant: -16)
         

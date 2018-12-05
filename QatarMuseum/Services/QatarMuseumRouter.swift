@@ -43,6 +43,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case GetNMoQTravelList()
     case GetNMoQSpecialEventList()
     case GetNMoQSpecialEventDetail([String: Any])
+    case GetNMoQTourDetail([String: Any])
     var method: Alamofire.HTTPMethod {
         switch self {
         case .ExhibitionList:
@@ -110,6 +111,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .GetNMoQSpecialEventList:
             return .get
         case .GetNMoQSpecialEventDetail:
+            return .get
+        case .GetNMoQTourDetail:
             return .get
         }
     }
@@ -182,6 +185,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/nmoq_special_event.json"
         case .GetNMoQSpecialEventDetail( _):
             return "/nmoq_special_event.json"
+        case .GetNMoQTourDetail( _):
+            return "/list_tour_per_day.json"
         }
     }
 
@@ -309,6 +314,13 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
         case .GetNMoQSpecialEventDetail(let parameters):
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
+        case .GetNMoQTourDetail(let parameters):
+            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
+//            let nmqURL = NSURL(string: Config.baseURL + Config.engLang + Config.mobileApiURL)!
+//            var nmqMutableURLReq = URLRequest(url: nmqURL.appendingPathComponent(path)!)
+//            nmqMutableURLReq.httpMethod = method.rawValue
+//           // return try! Alamofire.URLEncoding.default.encode(nmqMutableURLReq, with: parameters)
+//            return try! Alamofire.JSONEncoding.default.encode(nmqMutableURLReq, with: parameters)
         }
         
         
