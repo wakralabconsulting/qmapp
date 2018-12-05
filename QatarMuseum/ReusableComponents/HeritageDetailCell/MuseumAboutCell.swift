@@ -56,7 +56,9 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
     @IBOutlet weak var claimOfferButton: UIButton!
     @IBOutlet weak var offerCodeViewHeight: NSLayoutConstraint!
     @IBOutlet weak var mapViewHeight: NSLayoutConstraint!
-
+    @IBOutlet weak var mainView: UIView!
+    
+    @IBOutlet weak var favouriteView: UIView!
     var imgArray = NSArray()
     var favBtnTapAction : (()->())?
     var shareBtnTapAction : (()->())?
@@ -64,6 +66,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
     var loadMapView : (()->())?
     var loadAboutVideo : (()->())?
     var downloadBtnTapAction : (()->())?
+    var claimOfferBtnTapAction : (()->())?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -138,6 +141,9 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         favoriteBtnViewHeight.constant = 0
         offerCodeViewHeight.constant = 0
         downloadLabel.font = UIFont.downloadLabelFont
+        claimOfferButton.titleLabel?.font = UIFont.popupProductionFont
+        codeLabel.font = UIFont.artifactNumberFont
+        offerCodeTitleLabel.font = UIFont.closeButtonFont
     }
     
     func setHeritageDetailData(heritageDetail: Heritage) {
@@ -384,7 +390,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         
     }
     
-    func setNMoQTravelCellData(title: String) {
+    func setNMoQTravelCellData(travelDetailData: HomeBanner) {
         middleTitleLabel.isHidden = true
         midTitleDescriptionLabel.isHidden = true
         middleLabelLine.isHidden = true
@@ -398,8 +404,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         sundayTimeLabel.isHidden = false
         
         subTitleLabel.isHidden = true
-        titleLabel.text = title
-        titleDescriptionLabel.text = "We have arranged for exclusive discounts for you. Just click on 'Claim Offers' button and use the code provided below"
+        
 
         locationFirstLabelHeight.constant = 0
         downloadViewHeight.constant = 0
@@ -410,12 +415,24 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         downloadLabel.isHidden = true
         downloadButton.isHidden = true
         
-        sundayTimeLabel.text = "+974 4452 5555 /n info@qm.org.qa"
-        
         titleLabel.font = UIFont.closeButtonFont
         locationTitleLabel.isHidden = true
-        openingTimeTitleLabel.text =  NSLocalizedString("CONTACT_TITLE",
-                                                       comment: "CONTACT_TITLE in the Heritage detail")
+        
+        titleLabel.text = travelDetailData.title
+        titleDescriptionLabel.text = travelDetailData.introductionText
+        offerCodeTitleLabel.text = NSLocalizedString("OFFER_CODE", comment: "OFFER_CODE in Travel Page")
+        claimOfferButton.setTitle(NSLocalizedString("CLAIM_OFFER", comment: "CLAIM_OFFER in Travel Page"), for: .normal)
+        codeLabel.text = travelDetailData.promotionalCode
+        if ((travelDetailData.contactNumber != nil) && (travelDetailData.email != nil)) {
+            openingTimeTitleLabel.text =  NSLocalizedString("CONTACT_TITLE",
+                                                            comment: "CONTACT_TITLE in the Heritage detail")
+            sundayTimeLabel.text = travelDetailData.contactNumber! + "\n" + travelDetailData.email!
+        }
+        let verticalSpace = NSLayoutConstraint(item: self.sundayTimeLabel, attribute: .bottom, relatedBy: .equal, toItem: self.favouriteView, attribute: .top, multiplier: 1, constant: -40)
+        
+        // activate the constraints
+        NSLayoutConstraint.activate([verticalSpace])
+        
 //            contactLabel.text = "info@qm.org.qa"
 //            contactLine.isHidden = false
     }
@@ -485,4 +502,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         self.downloadBtnTapAction?()
     }
     
+    @IBAction func didTapClaimOffer(_ sender: UIButton) {
+        self.claimOfferBtnTapAction?()
+    }
 }

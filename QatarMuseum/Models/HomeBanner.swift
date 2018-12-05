@@ -12,6 +12,13 @@ struct HomeBanner: ResponseObjectSerializable, ResponseCollectionSerializable {
     var fullContentID: String? = nil
     var bannerTitle: String? = nil
     var bannerLink: String? = nil
+    //for Travel List
+    var introductionText: String? = nil
+    var email: String? = nil
+    var contactNumber: String? = nil
+    var promotionalCode: String? = nil
+    var claimOffer: String? = nil
+
     
     public init?(response: HTTPURLResponse, representation: AnyObject) {
         if let representation = representation as? [String: Any] {
@@ -19,6 +26,12 @@ struct HomeBanner: ResponseObjectSerializable, ResponseCollectionSerializable {
             self.fullContentID = representation["full_content_ID"] as? String
             self.bannerTitle = representation["Banner_title"] as? String
             self.bannerLink = representation["banner_link"] as? String
+            //for Travel List
+            self.introductionText = representation["Introduction_Text"] as? String
+            self.email = representation["email"] as? String
+            self.contactNumber = representation["contact_number"] as? String
+            self.promotionalCode = representation["Promotional_code"] as? String
+            self.claimOffer = representation["claim_offer"] as? String
         }
     }
     

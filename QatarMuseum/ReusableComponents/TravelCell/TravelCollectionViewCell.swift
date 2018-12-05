@@ -15,4 +15,10 @@ class TravelCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         titleLabel.font = UIFont.oopsTitleFont
     }
+    func setTravelListData(travelListData: HomeBanner) {
+        titleLabel.text = travelListData.title
+        if let imgUrl = travelListData.bannerLink {
+            imageView.kf.setImage(with: URL(string: imgUrl))
+        }
+    }
 }

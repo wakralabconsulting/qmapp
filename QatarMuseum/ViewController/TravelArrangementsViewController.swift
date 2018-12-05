@@ -6,6 +6,7 @@
 //  Copyright © 2018 Wakralab. All rights reserved.
 //
 
+import Alamofire
 import UIKit
 
 class TravelArrangementsViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol {
@@ -15,10 +16,8 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
     @IBOutlet weak var travelHeaderView: CommonHeaderView!
     @IBOutlet weak var travelCollectionView: UICollectionView!
     @IBOutlet weak var loadingView: LoadingView!
-    var panelDiscussionTitle = String()
-    var travelImgArray = NSArray()
-    var travelTitleArray = NSArray()
-    
+    var travelList: [HomeBanner]! = []
+    let networkReachability = NetworkReachabilityManager()
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -36,10 +35,12 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
             travelHeaderView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
             travelHeaderView.headerTitle.text = NSLocalizedString("TRAVEL_ARRANGEMENTS", comment: "TRAVEL_ARRANGEMENTS Label in the Travel page page").uppercased()
-            travelImgArray = ["qatar_airways_bg","katara_bg"]
-            travelTitleArray = ["Qatar Airways","Katara Hospitality"]
-        
         registerNib()
+        if (networkReachability?.isReachable)! {
+            getTravelList()
+        } else {
+            
+        }
     }
     func registerNib() {
             let nib = UINib(nibName: "TravelCell", bundle: nil)
@@ -50,15 +51,14 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
         return .lightContent
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return travelList.count
         
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         loadingView.stopLoading()
         loadingView.isHidden = true
-            let travelCell : TravelCollectionViewCell = travelCollectionView.dequeueReusableCell(withReuseIdentifier: "travelCellId", for: indexPath) as! TravelCollectionViewCell
-            travelCell.titleLabel.text = travelTitleArray[indexPath.row] as! String
-            travelCell.imageView.image = UIImage(named: travelImgArray[indexPath.row] as! String)
+        let travelCell : TravelCollectionViewCell = travelCollectionView.dequeueReusableCell(withReuseIdentifier: "travelCellId", for: indexPath) as! TravelCollectionViewCell
+        travelCell.setTravelListData(travelListData: travelList[indexPath.row])
             return travelCell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -72,16 +72,17 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
     func loadDetailPage(selectedIndex: Int) {
         let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
         
-        let heritageDtlView = detailStoryboard.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
-        heritageDtlView.pageNameString = PageName2.museumTravel
-        heritageDtlView.travelImage = travelImgArray[selectedIndex] as! String
-        heritageDtlView.travelTitle = travelTitleArray[selectedIndex] as! String
+        let museumAboutView = detailStoryboard.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
+        museumAboutView.pageNameString = PageName2.museumTravel
+        museumAboutView.travelImage = travelList[selectedIndex].bannerLink
+        museumAboutView.travelTitle = travelList[selectedIndex].title
+        museumAboutView.travelDetail = travelList[selectedIndex]
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionFade
         transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
         view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(heritageDtlView, animated: false, completion: nil)
+        self.present(museumAboutView, animated: false, completion: nil)
     }
     
     func headerCloseButtonPressed() {
@@ -91,6 +92,25 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
         transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
         self.view.window!.layer.add(transition, forKey: kCATransition)
         dismiss(animated: false, completion: nil)
+    }
+    //MARK: Service Call
+    func getTravelList() {
+        _ = Alamofire.request(QatarMuseumRouter.GetNMoQTravelList()).responseObject { (response: DataResponse<HomeBannerList>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.travelList = data.homeBannerList
+                self.travelCollectionView.reloadData()
+            case .failure(let error):
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
+            }
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
