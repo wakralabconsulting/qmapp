@@ -47,6 +47,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     var travelImage: String!
     var travelTitle: String!
     var aboutBannerId: String? = nil
+    var travelDetail: HomeBanner?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -142,8 +143,13 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             }
             
         } else if (pageNameString == PageName2.museumTravel){
-            if(travelImage != nil) {
-                imageView.image = UIImage(named: travelImage)
+            if(travelDetail != nil) {
+                if let imageUrl = travelDetail?.bannerLink {
+                    imageView.kf.setImage(with: URL(string: imageUrl))
+                }
+                else {
+                    imageView.image = UIImage(named: "default_imageX2")
+                }
             } else {
                 imageView.image = UIImage(named: "default_imageX2")
             }
@@ -244,8 +250,12 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             heritageCell.videoOuterView.isHidden = true
             heritageCell.selectionStyle = .none
             heritageCell.videoOuterViewHeight.constant = 0
-            heritageCell.setNMoQTravelCellData(title: travelTitle)
+            heritageCell.setNMoQTravelCellData(travelDetailData: travelDetail!)
             heritageCell.pageControl.isHidden = true
+            heritageCell.claimOfferBtnTapAction = {
+                () in
+                self.claimOfferButtonAction(offerLink: self.travelDetail?.claimOffer)
+            }
         }
         
         heritageCell.favBtnTapAction = {
@@ -388,7 +398,20 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
        let downloadLink = aboutDetailtArray[0].downloadable
         print(downloadLink)
     }
-    
+    func claimOfferButtonAction(offerLink: String?) {
+        
+        if(offerLink != "") {
+            if let offerUrl = URL(string: offerLink!) {
+                // show alert to choose app
+                if UIApplication.shared.canOpenURL(offerUrl as URL) {
+                    let webViewVc:WebViewController = self.storyboard?.instantiateViewController(withIdentifier: "webViewId") as! WebViewController
+                    webViewVc.webViewUrl = offerUrl
+                    webViewVc.titleString = NSLocalizedString("WEBVIEW_TITLE", comment: "WEBVIEW_TITLE  in the Webview")
+                    self.present(webViewVc, animated: false, completion: nil)
+                }
+            }
+        }
+    }
     func showLocationErrorPopup() {
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self

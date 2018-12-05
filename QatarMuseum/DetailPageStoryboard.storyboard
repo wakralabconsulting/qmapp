@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,22 +27,22 @@
                         <viewControllerLayoutGuide type="bottom" id="AEO-l0-vMp"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ptq-QW-HYO">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="1182"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="1355"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gC4-Ir-SsL">
-                                <rect key="frame" x="0.0" y="20" width="414" height="1162"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="1335"/>
                                 <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="heritageDetailCellId2" rowHeight="1162" id="Akh-2R-i7o" customClass="MuseumAboutCell" customModule="QatarMuseums" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="1" width="414" height="1162"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="heritageDetailCellId2" rowHeight="1334" id="Akh-2R-i7o" customClass="MuseumAboutCell" customModule="QatarMuseums" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="1" width="414" height="1334"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Akh-2R-i7o" id="fSg-hC-xN3">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="1162"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="1334"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1lx-cw-fLc">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="1162"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="1434"/>
                                                     <subviews>
                                                         <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="znO-IB-LbI">
                                                             <rect key="frame" x="187.66666666666666" y="0.0" width="39" height="20"/>
@@ -169,7 +169,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DsF-np-ZdL">
-                                                            <rect key="frame" x="15" y="318.66666666666674" width="384" height="734"/>
+                                                            <rect key="frame" x="15" y="318.66666666666674" width="384" height="906"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IG7-Mi-k82">
                                                                     <rect key="frame" x="0.0" y="0.0" width="384" height="185"/>
@@ -240,6 +240,9 @@
                                                                                     <integer key="value" value="25"/>
                                                                                 </userDefinedRuntimeAttribute>
                                                                             </userDefinedRuntimeAttributes>
+                                                                            <connections>
+                                                                                <action selector="didTapClaimOffer:" destination="Akh-2R-i7o" eventType="touchUpInside" id="gzr-wx-gxh"/>
+                                                                            </connections>
                                                                         </button>
                                                                     </subviews>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -281,7 +284,6 @@
                                                                 </view>
                                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eUH-lb-eDo">
                                                                     <rect key="frame" x="25" y="450.99999999999994" width="334" height="34"/>
-                                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="15"/>
                                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                 </textView>
@@ -396,6 +398,7 @@
                                                                 <constraint firstAttribute="trailing" secondItem="IG7-Mi-k82" secondAttribute="trailing" id="ItW-dJ-R8j"/>
                                                                 <constraint firstItem="4fK-U9-TFx" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DsF-np-ZdL" secondAttribute="leading" constant="25" id="Kv1-yZ-yp4"/>
                                                                 <constraint firstItem="qa0-nk-rek" firstAttribute="leading" secondItem="DsF-np-ZdL" secondAttribute="leading" id="Lbf-gE-N6U"/>
+                                                                <constraint firstAttribute="bottom" secondItem="ZSR-Lu-lsl" secondAttribute="bottom" constant="22" id="OEL-ZU-3qc"/>
                                                                 <constraint firstItem="xOc-VW-Qtf" firstAttribute="top" secondItem="aXK-nl-XNw" secondAttribute="bottom" constant="9" id="OdL-sB-3NK"/>
                                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="4fK-U9-TFx" secondAttribute="trailing" constant="25" id="OfI-bJ-fRE"/>
                                                                 <constraint firstItem="cNV-Hg-bLd" firstAttribute="centerX" secondItem="y91-ye-xUv" secondAttribute="centerX" id="OqN-yv-G2z"/>
@@ -421,7 +424,6 @@
                                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ZSR-Lu-lsl" secondAttribute="trailing" constant="12" id="npq-XM-HYB"/>
                                                                 <constraint firstItem="aXK-nl-XNw" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DsF-np-ZdL" secondAttribute="leading" constant="20" id="q7P-q0-IAd"/>
                                                                 <constraint firstItem="01t-4J-Snn" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DsF-np-ZdL" secondAttribute="leading" constant="20" id="qRe-pV-pkT"/>
-                                                                <constraint firstAttribute="bottom" secondItem="ZSR-Lu-lsl" secondAttribute="bottom" constant="50" id="sSQ-ZP-LWb"/>
                                                                 <constraint firstItem="y91-ye-xUv" firstAttribute="top" secondItem="qa0-nk-rek" secondAttribute="bottom" constant="20" id="slP-Hy-z5Q"/>
                                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fBT-Ut-cGZ" secondAttribute="trailing" constant="20" id="tDX-Mb-xTm"/>
                                                                 <constraint firstItem="hqM-56-omt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DsF-np-ZdL" secondAttribute="leading" constant="12" id="viG-zV-uQg"/>
@@ -435,7 +437,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
                                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xbK-Dh-95S">
-                                                            <rect key="frame" x="0.0" y="1065" width="207" height="77"/>
+                                                            <rect key="frame" x="0.0" y="1237" width="207" height="77"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pqb-39-KdR">
                                                                     <rect key="frame" x="141" y="15" width="46" height="46"/>
@@ -457,7 +459,7 @@
                                                             </constraints>
                                                         </view>
                                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FWa-7w-ZOM">
-                                                            <rect key="frame" x="207" y="1065" width="207" height="77"/>
+                                                            <rect key="frame" x="207" y="1237" width="207" height="77"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sZg-6G-Zgc">
                                                                     <rect key="frame" x="20" y="16" width="46" height="46"/>
@@ -488,7 +490,7 @@
                                                         <constraint firstItem="znO-IB-LbI" firstAttribute="centerX" secondItem="1lx-cw-fLc" secondAttribute="centerX" id="UpA-FS-f1S"/>
                                                         <constraint firstAttribute="trailing" secondItem="FWa-7w-ZOM" secondAttribute="trailing" id="Whq-84-Ooz"/>
                                                         <constraint firstItem="xbK-Dh-95S" firstAttribute="top" secondItem="DsF-np-ZdL" secondAttribute="bottom" constant="12.333333333333258" id="dJa-bE-h3b"/>
-                                                        <constraint firstAttribute="bottom" secondItem="FWa-7w-ZOM" secondAttribute="bottom" constant="20" id="dWO-bE-2Fm"/>
+                                                        <constraint firstAttribute="bottom" secondItem="FWa-7w-ZOM" secondAttribute="bottom" constant="120" id="dWO-bE-2Fm"/>
                                                         <constraint firstItem="DsF-np-ZdL" firstAttribute="trailing" secondItem="J58-nk-sCF" secondAttribute="trailing" id="fIu-ke-5p4"/>
                                                         <constraint firstItem="FWa-7w-ZOM" firstAttribute="width" secondItem="xbK-Dh-95S" secondAttribute="width" id="k5W-GZ-XXJ"/>
                                                         <constraint firstItem="FWa-7w-ZOM" firstAttribute="height" secondItem="xbK-Dh-95S" secondAttribute="height" id="l3x-Xb-JDY"/>
@@ -502,7 +504,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="1lx-cw-fLc" secondAttribute="trailing" id="6SJ-Od-1hv"/>
                                                 <constraint firstItem="1lx-cw-fLc" firstAttribute="leading" secondItem="fSg-hC-xN3" secondAttribute="leading" id="YyN-cA-crp"/>
-                                                <constraint firstAttribute="bottom" secondItem="1lx-cw-fLc" secondAttribute="bottom" id="ojO-ve-apu"/>
+                                                <constraint firstAttribute="bottom" secondItem="1lx-cw-fLc" secondAttribute="bottom" constant="-100" id="ojO-ve-apu"/>
                                                 <constraint firstItem="1lx-cw-fLc" firstAttribute="top" secondItem="fSg-hC-xN3" secondAttribute="top" id="uwZ-DL-Gei"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -521,6 +523,7 @@
                                             <outlet property="downloadViewHeight" destination="80l-P2-3Kg" id="JN9-cb-fCe"/>
                                             <outlet property="favoriteBtnViewHeight" destination="3TV-T0-Foz" id="i1k-wN-wBH"/>
                                             <outlet property="favoriteButton" destination="Pqb-39-KdR" id="5WE-FS-vHg"/>
+                                            <outlet property="favouriteView" destination="xbK-Dh-95S" id="zhU-36-Wdh"/>
                                             <outlet property="fridayLabel" destination="01t-4J-Snn" id="AMc-2F-htG"/>
                                             <outlet property="fridayTimeLabel" destination="4fK-U9-TFx" id="uar-kL-uZ6"/>
                                             <outlet property="locationButton" destination="hqM-56-omt" id="Ogi-8C-v3A"/>
@@ -528,6 +531,7 @@
                                             <outlet property="locationFirstLabelHeight" destination="JNw-y6-r5V" id="jlf-kB-SyY"/>
                                             <outlet property="locationLine" destination="hSu-dr-bze" id="A3x-5i-Hfg"/>
                                             <outlet property="locationTitleLabel" destination="fBT-Ut-cGZ" id="fwz-D8-Zwy"/>
+                                            <outlet property="mainView" destination="DsF-np-ZdL" id="trQ-R0-kfY"/>
                                             <outlet property="mapOverlayView" destination="DSB-CZ-BAS" id="7aN-U8-Qh8"/>
                                             <outlet property="mapView" destination="dGv-dr-SC8" id="eQ4-IK-Ocm"/>
                                             <outlet property="mapViewHeight" destination="W1w-lY-qc3" id="T5T-0A-jfb"/>
@@ -557,7 +561,7 @@
                                 </connections>
                             </tableView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="itZ-hc-c8t" customClass="LoadingView" customModule="QatarMuseums" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="20" width="414" height="1162"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="1335"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
@@ -573,7 +577,7 @@
                         </constraints>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="414" height="1182"/>
+                    <size key="freeformSize" width="414" height="1355"/>
                     <connections>
                         <outlet property="heritageDetailTableView" destination="gC4-Ir-SsL" id="Yb2-6w-scr"/>
                         <outlet property="loadingView" destination="itZ-hc-c8t" id="NQc-lh-yJ9"/>
@@ -731,7 +735,7 @@
                     </connections>
                 </view>
             </objects>
-            <point key="canvasLocation" x="5426.0869565217399" y="176.9021739130435"/>
+            <point key="canvasLocation" x="5426.0869565217399" y="176.49456521739131"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="Vdj-98-XRc">
