@@ -30,9 +30,16 @@ class PanelDetailCell: UITableViewCell {
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var secondView: UIView!
     @IBOutlet weak var thirdView: UIView!
-    
     @IBOutlet weak var secondTitleLine: UILabel!
+    @IBOutlet weak var mapOverlayView: UIView!
+    
+    @IBOutlet weak var contactTitleLine: UILabel!
+    var loadMapView : (()->())?
+
     override func awakeFromNib() {
+        setUI()
+    }
+    func setUI() {
         topTitle.font = UIFont.selfGuidedFont
         topDescription.font = UIFont.collectionFirstDescriptionFont
         interestedLabel.font = UIFont.collectionFirstDescriptionFont
@@ -51,23 +58,78 @@ class PanelDetailCell: UITableViewCell {
         topView.clipsToBounds = true
         secondView.clipsToBounds = true
         thirdView.clipsToBounds = true
-
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
+        tap.delegate = self // This is not required
+        mapOverlayView.addGestureRecognizer(tap)
     }
-    func setPanelDetailCellContent(titleName: String?) {
-        topImg.image = UIImage(named: "panel_discussion-1")
-        topTitle.text = titleName
-        topDescription.text = "This discussion is going to be about the grandeur and originality of Qatari Songs. The speakers will also demonstrate the various songs and the musical instruments used to create the songs."
-        interestedLabel.text = "Interested"
-        notInterestedLabel.text = "Not Interested"
-        secondImg.image = UIImage(named: "panelDetail2")
-        secondTitle.text = "Name of the Speaker"
-        secondDescription.text = "Information of the Speaker. Information of the Speaker. Information of the Speaker."
+    func setPanelDetailCellContent(panelDetailData: NMoQTour?) {
+        topTitle.text = panelDetailData?.title
+        topDescription.text = panelDetailData?.dayDescription
+        interestedLabel.text = "Registered"
+        notInterestedLabel.text = "Not Registered"
+        secondTitle.text = panelDetailData?.moderatorName
+        secondDescription.text = panelDetailData?.descriptioForModerator
         dateTitle.text = NSLocalizedString("DATE", comment: "DATE in Paneldetail Page")
-        dateText.text = "28 March 2019"
+        dateText.text = changeDateFormat(dateString: panelDetailData?.eventDate)
         venueTitle.text = NSLocalizedString("VENUE", comment: "VENUE in Paneldetail Page")
-        contactTitle.text = NSLocalizedString("CONTACT_TITLE", comment: "CONTACT_TITLE in Paneldetail Page")
-        contactNumberLabel.text = "+97444525555"
-        contactEmailLabel.text = "info@qm.org.qa"
+        if ((panelDetailData?.contactPhone != nil) && (panelDetailData?.contactPhone != "") || (panelDetailData?.contactEmail != nil) && (panelDetailData?.contactEmail != "")) {
+            contactTitle.text = NSLocalizedString("CONTACT_TITLE", comment: "CONTACT_TITLE in Paneldetail Page")
+            contactTitleLine.isHidden = false
+        } else {
+            contactTitleLine.isHidden = true
+        }
+    
+        contactNumberLabel.text = panelDetailData?.contactPhone
+        contactEmailLabel.text = panelDetailData?.contactEmail
+        if ((panelDetailData?.images?.count)! > 1) {
+            if let imageUrl = panelDetailData?.images![0]{
+                topImg.kf.setImage(with: URL(string: imageUrl))
+            } else {
+                topImg.image = UIImage(named: "default_imageX2")
+            }
+            if let imageUrl = panelDetailData?.images![1]{
+                secondImg.kf.setImage(with: URL(string: imageUrl))
+            } else {
+                secondImg.image = UIImage(named: "default_imageX2")
+            }
+        } else if ((panelDetailData?.images?.count)! > 0) {
+            if let imageUrl = panelDetailData?.images![0]{
+                topImg.kf.setImage(with: URL(string: imageUrl))
+            } else {
+                topImg.image = UIImage(named: "default_imageX2")
+            }
+            secondImg.image = UIImage(named: "default_imageX2")
+        }
+        
+        //Details For Map
+        var latitudeString  = String()
+        var longitudeString = String()
+        var latitude : Double?
+        var longitude : Double?
+        
+        if (panelDetailData?.mobileLatitude != nil && panelDetailData?.mobileLatitude != "" && panelDetailData?.longitude != nil && panelDetailData?.longitude != "") {
+            latitudeString = (panelDetailData?.mobileLatitude)!
+            longitudeString = (panelDetailData?.longitude)!
+            if let lat : Double = Double(latitudeString) {
+                latitude = lat
+            }
+            if let long : Double = Double(longitudeString) {
+                longitude = long
+            }
+            
+            let location = CLLocationCoordinate2D(latitude: latitude!,
+                                                  longitude: longitude!)
+            
+            // 2
+            let span = MKCoordinateSpanMake(0.05, 0.05)
+            let region = MKCoordinateRegion(center: location, span: span)
+            mapView.setRegion(region, animated: true)
+            //3
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = location
+            mapView.addAnnotation(annotation)
+        }
         
     }
     func setTourSecondDetailCellContent(titleName: String?) {
@@ -95,5 +157,9 @@ class PanelDetailCell: UITableViewCell {
         // activate the constraints
         NSLayoutConstraint.activate([verticalSpace])
         
+    }
+
+    @objc func handleTap(sender: UITapGestureRecognizer? = nil) {
+        self.loadMapView?()
     }
 }

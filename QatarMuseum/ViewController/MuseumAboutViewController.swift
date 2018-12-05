@@ -320,7 +320,9 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
         
         let mapDetailView = detailStoryboard.instantiateViewController(withIdentifier: "mapViewId") as! MapViewController
-        mapDetailView.aboutData = aboutDetailtArray[0]
+       // mapDetailView.aboutData = aboutDetailtArray[0]
+        mapDetailView.latitudeString = aboutDetailtArray[0].mobileLatitude
+        mapDetailView.longiudeString = aboutDetailtArray[0].mobileLongtitude
         mapDetailView.destination = destination
         let transition = CATransition()
         transition.duration = 0.3

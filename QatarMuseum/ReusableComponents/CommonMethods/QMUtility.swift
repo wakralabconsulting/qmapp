@@ -114,6 +114,17 @@ func showAlertView(title: String ,message: String, viewController : UIViewContro
     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
     viewController.present(alert, animated: true, completion: nil)
 }
+func changeDateFormat(dateString: String?) -> String? {
+    if (dateString != nil) {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "dd/MM/yyyy"
+        let showDate = inputFormatter.date(from: dateString!)
+        inputFormatter.dateFormat = "dd MMMM yyyy"
+        let resultString = inputFormatter.string(from: showDate!)
+        return resultString
+    }
+    return nil
+}
 
 func getContext() -> NSManagedObjectContext {
     let appDelegate =  UIApplication.shared.delegate as? AppDelegate

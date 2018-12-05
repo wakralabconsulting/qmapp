@@ -243,13 +243,13 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                     museumsCell.itemNameSecondLine.text = itemNameArray?[1]
                 }
             }
-            else if((itemName == "Panel Discussion") || (itemName == "")) {
+            else if(itemName == "Special Events")  {
                 museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
-                let itemNameArray = itemName?.components(separatedBy: " ")
-                if((itemNameArray?.count)! > 0) {
-                    museumsCell.itemName.text = itemNameArray?[0]
-                    museumsCell.itemNameSecondLine.text = itemNameArray?[1]
-                }
+//                let itemNameArray = itemName?.components(separatedBy: " ")
+//                if((itemNameArray?.count)! > 0) {
+//                    museumsCell.itemName.text = itemNameArray?[0]
+//                    museumsCell.itemNameSecondLine.text = itemNameArray?[1]
+//                }
             }
         } else {
             if((itemName == "Tour Guide") || (itemName == "الدليل السياحي")) {
@@ -342,7 +342,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 view.window!.layer.add(transition, forKey: kCATransition)
                 self.present(travelView, animated: false, completion: nil)
             }
-            else if (selectedItem == "Panel Discussion") {
+            else if (selectedItem == "Special Events") {
                 let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "tourAndPanelId") as! TourAndPanelListViewController
                 panelView.pageNameString = NMoQPageName.PanelDiscussion
                 let transition = CATransition()

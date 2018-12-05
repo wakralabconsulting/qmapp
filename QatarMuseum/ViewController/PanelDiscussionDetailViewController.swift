@@ -6,6 +6,8 @@
 //  Copyright © 2018 Wakralab. All rights reserved.
 //
 
+import Alamofire
+import MapKit
 import UIKit
 enum NMoQPanelPage {
     case PanelDetailPage
@@ -18,6 +20,8 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     @IBOutlet weak var headerView: CommonHeaderView!
     var panelTitle : String? = ""
     var pageNameString : NMoQPanelPage?
+    var panelDetailId : String? = nil
+    var nmoqSpecialEventDetail: [NMoQTour]! = []
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCell()
@@ -35,6 +39,9 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         
             headerView.headerBackButton.setImage(UIImage(named: "closeX1"), for: .normal)
             headerView.headerBackButton.contentEdgeInsets = UIEdgeInsets(top:12, left:17, bottom: 12, right:17)
+        if (pageNameString == NMoQPanelPage.PanelDetailPage) {
+            getNMoQSpecialEventDetail()
+        }
         
     }
     func registerCell() {
@@ -42,7 +49,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(pageNameString == NMoQPanelPage.PanelDetailPage) {
-            return 1
+            return nmoqSpecialEventDetail.count
         } else {
             return 1
         }
@@ -54,7 +61,28 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         let cell = tableView.dequeueReusableCell(withIdentifier: "panelCellID", for: indexPath) as! PanelDetailCell
         cell.selectionStyle = .none
         if(pageNameString == NMoQPanelPage.PanelDetailPage) {
-            cell.setPanelDetailCellContent(titleName: panelTitle)
+            cell.setPanelDetailCellContent(panelDetailData: nmoqSpecialEventDetail[indexPath.row])
+            cell.loadMapView = {
+                () in
+                if (self.nmoqSpecialEventDetail[indexPath.row].mobileLatitude != nil && self.nmoqSpecialEventDetail[indexPath.row].mobileLatitude != "" && self.nmoqSpecialEventDetail[indexPath.row].longitude != nil && self.nmoqSpecialEventDetail[indexPath.row].longitude != "") {
+                    let latitudeString = (self.nmoqSpecialEventDetail[indexPath.row].mobileLatitude)!
+                    let longitudeString = (self.nmoqSpecialEventDetail[indexPath.row].longitude)!
+                    var latitude : Double?
+                    var longitude : Double?
+                    if let lat : Double = Double(latitudeString) {
+                        latitude = lat
+                    }
+                    if let long : Double = Double(longitudeString) {
+                        longitude = long
+                    }
+                    
+                    let destinationLocation = CLLocationCoordinate2D(latitude: latitude!,
+                                                                     longitude: longitude!)
+                    let destinationPlacemark = MKPlacemark(coordinate: destinationLocation, addressDictionary: nil)
+                    let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
+                    self.loadLocationMap(currentRow: indexPath.row, destination: destinationMapItem)
+                }
+            }
             
         } else if (pageNameString == NMoQPanelPage.TourDetailPage){
             cell.setTourSecondDetailCellContent(titleName: panelTitle)
@@ -67,6 +95,21 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         } else {
             return UITableViewAutomaticDimension
         }
+    }
+    func loadLocationMap(currentRow: Int, destination: MKMapItem) {
+        let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
+        
+        let mapDetailView = detailStoryboard.instantiateViewController(withIdentifier: "mapViewId") as! MapViewController
+        mapDetailView.latitudeString = nmoqSpecialEventDetail[currentRow].mobileLatitude
+        mapDetailView.latitudeString = nmoqSpecialEventDetail[currentRow].longitude
+        mapDetailView.destination = destination
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionFade
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(mapDetailView, animated: false, completion: nil)
+        
     }
     func headerCloseButtonPressed() {
         let transition = CATransition()
@@ -98,7 +141,28 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
     }
-    
+    func getNMoQSpecialEventDetail() {
+        if(panelDetailId != nil) {
+            _ = Alamofire.request(QatarMuseumRouter.GetNMoQSpecialEventDetail(["event_id" : panelDetailId!])).responseObject { (response: DataResponse<NMoQTourList>) -> Void in
+                switch response.result {
+                case .success(let data):
+                    self.nmoqSpecialEventDetail = data.nmoqTourList
+                    //self.saveOrUpdateHomeCoredata()
+                    self.tableView.reloadData()
+                case .failure(let error):
+                    var errorMessage: String
+                    errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                    comment: "Setting the content of the alert"))
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                    self.loadingView.noDataLabel.text = errorMessage
+                }
+            }
+        }
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
