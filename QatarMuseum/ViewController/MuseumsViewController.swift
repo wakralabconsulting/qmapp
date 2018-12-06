@@ -315,7 +315,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
 
                 let heritageDtlView = detailStoryboard.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
                 heritageDtlView.pageNameString = PageName2.museumEvent
-                heritageDtlView.aboutBannerId = bannerId
+                heritageDtlView.museumId = bannerId
 
                 let transition = CATransition()
                 transition.duration = 0.3

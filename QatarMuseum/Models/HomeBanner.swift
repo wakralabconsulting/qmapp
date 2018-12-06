@@ -35,12 +35,12 @@ struct HomeBanner: ResponseObjectSerializable, ResponseCollectionSerializable {
         }
     }
     
-//    init (title:String?, fullContentID: String?, bannerTitle: String?, bannerLink: String?) {
-//        self.title = title
-//        self.fullContentID = fullContentID
-//        self.bannerTitle = bannerTitle
-//        self.bannerLink = bannerLink
-//    }
+    init (title:String?, fullContentID: String?, bannerTitle: String?, bannerLink: String?,introductionText:String?, email: String?, contactNumber: String?, promotionalCode: String?,claimOffer: String?) {
+        self.title = title
+        self.fullContentID = fullContentID
+        self.bannerTitle = bannerTitle
+        self.bannerLink = bannerLink
+    }
 }
 
 struct HomeBannerList: ResponseObjectSerializable {

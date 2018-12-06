@@ -29,23 +29,28 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
     func setExhibitionCellValues(exhibition: Exhibition) {
         titleLabel.text = exhibition.name?.uppercased()
         //Hide Date and Location from Exhibition List page.
-        //dateLabel.text = ((exhibition.startDate?.uppercased())!).replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil) + " - " + ((exhibition.endDate?.uppercased())!).replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+        dateLabel.text = ((exhibition.startDate?.uppercased())!).replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil) + " - " + ((exhibition.endDate?.uppercased())!).replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
         //addressLabel.text = exhibition.location?.uppercased()
         titleLabel.font = UIFont.heritageTitleFont
-        dateLabel.font = UIFont.exhibitionDateLabelFont
+        dateLabel.font = UIFont.downloadLabelFont
         addressLabel.font = UIFont.exhibitionDateLabelFont
         if (exhibition.isFavourite == true) {
             favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
         } else {
             favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
         }
-        if (exhibition.isOpen == true) {
+        openCloseView.isHidden = false
+        openCloseLabel.isHidden = false
+        openCloseLabel.font = UIFont.closeButtonFont
+        if (exhibition.status == "Now open") {
             openCloseView.backgroundColor = UIColor.yellow
-            openCloseLabel.text = NSLocalizedString("NOW_OPEN_TITLE", comment: "NOW_OPEN_TITLE in the exhibition page")
+            //openCloseLabel.text = NSLocalizedString("NOW_OPEN_TITLE", comment: "NOW_OPEN_TITLE in the exhibition page")
+            openCloseLabel.text = exhibition.status
             openCloseLabel.textColor = UIColor.black
         } else {
             openCloseView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.45)
-            openCloseLabel.text = NSLocalizedString("CLOSED_TITLE", comment: "CLOSED_TITLE in the exhibition page")
+            //openCloseLabel.text = NSLocalizedString("CLOSED_TITLE", comment: "CLOSED_TITLE in the exhibition page")
+            openCloseLabel.text = exhibition.status
             openCloseLabel.textColor = UIColor.white
         }
         if let imageUrl = exhibition.image {
@@ -60,17 +65,17 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
     //MARK: MuseumExhibitionList data
     func setMuseumExhibitionCellValues(exhibition: Exhibition) {
         titleLabel.text = exhibition.name?.uppercased()
-        dateLabel.text = (exhibition.startDate?.uppercased())! + " - " + (exhibition.endDate?.uppercased())!
+        dateLabel.text = ((exhibition.startDate?.uppercased())!).replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil) + " - " + ((exhibition.endDate?.uppercased())!).replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
         addressLabel.text = exhibition.location?.uppercased()
         titleLabel.font = UIFont.heritageTitleFont
-        dateLabel.font = UIFont.exhibitionDateLabelFont
+        dateLabel.font = UIFont.downloadLabelFont
         addressLabel.font = UIFont.exhibitionDateLabelFont
         if (exhibition.isFavourite == true) {
             favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
         } else {
             favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
         }
-        if (exhibition.isOpen == true) {
+        if (exhibition.status == "Now open") {
             openCloseView.backgroundColor = UIColor.yellow
             openCloseLabel.text = NSLocalizedString("NOW_OPEN_TITLE", comment: "NOW_OPEN_TITLE in the exhibition page")
             openCloseLabel.textColor = UIColor.black

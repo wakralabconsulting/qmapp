@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="17C88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17C88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="AboutDescriptionEntity" representedClassName="AboutDescriptionEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="mobileDesc" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="mobileDescRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AboutEntity" syncable="YES"/>
     </entity>
     <entity name="AboutDescriptionEntityAr" representedClassName="AboutDescriptionEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="mobileDesc" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="mobileDescRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AboutEntityArabic" syncable="YES"/>
     </entity>
@@ -264,6 +266,7 @@
         <attribute name="museumId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="startDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="ExhibitionsEntityArabic" representedClassName="ExhibitionsEntityArabic" syncable="YES" codeGenerationType="class">
         <attribute name="detailendDateAr" optional="YES" attributeType="String" syncable="YES"/>
@@ -282,6 +285,7 @@
         <attribute name="museumId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nameArabic" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="startDateArabic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="FloorMapImagesEntity" representedClassName="FloorMapImagesEntity" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
@@ -377,6 +381,12 @@
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="imagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HeritageEntityArabic" syncable="YES"/>
     </entity>
+    <entity name="HomeBannerEntity" representedClassName="HomeBannerEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="bannerLink" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bannerTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fullContentID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="HomeEntity" representedClassName="HomeEntity" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
@@ -464,8 +474,8 @@
         <relationship name="tourGuideMultimediaRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TourGuideEntityAr" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AboutDescriptionEntity" positionX="-27" positionY="135" width="128" height="75"/>
-        <element name="AboutDescriptionEntityAr" positionX="-18" positionY="144" width="128" height="75"/>
+        <element name="AboutDescriptionEntity" positionX="-27" positionY="135" width="128" height="90"/>
+        <element name="AboutDescriptionEntityAr" positionX="-18" positionY="144" width="128" height="90"/>
         <element name="AboutEntity" positionX="-36" positionY="135" width="128" height="225"/>
         <element name="AboutEntityArabic" positionX="-27" positionY="144" width="128" height="270"/>
         <element name="AboutMultimediaFileEntity" positionX="-9" positionY="135" width="128" height="75"/>
@@ -502,8 +512,8 @@
         <element name="EventStartDateEntityAr" positionX="9" positionY="153" width="128" height="75"/>
         <element name="EventTopicsEntity" positionX="9" positionY="171" width="128" height="75"/>
         <element name="EventTopicsEntityAr" positionX="18" positionY="180" width="128" height="75"/>
-        <element name="ExhibitionsEntity" positionX="-54" positionY="108" width="128" height="285"/>
-        <element name="ExhibitionsEntityArabic" positionX="-45" positionY="126" width="128" height="285"/>
+        <element name="ExhibitionsEntity" positionX="-54" positionY="108" width="128" height="300"/>
+        <element name="ExhibitionsEntityArabic" positionX="-45" positionY="126" width="128" height="300"/>
         <element name="FloorMapImagesEntity" positionX="0" positionY="144" width="128" height="75"/>
         <element name="FloorMapImagesEntityAr" positionX="18" positionY="162" width="128" height="75"/>
         <element name="FloorMapTourGuideEntity" positionX="-9" positionY="135" width="128" height="420"/>
@@ -526,5 +536,6 @@
         <element name="TourGuideEntityAr" positionX="0" positionY="144" width="128" height="120"/>
         <element name="TourGuideMultimediaEntity" positionX="9" positionY="153" width="128" height="75"/>
         <element name="TourGuideMultimediaEntityAr" positionX="18" positionY="162" width="128" height="75"/>
+        <element name="HomeBannerEntity" positionX="-9" positionY="135" width="128" height="105"/>
     </elements>
 </model>
