@@ -211,14 +211,20 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         culturePassLabel.font = UIFont.exhibitionDateLabelFont
         giftShopLabel.font = UIFont.exhibitionDateLabelFont
         diningLabel.font = UIFont.exhibitionDateLabelFont
-        if(UserDefaults.standard.value(forKey: "firstTimeLaunch") as? String == nil) {
-           loadLoginPopup()
-            UserDefaults.standard.set("false", forKey: "firstTimeLaunch")
-        } else {
-            if (networkReachability?.isReachable)! {
-                getHomeBanner()
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            if(UserDefaults.standard.value(forKey: "firstTimeLaunch") as? String == nil) {
+                if (networkReachability?.isReachable)! {
+                    loadLoginPopup()
+                    UserDefaults.standard.set("false", forKey: "firstTimeLaunch")
+                } else {
+                    showNoNetwork()
+                }
             } else {
-                
+                if (networkReachability?.isReachable)! {
+                    getHomeBanner()
+                } else {
+                    fetchHomeBannerInfoFromCoredata()
+                }
             }
         }
     }
@@ -419,6 +425,10 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 self.homeBannerList = data.homeBannerList
                 if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")  && (self.homeBannerList.count > 0)) {
                     //self.setTopImageUI()
+                    
+                }
+                if(self.homeBannerList.count > 0) {
+                    self.saveOrUpdateHomeBannerCoredata()
                 }
                 self.homeCollectionView.reloadData()
                 print(self.homeBannerList)
@@ -747,12 +757,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            let fetchData = checkAddedToCoredata(entityName: "HomeEntity", homeId: nil, managedContext: managedContext) as! [HomeEntity]
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "HomeEntity", idKey: "id", idValue: nil, managedContext: managedContext) as! [HomeEntity]
             if (fetchData.count > 0) {
                 for i in 0 ... homeList.count-1 {
                     let homeListDict = homeList[i]
-                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntity", homeId: homeList[i].id, managedContext: managedContext)
+                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntity", idKey: "id", idValue: homeList[i].id, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
                         let homedbDict = fetchResult[0] as! HomeEntity
@@ -780,12 +790,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 }
             }
         } else {
-            let fetchData = checkAddedToCoredata(entityName: "HomeEntityArabic", homeId: nil, managedContext: managedContext) as! [HomeEntityArabic]
+            let fetchData = checkAddedToCoredata(entityName: "HomeEntityArabic", idKey: "id", idValue: nil, managedContext: managedContext) as! [HomeEntityArabic]
             if (fetchData.count > 0) {
                 for i in 0 ... homeList.count-1 {
                     let homeListDict = homeList[i]
                     
-                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntityArabic", homeId: homeList[i].id, managedContext: managedContext)
+                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntityArabic", idKey: "id", idValue: homeList[i].id, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
                         let homedbDict = fetchResult[0] as! HomeEntityArabic
@@ -884,13 +894,124 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         }
     }
     
-    func checkAddedToCoredata(entityName: String?, homeId: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
-        var fetchResults : [NSManagedObject] = []
-        let homeFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
-        if (homeId != nil) {
-            homeFetchRequest.predicate = NSPredicate.init(format: "id == \(homeId!)")
+    //MARK: HomeBanner CoreData
+    func saveOrUpdateHomeBannerCoredata() {
+        if (homeBannerList.count > 0) {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.homeBannerCoreDataInBackgroundThread(managedContext: managedContext)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.homeBannerCoreDataInBackgroundThread(managedContext : managedContext)
+                }
+            }
         }
-        fetchResults = try! managedContext.fetch(homeFetchRequest)
+    }
+    func homeBannerCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "HomeBannerEntity", idKey: "fullContentID", idValue: nil, managedContext: managedContext) as! [HomeBannerEntity]
+            let homeListDict = homeBannerList[0]
+            if (fetchData.count > 0) {
+                
+                let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "HomeBannerEntity")
+                if(isDeleted == true) {
+                    //self.saveToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
+                    self.saveHomeBannerToCoreData(homeListDict: homeListDict, managedObjContext: managedContext)
+                }
+                //for i in 0 ... homeBannerList.count-1 {
+//                    let homeListDict = homeBannerList[i]
+//                    let fetchResult = checkAddedToCoredata(entityName: "HomeBannerEntity", idKey: "fullContentID", idValue: homeBannerList[i].fullContentID, managedContext: managedContext)
+                    //update
+//                    if(fetchResult.count != 0) {
+//                        let homedbDict = fetchResult[0] as! HomeBannerEntity
+//                        homedbDict.title = homeListDict.title
+//                        homedbDict.fullContentID = homeListDict.fullContentID
+//                        homedbDict.bannerTitle =  homeListDict.bannerTitle
+//                        homedbDict.bannerLink = homeListDict.bannerLink
+//
+//                        do{
+//                            try managedContext.save()
+//                        }
+//                        catch{
+//                            print(error)
+//                        }
+                    } else {
+                        //save
+                        self.saveHomeBannerToCoreData(homeListDict: homeListDict, managedObjContext: managedContext)
+                    }
+                //}
+//            } else {
+//                for i in 0 ... homeBannerList.count-1 {
+//                    let homeListDict : HomeBanner?
+//                    homeListDict = homeBannerList[i]
+//                    self.saveHomeBannerToCoreData(homeListDict: homeListDict!, managedObjContext: managedContext)
+//                }
+//            }
+        }
+    }
+    func saveHomeBannerToCoreData(homeListDict: HomeBanner, managedObjContext: NSManagedObjectContext) {
+            let homeInfo: HomeBannerEntity = NSEntityDescription.insertNewObject(forEntityName: "HomeBannerEntity", into: managedObjContext) as! HomeBannerEntity
+            homeInfo.title = homeListDict.title
+            homeInfo.fullContentID = homeListDict.fullContentID
+            homeInfo.bannerTitle = homeListDict.bannerTitle
+            homeInfo.bannerLink = homeListDict.bannerLink
+        do {
+            try managedObjContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    func fetchHomeBannerInfoFromCoredata() {
+        let managedContext = getContext()
+        do {
+            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                var homeArray = [HomeBannerEntity]()
+                let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeBannerEntity")
+                homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeBannerEntity])!
+                if (homeArray.count > 0) {
+                    for i in 0 ... homeArray.count-1 {
+                        self.homeBannerList.insert(HomeBanner(title: homeArray[i].title, fullContentID: homeArray[i].fullContentID, bannerTitle: homeArray[i].bannerTitle, bannerLink: homeArray[i].bannerLink, introductionText: nil, email: nil, contactNumber: nil, promotionalCode: nil, claimOffer: nil), at: i)
+                    }
+                    if(homeList.count == 0){
+                        self.showNoNetwork()
+                    }
+                    homeCollectionView.reloadData()
+                } else{
+                    self.showNoNetwork()
+                }
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    func deleteExistingEvent(managedContext:NSManagedObjectContext,entityName : String?) ->Bool? {
+        
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName!)
+       // fetchRequest.predicate = NSPredicate.init(format: "\("dateId") == \(dateID!)")
+        let deleteRequest = NSBatchDeleteRequest( fetchRequest: fetchRequest)
+        do{
+            try managedContext.execute(deleteRequest)
+            return true
+        }catch let error as NSError {
+            //handle error here
+            return false
+        }
+        
+    }
+    
+    func checkAddedToCoredata(entityName: String?, idKey:String?, idValue: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
+        var fetchResults : [NSManagedObject] = []
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
+        if (idValue != nil) {
+           // homeFetchRequest.predicate = NSPredicate.init(format: "id == \(homeId!)")
+            fetchRequest.predicate = NSPredicate(format: "\(idKey!) == %@", idValue!)
+        }
+        fetchResults = try! managedContext.fetch(fetchRequest)
         return fetchResults
     }
     
@@ -914,6 +1035,10 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     func tryAgainButtonPressed() {
         if  (networkReachability?.isReachable)! {
             self.getHomeList()
+            if(UserDefaults.standard.value(forKey: "firstTimeLaunch") as? String == nil) {
+                loadLoginPopup()
+                UserDefaults.standard.set("false", forKey: "firstTimeLaunch")
+            }
         }
     }
     //MARK: Login Details

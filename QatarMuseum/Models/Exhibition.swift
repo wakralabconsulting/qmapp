@@ -9,20 +9,21 @@
 import Foundation
 
 struct Exhibition: ResponseObjectSerializable, ResponseCollectionSerializable {
-    var id: String? = nil
     var name: String? = nil
+    var id: String? = nil
     var image: String? = nil
-    var detailImage: String? = nil
-    var location: String? = nil
-    var latitude: String? = nil
-    var longitude: String? = nil
     var startDate: String? = nil
     var endDate: String? = nil
+    var location: String? = nil
+    var museumId : String? = nil
+
+    var detailImage: String? = nil
+    var latitude: String? = nil
+    var longitude: String? = nil
     var shortDescription: String? = nil
     var longDescription: String? = nil
     var isFavourite : Bool = false
-    var isOpen : Bool = false
-    var museumId : String? = nil
+    var status : String? = nil
 
     public init?(response: HTTPURLResponse, representation: AnyObject) {
         if let representation = representation as? [String: Any] {
@@ -38,9 +39,10 @@ struct Exhibition: ResponseObjectSerializable, ResponseCollectionSerializable {
             self.shortDescription  = representation["Short_description"] as? String
             self.longDescription  = representation["Long_description"] as? String
             self.museumId  = representation["museum_id"] as? String
+            self.status  = representation["Status"] as? String
         }
     }
-    init(id:String?, name:String?, image:String?,detailImage:String?, startDate:String?, endDate:String?, location:String?, latitude:String?, longitude:String?, shortDescription:String?, longDescription:String?, museumId : String?) {
+    init(id:String?, name:String?, image:String?,detailImage:String?, startDate:String?, endDate:String?, location:String?, latitude:String?, longitude:String?, shortDescription:String?, longDescription:String?, museumId : String?, status : String?) {
         self.id = id
         self.name = name
         self.image = image
@@ -53,6 +55,7 @@ struct Exhibition: ResponseObjectSerializable, ResponseCollectionSerializable {
         self.shortDescription = shortDescription
         self.longDescription = longDescription
         self.museumId = museumId
+        self.status = museumId
     }
 }
 

@@ -27,16 +27,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="318" height="178"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BfQ-Vk-GdY">
-                        <rect key="frame" x="12" y="165" width="294" height="0.0"/>
+                        <rect key="frame" x="12" y="160" width="294" height="0.0"/>
                         <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="17"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LBm-nz-pc1">
                         <rect key="frame" x="12" y="165" width="294" height="0.0"/>
-                        <constraints>
-                            <constraint firstAttribute="height" id="sf3-Z7-aIH"/>
-                        </constraints>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -64,10 +61,10 @@
                         </connections>
                     </button>
                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LUd-38-3DW">
-                        <rect key="frame" x="200.5" y="10.5" width="82.5" height="19"/>
+                        <rect key="frame" x="198.5" y="7.5" width="84.5" height="25"/>
                         <subviews>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOW OPEN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j0W-ZI-avy">
-                                <rect key="frame" x="5" y="2" width="72.5" height="15"/>
+                                <rect key="frame" x="6" y="5" width="72.5" height="15"/>
                                 <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -75,14 +72,14 @@
                         </subviews>
                         <color key="backgroundColor" white="0.19061957465277779" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="19" id="7ab-QR-WTa"/>
+                            <constraint firstAttribute="height" constant="25" id="7ab-QR-WTa"/>
                             <constraint firstItem="j0W-ZI-avy" firstAttribute="centerY" secondItem="LUd-38-3DW" secondAttribute="centerY" id="TyX-b4-hwd"/>
-                            <constraint firstItem="j0W-ZI-avy" firstAttribute="leading" secondItem="LUd-38-3DW" secondAttribute="leading" constant="5" id="VMs-YJ-zjC"/>
-                            <constraint firstAttribute="trailing" secondItem="j0W-ZI-avy" secondAttribute="trailing" constant="5" id="zxo-sg-6nc"/>
+                            <constraint firstItem="j0W-ZI-avy" firstAttribute="leading" secondItem="LUd-38-3DW" secondAttribute="leading" constant="6" id="VMs-YJ-zjC"/>
+                            <constraint firstAttribute="trailing" secondItem="j0W-ZI-avy" secondAttribute="trailing" constant="6" id="zxo-sg-6nc"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                <integer key="value" value="5"/>
+                                <integer key="value" value="6"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                         </userDefinedRuntimeAttributes>
@@ -106,7 +103,7 @@
                 <constraint firstItem="vRd-Da-zA7" firstAttribute="trailing" secondItem="LBm-nz-pc1" secondAttribute="trailing" id="obf-Of-3c8"/>
                 <constraint firstAttribute="bottom" secondItem="vRd-Da-zA7" secondAttribute="bottom" constant="13" id="sdq-bU-GfF"/>
                 <constraint firstItem="LBm-nz-pc1" firstAttribute="trailing" secondItem="BfQ-Vk-GdY" secondAttribute="trailing" id="tD3-Ml-iCb"/>
-                <constraint firstItem="LBm-nz-pc1" firstAttribute="top" secondItem="BfQ-Vk-GdY" secondAttribute="bottom" id="tTt-5Q-VKG"/>
+                <constraint firstItem="LBm-nz-pc1" firstAttribute="top" secondItem="BfQ-Vk-GdY" secondAttribute="bottom" constant="5" id="tTt-5Q-VKG"/>
             </constraints>
             <connections>
                 <outlet property="addressLabel" destination="vRd-Da-zA7" id="NfO-Sp-93K"/>
