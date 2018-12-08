@@ -35,6 +35,7 @@ class PanelDetailCell: UITableViewCell {
     
     @IBOutlet weak var contactTitleLine: UILabel!
     var loadMapView : (()->())?
+    var registerOrUnRegisterAction : (()->())?
 
     override func awakeFromNib() {
         setUI()
@@ -198,7 +199,10 @@ class PanelDetailCell: UITableViewCell {
         NSLayoutConstraint.activate([verticalSpace])
         
     }
-
+    @IBAction func didTapRegisterButton(_ sender: UISwitch) {
+        self.registerOrUnRegisterAction?()
+    }
+    
     @objc func handleTap(sender: UITapGestureRecognizer? = nil) {
         self.loadMapView?()
     }

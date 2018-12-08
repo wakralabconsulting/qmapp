@@ -241,6 +241,13 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
                 }
                 
             }
+            let translationsData = userData?.translations["data"] as! NSDictionary
+            if(translationsData != nil) {
+                let arValues = translationsData["ar"] as! NSDictionary
+                if(arValues["entity_id"] != nil) {
+                    UserDefaults.standard.setValue(arValues["entity_id"] as! String , forKey: "loginEntityID")
+                }
+            }
             
         }
         self.loginPopUpView.removeFromSuperview()

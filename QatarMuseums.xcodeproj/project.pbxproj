@@ -80,6 +80,8 @@
 		B816029E215A239900786F94 /* TourGuideFloorMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B816029D215A239900786F94 /* TourGuideFloorMap.swift */; };
 		B81FF06B21AFBA1B006A968B /* NMoHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B81FF06A21AFBA1B006A968B /* NMoHeaderView.xib */; };
 		B81FF06D21AFBA36006A968B /* NMoQHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81FF06C21AFBA36006A968B /* NMoQHeaderCell.swift */; };
+		B8234F4921BA6D3800760DEC /* NMoQUserEventList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8234F4821BA6D3800760DEC /* NMoQUserEventList.swift */; };
+		B8234F4B21BA7D8600760DEC /* NMoQEntityRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8234F4A21BA7D8600760DEC /* NMoQEntityRegistration.swift */; };
 		B82729B021778B2F0017EC71 /* VPlayerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827299721778B2F0017EC71 /* VPlayerLayer.swift */; };
 		B82729B121778B2F0017EC71 /* VPlayerRenderingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827299821778B2F0017EC71 /* VPlayerRenderingView.swift */; };
 		B82729B221778B2F0017EC71 /* VersaPlayerPlaybackDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827299A21778B2F0017EC71 /* VersaPlayerPlaybackDelegate.swift */; };
@@ -340,6 +342,8 @@
 		B816029D215A239900786F94 /* TourGuideFloorMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourGuideFloorMap.swift; sourceTree = "<group>"; };
 		B81FF06A21AFBA1B006A968B /* NMoHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NMoHeaderView.xib; sourceTree = "<group>"; };
 		B81FF06C21AFBA36006A968B /* NMoQHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQHeaderCell.swift; sourceTree = "<group>"; };
+		B8234F4821BA6D3800760DEC /* NMoQUserEventList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQUserEventList.swift; sourceTree = "<group>"; };
+		B8234F4A21BA7D8600760DEC /* NMoQEntityRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQEntityRegistration.swift; sourceTree = "<group>"; };
 		B827299721778B2F0017EC71 /* VPlayerLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPlayerLayer.swift; sourceTree = "<group>"; };
 		B827299821778B2F0017EC71 /* VPlayerRenderingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPlayerRenderingView.swift; sourceTree = "<group>"; };
 		B827299A21778B2F0017EC71 /* VersaPlayerPlaybackDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersaPlayerPlaybackDelegate.swift; sourceTree = "<group>"; };
@@ -683,6 +687,8 @@
 				B8DDBC7C21AD78AA007B3A06 /* HomeBanner.swift */,
 				B84C9D8A21B5497E00DCB95C /* NMoQTour.swift */,
 				B897351221B81C3200BB812C /* NMoQTourDetail.swift */,
+				B8234F4821BA6D3800760DEC /* NMoQUserEventList.swift */,
+				B8234F4A21BA7D8600760DEC /* NMoQEntityRegistration.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1624,6 +1630,7 @@
 				B8294CF020CBF265002AFF72 /* FSCalendarCollectionViewLayout.m in Sources */,
 				B82E1B3321808229006623A6 /* LogoutData.swift in Sources */,
 				B897351321B81C3200BB812C /* NMoQTourDetail.swift in Sources */,
+				B8234F4B21BA7D8600760DEC /* NMoQEntityRegistration.swift in Sources */,
 				B8BBF459211C1AC000352706 /* ParksList.swift in Sources */,
 				B8294CEE20CBF265002AFF72 /* FSCalendarScopeHandle.m in Sources */,
 				B811FBCC2103811400960246 /* QMColours.swift in Sources */,
@@ -1699,6 +1706,7 @@
 				B82729B321778B2F0017EC71 /* VersaPlayerExtension.swift in Sources */,
 				B8C64D4D20FDDBB700C2D51A /* MiaCollectionReusableView.swift in Sources */,
 				B8ADA8AB2164CC2E00127F9A /* PreviewContentViewController.swift in Sources */,
+				B8234F4921BA6D3800760DEC /* NMoQUserEventList.swift in Sources */,
 				B8EAB7BC20CA424300C001B2 /* CalendarConfigViewController.swift in Sources */,
 				B82729BA21778B2F0017EC71 /* VersaPlayerGestureRecieverViewDelegate.swift in Sources */,
 				B88F07E8217DD5F600B16875 /* CulturePassCardViewController.swift in Sources */,
