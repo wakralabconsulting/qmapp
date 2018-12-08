@@ -20,7 +20,7 @@ struct NMoQTourDetail: ResponseObjectSerializable, ResponseCollectionSerializabl
     var sort_id: String? = nil
     var body: String? = nil
     var registered: String? = nil
-    
+    var nid: String? = nil
     
     public init?(response: HTTPURLResponse, representation: AnyObject) {
         if let representation = representation as? [String: Any] {
@@ -36,8 +36,8 @@ struct NMoQTourDetail: ResponseObjectSerializable, ResponseCollectionSerializabl
             self.sort_id = representation["sort_id"] as? String
             self.body = representation["Body"] as? String
             self.registered = representation["registered"] as? String
-            
-            
+            self.nid = representation["nid"] as? String
+
         }
     }
     
