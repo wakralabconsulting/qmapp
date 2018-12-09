@@ -44,6 +44,10 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case GetNMoQSpecialEventList()
     case GetNMoQSpecialEventDetail([String: Any])
     case GetNMoQTourDetail([String: Any])
+    case NMoQEventListUserRegistration([String: Any])
+    case NMoQEntityRegistration([String: Any])
+    case SetUserRegistrationComplete(String,[String: Any])
+    case SetUserUnRegistration(String,[String: Any])
     var method: Alamofire.HTTPMethod {
         switch self {
         case .ExhibitionList:
@@ -114,6 +118,14 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return .get
         case .GetNMoQTourDetail:
             return .get
+        case .NMoQEventListUserRegistration:
+            return .get
+        case .NMoQEntityRegistration:
+            return .post
+        case .SetUserRegistrationComplete:
+            return .put
+        case .SetUserUnRegistration:
+            return .delete
         }
     }
     
@@ -187,6 +199,14 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/nmoq_special_event.json"
         case .GetNMoQTourDetail( _):
             return "/list_tour_per_day.json"
+        case .NMoQEventListUserRegistration( _):
+            return "/list_event_user_registration.json"
+        case .NMoQEntityRegistration( _):
+            return "/entity_registration.json"
+        case .SetUserRegistrationComplete(let registrationId, _):
+            return "/entity_registration/\(registrationId).json"
+        case .SetUserUnRegistration(let registrationId, _):
+            return "/entity_registration/\(registrationId).json"
         }
     }
 
@@ -321,6 +341,35 @@ enum QatarMuseumRouter: URLRequestConvertible {
 //            nmqMutableURLReq.httpMethod = method.rawValue
 //           // return try! Alamofire.URLEncoding.default.encode(nmqMutableURLReq, with: parameters)
 //            return try! Alamofire.JSONEncoding.default.encode(nmqMutableURLReq, with: parameters)
+        case .NMoQEventListUserRegistration(let parameters):
+            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
+        case .NMoQEntityRegistration(let parameters):
+            let regURL = NSURL(string: Config.secureBaseURL + lang() + Config.mobileApiURL)!
+            var regMutableURLReq = URLRequest(url: regURL.appendingPathComponent(path)!)
+            regMutableURLReq.httpMethod = method.rawValue
+            if let accessToken = UserDefaults.standard.value(forKey: "accessToken") as? String {
+                regMutableURLReq.setValue(accessToken, forHTTPHeaderField: "x-csrf-token")
+            }
+            regMutableURLReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            return try! Alamofire.JSONEncoding.default.encode(regMutableURLReq, with: parameters)
+        case .SetUserRegistrationComplete( _,let parameters):
+            let regURL = NSURL(string: Config.secureBaseURL + Config.engLang + Config.mobileApiURL)!
+            var regMutableURLReq = URLRequest(url: regURL.appendingPathComponent(path)!)
+            regMutableURLReq.httpMethod = method.rawValue
+            if let accessToken = UserDefaults.standard.value(forKey: "accessToken") as? String {
+                regMutableURLReq.setValue(accessToken, forHTTPHeaderField: "x-csrf-token")
+            }
+            regMutableURLReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            return try! Alamofire.JSONEncoding.default.encode(regMutableURLReq, with: parameters)
+        case .SetUserUnRegistration( _,let parameters):
+            let regURL = NSURL(string: Config.secureBaseURL + Config.engLang + Config.mobileApiURL)!
+            var regMutableURLReq = URLRequest(url: regURL.appendingPathComponent(path)!)
+            regMutableURLReq.httpMethod = method.rawValue
+            if let accessToken = UserDefaults.standard.value(forKey: "accessToken") as? String {
+                regMutableURLReq.setValue(accessToken, forHTTPHeaderField: "x-csrf-token")
+            }
+            regMutableURLReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            return try! Alamofire.JSONEncoding.default.encode(regMutableURLReq, with: parameters)
         }
         
         

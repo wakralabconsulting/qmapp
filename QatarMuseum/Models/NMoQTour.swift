@@ -12,7 +12,7 @@ struct NMoQTour: ResponseObjectSerializable, ResponseCollectionSerializable {
     var dayDescription: String? = nil
     var images: [String]? = []
     var subtitle: String? = nil
-    var sort_id: String? = nil
+    var sortId: String? = nil
     var nid: String? = nil
     var eventDate: String? = nil
     //For Special Events
@@ -31,7 +31,7 @@ struct NMoQTour: ResponseObjectSerializable, ResponseCollectionSerializable {
             self.dayDescription = representation["descriptif_day"] as? String
             self.images = representation["Images"] as? [String]
             self.subtitle = representation["subtitle"] as? String
-            self.sort_id = representation["sort_id"] as? String
+            self.sortId = representation["sort_id"] as? String
             self.nid = representation["nid"] as? String
             self.eventDate = representation["NMoq_event_Date"] as? String
             //For Special Events
@@ -45,12 +45,22 @@ struct NMoQTour: ResponseObjectSerializable, ResponseCollectionSerializable {
         }
     }
     
-    //    init (title:String?, fullContentID: String?, bannerTitle: String?, bannerLink: String?) {
-    //        self.title = title
-    //        self.fullContentID = fullContentID
-    //        self.bannerTitle = bannerTitle
-    //        self.bannerLink = bannerLink
-    //    }
+        init (title:String?, dayDescription: String?, images: [String]?, subtitle: String?,sortId:String?, nid: String?, eventDate: String?, date: String?, descriptioForModerator: String?, mobileLatitude: String?,moderatorName:String?, longitude: String?, contactEmail: String?, contactPhone: String?) {
+            self.title = title
+            self.dayDescription = dayDescription
+            self.images = images
+            self.subtitle = subtitle
+            self.sortId = sortId
+            self.nid = nid
+            self.eventDate = eventDate
+            self.date = date
+            self.descriptioForModerator = descriptioForModerator
+            self.mobileLatitude = mobileLatitude
+            self.moderatorName = moderatorName
+            self.longitude = longitude
+            self.contactEmail = contactEmail
+            self.contactPhone = contactPhone
+        }
 }
 
 struct NMoQTourList: ResponseObjectSerializable {

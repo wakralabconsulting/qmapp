@@ -7,6 +7,7 @@
 //
 
 import Alamofire
+import CoreData
 import Crashlytics
 import Kingfisher
 import UIKit
@@ -306,7 +307,11 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
                         UserDefaults.standard.removeObject(forKey: "acceptOrDecline")
                         UserDefaults.standard.removeObject(forKey: "fieldFirstName")
                         UserDefaults.standard.removeObject(forKey: "fieldLastName")
-
+                        if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")) {
+                            let managedContext = getContext()
+                            self.deleteExistingEvent(managedContext: managedContext, entityName: "RegisteredEventListEntity")
+                        }
+                        
                         if let presenter = self.presentingViewController as? CulturePassViewController {
                             presenter.fromHome = true
                             presenter.fromProfile = true
@@ -329,6 +334,19 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         } else {
             showAlertView(title: NSLocalizedString("WEBVIEW_TITLE", comment: "WEBVIEW_TITLE in profile page"), message: NSLocalizedString("LOGOUT_ERROR", comment: "LOGOUT_ERROR in profile page"), viewController: self)
         }
+    }
+    func deleteExistingEvent(managedContext:NSManagedObjectContext,entityName : String?)  {
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName!)
+        let deleteRequest = NSBatchDeleteRequest( fetchRequest: fetchRequest)
+        do{
+            try managedContext.execute(deleteRequest)
+            
+        }catch let error as NSError {
+            //handle error here
+            
+        }
+        
     }
     //MARK: Methods for Invitation Greetings
     

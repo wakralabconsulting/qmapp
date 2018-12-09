@@ -7,6 +7,7 @@
 //
 
 import Alamofire
+import CoreData
 import MapKit
 import UIKit
 enum NMoQPanelPage {
@@ -23,6 +24,11 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     var panelDetailId : String? = nil
     var nmoqSpecialEventDetail: [NMoQTour]! = []
     var nmoqTourDetail: [NMoQTourDetail]! = []
+    var entityRegistration : NMoQEntityRegistration?
+    var completedEntityReg : NMoQEntityRegistration?
+    var selectedCell : PanelDetailCell?
+    var userEventList: [NMoQUserEventList]! = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCell()
@@ -40,6 +46,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         
             headerView.headerBackButton.setImage(UIImage(named: "closeX1"), for: .normal)
             headerView.headerBackButton.contentEdgeInsets = UIEdgeInsets(top:12, left:17, bottom: 12, right:17)
+        fetchUserEventListFromCoredata()
         if (pageNameString == NMoQPanelPage.PanelDetailPage) {
             getNMoQSpecialEventDetail()
         } else if (pageNameString == NMoQPanelPage.TourDetailPage) {
@@ -68,8 +75,22 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             
         } else if (pageNameString == NMoQPanelPage.TourDetailPage){
             cell.setTourSecondDetailCellContent(tourDetailData: nmoqTourDetail[indexPath.row])
+            
+            if let arrayOffset = self.userEventList.index(where: {$0.eventID == nmoqTourDetail[indexPath.row].nmoqEvent}) {
+                self.setRegistrationSwitchOn()
+            } else {
+                self.setRegistrationSwitchOff()
+            }
+            cell.registerOrUnRegisterAction = {
+                () in
+                self.selectedCell = cell
+                self.reisterOrUnregisterTapAction(currentRow: indexPath.row)
+            }
         }
-        
+        cell.loadMapView = {
+            () in
+            
+        }
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -92,6 +113,16 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(mapDetailView, animated: false, completion: nil)
+        
+    }
+    func reisterOrUnregisterTapAction(currentRow: Int) {
+        print(selectedCell?.interestSwitch.state)
+        if (selectedCell?.interestSwitch.isOn)! {
+            self.setEntityUnRegistration(currentRow: currentRow)
+        } else {
+            self.getEntityRegistrationFromServer(currentRow: currentRow)
+
+        }
         
     }
     func headerCloseButtonPressed() {
@@ -185,6 +216,246 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             }
         }
         
+    }
+    func CheckUserRegisteredForEvent() {
+        
+    }
+    //MARK: EntityRegistration API
+    func getEntityRegistrationFromServer(currentRow: Int) {
+         if((nmoqTourDetail[currentRow].nmoqEvent != nil) && (UserDefaults.standard.value(forKey: "uid") != nil) && (UserDefaults.standard.value(forKey: "fieldFirstName") != nil) && (UserDefaults.standard.value(forKey: "fieldLastName") != nil)) {
+        let entityId = nmoqTourDetail[currentRow].nmoqEvent
+        let userId = UserDefaults.standard.value(forKey: "uid") as! String
+        let firstName = UserDefaults.standard.value(forKey: "fieldFirstName") as! String
+        let lastName = UserDefaults.standard.value(forKey: "fieldLastName") as! String
+        let fieldConfirmAttendance =
+            [
+                "und":[[
+                    "value": "1"
+                    ]]
+        ]
+        let fieldNumberOfAttendees =
+            [
+                "und":[[
+                    "value": "2"
+                    ]]
+        ]
+        let fieldFirstName =
+            [
+                "und":[[
+                    "value": firstName,
+                    "safe_value": firstName
+                    ]]
+        ]
+        let fieldNmoqLastName =
+            [
+                "und":[[
+                    "value": lastName,
+                    "safe_value": lastName
+                    ]]
+        ]
+        let fieldMembershipNumber =
+            [
+                "und":[[
+                    "value": "144386",
+                    
+                    ]]
+        ]
+        let fieldQmaEduRegDate =
+            [
+                "und":[[
+                    "value": "1545807600",
+                    "value2": "1545811200",
+                    "timezone": "Asia/Qatar",
+                    "offset": "10800",
+                    "offset2": "10800",
+                    "timezone_db": "Asia/Qatar",
+                    "date_type": "datestamp"
+                    
+                    ]]
+        ]
+        let timestamp = Int(NSDate().timeIntervalSince1970)
+        let timestampInString = String(timestamp)
+            print("timestamp: \(timestamp)")
+        _ = Alamofire.request(QatarMuseumRouter.NMoQEntityRegistration(["type" : "nmoq_event_registration","entity_id": entityId!,"entity_type" :"node","user_uid": userId,"count": "1","author_uid": userId,"state": "pending","created": timestampInString,"updated": timestampInString,"field_confirm_attendance" :fieldConfirmAttendance,"field_number_of_attendees" : fieldNumberOfAttendees, "field_first_name_": fieldFirstName,"field_nmoq_last_name" : fieldNmoqLastName,"field_membership_number": fieldMembershipNumber,"field_qma_edu_reg_date":fieldQmaEduRegDate])).responseObject { (response: DataResponse<NMoQEntityRegistration>) -> Void in
+                switch response.result {
+                case .success(let data):
+                    self.loadingView.stopLoading()
+                    self.loadingView.isHidden = true
+                    self.entityRegistration = data
+                    UserDefaults.standard.set(self.entityRegistration?.registrationId, forKey: "registrationId")
+                    self.setEntityRegistrationAsComplete(currentRow: currentRow, timestamp: timestampInString)
+                case .failure( _):
+                    self.loadingView.stopLoading()
+                    self.loadingView.isHidden = true
+                    
+                }
+            }
+    }
+        
+    }
+    func setEntityRegistrationAsComplete(currentRow: Int, timestamp: String) {
+        if((UserDefaults.standard.value(forKey: "registrationId") != nil) && (nmoqTourDetail[currentRow].nmoqEvent != nil) && (UserDefaults.standard.value(forKey: "uid") != nil) && (UserDefaults.standard.value(forKey: "fieldFirstName") != nil) && (UserDefaults.standard.value(forKey: "fieldLastName") != nil)) {
+            let regId = UserDefaults.standard.value(forKey: "registrationId") as! String
+            let entityId = nmoqTourDetail[currentRow].nmoqEvent
+            let userId = UserDefaults.standard.value(forKey: "uid") as! String
+            let firstName = UserDefaults.standard.value(forKey: "fieldFirstName") as! String
+            let lastName = UserDefaults.standard.value(forKey: "fieldLastName") as! String
+            let fieldConfirmAttendance =
+                [
+                    "und":[[
+                        "value": "1"
+                        ]]
+            ]
+            let fieldNumberOfAttendees =
+                [
+                    "und":[[
+                        "value": "2"
+                        ]]
+            ]
+            let fieldFirstName =
+                [
+                    "und":[[
+                        "value": firstName,
+                        "safe_value": firstName
+                        ]]
+            ]
+            let fieldNmoqLastName =
+                [
+                    "und":[[
+                        "value": lastName,
+                        "safe_value": lastName
+                        ]]
+            ]
+            let fieldMembershipNumber =
+                [
+                    "und":[[
+                        "value": "144386",
+
+                        ]]
+            ]
+            let fieldQmaEduRegDate =
+                [
+                    "und":[[
+                        "value": "1545807600",
+                        "value2": "1545811200",
+                        "timezone": "Asia/Qatar",
+                        "offset": "10800",
+                        "offset2": "10800",
+                        "timezone_db": "Asia/Qatar",
+                        "date_type": "datestamp"
+
+                        ]]
+            ]
+            _ = Alamofire.request(QatarMuseumRouter.SetUserRegistrationComplete(regId,["registration_id": regId,"type" : "nmoq_event_registration","entity_id": entityId!,"entity_type" :"node","user_uid": userId,"count": "1","author_uid": userId,"state": "complete","created": timestamp,"updated": timestamp,"field_confirm_attendance" :fieldConfirmAttendance,"field_number_of_attendees" : fieldNumberOfAttendees, "field_first_name_": fieldFirstName,"field_nmoq_last_name" : fieldNmoqLastName,"field_membership_number": fieldMembershipNumber,"field_qma_edu_reg_date":fieldQmaEduRegDate])).responseObject { (response: DataResponse<NMoQEntityRegistration>) -> Void in
+                switch response.result {
+                case .success(let data):
+                    self.loadingView.stopLoading()
+                    self.loadingView.isHidden = true
+                    self.completedEntityReg = data
+                    self.userEventList.append(NMoQUserEventList(title: self.panelTitle, eventID: self.completedEntityReg?.entityId))
+                    self.saveOrUpdateEventReistratedCoredata()
+                    self.setRegistrationSwitchOn()
+                case .failure( _):
+                    self.loadingView.stopLoading()
+                    self.loadingView.isHidden = true
+
+                }
+            }
+    }
+
+    }
+    func setEntityUnRegistration(currentRow: Int) {
+        if((nmoqTourDetail[currentRow].nid != nil) && (UserDefaults.standard.value(forKey: "userPassword") != nil)  && (UserDefaults.standard.value(forKey: "displayName") != nil)) {
+            let regId = nmoqTourDetail[currentRow].nid
+            let userName = UserDefaults.standard.value(forKey: "displayName") as! String
+            let pwd = UserDefaults.standard.value(forKey: "userPassword") as! String
+            
+            _ = Alamofire.request(QatarMuseumRouter.SetUserUnRegistration(regId!,["name":userName,"pass":pwd])).responseData { (response) -> Void in
+                switch response.result {
+                case .success( _):
+                    self.loadingView.stopLoading()
+                    self.loadingView.isHidden = true
+                    if(response.response?.statusCode == 200) {
+                        if let index = self.userEventList.index(where: {$0.eventID == nmoqTourDetail[currentRow].nmoqEvent}) {
+                            self.userEventList.remove(at: index)
+                        }
+                        self.setRegistrationSwitchOff()
+                    }
+                case .failure( _):
+                    self.loadingView.stopLoading()
+                    self.loadingView.isHidden = true
+                    
+                }
+            }
+        }
+        
+    }
+    
+    //MARK: EventRegistrationCoreData
+    func saveOrUpdateEventReistratedCoredata() {
+        if (userEventList.count > 0) {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.userEventCoreDataInBackgroundThread(managedContext: managedContext)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.userEventCoreDataInBackgroundThread(managedContext : managedContext)
+                }
+            }
+        }
+    }
+    
+    func userEventCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            if (userEventList.count > 0) {
+                for i in 0 ... userEventList.count-1 {
+                    let userEventInfo: RegisteredEventListEntity = NSEntityDescription.insertNewObject(forEntityName: "RegisteredEventListEntity", into: managedContext) as! RegisteredEventListEntity
+                    let userEventListDict = userEventList[i]
+                    userEventInfo.eventId = userEventListDict.eventID
+                    do{
+                        try managedContext.save()
+                    }
+                    catch{
+                        print(error)
+                    }
+                }
+            }
+        }
+    }
+    
+    func fetchUserEventListFromCoredata() {
+        let managedContext = getContext()
+        do {
+            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                var eventArray = [RegisteredEventListEntity]()
+                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "RegisteredEventListEntity")
+                eventArray = (try managedContext.fetch(fetchRequest) as? [RegisteredEventListEntity])!
+                if (eventArray.count > 0) {
+                    for i in 0 ... eventArray.count-1 {
+                        self.userEventList.insert(NMoQUserEventList(title: eventArray[i].title, eventID: eventArray[i].eventId), at: i)
+                    }
+                    
+                } else{
+                    self.showNoNetwork()
+                }
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    func setRegistrationSwitchOn() {
+        selectedCell?.interestSwitch.tintColor = UIColor.settingsSwitchOnTint
+        selectedCell?.interestSwitch.layer.cornerRadius = 16
+        selectedCell?.interestSwitch.backgroundColor = UIColor.settingsSwitchOnTint
+    }
+    func setRegistrationSwitchOff() {
+        selectedCell?.interestSwitch.onTintColor = UIColor.red
+        selectedCell?.interestSwitch.layer.cornerRadius = 16
+        selectedCell?.interestSwitch.backgroundColor = UIColor.red
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

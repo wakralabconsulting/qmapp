@@ -50,6 +50,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     var accessToken : String? = nil
     var loginArray : LoginData?
     var userInfoArray : UserInfoData?
+    var userEventList: [NMoQUserEventList]! = []
 
 
     override func viewDidLoad() {
@@ -893,7 +894,40 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-    
+    //MARK: EventRegistrationCoreData
+    func saveOrUpdateEventReistratedCoredata() {
+        if (userEventList.count > 0) {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.userEventCoreDataInBackgroundThread(managedContext: managedContext)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.userEventCoreDataInBackgroundThread(managedContext : managedContext)
+                }
+            }
+        }
+    }
+    func userEventCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            if (userEventList.count > 0) {
+                for i in 0 ... userEventList.count-1 {
+                    let userEventInfo: RegisteredEventListEntity = NSEntityDescription.insertNewObject(forEntityName: "RegisteredEventListEntity", into: managedContext) as! RegisteredEventListEntity
+                        let userEventListDict = userEventList[i]
+                        userEventInfo.eventId = userEventListDict.eventID
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                }
+            }
+        }
+    }
     //MARK: HomeBanner CoreData
     func saveOrUpdateHomeBannerCoredata() {
         if (homeBannerList.count > 0) {
@@ -919,38 +953,13 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 
                 let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "HomeBannerEntity")
                 if(isDeleted == true) {
-                    //self.saveToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
                     self.saveHomeBannerToCoreData(homeListDict: homeListDict, managedObjContext: managedContext)
                 }
-                //for i in 0 ... homeBannerList.count-1 {
-//                    let homeListDict = homeBannerList[i]
-//                    let fetchResult = checkAddedToCoredata(entityName: "HomeBannerEntity", idKey: "fullContentID", idValue: homeBannerList[i].fullContentID, managedContext: managedContext)
-                    //update
-//                    if(fetchResult.count != 0) {
-//                        let homedbDict = fetchResult[0] as! HomeBannerEntity
-//                        homedbDict.title = homeListDict.title
-//                        homedbDict.fullContentID = homeListDict.fullContentID
-//                        homedbDict.bannerTitle =  homeListDict.bannerTitle
-//                        homedbDict.bannerLink = homeListDict.bannerLink
-//
-//                        do{
-//                            try managedContext.save()
-//                        }
-//                        catch{
-//                            print(error)
-//                        }
+                
                     } else {
                         //save
                         self.saveHomeBannerToCoreData(homeListDict: homeListDict, managedObjContext: managedContext)
                     }
-                //}
-//            } else {
-//                for i in 0 ... homeBannerList.count-1 {
-//                    let homeListDict : HomeBanner?
-//                    homeListDict = homeBannerList[i]
-//                    self.saveHomeBannerToCoreData(homeListDict: homeListDict!, managedObjContext: managedContext)
-//                }
-//            }
         }
     }
     func saveHomeBannerToCoreData(homeListDict: HomeBanner, managedObjContext: NSManagedObjectContext) {
@@ -1108,6 +1117,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 case .success(let data):
                     self.loginPopUpView.loadingView.stopLoading()
                     self.loginPopUpView.loadingView.isHidden = true
+                    UserDefaults.standard.setValue(self.loginPopUpView.passwordText.text, forKey: "userPassword")
                     self.loginPopUpView.removeFromSuperview()
                     if(response.response?.statusCode == 200) {
                         self.loginArray = data
@@ -1172,6 +1182,26 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             }
         }
     }
+    //MARK : NMoQ EntityRegistratiion
+    func getEventListUserRegistrationFromServer() {
+        if((accessToken != nil) && (UserDefaults.standard.value(forKey: "uid") != nil)){
+            let userId = UserDefaults.standard.value(forKey: "uid") as! String
+            _ = Alamofire.request(QatarMuseumRouter.NMoQEventListUserRegistration(["user_id" : userId])).responseObject { (response: DataResponse<NMoQUserEventListValues>) -> Void in
+                switch response.result {
+                case .success(let data):
+                    self.userEventList = data.eventList
+                    self.saveOrUpdateEventReistratedCoredata()
+                case .failure( _):
+                    self.loginPopUpView.removeFromSuperview()
+                    self.loginPopUpView.loadingView.stopLoading()
+                    self.loginPopUpView.loadingView.isHidden = true
+                    
+                }
+            }
+            
+        }
+    }
+    
     func setProfileDetails(loginInfo : LoginData?) {
         if (loginInfo != nil) {
             let userData = loginInfo?.user
@@ -1213,11 +1243,20 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 if(nation["iso2"] != nil) {
                     UserDefaults.standard.setValue(nation["iso2"] as! String , forKey: "nationality")
                 }
-                
             }
+            let translationsData = userData?.translations["data"] as! NSDictionary
+            if(translationsData != nil) {
+                let arValues = translationsData["ar"] as! NSDictionary
+                if(arValues["entity_id"] != nil) {
+                    UserDefaults.standard.setValue(arValues["entity_id"] as! String , forKey: "loginEntityID")
+                }
+            }
+            
+            
             
         }
         self.loginPopUpView.removeFromSuperview()
+        getEventListUserRegistrationFromServer()
     }
     //MARK:TextField Delegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
