@@ -133,7 +133,8 @@ class PanelDetailCell: UITableViewCell {
         }
         
     }
-    func setTourSecondDetailCellContent(tourDetailData: NMoQTourDetail?) {
+    func setTourSecondDetailCellContent(tourDetailData: NMoQTourDetail?,userEventList : [NMoQUserEventList]) {
+        
         topTitle.text = tourDetailData?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         topDescription.text = tourDetailData?.body
         interestedLabel.text = "Registered"
@@ -195,9 +196,26 @@ class PanelDetailCell: UITableViewCell {
         
         let verticalSpace = NSLayoutConstraint(item: self.topView, attribute: .bottom, relatedBy: .equal, toItem: self.thirdView, attribute: .top, multiplier: 1, constant: -16)
         
+
         // activate the constraints
         NSLayoutConstraint.activate([verticalSpace])
-        
+        if let arrayOffset = userEventList.index(where: {$0.eventID == tourDetailData?.nmoqEvent}) {
+            setRegistrationSwitchOn()
+        } else {
+            setRegistrationSwitchOff()
+        }
+    }
+    func setRegistrationSwitchOn() {
+        interestSwitch.tintColor = UIColor.settingsSwitchOnTint
+        interestSwitch.layer.cornerRadius = 16
+        interestSwitch.backgroundColor = UIColor.settingsSwitchOnTint
+        interestSwitch.isOn = false
+    }
+    func setRegistrationSwitchOff() {
+        interestSwitch.onTintColor = UIColor.red
+        interestSwitch.layer.cornerRadius = 16
+        interestSwitch.backgroundColor = UIColor.red
+        interestSwitch.isOn = true
     }
     @IBAction func didTapRegisterButton(_ sender: UISwitch) {
         self.registerOrUnRegisterAction?()

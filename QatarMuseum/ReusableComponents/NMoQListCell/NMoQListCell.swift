@@ -32,7 +32,19 @@ class NMoQListCell: UITableViewCell {
             }
         }
     }
-    
+    func setTourMiddleDate(tourList: NMoQTourDetail?) {
+        titleLabel.text = tourList?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+        dayLabel.isHidden = true
+        dateLabel.isHidden = true
+        //dayLabel.text = tourList?.title
+        //dateLabel.text = changeDateFormat(dateString: tourList?.eventDate)
+        
+        if ((tourList?.imageBanner?.count)! > 0) {
+            if let imageUrl = tourList?.imageBanner![0]{
+                cellImageView.kf.setImage(with: URL(string: imageUrl))
+            }
+        }
+    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
