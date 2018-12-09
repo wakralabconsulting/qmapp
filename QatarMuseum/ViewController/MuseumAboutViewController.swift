@@ -400,7 +400,21 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     func downloadButtonAction() {
        let downloadLink = aboutDetailtArray[0].downloadable
-        print(downloadLink)
+        if ((downloadLink?.count)! > 0) {
+            if(downloadLink![0] != "") {
+                if let downloadUrl = URL(string: downloadLink![0]) {
+                    // show alert to choose app
+                    if UIApplication.shared.canOpenURL(downloadUrl as URL) {
+                        if #available(iOS 10.0, *) {
+                            UIApplication.shared.open(downloadUrl, options: [:], completionHandler: nil)
+                        } else {
+                            UIApplication.shared.openURL(downloadUrl)
+                        }
+                    }
+                }
+            }
+        }
+       
     }
     func claimOfferButtonAction(offerLink: String?) {
         
@@ -408,10 +422,16 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             if let offerUrl = URL(string: offerLink!) {
                 // show alert to choose app
                 if UIApplication.shared.canOpenURL(offerUrl as URL) {
-                    let webViewVc:WebViewController = self.storyboard?.instantiateViewController(withIdentifier: "webViewId") as! WebViewController
-                    webViewVc.webViewUrl = offerUrl
-                    webViewVc.titleString = NSLocalizedString("WEBVIEW_TITLE", comment: "WEBVIEW_TITLE  in the Webview")
-                    self.present(webViewVc, animated: false, completion: nil)
+//                    let storyBoardName : UIStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
+//                    let webViewVc:WebViewController = storyBoardName.instantiateViewController(withIdentifier: "webViewId") as! WebViewController
+//                    webViewVc.webViewUrl = offerUrl
+//                    webViewVc.titleString = NSLocalizedString("WEBVIEW_TITLE", comment: "WEBVIEW_TITLE  in the Webview")
+//                    self.present(webViewVc, animated: false, completion: nil)
+                    if #available(iOS 10.0, *) {
+                        UIApplication.shared.open(offerUrl, options: [:], completionHandler: nil)
+                    } else {
+                        UIApplication.shared.openURL(offerUrl)
+                    }
                 }
             }
         }
