@@ -14,7 +14,9 @@ enum NMoQPanelPage {
     case PanelDetailPage
     case TourDetailPage
 }
-class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,UITableViewDelegate,UITableViewDataSource,HeaderViewProtocol,comingSoonPopUpProtocol {
+class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,UITableViewDelegate,UITableViewDataSource,HeaderViewProtocol,comingSoonPopUpProtocol,DeclinePopupProtocol {
+    
+    
     
     
 
@@ -28,10 +30,12 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     var nmoqTourDetail: [NMoQTourDetail]! = []
     var entityRegistration : NMoQEntityRegistration?
     var completedEntityReg : NMoQEntityRegistration?
-    //var selectedCell : PanelDetailCell?
     var userEventList: [NMoQUserEventList]! = []
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var selectedRow : Int?
+    var unRegisterPopupView : AcceptDeclinePopup = AcceptDeclinePopup()
+    var selectedPanelCell : PanelDetailCell?
+    var newRegistrationId : String? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,12 +86,19 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         if(pageNameString == NMoQPanelPage.PanelDetailPage) {
             //cell.setPanelDetailCellContent(panelDetailData: nmoqSpecialEventDetail[indexPath.row])
             cell.setTourSecondDetailCellContent(tourDetailData: nmoqTourDetail[indexPath.row], userEventList: userEventList)
+            cell.registerOrUnRegisterAction = {
+                () in
+                self.selectedPanelCell = cell
+                 self.reisterOrUnregisterTapAction(currentRow: indexPath.row, selectedCell: cell)
+                //self.reisterOrUnregisterTapAction(currentRow: self.selectedRow!, selectedCell: cell)
+            }
             
         } else if (pageNameString == NMoQPanelPage.TourDetailPage){
             //cell.setTourSecondDetailCellContent(tourDetailData: nmoqTourDetail[indexPath.row], userEventList: userEventList)
             cell.setTourSecondDetailCellContent(tourDetailData: nmoqTourDetail[self.selectedRow!], userEventList: userEventList)
             cell.registerOrUnRegisterAction = {
                 () in
+                self.selectedPanelCell = cell
                // self.reisterOrUnregisterTapAction(currentRow: indexPath.row, selectedCell: cell)
                 self.reisterOrUnregisterTapAction(currentRow: self.selectedRow!, selectedCell: cell)
             }
@@ -122,10 +133,21 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     func reisterOrUnregisterTapAction(currentRow: Int,selectedCell : PanelDetailCell?) {
         if (selectedCell?.interestSwitch.isOn)! {
-            self.setEntityUnRegistration(currentRow: currentRow, selectedCell: selectedCell)
+            loadConfirmationPopup()
         } else {
-            //checkForAlreadyRegisteredEvent(currentRow: currentRow)
-            self.getEntityRegistrationFromServer(currentRow: currentRow, selectedCell: selectedCell)
+            if(userEventList.count == 0) {
+                self.getEntityRegistrationFromServer(currentRow: currentRow, selectedCell: selectedCell)
+            } else {
+                let haveConflict = checkConflictWithAlreadyRegisteredEvent(currentRow: currentRow)
+                if((haveConflict == false) || (haveConflict == nil)) {
+                    self.getEntityRegistrationFromServer(currentRow: currentRow, selectedCell: selectedCell)
+                } else {
+                    loadAlreadyRegisteredPopup()
+                    //setRegistrationSwitchOff(selectedCell: selectedCell)
+                }
+            }
+            
+            
 
         }
         
@@ -222,36 +244,14 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         }
         
     }
-    func CheckUserRegisteredForEvent() {
-        
-    }
+    
     //MARK: EntityRegistration API
     func getEntityRegistrationFromServer(currentRow: Int,selectedCell: PanelDetailCell?) {
-//        let time = nmoqTourDetail[0].date?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-//        if #available(iOS 10.0, *) {
-//            calculateToursOverlap()
-//        } else {
-//            // Fallback on earlier versions
-//        }
-//        let time = nmoqTourDetail[currentRow].date?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-//        let timeArray = time?.components(separatedBy: "-")
-//        if((timeArray?.count)! == 3) {
-//            let startTime = timeArray![0] + "" + timeArray![1]
-//            let endTime = timeArray![0] + "" + timeArray![2]
-//            print(startTime)
-//            print(endTime)
-//            let dateFormat = "MM-dd-yyyy HH:mm"
-//            let start = convertStringToDate(string: startTime, withFormat: dateFormat)
-//            let end = convertStringToDate(string: endTime, withFormat: dateFormat)
-//            let startDateStamp:TimeInterval = start!.timeIntervalSince1970
-//            let dateSt:Int = Int(startDateStamp)
-//            let EndDateStamp:TimeInterval = end!.timeIntervalSince1970
-//            let dateEnd:Int = Int(EndDateStamp)
         let time = getTimeStamp(currentRow: currentRow)
         if (time.startTime != nil && time.endTime != nil) {
             
-         if((nmoqTourDetail[currentRow].nmoqEvent != nil) && (UserDefaults.standard.value(forKey: "uid") != nil) && (UserDefaults.standard.value(forKey: "fieldFirstName") != nil) && (UserDefaults.standard.value(forKey: "fieldLastName") != nil)) {
-        let entityId = nmoqTourDetail[currentRow].nmoqEvent
+         if((nmoqTourDetail[currentRow].nid != nil) && (UserDefaults.standard.value(forKey: "uid") != nil) && (UserDefaults.standard.value(forKey: "fieldFirstName") != nil) && (UserDefaults.standard.value(forKey: "fieldLastName") != nil)) {
+        let entityId = nmoqTourDetail[currentRow].nid
         let userId = UserDefaults.standard.value(forKey: "uid") as! String
         let firstName = UserDefaults.standard.value(forKey: "fieldFirstName") as! String
         let lastName = UserDefaults.standard.value(forKey: "fieldLastName") as! String
@@ -303,14 +303,13 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         ]
         let timestamp = Int(NSDate().timeIntervalSince1970)
         let timestampInString = String(timestamp)
-            print("timestamp: \(timestamp)")
         _ = Alamofire.request(QatarMuseumRouter.NMoQEntityRegistration(["type" : "nmoq_event_registration","entity_id": entityId!,"entity_type" :"node","user_uid": userId,"count": "1","author_uid": userId,"state": "pending","created": timestampInString,"updated": timestampInString,"field_confirm_attendance" :fieldConfirmAttendance,"field_number_of_attendees" : fieldNumberOfAttendees, "field_first_name_": fieldFirstName,"field_nmoq_last_name" : fieldNmoqLastName,"field_membership_number": fieldMembershipNumber,"field_qma_edu_reg_date":fieldQmaEduRegDate])).responseObject { (response: DataResponse<NMoQEntityRegistration>) -> Void in
                 switch response.result {
                 case .success(let data):
                     self.loadingView.stopLoading()
                     self.loadingView.isHidden = true
                     self.entityRegistration = data
-                    UserDefaults.standard.set(self.entityRegistration?.registrationId, forKey: "registrationId")
+                    self.newRegistrationId = self.entityRegistration?.registrationId
                     self.setEntityRegistrationAsComplete(currentRow: currentRow, timestamp: timestampInString, selectedCell: selectedCell)
                 case .failure( _):
                     self.loadingView.stopLoading()
@@ -323,11 +322,11 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         
     }
     func setEntityRegistrationAsComplete(currentRow: Int, timestamp: String,selectedCell: PanelDetailCell?) {
-        if((UserDefaults.standard.value(forKey: "registrationId") != nil) && (nmoqTourDetail[currentRow].nmoqEvent != nil) && (UserDefaults.standard.value(forKey: "uid") != nil) && (UserDefaults.standard.value(forKey: "fieldFirstName") != nil) && (UserDefaults.standard.value(forKey: "fieldLastName") != nil)) {
+        if((newRegistrationId != nil) && (nmoqTourDetail[currentRow].nid != nil) && (UserDefaults.standard.value(forKey: "uid") != nil) && (UserDefaults.standard.value(forKey: "fieldFirstName") != nil) && (UserDefaults.standard.value(forKey: "fieldLastName") != nil)) {
             let time = getTimeStamp(currentRow: currentRow)
             if (time.startTime != nil && time.endTime != nil) {
-            let regId = UserDefaults.standard.value(forKey: "registrationId") as! String
-            let entityId = nmoqTourDetail[currentRow].nmoqEvent
+            let regId = newRegistrationId
+            let entityId = nmoqTourDetail[currentRow].nid
             let userId = UserDefaults.standard.value(forKey: "uid") as! String
             let firstName = UserDefaults.standard.value(forKey: "fieldFirstName") as! String
             let lastName = UserDefaults.standard.value(forKey: "fieldLastName") as! String
@@ -377,14 +376,16 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
 
                         ]]
             ]
-            _ = Alamofire.request(QatarMuseumRouter.SetUserRegistrationComplete(regId,["registration_id": regId,"type" : "nmoq_event_registration","entity_id": entityId!,"entity_type" :"node","user_uid": userId,"count": "1","author_uid": userId,"state": "complete","created": timestamp,"updated": timestamp,"field_confirm_attendance" :fieldConfirmAttendance,"field_number_of_attendees" : fieldNumberOfAttendees, "field_first_name_": fieldFirstName,"field_nmoq_last_name" : fieldNmoqLastName,"field_membership_number": fieldMembershipNumber,"field_qma_edu_reg_date":fieldQmaEduRegDate])).responseObject { (response: DataResponse<NMoQEntityRegistration>) -> Void in
+                _ = Alamofire.request(QatarMuseumRouter.SetUserRegistrationComplete(regId!,["registration_id": regId!,"type" : "nmoq_event_registration","entity_id": entityId!,"entity_type" :"node","user_uid": userId,"count": "1","author_uid": userId,"state": "complete","created": timestamp,"updated": timestamp,"field_confirm_attendance" :fieldConfirmAttendance,"field_number_of_attendees" : fieldNumberOfAttendees, "field_first_name_": fieldFirstName,"field_nmoq_last_name" : fieldNmoqLastName,"field_membership_number": fieldMembershipNumber,"field_qma_edu_reg_date":fieldQmaEduRegDate])).responseObject { (response: DataResponse<NMoQEntityRegistration>) -> Void in
                 switch response.result {
                 case .success(let data):
                     self.loadingView.stopLoading()
                     self.loadingView.isHidden = true
                     self.completedEntityReg = data
-                    self.userEventList.append(NMoQUserEventList(title: self.panelTitle, eventID: self.completedEntityReg?.entityId))
-                    self.saveOrUpdateEventReistratedCoredata(completedEntity: self.completedEntityReg!)
+                    //self.userEventList.append(NMoQUserEventList(title: self.panelTitle, eventID: self.completedEntityReg?.entityId))
+                    self.userEventList.append(NMoQUserEventList(title: self.panelTitle, eventID: self.completedEntityReg?.entityId, regID: self.completedEntityReg?.registrationId))
+                    self.saveOrUpdateEventReistratedCoredata(tourEntity: self.nmoqTourDetail[currentRow], registrationId: self.completedEntityReg?.registrationId)
+                    self.loadComingSoonPopup()
                     self.setRegistrationSwitchOn(selectedCell: selectedCell)
                 case .failure( _):
                     self.loadingView.stopLoading()
@@ -397,8 +398,18 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
 
     }
     func setEntityUnRegistration(currentRow: Int,selectedCell: PanelDetailCell?) {
-        if((nmoqTourDetail[currentRow].nid != nil) && (UserDefaults.standard.value(forKey: "userPassword") != nil)  && (UserDefaults.standard.value(forKey: "displayName") != nil)) {
-            let regId = nmoqTourDetail[currentRow].nid
+        var regId : String? = nil
+        if (newRegistrationId != nil) {
+            regId = newRegistrationId
+        } else {
+            fetchUserEventListFromCoredata()
+            if let registeredEvent = userEventList.first(where: {$0.eventID == nmoqTourDetail[currentRow].nid}) {
+                regId = registeredEvent.regID
+                
+            }
+        }
+        if((regId != nil) && (UserDefaults.standard.value(forKey: "userPassword") != nil)  && (UserDefaults.standard.value(forKey: "displayName") != nil)) {
+           // let regId = nmoqTourDetail[currentRow].nid
             let userName = UserDefaults.standard.value(forKey: "displayName") as! String
             let pwd = UserDefaults.standard.value(forKey: "userPassword") as! String
             
@@ -408,10 +419,12 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                     self.loadingView.stopLoading()
                     self.loadingView.isHidden = true
                     if(response.response?.statusCode == 200) {
-                        if let index = self.userEventList.index(where: {$0.eventID == self.nmoqTourDetail[currentRow].nmoqEvent}) {
+                        if let index = self.userEventList.index(where: {$0.eventID == self.nmoqTourDetail[currentRow].nid}) {
                             self.userEventList.remove(at: index)
                         }
+                        self.deleteRegisteredEvent(registrationId: regId)
                         self.setRegistrationSwitchOff(selectedCell: selectedCell)
+                        
                     }
                 case .failure( _):
                     self.loadingView.stopLoading()
@@ -424,66 +437,43 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     
     //MARK: EventRegistrationCoreData
-    func saveOrUpdateEventReistratedCoredata(completedEntity: NMoQEntityRegistration) {
+    func saveOrUpdateEventReistratedCoredata(tourEntity: NMoQTourDetail,registrationId: String?) {
         if (userEventList.count > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
                 let container = appDelegate!.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
-                    self.userEventCoreDataInBackgroundThread(managedContext: managedContext, completedEntity: completedEntity)
+                    self.userEventCoreDataInBackgroundThread(managedContext: managedContext, tourEntity: tourEntity, registrationId: registrationId)
                 }
             } else {
                 let managedContext = appDelegate!.managedObjectContext
                 managedContext.perform {
-                    self.userEventCoreDataInBackgroundThread(managedContext : managedContext, completedEntity: completedEntity)
+                    self.userEventCoreDataInBackgroundThread(managedContext : managedContext, tourEntity: tourEntity, registrationId: registrationId)
                 }
             }
         }
     }
     
-    func userEventCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,completedEntity: NMoQEntityRegistration) {
+    func userEventCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,tourEntity: NMoQTourDetail,registrationId: String?) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             if (userEventList.count > 0) {
-               // for i in 0 ... userEventList.count-1 {
                     let userEventInfo: RegisteredEventListEntity = NSEntityDescription.insertNewObject(forEntityName: "RegisteredEventListEntity", into: managedContext) as! RegisteredEventListEntity
-//                    let userEventListDict = nmoqTourDetail[i]
-//                    userEventInfo.eventId = userEventListDict.nid
-                    userEventInfo.eventId = completedEntity.entityId
+                    userEventInfo.eventId = tourEntity.nid
+                    userEventInfo.regId = registrationId
                     do{
                         try managedContext.save()
                     }
                     catch{
                         print(error)
                     }
-                //}
             }
         }
     }
     
     @available(iOS 10.0, *)
-    func calculateToursOverlap()  {
-        var times: [[String : String]] = []
-        for i in 0 ... nmoqTourDetail.count-1 {
-            let time = nmoqTourDetail[i].date?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-            let timeArray = time?.components(separatedBy: "-")
-            if((timeArray?.count)! == 3) {
-                let startTime = timeArray![0] + "" + timeArray![1]
-                let endTime = timeArray![0] + "" + timeArray![2]
-                print(startTime)
-                print(endTime)
-                if(times.count == 0) {
-                    times = [["start": startTime, "end":endTime]]
-                } else {
-                    times.append(["start": startTime, "end":endTime])
-
-                }
-            }
-        }
-        print(times)
+    func calculateToursOverlap(times : [[String : String]]) -> Bool? {
+        
         let dateFormat = "MM-dd-yyyy HH:mm" //Z is for zone
-
-        // Date ranges
-
 
             var intervals = [DateInterval]()
         
@@ -501,7 +491,14 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             }
 
         }
-
+        
+//        let cal = Calendar.current
+//        let d1 = convertStringToDate(string: times[0]["start"]!, withFormat: dateFormat)
+//        let d2 = convertStringToDate(string: times[0]["end"]!, withFormat: dateFormat) // April 27, 2018 12:00:00 AM
+//        let components = cal.dateComponents([.hour], from: d2!, to: d1!)
+//        let diff = components.hour!
+//print(intervals)
+//        print(diff)
 
 
         // Check for intersection
@@ -509,6 +506,11 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         let intersection = intersect(intervals: intervals)
 
         print(intersection) // Also here we can block actions based on intersection found
+        if (intersection == nil) {
+            return false
+        } else {
+            return true
+        }
 
     }
     // Converts the string to date with given format if require
@@ -524,23 +526,6 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     @available(iOS 10.0, *)
     func intersect(intervals: [DateInterval]) -> DateInterval? {
-        
-        // Algorithm:
-        
-        // We will compare first two intervals.
-        
-        // If an intersection is found, we will save the resultant interval
-        
-        // and compare it with the next interval in the array.
-        
-        // If no intersection is found at any iteration
-        
-        // it means the intervals in the array are disjoint. Break the loop and return nil
-        
-        // Otherwise return the last intersection.
-        
-        
-        
         var previous = intervals.first
         
         for (index, element) in intervals.enumerated() {
@@ -548,15 +533,8 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             if index == 0 {
                 
                 continue
-                
             }
-            
-            
-            
             previous = previous?.intersection(with: element)
-            
-            
-            
             if previous == nil {
                 
                 break
@@ -570,15 +548,57 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         return previous
         
     }
-//    func checkForAlreadyRegisteredEvent(currentRow: Int?) {
-//        let selectedEventId = nmoqTourDetail[currentRow!].nmoqEvent
+    func checkConflictWithAlreadyRegisteredEvent(currentRow: Int?) -> Bool? {
+//        let selectedEventId = nmoqTourDetail[currentRow!].nid
 //        var eventIdArray = NSArray()
 //        for i in  0 ... nmoqTourDetail.count-1 {
-//            eventIdArray. nmoqTourDetail[i].nmoqEvent
-//        }
-//    }
+//            if(selectedEventId != nmoqTourDetail[i].nid) {
+//                eventIdArray.adding(nmoqTourDetail[i].nid)
+//                }
+//            }
+        for i  in 0 ... userEventList.count-1 {
+            if let idArray = nmoqTourDetail.first(where: {$0.nid == userEventList[i].eventID}) {
+                var timeEvents :[NMoQTourDetail] = []
+                timeEvents.append(idArray)
+                timeEvents.append(nmoqTourDetail[currentRow!])
+                let haveConflict = self.setTimeArray( selectedEvent: timeEvents)
+                return haveConflict
+            }
+        }
+        return nil
+            
+        
+    }
+    func setTimeArray(selectedEvent: [NMoQTourDetail])-> Bool? {
+        var times: [[String : String]] = []
+        for i in 0 ... selectedEvent.count-1 {
+            let time = selectedEvent[i].date?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+            let timeArray = time?.components(separatedBy: "-")
+            if((timeArray?.count)! == 3) {
+                let startTime = timeArray![0] + "" + timeArray![1]
+                let endTime = timeArray![0] + "" + timeArray![2]
+                if(times.count == 0) {
+                    times = [["start": startTime, "end":endTime]]
+                } else {
+                    times.append(["start": startTime, "end":endTime])
+                    
+                }
+            }
+        }
+        if #available(iOS 10.0, *) {
+            let haveConflict = calculateToursOverlap(times: times)
+            return haveConflict
+        } else {
+            // Fallback on earlier versions
+        }
+        return nil
+    }
 
     func fetchUserEventListFromCoredata() {
+        if (userEventList.count > 0) {
+            userEventList.removeAll()
+        }
+        
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
@@ -587,16 +607,61 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                 eventArray = (try managedContext.fetch(fetchRequest) as? [RegisteredEventListEntity])!
                 if (eventArray.count > 0) {
                     for i in 0 ... eventArray.count-1 {
-                        self.userEventList.insert(NMoQUserEventList(title: eventArray[i].title, eventID: eventArray[i].eventId), at: i)
+                        self.userEventList.insert(NMoQUserEventList(title: eventArray[i].title, eventID: eventArray[i].eventId, regID: eventArray[i].regId), at: i)
                     }
-                    print(self.userEventList)
-                } else{
-                    self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
+    }
+    func deleteRegisteredEvent(registrationId: String?) {
+//        let managedContext = getContext()
+//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "RegisteredEventListEntity")
+//        fetchRequest.predicate = NSPredicate.init(format: "\("regId") == \(registrationId!)")
+//        let deleteRequest = NSBatchDeleteRequest( fetchRequest: fetchRequest)
+//        do{
+//            try managedContext.execute(deleteRequest)
+//            //fetchUserEventListFromCoredata()
+//        }catch let error as NSError {
+//            //handle error here
+//
+//        }
+        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+        if #available(iOS 10.0, *) {
+            let container = appDelegate!.persistentContainer
+            container.performBackgroundTask() {(managedContext) in
+                self.deleteExistingEvent(managedContext: managedContext, registrationId: registrationId)
+            }
+        } else {
+            let managedContext = appDelegate!.managedObjectContext
+            managedContext.perform {
+                self.deleteExistingEvent(managedContext: managedContext, registrationId: registrationId)
+            }
+        }
+    }
+//    func getContext() -> NSManagedObjectContext{
+//
+//        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+//        if #available(iOS 10.0, *) {
+//            return
+//                appDelegate!.persistentContainer.viewContext
+//        } else {
+//            return appDelegate!.managedObjectContext
+//        }
+//    }
+    func deleteExistingEvent(managedContext:NSManagedObjectContext,registrationId: String?)  {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "RegisteredEventListEntity")
+        fetchRequest.predicate = NSPredicate.init(format: "\("regId") == \(registrationId!)")
+        let deleteRequest = NSBatchDeleteRequest( fetchRequest: fetchRequest)
+        do{
+            try managedContext.execute(deleteRequest)
+            
+        }catch let error as NSError {
+            //handle error here
+            
+        }
+        
     }
     func getTimeStamp(currentRow:Int?) ->(startTime:Int?,endTime:Int?) {
         let time = nmoqTourDetail[currentRow!].date?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
@@ -604,8 +669,6 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         if((timeArray?.count)! == 3) {
             let startTime = timeArray![0] + "" + timeArray![1]
             let endTime = timeArray![0] + "" + timeArray![2]
-            print(startTime)
-            print(endTime)
             let dateFormat = "MM-dd-yyyy HH:mm"
             let start = convertStringToDate(string: startTime, withFormat: dateFormat)
             let end = convertStringToDate(string: endTime, withFormat: dateFormat)
@@ -618,25 +681,59 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         return (nil,nil)
     }
     func setRegistrationSwitchOn(selectedCell: PanelDetailCell?) {
-        loadComingSoonPopup()
+        //loadComingSoonPopup()
         selectedCell?.interestSwitch.tintColor = UIColor.settingsSwitchOnTint
         selectedCell?.interestSwitch.layer.cornerRadius = 16
         selectedCell?.interestSwitch.backgroundColor = UIColor.settingsSwitchOnTint
+        selectedCell?.interestSwitch.isOn = false
     }
     func setRegistrationSwitchOff(selectedCell: PanelDetailCell?) {
         selectedCell?.interestSwitch.onTintColor = UIColor.red
         selectedCell?.interestSwitch.layer.cornerRadius = 16
         selectedCell?.interestSwitch.backgroundColor = UIColor.red
+        selectedCell?.interestSwitch.isOn = true
     }
     func loadComingSoonPopup() {
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
+        popupView.tag = 0
         popupView.loadRegistrationPopup()
         self.view.addSubview(popupView)
     }
+    func loadAlreadyRegisteredPopup() {
+        popupView  = ComingSoonPopUp(frame: self.view.frame)
+        popupView.comingSoonPopupDelegate = self
+        popupView.tag = 1
+        popupView.loadAlreadyRegisteredPopupMessage()
+        self.view.addSubview(popupView)
+    }
     func closeButtonPressed() {
+        if (popupView.tag == 1) {
+            self.popupView.removeFromSuperview()
+            setRegistrationSwitchOff(selectedCell: selectedPanelCell)
+        }
         self.popupView.removeFromSuperview()
 
+    }
+    func loadConfirmationPopup() {
+        unRegisterPopupView  = AcceptDeclinePopup(frame: self.view.frame)
+        unRegisterPopupView.popupViewHeight.constant = 280
+        unRegisterPopupView.showUnregisterYesOrNoMessage()
+        unRegisterPopupView.declinePopupDelegate = self
+        self.view.addSubview(unRegisterPopupView)
+    }
+    func declinePopupCloseButtonPressed() {
+        
+    }
+    
+    func yesButtonPressed() {
+        setEntityUnRegistration(currentRow: selectedRow!, selectedCell: selectedPanelCell)
+        self.unRegisterPopupView.removeFromSuperview()
+    }
+    
+    func noButtonPressed() {
+        setRegistrationSwitchOn(selectedCell: selectedPanelCell)
+        self.unRegisterPopupView.removeFromSuperview()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

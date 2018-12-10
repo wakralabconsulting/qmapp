@@ -199,7 +199,7 @@ class PanelDetailCell: UITableViewCell {
 
         // activate the constraints
         NSLayoutConstraint.activate([verticalSpace])
-        if let arrayOffset = userEventList.index(where: {$0.eventID == tourDetailData?.nmoqEvent}) {
+        if let arrayOffset = userEventList.index(where: {$0.eventID == tourDetailData?.nid}) {
             setRegistrationSwitchOn()
         } else {
             setRegistrationSwitchOff()

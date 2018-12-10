@@ -31,6 +31,9 @@ class NMoQListCell: UITableViewCell {
                 cellImageView.kf.setImage(with: URL(string: imageUrl))
             }
         }
+        if (cellImageView.image == nil) {
+            cellImageView.image = UIImage(named: "default_imageX2")
+        }
     }
     func setTourMiddleDate(tourList: NMoQTourDetail?) {
         titleLabel.text = tourList?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
@@ -43,6 +46,9 @@ class NMoQListCell: UITableViewCell {
             if let imageUrl = tourList?.imageBanner![0]{
                 cellImageView.kf.setImage(with: URL(string: imageUrl))
             }
+        }
+        if (cellImageView.image == nil) {
+           cellImageView.image = UIImage(named: "default_imageX2")
         }
     }
 

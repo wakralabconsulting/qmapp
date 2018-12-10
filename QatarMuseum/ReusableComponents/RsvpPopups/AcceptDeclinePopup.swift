@@ -22,7 +22,8 @@ class AcceptDeclinePopup: UIView {
     @IBOutlet weak var noButton: UIButton!
     @IBOutlet weak var closeButton: UIButton!
     
-    @IBOutlet weak var descriptionLabel: UITextView!
+    @IBOutlet weak var titleLineLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var popupViewHeight: NSLayoutConstraint!
     
     var declinePopupDelegate : DeclinePopupProtocol?
@@ -55,6 +56,13 @@ class AcceptDeclinePopup: UIView {
     func showAcceptDeclineMessage() {
         titleLabel.text = NSLocalizedString("CONFIRMATION", comment: "CONFIRMATION in accept decline popup")
         descriptionLabel.text = NSLocalizedString("DECLINE_DESCRIPTION", comment: "DECLINE_DESCRIPTION in accept decline popup")
+        yesButton.setTitle(NSLocalizedString("YES", comment: "YES in accept decline popup"), for: .normal)
+        noButton.setTitle(NSLocalizedString("NO", comment: "NO in accept decline popup"), for: .normal)
+    }
+    func showUnregisterYesOrNoMessage() {
+        titleLabel.isHidden = true
+        descriptionLabel.text = NSLocalizedString(UNREGISTER_CONFIRMATION_MESSAGE, comment: "UNREGISTERmesage in accept decline popup")
+        titleLineLabel.isHidden = true
         yesButton.setTitle(NSLocalizedString("YES", comment: "YES in accept decline popup"), for: .normal)
         noButton.setTitle(NSLocalizedString("NO", comment: "NO in accept decline popup"), for: .normal)
     }

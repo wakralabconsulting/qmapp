@@ -9,3 +9,5 @@
 import Foundation
 var ENG_LANGUAGE = "en"
 var AR_LANGUAGE = "ar"
+var ALREADY_REGISTERED = "You are already registered for another event at the selected time."
+var UNREGISTER_CONFIRMATION_MESSAGE = "Are you sure you want to cancel the request to make your tour arrangements?"

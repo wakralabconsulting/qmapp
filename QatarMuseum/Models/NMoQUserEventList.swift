@@ -10,6 +10,7 @@ import Foundation
 struct NMoQUserEventList: ResponseObjectSerializable, ResponseCollectionSerializable {
     var title: String? = nil
     var eventID: String? = nil
+    var regID: String? = nil
     
     
     
@@ -17,14 +18,15 @@ struct NMoQUserEventList: ResponseObjectSerializable, ResponseCollectionSerializ
         if let representation = representation as? [String: Any] {
             self.title = representation["Title"] as? String
             self.eventID = representation["event_ID"] as? String
+            self.regID = representation["reg_id"] as? String
             
         }
     }
     
-    init (title:String?, eventID: String?) {
+    init (title:String?, eventID: String?, regID: String?) {
         self.title = title
         self.eventID = eventID
-        
+        self.regID = regID
     }
 }
 

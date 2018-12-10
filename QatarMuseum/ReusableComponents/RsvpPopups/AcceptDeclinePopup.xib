@@ -6,14 +6,12 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
         <array key="DINNextLTPro-Bold.otf">
             <string>DINNextLTPro-Bold</string>
-        </array>
-        <array key="DINNextLTPro-Regular.ttf">
-            <string>DINNextLTPro-Regular</string>
         </array>
     </customFonts>
     <objects>
@@ -21,10 +19,11 @@
             <connections>
                 <outlet property="declinePopup" destination="iN0-l3-epB" id="fyK-4L-JsB"/>
                 <outlet property="declinePopupInnerView" destination="iKo-SS-FRg" id="L2N-qu-QNB"/>
-                <outlet property="descriptionLabel" destination="6hp-0t-BKX" id="sFm-z6-Xho"/>
+                <outlet property="descriptionLabel" destination="bCE-NQ-mwA" id="OFC-r7-emZ"/>
                 <outlet property="noButton" destination="6Nk-lM-Vrd" id="xDQ-Am-74M"/>
-                <outlet property="popupViewHeight" destination="YnK-r2-ra8" id="TvJ-yE-hOo"/>
+                <outlet property="popupViewHeight" destination="bbT-WJ-Tyn" id="nHu-bi-Dya"/>
                 <outlet property="titleLabel" destination="HxL-o0-pNE" id="1ZO-rC-u2b"/>
+                <outlet property="titleLineLabel" destination="q2V-7j-Pw4" id="J7v-Sx-mlG"/>
                 <outlet property="yesButton" destination="tzk-Pl-3ZK" id="Wlx-3j-C9k"/>
             </connections>
         </placeholder>
@@ -34,20 +33,19 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iKo-SS-FRg" userLabel="Greetings Popup Inner View">
-                    <rect key="frame" x="46" y="198.5" width="283" height="270"/>
+                    <rect key="frame" x="52.5" y="243" width="270" height="182"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CONFIRMATION!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HxL-o0-pNE">
-                            <rect key="frame" x="67" y="34" width="149" height="21"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HxL-o0-pNE">
+                            <rect key="frame" x="135" y="34" width="0.0" height="0.0"/>
                             <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="21"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tzk-Pl-3ZK">
-                            <rect key="frame" x="20" y="153" width="243" height="44"/>
+                            <rect key="frame" x="30.5" y="73" width="210" height="40"/>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="243" id="Shz-dG-BVP"/>
-                                <constraint firstAttribute="height" constant="44" id="kuP-jj-VEM"/>
+                                <constraint firstAttribute="height" constant="40" id="kuP-jj-VEM"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="19"/>
                             <state key="normal" title="Yes">
@@ -55,7 +53,7 @@
                             </state>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                    <integer key="value" value="22"/>
+                                    <integer key="value" value="20"/>
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                             <connections>
@@ -64,19 +62,15 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Nk-lM-Vrd">
-                            <rect key="frame" x="20" y="205" width="243" height="44"/>
+                            <rect key="frame" x="30.5" y="121" width="210" height="40"/>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="243" id="VLU-rA-Ezj"/>
-                                <constraint firstAttribute="height" constant="44" id="vBT-hO-gHD"/>
-                            </constraints>
                             <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="19"/>
                             <state key="normal" title="No">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                    <integer key="value" value="22"/>
+                                    <integer key="value" value="20"/>
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                             <connections>
@@ -84,17 +78,14 @@
                                 <action selector="noButtonTouchDown:" destination="-1" eventType="touchDown" id="YR1-lp-nxb"/>
                             </connections>
                         </button>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Are you sure you want to decline the invitation" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6hp-0t-BKX">
-                            <rect key="frame" x="20" y="74" width="243" height="76"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="243" id="F4U-ib-n5R"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="20"/>
-                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                        </textView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bCE-NQ-mwA">
+                            <rect key="frame" x="8" y="53" width="254" height="0.0"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q2V-7j-Pw4">
-                            <rect key="frame" x="120.5" y="56" width="42" height="3"/>
+                            <rect key="frame" x="113.5" y="35" width="42" height="3"/>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="3" id="RZ9-sN-c4G"/>
@@ -107,19 +98,24 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="6Nk-lM-Vrd" firstAttribute="centerX" secondItem="iKo-SS-FRg" secondAttribute="centerX" id="165-lT-Avy"/>
+                        <constraint firstItem="bCE-NQ-mwA" firstAttribute="leading" secondItem="iKo-SS-FRg" secondAttribute="leading" constant="8" id="1Ex-DC-WeL"/>
                         <constraint firstItem="q2V-7j-Pw4" firstAttribute="centerX" secondItem="iKo-SS-FRg" secondAttribute="centerX" id="1QF-C9-OOh"/>
+                        <constraint firstItem="tzk-Pl-3ZK" firstAttribute="top" secondItem="bCE-NQ-mwA" secondAttribute="bottom" constant="20" id="52C-Do-m31"/>
                         <constraint firstItem="tzk-Pl-3ZK" firstAttribute="centerX" secondItem="iKo-SS-FRg" secondAttribute="centerX" id="CIV-NR-p4W"/>
-                        <constraint firstItem="tzk-Pl-3ZK" firstAttribute="centerX" secondItem="6hp-0t-BKX" secondAttribute="centerX" id="JGx-bK-wZG"/>
+                        <constraint firstItem="HxL-o0-pNE" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iKo-SS-FRg" secondAttribute="leading" constant="3" id="Dhc-OU-QK1"/>
+                        <constraint firstItem="tzk-Pl-3ZK" firstAttribute="leading" secondItem="iKo-SS-FRg" secondAttribute="leading" constant="30" id="LFW-u8-Hgw"/>
                         <constraint firstItem="q2V-7j-Pw4" firstAttribute="top" secondItem="HxL-o0-pNE" secondAttribute="bottom" constant="1" id="LfY-UJ-1En"/>
-                        <constraint firstItem="6hp-0t-BKX" firstAttribute="top" secondItem="q2V-7j-Pw4" secondAttribute="bottom" constant="15" id="QLv-GB-jWa"/>
-                        <constraint firstItem="6hp-0t-BKX" firstAttribute="centerX" secondItem="iKo-SS-FRg" secondAttribute="centerX" id="Vqk-E3-NZ3"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="HxL-o0-pNE" secondAttribute="trailing" constant="3" id="QPL-X1-txW"/>
+                        <constraint firstAttribute="trailing" secondItem="bCE-NQ-mwA" secondAttribute="trailing" constant="8" id="SJh-sL-Ulb"/>
+                        <constraint firstItem="bCE-NQ-mwA" firstAttribute="top" secondItem="q2V-7j-Pw4" secondAttribute="bottom" constant="15" id="X9c-Pg-ijx"/>
                         <constraint firstItem="HxL-o0-pNE" firstAttribute="top" secondItem="iKo-SS-FRg" secondAttribute="top" constant="34" id="XZq-Dm-RWP"/>
-                        <constraint firstAttribute="height" constant="270" id="YnK-r2-ra8"/>
+                        <constraint firstAttribute="height" constant="182" id="bbT-WJ-Tyn"/>
                         <constraint firstItem="HxL-o0-pNE" firstAttribute="centerX" secondItem="iKo-SS-FRg" secondAttribute="centerX" id="dGR-7g-eQc"/>
-                        <constraint firstItem="6Nk-lM-Vrd" firstAttribute="centerX" secondItem="6hp-0t-BKX" secondAttribute="centerX" id="jOn-nE-bWU"/>
+                        <constraint firstAttribute="trailing" secondItem="tzk-Pl-3ZK" secondAttribute="trailing" constant="30" id="eKm-jm-a63"/>
+                        <constraint firstItem="6Nk-lM-Vrd" firstAttribute="width" secondItem="tzk-Pl-3ZK" secondAttribute="width" id="mXw-on-meB"/>
                         <constraint firstAttribute="bottom" secondItem="6Nk-lM-Vrd" secondAttribute="bottom" constant="21" id="nr5-l1-cKQ"/>
-                        <constraint firstItem="tzk-Pl-3ZK" firstAttribute="top" secondItem="6hp-0t-BKX" secondAttribute="bottom" constant="3" id="ueY-yz-BHk"/>
                         <constraint firstItem="6Nk-lM-Vrd" firstAttribute="top" secondItem="tzk-Pl-3ZK" secondAttribute="bottom" constant="8" symbolic="YES" id="vDy-1u-aqK"/>
+                        <constraint firstItem="6Nk-lM-Vrd" firstAttribute="height" secondItem="tzk-Pl-3ZK" secondAttribute="height" id="yLW-xL-PDW"/>
                     </constraints>
                 </view>
             </subviews>
@@ -128,8 +124,8 @@
                 <constraint firstItem="iKo-SS-FRg" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="4bb-g7-nqF"/>
                 <constraint firstItem="iKo-SS-FRg" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="MBW-M0-Inu"/>
                 <constraint firstItem="iKo-SS-FRg" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="bsP-Yf-qMi"/>
-                <constraint firstItem="iKo-SS-FRg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="46" id="gbd-ae-WBD"/>
                 <constraint firstItem="iKo-SS-FRg" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="oHK-4i-y0b"/>
+                <constraint firstItem="iKo-SS-FRg" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.72" id="rde-E8-08b"/>
             </constraints>
             <point key="canvasLocation" x="32.799999999999997" y="130.78817733990149"/>
         </view>

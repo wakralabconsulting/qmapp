@@ -918,6 +918,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     let userEventInfo: RegisteredEventListEntity = NSEntityDescription.insertNewObject(forEntityName: "RegisteredEventListEntity", into: managedContext) as! RegisteredEventListEntity
                         let userEventListDict = userEventList[i]
                         userEventInfo.eventId = userEventListDict.eventID
+                        userEventInfo.regId = userEventListDict.regID
                         do{
                             try managedContext.save()
                         }
