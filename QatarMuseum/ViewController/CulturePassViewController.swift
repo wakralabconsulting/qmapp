@@ -7,6 +7,7 @@
 //
 
 import Alamofire
+import CoreData
 import Crashlytics
 import UIKit
 
@@ -36,6 +37,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     var loginArray : LoginData?
     var userInfoArray : UserInfoData?
     let networkReachability = NetworkReachabilityManager()
+    var userEventList: [NMoQUserEventList]! = []
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -251,7 +253,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
             
         }
         self.loginPopUpView.removeFromSuperview()
-        
+        getEventListUserRegistrationFromServer()
         let profileView =  self.storyboard?.instantiateViewController(withIdentifier: "profileViewId") as! ProfileViewController
         profileView.loginInfo = loginArray
         profileView.fromCulturePass = true
@@ -412,6 +414,60 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
                 self.loginPopUpView.loadingView.stopLoading()
                 self.loginPopUpView.loadingView.isHidden = true
                 
+            }
+        }
+    }
+    //MARK : NMoQ EntityRegistratiion
+    func getEventListUserRegistrationFromServer() {
+        if((accessToken != nil) && (UserDefaults.standard.value(forKey: "uid") != nil)){
+            let userId = UserDefaults.standard.value(forKey: "uid") as! String
+            _ = Alamofire.request(QatarMuseumRouter.NMoQEventListUserRegistration(["user_id" : userId])).responseObject { (response: DataResponse<NMoQUserEventListValues>) -> Void in
+                switch response.result {
+                case .success(let data):
+                    self.userEventList = data.eventList
+                    self.saveOrUpdateEventReistratedCoredata()
+                case .failure( _):
+                    self.loginPopUpView.removeFromSuperview()
+                    self.loginPopUpView.loadingView.stopLoading()
+                    self.loginPopUpView.loadingView.isHidden = true
+                    
+                }
+            }
+            
+        }
+    }
+    //MARK: EventRegistrationCoreData
+    func saveOrUpdateEventReistratedCoredata() {
+        if (userEventList.count > 0) {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.userEventCoreDataInBackgroundThread(managedContext: managedContext)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.userEventCoreDataInBackgroundThread(managedContext : managedContext)
+                }
+            }
+        }
+    }
+    func userEventCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            if (userEventList.count > 0) {
+                for i in 0 ... userEventList.count-1 {
+                    let userEventInfo: RegisteredEventListEntity = NSEntityDescription.insertNewObject(forEntityName: "RegisteredEventListEntity", into: managedContext) as! RegisteredEventListEntity
+                    let userEventListDict = userEventList[i]
+                    userEventInfo.eventId = userEventListDict.eventID
+                    userEventInfo.regId = userEventListDict.regID
+                    do{
+                        try managedContext.save()
+                    }
+                    catch{
+                        print(error)
+                    }
+                }
             }
         }
     }
