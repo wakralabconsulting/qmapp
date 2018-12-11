@@ -12,6 +12,7 @@ struct HomeBanner: ResponseObjectSerializable, ResponseCollectionSerializable {
     var fullContentID: String? = nil
     var bannerTitle: String? = nil
     var bannerLink: String? = nil
+    var image: [String]? = []
     //for Travel List
     var introductionText: String? = nil
     var email: String? = nil
@@ -26,6 +27,7 @@ struct HomeBanner: ResponseObjectSerializable, ResponseCollectionSerializable {
             self.fullContentID = representation["full_content_ID"] as? String
             self.bannerTitle = representation["Banner_title"] as? String
             self.bannerLink = representation["banner_link"] as? String
+            self.image = representation["Image"] as? [String]
             //for Travel List
             self.introductionText = representation["Introduction_Text"] as? String
             self.email = representation["email"] as? String
@@ -35,11 +37,12 @@ struct HomeBanner: ResponseObjectSerializable, ResponseCollectionSerializable {
         }
     }
     
-    init (title:String?, fullContentID: String?, bannerTitle: String?, bannerLink: String?,introductionText:String?, email: String?, contactNumber: String?, promotionalCode: String?,claimOffer: String?) {
+    init (title:String?, fullContentID: String?, bannerTitle: String?, bannerLink: String?, image: [String]?,introductionText:String?, email: String?, contactNumber: String?, promotionalCode: String?,claimOffer: String?) {
         self.title = title
         self.fullContentID = fullContentID
         self.bannerTitle = bannerTitle
         self.bannerLink = bannerLink
+        self.image = image
     }
 }
 

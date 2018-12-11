@@ -286,6 +286,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 museumsView.fromHomeBanner = true
                 museumsView.museumTitleString = homeBannerList[0].bannerTitle
                 museumsView.bannerId = homeBannerList[0].fullContentID
+                museumsView.bannerImageArray = homeBannerList[0].image
                 let transition = CATransition()
                 transition.duration = 0.25
                 transition.type = kCATransitionPush
@@ -969,6 +970,24 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             homeInfo.fullContentID = homeListDict.fullContentID
             homeInfo.bannerTitle = homeListDict.bannerTitle
             homeInfo.bannerLink = homeListDict.bannerLink
+        
+        if(homeListDict.image != nil){
+            if((homeListDict.image?.count)! > 0) {
+                for i in 0 ... (homeListDict.image?.count)!-1 {
+                    var bannerImage: HomeBannerImageEntity
+                    let bannerImgaeArray: HomeBannerImageEntity = NSEntityDescription.insertNewObject(forEntityName: "HomeBannerImageEntity", into: managedObjContext) as! HomeBannerImageEntity
+                    bannerImgaeArray.image = homeListDict.image![i]
+                    
+                    bannerImage = bannerImgaeArray
+                    homeInfo.addToBannerImageRelations(bannerImage)
+                    do {
+                        try managedObjContext.save()
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                }
+            }
+        }
         do {
             try managedObjContext.save()
         } catch let error as NSError {
@@ -984,7 +1003,16 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeBannerEntity])!
                 if (homeArray.count > 0) {
                     for i in 0 ... homeArray.count-1 {
-                        self.homeBannerList.insert(HomeBanner(title: homeArray[i].title, fullContentID: homeArray[i].fullContentID, bannerTitle: homeArray[i].bannerTitle, bannerLink: homeArray[i].bannerLink, introductionText: nil, email: nil, contactNumber: nil, promotionalCode: nil, claimOffer: nil), at: i)
+                        let homeBannerDict = homeArray[i]
+                        var imagesArray : [String] = []
+                        let imagesInfoArray = (homeBannerDict.bannerImageRelations?.allObjects) as! [HomeBannerImageEntity]
+                        if(imagesInfoArray.count > 0) {
+                            for i in 0 ... imagesInfoArray.count-1 {
+                                imagesArray.append(imagesInfoArray[i].image!)
+                            }
+                        }
+                        self.homeBannerList.insert(HomeBanner(title: homeArray[i].title, fullContentID: homeArray[i].fullContentID, bannerTitle: homeArray[i].bannerTitle, bannerLink: homeArray[i].bannerLink,image: imagesArray, introductionText: nil, email: nil, contactNumber: nil, promotionalCode: nil, claimOffer: nil), at: i)
+                        
                     }
                     if(homeList.count == 0){
                         self.showNoNetwork()
