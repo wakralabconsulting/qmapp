@@ -10,7 +10,6 @@ import Alamofire
 import Crashlytics
 import Kingfisher
 import UIKit
-
 class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,comingSoonPopUpProtocol {
     
     @IBOutlet weak var museumsTopbar: TopBarView!
@@ -33,6 +32,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     var apnDelegate : APNProtocol?
     var fromHomeBanner : Bool? = false
     var bannerId: String? = nil
+    var bannerImageArray : [String]? = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,8 +45,11 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     
     func setupUI() {
-
-        getMuseumDataFromServer()
+        if (fromHomeBanner == false) {
+            getMuseumDataFromServer()
+        } else {
+            self.setImageArray(imageArray: bannerImageArray)
+        }
         museumsSlideView.imagesContentMode = .scaleAspectFill
         self.museumsSlideView.addImage(UIImage(named: "sliderPlaceholder"))
         let aboutName = NSLocalizedString("ABOUT", comment: "ABOUT  in the Museum")
@@ -120,22 +123,22 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         pageControl.currentPage = Int(museumsSlideView.currentIndex)
         pageControl.addTarget(self, action: #selector(MuseumsViewController.pageChanged), for: .valueChanged)
     }
-    
-    func setImageArray() {
+    func setImageArray(imageArray: [String]?) {
         self.sliderImgArray[0] = UIImage(named: "sliderPlaceholder")!
         self.sliderImgArray[1] = UIImage(named: "sliderPlaceholder")!
         self.sliderImgArray[2] = UIImage(named: "sliderPlaceholder")!
-    
-        if ((museumArray[0].multimediaFile?.count)! >= 4) {
+
+        if ((imageArray?.count)! >= 4) {
             totalImgCount = 3
-        } else if ((museumArray[0].multimediaFile?.count)! > 1){
-            totalImgCount = (museumArray[0].multimediaFile?.count)!-1
+        } else if ((imageArray?.count)! > 1){
+            //totalImgCount = (imageArray?.count)!-1
+            totalImgCount = (imageArray?.count)!
         } else {
             totalImgCount = 0
         }
         if (totalImgCount > 0) {
-            for  var i in 1 ... totalImgCount {
-                let imageUrlString = museumArray[0].multimediaFile![i]
+            for  var i in 0 ... totalImgCount-1 {
+                let imageUrlString = imageArray![i]
                 downloadImage(imageUrlString: imageUrlString)
             }
         }
@@ -152,6 +155,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                         self.setSlideShow(imgArray: self.sliderImgArray)
                         self.museumsSlideView.start()
                     } else {
+                        print(error)
                         if(self.sliderImgCount == 0) {
                            self.sliderImgArray[0] = UIImage(named: "sliderPlaceholder")!
                         } else {
@@ -543,7 +547,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             case .success(let data):
                 self.museumArray = data.museum!
                 if(self.museumArray.count > 0) {
-                    self.setImageArray()
+                    self.setImageArray(imageArray: self.museumArray[0].multimediaFile)
                 }
             case .failure(let error):
                 print(error)

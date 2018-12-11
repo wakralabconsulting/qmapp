@@ -85,6 +85,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         cell.selectionStyle = .none
         if(pageNameString == NMoQPanelPage.PanelDetailPage) {
             //cell.setPanelDetailCellContent(panelDetailData: nmoqSpecialEventDetail[indexPath.row])
+            selectedRow = indexPath.row
             cell.setTourSecondDetailCellContent(tourDetailData: nmoqTourDetail[indexPath.row], userEventList: userEventList)
             cell.registerOrUnRegisterAction = {
                 () in
