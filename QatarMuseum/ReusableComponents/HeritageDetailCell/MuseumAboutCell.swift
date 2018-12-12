@@ -11,7 +11,7 @@ import AVKit
 import UIKit
 import MapKit
 import YouTubePlayer
-class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
+class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UITextViewDelegate {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var titleLabel: UITextView!
@@ -323,19 +323,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         downloadImg.isHidden = false
         downloadLabel.isHidden = false
         downloadButton.isHidden = false
-        var subDesc : String? = ""
-        if let descriptionArray = aboutData.mobileDescription  {
-            if ((descriptionArray.count) > 0) {
-                for i in 0 ... (aboutData.mobileDescription?.count)!-1 {
-                    if(i == 0) {
-                        titleDescriptionLabel.text = aboutData.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-                    } else {
-                        subDesc = subDesc! + aboutData.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-                        midTitleDescriptionLabel.text = subDesc
-                    }
-                }
-            }
-        }
+        
         downloadLabel.text = NSLocalizedString("DOWNLOAD_TEXT",
                                                     comment: "DOWNLOAD_TEXT in the Abbout detail")
         sundayTimeLabel.text = aboutData.eventDate
@@ -352,7 +340,49 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
             contactLabel.text = aboutData.contactEmail! + "\n\n" + aboutData.contactNumber!
             contactLine.isHidden = false
         }
+        //Description
+        var subDesc : String? = ""
+        if let descriptionArray = aboutData.mobileDescription  {
+            if ((descriptionArray.count) > 0) {
+                for i in 0 ... (aboutData.mobileDescription?.count)!-1 {
+                    if(i == 0) {
+                        titleDescriptionLabel.text = aboutData.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+                    } else {
+                        subDesc = subDesc! + aboutData.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+                        
+                        if (subDesc != "") {
+                            let attributedString = setHyperLinkText(originalString: subDesc)
+                            if(attributedString != nil) {
+                                midTitleDescriptionLabel.delegate = self
+                                midTitleDescriptionLabel.attributedText = attributedString
+                                midTitleDescriptionLabel.isUserInteractionEnabled = true
+                                midTitleDescriptionLabel.isEditable = false
+                                //midTitleDescriptionLabel.tintColor = UIColor.viewMyFavDarkPink
+                                midTitleDescriptionLabel.textAlignment = .center
+                            } else {
+                                midTitleDescriptionLabel.text = subDesc
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        }
+        if(subDesc == "") {
+            let attributedString = setHyperLinkText(originalString: titleDescriptionLabel.text)
+            if(attributedString != nil) {
+                titleDescriptionLabel.delegate = self
+                titleDescriptionLabel.attributedText = attributedString
+                titleDescriptionLabel.isUserInteractionEnabled = true
+                titleDescriptionLabel.isEditable = false
+                titleDescriptionLabel.textAlignment = .center
+            } else {
+                titleDescriptionLabel.text = subDesc
+            }
+        }
+
         
+        //load Map
         var latitudeString  = String()
         var longitudeString = String()
         var latitude : Double?
@@ -381,12 +411,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
             annotation.subtitle = aboutData.name
             mapView.addAnnotation(annotation)
         }
-//        if (aboutData.multimediaVideo != nil) {
-//            if((aboutData.multimediaVideo?.count)! > 0) {
-//                self.loadVideo(urlString: aboutData.multimediaVideo?[0])
-//            }
-//        }
-        
+
         
     }
     
@@ -433,10 +458,32 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
         // activate the constraints
         NSLayoutConstraint.activate([verticalSpace])
         
-//            contactLabel.text = "info@qm.org.qa"
-//            contactLine.isHidden = false
     }
-
+    func setHyperLinkText(originalString: String?) -> NSMutableAttributedString? {
+        
+        let splitArray = originalString?.components(separatedBy: " ")
+        if((splitArray?.count)! > 1) {
+            let last = splitArray![(splitArray?.count)!-1]
+            let lastTwo = splitArray![(splitArray?.count)!-2]
+            let linkString = lastTwo + " " + last
+            let stringValue = originalString! as NSString
+            
+            let yourAttributes = [kCTForegroundColorAttributeName: UIColor.black, kCTFontAttributeName: UIFont.englishTitleFont]
+            let attributedString = NSMutableAttributedString(string: originalString!, attributes: yourAttributes as [NSAttributedStringKey : Any])
+            
+            
+            let linkAttributes: [NSAttributedStringKey: Any] = [
+                .link: NSURL(string: "http://visitqatar.qa/")!,
+                NSAttributedStringKey.foregroundColor: UIColor.blue,
+                NSAttributedStringKey.underlineStyle: NSNumber.init(value: Int8(NSUnderlineStyle.styleSingle.rawValue)),
+                NSAttributedStringKey.font : UIFont.englishTitleFont
+            ]
+            attributedString.setAttributes(linkAttributes, range: stringValue.range(of: linkString))
+            return attributedString
+        }
+        return nil
+        
+    }
     @IBAction func didTapFavouriteButton(_ sender: UIButton) {
         UIButton.animate(withDuration: 0.3,
                          animations: {
