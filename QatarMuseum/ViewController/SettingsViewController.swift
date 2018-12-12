@@ -218,7 +218,7 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
     //MARK: Event Popup Delegate
     func loadConfirmationPopup() {
         eventPopup  = EventPopupView(frame: self.view.frame)
-        eventPopup.eventPopupHeight.constant = 250
+       // eventPopup.eventPopupHeight.constant = 250
         eventPopup.eventPopupDelegate = self
         eventPopup.eventTitle.text = NSLocalizedString("CHANGE_LANGUAGE_TITLE", comment: "CHANGE_LANGUAGE_TITLE  in the popup view")
         eventPopup.eventDescription.text = NSLocalizedString("SETTINGS_REDIRECTION_MSG", comment: "SETTINGS_REDIRECTION_MSG  in the popup view")

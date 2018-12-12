@@ -346,10 +346,10 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource {
                                                     comment: "LOCATION_TITLE in the Heritage detail")
         openingTimeTitleLabel.text = NSLocalizedString("EVENT_DATE",
                                                        comment: "EVENT_DATE in the Heritage detail")
-        if ((aboutData.contactEmail != nil) && (aboutData.contactEmail != "")) {
+        if ((aboutData.contactEmail != nil) && (aboutData.contactEmail != "") || (aboutData.contactNumber != nil) && (aboutData.contactEmail != "")) {
             contactTitleLabel.text = NSLocalizedString("CONTACT_TITLE",
                                                        comment: "CONTACT_TITLE in the Heritage detail")
-            contactLabel.text = aboutData.contactEmail
+            contactLabel.text = aboutData.contactEmail! + "\n\n" + aboutData.contactNumber!
             contactLine.isHidden = false
         }
         

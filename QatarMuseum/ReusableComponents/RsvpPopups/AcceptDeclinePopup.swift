@@ -63,8 +63,8 @@ class AcceptDeclinePopup: UIView {
         titleLabel.isHidden = true
         descriptionLabel.text = NSLocalizedString(UNREGISTER_CONFIRMATION_MESSAGE, comment: "UNREGISTERmesage in accept decline popup")
         titleLineLabel.isHidden = true
-        yesButton.setTitle(NSLocalizedString("YES", comment: "YES in accept decline popup"), for: .normal)
-        noButton.setTitle(NSLocalizedString("NO", comment: "NO in accept decline popup"), for: .normal)
+        yesButton.setTitle(YES, for: .normal)
+        noButton.setTitle(NO, for: .normal)
     }
     @IBAction func didTapNoButton(_ sender: UIButton) {
         self.noButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)

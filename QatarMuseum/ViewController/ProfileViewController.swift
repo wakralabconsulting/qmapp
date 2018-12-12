@@ -421,7 +421,7 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     }
     func loadConfirmationPopup() {
         acceptDeclinePopupView  = AcceptDeclinePopup(frame: self.view.frame)
-        acceptDeclinePopupView.popupViewHeight.constant = 270
+        //acceptDeclinePopupView.popupViewHeight.constant = 270
         acceptDeclinePopupView.showAcceptDeclineMessage()
         acceptDeclinePopupView.declinePopupDelegate = self
         self.view.addSubview(acceptDeclinePopupView)

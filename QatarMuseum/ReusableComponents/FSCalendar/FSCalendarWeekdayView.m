@@ -50,9 +50,9 @@
     
     _weekdayPointers = [NSPointerArray weakObjectsPointerArray];
     for (int i = 0; i < 7; i++) {
-       // UILabel *weekdayLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        UILabel *weekdayLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         //changed
-        UITextView *weekdayLabel = [[UITextView alloc] initWithFrame:CGRectZero];
+        //UITextView *weekdayLabel = [[UITextView alloc] initWithFrame:CGRectZero];
         weekdayLabel.textAlignment = NSTextAlignmentCenter;
         
         //changed

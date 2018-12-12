@@ -1490,10 +1490,10 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     }
     //MARK: Event Popup Delegate
     func loadPermissionPopup() {
-        eventPopup.eventTitle.isScrollEnabled = false
+        //eventPopup.eventTitle.isScrollEnabled = false
         
         eventPopup  = EventPopupView(frame: self.view.frame)
-        eventPopup.eventPopupHeight.constant = 300
+        //eventPopup.eventPopupHeight.constant = 300
         eventPopup.eventPopupDelegate = self
         
         eventPopup.eventTitle.text = NSLocalizedString("PERMISSION_TITLE", comment: "PERMISSION_TITLE  in the popup view")

@@ -19,10 +19,10 @@ class EventPopupView: UIView {
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var eventPopupInnerView: UIView!
     @IBOutlet weak var addToCalendarButton: UIButton!
-    @IBOutlet weak var eventTitle: UITextView!
+    @IBOutlet weak var eventTitle: UILabel!
     @IBOutlet weak var eventPopupHeight: NSLayoutConstraint!
     
-    @IBOutlet weak var eventDescription: UITextView!
+    @IBOutlet weak var eventDescription: UILabel!
     var eventPopupDelegate : EventPopUpProtocol?
     override init(frame: CGRect) {
         super.init(frame: frame)
