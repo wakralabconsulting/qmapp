@@ -15,10 +15,6 @@ enum NMoQPanelPage {
     case TourDetailPage
 }
 class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,UITableViewDelegate,UITableViewDataSource,HeaderViewProtocol,comingSoonPopUpProtocol,DeclinePopupProtocol {
-    
-    
-    
-    
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
@@ -41,6 +37,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         super.viewDidLoad()
         registerCell()
         setupUI()
+        
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -136,9 +133,12 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         if (selectedCell?.interestSwitch.isOn)! {
             loadConfirmationPopup()
         } else {
+            selectedCell?.interestSwitch.tintColor = UIColor.settingsSwitchOnTint
+            selectedCell?.interestSwitch.backgroundColor = UIColor.settingsSwitchOnTint
             if(userEventList.count == 0) {
                 self.getEntityRegistrationFromServer(currentRow: currentRow, selectedCell: selectedCell)
             } else {
+                
                 let haveConflict = checkConflictWithAlreadyRegisteredEvent(currentRow: currentRow)
                 if((haveConflict == false) || (haveConflict == nil)) {
                     self.getEntityRegistrationFromServer(currentRow: currentRow, selectedCell: selectedCell)
@@ -471,47 +471,61 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         }
     }
     
-    @available(iOS 10.0, *)
+   
     func calculateToursOverlap(times : [[String : String]]) -> Bool? {
         
         let dateFormat = "MM-dd-yyyy HH:mm" //Z is for zone
 
+        if #available(iOS 10.0, *) {
             var intervals = [DateInterval]()
-        
-
-        // Loop through date ranges to convert them to date intervals
-
-        for item in times {
-
-            if let start = convertStringToDate(string: item["start"]!, withFormat: dateFormat),
-
-                let end = convertStringToDate(string: item["end"]!, withFormat: dateFormat) {
-
-                intervals.append(DateInterval(start: start, end: end))
-
+            // Loop through date ranges to convert them to date intervals
+            
+            for item in times {
+                
+                if let start = convertStringToDate(string: item["start"]!, withFormat: dateFormat),
+                    
+                    let end = convertStringToDate(string: item["end"]!, withFormat: dateFormat) {
+                    
+                    intervals.append(DateInterval(start: start, end: end))
+                }
+                
             }
-
+            // Check for intersection
+            
+            let intersection = intersect(intervals: intervals)
+            
+            print(intersection) // Also here we can block actions based on intersection found
+            if (intersection == nil) {
+                return false
+            } else {
+                return true
+            }
+        } else {
+            //Older Version
+            let d1 = convertStringToDate(string: times[0]["start"]!, withFormat: dateFormat)
+            let d2 = convertStringToDate(string: times[0]["end"]!, withFormat: dateFormat)
+            let startDateStamp:TimeInterval = d1!.timeIntervalSince1970
+            let dateSt:Int = Int(startDateStamp)
+            let EndDateStamp:TimeInterval = d2!.timeIntervalSince1970
+            let dateEnd:Int = Int(EndDateStamp)
+            let firstDayTimeDiff = dateEnd - dateSt
+            
+            let d3 = convertStringToDate(string: times[1]["start"]!, withFormat: dateFormat)
+            let d4 = convertStringToDate(string: times[1]["end"]!, withFormat: dateFormat)
+            let startDateStamp2:TimeInterval = d3!.timeIntervalSince1970
+            let dateSt2:Int = Int(startDateStamp2)
+            let EndDateStamp2:TimeInterval = d4!.timeIntervalSince1970
+            let dateEnd2:Int = Int(EndDateStamp2)
+            let SecondDayTimeDiff = dateEnd2 - dateSt2
+            let totalDiff = SecondDayTimeDiff - firstDayTimeDiff
+            if(totalDiff == 0) {
+                return true
+            }
+            return false
         }
         
-//        let cal = Calendar.current
-//        let d1 = convertStringToDate(string: times[0]["start"]!, withFormat: dateFormat)
-//        let d2 = convertStringToDate(string: times[0]["end"]!, withFormat: dateFormat) // April 27, 2018 12:00:00 AM
-//        let components = cal.dateComponents([.hour], from: d2!, to: d1!)
-//        let diff = components.hour!
-//print(intervals)
-//        print(diff)
 
-
-        // Check for intersection
-
-        let intersection = intersect(intervals: intervals)
-
-        print(intersection) // Also here we can block actions based on intersection found
-        if (intersection == nil) {
-            return false
-        } else {
-            return true
-        }
+        
 
     }
     // Converts the string to date with given format if require
@@ -550,15 +564,18 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         
     }
     func checkConflictWithAlreadyRegisteredEvent(currentRow: Int?) -> Bool? {
-//        let selectedEventId = nmoqTourDetail[currentRow!].nid
-//        var eventIdArray = NSArray()
-//        for i in  0 ... nmoqTourDetail.count-1 {
-//            if(selectedEventId != nmoqTourDetail[i].nid) {
-//                eventIdArray.adding(nmoqTourDetail[i].nid)
-//                }
-//            }
+        let selectedEventId = nmoqTourDetail[currentRow!].nid
+        var conflictIdArray: [NMoQTourDetail]! = []
+        for i in  0 ... nmoqTourDetail.count-1 {
+            if(selectedEventId == nmoqTourDetail[i].nid) {
+                conflictIdArray = nmoqTourDetail
+                conflictIdArray.remove(at: i)
+                break
+                }
+            }
+        
         for i  in 0 ... userEventList.count-1 {
-            if let idArray = nmoqTourDetail.first(where: {$0.nid == userEventList[i].eventID}) {
+            if let idArray = conflictIdArray.first(where: {$0.nid == userEventList[i].eventID}) {
                 var timeEvents :[NMoQTourDetail] = []
                 timeEvents.append(idArray)
                 timeEvents.append(nmoqTourDetail[currentRow!])
@@ -586,12 +603,9 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                 }
             }
         }
-        if #available(iOS 10.0, *) {
+        
             let haveConflict = calculateToursOverlap(times: times)
             return haveConflict
-        } else {
-            // Fallback on earlier versions
-        }
         return nil
     }
 
@@ -617,17 +631,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         }
     }
     func deleteRegisteredEvent(registrationId: String?) {
-//        let managedContext = getContext()
-//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "RegisteredEventListEntity")
-//        fetchRequest.predicate = NSPredicate.init(format: "\("regId") == \(registrationId!)")
-//        let deleteRequest = NSBatchDeleteRequest( fetchRequest: fetchRequest)
-//        do{
-//            try managedContext.execute(deleteRequest)
-//            //fetchUserEventListFromCoredata()
-//        }catch let error as NSError {
-//            //handle error here
-//
-//        }
+
         let appDelegate =  UIApplication.shared.delegate as? AppDelegate
         if #available(iOS 10.0, *) {
             let container = appDelegate!.persistentContainer
@@ -641,16 +645,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             }
         }
     }
-//    func getContext() -> NSManagedObjectContext{
-//
-//        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
-//        if #available(iOS 10.0, *) {
-//            return
-//                appDelegate!.persistentContainer.viewContext
-//        } else {
-//            return appDelegate!.managedObjectContext
-//        }
-//    }
+
     func deleteExistingEvent(managedContext:NSManagedObjectContext,registrationId: String?)  {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "RegisteredEventListEntity")
         fetchRequest.predicate = NSPredicate.init(format: "\("regId") == \(registrationId!)")
@@ -718,7 +713,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     func loadConfirmationPopup() {
         unRegisterPopupView  = AcceptDeclinePopup(frame: self.view.frame)
-        unRegisterPopupView.popupViewHeight.constant = 280
+        //unRegisterPopupView.popupViewHeight.constant = 280
         unRegisterPopupView.showUnregisterYesOrNoMessage()
         unRegisterPopupView.declinePopupDelegate = self
         self.view.addSubview(unRegisterPopupView)

@@ -83,6 +83,9 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             collectionViewNames = [aboutBanner,tourBanner,travelBanner,panelBanner]
             previousButton.isHidden = true
             nextButton.isHidden = true
+            museumsTopbar.eventButton.isHidden = true
+            museumsTopbar.notificationButton.isHidden = true
+            museumsTopbar.profileButton.isHidden = true
         } else {
             if ((museumId != nil) && ((museumId == "63") || (museumId == "96"))) {
                 collectionViewImages = ["MIA_AboutX1","Audio CircleX1","exhibition_blackX1","collectionsX1","park_blackX1","diningX1",]

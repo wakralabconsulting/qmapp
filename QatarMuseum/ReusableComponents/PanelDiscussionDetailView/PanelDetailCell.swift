@@ -67,8 +67,8 @@ class PanelDetailCell: UITableViewCell {
     func setPanelDetailCellContent(panelDetailData: NMoQTour?) {
         topTitle.text = panelDetailData?.subtitle
         topDescription.text = panelDetailData?.dayDescription
-        interestedLabel.text = "Registered"
-        notInterestedLabel.text = "Not Registered"
+        interestedLabel.text = REGISTER
+        notInterestedLabel.text = UNREGISTER
         secondTitle.text = panelDetailData?.moderatorName
         secondDescription.text = panelDetailData?.descriptioForModerator
         dateTitle.text = NSLocalizedString("DATE", comment: "DATE in Paneldetail Page")
@@ -137,8 +137,8 @@ class PanelDetailCell: UITableViewCell {
         
         topTitle.text = tourDetailData?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         topDescription.text = tourDetailData?.body
-        interestedLabel.text = "Registered"
-        notInterestedLabel.text = "Not Registered"
+        interestedLabel.text = REGISTER
+        notInterestedLabel.text = UNREGISTER
         secondImg.isHidden = true
         secondTitle.isHidden = true
         secondDescription.isHidden = true

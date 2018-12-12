@@ -16,7 +16,7 @@ class ComingSoonPopUp: UIView {
     
     @IBOutlet var comingSoonPopup: UIView!
     @IBOutlet weak var popupInnerView: UIView!
-    @IBOutlet weak var messageLabel: UITextView!
+    @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var stayTunedLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var closeButton: UIButton!
@@ -63,8 +63,8 @@ class ComingSoonPopUp: UIView {
         messageLabel.text = message
         stayTunedLabel.text = ""
         messageLabel.font = UIFont.diningHeaderFont
-        let newMultiplier:CGFloat = 0.42
-        popUpInnerViewHeight = popUpInnerViewHeight.setMultiplier(multiplier: newMultiplier)
+        //let newMultiplier:CGFloat = 0.42
+       // popUpInnerViewHeight = popUpInnerViewHeight.setMultiplier(multiplier: newMultiplier)
         let buttonTitle = NSLocalizedString("OK", comment: "OK Label in the Popup")
         closeButton.setTitle(buttonTitle, for: .normal)
     }
@@ -88,8 +88,8 @@ class ComingSoonPopUp: UIView {
         titleLabel.isHidden = true
         messageLabel.font = UIFont.collectionFirstDescriptionFont
         messageLabel.text = "Thank u for showing interest in the tour. We will make necessary arrangements for it during your visit. You will receive further details on your email. For any queries, please contact Qatar Museums Authority via: \n info@Qm.org.qa \n +9744452555"
-        let newMultiplier:CGFloat = 0.58
-        popUpInnerViewHeight = popUpInnerViewHeight.setMultiplier(multiplier: newMultiplier)
+        //let newMultiplier:CGFloat = 0.58
+        //popUpInnerViewHeight = popUpInnerViewHeight.setMultiplier(multiplier: newMultiplier)
         stayTunedLabel.isHidden = true
         let buttonTitle = NSLocalizedString("CLOSEBUTTON_TITLE", comment: "CLOSEBUTTON_TITLE Label in the Popup")
         closeButton.setTitle(buttonTitle, for: .normal)
