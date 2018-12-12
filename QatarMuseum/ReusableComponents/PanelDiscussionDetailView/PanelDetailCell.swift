@@ -33,6 +33,7 @@ class PanelDetailCell: UITableViewCell {
     @IBOutlet weak var secondTitleLine: UILabel!
     @IBOutlet weak var mapOverlayView: UIView!
     
+    @IBOutlet weak var descriptionLeftConstraint: NSLayoutConstraint!
     @IBOutlet weak var contactTitleLine: UILabel!
     var loadMapView : (()->())?
     var registerOrUnRegisterAction : (()->())?
@@ -160,9 +161,10 @@ class PanelDetailCell: UITableViewCell {
         if ((tourDetailData?.imageBanner?.count)! > 0) {
             if let imageUrl = tourDetailData?.imageBanner![0]{
                 topImg.kf.setImage(with: URL(string: imageUrl))
-            } else {
-                topImg.image = UIImage(named: "default_imageX2")
             }
+        }
+        if (topImg.image == nil) {
+            topImg.image = UIImage(named: "default_imageX2")
         }
         //Details For Map
         var latitudeString  = String()

@@ -283,6 +283,7 @@
                 <outlet property="contactTitleLine" destination="AHZ-WT-17F" id="0R9-BS-506"/>
                 <outlet property="dateText" destination="dAs-fs-dFN" id="z5Z-m6-9kx"/>
                 <outlet property="dateTitle" destination="1Yq-ks-JRV" id="DZa-7d-7h7"/>
+                <outlet property="descriptionLeftConstraint" destination="s0I-y2-uBR" id="sRl-Ep-ckR"/>
                 <outlet property="interestSwitch" destination="lGH-6A-bqW" id="dLT-fj-7Ah"/>
                 <outlet property="interestedLabel" destination="Drw-4q-p7q" id="dra-lf-Ak2"/>
                 <outlet property="mapOverlayView" destination="ekk-f2-ErM" id="oLY-V6-ZjK"/>

@@ -94,6 +94,8 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         } else if (pageNameString == NMoQPanelPage.TourDetailPage){
             //cell.setTourSecondDetailCellContent(tourDetailData: nmoqTourDetail[indexPath.row], userEventList: userEventList)
             cell.setTourSecondDetailCellContent(tourDetailData: nmoqTourDetail[self.selectedRow!], userEventList: userEventList)
+            cell.topDescription.textAlignment = .left
+            cell.descriptionLeftConstraint.constant = 30
             cell.registerOrUnRegisterAction = {
                 () in
                 self.selectedPanelCell = cell
