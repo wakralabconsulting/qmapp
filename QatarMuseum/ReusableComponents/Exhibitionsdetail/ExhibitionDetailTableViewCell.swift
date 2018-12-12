@@ -90,7 +90,7 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
         locationLabel.text = "MUSEUM OF ISLAMIC ART"
         centerImgHeight.constant = 150
         centerImageView.isHidden = false
-        centerImageView.image = UIImage(named: "powder_and_damask_2")
+        centerImageView.image = UIImage(named: "default_imageX2")
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -77,7 +77,7 @@ class ObjectDetailTableViewCell: UITableViewCell,UITextViewDelegate,MapDetailPro
         detailSecondLabel.text = objectDetail.objectENGSummary?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&#039;", with: "", options: .regularExpression, range: nil)
        // imageDetailLabel.text = "Saint Jerome in His Study \nDomenico Ghirlandaio (1449-1494) \nChurch of Ognissanti, Florence, 1480"
         imageDetailLabel.isHidden = true
-       // centerImageView.image = UIImage(named: "lusterwar_apothecarry_jar_full")
+       
         shareBtnViewHeight.constant = 0
         bottomPadding.constant = 0
         

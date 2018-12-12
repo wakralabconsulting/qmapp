@@ -490,7 +490,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EVENTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWB-Sh-j4n">
-                                        <rect key="frame" x="164" y="308.66666666666669" width="87" height="29"/>
+                                        <rect key="frame" x="166.66666666666666" y="308.66666666666669" width="81.333333333333343" height="29"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="29" id="guL-0K-jjs"/>
                                         </constraints>
@@ -1141,7 +1141,7 @@
                                                                     <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                 </textView>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="powder_and_damask_2" translatesAutoresizingMaskIntoConstraints="NO" id="bJ5-Pq-9Zh">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bJ5-Pq-9Zh">
                                                                     <rect key="frame" x="20.666666666666657" y="132.66666666666666" width="343.33333333333337" height="149.99999999999997"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="150" id="dKT-K6-Su2"/>
@@ -2974,7 +2974,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="museum_of_islamic" translatesAutoresizingMaskIntoConstraints="NO" id="FJk-jI-3fc">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FJk-jI-3fc">
                                 <rect key="frame" x="0.0" y="85" width="414" height="651"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wFM-oa-Gc4" customClass="CommonHeaderView" customModule="QatarMuseums" customModuleProvider="target">
@@ -6790,14 +6790,12 @@
         <image name="gift_shopX1" width="102" height="93"/>
         <image name="heart_emptyX1" width="101" height="93"/>
         <image name="moreX1" width="101" height="93"/>
-        <image name="museum_of_islamic" width="472" height="777"/>
         <image name="nextImg" width="2000" height="2000"/>
         <image name="notificationX1" width="81" height="93"/>
         <image name="number_padX1" width="68" height="93"/>
         <image name="play_blackX1" width="93" height="93"/>
         <image name="play_button" width="93" height="93"/>
         <image name="play_button_white" width="93" height="93"/>
-        <image name="powder_and_damask_2" width="401" height="143"/>
         <image name="previousImg" width="2000" height="2000"/>
         <image name="profile_editX1" width="86" height="93"/>
         <image name="profile_pic_round" width="112" height="112"/>
