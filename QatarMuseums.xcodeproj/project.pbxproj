@@ -18,8 +18,6 @@
 		1B444A6521B137DC009FF40F /* NMoQTourDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B444A6321B137DC009FF40F /* NMoQTourDescriptionCell.swift */; };
 		1B444A6621B137DC009FF40F /* NMoQTourDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B444A6421B137DC009FF40F /* NMoQTourDescriptionCell.xib */; };
 		1B51411E215B892E0055AAF5 /* TourGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51411D215B892D0055AAF5 /* TourGuide.swift */; };
-		1B51B3CE21214820002B84AA /* ObjectPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51B3CD21214820002B84AA /* ObjectPopupView.swift */; };
-		1B51B3D021214853002B84AA /* ObjectPopupXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B51B3CF21214853002B84AA /* ObjectPopupXib.xib */; };
 		1B51B3D221219367002B84AA /* ObjectDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51B3D121219366002B84AA /* ObjectDetailViewController.swift */; };
 		1B51B3D52121B6A9002B84AA /* ObjectDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51B3D42121B6A9002B84AA /* ObjectDetailTableViewCell.swift */; };
 		1B7031EE218AFDB200B0E05B /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7031ED218AFDB200B0E05B /* Notification.swift */; };
@@ -268,8 +266,6 @@
 		1B444A6321B137DC009FF40F /* NMoQTourDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQTourDescriptionCell.swift; sourceTree = "<group>"; };
 		1B444A6421B137DC009FF40F /* NMoQTourDescriptionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NMoQTourDescriptionCell.xib; sourceTree = "<group>"; };
 		1B51411D215B892D0055AAF5 /* TourGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourGuide.swift; sourceTree = "<group>"; };
-		1B51B3CD21214820002B84AA /* ObjectPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectPopupView.swift; sourceTree = "<group>"; };
-		1B51B3CF21214853002B84AA /* ObjectPopupXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ObjectPopupXib.xib; sourceTree = "<group>"; };
 		1B51B3D121219366002B84AA /* ObjectDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectDetailViewController.swift; sourceTree = "<group>"; };
 		1B51B3D42121B6A9002B84AA /* ObjectDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectDetailTableViewCell.swift; sourceTree = "<group>"; };
 		1B7031ED218AFDB200B0E05B /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
@@ -610,15 +606,6 @@
 			path = NMoQTourDescriptionCell;
 			sourceTree = "<group>";
 		};
-		1B51B3CC212146E7002B84AA /* ObjectPopup */ = {
-			isa = PBXGroup;
-			children = (
-				1B51B3CF21214853002B84AA /* ObjectPopupXib.xib */,
-				1B51B3CD21214820002B84AA /* ObjectPopupView.swift */,
-			);
-			path = ObjectPopup;
-			sourceTree = "<group>";
-		};
 		1B51B3D32121B658002B84AA /* ObjectDetailCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -880,7 +867,6 @@
 				1B3C5058212AB2E30034E560 /* ArtifactNumberPadCell */,
 				1B51B3D62125B410002B84AA /* ObjectImageView */,
 				1B51B3D32121B658002B84AA /* ObjectDetailCell */,
-				1B51B3CC212146E7002B84AA /* ObjectPopup */,
 				1BC909CE2108E37900D6C00B /* CommonMethods */,
 				B8E01BFA21060FBC008D7F33 /* RTLSupportFiles */,
 				B811FBCA210380EF00960246 /* CommonColours */,
@@ -1483,7 +1469,6 @@
 				B8B54D6C20FF514E00B21348 /* CollectionDetailView.xib in Resources */,
 				B8D827ED216239DC0092262A /* DetailPageStoryboard.storyboard in Resources */,
 				B860EE6521AEC9030007F63B /* panel_discussion-3.png in Resources */,
-				1B51B3D021214853002B84AA /* ObjectPopupXib.xib in Resources */,
 				B80B76AC218AD6AC00190967 /* AcceptDeclinePopup.xib in Resources */,
 				B8CA08E42146D38400783642 /* ObjectPopupView.xib in Resources */,
 				B860EE6821AEC9030007F63B /* panel_discussion-4.png in Resources */,
@@ -1674,7 +1659,6 @@
 				B8294CEC20CBF265002AFF72 /* FSCalendarTransitionCoordinator.m in Sources */,
 				B8CAA93D20DC15FA009A936D /* HeritageDetailCell.swift in Sources */,
 				B80DC05920C792E400E28034 /* AppDelegate.swift in Sources */,
-				1B51B3CE21214820002B84AA /* ObjectPopupView.swift in Sources */,
 				B80DC08C20C798BA00E28034 /* HomeViewController.swift in Sources */,
 				B807FCD1218ECFE5003CC51E /* CulturePassCardBackViewController.swift in Sources */,
 				B8EAB7BD20CA424300C001B2 /* LunarFormatter.swift in Sources */,

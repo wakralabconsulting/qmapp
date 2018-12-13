@@ -148,14 +148,16 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
             switch response.result {
             case .success(let data):
                 self.museumsList = data.homeList
-                self.saveOrUpdateMuseumsCoredata()
+                
                 self.loadingView.stopLoading()
                 self.loadingView.isHidden = true
                 if(self.museumsList.count > 0) {
+                   
                     //Removed Exhibition from Tour List
                     if let arrayOffset = self.museumsList.index(where: {$0.id == searchstring}) {
                         self.museumsList.remove(at: arrayOffset)
                     }
+                     self.saveOrUpdateMuseumsCoredata()
                 }
                 //self.saveOrUpdateHomeCoredata()
                 self.tourCollectionView.reloadData()
