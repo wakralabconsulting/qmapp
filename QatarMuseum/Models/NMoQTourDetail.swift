@@ -41,12 +41,22 @@ struct NMoQTourDetail: ResponseObjectSerializable, ResponseCollectionSerializabl
         }
     }
     
-    //    init (title:String?, fullContentID: String?, bannerTitle: String?, bannerLink: String?) {
-    //        self.title = title
-    //        self.fullContentID = fullContentID
-    //        self.bannerTitle = bannerTitle
-    //        self.bannerLink = bannerLink
-    //    }
+        init (title:String?, imageBanner: [String]?, date: String?, nmoqEvent: String?, register: String?, contactEmail: String?, contactPhone: String?, mobileLatitude: String?, longitude: String?, sort_id: String?, body: String?, registered: String?, nid: String?) {
+            self.title = title
+            self.imageBanner = imageBanner
+            self.date = date
+            self.nmoqEvent = nmoqEvent
+            self.register = register
+            self.contactEmail = contactEmail
+            self.contactPhone = contactPhone
+            self.mobileLatitude = mobileLatitude
+            self.longitude = longitude
+            self.sort_id = sort_id
+            self.body = body
+            self.registered = registered
+            self.nid = nid
+
+        }
 }
 
 struct NMoQTourDetailList: ResponseObjectSerializable {

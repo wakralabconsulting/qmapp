@@ -87,7 +87,6 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         loadingView.showLoading()
         loadingView.loadingViewDelegate = self
         setTopBarImage()
-        //imgArray = ["dajar_women","artifactimg","001_MIA_MW.146_005","exhibition","firestation"]
         
     }
     

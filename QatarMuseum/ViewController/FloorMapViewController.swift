@@ -26,7 +26,7 @@ enum fromTour{
 }
 //fetchTourGuideFromCoredata
 
-class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpProtocol, HeaderViewProtocol,UIGestureRecognizerDelegate,MapDetailProtocol,LoadingViewProtocol {
+class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewProtocol,UIGestureRecognizerDelegate,MapDetailProtocol,LoadingViewProtocol {
     
     
     @IBOutlet weak var viewForMap: GMSMapView!
@@ -207,7 +207,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     let l3_g18_11 = GMSMarker()
     
     
-    var objectPopupView : ObjectPopupView = ObjectPopupView()
     var level : levelNumber?
     var zoomValue = Float()
     var fromTourString : fromTour?
@@ -860,15 +859,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
         super.didReceiveMemoryWarning()
     }
     
-    func loadObjectPopup() {
-        objectPopupView = ObjectPopupView(frame: self.view.frame)
-        objectPopupView.objectPopupDelegate = self
-        objectPopupView.loadPopup()
-        self.view.addSubview(objectPopupView)
-        
-
-    }
-    
     func stopLoadingView(delayInSeconds : Double?) {
         //let delayInSeconds = 0.3
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayInSeconds!) {
@@ -986,7 +976,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, ObjectPopUpP
     
     //MARK: Poup Delegate
     func objectPopupCloseButtonPressed() {
-        self.objectPopupView.removeFromSuperview()
+       // self.objectPopupView.removeFromSuperview()
         if ((fromTourString == fromTour.HighlightTour) || (fromTourString == fromTour.exploreTour))
         {
             if(level == levelNumber.two) {
