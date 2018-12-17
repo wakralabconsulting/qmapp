@@ -35,7 +35,7 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
         if (networkReachability?.isReachable)! {
             getNMoQTourDetail()
         } else {
-            self.fetchTourDetailsFromCoredata()
+            fetchTourDetailsFromCoredata()
         }
         
         loadingView.loadingViewDelegate = self
@@ -255,7 +255,6 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
         tourDetaildbDict.body = tourDetailDict.body
         tourDetaildbDict.registered =  tourDetailDict.registered
         tourDetaildbDict.nid =  tourDetailDict.nid
-        
         if(tourDetailDict.imageBanner != nil){
             if((tourDetailDict.imageBanner?.count)! > 0) {
                 for i in 0 ... (tourDetailDict.imageBanner?.count)!-1 {
@@ -281,16 +280,13 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+
     func fetchTourDetailsFromCoredata() {
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                 var tourDetailArray = [NmoqTourDetailEntity]()
-                //let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "NmoqTourDetailEntity")
-                
                 tourDetailArray = checkAddedToCoredata(entityName: "NmoqTourDetailEntity", idKey: "nmoqEvent", idValue: tourDetailId, managedContext: managedContext) as! [NmoqTourDetailEntity]
-               // tourDetailArray = (try managedContext.fetch(fetchData) as? [NmoqTourDetailEntity])!
-                
                 if (tourDetailArray.count > 0) {
                     for i in 0 ... tourDetailArray.count-1 {
                         var imagesArray : [String] = []
@@ -306,7 +302,6 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     if(nmoqTourDetail.count == 0){
                         self.showNoNetwork()
                     }
-                    
                     tableView.reloadData()
                 }
                 else{
@@ -326,7 +321,6 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
         fetchResults = try! managedContext.fetch(fetchRequest)
         return fetchResults
     }
- 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

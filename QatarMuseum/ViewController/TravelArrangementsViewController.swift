@@ -7,6 +7,7 @@
 //
 
 import Alamofire
+import CoreData
 import UIKit
 
 class TravelArrangementsViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol {
@@ -18,6 +19,7 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
     @IBOutlet weak var loadingView: LoadingView!
     var travelList: [HomeBanner]! = []
     let networkReachability = NetworkReachabilityManager()
+    var bannerId: String? = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -39,7 +41,7 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
         if (networkReachability?.isReachable)! {
             getTravelList()
         } else {
-            
+            fetchTravelInfoFromCoredata()
         }
     }
     func registerNib() {
@@ -100,6 +102,9 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
             case .success(let data):
                 self.travelList = data.homeBannerList
                 self.travelCollectionView.reloadData()
+                if(self.travelList.count > 0) {
+                    self.saveOrUpdateTravelListCoredata()
+                }
             case .failure(let error):
                 var errorMessage: String
                 errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
@@ -111,6 +116,134 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
                 self.loadingView.noDataLabel.text = errorMessage
             }
         }
+    }
+    
+    //MARK: Travel List Coredata
+    func saveOrUpdateTravelListCoredata() {
+        if (travelList.count > 0) {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.travelListCoreDataInBackgroundThread(managedContext: managedContext)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.travelListCoreDataInBackgroundThread(managedContext : managedContext)
+                }
+            }
+        }
+    }
+    
+    func travelListCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "HomeBannerEntity", idKey: "fullContentID", idValue: nil, managedContext: managedContext) as! [HomeBannerEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... travelList.count-1 {
+                    let travelListDict = travelList[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "HomeBannerEntity", idKey: "fullContentID", idValue: travelListDict.fullContentID, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let travelListdbDict = fetchResult[0] as! HomeBannerEntity
+                        travelListdbDict.title = travelListDict.title
+                        travelListdbDict.fullContentID = travelListDict.fullContentID
+                        travelListdbDict.bannerTitle =  travelListDict.bannerTitle
+                        travelListdbDict.bannerLink = travelListDict.bannerLink
+                        travelListdbDict.introductionText =  travelListDict.introductionText
+                        travelListdbDict.email = travelListDict.email
+                        
+                        travelListdbDict.contactNumber = travelListDict.contactNumber
+                        travelListdbDict.promotionalCode =  travelListDict.promotionalCode
+                        travelListdbDict.claimOffer = travelListDict.claimOffer
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    } else {
+                        //save
+                        self.saveTrevelListToCoreData(travelListDict: travelListDict, managedObjContext: managedContext)
+                    }
+                }
+            } else {
+                for i in 0 ... travelList.count-1 {
+                    let travelListDict : HomeBanner?
+                    travelListDict = travelList[i]
+                    self.saveTrevelListToCoreData(travelListDict: travelListDict!, managedObjContext: managedContext)
+                }
+            }
+        }
+    }
+    func saveTrevelListToCoreData(travelListDict: HomeBanner, managedObjContext: NSManagedObjectContext) {
+        let travelListdbDict: HomeBannerEntity = NSEntityDescription.insertNewObject(forEntityName: "HomeBannerEntity", into: managedObjContext) as! HomeBannerEntity
+        travelListdbDict.title = travelListDict.title
+        travelListdbDict.fullContentID = travelListDict.fullContentID
+        travelListdbDict.bannerTitle =  travelListDict.bannerTitle
+        travelListdbDict.bannerLink = travelListDict.bannerLink
+        travelListdbDict.introductionText =  travelListDict.introductionText
+        travelListdbDict.email = travelListDict.email
+        travelListdbDict.contactNumber = travelListDict.contactNumber
+        travelListdbDict.promotionalCode =  travelListDict.promotionalCode
+        travelListdbDict.claimOffer = travelListDict.claimOffer
+        
+        do {
+            try managedObjContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    func fetchTravelInfoFromCoredata() {
+        let managedContext = getContext()
+        do {
+            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                var travelListArray = [HomeBannerEntity]()
+                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeBannerEntity")
+                travelListArray = (try managedContext.fetch(fetchRequest) as? [HomeBannerEntity])!
+                if (travelListArray.count > 0) {
+                    for i in 0 ... travelListArray.count-1 {
+                        let travelListDict = travelListArray[i]
+                        
+                     
+                        
+                        self.travelList.insert(HomeBanner(title: travelListArray[i].title, fullContentID: travelListArray[i].fullContentID, bannerTitle: travelListArray[i].bannerTitle, bannerLink: travelListArray[i].bannerLink, image: nil, introductionText: travelListArray[i].introductionText, email: travelListArray[i].email, contactNumber: travelListArray[i].contactNumber, promotionalCode: travelListArray[i].promotionalCode, claimOffer: travelListArray[i].claimOffer), at: i)
+                    }
+                    if(travelList.count == 0){
+                        self.showNoNetwork()
+                    } else {
+                        if(bannerId != nil) {
+                            if let arrayOffset = self.travelList.index(where: {$0.fullContentID == bannerId}) {
+                                self.travelList.remove(at: arrayOffset)
+                            }
+                        }
+                    }
+                    travelCollectionView.reloadData()
+                } else{
+                    self.showNoNetwork()
+                }
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func checkAddedToCoredata(entityName: String?, idKey:String?, idValue: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
+        var fetchResults : [NSManagedObject] = []
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
+        if (idValue != nil) {
+            // homeFetchRequest.predicate = NSPredicate.init(format: "id == \(homeId!)")
+            fetchRequest.predicate = NSPredicate(format: "\(idKey!) == %@", idValue!)
+        }
+        fetchResults = try! managedContext.fetch(fetchRequest)
+        return fetchResults
+    }
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
