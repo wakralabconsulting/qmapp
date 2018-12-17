@@ -20,6 +20,7 @@ class NMoQListCell: UITableViewCell {
         titleLabel.font = UIFont.selfGuidedFont
         dayLabel.font  = UIFont.settingsUpdateLabelFont
         dateLabel.font = UIFont.sideMenuLabelFont
+        setGradientLayer()
     }
     func setTourListDate(tourList: NMoQTour?) {
         titleLabel.text = tourList?.subtitle
@@ -51,7 +52,17 @@ class NMoQListCell: UITableViewCell {
            cellImageView.image = UIImage(named: "default_imageX2")
         }
     }
-
+    func setGradientLayer() {
+        self.cellImageView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+        let width = self.bounds.width
+        let height = self.bounds.height
+        let sHeight:CGFloat = 60.0
+        let shadow = UIColor.black.withAlphaComponent(0.6).cgColor
+        let bottomImageGradient = CAGradientLayer()
+        bottomImageGradient.frame = CGRect(x: 0, y: height - sHeight, width: width, height: sHeight)
+        bottomImageGradient.colors = [UIColor.clear.cgColor, shadow]
+        cellImageView.layer.insertSublayer(bottomImageGradient, at: 0)
+    }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
