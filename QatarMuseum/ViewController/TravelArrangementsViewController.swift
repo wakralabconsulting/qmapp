@@ -7,6 +7,7 @@
 //
 
 import Alamofire
+import CoreData
 import UIKit
 
 class TravelArrangementsViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol {
@@ -112,6 +113,155 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
             }
         }
     }
+    /*
+    //MARK: Travel List Coredata
+    func saveOrUpdateTravelListCoredata() {
+        if (travelList.count > 0) {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.travelListCoreDataInBackgroundThread(managedContext: managedContext)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.travelListCoreDataInBackgroundThread(managedContext : managedContext)
+                }
+            }
+        }
+    }
+    
+    func travelListCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "NMoQTourListEntity", idKey: "nid", idValue: nil, managedContext: managedContext) as! [NMoQTourListEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... nmoqTourList.count-1 {
+                    let tourListDict = nmoqTourList[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "NMoQTourListEntity", idKey: "nid", idValue: tourListDict.nid, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let tourListdbDict = fetchResult[0] as! NMoQTourListEntity
+                        tourListdbDict.title = tourListDict.title
+                        tourListdbDict.dayDescription = tourListDict.dayDescription
+                        tourListdbDict.subtitle =  tourListDict.subtitle
+                        tourListdbDict.sortId = tourListDict.sortId
+                        tourListdbDict.nid =  tourListDict.nid
+                        tourListdbDict.eventDate = tourListDict.eventDate
+                        
+                        if(tourListDict.images != nil){
+                            if((tourListDict.images?.count)! > 0) {
+                                for i in 0 ... (tourListDict.images?.count)!-1 {
+                                    var tourImage: NMoqTourImagesEntity!
+                                    let tourImgaeArray: NMoqTourImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoqTourImagesEntity", into: managedContext) as! NMoqTourImagesEntity
+                                    tourImgaeArray.image = tourListDict.images?[i]
+                                    
+                                    tourImage = tourImgaeArray
+                                    tourListdbDict.addToTourImagesRelation(tourImage)
+                                    do {
+                                        try managedContext.save()
+                                    } catch let error as NSError {
+                                        print("Could not save. \(error), \(error.userInfo)")
+                                    }
+                                }
+                            }
+                        }
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    } else {
+                        //save
+                        self.saveTourListToCoreData(tourListDict: tourListDict, managedObjContext: managedContext)
+                    }
+                }
+            } else {
+                for i in 0 ... nmoqTourList.count-1 {
+                    let tourListDict : NMoQTour?
+                    tourListDict = nmoqTourList[i]
+                    self.saveTourListToCoreData(tourListDict: tourListDict!, managedObjContext: managedContext)
+                }
+            }
+        }
+    }
+    func saveTourListToCoreData(tourListDict: NMoQTour, managedObjContext: NSManagedObjectContext) {
+        let tourListInfo: NMoQTourListEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoQTourListEntity", into: managedObjContext) as! NMoQTourListEntity
+        tourListInfo.title = tourListDict.title
+        tourListInfo.dayDescription = tourListDict.dayDescription
+        tourListInfo.subtitle = tourListDict.subtitle
+        tourListInfo.sortId = tourListDict.sortId
+        tourListInfo.nid = tourListDict.nid
+        tourListInfo.eventDate = tourListDict.eventDate
+        
+        if(tourListDict.images != nil){
+            if((tourListDict.images?.count)! > 0) {
+                for i in 0 ... (tourListDict.images?.count)!-1 {
+                    var tourImage: NMoqTourImagesEntity!
+                    let tourImgaeArray: NMoqTourImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoqTourImagesEntity", into: managedObjContext) as! NMoqTourImagesEntity
+                    tourImgaeArray.image = tourListDict.images?[i]
+                    
+                    tourImage = tourImgaeArray
+                    tourListInfo.addToTourImagesRelation(tourImage)
+                    do {
+                        try managedObjContext.save()
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                }
+            }
+        }
+        do {
+            try managedObjContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    func fetchTourInfoFromCoredata() {
+        let managedContext = getContext()
+        do {
+            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                var tourListArray = [NMoQTourListEntity]()
+                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "NMoQTourListEntity")
+                tourListArray = (try managedContext.fetch(fetchRequest) as? [NMoQTourListEntity])!
+                if (tourListArray.count > 0) {
+                    for i in 0 ... tourListArray.count-1 {
+                        let tourListDict = tourListArray[i]
+                        var imagesArray : [String] = []
+                        let imagesInfoArray = (tourListDict.tourImagesRelation?.allObjects) as! [NMoqTourImagesEntity]
+                        if(imagesInfoArray.count > 0) {
+                            for i in 0 ... imagesInfoArray.count-1 {
+                                imagesArray.append(imagesInfoArray[i].image!)
+                            }
+                        }
+                        self.nmoqTourList.insert(NMoQTour(title: tourListArray[i].title, dayDescription: tourListArray[i].dayDescription, images: imagesArray, subtitle: tourListArray[i].subtitle, sortId: tourListArray[i].sortId, nid: tourListArray[i].nid, eventDate: nil, date: nil, descriptioForModerator: nil, mobileLatitude: nil, moderatorName: nil, longitude: nil, contactEmail: nil, contactPhone: nil), at: i)
+                    }
+                    if(nmoqTourList.count == 0){
+                        self.showNoNetwork()
+                    }
+                    collectionTableView.reloadData()
+                } else{
+                    self.showNoNetwork()
+                }
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func checkAddedToCoredata(entityName: String?, idKey:String?, idValue: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
+        var fetchResults : [NSManagedObject] = []
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
+        if (idValue != nil) {
+            // homeFetchRequest.predicate = NSPredicate.init(format: "id == \(homeId!)")
+            fetchRequest.predicate = NSPredicate(format: "\(idKey!) == %@", idValue!)
+        }
+        fetchResults = try! managedContext.fetch(fetchRequest)
+        return fetchResults
+    }
+ */
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
