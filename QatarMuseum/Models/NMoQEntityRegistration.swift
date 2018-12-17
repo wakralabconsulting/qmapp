@@ -52,14 +52,6 @@ struct NMoQEntityRegistration: ResponseObjectSerializable {
        
     }
 }
-//struct NMoQEntityRegistrationList: ResponseObjectSerializable {
-//    var entityList: [NMoQEntityRegistration]? = []
-//    
-//    public init?(response: HTTPURLResponse, representation: AnyObject) {
-//        if let data = representation as? [[String: Any]] {
-//            self.entityList = NMoQEntityRegistration.collection(response: response, representation: data as AnyObject)
-//        }
-//    }
-//}
+
 
 

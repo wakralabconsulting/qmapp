@@ -9,6 +9,7 @@
 import CoreData
 import Firebase
 import GoogleMaps
+import GooglePlaces
 import UIKit
 import UserNotifications
 import Alamofire
@@ -22,16 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var shouldRotate = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        GMSServices.provideAPIKey("AIzaSyBXEzUfmsi5BidKqR1eY999pj0APP2N0k0")
-        // GMSPlacesClient.provideAPIKey("YOUR_API_KEY")
+       // GMSServices.provideAPIKey("AIzaSyBXEzUfmsi5BidKqR1eY999pj0APP2N0k0")
+        GMSServices.provideAPIKey("AIzaSyAbuv0Gx0vwyZdr90LFKeUFmMesorNZHKQ") // QM key
+         GMSPlacesClient.provideAPIKey("AIzaSyAbuv0Gx0vwyZdr90LFKeUFmMesorNZHKQ")
         AppLocalizer.DoTheMagic()
         FirebaseApp.configure()
-//        let title = "Analytics Title"
-//        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
-//            AnalyticsParameterItemID: "id-\(title)",
-//            AnalyticsParameterItemName: title,
-//            AnalyticsParameterContentType: "cont"
-//            ])
         
         // Register with APNs
         let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)

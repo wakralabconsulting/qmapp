@@ -272,7 +272,6 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 }
             }
         }
-        
         do {
             try managedObjContext.save()
             
@@ -281,14 +280,13 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
-    func fetchTourDetailFromCoredata() {
+
+    func fetchTourDetailsFromCoredata() {
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                 var tourDetailArray = [NmoqTourDetailEntity]()
-                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "NmoqTourDetailEntity")
-                tourDetailArray = (try managedContext.fetch(fetchRequest) as? [NmoqTourDetailEntity])!
-                
+                tourDetailArray = checkAddedToCoredata(entityName: "NmoqTourDetailEntity", idKey: "nmoqEvent", idValue: tourDetailId, managedContext: managedContext) as! [NmoqTourDetailEntity]
                 if (tourDetailArray.count > 0) {
                     for i in 0 ... tourDetailArray.count-1 {
                         var imagesArray : [String] = []
@@ -323,7 +321,6 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
         fetchResults = try! managedContext.fetch(fetchRequest)
         return fetchResults
     }
-   
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
