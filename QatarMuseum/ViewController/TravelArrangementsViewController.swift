@@ -19,6 +19,7 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
     @IBOutlet weak var loadingView: LoadingView!
     var travelList: [HomeBanner]! = []
     let networkReachability = NetworkReachabilityManager()
+    var bannerId: String? = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -40,7 +41,7 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
         if (networkReachability?.isReachable)! {
             getTravelList()
         } else {
-            
+            fetchTravelInfoFromCoredata()
         }
     }
     func registerNib() {
@@ -101,6 +102,9 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
             case .success(let data):
                 self.travelList = data.homeBannerList
                 self.travelCollectionView.reloadData()
+                if(self.travelList.count > 0) {
+                    self.saveOrUpdateTravelListCoredata()
+                }
             case .failure(let error):
                 var errorMessage: String
                 errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
@@ -113,7 +117,7 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
             }
         }
     }
-    /*
+    
     //MARK: Travel List Coredata
     func saveOrUpdateTravelListCoredata() {
         if (travelList.count > 0) {
@@ -134,38 +138,24 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
     
     func travelListCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            let fetchData = checkAddedToCoredata(entityName: "NMoQTourListEntity", idKey: "nid", idValue: nil, managedContext: managedContext) as! [NMoQTourListEntity]
+            let fetchData = checkAddedToCoredata(entityName: "HomeBannerEntity", idKey: "fullContentID", idValue: nil, managedContext: managedContext) as! [HomeBannerEntity]
             if (fetchData.count > 0) {
-                for i in 0 ... nmoqTourList.count-1 {
-                    let tourListDict = nmoqTourList[i]
-                    let fetchResult = checkAddedToCoredata(entityName: "NMoQTourListEntity", idKey: "nid", idValue: tourListDict.nid, managedContext: managedContext)
+                for i in 0 ... travelList.count-1 {
+                    let travelListDict = travelList[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "HomeBannerEntity", idKey: "fullContentID", idValue: travelListDict.fullContentID, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
-                        let tourListdbDict = fetchResult[0] as! NMoQTourListEntity
-                        tourListdbDict.title = tourListDict.title
-                        tourListdbDict.dayDescription = tourListDict.dayDescription
-                        tourListdbDict.subtitle =  tourListDict.subtitle
-                        tourListdbDict.sortId = tourListDict.sortId
-                        tourListdbDict.nid =  tourListDict.nid
-                        tourListdbDict.eventDate = tourListDict.eventDate
+                        let travelListdbDict = fetchResult[0] as! HomeBannerEntity
+                        travelListdbDict.title = travelListDict.title
+                        travelListdbDict.fullContentID = travelListDict.fullContentID
+                        travelListdbDict.bannerTitle =  travelListDict.bannerTitle
+                        travelListdbDict.bannerLink = travelListDict.bannerLink
+                        travelListdbDict.introductionText =  travelListDict.introductionText
+                        travelListdbDict.email = travelListDict.email
                         
-                        if(tourListDict.images != nil){
-                            if((tourListDict.images?.count)! > 0) {
-                                for i in 0 ... (tourListDict.images?.count)!-1 {
-                                    var tourImage: NMoqTourImagesEntity!
-                                    let tourImgaeArray: NMoqTourImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoqTourImagesEntity", into: managedContext) as! NMoqTourImagesEntity
-                                    tourImgaeArray.image = tourListDict.images?[i]
-                                    
-                                    tourImage = tourImgaeArray
-                                    tourListdbDict.addToTourImagesRelation(tourImage)
-                                    do {
-                                        try managedContext.save()
-                                    } catch let error as NSError {
-                                        print("Could not save. \(error), \(error.userInfo)")
-                                    }
-                                }
-                            }
-                        }
+                        travelListdbDict.contactNumber = travelListDict.contactNumber
+                        travelListdbDict.promotionalCode =  travelListDict.promotionalCode
+                        travelListdbDict.claimOffer = travelListDict.claimOffer
                         
                         do{
                             try managedContext.save()
@@ -175,73 +165,61 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
                         }
                     } else {
                         //save
-                        self.saveTourListToCoreData(tourListDict: tourListDict, managedObjContext: managedContext)
+                        self.saveTrevelListToCoreData(travelListDict: travelListDict, managedObjContext: managedContext)
                     }
                 }
             } else {
-                for i in 0 ... nmoqTourList.count-1 {
-                    let tourListDict : NMoQTour?
-                    tourListDict = nmoqTourList[i]
-                    self.saveTourListToCoreData(tourListDict: tourListDict!, managedObjContext: managedContext)
+                for i in 0 ... travelList.count-1 {
+                    let travelListDict : HomeBanner?
+                    travelListDict = travelList[i]
+                    self.saveTrevelListToCoreData(travelListDict: travelListDict!, managedObjContext: managedContext)
                 }
             }
         }
     }
-    func saveTourListToCoreData(tourListDict: NMoQTour, managedObjContext: NSManagedObjectContext) {
-        let tourListInfo: NMoQTourListEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoQTourListEntity", into: managedObjContext) as! NMoQTourListEntity
-        tourListInfo.title = tourListDict.title
-        tourListInfo.dayDescription = tourListDict.dayDescription
-        tourListInfo.subtitle = tourListDict.subtitle
-        tourListInfo.sortId = tourListDict.sortId
-        tourListInfo.nid = tourListDict.nid
-        tourListInfo.eventDate = tourListDict.eventDate
+    func saveTrevelListToCoreData(travelListDict: HomeBanner, managedObjContext: NSManagedObjectContext) {
+        let travelListdbDict: HomeBannerEntity = NSEntityDescription.insertNewObject(forEntityName: "HomeBannerEntity", into: managedObjContext) as! HomeBannerEntity
+        travelListdbDict.title = travelListDict.title
+        travelListdbDict.fullContentID = travelListDict.fullContentID
+        travelListdbDict.bannerTitle =  travelListDict.bannerTitle
+        travelListdbDict.bannerLink = travelListDict.bannerLink
+        travelListdbDict.introductionText =  travelListDict.introductionText
+        travelListdbDict.email = travelListDict.email
+        travelListdbDict.contactNumber = travelListDict.contactNumber
+        travelListdbDict.promotionalCode =  travelListDict.promotionalCode
+        travelListdbDict.claimOffer = travelListDict.claimOffer
         
-        if(tourListDict.images != nil){
-            if((tourListDict.images?.count)! > 0) {
-                for i in 0 ... (tourListDict.images?.count)!-1 {
-                    var tourImage: NMoqTourImagesEntity!
-                    let tourImgaeArray: NMoqTourImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoqTourImagesEntity", into: managedObjContext) as! NMoqTourImagesEntity
-                    tourImgaeArray.image = tourListDict.images?[i]
-                    
-                    tourImage = tourImgaeArray
-                    tourListInfo.addToTourImagesRelation(tourImage)
-                    do {
-                        try managedObjContext.save()
-                    } catch let error as NSError {
-                        print("Could not save. \(error), \(error.userInfo)")
-                    }
-                }
-            }
-        }
         do {
             try managedObjContext.save()
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
-    func fetchTourInfoFromCoredata() {
+    func fetchTravelInfoFromCoredata() {
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-                var tourListArray = [NMoQTourListEntity]()
-                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "NMoQTourListEntity")
-                tourListArray = (try managedContext.fetch(fetchRequest) as? [NMoQTourListEntity])!
-                if (tourListArray.count > 0) {
-                    for i in 0 ... tourListArray.count-1 {
-                        let tourListDict = tourListArray[i]
-                        var imagesArray : [String] = []
-                        let imagesInfoArray = (tourListDict.tourImagesRelation?.allObjects) as! [NMoqTourImagesEntity]
-                        if(imagesInfoArray.count > 0) {
-                            for i in 0 ... imagesInfoArray.count-1 {
-                                imagesArray.append(imagesInfoArray[i].image!)
+                var travelListArray = [HomeBannerEntity]()
+                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeBannerEntity")
+                travelListArray = (try managedContext.fetch(fetchRequest) as? [HomeBannerEntity])!
+                if (travelListArray.count > 0) {
+                    for i in 0 ... travelListArray.count-1 {
+                        let travelListDict = travelListArray[i]
+                        
+                     
+                        
+                        self.travelList.insert(HomeBanner(title: travelListArray[i].title, fullContentID: travelListArray[i].fullContentID, bannerTitle: travelListArray[i].bannerTitle, bannerLink: travelListArray[i].bannerLink, image: nil, introductionText: travelListArray[i].introductionText, email: travelListArray[i].email, contactNumber: travelListArray[i].contactNumber, promotionalCode: travelListArray[i].promotionalCode, claimOffer: travelListArray[i].claimOffer), at: i)
+                    }
+                    if(travelList.count == 0){
+                        self.showNoNetwork()
+                    } else {
+                        if(bannerId != nil) {
+                            if let arrayOffset = self.travelList.index(where: {$0.fullContentID == bannerId}) {
+                                self.travelList.remove(at: arrayOffset)
                             }
                         }
-                        self.nmoqTourList.insert(NMoQTour(title: tourListArray[i].title, dayDescription: tourListArray[i].dayDescription, images: imagesArray, subtitle: tourListArray[i].subtitle, sortId: tourListArray[i].sortId, nid: tourListArray[i].nid, eventDate: nil, date: nil, descriptioForModerator: nil, mobileLatitude: nil, moderatorName: nil, longitude: nil, contactEmail: nil, contactPhone: nil), at: i)
                     }
-                    if(nmoqTourList.count == 0){
-                        self.showNoNetwork()
-                    }
-                    collectionTableView.reloadData()
+                    travelCollectionView.reloadData()
                 } else{
                     self.showNoNetwork()
                 }
@@ -261,7 +239,12 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
         fetchResults = try! managedContext.fetch(fetchRequest)
         return fetchResults
     }
- */
+    func showNoNetwork() {
+        self.loadingView.stopLoading()
+        self.loadingView.noDataView.isHidden = false
+        self.loadingView.isHidden = false
+        self.loadingView.showNoNetworkView()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

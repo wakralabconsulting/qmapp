@@ -35,7 +35,7 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
         if (networkReachability?.isReachable)! {
             getNMoQTourDetail()
         } else {
-            fetchTourDetailFromCoredata()
+            fetchTourDetailsFromCoredata()
         }
         
         loadingView.loadingViewDelegate = self

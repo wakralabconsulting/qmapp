@@ -43,6 +43,12 @@ struct HomeBanner: ResponseObjectSerializable, ResponseCollectionSerializable {
         self.bannerTitle = bannerTitle
         self.bannerLink = bannerLink
         self.image = image
+        //for Travel List
+        self.introductionText = introductionText
+        self.email = email
+        self.contactNumber = contactNumber
+        self.promotionalCode = promotionalCode
+        self.claimOffer = claimOffer
     }
 }
 
