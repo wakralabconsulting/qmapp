@@ -7,6 +7,6 @@ target 'QatarMuseums' do
  pod 'Firebase/Core'
  pod 'Fabric'
  pod 'Crashlytics'
-
+ pod 'GooglePlaces'
  
 end

@@ -119,6 +119,7 @@
 		B82C87F620E69D4100777674 /* DiningDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82C87F520E69D4100777674 /* DiningDetailTableViewCell.swift */; };
 		B82E1B3321808229006623A6 /* LogoutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82E1B3221808229006623A6 /* LogoutData.swift */; };
 		B839831A21196E68007090C8 /* QatarMuseums.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B839831821196E68007090C8 /* QatarMuseums.xcdatamodeld */; };
+		B8436A9121C264CA00045242 /* GoogleMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8436A9021C264CA00045242 /* GoogleMapViewController.swift */; };
 		B84BA060217EE3C000FD2C0D /* TokenData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84BA05F217EE3C000FD2C0D /* TokenData.swift */; };
 		B84BA062217F1A6300FD2C0D /* LoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84BA061217F1A6300FD2C0D /* LoginData.swift */; };
 		B84C9D8B21B5497E00DCB95C /* NMoQTour.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84C9D8A21B5497E00DCB95C /* NMoQTour.swift */; };
@@ -170,6 +171,7 @@
 		B8BA80BA20CD8305007E880A /* ExhibitionsCellXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8BA80B920CD8305007E880A /* ExhibitionsCellXib.xib */; };
 		B8BA80BC20CD831D007E880A /* ExhibitionsCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BA80BB20CD831D007E880A /* ExhibitionsCollectionCell.swift */; };
 		B8BBF459211C1AC000352706 /* ParksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBF458211C1AC000352706 /* ParksList.swift */; };
+		B8BCE8A021C28ED20083DC35 /* GoogleDirections.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BCE89F21C28ED20083DC35 /* GoogleDirections.swift */; };
 		B8BD1DA721298AA500150A01 /* EducationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD1DA621298AA500150A01 /* EducationEvent.swift */; };
 		B8BD3A6D212C77B9006D440A /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8BD3A6C212C77B8006D440A /* EventKit.framework */; };
 		B8C1C2BD21160B7300531AB3 /* PublicArtsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C1C2BC21160B7300531AB3 /* PublicArtsList.swift */; };
@@ -396,6 +398,7 @@
 		B82C87F520E69D4100777674 /* DiningDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDetailTableViewCell.swift; sourceTree = "<group>"; };
 		B82E1B3221808229006623A6 /* LogoutData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutData.swift; sourceTree = "<group>"; };
 		B839831921196E68007090C8 /* QatarMuseums.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QatarMuseums.xcdatamodel; sourceTree = "<group>"; };
+		B8436A9021C264CA00045242 /* GoogleMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapViewController.swift; sourceTree = "<group>"; };
 		B84BA05F217EE3C000FD2C0D /* TokenData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenData.swift; sourceTree = "<group>"; };
 		B84BA061217F1A6300FD2C0D /* LoginData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginData.swift; sourceTree = "<group>"; };
 		B84C9D8A21B5497E00DCB95C /* NMoQTour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQTour.swift; sourceTree = "<group>"; };
@@ -448,6 +451,7 @@
 		B8BA80B920CD8305007E880A /* ExhibitionsCellXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExhibitionsCellXib.xib; sourceTree = "<group>"; };
 		B8BA80BB20CD831D007E880A /* ExhibitionsCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitionsCollectionCell.swift; sourceTree = "<group>"; };
 		B8BBF458211C1AC000352706 /* ParksList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParksList.swift; sourceTree = "<group>"; };
+		B8BCE89F21C28ED20083DC35 /* GoogleDirections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleDirections.swift; sourceTree = "<group>"; };
 		B8BD1DA621298AA500150A01 /* EducationEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationEvent.swift; sourceTree = "<group>"; };
 		B8BD3A6C212C77B8006D440A /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		B8C1C2BC21160B7300531AB3 /* PublicArtsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicArtsList.swift; sourceTree = "<group>"; };
@@ -676,6 +680,7 @@
 				B897351221B81C3200BB812C /* NMoQTourDetail.swift */,
 				B8234F4821BA6D3800760DEC /* NMoQUserEventList.swift */,
 				B8234F4A21BA7D8600760DEC /* NMoQEntityRegistration.swift */,
+				B8BCE89F21C28ED20083DC35 /* GoogleDirections.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -845,6 +850,7 @@
 				B860EE4A21AE9F340007F63B /* TravelArrangementsViewController.swift */,
 				1B444A6021B12A24009FF40F /* NMoQTourViewController.swift */,
 				B8DB500521B2A36E00C5DD10 /* PanelDiscussionDetailViewController.swift */,
+				B8436A9021C264CA00045242 /* GoogleMapViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1511,9 +1517,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-QatarMuseums/Pods-QatarMuseums-resources.sh",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1708,6 +1717,7 @@
 				1BC909D2210B277F00D6C00B /* Home.swift in Sources */,
 				B8EAB7BB20CA424300C001B2 /* LoadViewExampleViewController.swift in Sources */,
 				B8F00C872178D74800320DF1 /* RegistrationViewController.swift in Sources */,
+				B8BCE8A021C28ED20083DC35 /* GoogleDirections.swift in Sources */,
 				B8BA80B520CCDDA3007E880A /* ProfileViewController.swift in Sources */,
 				1B373E95212C794700EE8DD1 /* CulturePassViewController.swift in Sources */,
 				B8BD1DA721298AA500150A01 /* EducationEvent.swift in Sources */,
@@ -1717,6 +1727,7 @@
 				B8E01BF92105EDFB008D7F33 /* SettingsViewController.swift in Sources */,
 				B816029E215A239900786F94 /* TourGuideFloorMap.swift in Sources */,
 				B8D1229220C9095B00772507 /* LoadingView.swift in Sources */,
+				B8436A9121C264CA00045242 /* GoogleMapViewController.swift in Sources */,
 				B8C700852116F833006F3653 /* PublicArtsDetail.swift in Sources */,
 				B8D4C536210453FB0096912C /* FilterViewController.swift in Sources */,
 				B8DB500021B25D5B00C5DD10 /* PanelDetailCell.swift in Sources */,

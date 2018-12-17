@@ -51,7 +51,6 @@ class NMoQListCell: UITableViewCell {
            cellImageView.image = UIImage(named: "default_imageX2")
         }
     }
-
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
