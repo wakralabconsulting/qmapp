@@ -318,29 +318,13 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
 //
 //    }
     func loadLocationMap(currentRow: Int, destination: MKMapItem) {
-//        let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
-//
-//        let mapDetailView = detailStoryboard.instantiateViewController(withIdentifier: "mapViewId") as! MapViewController
-//       // mapDetailView.aboutData = aboutDetailtArray[0]
-//        mapDetailView.latitudeString = aboutDetailtArray[0].mobileLatitude
-//        mapDetailView.longiudeString = aboutDetailtArray[0].mobileLongtitude
-//        mapDetailView.destination = destination
-//        let transition = CATransition()
-//        transition.duration = 0.3
-//        transition.type = kCATransitionFade
-//        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-//        view.window!.layer.add(transition, forKey: kCATransition)
-//        self.present(mapDetailView, animated: false, completion: nil)
-        
-        
-        
-        
-        
         let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
-        
-        let mapDetailView = detailStoryboard.instantiateViewController(withIdentifier: "googleMapViewId") as! GoogleMapViewController
-        
-        
+
+        let mapDetailView = detailStoryboard.instantiateViewController(withIdentifier: "mapViewId") as! MapViewController
+       // mapDetailView.aboutData = aboutDetailtArray[0]
+        mapDetailView.latitudeString = aboutDetailtArray[0].mobileLatitude
+        mapDetailView.longiudeString = aboutDetailtArray[0].mobileLongtitude
+        mapDetailView.destination = destination
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionFade

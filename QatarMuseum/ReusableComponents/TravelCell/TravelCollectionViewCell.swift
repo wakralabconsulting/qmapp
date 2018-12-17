@@ -14,7 +14,6 @@ class TravelCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     override func awakeFromNib() {
         titleLabel.font = UIFont.oopsTitleFont
-        self.awakeFromNib()
     }
     func setTravelListData(travelListData: HomeBanner) {
         titleLabel.text = travelListData.title
