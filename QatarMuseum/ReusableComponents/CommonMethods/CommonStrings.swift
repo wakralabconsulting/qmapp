@@ -15,3 +15,4 @@ var REGISTER = "Register"
 var UNREGISTER = "UnRegister"
 var YES = "Yes"
 var NO = "No"
+var LOCATION_ERROR = "Unfortunately we cannot open Map.";
