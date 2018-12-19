@@ -2,14 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-<<<<<<< HEAD
     <key>LSApplicationQueriesSchemes</key>
     <array>
         <string>googlechromes</string>
         <string>comgooglemaps</string>
     </array>
-=======
->>>>>>> 2d7cb0b698491448ea6538900a482c485e4d6e4b
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -27,11 +24,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.0</string>
 	<key>CFBundleVersion</key>
-<<<<<<< HEAD
 	<string>7</string>
-=======
-	<string>6</string>
->>>>>>> 2d7cb0b698491448ea6538900a482c485e4d6e4b
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
