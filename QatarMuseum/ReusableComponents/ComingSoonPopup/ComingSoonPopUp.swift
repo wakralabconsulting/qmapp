@@ -77,6 +77,14 @@ class ComingSoonPopUp: UIView {
         
         closeButton.setTitle(buttonTitle, for: .normal)
     }
+    func loadMapKitLocationErrorPopup() {
+        titleLabel.text = NSLocalizedString("SOMETHING_WENT_WRONG_TITLE", comment: "SOMETHING_WENT_WRONG_TITLE Label in the Popup")
+        messageLabel.text = LOCATION_ERROR
+        stayTunedLabel.text = ""
+        let buttonTitle = NSLocalizedString("CLOSEBUTTON_TITLE", comment: "CLOSEBUTTON_TITLE Label in the Popup")
+        
+        closeButton.setTitle(buttonTitle, for: .normal)
+    }
     func loadTourGuidePopup() {
         titleLabel.text = NSLocalizedString("COMINGSOON_TITLE", comment: "COMINGSOON_TITLE Label in the Popup")
         messageLabel.text = NSLocalizedString("COMINGSOON_MESSAGE", comment: "COMINGSOON_MESSAGE Label in the Popup") + "\n" + NSLocalizedString("TOUR_GUIDE_COMINGSOON", comment: "TOUR_GUIDE_COMINGSOON Label in the Popup")

@@ -13,7 +13,7 @@ class PanelDetailCell: UITableViewCell {
     @IBOutlet weak var topImg: UIImageView!
     
     @IBOutlet weak var topTitle: UITextView!
-    @IBOutlet weak var topDescription: UITextView!
+    @IBOutlet weak var topDescription: UILabel!
     @IBOutlet weak var interestedLabel: UILabel!
     @IBOutlet weak var notInterestedLabel: UILabel!
     @IBOutlet weak var interestSwitch: UISwitch!

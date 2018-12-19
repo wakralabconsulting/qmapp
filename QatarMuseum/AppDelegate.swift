@@ -12,7 +12,6 @@ import GoogleMaps
 import GooglePlaces
 import UIKit
 import UserNotifications
-import UserNotifications
 import Alamofire
 
 var tokenValue : String? = nil

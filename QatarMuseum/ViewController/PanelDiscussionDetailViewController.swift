@@ -37,8 +37,8 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         super.viewDidLoad()
         registerCell()
         setupUI()
-        
     }
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -82,6 +82,8 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         cell.selectionStyle = .none
         if(pageNameString == NMoQPanelPage.PanelDetailPage) {
             //cell.setPanelDetailCellContent(panelDetailData: nmoqSpecialEventDetail[indexPath.row])
+            cell.topDescription.textAlignment = .left
+            cell.descriptionLeftConstraint.constant = 30
             selectedRow = indexPath.row
             cell.setTourSecondDetailCellContent(tourDetailData: nmoqTourDetail[indexPath.row], userEventList: userEventList)
             cell.registerOrUnRegisterAction = {
@@ -90,23 +92,26 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                  self.reisterOrUnregisterTapAction(currentRow: indexPath.row, selectedCell: cell)
                 //self.reisterOrUnregisterTapAction(currentRow: self.selectedRow!, selectedCell: cell)
             }
+            cell.loadMapView = {
+                () in
+                self.loadLocationMap(tourDetail: self.nmoqTourDetail[indexPath.row])
+            }
             
         } else if (pageNameString == NMoQPanelPage.TourDetailPage){
-            //cell.setTourSecondDetailCellContent(tourDetailData: nmoqTourDetail[indexPath.row], userEventList: userEventList)
             cell.setTourSecondDetailCellContent(tourDetailData: nmoqTourDetail[self.selectedRow!], userEventList: userEventList)
             cell.topDescription.textAlignment = .left
             cell.descriptionLeftConstraint.constant = 30
             cell.registerOrUnRegisterAction = {
                 () in
                 self.selectedPanelCell = cell
-               // self.reisterOrUnregisterTapAction(currentRow: indexPath.row, selectedCell: cell)
                 self.reisterOrUnregisterTapAction(currentRow: self.selectedRow!, selectedCell: cell)
             }
+            cell.loadMapView = {
+                () in
+                self.loadLocationMap(tourDetail: self.nmoqTourDetail[self.selectedRow!])
+            }
         }
-        cell.loadMapView = {
-            () in
-            
-        }
+        
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -116,20 +121,40 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             return UITableViewAutomaticDimension
         }
     }
-    func loadLocationMap(currentRow: Int, destination: MKMapItem) {
-        let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
-        
-        let mapDetailView = detailStoryboard.instantiateViewController(withIdentifier: "mapViewId") as! MapViewController
-        mapDetailView.latitudeString = nmoqSpecialEventDetail[currentRow].mobileLatitude
-        mapDetailView.latitudeString = nmoqSpecialEventDetail[currentRow].longitude
-        mapDetailView.destination = destination
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(mapDetailView, animated: false, completion: nil)
-        
+    func loadLocationMap( tourDetail : NMoQTourDetail ) {
+        if (tourDetail.mobileLatitude != nil && tourDetail.mobileLatitude != "" && tourDetail.longitude != nil && tourDetail.longitude != "") {
+            let latitudeString = (tourDetail.mobileLatitude)!
+            let longitudeString = (tourDetail.longitude)!
+            var latitude : Double?
+            var longitude : Double?
+            if let lat : Double = Double(latitudeString) {
+                latitude = lat
+            }
+            if let long : Double = Double(longitudeString) {
+                longitude = long
+            }
+            
+            let destinationLocation = CLLocationCoordinate2D(latitude: latitude!,
+                                                             longitude: longitude!)
+            let destinationPlacemark = MKPlacemark(coordinate: destinationLocation, addressDictionary: nil)
+            let destination = MKMapItem(placemark: destinationPlacemark)
+            
+            let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
+            
+            let mapDetailView = detailStoryboard.instantiateViewController(withIdentifier: "mapViewId") as! MapViewController
+            mapDetailView.latitudeString = tourDetail.mobileLatitude
+            mapDetailView.longiudeString = tourDetail.longitude
+            mapDetailView.destination = destination
+            let transition = CATransition()
+            transition.duration = 0.3
+            transition.type = kCATransitionFade
+            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+            view.window!.layer.add(transition, forKey: kCATransition)
+            self.present(mapDetailView, animated: false, completion: nil)
+        }
+        else {
+            showLocationErrorPopup()
+        }
     }
     func reisterOrUnregisterTapAction(currentRow: Int,selectedCell : PanelDetailCell?) {
         if (selectedCell?.interestSwitch.isOn)! {
@@ -732,6 +757,12 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     func noButtonPressed() {
         setRegistrationSwitchOn(selectedCell: selectedPanelCell)
         self.unRegisterPopupView.removeFromSuperview()
+    }
+    func showLocationErrorPopup() {
+        popupView  = ComingSoonPopUp(frame: self.view.frame)
+        popupView.comingSoonPopupDelegate = self
+        popupView.loadMapKitLocationErrorPopup()
+        self.view.addSubview(popupView)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
