@@ -242,7 +242,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             heritageCell.videoOuterViewHeight.constant = 0
             heritageCell.setNMoQAboutCellData(aboutData: aboutDetailtArray[indexPath.row])
             // heritageCell.setMuseumAboutCellData(aboutData: aboutDetailtArray[0])
-            heritageCell.pageControl.isHidden = true
+            heritageCell.pageControl.isHidden = false
             heritageCell.downloadBtnTapAction = {
                 () in
                 self.downloadButtonAction()
