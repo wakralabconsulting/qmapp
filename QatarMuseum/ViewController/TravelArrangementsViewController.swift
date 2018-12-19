@@ -64,7 +64,10 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
             return travelCell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: travelCollectionView.frame.width, height: self.travelCollectionView.frame.height/2)
+//        return CGSize(width: travelCollectionView.frame.width, height: self.travelCollectionView.frame.height/2)
+        let heightValue = UIScreen.main.bounds.height/100
+        return CGSize(width: travelCollectionView.frame.width, height: heightValue*27)
+
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

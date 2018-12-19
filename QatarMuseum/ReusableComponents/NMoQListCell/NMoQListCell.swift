@@ -14,6 +14,11 @@ class NMoQListCell: UITableViewCell {
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setGradientLayer()
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -57,5 +62,18 @@ class NMoQListCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func setGradientLayer() {
+        self.cellImageView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+        
+        let width = self.bounds.width
+        let height = self.bounds.height
+        let sHeight:CGFloat = 70.0
+        let shadow = UIColor.black.withAlphaComponent(0.7).cgColor
+        
+        let bottomImageGradient = CAGradientLayer()
+        bottomImageGradient.frame = CGRect(x: 0, y: height - sHeight, width: width, height: sHeight)
+        bottomImageGradient.colors = [UIColor.clear.cgColor, shadow]
+        cellImageView.layer.insertSublayer(bottomImageGradient, at: 0)
+    }
     
 }
