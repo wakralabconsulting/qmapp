@@ -218,14 +218,12 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     //MARK: Topbar delegate
     func backButtonPressed() {
-        let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromLeft
+        self.dismiss(animated: false, completion: nil)
         self.view.window!.layer.add(transition, forKey: kCATransition)
-        let appDelegate = UIApplication.shared.delegate
-        appDelegate?.window??.rootViewController = homeViewController
     }
     //MARK: CollectionView Delegates
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
