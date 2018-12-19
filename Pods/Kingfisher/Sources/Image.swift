@@ -181,11 +181,7 @@ extension Kingfisher where Base: Image {
             let rep = NSBitmapImageRep(cgImage: cgimage)
             return rep.representation(using: .png, properties: [:])
         #else
-            #if swift(>=4.2)
-            return base.pngData()
-            #else
             return UIImagePNGRepresentation(base)
-            #endif
         #endif
     }
     
@@ -198,11 +194,7 @@ extension Kingfisher where Base: Image {
             let rep = NSBitmapImageRep(cgImage: cgImage)
             return rep.representation(using:.jpeg, properties: [.compressionFactor: compressionQuality])
         #else
-            #if swift(>=4.2)
-            return base.jpegData(compressionQuality: compressionQuality)
-            #else
             return UIImageJPEGRepresentation(base, compressionQuality)
-            #endif
         #endif
     }
     
@@ -293,7 +285,7 @@ extension Kingfisher where Base: Image {
                 guard let (images, gifDuration) = decode(from: imageSource, for: options) else { return nil }
                 image = onlyFirstFrame ? images.first : Kingfisher<Image>.animated(with: images, forDuration: duration <= 0.0 ? gifDuration : duration)
             } else {
-                image = Image(data: data, scale: scale)
+                image = Image(data: data)
                 image?.kf.imageSource = ImageSource(ref: imageSource)
             }
             image?.kf.animatedImageData = data
@@ -439,11 +431,7 @@ extension Kingfisher where Base: Image {
                 }
 
                 let path = NSBezierPath(roundedRect: rect, byRoundingCorners: corners, radius: radius)
-                #if swift(>=4.2)
-                path.windingRule = .evenOdd
-                #else
                 path.windingRule = .evenOddWindingRule
-                #endif
                 path.addClip()
                 base.draw(in: rect)
             #else
@@ -469,7 +457,7 @@ extension Kingfisher where Base: Image {
     }
     
     #if os(iOS) || os(tvOS)
-    func resize(to size: CGSize, for contentMode: UIView.ContentMode) -> Image {
+    func resize(to size: CGSize, for contentMode: UIViewContentMode) -> Image {
         switch contentMode {
         case .scaleAspectFit:
             return resize(to: size, for: .aspectFit)

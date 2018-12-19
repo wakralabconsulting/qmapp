@@ -15,7 +15,7 @@ PODS:
     - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
     - GoogleUtilities/MethodSwizzler (~> 5.2)
     - GoogleUtilities/Network (~> 5.2)
-    - "GoogleUtilities/NSData+zlib (~> 5.2)"
+    - GoogleUtilities/NSData+zlib (~> 5.2)
     - nanopb (~> 0.3)
   - FirebaseCore (5.1.10):
     - GoogleUtilities/Logger (~> 5.2)
@@ -27,7 +27,7 @@ PODS:
     - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
     - GoogleUtilities/MethodSwizzler (~> 5.2)
     - GoogleUtilities/Network (~> 5.2)
-    - "GoogleUtilities/NSData+zlib (~> 5.2)"
+    - GoogleUtilities/NSData+zlib (~> 5.2)
     - nanopb (~> 0.3)
   - GoogleMaps/Base (2.7.0)
   - GooglePlaces (2.7.0):
@@ -43,14 +43,14 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/Network (5.3.6):
     - GoogleUtilities/Logger
-    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/NSData+zlib
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (5.3.6)"
+  - GoogleUtilities/NSData+zlib (5.3.6)
   - GoogleUtilities/Reachability (5.3.6):
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (5.3.6):
     - GoogleUtilities/Logger
-  - Kingfisher (4.10.1)
+  - Kingfisher (4.9.0)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
@@ -64,25 +64,8 @@ DEPENDENCIES:
   - Fabric
   - Firebase/Core
   - GooglePlaces
-  - Kingfisher
+  - Kingfisher (<= 4.9.0)
   - YouTubePlayer
-
-SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - Alamofire
-    - Crashlytics
-    - Fabric
-    - Firebase
-    - FirebaseAnalytics
-    - FirebaseCore
-    - FirebaseInstanceID
-    - GoogleAppMeasurement
-    - GoogleMaps
-    - GooglePlaces
-    - GoogleUtilities
-    - Kingfisher
-    - nanopb
-    - YouTubePlayer
 
 SPEC CHECKSUMS:
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
@@ -96,10 +79,10 @@ SPEC CHECKSUMS:
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   GooglePlaces: 3d06e6c99654545b4738ce49648745779c25f2ef
   GoogleUtilities: 95996bea7c7d9b8fb811b7507669a4a8762f80c7
-  Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
+  Kingfisher: 64539b51826b778206daa6ed815d12653caa69dd
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   YouTubePlayer: 028451f6772f372d4759866db99824c676ac1473
 
-PODFILE CHECKSUM: 9abdf2afd6ef4f973c8a1413d71116e0e3db8335
+PODFILE CHECKSUM: bc096e2fde4d24d94f6cea6721b50e0ca492673e
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.4.0
