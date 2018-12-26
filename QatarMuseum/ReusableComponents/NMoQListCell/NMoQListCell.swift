@@ -22,7 +22,7 @@ class NMoQListCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        titleLabel.font = UIFont.selfGuidedFont
+        titleLabel.font = UIFont.tourListTitleFont
         dayLabel.font  = UIFont.settingsUpdateLabelFont
         dateLabel.font = UIFont.sideMenuLabelFont
     }
