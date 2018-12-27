@@ -26,7 +26,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     var imageArray: [String] = []
     var titleArray: [String] = []
     var nmoqTourList: [NMoQTour]! = []
-    
+    var sortIdTest = String()
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCell()
@@ -165,8 +165,9 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
             switch response.result {
             case .success(let data):
                 self.nmoqTourList = data.nmoqTourList
-                
-                
+                if self.nmoqTourList.first(where: {$0.sortId != "" && $0.sortId != nil} ) != nil {
+                   self.nmoqTourList = self.nmoqTourList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
+                }
                 self.saveOrUpdateTourListCoredata()
                 self.collectionTableView.reloadData()
             case .failure(let error):
@@ -186,6 +187,9 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
             switch response.result {
             case .success(let data):
                 self.nmoqTourList = data.nmoqTourList
+                if self.nmoqTourList.first(where: {$0.sortId != "" && $0.sortId != nil} ) != nil {
+                    self.nmoqTourList = self.nmoqTourList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
+                }
                 //self.saveOrUpdateHomeCoredata()
                 self.collectionTableView.reloadData()
             case .failure(let error):
@@ -232,7 +236,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                         tourListdbDict.title = tourListDict.title
                         tourListdbDict.dayDescription = tourListDict.dayDescription
                         tourListdbDict.subtitle =  tourListDict.subtitle
-                        tourListdbDict.sortId = tourListDict.sortId
+                        tourListdbDict.sortId = Int16(tourListDict.sortId!)!
                         tourListdbDict.nid =  tourListDict.nid
                         tourListdbDict.eventDate = tourListDict.eventDate
                         
@@ -279,7 +283,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
             tourListInfo.title = tourListDict.title
             tourListInfo.dayDescription = tourListDict.dayDescription
             tourListInfo.subtitle = tourListDict.subtitle
-            tourListInfo.sortId = tourListDict.sortId
+            tourListInfo.sortId = Int16(tourListDict.sortId!)!
             tourListInfo.nid = tourListDict.nid
             tourListInfo.eventDate = tourListDict.eventDate
         
@@ -314,6 +318,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "NMoQTourListEntity")
                 tourListArray = (try managedContext.fetch(fetchRequest) as? [NMoQTourListEntity])!
                 if (tourListArray.count > 0) {
+                    tourListArray.sort(by: {$0.sortId < $1.sortId})
                     for i in 0 ... tourListArray.count-1 {
                         let tourListDict = tourListArray[i]
                         var imagesArray : [String] = []
@@ -323,7 +328,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                                 imagesArray.append(imagesInfoArray[i].image!)
                             }
                         }
-                        self.nmoqTourList.insert(NMoQTour(title: tourListArray[i].title, dayDescription: tourListArray[i].dayDescription, images: imagesArray, subtitle: tourListArray[i].subtitle, sortId: tourListArray[i].sortId, nid: tourListArray[i].nid, eventDate: nil, date: nil, descriptioForModerator: nil, mobileLatitude: nil, moderatorName: nil, longitude: nil, contactEmail: nil, contactPhone: nil), at: i)
+                        self.nmoqTourList.insert(NMoQTour(title: tourListArray[i].title, dayDescription: tourListArray[i].dayDescription, images: imagesArray, subtitle: tourListArray[i].subtitle, sortId: String(tourListArray[i].sortId), nid: tourListArray[i].nid, eventDate: nil, date: nil, descriptioForModerator: nil, mobileLatitude: nil, moderatorName: nil, longitude: nil, contactEmail: nil, contactPhone: nil), at: i)
                     }
                     if(nmoqTourList.count == 0){
                         self.showNoNetwork()

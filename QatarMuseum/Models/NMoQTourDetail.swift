@@ -17,7 +17,7 @@ struct NMoQTourDetail: ResponseObjectSerializable, ResponseCollectionSerializabl
     var contactPhone: String? = nil
     var mobileLatitude: String? = nil
     var longitude: String? = nil
-    var sort_id: String? = nil
+    var sortId: String? = nil
     var body: String? = nil
     var registered: String? = nil
     var nid: String? = nil
@@ -33,7 +33,7 @@ struct NMoQTourDetail: ResponseObjectSerializable, ResponseCollectionSerializabl
             self.contactPhone = representation["contact_phone"] as? String
             self.mobileLatitude = representation["latitude"] as? String
             self.longitude = representation["longtitude"] as? String
-            self.sort_id = representation["sort_id"] as? String
+            self.sortId = representation["sort_id"] as? String
             self.body = representation["Body"] as? String
             self.registered = representation["registered"] as? String
             self.nid = representation["nid"] as? String
@@ -41,7 +41,7 @@ struct NMoQTourDetail: ResponseObjectSerializable, ResponseCollectionSerializabl
         }
     }
     
-        init (title:String?, imageBanner: [String]?, date: String?, nmoqEvent: String?, register: String?, contactEmail: String?, contactPhone: String?, mobileLatitude: String?, longitude: String?, sort_id: String?, body: String?, registered: String?, nid: String?) {
+        init (title:String?, imageBanner: [String]?, date: String?, nmoqEvent: String?, register: String?, contactEmail: String?, contactPhone: String?, mobileLatitude: String?, longitude: String?, sortId: String?, body: String?, registered: String?, nid: String?) {
             self.title = title
             self.imageBanner = imageBanner
             self.date = date
@@ -51,7 +51,7 @@ struct NMoQTourDetail: ResponseObjectSerializable, ResponseCollectionSerializabl
             self.contactPhone = contactPhone
             self.mobileLatitude = mobileLatitude
             self.longitude = longitude
-            self.sort_id = sort_id
+            self.sortId = sortId
             self.body = body
             self.registered = registered
             self.nid = nid

@@ -23,7 +23,6 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case GetPublicArtsDetail([String: Any])
     case CollectionList([String: Any])
     case EducationEvent([String: Any])
-    case MuseumAbout([String: Any])
     case LandingPageMuseums([String: Any])
     case MuseumDiningList([String: Any])
     case CollectionDetail([String: Any])
@@ -73,8 +72,6 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .CollectionList:
             return .get
         case .EducationEvent:
-            return .get
-        case .MuseumAbout:
             return .get
         case .LandingPageMuseums:
             return .get
@@ -157,8 +154,6 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/collection_ws.json"
         case .EducationEvent( _):
             return "/new_ws_educations.json"
-        case .MuseumAbout( _):
-            return "/about.php"
         case .LandingPageMuseums( _):
             return "/museum-detail.json"
         case .MuseumDiningList( _):
@@ -256,11 +251,6 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         case .CollectionByTourGuide(let parameters):
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
-        case .MuseumAbout(let parameters):
-            let aboutURL = NSURL(string: Config.tempBaseIP + lang())!
-            var mutableURLReq = URLRequest(url: aboutURL.appendingPathComponent(path)!)
-            mutableURLReq.httpMethod = method.rawValue
-            return try! Alamofire.URLEncoding.default.encode(mutableURLReq, with: parameters)
         case .MuseumTourGuide(let parameters):
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         case .GetToken(let parameters):

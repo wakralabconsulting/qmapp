@@ -131,6 +131,9 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 switch response.result {
                 case .success(let data):
                     self.nmoqTourDetail = data.nmoqTourDetailList
+                    if self.nmoqTourDetail.first(where: {$0.sortId != "" && $0.sortId != nil} ) != nil {
+                        self.nmoqTourDetail = self.nmoqTourDetail.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
+                    }
                     self.tableView.reloadData()
                     if(self.nmoqTourDetail.count == 0) {
                         let noResultMsg = NSLocalizedString("NO_RESULT_MESSAGE",
@@ -193,7 +196,7 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         tourDetaildbDict.contactPhone = tourDetailDict.contactPhone
                         tourDetaildbDict.mobileLatitude =  tourDetailDict.mobileLatitude
                         tourDetaildbDict.longitude =  tourDetailDict.longitude
-                        tourDetaildbDict.sort_id = tourDetailDict.sort_id
+                        tourDetaildbDict.sort_id = tourDetailDict.sortId
                         tourDetaildbDict.body = tourDetailDict.body
                         tourDetaildbDict.registered =  tourDetailDict.registered
                         tourDetaildbDict.nid =  tourDetailDict.nid
@@ -251,7 +254,7 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
         tourDetaildbDict.contactPhone = tourDetailDict.contactPhone
         tourDetaildbDict.mobileLatitude =  tourDetailDict.mobileLatitude
         tourDetaildbDict.longitude =  tourDetailDict.longitude
-        tourDetaildbDict.sort_id = tourDetailDict.sort_id
+        tourDetaildbDict.sort_id = tourDetailDict.sortId
         tourDetaildbDict.body = tourDetailDict.body
         tourDetaildbDict.registered =  tourDetailDict.registered
         tourDetaildbDict.nid =  tourDetailDict.nid
@@ -296,7 +299,7 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 imagesArray.append(imagesInfoArray[i].imgBanner!)
                             }
                         }
-                        self.nmoqTourDetail.insert(NMoQTourDetail(title: tourDetailArray[i].title, imageBanner: imagesArray, date: tourDetailArray[i].date, nmoqEvent: tourDetailArray[i].nmoqEvent, register: tourDetailArray[i].register, contactEmail: tourDetailArray[i].contactEmail, contactPhone: tourDetailArray[i].contactPhone, mobileLatitude: tourDetailArray[i].mobileLatitude, longitude: tourDetailArray[i].longitude, sort_id: tourDetailArray[i].sort_id, body: tourDetailArray[i].body, registered: tourDetailArray[i].registered, nid: tourDetailArray[i].nid), at: i)
+                        self.nmoqTourDetail.insert(NMoQTourDetail(title: tourDetailArray[i].title, imageBanner: imagesArray, date: tourDetailArray[i].date, nmoqEvent: tourDetailArray[i].nmoqEvent, register: tourDetailArray[i].register, contactEmail: tourDetailArray[i].contactEmail, contactPhone: tourDetailArray[i].contactPhone, mobileLatitude: tourDetailArray[i].mobileLatitude, longitude: tourDetailArray[i].longitude, sortId: tourDetailArray[i].sort_id, body: tourDetailArray[i].body, registered: tourDetailArray[i].registered, nid: tourDetailArray[i].nid), at: i)
                         
                     }
                     if(nmoqTourDetail.count == 0){
