@@ -350,25 +350,38 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
                     } else {
                         subDesc = subDesc! + aboutData.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                         
-                        if (subDesc != "") {
-                            let attributedString = setHyperLinkText(originalString: subDesc)
-                            if(attributedString != nil) {
-                                midTitleDescriptionLabel.delegate = self
-                                midTitleDescriptionLabel.attributedText = attributedString
-                                midTitleDescriptionLabel.isUserInteractionEnabled = true
-                                midTitleDescriptionLabel.isEditable = false
-                                //midTitleDescriptionLabel.tintColor = UIColor.viewMyFavDarkPink
-                                midTitleDescriptionLabel.textAlignment = .center
-                            } else {
+//                        if (subDesc != "") {
+//                            let attributedString = setHyperLinkText(originalString: subDesc)
+//                            if(attributedString != nil) {
+//                                midTitleDescriptionLabel.delegate = self
+//                                midTitleDescriptionLabel.attributedText = attributedString
+//                                midTitleDescriptionLabel.isUserInteractionEnabled = true
+//                                midTitleDescriptionLabel.isEditable = false
+//                                //midTitleDescriptionLabel.tintColor = UIColor.viewMyFavDarkPink
+//                                midTitleDescriptionLabel.textAlignment = .center
+//                            } else {
                                 midTitleDescriptionLabel.text = subDesc
-                            }
-                        }
+                           // }
+                        //}
                         
                     }
                 }
             }
         }
-        if(subDesc == "") {
+        if(subDesc != "") {
+            let attributedString = setHyperLinkText(originalString: subDesc)
+            if(attributedString != nil) {
+                midTitleDescriptionLabel.delegate = self
+                midTitleDescriptionLabel.attributedText = attributedString
+                midTitleDescriptionLabel.isUserInteractionEnabled = true
+                midTitleDescriptionLabel.isEditable = false
+                //midTitleDescriptionLabel.tintColor = UIColor.viewMyFavDarkPink
+                midTitleDescriptionLabel.textAlignment = .center
+            } else {
+                midTitleDescriptionLabel.text = subDesc
+            }
+        }
+        else if(subDesc == "") {
             let attributedString = setHyperLinkText(originalString: titleDescriptionLabel.text)
             if(attributedString != nil) {
                 titleDescriptionLabel.delegate = self
@@ -460,11 +473,19 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
         
     }
     func setHyperLinkText(originalString: String?) -> NSMutableAttributedString? {
-        
-        let splitArray = originalString?.components(separatedBy: " ")
+        let originalStringCopy = originalString?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|\n|\r", with: "", options: .regularExpression, range: nil)
+        let splitArray = originalStringCopy?.components(separatedBy: " ")
         if((splitArray?.count)! > 1) {
-            let last = splitArray![(splitArray?.count)!-1]
-            let lastTwo = splitArray![(splitArray?.count)!-2]
+            var last = String()
+            var lastTwo = String()
+            if(splitArray![(splitArray?.count)!-1] == "") {
+                last = splitArray![(splitArray?.count)!-2]
+                lastTwo = splitArray![(splitArray?.count)!-3]
+            } else {
+                last = splitArray![(splitArray?.count)!-1]
+                lastTwo = splitArray![(splitArray?.count)!-2]
+            }
+            
             let linkString = lastTwo + " " + last
             let stringValue = originalString! as NSString
             
