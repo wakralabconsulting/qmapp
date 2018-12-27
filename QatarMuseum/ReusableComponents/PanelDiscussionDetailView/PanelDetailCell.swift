@@ -134,10 +134,10 @@ class PanelDetailCell: UITableViewCell {
         }
         
     }
+    
     func setTourSecondDetailCellContent(tourDetailData: NMoQTourDetail?,userEventList : [NMoQUserEventList]) {
-        
         topTitle.text = tourDetailData?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-        topDescription.text = tourDetailData?.body
+        topDescription.text = tourDetailData?.body?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         interestedLabel.text = REGISTER
         notInterestedLabel.text = UNREGISTER
         secondImg.isHidden = true

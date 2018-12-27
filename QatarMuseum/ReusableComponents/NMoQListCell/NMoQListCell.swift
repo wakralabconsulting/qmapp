@@ -22,7 +22,7 @@ class NMoQListCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        titleLabel.font = UIFont.selfGuidedFont
+        titleLabel.font = UIFont.tourListTitleFont
         dayLabel.font  = UIFont.settingsUpdateLabelFont
         dateLabel.font = UIFont.sideMenuLabelFont
     }
@@ -35,6 +35,8 @@ class NMoQListCell: UITableViewCell {
             if let imageUrl = tourList?.images![0]{
                 cellImageView.kf.setImage(with: URL(string: imageUrl))
             }
+        } else {
+            cellImageView.image = UIImage(named: "default_imageX2")
         }
         if (cellImageView.image == nil) {
             cellImageView.image = UIImage(named: "default_imageX2")
@@ -51,6 +53,8 @@ class NMoQListCell: UITableViewCell {
             if let imageUrl = tourList?.imageBanner![0]{
                 cellImageView.kf.setImage(with: URL(string: imageUrl))
             }
+        } else {
+            cellImageView.image = UIImage(named: "default_imageX2")
         }
         if (cellImageView.image == nil) {
            cellImageView.image = UIImage(named: "default_imageX2")

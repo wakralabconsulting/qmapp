@@ -177,6 +177,13 @@ extension UIFont {
             return UIFont.init(name: "DINNextLTArabic-Bold", size:26)!
         }
     }
+    static var tourListTitleFont: UIFont {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            return UIFont.init(name: "DINNextLTPro-Regular", size: 26)!
+        } else{
+            return UIFont.init(name: "DINNextLTArabic-Regular", size:26)!
+        }
+    }
     static var miatourGuideFont: UIFont {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             return UIFont.init(name: "DINNextLTPro-Bold", size: 38)!
