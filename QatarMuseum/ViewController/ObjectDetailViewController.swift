@@ -68,7 +68,7 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
         objectTableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0)
         
         imageView.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.size.width, height: 300)
-        imageView.image = UIImage.init(named: "science_tour_object")
+       // imageView.image = UIImage.init(named: "science_tour_object")
         imageView.backgroundColor = UIColor.white
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
