@@ -13,30 +13,27 @@ import GooglePlaces
 import UIKit
 import UserNotifications
 import Alamofire
-
 var tokenValue : String? = nil
 
 var languageKey = 1
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     var window: UIWindow?
     var shouldRotate = false
-
+    let networkReachability = NetworkReachabilityManager()
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
        // GMSServices.provideAPIKey("AIzaSyBXEzUfmsi5BidKqR1eY999pj0APP2N0k0")
         GMSServices.provideAPIKey("AIzaSyAbuv0Gx0vwyZdr90LFKeUFmMesorNZHKQ") // QM key
          GMSPlacesClient.provideAPIKey("AIzaSyAbuv0Gx0vwyZdr90LFKeUFmMesorNZHKQ")
+        if  (networkReachability?.isReachable)! {
+            self.getHeritageDataFromServer()
+        }
+        
         AppLocalizer.DoTheMagic()
         FirebaseApp.configure()
 
         registerForPushNotifications()
-//        let title = "Analytics Title"
-//        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
-//            AnalyticsParameterItemID: "id-\(title)",
-//            AnalyticsParameterItemName: title,
-//            AnalyticsParameterContentType: "cont"
-//            ])
-
         
         // Register with APNs
         let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
@@ -61,6 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             self.window?.makeKeyAndVisible()
         }
         application.applicationIconBadgeNumber = 0
+        
         return true
     }
     
@@ -371,8 +369,146 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             
         }
     }
-
-
+    //MARK: HeritageList WebServiceCall
+    func getHeritageDataFromServer() {
+        let queue = DispatchQueue(label: "", qos: .background, attributes: .concurrent)
+        _ = Alamofire.request(QatarMuseumRouter.HeritageList()).responseObject(queue: queue) { (response: DataResponse<Heritages>) -> Void in
+            switch response.result {
+            case .success(let data):
+                DispatchQueue.main.async{
+                    self.saveOrUpdateHeritageCoredata(heritageListArray: data.heritage)
+                }
+            case .failure(let error):
+               // self.getHeritageDataFromServer()
+               print(error)
+            }
+        }
+    }
+    //MARK: Coredata Method
+    func saveOrUpdateHeritageCoredata(heritageListArray: [Heritage]?) {
+        if ((heritageListArray?.count)! > 0) {
+            if #available(iOS 10.0, *) {
+                let container = self.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.coreDataInBackgroundThread(managedContext: managedContext, heritageListArray: heritageListArray)
+                }
+            } else {
+                let managedContext = self.managedObjectContext
+                managedContext.perform {
+                    self.coreDataInBackgroundThread(managedContext : managedContext, heritageListArray: heritageListArray)
+                }
+            }
+        }
+    }
+    
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,heritageListArray: [Heritage]?) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "HeritageEntity", heritageId: nil, managedContext: managedContext) as! [HeritageEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... (heritageListArray?.count)!-1 {
+                    let heritageListDict = heritageListArray![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "HeritageEntity", heritageId: heritageListArray![i].id, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let heritagedbDict = fetchResult[0] as! HeritageEntity
+                        heritagedbDict.listname = heritageListDict.name
+                        heritagedbDict.listimage = heritageListDict.image
+                        heritagedbDict.listsortid =  heritageListDict.sortid
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    } else {
+                        //save
+                        self.saveToCoreData(heritageListDict: heritageListDict, managedObjContext: managedContext)
+                        
+                    }
+                }
+                
+            } else {
+                for i in 0 ... (heritageListArray?.count)!-1 {
+                    let heritageListDict : Heritage?
+                    heritageListDict = heritageListArray?[i]
+                    self.saveToCoreData(heritageListDict: heritageListDict!, managedObjContext: managedContext)
+                }
+            }
+        } else {
+            let fetchData = checkAddedToCoredata(entityName: "HeritageEntityArabic", heritageId: nil, managedContext: managedContext) as! [HeritageEntityArabic]
+            if (fetchData.count > 0) {
+                for i in 0 ... (heritageListArray?.count)!-1 {
+                    let heritageListDict = heritageListArray![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "HeritageEntityArabic", heritageId: heritageListArray![i].id, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let heritagedbDict = fetchResult[0] as! HeritageEntityArabic
+                        heritagedbDict.listnamearabic = heritageListDict.name
+                        heritagedbDict.listimagearabic = heritageListDict.image
+                        heritagedbDict.listsortidarabic =  heritageListDict.sortid
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    }
+                    else {
+                        //save
+                        self.saveToCoreData(heritageListDict: heritageListDict, managedObjContext: managedContext)
+                        
+                    }
+                }
+            }
+            else {
+                for i in 0 ... (heritageListArray?.count)!-1 {
+                    let heritageListDict : Heritage?
+                    heritageListDict = heritageListArray?[i]
+                    self.saveToCoreData(heritageListDict: heritageListDict!, managedObjContext: managedContext)
+                    
+                }
+            }
+        }
+    }
+    
+    func saveToCoreData(heritageListDict: Heritage, managedObjContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let heritageInfo: HeritageEntity = NSEntityDescription.insertNewObject(forEntityName: "HeritageEntity", into: managedObjContext) as! HeritageEntity
+            heritageInfo.listid = heritageListDict.id
+            heritageInfo.listname = heritageListDict.name
+            
+            heritageInfo.listimage = heritageListDict.image
+            if(heritageListDict.sortid != nil) {
+                heritageInfo.listsortid = heritageListDict.sortid
+            }
+        } else {
+            let heritageInfo: HeritageEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "HeritageEntityArabic", into: managedObjContext) as! HeritageEntityArabic
+            heritageInfo.listid = heritageListDict.id
+            heritageInfo.listnamearabic = heritageListDict.name
+            
+            heritageInfo.listimagearabic = heritageListDict.image
+            if(heritageListDict.sortid != nil) {
+                heritageInfo.listsortidarabic = heritageListDict.sortid
+            }
+        }
+        do {
+            try managedObjContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    func checkAddedToCoredata(entityName: String?, heritageId: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
+        var fetchResults : [NSManagedObject] = []
+        let homeFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
+        if (heritageId != nil) {
+            homeFetchRequest.predicate = NSPredicate.init(format: "listid == \(heritageId!)")
+        }
+        fetchResults = try! managedContext.fetch(homeFetchRequest)
+        return fetchResults
+    }
+    
 }
 
 extension UIApplication {

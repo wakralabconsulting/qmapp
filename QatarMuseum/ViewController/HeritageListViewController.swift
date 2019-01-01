@@ -11,7 +11,8 @@ import CoreData
 import Crashlytics
 import Firebase
 import UIKit
-
+import AVFoundation
+import Foundation
 class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol,LoadingViewProtocol {
     
     @IBOutlet weak var heritageHeader: CommonHeaderView!
@@ -22,17 +23,15 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
     var heritageListArray: [Heritage]! = []
     let networkReachability = NetworkReachabilityManager()
     var fromSideMenu : Bool = false
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        if  (networkReachability?.isReachable)! {
-            getHeritageDataFromServer()
-        } else {
-            self.fetchHeritageListFromCoredata()
-        }
+        self.fetchHeritageListFromCoredata()
         registerNib()
         recordScreenView()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        
     }
    
     func setupUI() {
@@ -65,9 +64,7 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let heritageCell : HeritageCollectionCell = heritageCollectionView.dequeueReusableCell(withReuseIdentifier: "heritageCellId", for: indexPath) as! HeritageCollectionCell
-        
-        //heritageCell.setHeritageListCellValues(heritageList: heritageListArray[indexPath.row])
-         heritageCell.setHeritageListCellValues(heritageList: heritageListArray[indexPath.row])
+        heritageCell.setHeritageListCellValues(heritageList: heritageListArray[indexPath.row])
         loadingView.stopLoading()
         loadingView.isHidden = true
         return heritageCell
@@ -283,7 +280,9 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
                     if(heritageListArray.count == 0){
                         self.showNoNetwork()
                     }
-                    heritageCollectionView.reloadData()
+                    DispatchQueue.main.async{
+                        self.heritageCollectionView.reloadData()
+                    }
                 } else {
                     self.showNoNetwork()
                 }
@@ -347,7 +346,10 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
         if  (networkReachability?.isReachable)! {
-            self.getHeritageDataFromServer()
+            //self.getHeritageDataFromServer()
+            //self.fetchHeritageListFromCoredata()
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            appDelegate?.getHeritageDataFromServer()
         }
     }
     func showNoNetwork() {
@@ -356,4 +358,5 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
     }
+    
 }
