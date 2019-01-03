@@ -22,13 +22,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var window: UIWindow?
     var shouldRotate = false
     let networkReachability = NetworkReachabilityManager()
+    var tourGuideId : String? = ""
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
        // GMSServices.provideAPIKey("AIzaSyBXEzUfmsi5BidKqR1eY999pj0APP2N0k0")
         GMSServices.provideAPIKey("AIzaSyAbuv0Gx0vwyZdr90LFKeUFmMesorNZHKQ") // QM key
          GMSPlacesClient.provideAPIKey("AIzaSyAbuv0Gx0vwyZdr90LFKeUFmMesorNZHKQ")
-        if  (networkReachability?.isReachable)! {
-            self.getHeritageDataFromServer()
-        }
+        self.apiCalls()
+        
+           
         
         AppLocalizer.DoTheMagic()
         FirebaseApp.configure()
@@ -62,7 +63,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return true
     }
     
-    
+    func apiCalls() {
+        if  (networkReachability?.isReachable)! {
+            self.getHeritageDataFromServer()
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                self.getFloorMapDataFromServer(tourGuideId: "12471") // for explore and highlight tour English
+                self.getFloorMapDataFromServer(tourGuideId: "12216") // for science tour English
+            } else {
+                self.getFloorMapDataFromServer(tourGuideId: "12916") //for explore and highlight tour Arabic
+                self.getFloorMapDataFromServer(tourGuideId: "12226") // for science tour Arabic
+            }
+            
+        }
+        
+    }
     func registerForPushNotifications() {
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
@@ -403,11 +417,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,heritageListArray: [Heritage]?) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            let fetchData = checkAddedToCoredata(entityName: "HeritageEntity", heritageId: nil, managedContext: managedContext) as! [HeritageEntity]
+            let fetchData = checkAddedToCoredata(entityName: "HeritageEntity", idKey: "listid", idValue: nil, managedContext: managedContext) as! [HeritageEntity]
             if (fetchData.count > 0) {
                 for i in 0 ... (heritageListArray?.count)!-1 {
                     let heritageListDict = heritageListArray![i]
-                    let fetchResult = checkAddedToCoredata(entityName: "HeritageEntity", heritageId: heritageListArray![i].id, managedContext: managedContext)
+                    let fetchResult = checkAddedToCoredata(entityName: "HeritageEntity", idKey: "listid", idValue: heritageListArray![i].id, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
                         let heritagedbDict = fetchResult[0] as! HeritageEntity
@@ -427,6 +441,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         
                     }
                 }
+                NotificationCenter.default.post(name: NSNotification.Name(heritageListNotification), object: self)
                 
             } else {
                 for i in 0 ... (heritageListArray?.count)!-1 {
@@ -434,13 +449,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     heritageListDict = heritageListArray?[i]
                     self.saveToCoreData(heritageListDict: heritageListDict!, managedObjContext: managedContext)
                 }
+                NotificationCenter.default.post(name: NSNotification.Name(heritageListNotification), object: self)
             }
         } else {
-            let fetchData = checkAddedToCoredata(entityName: "HeritageEntityArabic", heritageId: nil, managedContext: managedContext) as! [HeritageEntityArabic]
+            let fetchData = checkAddedToCoredata(entityName: "HeritageEntityArabic", idKey: "listid", idValue: nil, managedContext: managedContext) as! [HeritageEntityArabic]
             if (fetchData.count > 0) {
                 for i in 0 ... (heritageListArray?.count)!-1 {
                     let heritageListDict = heritageListArray![i]
-                    let fetchResult = checkAddedToCoredata(entityName: "HeritageEntityArabic", heritageId: heritageListArray![i].id, managedContext: managedContext)
+                    let fetchResult = checkAddedToCoredata(entityName: "HeritageEntityArabic", idKey: "listid", idValue: heritageListArray![i].id, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
                         let heritagedbDict = fetchResult[0] as! HeritageEntityArabic
@@ -461,6 +477,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         
                     }
                 }
+                NotificationCenter.default.post(name: NSNotification.Name(heritageListNotification), object: self)
             }
             else {
                 for i in 0 ... (heritageListArray?.count)!-1 {
@@ -469,6 +486,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     self.saveToCoreData(heritageListDict: heritageListDict!, managedObjContext: managedContext)
                     
                 }
+                NotificationCenter.default.post(name: NSNotification.Name(heritageListNotification), object: self)
             }
         }
     }
@@ -499,13 +517,346 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
-    func checkAddedToCoredata(entityName: String?, heritageId: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
-        var fetchResults : [NSManagedObject] = []
-        let homeFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
-        if (heritageId != nil) {
-            homeFetchRequest.predicate = NSPredicate.init(format: "listid == \(heritageId!)")
+    //MARK: FloorMap WebServiceCall
+    func getFloorMapDataFromServer(tourGuideId: String?) {
+        let queue = DispatchQueue(label: "", qos: .background, attributes: .concurrent)
+        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": tourGuideId!])).responseObject(queue: queue) { (response: DataResponse<TourGuideFloorMaps>) -> Void in
+            switch response.result {
+            case .success(let data):
+                //DispatchQueue.main.async{
+                    self.saveOrUpdateFloormapCoredata(floorMapArray: data.tourGuideFloorMap)
+                //}
+            case .failure(let error):
+                print("error")
+                
+            }
         }
-        fetchResults = try! managedContext.fetch(homeFetchRequest)
+    }
+    //MARK: FloorMap Coredata Method
+    func saveOrUpdateFloormapCoredata(floorMapArray: [TourGuideFloorMap]?) {
+        if ((floorMapArray?.count)! > 0) {
+            if #available(iOS 10.0, *) {
+                let container = self.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.floormapCoreDataInBackgroundThread(managedContext: managedContext, floorMapArray: floorMapArray)
+                }
+            } else {
+                let managedContext = self.managedObjectContext
+                managedContext.perform {
+                    self.floormapCoreDataInBackgroundThread(managedContext : managedContext, floorMapArray: floorMapArray)
+                }
+            }
+        }
+    }
+    func floormapCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,floorMapArray: [TourGuideFloorMap]?) {
+        if ((floorMapArray?.count)! > 0) {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                let fetchData = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "tourGuideId", idValue: tourGuideId , managedContext: managedContext ) as! [FloorMapTourGuideEntity]
+                
+                if (fetchData.count > 0) {
+                    for i in 0 ... (floorMapArray?.count)!-1 {
+                        let managedContext = getContext()
+                        let tourGuideDeatilDict = floorMapArray![i]
+                        let fetchResult = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "nid", idValue: floorMapArray![i].nid, managedContext: managedContext) as! [FloorMapTourGuideEntity]
+                        
+                        if(fetchResult.count != 0) {
+                            
+                            //update
+                            let tourguidedbDict = fetchResult[0]
+                            tourguidedbDict.title = tourGuideDeatilDict.title
+                            tourguidedbDict.accessionNumber = tourGuideDeatilDict.accessionNumber
+                            tourguidedbDict.nid =  tourGuideDeatilDict.nid
+                            tourguidedbDict.curatorialDescription = tourGuideDeatilDict.curatorialDescription
+                            tourguidedbDict.diam = tourGuideDeatilDict.diam
+                            
+                            tourguidedbDict.dimensions = tourGuideDeatilDict.dimensions
+                            tourguidedbDict.mainTitle = tourGuideDeatilDict.mainTitle
+                            tourguidedbDict.objectEngSummary =  tourGuideDeatilDict.objectENGSummary
+                            tourguidedbDict.objectHistory = tourGuideDeatilDict.objectHistory
+                            tourguidedbDict.production = tourGuideDeatilDict.production
+                            
+                            tourguidedbDict.productionDates = tourGuideDeatilDict.productionDates
+                            tourguidedbDict.image = tourGuideDeatilDict.image
+                            tourguidedbDict.tourGuideId =  tourGuideDeatilDict.tourGuideId
+                            tourguidedbDict.artifactNumber = tourGuideDeatilDict.artifactNumber
+                            tourguidedbDict.artifactPosition = tourGuideDeatilDict.artifactPosition
+                            
+                            tourguidedbDict.audioDescriptif = tourGuideDeatilDict.audioDescriptif
+                            tourguidedbDict.audioFile = tourGuideDeatilDict.audioFile
+                            tourguidedbDict.floorLevel =  tourGuideDeatilDict.floorLevel
+                            tourguidedbDict.galleyNumber = tourGuideDeatilDict.galleyNumber
+                            tourguidedbDict.artistOrCreatorOrAuthor = tourGuideDeatilDict.artistOrCreatorOrAuthor
+                            tourguidedbDict.periodOrStyle = tourGuideDeatilDict.periodOrStyle
+                            tourguidedbDict.techniqueAndMaterials = tourGuideDeatilDict.techniqueAndMaterials
+                            if let imageUrl = tourGuideDeatilDict.thumbImage{
+                                if(imageUrl != "") {
+                                    if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
+                                        let image: UIImage = UIImage(data: data)!
+                                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
+                                    }
+                                }
+                            }
+                            
+                            
+                            if(tourGuideDeatilDict.images != nil) {
+                                if((tourGuideDeatilDict.images?.count)! > 0) {
+                                    for i in 0 ... (tourGuideDeatilDict.images?.count)!-1 {
+                                        var tourGuideImgEntity: FloorMapImagesEntity!
+                                        let tourGuideImg: FloorMapImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "FloorMapImagesEntity", into: managedContext) as! FloorMapImagesEntity
+                                        tourGuideImg.image = tourGuideDeatilDict.images?[i]
+                                        
+                                        tourGuideImgEntity = tourGuideImg
+                                        tourguidedbDict.addToImagesRelation(tourGuideImgEntity)
+                                        do {
+                                            try managedContext.save()
+                                            
+                                        } catch let error as NSError {
+                                            print("Could not save. \(error), \(error.userInfo)")
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                            DispatchQueue.main.async(execute: {
+                                do{
+                                    try managedContext.save()
+                                }
+                                catch{
+                                    print(error)
+                                }
+                            })
+                        }else {
+                            self.saveToCoreData(tourGuideDetailDict: tourGuideDeatilDict, managedObjContext: managedContext)
+                        }
+                    }//for
+                    NotificationCenter.default.post(name: NSNotification.Name(floormapNotification), object: self)
+                }//if
+                else {
+                    for i in 0 ... (floorMapArray?.count)!-1 {
+                        let managedContext = getContext()
+                        let tourGuideDetailDict : TourGuideFloorMap?
+                        tourGuideDetailDict = floorMapArray?[i]
+                        self.saveToCoreData(tourGuideDetailDict: tourGuideDetailDict!, managedObjContext: managedContext)
+                    }
+                    NotificationCenter.default.post(name: NSNotification.Name(floormapNotification), object: self)
+                }
+            }
+            else {
+                let fetchData = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey:"tourGuideId" , idValue: tourGuideId, managedContext: managedContext) as! [FloorMapTourGuideEntityAr]
+                if (fetchData.count > 0) {
+                    for i in 0 ... (floorMapArray?.count)!-1 {
+                        let managedContext = getContext()
+                        let tourGuideDeatilDict = floorMapArray![i]
+                        let fetchResult = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey: "nid", idValue: floorMapArray![i].nid, managedContext: managedContext) as! [FloorMapTourGuideEntityAr]
+                        //update
+                        if(fetchResult.count != 0) {
+                            let tourguidedbDict = fetchResult[0]
+                            tourguidedbDict.title = tourGuideDeatilDict.title
+                            tourguidedbDict.accessionNumber = tourGuideDeatilDict.accessionNumber
+                            tourguidedbDict.nid =  tourGuideDeatilDict.nid
+                            tourguidedbDict.curatorialDescription = tourGuideDeatilDict.curatorialDescription
+                            tourguidedbDict.diam = tourGuideDeatilDict.diam
+                            
+                            tourguidedbDict.dimensions = tourGuideDeatilDict.dimensions
+                            tourguidedbDict.mainTitle = tourGuideDeatilDict.mainTitle
+                            tourguidedbDict.objectEngSummary =  tourGuideDeatilDict.objectENGSummary
+                            tourguidedbDict.objectHistory = tourGuideDeatilDict.objectHistory
+                            tourguidedbDict.production = tourGuideDeatilDict.production
+                            
+                            tourguidedbDict.productionDates = tourGuideDeatilDict.productionDates
+                            tourguidedbDict.image = tourGuideDeatilDict.image
+                            tourguidedbDict.tourGuideId =  tourGuideDeatilDict.tourGuideId
+                            tourguidedbDict.artifactNumber = tourGuideDeatilDict.artifactNumber
+                            tourguidedbDict.artifactPosition = tourGuideDeatilDict.artifactPosition
+                            
+                            tourguidedbDict.audioDescriptif = tourGuideDeatilDict.audioDescriptif
+                            tourguidedbDict.audioFile = tourGuideDeatilDict.audioFile
+                            tourguidedbDict.floorLevel =  tourGuideDeatilDict.floorLevel
+                            tourguidedbDict.galleyNumber = tourGuideDeatilDict.galleyNumber
+                            tourguidedbDict.artistOrCreatorOrAuthor = tourGuideDeatilDict.artistOrCreatorOrAuthor
+                            tourguidedbDict.periodOrStyle = tourGuideDeatilDict.periodOrStyle
+                            tourguidedbDict.techniqueAndMaterials = tourGuideDeatilDict.techniqueAndMaterials
+                            if let imageUrl = tourGuideDeatilDict.thumbImage{
+                                if(imageUrl != "") {
+                                    if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
+                                        let image: UIImage = UIImage(data: data)!
+                                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
+                                    }
+                                }
+                                
+                            }
+                            if(tourGuideDeatilDict.images != nil) {
+                                if((tourGuideDeatilDict.images?.count)! > 0) {
+                                    for i in 0 ... (tourGuideDeatilDict.images?.count)!-1 {
+                                        var tourGuideImgEntity: FloorMapImagesEntityAr!
+                                        let tourGuideImg: FloorMapImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FloorMapImagesEntityAr", into: managedContext) as! FloorMapImagesEntityAr
+                                        tourGuideImg.image = tourGuideDeatilDict.images?[i]
+                                        
+                                        tourGuideImgEntity = tourGuideImg
+                                        tourguidedbDict.addToImagesRelation(tourGuideImgEntity)
+                                        do {
+                                            try managedContext.save()
+                                            
+                                        } catch let error as NSError {
+                                            print("Could not save. \(error), \(error.userInfo)")
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                            DispatchQueue.main.async(execute: {
+                                do{
+                                    try managedContext.save()
+                                }
+                                catch{
+                                    print(error)
+                                }
+                            })
+                        } else {
+                            self.saveToCoreData(tourGuideDetailDict: tourGuideDeatilDict, managedObjContext: managedContext)
+                        }
+                    }//for
+                    NotificationCenter.default.post(name: NSNotification.Name(floormapNotification), object: self)
+                } //if
+                else {
+                    for i in 0 ... (floorMapArray?.count)!-1 {
+                        let managedContext = getContext()
+                        let tourGuideDetailDict : TourGuideFloorMap?
+                        tourGuideDetailDict = floorMapArray?[i]
+                        self.saveToCoreData(tourGuideDetailDict: tourGuideDetailDict!, managedObjContext: managedContext)
+                    }
+                    NotificationCenter.default.post(name: NSNotification.Name(floormapNotification), object: self)
+                }
+            }
+        }
+    }
+    func saveToCoreData(tourGuideDetailDict: TourGuideFloorMap, managedObjContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let tourguidedbDict: FloorMapTourGuideEntity = NSEntityDescription.insertNewObject(forEntityName: "FloorMapTourGuideEntity", into: managedObjContext) as! FloorMapTourGuideEntity
+            tourguidedbDict.title = tourGuideDetailDict.title
+            tourguidedbDict.accessionNumber = tourGuideDetailDict.accessionNumber
+            tourguidedbDict.nid =  tourGuideDetailDict.nid
+            tourguidedbDict.curatorialDescription = tourGuideDetailDict.curatorialDescription
+            tourguidedbDict.diam = tourGuideDetailDict.diam
+            
+            tourguidedbDict.dimensions = tourGuideDetailDict.dimensions
+            tourguidedbDict.mainTitle = tourGuideDetailDict.mainTitle
+            tourguidedbDict.objectEngSummary =  tourGuideDetailDict.objectENGSummary
+            tourguidedbDict.objectHistory = tourGuideDetailDict.objectHistory
+            tourguidedbDict.production = tourGuideDetailDict.production
+            
+            tourguidedbDict.productionDates = tourGuideDetailDict.productionDates
+            tourguidedbDict.image = tourGuideDetailDict.image
+            tourguidedbDict.tourGuideId =  tourGuideDetailDict.tourGuideId
+            tourguidedbDict.artifactNumber = tourGuideDetailDict.artifactNumber
+            tourguidedbDict.artifactPosition = tourGuideDetailDict.artifactPosition
+            
+            tourguidedbDict.audioDescriptif = tourGuideDetailDict.audioDescriptif
+            tourguidedbDict.audioFile = tourGuideDetailDict.audioFile
+            tourguidedbDict.floorLevel =  tourGuideDetailDict.floorLevel
+            tourguidedbDict.galleyNumber = tourGuideDetailDict.galleyNumber
+            tourguidedbDict.artistOrCreatorOrAuthor = tourGuideDetailDict.artistOrCreatorOrAuthor
+            tourguidedbDict.periodOrStyle = tourGuideDetailDict.periodOrStyle
+            tourguidedbDict.techniqueAndMaterials = tourGuideDetailDict.techniqueAndMaterials
+            if let imageUrl = tourGuideDetailDict.thumbImage{
+                if(imageUrl != "") {
+                    if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
+                        let image: UIImage = UIImage(data: data)!
+                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
+                    }
+                }
+            }
+            if(tourGuideDetailDict.images != nil) {
+                if((tourGuideDetailDict.images?.count)! > 0) {
+                    for i in 0 ... (tourGuideDetailDict.images?.count)!-1 {
+                        var tourGuideImgEntity: FloorMapImagesEntity!
+                        let tourGuideImg: FloorMapImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "FloorMapImagesEntity", into: managedObjContext) as! FloorMapImagesEntity
+                        tourGuideImg.image = tourGuideDetailDict.images?[i]
+                        
+                        tourGuideImgEntity = tourGuideImg
+                        tourguidedbDict.addToImagesRelation(tourGuideImgEntity)
+                        do {
+                            try managedObjContext.save()
+                            
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                        
+                    }
+                }
+            }
+            
+        }
+        else {
+            let tourguidedbDict: FloorMapTourGuideEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FloorMapTourGuideEntityAr", into: managedObjContext) as! FloorMapTourGuideEntityAr
+            tourguidedbDict.title = tourGuideDetailDict.title
+            tourguidedbDict.accessionNumber = tourGuideDetailDict.accessionNumber
+            tourguidedbDict.nid =  tourGuideDetailDict.nid
+            tourguidedbDict.curatorialDescription = tourGuideDetailDict.curatorialDescription
+            tourguidedbDict.diam = tourGuideDetailDict.diam
+            
+            tourguidedbDict.dimensions = tourGuideDetailDict.dimensions
+            tourguidedbDict.mainTitle = tourGuideDetailDict.mainTitle
+            tourguidedbDict.objectEngSummary =  tourGuideDetailDict.objectENGSummary
+            tourguidedbDict.objectHistory = tourGuideDetailDict.objectHistory
+            tourguidedbDict.production = tourGuideDetailDict.production
+            
+            tourguidedbDict.productionDates = tourGuideDetailDict.productionDates
+            tourguidedbDict.image = tourGuideDetailDict.image
+            tourguidedbDict.tourGuideId =  tourGuideDetailDict.tourGuideId
+            tourguidedbDict.artifactNumber = tourGuideDetailDict.artifactNumber
+            tourguidedbDict.artifactPosition = tourGuideDetailDict.artifactPosition
+            
+            tourguidedbDict.audioDescriptif = tourGuideDetailDict.audioDescriptif
+            tourguidedbDict.audioFile = tourGuideDetailDict.audioFile
+            tourguidedbDict.floorLevel =  tourGuideDetailDict.floorLevel
+            tourguidedbDict.galleyNumber = tourGuideDetailDict.galleyNumber
+            tourguidedbDict.artistOrCreatorOrAuthor = tourGuideDetailDict.artistOrCreatorOrAuthor
+            tourguidedbDict.periodOrStyle = tourGuideDetailDict.periodOrStyle
+            tourguidedbDict.techniqueAndMaterials = tourGuideDetailDict.techniqueAndMaterials
+            if let imageUrl = tourGuideDetailDict.thumbImage{
+                if(imageUrl != "") {
+                    if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
+                        let image: UIImage = UIImage(data: data)!
+                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
+                    }
+                }
+            }
+            if(tourGuideDetailDict.images != nil) {
+                if((tourGuideDetailDict.images?.count)! > 0) {
+                    for i in 0 ... (tourGuideDetailDict.images?.count)!-1 {
+                        var tourGuideImgEntity: FloorMapImagesEntityAr!
+                        let tourGuideImg: FloorMapImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FloorMapImagesEntityAr", into: managedObjContext) as! FloorMapImagesEntityAr
+                        tourGuideImg.image = tourGuideDetailDict.images?[i]
+                        
+                        tourGuideImgEntity = tourGuideImg
+                        tourguidedbDict.addToImagesRelation(tourGuideImgEntity)
+                        do {
+                            try managedObjContext.save()
+                            
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                        
+                    }
+                }
+            }
+        }
+        DispatchQueue.main.async(execute: {
+        do {
+                try managedObjContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+        })
+    }
+    func checkAddedToCoredata(entityName: String?, idKey:String?, idValue: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
+        var fetchResults : [NSManagedObject] = []
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
+        if (idValue != nil) {
+            fetchRequest.predicate = NSPredicate(format: "\(idKey!) == %@", idValue!)
+        }
+        fetchResults = try! managedContext.fetch(fetchRequest)
         return fetchResults
     }
     
