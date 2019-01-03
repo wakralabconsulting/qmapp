@@ -95,6 +95,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     func loadTourViewPage(selectedRow: Int?) {
         let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "nMoQTourId") as! NMoQTourViewController
         tourView.tourDetailId = nmoqTourList[selectedRow!].nid
+        tourView.headerTitle = nmoqTourList[selectedRow!].subtitle
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionPush
@@ -347,7 +348,6 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         var fetchResults : [NSManagedObject] = []
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
         if (idValue != nil) {
-            // homeFetchRequest.predicate = NSPredicate.init(format: "id == \(homeId!)")
             fetchRequest.predicate = NSPredicate(format: "\(idKey!) == %@", idValue!)
         }
         fetchResults = try! managedContext.fetch(fetchRequest)

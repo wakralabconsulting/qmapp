@@ -19,8 +19,8 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
     var tourTitle : String! = ""
     let networkReachability = NetworkReachabilityManager()
     var tourDesc: String = ""
-    var tourName : [String]? = ["Day Tour", "Evening Tour"]
     var tourDetailId : String? = nil
+    var headerTitle : String? = nil
     var nmoqTourDetail: [NMoQTourDetail]! = []
 
     override func viewDidLoad() {
@@ -40,9 +40,8 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         loadingView.loadingViewDelegate = self
         headerView.headerViewDelegate = self
-        
-        
-            tourDesc = NSLocalizedString("NMoQ_TOUR_DESC", comment: "NMoQ_TOUR_DESC in the NMoQ Tour page")
+        tourDesc = NSLocalizedString("NMoQ_TOUR_DESC", comment: "NMoQ_TOUR_DESC in the NMoQ Tour page")
+        headerView.headerTitle.text = headerTitle?.uppercased()
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                 headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
             } else {

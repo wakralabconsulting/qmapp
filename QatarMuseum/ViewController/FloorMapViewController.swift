@@ -358,7 +358,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
              headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
             if (fromTourString == fromTour.scienceTour) {
                 tourGuideId = "12216"
-            } else if ((fromTourString == fromTour.HighlightTour) || (fromTourString == fromTour.exploreTour)){
+            } else if (fromTourString == fromTour.exploreTour){
+                tourGuideId = "12471"
+                DispatchQueue.global(qos: .background).async {
+                    self.getFloorMapDataFromServer()
+                }
+            } else if (fromTourString == fromTour.HighlightTour) {
                 tourGuideId = "12471"
             }
         } else {
@@ -366,34 +371,17 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             self.playerSlider.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             if (fromTourString == fromTour.scienceTour) {
                 tourGuideId = "12226"
-            } else if ((fromTourString == fromTour.HighlightTour) || (fromTourString == fromTour.exploreTour)){
+            } else if (fromTourString == fromTour.exploreTour){
+                tourGuideId = "12916"
+                DispatchQueue.global(qos: .background).async {
+                    self.getFloorMapDataFromServer()
+                }
+            } else if (fromTourString == fromTour.HighlightTour) {
                 tourGuideId = "12916"
             }
         }
-        if  (networkReachability?.isReachable)! {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-                var tourGuideArray = [FloorMapTourGuideEntity]()
-                tourGuideArray = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "tourGuideId", idValue: tourGuideId) as! [FloorMapTourGuideEntity]
-                if (tourGuideArray.count > 0) {
-                    fetchTourGuideFromCoredata()
-                }
-                //else {
-                    getFloorMapDataFromServer()
-               // }
-            } else {
-                var tourGuideArray = [FloorMapTourGuideEntityAr]()
-                tourGuideArray = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey: "tourGuideId", idValue: tourGuideId) as! [FloorMapTourGuideEntityAr]
-                if(tourGuideArray.count > 0) {
-                    fetchTourGuideFromCoredata()
-                }
-                //else {
-                     getFloorMapDataFromServer()
-               // }
-            }
-            
-        } else {
             fetchTourGuideFromCoredata()
-        }
+        NotificationCenter.default.addObserver(self, selector: #selector(FloorMapViewController.receiveFloormapNotification(notification:)), name: NSNotification.Name(floormapNotification), object: nil)
     }
     
     func loadMap() {
@@ -760,9 +748,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
     @IBAction func didTapThirdLevel(_ sender: UIButton) {
         if(level != levelNumber.three) {
             self.closeAudio()
-            self.loadingView.isHidden = false
-            self.loadingView.showLoading()
-            self.stopLoadingView(delayInSeconds: 0.3)
+            //self.loadingView.isHidden = false
+            //self.loadingView.showLoading()
+            //self.stopLoadingView(delayInSeconds: 0.3)
             self.playList = self.playLists[2]
             playButton.isHidden = false
             playerSlider.isHidden = false
@@ -802,9 +790,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
     @IBAction func didtapSecondbutton(_ sender: UIButton) {
        if(level != levelNumber.two) {
         self.closeAudio()
-        self.loadingView.isHidden = false
-        self.loadingView.showLoading()
-        self.stopLoadingView(delayInSeconds: 0.3)
+        //self.loadingView.isHidden = false
+       // self.loadingView.showLoading()
+        //self.stopLoadingView(delayInSeconds: 0.3)
         self.playList = self.playLists[1]
         playButton.isHidden = false
         playerSlider.isHidden = false
@@ -1330,28 +1318,16 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
     
     //MARK: WebServiceCall
     func getFloorMapDataFromServer() {
-         let queue = DispatchQueue(label: "", qos: .background, attributes: .concurrent)
-        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": tourGuideId!])).responseObject(queue: queue) { (response: DataResponse<TourGuideFloorMaps>) -> Void in
+        // let queue = DispatchQueue(label: "", qos: .background, attributes: .concurrent)
+        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": tourGuideId!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
             switch response.result {
             case .success(let data):
-                self.floorMapArray = data.tourGuideFloorMap
-                //self.loadingView.stopLoading()
-               // self.loadingView.isHidden = true
                 if (self.floorMapArray.count > 0) {
-                    DispatchQueue.main.async{
-                        self.saveOrUpdateTourGuideCoredata()
-                    }
+                    self.saveOrUpdateFloormapCoredata(floorMapArray: data.tourGuideFloorMap)
                 }
                 
             case .failure(let error):
-                var errorMessage: String
-                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
-                                                                comment: "Setting the content of the alert"))
-                self.loadingView.stopLoading()
-                self.loadingView.noDataView.isHidden = false
-                self.loadingView.isHidden = false
-                self.loadingView.showNoDataView()
-                self.loadingView.noDataLabel.text = errorMessage
+                print("error")
 
             }
         }
@@ -1404,9 +1380,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             
             
         }
-        if (self.fromTourString == fromTour.exploreTour) {
-            self.stopLoadingView(delayInSeconds: 0.4)
-        }
+//        if (self.fromTourString == fromTour.exploreTour) {
+//            self.stopLoadingView(delayInSeconds: 0.4)
+//        }
     }
     func showOrHideLevelThreeHighlightTour() {
         for i in 0 ... self.levelThreePositionArray.count-1 {
@@ -1450,9 +1426,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                 (self.levelThreeMarkerArray[i] as! GMSMarker).map = nil
             }
         }
-        if (self.fromTourString == fromTour.exploreTour) {
-            self.stopLoadingView(delayInSeconds: 0.3)
-        }
+//        if (self.fromTourString == fromTour.exploreTour) {
+//            self.stopLoadingView(delayInSeconds: 0.3)
+//        }
 
     }
     
@@ -1553,16 +1529,32 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
     }
     
     //MARK: TourGuide DataBase
-    func saveOrUpdateTourGuideCoredata() {
-        if (floorMapArray.count > 0) {
+    func saveOrUpdateFloormapCoredata(floorMapArray: [TourGuideFloorMap]?) {
+        if ((floorMapArray?.count)! > 0) {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate?.persistentContainer
+                container?.performBackgroundTask() {(managedContext) in
+                    self.floormapCoreDataInBackgroundThread(managedContext: managedContext, floorMapArray: floorMapArray)
+                }
+            } else {
+                let managedContext = appDelegate?.managedObjectContext
+                managedContext?.perform {
+                    self.floormapCoreDataInBackgroundThread(managedContext : managedContext!, floorMapArray: floorMapArray)
+                }
+            }
+        }
+    }
+    func floormapCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,floorMapArray: [TourGuideFloorMap]?) {
+        if ((floorMapArray?.count)! > 0) {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 let fetchData = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "tourGuideId" , idValue: tourGuideId ) as! [FloorMapTourGuideEntity]
                 
                 if (fetchData.count > 0) {
-                    for i in 0 ... floorMapArray.count-1 {
+                    for i in 0 ... (floorMapArray?.count)!-1 {
                         let managedContext = getContext()
-                        let tourGuideDeatilDict = floorMapArray[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "nid", idValue: floorMapArray[i].nid) as! [FloorMapTourGuideEntity]
+                        let tourGuideDeatilDict = floorMapArray![i]
+                        let fetchResult = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "nid", idValue: floorMapArray![i].nid) as! [FloorMapTourGuideEntity]
                         
                         if(fetchResult.count != 0) {
                             
@@ -1635,10 +1627,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                     }//for
                 }//if
                 else {
-                    for i in 0 ... floorMapArray.count-1 {
+                    for i in 0 ... (floorMapArray?.count)!-1 {
                         let managedContext = getContext()
                         let tourGuideDetailDict : TourGuideFloorMap?
-                        tourGuideDetailDict = floorMapArray[i]
+                        tourGuideDetailDict = floorMapArray?[i]
                         self.saveToCoreData(tourGuideDetailDict: tourGuideDetailDict!, managedObjContext: managedContext)
                     }
                     
@@ -1647,10 +1639,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             else {
                 let fetchData = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey:"tourGuideId" , idValue: tourGuideId) as! [FloorMapTourGuideEntityAr]
                 if (fetchData.count > 0) {
-                    for i in 0 ... floorMapArray.count-1 {
+                    for i in 0 ... (floorMapArray?.count)!-1 {
                         let managedContext = getContext()
-                        let tourGuideDeatilDict = floorMapArray[i]
-                        let fetchResult = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey: "nid", idValue: floorMapArray[i].nid) as! [FloorMapTourGuideEntityAr]
+                        let tourGuideDeatilDict = floorMapArray![i]
+                        let fetchResult = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey: "nid", idValue: floorMapArray![i].nid) as! [FloorMapTourGuideEntityAr]
                         //update
                         if(fetchResult.count != 0) {
                             let tourguidedbDict = fetchResult[0]
@@ -1719,10 +1711,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                     }//for
                 } //if
                 else {
-                    for i in 0 ... floorMapArray.count-1 {
+                    for i in 0 ... (floorMapArray?.count)!-1 {
                         let managedContext = getContext()
                         let tourGuideDetailDict : TourGuideFloorMap?
-                        tourGuideDetailDict = floorMapArray[i]
+                        tourGuideDetailDict = floorMapArray?[i]
                         self.saveToCoreData(tourGuideDetailDict: tourGuideDetailDict!, managedObjContext: managedContext)
                     }
                     
@@ -1901,10 +1893,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                                 self.addBottomSheetView(index: arrayOffset)
                             }
                         }
-                        if (self.fromTourString != fromTour.exploreTour) {
+                        //if (self.fromTourString != fromTour.exploreTour) {
                             self.loadingView.stopLoading()
                             self.loadingView.isHidden = true
-                        }
+                        //}
                         
                         
                     } else if (self.floorMapArray.count == 0) {
@@ -2012,7 +2004,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
     }
-    
+    @objc func receiveFloormapNotification(notification: NSNotification) {
+        self.fetchTourGuideFromCoredata()
+        
+    }
 }
 extension AVPlayer {
     var isPlaying: Bool {

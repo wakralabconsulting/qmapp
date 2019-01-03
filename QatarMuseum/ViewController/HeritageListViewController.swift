@@ -26,7 +26,6 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        self.fetchHeritageListFromCoredata()
         registerNib()
         recordScreenView()
     }
@@ -46,6 +45,14 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
             heritageHeader.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         } else {
             heritageHeader.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+        }
+        
+        self.fetchHeritageListFromCoredata()
+        NotificationCenter.default.addObserver(self, selector: #selector(HeritageListViewController.receiveHeritageListNotification(notification:)), name: NSNotification.Name(heritageListNotification), object: nil)
+        if  (networkReachability?.isReachable)! {
+            DispatchQueue.global(qos: .background).async {
+                self.getHeritageDataFromServer()
+            }
         }
     }
     
@@ -130,20 +137,21 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
                     self.loadingView.stopLoading()
                     self.loadingView.isHidden = true
                     if (self.heritageListArray.count == 0) {
-                        self.loadingView.stopLoading()
-                        self.loadingView.noDataView.isHidden = false
-                        self.loadingView.isHidden = false
-                        self.loadingView.showNoDataView()
+//                        self.loadingView.stopLoading()
+//                        self.loadingView.noDataView.isHidden = false
+//                        self.loadingView.isHidden = false
+//                        self.loadingView.showNoDataView()
                     }
                 case .failure(let error):
-                    var errorMessage: String
-                    errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
-                                                                    comment: "Setting the content of the alert"))
-                    self.loadingView.stopLoading()
-                    self.loadingView.noDataView.isHidden = false
-                    self.loadingView.isHidden = false
-                    self.loadingView.showNoDataView()
-                    self.loadingView.noDataLabel.text = errorMessage
+//                    var errorMessage: String
+//                    errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+//                                                                    comment: "Setting the content of the alert"))
+//                    self.loadingView.stopLoading()
+//                    self.loadingView.noDataView.isHidden = false
+//                    self.loadingView.isHidden = false
+//                    self.loadingView.showNoDataView()
+//                    self.loadingView.noDataLabel.text = errorMessage
+                    print("error")
                 }
             }
     }
@@ -358,5 +366,8 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
     }
-    
+    @objc func receiveHeritageListNotification(notification: NSNotification) {
+        self.fetchHeritageListFromCoredata()
+ 
+    }
 }
