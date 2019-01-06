@@ -31,12 +31,13 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
         loadingView.isHidden = false
         loadingView.loadingViewDelegate = self
         loadingView.showLoading()
+        NotificationCenter.default.addObserver(self, selector: #selector(MiaTourGuideViewController.receiveMiaTourNotification(notification:)), name: NSNotification.Name(miaTourNotification), object: nil)
         if  (networkReachability?.isReachable)! {
-            getTourGuideDataFromServer()
-        } else {
-            self.fetchTourGuideListFromCoredata()
+            DispatchQueue.global(qos: .background).async {
+                self.getTourGuideDataFromServer()
+            }
         }
-        
+        self.fetchTourGuideListFromCoredata()
         topbarView.headerViewDelegate = self
         topbarView.headerTitle.isHidden = true
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -132,60 +133,41 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     }
     //MARK: WebServiceCall
     func getTourGuideDataFromServer() {
-        _ = Alamofire.request(QatarMuseumRouter.MuseumTourGuide(["museum_id": museumId])).responseObject { (response: DataResponse<TourGuides>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.MuseumTourGuide(LocalizationLanguage.currentAppleLanguage(),["museum_id": museumId])).responseObject { (response: DataResponse<TourGuides>) -> Void in
             switch response.result {
             case .success(let data):
-                self.miaTourDataFullArray = data.tourGuide!
-                self.saveOrUpdateTourGuideCoredata()
-                self.loadingView.stopLoading()
-                self.loadingView.isHidden = true
-                if(self.miaTourDataFullArray.count == 0) {
-                    self.loadingView.stopLoading()
-                    self.loadingView.noDataView.isHidden = false
-                    self.loadingView.isHidden = false
-                    self.loadingView.showNoDataView()
-                    self.loadingView.noDataLabel.text = NSLocalizedString("NO_RESULT_MESSAGE",
-                                                                          comment: "Setting the content of the alert")
-                }
-                self.miaTourCollectionView.reloadData()
+                self.saveOrUpdateTourGuideCoredata(miaTourDataFullArray: data.tourGuide)
             case .failure(let error):
-                var errorMessage: String
-                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
-                                                                comment: "Setting the content of the alert"))
-                self.loadingView.stopLoading()
-                self.loadingView.noDataView.isHidden = false
-                self.loadingView.isHidden = false
-                self.loadingView.showNoDataView()
-                self.loadingView.noDataLabel.text = errorMessage
+                print("error")
             }
         }
     }
    
     //MARK: Coredata Method
-    func saveOrUpdateTourGuideCoredata() {
-        if (miaTourDataFullArray.count > 0) {
+    func saveOrUpdateTourGuideCoredata(miaTourDataFullArray:[TourGuide]?) {
+        if ((miaTourDataFullArray?.count)! > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
                 let container = appDelegate!.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
-                    self.coreDataInBackgroundThread(managedContext: managedContext)
+                    self.coreDataInBackgroundThread(managedContext: managedContext, miaTourDataFullArray: miaTourDataFullArray)
                 }
             } else {
                 let managedContext = appDelegate!.managedObjectContext
                 managedContext.perform {
-                    self.coreDataInBackgroundThread(managedContext : managedContext)
+                    self.coreDataInBackgroundThread(managedContext : managedContext, miaTourDataFullArray: miaTourDataFullArray)
                 }
             }
         }
     }
     
-    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,miaTourDataFullArray:[TourGuide]?) {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             let fetchData = checkAddedToCoredata(entityName: "TourGuideEntity", idKey: "museumsEntity", idValue: museumId, managedContext: managedContext) as! [TourGuideEntity]
             if (fetchData.count > 0) {
-                for i in 0 ... miaTourDataFullArray.count-1 {
-                    let tourGuideListDict = miaTourDataFullArray[i]
-                    let fetchResult = checkAddedToCoredata(entityName: "TourGuideEntity", idKey: "nid", idValue: miaTourDataFullArray[i].nid, managedContext: managedContext)
+                for i in 0 ... (miaTourDataFullArray?.count)!-1 {
+                    let tourGuideListDict = miaTourDataFullArray![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "TourGuideEntity", idKey: "nid", idValue: miaTourDataFullArray![i].nid, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
                         let tourguidedbDict = fetchResult[0] as! TourGuideEntity
@@ -229,9 +211,9 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
                 }
             }
             else {
-                for i in 0 ... miaTourDataFullArray.count-1 {
+                for i in 0 ... (miaTourDataFullArray?.count)!-1 {
                     let tourGuideListDict : TourGuide?
-                    tourGuideListDict = miaTourDataFullArray[i]
+                    tourGuideListDict = miaTourDataFullArray?[i]
                     self.saveToCoreData(tourguideListDict: tourGuideListDict!, managedObjContext: managedContext)
                     
                 }
@@ -240,9 +222,9 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
         else {
             let fetchData = checkAddedToCoredata(entityName: "TourGuideEntityAr", idKey: "museumsEntity", idValue: museumId, managedContext: managedContext) as! [TourGuideEntityAr]
             if (fetchData.count > 0) {
-                for i in 0 ... miaTourDataFullArray.count-1 {
-                    let tourGuideListDict = miaTourDataFullArray[i]
-                    let fetchResult = checkAddedToCoredata(entityName: "TourGuideEntityAr", idKey: "nid" , idValue: miaTourDataFullArray[i].nid, managedContext: managedContext)
+                for i in 0 ... (miaTourDataFullArray?.count)!-1 {
+                    let tourGuideListDict = miaTourDataFullArray![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "TourGuideEntityAr", idKey: "nid" , idValue: miaTourDataFullArray![i].nid, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
                         let tourguidedbDict = fetchResult[0] as! TourGuideEntityAr
@@ -284,9 +266,9 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
                 }
             }
             else {
-                for i in 0 ... miaTourDataFullArray.count-1 {
+                for i in 0 ... (miaTourDataFullArray?.count)!-1 {
                     let tourGuideListDict : TourGuide?
-                    tourGuideListDict = miaTourDataFullArray[i]
+                    tourGuideListDict = miaTourDataFullArray?[i]
                     self.saveToCoreData(tourguideListDict: tourGuideListDict!, managedObjContext: managedContext)
                     
                 }
@@ -434,6 +416,11 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
+    }
+    @objc func receiveMiaTourNotification(notification: NSNotification) {
+        DispatchQueue.main.async{
+            self.fetchTourGuideListFromCoredata()
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

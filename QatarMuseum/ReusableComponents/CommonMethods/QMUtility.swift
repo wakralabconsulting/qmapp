@@ -11,6 +11,8 @@ import Alamofire
 import CoreData
 var heritageListNotification = "heritageListNotification"
 var floormapNotification = "FloormapNotification"
+var homepageNotification = "HomepageNotification"
+var miaTourNotification = "MiaTourNotification"
 // Utility method for presenting alert without any completion handler
 func presentAlert(_ viewController: UIViewController, title: String, message: String) {
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)

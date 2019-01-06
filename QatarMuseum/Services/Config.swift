@@ -13,10 +13,9 @@ import Foundation
  */
 struct Config {
     static let baseIP = "www.qm.org.qa/"
-    static let baseURL = "http://" + baseIP
+    static let baseURL = "https://" + baseIP
     static let mobileApiURL = "/mobile_api"
     static let tempBaseIP = "http://moushtarayatapp.com/xmltojson/"
-    static let secureBaseURL = "https://" + baseIP
     static let engLang = "en"
     
 }
