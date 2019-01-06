@@ -128,59 +128,41 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
     }
     //MARK: WebServiceCall
     func getHeritageDataFromServer() {
-        _ = Alamofire.request(QatarMuseumRouter.HeritageList()).responseObject { (response: DataResponse<Heritages>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.HeritageList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<Heritages>) -> Void in
                 switch response.result {
                 case .success(let data):
-                    self.heritageListArray = data.heritage
-                    self.saveOrUpdateHeritageCoredata()
-                    self.heritageCollectionView.reloadData()
-                    self.loadingView.stopLoading()
-                    self.loadingView.isHidden = true
-                    if (self.heritageListArray.count == 0) {
-//                        self.loadingView.stopLoading()
-//                        self.loadingView.noDataView.isHidden = false
-//                        self.loadingView.isHidden = false
-//                        self.loadingView.showNoDataView()
-                    }
+                    self.saveOrUpdateHeritageCoredata(heritageListArray: data.heritage)
                 case .failure(let error):
-//                    var errorMessage: String
-//                    errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
-//                                                                    comment: "Setting the content of the alert"))
-//                    self.loadingView.stopLoading()
-//                    self.loadingView.noDataView.isHidden = false
-//                    self.loadingView.isHidden = false
-//                    self.loadingView.showNoDataView()
-//                    self.loadingView.noDataLabel.text = errorMessage
                     print("error")
                 }
             }
     }
     
     //MARK: Coredata Method
-    func saveOrUpdateHeritageCoredata() {
-        if (heritageListArray.count > 0) {
+    func saveOrUpdateHeritageCoredata(heritageListArray:[Heritage]?) {
+        if ((heritageListArray?.count)! > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
                 let container = appDelegate!.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
-                    self.coreDataInBackgroundThread(managedContext: managedContext)
+                    self.coreDataInBackgroundThread(managedContext: managedContext, heritageListArray: heritageListArray)
                 }
             } else {
                 let managedContext = appDelegate!.managedObjectContext
                 managedContext.perform {
-                    self.coreDataInBackgroundThread(managedContext : managedContext)
+                    self.coreDataInBackgroundThread(managedContext : managedContext, heritageListArray: heritageListArray)
                 }
             }
         }
     }
     
-    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,heritageListArray:[Heritage]?) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "HeritageEntity", heritageId: nil, managedContext: managedContext) as! [HeritageEntity]
             if (fetchData.count > 0) {
-                for i in 0 ... heritageListArray.count-1 {
-                    let heritageListDict = heritageListArray[i]
-                    let fetchResult = checkAddedToCoredata(entityName: "HeritageEntity", heritageId: heritageListArray[i].id, managedContext: managedContext)
+                for i in 0 ... (heritageListArray?.count)!-1 {
+                    let heritageListDict = heritageListArray![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "HeritageEntity", heritageId: heritageListArray![i].id, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
                         let heritagedbDict = fetchResult[0] as! HeritageEntity
@@ -201,18 +183,18 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
                     }
                 }
             } else {
-                for i in 0 ... heritageListArray.count-1 {
+                for i in 0 ... (heritageListArray?.count)!-1 {
                     let heritageListDict : Heritage?
-                    heritageListDict = heritageListArray[i]
+                    heritageListDict = heritageListArray?[i]
                     self.saveToCoreData(heritageListDict: heritageListDict!, managedObjContext: managedContext)
                 }
             }
         } else {
             let fetchData = checkAddedToCoredata(entityName: "HeritageEntityArabic", heritageId: nil, managedContext: managedContext) as! [HeritageEntityArabic]
             if (fetchData.count > 0) {
-                for i in 0 ... heritageListArray.count-1 {
-                    let heritageListDict = heritageListArray[i]
-                    let fetchResult = checkAddedToCoredata(entityName: "HeritageEntityArabic", heritageId: heritageListArray[i].id, managedContext: managedContext)
+                for i in 0 ... (heritageListArray?.count)!-1 {
+                    let heritageListDict = heritageListArray![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "HeritageEntityArabic", heritageId: heritageListArray![i].id, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
                         let heritagedbDict = fetchResult[0] as! HeritageEntityArabic
@@ -235,9 +217,9 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
                 }
             }
             else {
-                for i in 0 ... heritageListArray.count-1 {
+                for i in 0 ... (heritageListArray?.count)!-1 {
                     let heritageListDict : Heritage?
-                    heritageListDict = heritageListArray[i]
+                    heritageListDict = heritageListArray?[i]
                     self.saveToCoreData(heritageListDict: heritageListDict!, managedObjContext: managedContext)
                     
                 }
@@ -357,7 +339,7 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
             //self.getHeritageDataFromServer()
             //self.fetchHeritageListFromCoredata()
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
-            appDelegate?.getHeritageDataFromServer()
+            appDelegate?.getHeritageDataFromServer(lang: LocalizationLanguage.currentAppleLanguage())
         }
     }
     func showNoNetwork() {

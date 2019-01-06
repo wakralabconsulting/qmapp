@@ -55,15 +55,17 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotification(notification:)), name: NSNotification.Name(homepageNotification), object: nil)
         registerNib()
         
         
         if (networkReachability?.isReachable)! {
-            getHomeList()
-        } else {
-            self.fetchHomeInfoFromCoredata()
+            DispatchQueue.global(qos: .background).async {
+                self.getHomeList()
+            }
         }
+        self.fetchHomeInfoFromCoredata()
+        
         setUpUI()
         NotificationCenter.default.addObserver(self, selector: #selector(self.receivedNotification(notification:)), name: NSNotification.Name("NotificationIdentifier"), object: nil)
         
@@ -395,27 +397,28 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     //MARK: Service call
     func getHomeList() {
-        _ = Alamofire.request(QatarMuseumRouter.HomeList()).responseObject { (response: DataResponse<HomeList>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.HomeList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<HomeList>) -> Void in
             switch response.result {
             case .success(let data):
-                self.homeList = data.homeList
-                
-                if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")  && (self.homeBannerList.count > 0)) {
-                    self.homeList.insert(Home(id:nil , name: self.homeBannerList[0].bannerTitle,image: self.homeBannerList[0].bannerLink,
-                                              tourguide_available: "false", sort_id: nil),
-                                         at: 0)
-                }
-                self.saveOrUpdateHomeCoredata()
-                self.homeCollectionView.reloadData()
+//                self.homeList = data.homeList
+//
+//                if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")  && (self.homeBannerList.count > 0)) {
+//                    self.homeList.insert(Home(id:nil , name: self.homeBannerList[0].bannerTitle,image: self.homeBannerList[0].bannerLink,
+//                                              tourguide_available: "false", sort_id: nil),
+//                                         at: 0)
+//                }
+                self.saveOrUpdateHomeCoredata(homeList: data.homeList)
+                //self.homeCollectionView.reloadData()
             case .failure(let error):
-                var errorMessage: String
-                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
-                                                                comment: "Setting the content of the alert"))
-                self.loadingView.stopLoading()
-                self.loadingView.noDataView.isHidden = false
-                self.loadingView.isHidden = false
-                self.loadingView.showNoDataView()
-                self.loadingView.noDataLabel.text = errorMessage
+//                var errorMessage: String
+//                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+//                                                                comment: "Setting the content of the alert"))
+//                self.loadingView.stopLoading()
+//                self.loadingView.noDataView.isHidden = false
+//                self.loadingView.isHidden = false
+//                self.loadingView.showNoDataView()
+//                self.loadingView.noDataLabel.text = errorMessage
+                print("error")
             }
         }
     }
@@ -732,30 +735,30 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     //MARK: Coredata Method
-    func saveOrUpdateHomeCoredata() {
-        if (homeList.count > 0) {
+    func saveOrUpdateHomeCoredata(homeList: [Home]?) {
+        if ((homeList?.count)! > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
                 let container = appDelegate!.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
-                    self.coreDataInBackgroundThread(managedContext: managedContext)
+                    self.coreDataInBackgroundThread(managedContext: managedContext, homeList: homeList)
                 }
             } else {
                 let managedContext = appDelegate!.managedObjectContext
                 managedContext.perform {
-                    self.coreDataInBackgroundThread(managedContext : managedContext)
+                    self.coreDataInBackgroundThread(managedContext : managedContext, homeList: homeList)
                 }
             }
         }
     }
     
-    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,homeList: [Home]?) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "HomeEntity", idKey: "id", idValue: nil, managedContext: managedContext) as! [HomeEntity]
             if (fetchData.count > 0) {
-                for i in 0 ... homeList.count-1 {
-                    let homeListDict = homeList[i]
-                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntity", idKey: "id", idValue: homeList[i].id, managedContext: managedContext)
+                for i in 0 ... (homeList?.count)!-1 {
+                    let homeListDict = homeList![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntity", idKey: "id", idValue: homeList![i].id, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
                         let homedbDict = fetchResult[0] as! HomeEntity
@@ -776,19 +779,19 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     }
                 }
             } else {
-                for i in 0 ... homeList.count-1 {
+                for i in 0 ... (homeList?.count)!-1 {
                     let homeListDict : Home?
-                    homeListDict = homeList[i]
+                    homeListDict = homeList?[i]
                     self.saveToCoreData(homeListDict: homeListDict!, managedObjContext: managedContext)
                 }
             }
         } else {
             let fetchData = checkAddedToCoredata(entityName: "HomeEntityArabic", idKey: "id", idValue: nil, managedContext: managedContext) as! [HomeEntityArabic]
             if (fetchData.count > 0) {
-                for i in 0 ... homeList.count-1 {
-                    let homeListDict = homeList[i]
+                for i in 0 ... (homeList?.count)!-1 {
+                    let homeListDict = homeList![i]
                     
-                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntityArabic", idKey: "id", idValue: homeList[i].id, managedContext: managedContext)
+                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntityArabic", idKey: "id", idValue: homeList![i].id, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
                         let homedbDict = fetchResult[0] as! HomeEntityArabic
@@ -809,9 +812,9 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     }
                 }
             } else {
-                for i in 0 ... homeList.count-1 {
+                for i in 0 ... (homeList?.count)!-1 {
                     let homeListDict : Home?
-                    homeListDict = homeList[i]
+                    homeListDict = homeList?[i]
                     self.saveToCoreData(homeListDict: homeListDict!, managedObjContext: managedContext)
                     
                 }
@@ -1287,6 +1290,11 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             loginPopUpView.passwordText.resignFirstResponder()
         }
         return true
+    }
+    @objc func receiveHomePageNotification(notification: NSNotification) {
+        DispatchQueue.main.async{
+            self.fetchHomeInfoFromCoredata()
+        }
     }
 
 }

@@ -32,11 +32,14 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         self.loadingView.isHidden = false
         self.loadingView.showLoading()
         self.loadingView.loadingViewDelegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(TourGuideViewController.receiveHomePageNotification(notification:)), name: NSNotification.Name(homepageNotification), object: nil)
         if  (networkReachability?.isReachable)! {
-            getTourGuideMuseumsList()
-        } else {
-            self.fetchMuseumsInfoFromCoredata()
+            DispatchQueue.global(qos: .background).async {
+                self.getTourGuideMuseumsList()
+            }
         }
+        self.fetchMuseumsInfoFromCoredata()
+       
         topbarView.headerViewDelegate = self
         topbarView.headerTitle.isHidden = true
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
@@ -144,60 +147,47 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         } else {
             searchstring = "12186"
         }
-        _ = Alamofire.request(QatarMuseumRouter.HomeList()).responseObject { (response: DataResponse<HomeList>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.HomeList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<HomeList>) -> Void in
             switch response.result {
             case .success(let data):
-                self.museumsList = data.homeList
-                
-                self.loadingView.stopLoading()
-                self.loadingView.isHidden = true
                 if(self.museumsList.count > 0) {
                    
                     //Removed Exhibition from Tour List
                     if let arrayOffset = self.museumsList.index(where: {$0.id == searchstring}) {
                         self.museumsList.remove(at: arrayOffset)
                     }
-                     self.saveOrUpdateMuseumsCoredata()
+                    self.saveOrUpdateMuseumsCoredata(museumsList: data.homeList)
                 }
-                //self.saveOrUpdateHomeCoredata()
-                self.tourCollectionView.reloadData()
             case .failure(let error):
-                var errorMessage: String
-                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
-                                                                comment: "Setting the content of the alert"))
-                self.loadingView.stopLoading()
-                self.loadingView.noDataView.isHidden = false
-                self.loadingView.isHidden = false
-                self.loadingView.showNoDataView()
-                self.loadingView.noDataLabel.text = errorMessage
+                print("error")
             }
         }
     }
     //MARK: Coredata Method
-    func saveOrUpdateMuseumsCoredata() {
-        if (museumsList.count > 0) {
+    func saveOrUpdateMuseumsCoredata(museumsList:[Home]?) {
+        if ((museumsList?.count)! > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
                 let container = appDelegate!.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
-                    self.coreDataInBackgroundThread(managedContext: managedContext)
+                    self.coreDataInBackgroundThread(managedContext: managedContext, museumsList: museumsList)
                 }
             } else {
                 let managedContext = appDelegate!.managedObjectContext
                 managedContext.perform {
-                    self.coreDataInBackgroundThread(managedContext : managedContext)
+                    self.coreDataInBackgroundThread(managedContext : managedContext, museumsList: museumsList)
                 }
             }
         }
     }
     
-    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,museumsList:[Home]?) {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             let fetchData = checkAddedToCoredata(entityName: "HomeEntity", homeId: nil, managedContext: managedContext) as! [HomeEntity]
             if (fetchData.count > 0) {
-                for i in 0 ... museumsList.count-1 {
-                    let museumListDict = museumsList[i]
-                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntity", homeId: museumsList[i].id, managedContext: managedContext)
+                for i in 0 ... (museumsList?.count)!-1 {
+                    let museumListDict = museumsList![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntity", homeId: museumsList![i].id, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
                         let museumsdbDict = fetchResult[0] as! HomeEntity
@@ -223,9 +213,9 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                 }
             }
             else {
-                for i in 0 ... museumsList.count-1 {
+                for i in 0 ... (museumsList?.count)!-1 {
                     let museumsListDict : Home?
-                    museumsListDict = museumsList[i]
+                    museumsListDict = museumsList?[i]
                     self.saveToCoreData(museumsListDict: museumsListDict!, managedObjContext: managedContext)
                     
                 }
@@ -234,10 +224,10 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         else {
             let fetchData = checkAddedToCoredata(entityName: "HomeEntityArabic", homeId: nil, managedContext: managedContext) as! [HomeEntityArabic]
             if (fetchData.count > 0) {
-                for i in 0 ... museumsList.count-1 {
-                    let museumsListDict = museumsList[i]
+                for i in 0 ... (museumsList?.count)!-1 {
+                    let museumsListDict = museumsList![i]
                     
-                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntityArabic", homeId: museumsList[i].id, managedContext: managedContext)
+                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntityArabic", homeId: museumsList![i].id, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
                         let museumsdbDict = fetchResult[0] as! HomeEntityArabic
@@ -259,9 +249,9 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                     }
                 }
             } else {
-                for i in 0 ... museumsList.count-1 {
+                for i in 0 ... (museumsList?.count)!-1 {
                     let museumsListDict : Home?
-                    museumsListDict = museumsList[i]
+                    museumsListDict = museumsList?[i]
                     self.saveToCoreData(museumsListDict: museumsListDict!, managedObjContext: managedContext)
                     
                 }
@@ -380,6 +370,11 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
+    }
+    @objc func receiveHomePageNotification(notification: NSNotification) {
+        DispatchQueue.main.async{
+            self.fetchMuseumsInfoFromCoredata()
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
