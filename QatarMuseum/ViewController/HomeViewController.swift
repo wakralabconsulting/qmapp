@@ -55,7 +55,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotification(notification:)), name: NSNotification.Name(homepageNotification), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationEn(notification:)), name: NSNotification.Name(homepageNotificationEn), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationAr(notification:)), name: NSNotification.Name(homepageNotificationAr), object: nil)
         registerNib()
         
         
@@ -429,6 +430,9 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 
                 self.homeBannerList = data.homeBannerList
                 if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")  && (self.homeBannerList.count > 0)) {
+                    self.homeList.insert(Home(id:nil , name: self.homeBannerList[0].bannerTitle,image: self.homeBannerList[0].bannerLink,
+                                              tourguide_available: "false", sort_id: nil),
+                                         at: 0)
                     
                 }
                 if(self.homeBannerList.count > 0) {
@@ -849,7 +853,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     func fetchHomeInfoFromCoredata() {
         let managedContext = getContext()
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var homeArray = [HomeEntity]()
                 let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntity")
             homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntity])!
@@ -1291,9 +1295,19 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         }
         return true
     }
-    @objc func receiveHomePageNotification(notification: NSNotification) {
-        DispatchQueue.main.async{
-            self.fetchHomeInfoFromCoredata()
+    @objc func receiveHomePageNotificationEn(notification: NSNotification) {
+        if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (homeList.count == 0)){
+            DispatchQueue.main.async{
+                self.fetchHomeInfoFromCoredata()
+            }
+        }
+        
+    }
+    @objc func receiveHomePageNotificationAr(notification: NSNotification) {
+        if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (homeList.count == 0)){
+            DispatchQueue.main.async{
+                self.fetchHomeInfoFromCoredata()
+            }
         }
     }
 

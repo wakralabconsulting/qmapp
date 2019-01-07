@@ -9,9 +9,11 @@
 import Foundation
 import Alamofire
 import CoreData
-var heritageListNotification = "heritageListNotification"
+var heritageListNotificationEn = "heritageListNotificationEn"
+var heritageListNotificationAr = "heritageListNotificationAr"
 var floormapNotification = "FloormapNotification"
-var homepageNotification = "HomepageNotification"
+var homepageNotificationEn = "HomepageNotificationEn"
+var homepageNotificationAr = "HomepageNotificationAr"
 var miaTourNotification = "MiaTourNotification"
 // Utility method for presenting alert without any completion handler
 func presentAlert(_ viewController: UIViewController, title: String, message: String) {
