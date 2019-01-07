@@ -1319,7 +1319,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
     //MARK: WebServiceCall
     func getFloorMapDataFromServer() {
         // let queue = DispatchQueue(label: "", qos: .background, attributes: .concurrent)
-        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": tourGuideId!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(LocalizationLanguage.currentAppleLanguage(),["tour_guide_id": tourGuideId!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
             switch response.result {
             case .success(let data):
                 if (self.floorMapArray.count > 0) {
@@ -2005,7 +2005,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
         self.loadingView.showNoNetworkView()
     }
     @objc func receiveFloormapNotification(notification: NSNotification) {
-        self.fetchTourGuideFromCoredata()
+        let data = notification.userInfo as? [String:String]
+        if (data?.count)!>0 {
+            if(tourGuideId == data!["id"]) {
+                self.fetchTourGuideFromCoredata()
+            }
+        }
         
     }
 }

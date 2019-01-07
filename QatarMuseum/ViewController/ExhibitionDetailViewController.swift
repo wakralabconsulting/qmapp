@@ -177,8 +177,8 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         }
         
         if ((latitudeString != nil) && (longitudeString != nil) && (latitudeString != "") && (longitudeString != "")) {
-            //latitude = convertDMSToDDCoordinate(latLongString: latitudeString!)
-            // longitude = convertDMSToDDCoordinate(latLongString: longitudeString!)
+            latitude = convertDMSToDDCoordinate(latLongString: latitudeString)
+            longitude = convertDMSToDDCoordinate(latLongString: longitudeString)
             if let lat : Double = Double(latitudeString) {
                 latitude = lat
             }

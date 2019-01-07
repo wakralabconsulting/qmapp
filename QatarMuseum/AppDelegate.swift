@@ -71,7 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             self.getHeritageDataFromServer(lang: AR_LANGUAGE)
             self.getFloorMapDataFromServer(tourGuideId: "12471", lang: ENG_LANGUAGE) // for explore and highlight tour English
             self.getFloorMapDataFromServer(tourGuideId: "12216", lang: ENG_LANGUAGE) // for science tour English
-            
+
             self.getFloorMapDataFromServer(tourGuideId: "12916", lang: AR_LANGUAGE) //for explore and highlight tour Arabic
             self.getFloorMapDataFromServer(tourGuideId: "12226", lang: AR_LANGUAGE) // for science tour Arabic
             self.getMiaTourGuideDataFromServer(museumId: "63", lang: ENG_LANGUAGE)
@@ -443,7 +443,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         
                     }
                 }
-                NotificationCenter.default.post(name: NSNotification.Name(heritageListNotification), object: self)
+                NotificationCenter.default.post(name: NSNotification.Name(heritageListNotificationEn), object: self)
                 
             } else {
                 for i in 0 ... (heritageListArray?.count)!-1 {
@@ -451,7 +451,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     heritageListDict = heritageListArray?[i]
                     self.saveHeritageListToCoreData(heritageListDict: heritageListDict!, managedObjContext: managedContext, lang: lang)
                 }
-                NotificationCenter.default.post(name: NSNotification.Name(heritageListNotification), object: self)
+                NotificationCenter.default.post(name: NSNotification.Name(heritageListNotificationEn), object: self)
             }
         } else {
             let fetchData = checkAddedToCoredata(entityName: "HeritageEntityArabic", idKey: "listid", idValue: nil, managedContext: managedContext) as! [HeritageEntityArabic]
@@ -479,7 +479,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         
                     }
                 }
-                NotificationCenter.default.post(name: NSNotification.Name(heritageListNotification), object: self)
+                NotificationCenter.default.post(name: NSNotification.Name(heritageListNotificationAr), object: self)
             }
             else {
                 for i in 0 ... (heritageListArray?.count)!-1 {
@@ -488,7 +488,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     self.saveHeritageListToCoreData(heritageListDict: heritageListDict!, managedObjContext: managedContext, lang: lang)
                     
                 }
-                NotificationCenter.default.post(name: NSNotification.Name(heritageListNotification), object: self)
+                NotificationCenter.default.post(name: NSNotification.Name(heritageListNotificationAr), object: self)
             }
         }
     }
@@ -522,12 +522,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     //MARK: FloorMap WebServiceCall
     func getFloorMapDataFromServer(tourGuideId: String?,lang: String?) {
         let queue = DispatchQueue(label: "FloorMapThread", qos: .background, attributes: .concurrent)
-        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": tourGuideId!])).responseObject(queue: queue) { (response: DataResponse<TourGuideFloorMaps>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(lang!,["tour_guide_id": tourGuideId!])).responseObject(queue: queue) { (response: DataResponse<TourGuideFloorMaps>) -> Void in
             switch response.result {
             case .success(let data):
-                //DispatchQueue.main.async{
-                self.saveOrUpdateFloormapCoredata(floorMapArray: data.tourGuideFloorMap, lang: lang)
-                //}
+                DispatchQueue.main.async{
+                self.saveOrUpdateFloormapCoredata(tourGuideId: tourGuideId, floorMapArray: data.tourGuideFloorMap, lang: lang)
+                }
             case .failure(let error):
                 print("error")
                 
@@ -535,29 +535,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
     //MARK: FloorMap Coredata Method
-    func saveOrUpdateFloormapCoredata(floorMapArray: [TourGuideFloorMap]?,lang: String?) {
+    func saveOrUpdateFloormapCoredata(tourGuideId: String?,floorMapArray: [TourGuideFloorMap]?,lang: String?) {
         if ((floorMapArray?.count)! > 0) {
             if #available(iOS 10.0, *) {
                 let container = self.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
-                    self.floormapCoreDataInBackgroundThread(managedContext: managedContext, floorMapArray: floorMapArray, lang: lang)
+                    self.floormapCoreDataInBackgroundThread(tourGuideId: tourGuideId, managedContext: managedContext, floorMapArray: floorMapArray, lang: lang)
                 }
             } else {
                 let managedContext = self.managedObjectContext
                 managedContext.perform {
-                    self.floormapCoreDataInBackgroundThread(managedContext : managedContext, floorMapArray: floorMapArray, lang: lang)
+                    self.floormapCoreDataInBackgroundThread(tourGuideId: tourGuideId, managedContext : managedContext, floorMapArray: floorMapArray, lang: lang)
                 }
             }
         }
     }
-    func floormapCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,floorMapArray: [TourGuideFloorMap]?,lang: String?) {
+    func floormapCoreDataInBackgroundThread(tourGuideId: String?,managedContext: NSManagedObjectContext,floorMapArray: [TourGuideFloorMap]?,lang: String?) {
+        let tourIdDict = ["id":tourGuideId]
         if ((floorMapArray?.count)! > 0) {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            if (lang == ENG_LANGUAGE) {
                 let fetchData = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "tourGuideId", idValue: tourGuideId , managedContext: managedContext ) as! [FloorMapTourGuideEntity]
                 
                 if (fetchData.count > 0) {
                     for i in 0 ... (floorMapArray?.count)!-1 {
-                        let managedContext = getContext()
+                        //let managedContext = getContext()
                         let tourGuideDeatilDict = floorMapArray![i]
                         let fetchResult = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "nid", idValue: floorMapArray![i].nid, managedContext: managedContext) as! [FloorMapTourGuideEntity]
                         
@@ -631,23 +632,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                             self.saveFloormapToCoreData(tourGuideDetailDict: tourGuideDeatilDict, managedObjContext: managedContext, lang: lang)
                         }
                     }//for
-                    NotificationCenter.default.post(name: NSNotification.Name(floormapNotification), object: self)
+                    NotificationCenter.default.post(name: NSNotification.Name(floormapNotification), object: self, userInfo: tourIdDict)
+                    
                 }//if
                 else {
                     for i in 0 ... (floorMapArray?.count)!-1 {
-                        let managedContext = getContext()
+                        //let managedContext = getContext()
                         let tourGuideDetailDict : TourGuideFloorMap?
                         tourGuideDetailDict = floorMapArray?[i]
                         self.saveFloormapToCoreData(tourGuideDetailDict: tourGuideDetailDict!, managedObjContext: managedContext, lang: lang)
                     }
-                    NotificationCenter.default.post(name: NSNotification.Name(floormapNotification), object: self)
+                    NotificationCenter.default.post(name: NSNotification.Name(floormapNotification), object: self, userInfo: tourIdDict)
                 }
             }
             else {
                 let fetchData = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey:"tourGuideId" , idValue: tourGuideId, managedContext: managedContext) as! [FloorMapTourGuideEntityAr]
                 if (fetchData.count > 0) {
                     for i in 0 ... (floorMapArray?.count)!-1 {
-                        let managedContext = getContext()
+                        //let managedContext = getContext()
                         let tourGuideDeatilDict = floorMapArray![i]
                         let fetchResult = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey: "nid", idValue: floorMapArray![i].nid, managedContext: managedContext) as! [FloorMapTourGuideEntityAr]
                         //update
@@ -718,16 +720,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                             self.saveFloormapToCoreData(tourGuideDetailDict: tourGuideDeatilDict, managedObjContext: managedContext, lang: lang)
                         }
                     }//for
-                    NotificationCenter.default.post(name: NSNotification.Name(floormapNotification), object: self)
+                   NotificationCenter.default.post(name: NSNotification.Name(floormapNotification), object: self, userInfo: tourIdDict)
                 } //if
                 else {
                     for i in 0 ... (floorMapArray?.count)!-1 {
-                        let managedContext = getContext()
+                        //let managedContext = getContext()
                         let tourGuideDetailDict : TourGuideFloorMap?
                         tourGuideDetailDict = floorMapArray?[i]
                         self.saveFloormapToCoreData(tourGuideDetailDict: tourGuideDetailDict!, managedObjContext: managedContext, lang: lang)
                     }
-                    NotificationCenter.default.post(name: NSNotification.Name(floormapNotification), object: self)
+                   NotificationCenter.default.post(name: NSNotification.Name(floormapNotification), object: self, userInfo: tourIdDict)
                 }
             }
         }
@@ -762,9 +764,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             tourguidedbDict.techniqueAndMaterials = tourGuideDetailDict.techniqueAndMaterials
             if let imageUrl = tourGuideDetailDict.thumbImage{
                 if(imageUrl != "") {
+                    DispatchQueue.main.async {
                     if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
                         let image: UIImage = UIImage(data: data)!
                         tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
+                    }
                     }
                 }
             }
@@ -820,7 +824,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 if(imageUrl != "") {
                     if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
                         let image: UIImage = UIImage(data: data)!
-                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
+                        DispatchQueue.main.async {
+                            tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
+                        }
                     }
                 }
             }
@@ -1040,14 +1046,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         self.saveHomeDataToCoreData(homeListDict: homeListDict, managedObjContext: managedContext, lang: lang)
                     }
                 }
-                NotificationCenter.default.post(name: NSNotification.Name(homepageNotification), object: self)
+                NotificationCenter.default.post(name: NSNotification.Name(homepageNotificationEn), object: self)
             } else {
                 for i in 0 ... (homeList?.count)!-1 {
                     let homeListDict : Home?
                     homeListDict = homeList?[i]
                     self.saveHomeDataToCoreData(homeListDict: homeListDict!, managedObjContext: managedContext, lang: lang)
                 }
-                NotificationCenter.default.post(name: NSNotification.Name(homepageNotification), object: self)
+                NotificationCenter.default.post(name: NSNotification.Name(homepageNotificationEn), object: self)
             }
         } else {
             let fetchData = checkAddedToCoredata(entityName: "HomeEntityArabic", idKey: "id", idValue: nil, managedContext: managedContext) as! [HomeEntityArabic]
@@ -1075,7 +1081,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         
                     }
                 }
-                NotificationCenter.default.post(name: NSNotification.Name(homepageNotification), object: self)
+                NotificationCenter.default.post(name: NSNotification.Name(homepageNotificationAr), object: self)
             } else {
                 for i in 0 ... (homeList?.count)!-1 {
                     let homeListDict : Home?
@@ -1083,9 +1089,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     self.saveHomeDataToCoreData(homeListDict: homeListDict!, managedObjContext: managedContext, lang: lang)
                     
                 }
-                NotificationCenter.default.post(name: NSNotification.Name(homepageNotification), object: self)
+                NotificationCenter.default.post(name: NSNotification.Name(homepageNotificationAr), object: self)
             }
         }
+
     }
     
     func saveHomeDataToCoreData(homeListDict: Home, managedObjContext: NSManagedObjectContext,lang: String?) {
@@ -1141,6 +1148,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func miaTourGuideCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,miaTourDataFullArray:[TourGuide]?,museumId:String?,lang:String?) {
+        let tourIdDict = ["id":museumId]
         if (lang == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "TourGuideEntity", idKey: "museumsEntity", idValue: museumId, managedContext: managedContext) as! [TourGuideEntity]
             if (fetchData.count > 0) {
@@ -1188,7 +1196,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         
                     }
                 }
-                NotificationCenter.default.post(name: NSNotification.Name(miaTourNotification), object: self)
+                NotificationCenter.default.post(name: NSNotification.Name(miaTourNotification), object: self, userInfo: tourIdDict)
             }
             else {
                 for i in 0 ... (miaTourDataFullArray?.count)!-1 {
@@ -1197,7 +1205,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     self.saveMiaTourToCoreData(tourguideListDict: tourGuideListDict!, managedObjContext: managedContext, lang: lang)
                     
                 }
-                NotificationCenter.default.post(name: NSNotification.Name(miaTourNotification), object: self)
+                NotificationCenter.default.post(name: NSNotification.Name(miaTourNotification), object: self, userInfo: tourIdDict)
             }
         }
         else {
@@ -1245,7 +1253,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         
                     }
                 }
-                NotificationCenter.default.post(name: NSNotification.Name(miaTourNotification), object: self)
+                NotificationCenter.default.post(name: NSNotification.Name(miaTourNotification), object: self, userInfo: tourIdDict)
             }
             else {
                 for i in 0 ... (miaTourDataFullArray?.count)!-1 {
@@ -1254,7 +1262,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     self.saveMiaTourToCoreData(tourguideListDict: tourGuideListDict!, managedObjContext: managedContext, lang: lang)
                     
                 }
-                NotificationCenter.default.post(name: NSNotification.Name(miaTourNotification), object: self)
+                NotificationCenter.default.post(name: NSNotification.Name(miaTourNotification), object: self, userInfo: tourIdDict)
             }
         }
     }

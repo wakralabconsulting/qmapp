@@ -48,7 +48,8 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         }
         
         self.fetchHeritageListFromCoredata()
-        NotificationCenter.default.addObserver(self, selector: #selector(HeritageListViewController.receiveHeritageListNotification(notification:)), name: NSNotification.Name(heritageListNotification), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HeritageListViewController.receiveHeritageListNotificationEn(notification:)), name: NSNotification.Name(heritageListNotificationEn), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HeritageListViewController.receiveHeritageListNotificationAr(notification:)), name: NSNotification.Name(heritageListNotificationAr), object: nil)
         if  (networkReachability?.isReachable)! {
             DispatchQueue.global(qos: .background).async {
                 self.getHeritageDataFromServer()
@@ -348,8 +349,14 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
     }
-    @objc func receiveHeritageListNotification(notification: NSNotification) {
-        self.fetchHeritageListFromCoredata()
- 
+    @objc func receiveHeritageListNotificationEn(notification: NSNotification) {
+        if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (heritageListArray.count == 0)){
+            self.fetchHeritageListFromCoredata()
+        }
+    }
+    @objc func receiveHeritageListNotificationAr(notification: NSNotification) {
+        if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (heritageListArray.count == 0)){
+            self.fetchHeritageListFromCoredata()
+        }
     }
 }
