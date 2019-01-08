@@ -47,10 +47,12 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         }
         if (pageNameString == NMoQPageName.Tours) {
             headerView.headerTitle.text = NSLocalizedString("TOUR_TITLE", comment: "TOUR_TITLE in the NMoQ page")
+            fetchTourInfoFromCoredata()
+            NotificationCenter.default.addObserver(self, selector: #selector(TourAndPanelListViewController.receiveNmoqTourListNotification(notification:)), name: NSNotification.Name(nmoqTourlistNotification), object: nil)
             if  (networkReachability?.isReachable)! {
-                getNMoQTourList()
-            } else {
-                fetchTourInfoFromCoredata()
+                DispatchQueue.global(qos: .background).async {
+                    self.getNMoQTourList()
+                }
             }
         } else if (pageNameString == NMoQPageName.PanelDiscussion) {
             headerView.headerTitle.text = NSLocalizedString("PANEL_DISCUSSION", comment: "PANEL_DISCUSSION in the NMoQ page").uppercased()
@@ -165,21 +167,9 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         _ = Alamofire.request(QatarMuseumRouter.GetNMoQTourList()).responseObject { (response: DataResponse<NMoQTourList>) -> Void in
             switch response.result {
             case .success(let data):
-                self.nmoqTourList = data.nmoqTourList
-                if self.nmoqTourList.first(where: {$0.sortId != "" && $0.sortId != nil} ) != nil {
-                   self.nmoqTourList = self.nmoqTourList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
-                }
-                self.saveOrUpdateTourListCoredata()
-                self.collectionTableView.reloadData()
+                self.saveOrUpdateTourListCoredata(nmoqTourList: data.nmoqTourList)
             case .failure(let error):
-                var errorMessage: String
-                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
-                                                                comment: "Setting the content of the alert"))
-                self.loadingView.stopLoading()
-                self.loadingView.noDataView.isHidden = false
-                self.loadingView.isHidden = false
-                self.loadingView.showNoDataView()
-                self.loadingView.noDataLabel.text = errorMessage
+                print("error")
             }
         }
     }
@@ -207,29 +197,29 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     //MARK: Tour List Coredata Method
-    func saveOrUpdateTourListCoredata() {
-        if (nmoqTourList.count > 0) {
+    func saveOrUpdateTourListCoredata(nmoqTourList:[NMoQTour]?) {
+        if ((nmoqTourList?.count)! > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
                 let container = appDelegate!.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
-                    self.tourListCoreDataInBackgroundThread(managedContext: managedContext)
+                    self.tourListCoreDataInBackgroundThread(nmoqTourList: nmoqTourList, managedContext: managedContext)
                 }
             } else {
                 let managedContext = appDelegate!.managedObjectContext
                 managedContext.perform {
-                    self.tourListCoreDataInBackgroundThread(managedContext : managedContext)
+                    self.tourListCoreDataInBackgroundThread(nmoqTourList: nmoqTourList, managedContext : managedContext)
                 }
             }
         }
     }
     
-    func tourListCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+    func tourListCoreDataInBackgroundThread(nmoqTourList:[NMoQTour]?,managedContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "NMoQTourListEntity", idKey: "nid", idValue: nil, managedContext: managedContext) as! [NMoQTourListEntity]
             if (fetchData.count > 0) {
-                for i in 0 ... nmoqTourList.count-1 {
-                    let tourListDict = nmoqTourList[i]
+                for i in 0 ... (nmoqTourList?.count)!-1 {
+                    let tourListDict = nmoqTourList![i]
                     let fetchResult = checkAddedToCoredata(entityName: "NMoQTourListEntity", idKey: "nid", idValue: tourListDict.nid, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
@@ -271,9 +261,9 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                     }
                 }
             } else {
-                for i in 0 ... nmoqTourList.count-1 {
+                for i in 0 ... (nmoqTourList?.count)!-1 {
                     let tourListDict : NMoQTour?
-                    tourListDict = nmoqTourList[i]
+                    tourListDict = nmoqTourList?[i]
                     self.saveTourListToCoreData(tourListDict: tourListDict!, managedObjContext: managedContext)
                 }
             }
@@ -352,6 +342,9 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         }
         fetchResults = try! managedContext.fetch(fetchRequest)
         return fetchResults
+    }
+    @objc func receiveNmoqTourListNotification(notification: NSNotification) {
+        self.fetchTourInfoFromCoredata()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
