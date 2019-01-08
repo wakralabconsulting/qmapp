@@ -76,7 +76,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             self.getFloorMapDataFromServer(tourGuideId: "12226", lang: AR_LANGUAGE) // for science tour Arabic
             self.getMiaTourGuideDataFromServer(museumId: "63", lang: ENG_LANGUAGE)
             self.getMiaTourGuideDataFromServer(museumId: "96", lang: AR_LANGUAGE)
-            
+            self.getNmoQAboutDetailsFromServer(museumId: "13376")
+            self.getNMoQTourList()
+            self.getTravelList()
         }
         
     }
@@ -591,14 +593,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                             tourguidedbDict.artistOrCreatorOrAuthor = tourGuideDeatilDict.artistOrCreatorOrAuthor
                             tourguidedbDict.periodOrStyle = tourGuideDeatilDict.periodOrStyle
                             tourguidedbDict.techniqueAndMaterials = tourGuideDeatilDict.techniqueAndMaterials
-                            if let imageUrl = tourGuideDeatilDict.thumbImage{
-                                if(imageUrl != "") {
-                                    if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
-                                        let image: UIImage = UIImage(data: data)!
-                                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
-                                    }
-                                }
-                            }
+                            tourguidedbDict.thumbImage = tourGuideDeatilDict.thumbImage
+//                            if let imageUrl = tourGuideDeatilDict.thumbImage{
+//                                if(imageUrl != "") {
+//                                    if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
+//                                        let image: UIImage = UIImage(data: data)!
+//                                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
+//                                    }
+//                                }
+//                            }
                             
                             
                             if(tourGuideDeatilDict.images != nil) {
@@ -610,13 +613,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                                         
                                         tourGuideImgEntity = tourGuideImg
                                         tourguidedbDict.addToImagesRelation(tourGuideImgEntity)
-                                        do {
-                                            try managedContext.save()
-                                            
-                                        } catch let error as NSError {
-                                            print("Could not save. \(error), \(error.userInfo)")
-                                        }
-                                        
+                                       // DispatchQueue.main.async(execute: {
+                                            do {
+                                                try managedContext.save()
+                                                
+                                            } catch let error as NSError {
+                                                print("Could not save. \(error), \(error.userInfo)")
+                                            }
+                                       // })
                                     }
                                 }
                             }
@@ -680,15 +684,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                             tourguidedbDict.artistOrCreatorOrAuthor = tourGuideDeatilDict.artistOrCreatorOrAuthor
                             tourguidedbDict.periodOrStyle = tourGuideDeatilDict.periodOrStyle
                             tourguidedbDict.techniqueAndMaterials = tourGuideDeatilDict.techniqueAndMaterials
-                            if let imageUrl = tourGuideDeatilDict.thumbImage{
-                                if(imageUrl != "") {
-                                    if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
-                                        let image: UIImage = UIImage(data: data)!
-                                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
-                                    }
-                                }
-                                
-                            }
+                            tourguidedbDict.thumbImage = tourGuideDeatilDict.thumbImage
+//                            if let imageUrl = tourGuideDeatilDict.thumbImage{
+//                                if(imageUrl != "") {
+//                                    if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
+//                                        let image: UIImage = UIImage(data: data)!
+//                                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
+//                                    }
+//                                }
+//
+//                            }
                             if(tourGuideDeatilDict.images != nil) {
                                 if((tourGuideDeatilDict.images?.count)! > 0) {
                                     for i in 0 ... (tourGuideDeatilDict.images?.count)!-1 {
@@ -698,24 +703,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                                         
                                         tourGuideImgEntity = tourGuideImg
                                         tourguidedbDict.addToImagesRelation(tourGuideImgEntity)
-                                        do {
-                                            try managedContext.save()
-                                            
-                                        } catch let error as NSError {
-                                            print("Could not save. \(error), \(error.userInfo)")
-                                        }
+                                        //DispatchQueue.main.async(execute: {
+                                            do {
+                                                try managedContext.save()
+                                                
+                                            } catch let error as NSError {
+                                                print("Could not save. \(error), \(error.userInfo)")
+                                            }
+                                       // })
                                         
                                     }
                                 }
                             }
-                            DispatchQueue.main.async(execute: {
+                           // DispatchQueue.main.async(execute: {
                                 do{
                                     try managedContext.save()
                                 }
                                 catch{
                                     print(error)
                                 }
-                            })
+                           // })
                         } else {
                             self.saveFloormapToCoreData(tourGuideDetailDict: tourGuideDeatilDict, managedObjContext: managedContext, lang: lang)
                         }
@@ -762,16 +769,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             tourguidedbDict.artistOrCreatorOrAuthor = tourGuideDetailDict.artistOrCreatorOrAuthor
             tourguidedbDict.periodOrStyle = tourGuideDetailDict.periodOrStyle
             tourguidedbDict.techniqueAndMaterials = tourGuideDetailDict.techniqueAndMaterials
-            if let imageUrl = tourGuideDetailDict.thumbImage{
-                if(imageUrl != "") {
-                    DispatchQueue.main.async {
-                    if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
-                        let image: UIImage = UIImage(data: data)!
-                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
-                    }
-                    }
-                }
-            }
+            tourguidedbDict.thumbImage = tourGuideDetailDict.thumbImage
+//            if let imageUrl = tourGuideDetailDict.thumbImage{
+//                if(imageUrl != "") {
+//                   // DispatchQueue.main.async {
+//                    if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
+//                        let image: UIImage = UIImage(data: data)!
+//                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
+//                    }
+//                    //}
+//                }
+//            }
             if(tourGuideDetailDict.images != nil) {
                 if((tourGuideDetailDict.images?.count)! > 0) {
                     for i in 0 ... (tourGuideDetailDict.images?.count)!-1 {
@@ -781,13 +789,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         
                         tourGuideImgEntity = tourGuideImg
                         tourguidedbDict.addToImagesRelation(tourGuideImgEntity)
-                        do {
-                            try managedObjContext.save()
-                            
-                        } catch let error as NSError {
-                            print("Could not save. \(error), \(error.userInfo)")
-                        }
-                        
+                       // DispatchQueue.main.async(execute: {
+                            do {
+                                try managedObjContext.save()
+                                
+                            } catch let error as NSError {
+                                print("Could not save. \(error), \(error.userInfo)")
+                            }
+                       // })
                     }
                 }
             }
@@ -820,16 +829,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             tourguidedbDict.artistOrCreatorOrAuthor = tourGuideDetailDict.artistOrCreatorOrAuthor
             tourguidedbDict.periodOrStyle = tourGuideDetailDict.periodOrStyle
             tourguidedbDict.techniqueAndMaterials = tourGuideDetailDict.techniqueAndMaterials
-            if let imageUrl = tourGuideDetailDict.thumbImage{
-                if(imageUrl != "") {
-                    if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
-                        let image: UIImage = UIImage(data: data)!
-                        DispatchQueue.main.async {
-                            tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
-                        }
-                    }
-                }
-            }
+            tourguidedbDict.thumbImage = tourGuideDetailDict.thumbImage
+            //tourguidedbDict.thumbImage = tourGuideDetailDict.thumbImage
+//            if let imageUrl = tourGuideDetailDict.thumbImage{
+//                if(imageUrl != "") {
+//                    if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
+//                        let image: UIImage = UIImage(data: data)!
+//                        //DispatchQueue.main.async {
+//                            tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
+//                        //}
+//                    }
+//                }
+//            }
             if(tourGuideDetailDict.images != nil) {
                 if((tourGuideDetailDict.images?.count)! > 0) {
                     for i in 0 ... (tourGuideDetailDict.images?.count)!-1 {
@@ -839,24 +850,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         
                         tourGuideImgEntity = tourGuideImg
                         tourguidedbDict.addToImagesRelation(tourGuideImgEntity)
-                        do {
-                            try managedObjContext.save()
-                            
-                        } catch let error as NSError {
-                            print("Could not save. \(error), \(error.userInfo)")
-                        }
-                        
+                        //DispatchQueue.main.async(execute: {
+                            do {
+                                try managedObjContext.save()
+                                
+                            } catch let error as NSError {
+                                print("Could not save. \(error), \(error.userInfo)")
+                            }
+                        //})
                     }
                 }
             }
         }
-        DispatchQueue.main.async(execute: {
+        //DispatchQueue.main.async(execute: {
         do {
                 try managedObjContext.save()
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
-        })
+       // })
     }
     //MARK: Exhibitions Service call
     func getExhibitionDataFromServer() {
@@ -995,9 +1007,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         _ = Alamofire.request(QatarMuseumRouter.HomeList(lang!)).responseObject(queue:queue) { (response: DataResponse<HomeList>) -> Void in
             switch response.result {
             case .success(let data):
-               // DispatchQueue.main.async{
+                DispatchQueue.main.async{
                 self.saveOrUpdateHomeCoredata(homeList: data.homeList, lang: lang)
-               // }
+                }
             case .failure(let error):
                 print("error")
             }
@@ -1124,7 +1136,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         _ = Alamofire.request(QatarMuseumRouter.MuseumTourGuide(lang!,["museum_id": museumId!])).responseObject(queue:queue) { (response: DataResponse<TourGuides>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateTourGuideCoredata(miaTourDataFullArray: data.tourGuide, museumId: museumId, lang: lang)
+                DispatchQueue.main.async{
+                    self.saveOrUpdateTourGuideCoredata(miaTourDataFullArray: data.tourGuide, museumId: museumId, lang: lang)
+                }
             case .failure(let error):
                 print("error")
             }
@@ -1182,13 +1196,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                             }
                         }
                         
-                        
-                        do{
-                            try managedContext.save()
-                        }
-                        catch{
-                            print(error)
-                        }
+                        DispatchQueue.main.async(execute: {
+                            do{
+                                try managedContext.save()
+                            }
+                            catch{
+                                print(error)
+                            }
+                        })
                     }
                     else {
                         //save
@@ -1240,12 +1255,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                                 }
                             }
                         }
-                        do{
-                            try managedContext.save()
-                        }
-                        catch{
-                            print(error)
-                        }
+                        DispatchQueue.main.async(execute: {
+                            do{
+                                try managedContext.save()
+                            }
+                            catch{
+                                print(error)
+                            }
+                        })
                     }
                     else {
                         //save
@@ -1319,15 +1336,351 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
             }
         }
+        DispatchQueue.main.async(execute: {
+            do {
+                try managedObjContext.save()
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
+        })
+    }
+    //MARK: NMoQ ABoutEvent Webservice
+    func getNmoQAboutDetailsFromServer(museumId:String?) {
+        let queue = DispatchQueue(label: "NmoQAboutThread", qos: .background, attributes: .concurrent)
+        if(museumId != nil) {
+            
+            _ = Alamofire.request(QatarMuseumRouter.GetNMoQAboutEvent(["nid": museumId!])).responseObject(queue: queue) { (response: DataResponse<Museums>) -> Void in
+                switch response.result {
+                case .success(let data):
+                    DispatchQueue.main.async{
+                        self.saveOrUpdateAboutCoredata(aboutDetailtArray: data.museum)
+                    }
+                case .failure( _):
+                    print("error")
+                }
+            }
+        }
+    }
+    //MARK: About CoreData
+    func saveOrUpdateAboutCoredata(aboutDetailtArray:[Museum]?) {
+        if ((aboutDetailtArray?.count)! > 0) {
+            if #available(iOS 10.0, *) {
+                let container = self.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.aboutCoreDataInBackgroundThread(managedContext: managedContext, aboutDetailtArray: aboutDetailtArray)
+                }
+            } else {
+                let managedContext = self.managedObjectContext
+                managedContext.perform {
+                    self.aboutCoreDataInBackgroundThread(managedContext : managedContext, aboutDetailtArray: aboutDetailtArray)
+                }
+            }
+        }
+    }
+    
+    
+    func aboutCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,aboutDetailtArray:[Museum]?) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "AboutEntity", idKey: "id" , idValue: aboutDetailtArray![0].id, managedContext: managedContext) as! [AboutEntity]
+            
+            if (fetchData.count > 0) {
+                let aboutDetailDict = aboutDetailtArray![0]
+                let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutEntity")
+                if(isDeleted == true) {
+                    self.saveToCoreData(aboutDetailDict: aboutDetailDict, managedObjContext: managedContext)
+                }
+                
+            } else {
+                let aboutDetailDict : Museum?
+                aboutDetailDict = aboutDetailtArray?[0]
+                self.saveToCoreData(aboutDetailDict: aboutDetailDict!, managedObjContext: managedContext)
+            }
+        }
+    }
+    
+    func saveToCoreData(aboutDetailDict: Museum, managedObjContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let aboutdbDict: AboutEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutEntity", into: managedObjContext) as! AboutEntity
+            
+            aboutdbDict.name = aboutDetailDict.name
+            aboutdbDict.id = aboutDetailDict.id
+            aboutdbDict.tourguideAvailable = aboutDetailDict.tourguideAvailable
+            aboutdbDict.contactNumber = aboutDetailDict.contactNumber
+            aboutdbDict.contactEmail = aboutDetailDict.contactEmail
+            aboutdbDict.mobileLongtitude = aboutDetailDict.mobileLongtitude
+            aboutdbDict.subtitle = aboutDetailDict.subtitle
+            aboutdbDict.openingTime = aboutDetailDict.openingTime
+            
+            aboutdbDict.mobileLatitude = aboutDetailDict.mobileLatitude
+            aboutdbDict.tourGuideAvailability = aboutDetailDict.tourGuideAvailability
+            
+            if((aboutDetailDict.mobileDescription?.count)! > 0) {
+                for i in 0 ... (aboutDetailDict.mobileDescription?.count)!-1 {
+                    var aboutDescEntity: AboutDescriptionEntity!
+                    let aboutDesc: AboutDescriptionEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutDescriptionEntity", into: managedObjContext) as! AboutDescriptionEntity
+                    aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+                    aboutDesc.id = Int16(i)
+                    aboutDescEntity = aboutDesc
+                    aboutdbDict.addToMobileDescRelation(aboutDescEntity)
+                    
+                    do {
+                        try managedObjContext.save()
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                    
+                }
+            }
+            
+            //MultimediaFile
+            if(aboutDetailDict.multimediaFile != nil){
+                if((aboutDetailDict.multimediaFile?.count)! > 0) {
+                    for i in 0 ... (aboutDetailDict.multimediaFile?.count)!-1 {
+                        var aboutImage: AboutMultimediaFileEntity!
+                        let aboutImgaeArray: AboutMultimediaFileEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutMultimediaFileEntity", into: managedObjContext) as! AboutMultimediaFileEntity
+                        aboutImgaeArray.image = aboutDetailDict.multimediaFile![i]
+                        
+                        aboutImage = aboutImgaeArray
+                        aboutdbDict.addToMultimediaRelation(aboutImage)
+                        do {
+                            try managedObjContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                    }
+                }
+            }
+            
+        }
         do {
             try managedObjContext.save()
-            
-            
+            NotificationCenter.default.post(name: NSNotification.Name(nmoqAboutNotification), object: self)
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    //MARK: NMoQ Tour ListService call
+    func getNMoQTourList() {
+        let queue = DispatchQueue(label: "NMoQTourListThread", qos: .background, attributes: .concurrent)
+        _ = Alamofire.request(QatarMuseumRouter.GetNMoQTourList()).responseObject(queue:queue) { (response: DataResponse<NMoQTourList>) -> Void in
+            switch response.result {
+            case .success(let data):
+                DispatchQueue.main.async{
+                    self.saveOrUpdateTourListCoredata(nmoqTourList: data.nmoqTourList)
+                }
+            case .failure(let error):
+                print("error")
+            }
+        }
+    }
+    //MARK: Tour List Coredata Method
+    func saveOrUpdateTourListCoredata(nmoqTourList:[NMoQTour]?) {
+        if ((nmoqTourList?.count)! > 0) {
+            if #available(iOS 10.0, *) {
+                let container = self.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.tourListCoreDataInBackgroundThread(nmoqTourList: nmoqTourList, managedContext: managedContext)
+                }
+            } else {
+                let managedContext = self.managedObjectContext
+                managedContext.perform {
+                    self.tourListCoreDataInBackgroundThread(nmoqTourList: nmoqTourList, managedContext : managedContext)
+                }
+            }
+        }
+    }
     
+    func tourListCoreDataInBackgroundThread(nmoqTourList:[NMoQTour]?,managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "NMoQTourListEntity", idKey: "nid", idValue: nil, managedContext: managedContext) as! [NMoQTourListEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... (nmoqTourList?.count)!-1 {
+                    let tourListDict = nmoqTourList![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "NMoQTourListEntity", idKey: "nid", idValue: tourListDict.nid, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let tourListdbDict = fetchResult[0] as! NMoQTourListEntity
+                        tourListdbDict.title = tourListDict.title
+                        tourListdbDict.dayDescription = tourListDict.dayDescription
+                        tourListdbDict.subtitle =  tourListDict.subtitle
+                        tourListdbDict.sortId = Int16(tourListDict.sortId!)!
+                        tourListdbDict.nid =  tourListDict.nid
+                        tourListdbDict.eventDate = tourListDict.eventDate
+                        
+                        if(tourListDict.images != nil){
+                            if((tourListDict.images?.count)! > 0) {
+                                for i in 0 ... (tourListDict.images?.count)!-1 {
+                                    var tourImage: NMoqTourImagesEntity!
+                                    let tourImgaeArray: NMoqTourImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoqTourImagesEntity", into: managedContext) as! NMoqTourImagesEntity
+                                    tourImgaeArray.image = tourListDict.images?[i]
+                                    
+                                    tourImage = tourImgaeArray
+                                    tourListdbDict.addToTourImagesRelation(tourImage)
+                                    do {
+                                        try managedContext.save()
+                                    } catch let error as NSError {
+                                        print("Could not save. \(error), \(error.userInfo)")
+                                    }
+                                }
+                            }
+                        }
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    } else {
+                        //save
+                        self.saveTourListToCoreData(tourListDict: tourListDict, managedObjContext: managedContext)
+                    }
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(nmoqTourlistNotification), object: self)
+            } else {
+                for i in 0 ... (nmoqTourList?.count)!-1 {
+                    let tourListDict : NMoQTour?
+                    tourListDict = nmoqTourList?[i]
+                    self.saveTourListToCoreData(tourListDict: tourListDict!, managedObjContext: managedContext)
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(nmoqTourlistNotification), object: self)
+            }
+        }
+    }
+    func saveTourListToCoreData(tourListDict: NMoQTour, managedObjContext: NSManagedObjectContext) {
+        let tourListInfo: NMoQTourListEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoQTourListEntity", into: managedObjContext) as! NMoQTourListEntity
+        tourListInfo.title = tourListDict.title
+        tourListInfo.dayDescription = tourListDict.dayDescription
+        tourListInfo.subtitle = tourListDict.subtitle
+        tourListInfo.sortId = Int16(tourListDict.sortId!)!
+        tourListInfo.nid = tourListDict.nid
+        tourListInfo.eventDate = tourListDict.eventDate
+        
+        if(tourListDict.images != nil){
+            if((tourListDict.images?.count)! > 0) {
+                for i in 0 ... (tourListDict.images?.count)!-1 {
+                    var tourImage: NMoqTourImagesEntity!
+                    let tourImgaeArray: NMoqTourImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoqTourImagesEntity", into: managedObjContext) as! NMoqTourImagesEntity
+                    tourImgaeArray.image = tourListDict.images?[i]
+                    
+                    tourImage = tourImgaeArray
+                    tourListInfo.addToTourImagesRelation(tourImage)
+                    do {
+                        try managedObjContext.save()
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                }
+            }
+        }
+        do {
+            try managedObjContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    //MARK: NMoQ TravelList Service Call
+    func getTravelList() {
+        let queue = DispatchQueue(label: "NMoQTravelListThread", qos: .background, attributes: .concurrent)
+        _ = Alamofire.request(QatarMuseumRouter.GetNMoQTravelList()).responseObject(queue:queue) { (response: DataResponse<HomeBannerList>) -> Void in
+            switch response.result {
+            case .success(let data):
+            self.saveOrUpdateTravelListCoredata(travelList: data.homeBannerList)
+            case .failure(let error):
+                print("error")
+            }
+        }
+    }
+    //MARK: Travel List Coredata
+    func saveOrUpdateTravelListCoredata(travelList:[HomeBanner]?) {
+        if ((travelList?.count)! > 0) {
+            if #available(iOS 10.0, *) {
+                let container = self.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.travelListCoreDataInBackgroundThread(travelList: travelList, managedContext: managedContext)
+                }
+            } else {
+                let managedContext = self.managedObjectContext
+                managedContext.perform {
+                    self.travelListCoreDataInBackgroundThread(travelList: travelList, managedContext : managedContext)
+                }
+            }
+        }
+    }
+    
+    func travelListCoreDataInBackgroundThread(travelList:[HomeBanner]?,managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "NMoQTravelListEntity", idKey: "fullContentID", idValue: nil, managedContext: managedContext) as! [NMoQTravelListEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... (travelList?.count)!-1 {
+                    let travelListDict = travelList![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "NMoQTravelListEntity", idKey: "fullContentID", idValue: travelListDict.fullContentID, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let travelListdbDict = fetchResult[0] as! NMoQTravelListEntity
+                        travelListdbDict.title = travelListDict.title
+                        travelListdbDict.fullContentID = travelListDict.fullContentID
+                        travelListdbDict.bannerTitle =  travelListDict.bannerTitle
+                        travelListdbDict.bannerLink = travelListDict.bannerLink
+                        travelListdbDict.introductionText =  travelListDict.introductionText
+                        travelListdbDict.email = travelListDict.email
+                        
+                        travelListdbDict.contactNumber = travelListDict.contactNumber
+                        travelListdbDict.promotionalCode =  travelListDict.promotionalCode
+                        travelListdbDict.claimOffer = travelListDict.claimOffer
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    } else {
+                        //save
+                        self.saveTrevelListToCoreData(travelListDict: travelListDict, managedObjContext: managedContext)
+                    }
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(nmoqTravelListNotification), object: self)
+            } else {
+                for i in 0 ... (travelList?.count)!-1 {
+                    let travelListDict : HomeBanner?
+                    travelListDict = travelList?[i]
+                    self.saveTrevelListToCoreData(travelListDict: travelListDict!, managedObjContext: managedContext)
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(nmoqTravelListNotification), object: self)
+            }
+        }
+    }
+    func saveTrevelListToCoreData(travelListDict: HomeBanner, managedObjContext: NSManagedObjectContext) {
+        let travelListdbDict: NMoQTravelListEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoQTravelListEntity", into: managedObjContext) as! NMoQTravelListEntity
+        travelListdbDict.title = travelListDict.title
+        travelListdbDict.fullContentID = travelListDict.fullContentID
+        travelListdbDict.bannerTitle =  travelListDict.bannerTitle
+        travelListdbDict.bannerLink = travelListDict.bannerLink
+        travelListdbDict.introductionText =  travelListDict.introductionText
+        travelListdbDict.email = travelListDict.email
+        travelListdbDict.contactNumber = travelListDict.contactNumber
+        travelListdbDict.promotionalCode =  travelListDict.promotionalCode
+        travelListdbDict.claimOffer = travelListDict.claimOffer
+        
+        do {
+            try managedObjContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    func deleteExistingEvent(managedContext:NSManagedObjectContext,entityName : String?) ->Bool? {
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName!)
+        let deleteRequest = NSBatchDeleteRequest( fetchRequest: fetchRequest)
+        do{
+            try managedContext.execute(deleteRequest)
+            return true
+        }catch let error as NSError {
+            return false
+        }
+        
+    }
     func checkAddedToCoredata(entityName: String?, idKey:String?, idValue: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
         var fetchResults : [NSManagedObject] = []
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)

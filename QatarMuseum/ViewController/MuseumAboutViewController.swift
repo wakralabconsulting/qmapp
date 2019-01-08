@@ -73,10 +73,12 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.fetchAboutDetailsFromCoredata()
             }
         } else if (pageNameString == PageName2.museumEvent) {
+             NotificationCenter.default.addObserver(self, selector: #selector(MuseumAboutViewController.receiveNmoqAboutNotification(notification:)), name: NSNotification.Name(nmoqAboutNotification), object: nil)
+            self.fetchAboutDetailsFromCoredata()
             if  (networkReachability?.isReachable)! {
-                getNmoQAboutDetailsFromServer()
-            } else {
-                self.fetchAboutDetailsFromCoredata()
+                DispatchQueue.global(qos: .background).async {
+                    self.getNmoQAboutDetailsFromServer()
+                }
             }
         }
         recordScreenView()
@@ -910,7 +912,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             case .success(let data):
                 self.aboutDetailtArray = data.museum!
                 self.setTopBarImage()
-                self.saveOrUpdateAboutCoredata()
+                self.saveOrUpdateAboutCoredata(aboutDetailtArray: data.museum)
                 self.heritageDetailTableView.reloadData()
                 self.loadingView.stopLoading()
                 self.loadingView.isHidden = true
@@ -946,63 +948,38 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             _ = Alamofire.request(QatarMuseumRouter.GetNMoQAboutEvent(["nid": museumId!])).responseObject { (response: DataResponse<Museums>) -> Void in
             switch response.result {
             case .success(let data):
-                self.aboutDetailtArray = data.museum!
-                self.setTopBarImage()
-                self.saveOrUpdateAboutCoredata()
-                self.heritageDetailTableView.reloadData()
-                self.loadingView.stopLoading()
-                self.loadingView.isHidden = true
-                if(self.aboutDetailtArray.count != 0) {
-                    if(self.aboutDetailtArray[0].multimediaFile != nil) {
-                        if((self.aboutDetailtArray[0].multimediaFile?.count)! > 0) {
-                            self.carousel.reloadData()
-                        }
-                    }
-                }
-                if (self.aboutDetailtArray.count == 0) {
-                    self.loadingView.stopLoading()
-                    self.loadingView.noDataView.isHidden = false
-                    self.loadingView.isHidden = false
-                    self.loadingView.showNoDataView()
-                }
+                self.saveOrUpdateAboutCoredata(aboutDetailtArray: data.museum)
             case .failure( _):
-                var errorMessage: String
-                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
-                                                                comment: "Setting the content of the alert"))
-                self.loadingView.stopLoading()
-                self.loadingView.noDataView.isHidden = false
-                self.loadingView.isHidden = false
-                self.loadingView.showNoDataView()
-                self.loadingView.noDataLabel.text = errorMessage
+                print("error")
             }
         }
     }
     }
     //MARK: About CoreData
-    func saveOrUpdateAboutCoredata() {
-        if (aboutDetailtArray.count > 0) {
+    func saveOrUpdateAboutCoredata(aboutDetailtArray:[Museum]?) {
+        if ((aboutDetailtArray?.count)! > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
                 let container = appDelegate!.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
-                    self.aboutCoreDataInBackgroundThread(managedContext: managedContext)
+                    self.aboutCoreDataInBackgroundThread(managedContext: managedContext, aboutDetailtArray: aboutDetailtArray)
                 }
             } else {
                 let managedContext = appDelegate!.managedObjectContext
                 managedContext.perform {
-                    self.aboutCoreDataInBackgroundThread(managedContext : managedContext)
+                    self.aboutCoreDataInBackgroundThread(managedContext : managedContext, aboutDetailtArray: aboutDetailtArray)
                 }
             }
         }
     }
     
 
-    func aboutCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+    func aboutCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,aboutDetailtArray:[Museum]?) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            let fetchData = checkAddedToCoredata(entityName: "AboutEntity", idKey: "id" , idValue: aboutDetailtArray[0].id, managedContext: managedContext) as! [AboutEntity]
+            let fetchData = checkAddedToCoredata(entityName: "AboutEntity", idKey: "id" , idValue: aboutDetailtArray![0].id, managedContext: managedContext) as! [AboutEntity]
             
             if (fetchData.count > 0) {
-                let aboutDetailDict = aboutDetailtArray[0]
+                let aboutDetailDict = aboutDetailtArray![0]
                 let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutEntity")
                 if(isDeleted == true) {
                    // self.saveToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
@@ -1011,22 +988,21 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                
             } else {
                 let aboutDetailDict : Museum?
-                aboutDetailDict = aboutDetailtArray[0]
+                aboutDetailDict = aboutDetailtArray?[0]
                 self.saveToCoreData(aboutDetailDict: aboutDetailDict!, managedObjContext: managedContext)
             }
         } else {
-            let fetchData = checkAddedToCoredata(entityName: "AboutEntityArabic", idKey:"id" , idValue: aboutDetailtArray[0].id, managedContext: managedContext) as! [AboutEntityArabic]
+            let fetchData = checkAddedToCoredata(entityName: "AboutEntityArabic", idKey:"id" , idValue: aboutDetailtArray![0].id, managedContext: managedContext) as! [AboutEntityArabic]
             if (fetchData.count > 0) {
-                let aboutDetailDict = aboutDetailtArray[0]
+                let aboutDetailDict = aboutDetailtArray![0]
                 let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutEntityArabic")
                 if(isDeleted == true) {
-                    // self.saveToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
                     self.saveToCoreData(aboutDetailDict: aboutDetailDict, managedObjContext: managedContext)
                 }
                 
             } else {
                 let aboutDetailDict : Museum?
-                aboutDetailDict = aboutDetailtArray[0]
+                aboutDetailDict = aboutDetailtArray?[0]
                 self.saveToCoreData(aboutDetailDict: aboutDetailDict!, managedObjContext: managedContext)
             }
         }
@@ -1182,7 +1158,6 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                                 descriptionArray.append("")
                             }
                             for i in 0 ... aboutInfoArray.count-1 {
-                                //descriptionArray.append(aboutInfoArray[i].mobileDesc!)
                                 descriptionArray.remove(at: Int(aboutInfoArray[i].id))
                                 descriptionArray.insert(aboutInfoArray[i].mobileDesc!, at: Int(aboutInfoArray[i].id))
                                 
@@ -1373,4 +1348,12 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    @objc func receiveNmoqAboutNotification(notification: NSNotification) {
+        if (pageNameString == PageName2.museumEvent) {
+            self.fetchAboutDetailsFromCoredata()
+        }
+    }
+    
+    
+    
 }

@@ -58,13 +58,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationEn(notification:)), name: NSNotification.Name(homepageNotificationEn), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationAr(notification:)), name: NSNotification.Name(homepageNotificationAr), object: nil)
         registerNib()
-        
-        
-        if (networkReachability?.isReachable)! {
-            DispatchQueue.global(qos: .background).async {
-                self.getHomeList()
-            }
-        }
         self.fetchHomeInfoFromCoredata()
         
         setUpUI()
@@ -282,7 +275,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(homeCollectionView.frame)
         if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")  && (self.homeBannerList.count > 0)) {
             if(indexPath.row == 0) {
                 let museumsView =  self.storyboard?.instantiateViewController(withIdentifier: "museumViewId") as! MuseumsViewController
@@ -401,24 +393,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         _ = Alamofire.request(QatarMuseumRouter.HomeList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<HomeList>) -> Void in
             switch response.result {
             case .success(let data):
-//                self.homeList = data.homeList
-//
-//                if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")  && (self.homeBannerList.count > 0)) {
-//                    self.homeList.insert(Home(id:nil , name: self.homeBannerList[0].bannerTitle,image: self.homeBannerList[0].bannerLink,
-//                                              tourguide_available: "false", sort_id: nil),
-//                                         at: 0)
-//                }
                 self.saveOrUpdateHomeCoredata(homeList: data.homeList)
-                //self.homeCollectionView.reloadData()
             case .failure(let error):
-//                var errorMessage: String
-//                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
-//                                                                comment: "Setting the content of the alert"))
-//                self.loadingView.stopLoading()
-//                self.loadingView.noDataView.isHidden = false
-//                self.loadingView.isHidden = false
-//                self.loadingView.showNoDataView()
-//                self.loadingView.noDataLabel.text = errorMessage
                 print("error")
             }
         }
@@ -891,6 +867,11 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        if (networkReachability?.isReachable)! {
+            DispatchQueue.global(qos: .background).async {
+                self.getHomeList()
+            }
         }
     }
     //MARK: EventRegistrationCoreData
