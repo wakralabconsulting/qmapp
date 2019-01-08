@@ -826,7 +826,9 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     
     func dialNumber(number : String) {
         
-        if let url = URL(string: "tel://\(number)"),
+        let phoneNumber = number.replacingOccurrences(of: " ", with: "")
+
+        if let url = URL(string: "tel://\(String(phoneNumber))"),
             UIApplication.shared.canOpenURL(url) {
             if #available(iOS 10, *) {
                 UIApplication.shared.open(url, options: [:], completionHandler:nil)
