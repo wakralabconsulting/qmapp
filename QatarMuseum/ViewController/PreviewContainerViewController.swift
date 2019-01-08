@@ -660,7 +660,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     
     //MARK: WebServiceCall
     func getTourGuideDataFromServer() {
-        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": tourGuideId!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(LocalizationLanguage.currentAppleLanguage(),["tour_guide_id": tourGuideId!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
             switch response.result {
             case .success(let data):
                 self.tourGuideArray = data.tourGuideFloorMap
@@ -698,7 +698,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     
     func getTourGuideDataFromServerInBackgound() {
         let queue = DispatchQueue(label: "", qos: .background, attributes: .concurrent)
-        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(["tour_guide_id": tourGuideId!])).responseObject(queue: queue) { (response: DataResponse<TourGuideFloorMaps>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(LocalizationLanguage.currentAppleLanguage(),["tour_guide_id": tourGuideId!])).responseObject(queue: queue) { (response: DataResponse<TourGuideFloorMaps>) -> Void in
             switch response.result {
             case .success(let data):
                 if(data.tourGuideFloorMap?.count != 0) {

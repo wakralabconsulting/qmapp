@@ -418,9 +418,15 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
         self.loadingView.showNoNetworkView()
     }
     @objc func receiveMiaTourNotification(notification: NSNotification) {
-        DispatchQueue.main.async{
-            self.fetchTourGuideListFromCoredata()
+        let data = notification.userInfo as? [String:String]
+        if (data?.count)!>0 {
+            if(museumId == data!["id"]) {
+                DispatchQueue.main.async{
+                    self.fetchTourGuideListFromCoredata()
+                }
+            }
         }
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

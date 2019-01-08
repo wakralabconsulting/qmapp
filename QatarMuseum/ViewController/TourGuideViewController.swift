@@ -32,7 +32,8 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         self.loadingView.isHidden = false
         self.loadingView.showLoading()
         self.loadingView.loadingViewDelegate = self
-        NotificationCenter.default.addObserver(self, selector: #selector(TourGuideViewController.receiveHomePageNotification(notification:)), name: NSNotification.Name(homepageNotification), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TourGuideViewController.receiveHomePageNotificationEn(notification:)), name: NSNotification.Name(homepageNotificationEn), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TourGuideViewController.receiveHomePageNotificationAr(notification:)), name: NSNotification.Name(homepageNotificationAr), object: nil)
         if  (networkReachability?.isReachable)! {
             DispatchQueue.global(qos: .background).async {
                 self.getTourGuideMuseumsList()
@@ -371,9 +372,18 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
     }
-    @objc func receiveHomePageNotification(notification: NSNotification) {
-        DispatchQueue.main.async{
-            self.fetchMuseumsInfoFromCoredata()
+    @objc func receiveHomePageNotificationEn(notification: NSNotification) {
+        if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (museumsList.count == 0)){
+            DispatchQueue.main.async{
+                self.fetchMuseumsInfoFromCoredata()
+            }
+        }
+    }
+    @objc func receiveHomePageNotificationAr(notification: NSNotification) {
+        if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (museumsList.count == 0)){
+            DispatchQueue.main.async{
+                self.fetchMuseumsInfoFromCoredata()
+            }
         }
     }
     override func didReceiveMemoryWarning() {
