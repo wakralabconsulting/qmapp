@@ -36,6 +36,8 @@ class PanelDetailCell: UITableViewCell {
     @IBOutlet weak var descriptionLeftConstraint: NSLayoutConstraint!
     @IBOutlet weak var contactTitleLine: UILabel!
     var loadMapView : (()->())?
+    var loadEmailComposer : (()->())?
+    var callPhone : (()->())?
     var registerOrUnRegisterAction : (()->())?
 
     override func awakeFromNib() {
@@ -60,6 +62,14 @@ class PanelDetailCell: UITableViewCell {
         topView.clipsToBounds = true
         secondView.clipsToBounds = true
         thirdView.clipsToBounds = true
+        
+        let emailTap = UITapGestureRecognizer(target: self, action: #selector(emailTapFunction))
+        contactEmailLabel.isUserInteractionEnabled = true
+        contactEmailLabel.addGestureRecognizer(emailTap)
+        
+        let phoneTap = UITapGestureRecognizer(target: self, action: #selector(phoneTapFunction))
+        contactNumberLabel.isUserInteractionEnabled = true
+        contactNumberLabel.addGestureRecognizer(phoneTap)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
         tap.delegate = self // This is not required
@@ -226,4 +236,25 @@ class PanelDetailCell: UITableViewCell {
     @objc func handleTap(sender: UITapGestureRecognizer? = nil) {
         self.loadMapView?()
     }
+    
+    @objc func emailTapFunction(sender:UITapGestureRecognizer) {
+        
+        print("email label tapped ...")
+        self.loadEmailComposer?()
+    }
+    
+    @objc func phoneTapFunction(sender:UITapGestureRecognizer) {
+        
+        print("phone label tapped ...")
+        self.callPhone?()
+    }
+    
+//    func underlinedString(stringName:String) -> String {
+//        
+//        let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: stringName)
+//        attributeString.addAttribute(NSAttributedStringKey.underlineStyle, value: 1, range: NSMakeRange(0, attributeString.length))
+//        
+//        return attributeString.string
+//    }
+    
 }
