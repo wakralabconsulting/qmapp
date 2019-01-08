@@ -29,10 +29,6 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         registerNib()
         recordScreenView()
     }
-    override func viewDidAppear(_ animated: Bool) {
-        
-    }
-   
     func setupUI() {
         loadingView.isHidden = false
         loadingView.loadingViewDelegate = self

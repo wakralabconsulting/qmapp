@@ -38,10 +38,12 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
         }
             travelHeaderView.headerTitle.text = NSLocalizedString("TRAVEL_ARRANGEMENTS", comment: "TRAVEL_ARRANGEMENTS Label in the Travel page page").uppercased()
         registerNib()
+        NotificationCenter.default.addObserver(self, selector: #selector(TravelArrangementsViewController.receiveNmoqTravelListNotification(notification:)), name: NSNotification.Name(nmoqTravelListNotification), object: nil)
+        fetchTravelInfoFromCoredata()
         if (networkReachability?.isReachable)! {
-            getTravelList()
-        } else {
-            fetchTravelInfoFromCoredata()
+            DispatchQueue.global(qos: .background).async {
+                self.getTravelList()
+            }
         }
     }
     func registerNib() {
@@ -103,52 +105,41 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
         _ = Alamofire.request(QatarMuseumRouter.GetNMoQTravelList()).responseObject { (response: DataResponse<HomeBannerList>) -> Void in
             switch response.result {
             case .success(let data):
-                self.travelList = data.homeBannerList
-                self.travelCollectionView.reloadData()
-                if(self.travelList.count > 0) {
-                    self.saveOrUpdateTravelListCoredata()
-                }
+                self.saveOrUpdateTravelListCoredata(travelList: data.homeBannerList)
             case .failure(let error):
-                var errorMessage: String
-                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
-                                                                comment: "Setting the content of the alert"))
-                self.loadingView.stopLoading()
-                self.loadingView.noDataView.isHidden = false
-                self.loadingView.isHidden = false
-                self.loadingView.showNoDataView()
-                self.loadingView.noDataLabel.text = errorMessage
+                print("error")
             }
         }
     }
     
     //MARK: Travel List Coredata
-    func saveOrUpdateTravelListCoredata() {
-        if (travelList.count > 0) {
+    func saveOrUpdateTravelListCoredata(travelList:[HomeBanner]?) {
+        if ((travelList?.count)! > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
                 let container = appDelegate!.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
-                    self.travelListCoreDataInBackgroundThread(managedContext: managedContext)
+                    self.travelListCoreDataInBackgroundThread(travelList: travelList, managedContext: managedContext)
                 }
             } else {
                 let managedContext = appDelegate!.managedObjectContext
                 managedContext.perform {
-                    self.travelListCoreDataInBackgroundThread(managedContext : managedContext)
+                    self.travelListCoreDataInBackgroundThread(travelList: travelList, managedContext : managedContext)
                 }
             }
         }
     }
     
-    func travelListCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+    func travelListCoreDataInBackgroundThread(travelList:[HomeBanner]?,managedContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            let fetchData = checkAddedToCoredata(entityName: "HomeBannerEntity", idKey: "fullContentID", idValue: nil, managedContext: managedContext) as! [HomeBannerEntity]
+            let fetchData = checkAddedToCoredata(entityName: "NMoQTravelListEntity", idKey: "fullContentID", idValue: nil, managedContext: managedContext) as! [NMoQTravelListEntity]
             if (fetchData.count > 0) {
-                for i in 0 ... travelList.count-1 {
-                    let travelListDict = travelList[i]
-                    let fetchResult = checkAddedToCoredata(entityName: "HomeBannerEntity", idKey: "fullContentID", idValue: travelListDict.fullContentID, managedContext: managedContext)
+                for i in 0 ... (travelList?.count)!-1 {
+                    let travelListDict = travelList![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "NMoQTravelListEntity", idKey: "fullContentID", idValue: travelListDict.fullContentID, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
-                        let travelListdbDict = fetchResult[0] as! HomeBannerEntity
+                        let travelListdbDict = fetchResult[0] as! NMoQTravelListEntity
                         travelListdbDict.title = travelListDict.title
                         travelListdbDict.fullContentID = travelListDict.fullContentID
                         travelListdbDict.bannerTitle =  travelListDict.bannerTitle
@@ -172,16 +163,16 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
                     }
                 }
             } else {
-                for i in 0 ... travelList.count-1 {
+                for i in 0 ... (travelList?.count)!-1 {
                     let travelListDict : HomeBanner?
-                    travelListDict = travelList[i]
+                    travelListDict = travelList?[i]
                     self.saveTrevelListToCoreData(travelListDict: travelListDict!, managedObjContext: managedContext)
                 }
             }
         }
     }
     func saveTrevelListToCoreData(travelListDict: HomeBanner, managedObjContext: NSManagedObjectContext) {
-        let travelListdbDict: HomeBannerEntity = NSEntityDescription.insertNewObject(forEntityName: "HomeBannerEntity", into: managedObjContext) as! HomeBannerEntity
+        let travelListdbDict: NMoQTravelListEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoQTravelListEntity", into: managedObjContext) as! NMoQTravelListEntity
         travelListdbDict.title = travelListDict.title
         travelListdbDict.fullContentID = travelListDict.fullContentID
         travelListdbDict.bannerTitle =  travelListDict.bannerTitle
@@ -202,15 +193,12 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-                var travelListArray = [HomeBannerEntity]()
-                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeBannerEntity")
-                travelListArray = (try managedContext.fetch(fetchRequest) as? [HomeBannerEntity])!
+                var travelListArray = [NMoQTravelListEntity]()
+                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "NMoQTravelListEntity")
+                travelListArray = (try managedContext.fetch(fetchRequest) as? [NMoQTravelListEntity])!
                 if (travelListArray.count > 0) {
                     for i in 0 ... travelListArray.count-1 {
                         let travelListDict = travelListArray[i]
-                        
-                     
-                        
                         self.travelList.insert(HomeBanner(title: travelListArray[i].title, fullContentID: travelListArray[i].fullContentID, bannerTitle: travelListArray[i].bannerTitle, bannerLink: travelListArray[i].bannerLink, image: nil, introductionText: travelListArray[i].introductionText, email: travelListArray[i].email, contactNumber: travelListArray[i].contactNumber, promotionalCode: travelListArray[i].promotionalCode, claimOffer: travelListArray[i].claimOffer), at: i)
                     }
                     if(travelList.count == 0){
@@ -247,6 +235,11 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
+    }
+    @objc func receiveNmoqTravelListNotification(notification: NSNotification) {
+        if (travelList.count == 0) {
+            self.fetchTravelInfoFromCoredata()
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
