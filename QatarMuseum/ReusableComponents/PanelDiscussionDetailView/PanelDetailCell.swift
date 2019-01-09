@@ -25,7 +25,7 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
     @IBOutlet weak var venueTitle: UILabel!
     @IBOutlet weak var contactTitle: UILabel!
     @IBOutlet weak var contactNumberLabel: UILabel!
-    @IBOutlet weak var contactEmailLabel: UILabel!
+    @IBOutlet weak var contactEmailLabel: UnderlinedLabel!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var secondView: UIView!
@@ -262,4 +262,18 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
 //        return attributeString.string
 //    }
     
+}
+
+class UnderlinedLabel: UILabel {
+    
+    override var text: String? {
+        didSet {
+            guard let text = text else { return }
+            let textRange = NSMakeRange(0, text.characters.count)
+            let attributedText = NSMutableAttributedString(string: text)
+            attributedText.addAttribute(NSAttributedStringKey.underlineStyle , value: NSUnderlineStyle.styleSingle.rawValue, range: textRange)
+            // Add other attributes if needed
+            self.attributedText = attributedText
+        }
+    }
 }
