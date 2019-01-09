@@ -9,11 +9,11 @@
 import UIKit
 import MapKit
 
-class PanelDetailCell: UITableViewCell {
+class PanelDetailCell: UITableViewCell,UITextViewDelegate {
     @IBOutlet weak var topImg: UIImageView!
     
-    @IBOutlet weak var topTitle: UITextView!
-    @IBOutlet weak var topDescription: UILabel!
+    @IBOutlet weak var topTitle: UILabel!
+    @IBOutlet weak var topDescription: UITextView!
     @IBOutlet weak var interestedLabel: UILabel!
     @IBOutlet weak var notInterestedLabel: UILabel!
     @IBOutlet weak var interestSwitch: UISwitch!
@@ -74,6 +74,11 @@ class PanelDetailCell: UITableViewCell {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
         tap.delegate = self // This is not required
         mapOverlayView.addGestureRecognizer(tap)
+        
+        topDescription.delegate = self
+        topDescription.isUserInteractionEnabled = true
+        topDescription.isEditable = false
+        topDescription.textAlignment = .center
     }
     func setPanelDetailCellContent(panelDetailData: NMoQTour?) {
         topTitle.text = panelDetailData?.subtitle

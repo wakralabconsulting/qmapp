@@ -1506,6 +1506,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         tourListdbDict.sortId = Int16(tourListDict.sortId!)!
                         tourListdbDict.nid =  tourListDict.nid
                         tourListdbDict.eventDate = tourListDict.eventDate
+                        //eventlist
+                        tourListdbDict.dateString = tourListDict.date
+                        tourListdbDict.descriptioForModerator = tourListDict.descriptioForModerator
+                        tourListdbDict.mobileLatitude = tourListDict.mobileLatitude
+                        tourListdbDict.moderatorName = tourListDict.moderatorName
+                        tourListdbDict.longitude = tourListDict.longitude
+                        tourListdbDict.contactEmail = tourListDict.contactEmail
+                        tourListdbDict.contactPhone = tourListDict.contactPhone
+                        
+                        
                         
                         if(tourListDict.images != nil){
                             if((tourListDict.images?.count)! > 0) {
@@ -1555,6 +1565,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         tourListInfo.sortId = Int16(tourListDict.sortId!)!
         tourListInfo.nid = tourListDict.nid
         tourListInfo.eventDate = tourListDict.eventDate
+        //specialEvent
+        tourListInfo.dateString = tourListDict.date
+        tourListInfo.descriptioForModerator = tourListDict.descriptioForModerator
+        tourListInfo.mobileLatitude = tourListDict.mobileLatitude
+        tourListInfo.moderatorName = tourListDict.moderatorName
+        tourListInfo.longitude = tourListDict.longitude
+        tourListInfo.contactEmail = tourListDict.contactEmail
+        tourListInfo.contactPhone = tourListDict.contactPhone
+        
         
         if(tourListDict.images != nil){
             if((tourListDict.images?.count)! > 0) {
