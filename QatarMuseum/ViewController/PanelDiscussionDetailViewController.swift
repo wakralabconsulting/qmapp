@@ -633,7 +633,6 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         
             let haveConflict = calculateToursOverlap(times: times)
             return haveConflict
-        return nil
     }
 
     func fetchUserEventListFromCoredata() {

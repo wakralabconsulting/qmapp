@@ -56,7 +56,11 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
             }
         } else if (pageNameString == NMoQPageName.PanelDiscussion) {
             headerView.headerTitle.text = NSLocalizedString("PANEL_DISCUSSION", comment: "PANEL_DISCUSSION in the NMoQ page").uppercased()
-            getNMoQSpecialEventList()
+            if  (networkReachability?.isReachable)! {
+                getNMoQSpecialEventList()
+            } else {
+              //  fetchTourInfoFromCoredata()
+            }
         }
         
     }
@@ -181,7 +185,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 if self.nmoqTourList.first(where: {$0.sortId != "" && $0.sortId != nil} ) != nil {
                     self.nmoqTourList = self.nmoqTourList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
                 }
-                //self.saveOrUpdateHomeCoredata()
+               // self.saveOrUpdateTourListCoredata(nmoqTourList: data.nmoqTourList)
                 self.collectionTableView.reloadData()
             case .failure(let error):
                 var errorMessage: String
@@ -192,6 +196,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 self.loadingView.isHidden = false
                 self.loadingView.showNoDataView()
                 self.loadingView.noDataLabel.text = errorMessage
+                print("error")
             }
         }
     }
@@ -230,6 +235,15 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                         tourListdbDict.sortId = Int16(tourListDict.sortId!)!
                         tourListdbDict.nid =  tourListDict.nid
                         tourListdbDict.eventDate = tourListDict.eventDate
+                        
+                        //eventlist
+                        tourListdbDict.dateString = tourListDict.date
+                        tourListdbDict.descriptioForModerator = tourListDict.descriptioForModerator
+                        tourListdbDict.mobileLatitude = tourListDict.mobileLatitude
+                        tourListdbDict.moderatorName = tourListDict.moderatorName
+                        tourListdbDict.longitude = tourListDict.longitude
+                        tourListdbDict.contactEmail = tourListDict.contactEmail
+                        tourListdbDict.contactPhone = tourListDict.contactPhone
                         
                         if(tourListDict.images != nil){
                             if((tourListDict.images?.count)! > 0) {
@@ -278,6 +292,14 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
             tourListInfo.nid = tourListDict.nid
             tourListInfo.eventDate = tourListDict.eventDate
         
+        //specialEvent
+        tourListInfo.dateString = tourListDict.date
+        tourListInfo.descriptioForModerator = tourListDict.descriptioForModerator
+        tourListInfo.mobileLatitude = tourListDict.mobileLatitude
+        tourListInfo.moderatorName = tourListDict.moderatorName
+        tourListInfo.longitude = tourListDict.longitude
+        tourListInfo.contactEmail = tourListDict.contactEmail
+        tourListInfo.contactPhone = tourListDict.contactPhone
         if(tourListDict.images != nil){
             if((tourListDict.images?.count)! > 0) {
                 for i in 0 ... (tourListDict.images?.count)!-1 {
@@ -319,7 +341,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                                 imagesArray.append(imagesInfoArray[i].image!)
                             }
                         }
-                        self.nmoqTourList.insert(NMoQTour(title: tourListArray[i].title, dayDescription: tourListArray[i].dayDescription, images: imagesArray, subtitle: tourListArray[i].subtitle, sortId: String(tourListArray[i].sortId), nid: tourListArray[i].nid, eventDate: nil, date: nil, descriptioForModerator: nil, mobileLatitude: nil, moderatorName: nil, longitude: nil, contactEmail: nil, contactPhone: nil), at: i)
+                        self.nmoqTourList.insert(NMoQTour(title: tourListArray[i].title, dayDescription: tourListArray[i].dayDescription, images: imagesArray, subtitle: tourListArray[i].subtitle, sortId: String(tourListArray[i].sortId), nid: tourListArray[i].nid, eventDate: tourListArray[i].eventDate, date: nil, descriptioForModerator: nil, mobileLatitude: nil, moderatorName: nil, longitude: nil, contactEmail: nil, contactPhone: nil), at: i)
                     }
                     if(nmoqTourList.count == 0){
                         self.showNoNetwork()
