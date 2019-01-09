@@ -10,11 +10,13 @@ import Alamofire
 import CoreData
 import MapKit
 import UIKit
+import MessageUI
+
 enum NMoQPanelPage {
     case PanelDetailPage
     case TourDetailPage
 }
-class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,UITableViewDelegate,UITableViewDataSource,HeaderViewProtocol,comingSoonPopUpProtocol,DeclinePopupProtocol {
+class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,UITableViewDelegate,UITableViewDataSource,HeaderViewProtocol,comingSoonPopUpProtocol,DeclinePopupProtocol, MFMailComposeViewControllerDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
@@ -97,6 +99,13 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                 self.loadLocationMap(tourDetail: self.nmoqTourDetail[indexPath.row])
             }
             
+            cell.loadEmailComposer = {
+                self.openEmail(email:self.nmoqTourDetail[indexPath.row].contactEmail ?? "nmoq@qm.org.qa")
+            }
+            cell.callPhone = {
+                self.dialNumber(number: self.nmoqTourDetail[indexPath.row].contactPhone ?? "+974 4402 8202")
+            }
+            
         } else if (pageNameString == NMoQPanelPage.TourDetailPage){
             cell.setTourSecondDetailCellContent(tourDetailData: nmoqTourDetail[self.selectedRow!], userEventList: userEventList)
             cell.topDescription.textAlignment = .left
@@ -109,6 +118,13 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             cell.loadMapView = {
                 () in
                 self.loadLocationMap(tourDetail: self.nmoqTourDetail[self.selectedRow!])
+            }
+            
+            cell.loadEmailComposer = {
+                self.openEmail(email:self.nmoqTourDetail[indexPath.row].contactEmail ?? "nmoq@qm.org.qa")
+            }
+            cell.callPhone = {
+                self.dialNumber(number: self.nmoqTourDetail[indexPath.row].contactPhone ?? "+974 4402 8202")
             }
         }
         
@@ -767,7 +783,61 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         super.didReceiveMemoryWarning()
     }
     
-
+    func openEmail(email : String) {
+        let mailComposeViewController = configuredMailComposeViewController(emailId:email)
+        if MFMailComposeViewController.canSendMail() {
+            self.present(mailComposeViewController, animated: true, completion: nil)
+        } else {
+            self.showSendMailErrorAlert()
+        }
+    }
    
+    func configuredMailComposeViewController(emailId:String) -> MFMailComposeViewController {
+        let mailComposerVC = MFMailComposeViewController()
+        mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
+        
+        mailComposerVC.setToRecipients([emailId])
+        mailComposerVC.setSubject("NMOQ Event:")
+        mailComposerVC.setMessageBody("Greetings, Thanks for contacting NMOQ event support team", isHTML: false)
+        
+        return mailComposerVC
+    }
+    
+    func showSendMailErrorAlert() {
+        
+        let sendMailErrorAlert = UIAlertController(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", preferredStyle: UIAlertControllerStyle.alert)
+        
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default)
+        {
+            (result : UIAlertAction) -> Void in
+            print("You pressed OK")
+        }
+        sendMailErrorAlert.addAction(okAction)
+        self.present(sendMailErrorAlert, animated: true, completion: nil)
 
+    }
+    
+    // MARK: MFMailComposeViewControllerDelegate Method
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+
+    
+    func dialNumber(number : String) {
+        
+        let phoneNumber = number.replacingOccurrences(of: " ", with: "")
+
+        if let url = URL(string: "tel://\(String(phoneNumber))"),
+            UIApplication.shared.canOpenURL(url) {
+            if #available(iOS 10, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler:nil)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        } else {
+            // add error message here
+            
+            print("Error in calling phone ...")
+        }
+    }
 }
