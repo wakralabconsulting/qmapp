@@ -79,6 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             self.getNmoQAboutDetailsFromServer(museumId: "13376")
             self.getNMoQTourList()
             self.getTravelList()
+            self.getNMoQSpecialEventList()
         }
         
     }
@@ -530,7 +531,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 DispatchQueue.main.async{
                 self.saveOrUpdateFloormapCoredata(tourGuideId: tourGuideId, floorMapArray: data.tourGuideFloorMap, lang: lang)
                 }
-            case .failure(let error):
+            case .failure( _):
                 print("error")
                 
             }
@@ -594,16 +595,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                             tourguidedbDict.periodOrStyle = tourGuideDeatilDict.periodOrStyle
                             tourguidedbDict.techniqueAndMaterials = tourGuideDeatilDict.techniqueAndMaterials
                             tourguidedbDict.thumbImage = tourGuideDeatilDict.thumbImage
-//                            if let imageUrl = tourGuideDeatilDict.thumbImage{
-//                                if(imageUrl != "") {
-//                                    if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
-//                                        let image: UIImage = UIImage(data: data)!
-//                                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
-//                                    }
-//                                }
-//                            }
-                            
-                            
+
                             if(tourGuideDeatilDict.images != nil) {
                                 if((tourGuideDeatilDict.images?.count)! > 0) {
                                     for i in 0 ... (tourGuideDeatilDict.images?.count)!-1 {
@@ -685,15 +677,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                             tourguidedbDict.periodOrStyle = tourGuideDeatilDict.periodOrStyle
                             tourguidedbDict.techniqueAndMaterials = tourGuideDeatilDict.techniqueAndMaterials
                             tourguidedbDict.thumbImage = tourGuideDeatilDict.thumbImage
-//                            if let imageUrl = tourGuideDeatilDict.thumbImage{
-//                                if(imageUrl != "") {
-//                                    if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
-//                                        let image: UIImage = UIImage(data: data)!
-//                                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
-//                                    }
-//                                }
-//
-//                            }
                             if(tourGuideDeatilDict.images != nil) {
                                 if((tourGuideDeatilDict.images?.count)! > 0) {
                                     for i in 0 ... (tourGuideDeatilDict.images?.count)!-1 {
@@ -770,16 +753,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             tourguidedbDict.periodOrStyle = tourGuideDetailDict.periodOrStyle
             tourguidedbDict.techniqueAndMaterials = tourGuideDetailDict.techniqueAndMaterials
             tourguidedbDict.thumbImage = tourGuideDetailDict.thumbImage
-//            if let imageUrl = tourGuideDetailDict.thumbImage{
-//                if(imageUrl != "") {
-//                   // DispatchQueue.main.async {
-//                    if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
-//                        let image: UIImage = UIImage(data: data)!
-//                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
-//                    }
-//                    //}
-//                }
-//            }
+
             if(tourGuideDetailDict.images != nil) {
                 if((tourGuideDetailDict.images?.count)! > 0) {
                     for i in 0 ... (tourGuideDetailDict.images?.count)!-1 {
@@ -877,7 +851,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             switch response.result {
             case .success(let data):
                 self.saveOrUpdateExhibitionsCoredata(exhibition: data.exhibitions)
-            case .failure(let error):
+            case .failure( _):
                 print("error")
             }
         }
@@ -1010,7 +984,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 DispatchQueue.main.async{
                 self.saveOrUpdateHomeCoredata(homeList: data.homeList, lang: lang)
                 }
-            case .failure(let error):
+            case .failure( _):
                 print("error")
             }
         }
@@ -1139,7 +1113,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 DispatchQueue.main.async{
                     self.saveOrUpdateTourGuideCoredata(miaTourDataFullArray: data.tourGuide, museumId: museumId, lang: lang)
                 }
-            case .failure(let error):
+            case .failure( _):
                 print("error")
             }
         }
@@ -1466,31 +1440,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             switch response.result {
             case .success(let data):
                 DispatchQueue.main.async{
-                    self.saveOrUpdateTourListCoredata(nmoqTourList: data.nmoqTourList)
+                    self.saveOrUpdateTourListCoredata(nmoqTourList: data.nmoqTourList, isTourGuide: true)
                 }
-            case .failure(let error):
+            case .failure( _):
                 print("error")
             }
         }
     }
     //MARK: Tour List Coredata Method
-    func saveOrUpdateTourListCoredata(nmoqTourList:[NMoQTour]?) {
+    func saveOrUpdateTourListCoredata(nmoqTourList:[NMoQTour]?,isTourGuide:Bool) {
         if ((nmoqTourList?.count)! > 0) {
             if #available(iOS 10.0, *) {
                 let container = self.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
-                    self.tourListCoreDataInBackgroundThread(nmoqTourList: nmoqTourList, managedContext: managedContext)
+                    self.tourListCoreDataInBackgroundThread(nmoqTourList: nmoqTourList, managedContext: managedContext, isTourGuide: isTourGuide)
                 }
             } else {
                 let managedContext = self.managedObjectContext
                 managedContext.perform {
-                    self.tourListCoreDataInBackgroundThread(nmoqTourList: nmoqTourList, managedContext : managedContext)
+                    self.tourListCoreDataInBackgroundThread(nmoqTourList: nmoqTourList, managedContext : managedContext, isTourGuide: isTourGuide)
                 }
             }
         }
     }
     
-    func tourListCoreDataInBackgroundThread(nmoqTourList:[NMoQTour]?,managedContext: NSManagedObjectContext) {
+    func tourListCoreDataInBackgroundThread(nmoqTourList:[NMoQTour]?,managedContext: NSManagedObjectContext,isTourGuide:Bool) {
+        let tourOrSpecialEventDict = ["isTour":isTourGuide]
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "NMoQTourListEntity", idKey: "nid", idValue: nil, managedContext: managedContext) as! [NMoQTourListEntity]
             if (fetchData.count > 0) {
@@ -1514,7 +1489,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         tourListdbDict.longitude = tourListDict.longitude
                         tourListdbDict.contactEmail = tourListDict.contactEmail
                         tourListdbDict.contactPhone = tourListDict.contactPhone
-                        
+                        tourListdbDict.isTourGuide = isTourGuide
                         
                         
                         if(tourListDict.images != nil){
@@ -1543,21 +1518,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         }
                     } else {
                         //save
-                        self.saveTourListToCoreData(tourListDict: tourListDict, managedObjContext: managedContext)
+                        self.saveTourListToCoreData(tourListDict: tourListDict, managedObjContext: managedContext, isTourGuide: isTourGuide)
                     }
                 }
-                NotificationCenter.default.post(name: NSNotification.Name(nmoqTourlistNotification), object: self)
+                NotificationCenter.default.post(name: NSNotification.Name(nmoqTourlistNotification), object: self, userInfo: tourOrSpecialEventDict)
             } else {
                 for i in 0 ... (nmoqTourList?.count)!-1 {
                     let tourListDict : NMoQTour?
                     tourListDict = nmoqTourList?[i]
-                    self.saveTourListToCoreData(tourListDict: tourListDict!, managedObjContext: managedContext)
+                    self.saveTourListToCoreData(tourListDict: tourListDict!, managedObjContext: managedContext, isTourGuide: isTourGuide)
                 }
-                NotificationCenter.default.post(name: NSNotification.Name(nmoqTourlistNotification), object: self)
+                 NotificationCenter.default.post(name: NSNotification.Name(nmoqTourlistNotification), object: self, userInfo: tourOrSpecialEventDict)
             }
         }
     }
-    func saveTourListToCoreData(tourListDict: NMoQTour, managedObjContext: NSManagedObjectContext) {
+    func saveTourListToCoreData(tourListDict: NMoQTour, managedObjContext: NSManagedObjectContext,isTourGuide:Bool) {
         let tourListInfo: NMoQTourListEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoQTourListEntity", into: managedObjContext) as! NMoQTourListEntity
         tourListInfo.title = tourListDict.title
         tourListInfo.dayDescription = tourListDict.dayDescription
@@ -1573,7 +1548,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         tourListInfo.longitude = tourListDict.longitude
         tourListInfo.contactEmail = tourListDict.contactEmail
         tourListInfo.contactPhone = tourListDict.contactPhone
-        
+        tourListInfo.isTourGuide = isTourGuide
         
         if(tourListDict.images != nil){
             if((tourListDict.images?.count)! > 0) {
@@ -1605,7 +1580,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             switch response.result {
             case .success(let data):
             self.saveOrUpdateTravelListCoredata(travelList: data.homeBannerList)
-            case .failure(let error):
+            case .failure( _):
                 print("error")
             }
         }
@@ -1686,6 +1661,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             try managedObjContext.save()
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    //MARK: NMoQSpecialEvent Lst APi
+    func getNMoQSpecialEventList() {
+         let queue = DispatchQueue(label: "NMoQSpecialEventListThread", qos: .background, attributes: .concurrent)
+        _ = Alamofire.request(QatarMuseumRouter.GetNMoQSpecialEventList()).responseObject(queue:queue) { (response: DataResponse<NMoQTourList>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.saveOrUpdateTourListCoredata(nmoqTourList: data.nmoqTourList, isTourGuide: false)
+            case .failure( _):
+                print("error")
+            }
         }
     }
     func deleteExistingEvent(managedContext:NSManagedObjectContext,entityName : String?) ->Bool? {
