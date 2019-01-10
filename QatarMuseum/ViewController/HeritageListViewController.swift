@@ -265,13 +265,21 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
                         
                     }
                     if(heritageListArray.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                     DispatchQueue.main.async{
                         self.heritageCollectionView.reloadData()
                     }
                 } else {
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
                 }
             } else {
                 var heritageArray = [HeritageEntityArabic]()
@@ -283,11 +291,19 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
                         
                     }
                     if(heritageListArray.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                     heritageCollectionView.reloadData()
                 } else {
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
                 }
             }
         } catch let error as NSError {

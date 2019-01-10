@@ -12,6 +12,7 @@ import AVKit
 import Crashlytics
 import CoreData
 import GoogleMaps
+import Kingfisher
 import UIKit
 
 enum levelNumber{
@@ -985,7 +986,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                         (loadedLevelThreeMarkerArray[i] as! GMSMarker).map = self.viewForMap
                     }
                 }
-               // showOrHideLevelThreeHighlightTour()
             }
         } else {
             if (level == levelNumber.two) {
@@ -1110,7 +1110,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                     }
                 }
             } else if(level == levelNumber.three) {
-               // showOrHideLevelThreeHighlightTour()
                 if(loadedLevelThreeMarkerArray.count == 0) {
                     showOrHideLevelThreeHighlightTour()
                 } else {
@@ -1163,7 +1162,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                     }
                 }
             } else if(level == levelNumber.three) {
-               // showOrHideLevelThreeHighlightTour()
                 if(loadedLevelThreeMarkerArray.count == 0) {
                     showOrHideLevelThreeHighlightTour()
                 } else {
@@ -1334,40 +1332,35 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
         }
     }
     func showOrHideLevelTwoHighlightTour() {
-        
+        self.loadingView.isHidden = false
+        self.loadingView.showLoading()
         for i in 0 ... self.levelTwoPositionArray.count-1 {
             if let searchResult = self.floorMapArray.first(where: {$0.artifactPosition! == self.levelTwoPositionArray[i] as! String}) {
                 if(self.selectedScienceTourLevel == "2") {
                     (self.levelTwoMarkerArray[i] as! GMSMarker).map = self.viewForMap
                     
                 }
-                
-//                if(searchResult.artifactImg != nil) {
-//                    let artImg = UIImage(data: searchResult.artifactImg!)
-//                    if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour! == (self.levelTwoPositionArray[i] as! String))) {
-//                        (self.levelTwoMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: artImg!, scaledToSize: CGSize(width:54, height: 64))
-//                        selectedMarker = self.levelTwoMarkerArray[i] as! GMSMarker
-//                        selectedMarkerImage = artImg!
-//                    } else {
-//                        (self.levelTwoMarkerArray[i] as! GMSMarker).icon = artImg
-//                    }
-//
-//                } else {
+
+                if(searchResult.artifactImg != nil) {
+                    let artImg = UIImage(data: searchResult.artifactImg!)
+                    if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour! == (self.levelTwoPositionArray[i] as! String))) {
+                        (self.levelTwoMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: artImg!, scaledToSize: CGSize(width:54, height: 64))
+                        selectedMarker = self.levelTwoMarkerArray[i] as! GMSMarker
+                        selectedMarkerImage = artImg!
+                    } else {
+                        (self.levelTwoMarkerArray[i] as! GMSMarker).icon = artImg
+                    }
+
+                } else {
                 if let imageUrl = searchResult.thumbImage{
                     if(imageUrl != "") {
-                        if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
-                            let image: UIImage = UIImage(data: data)!
-                            if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour! == (self.levelTwoPositionArray[i] as! String))) {
-                                (self.levelTwoMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: image, scaledToSize: CGSize(width:54, height: 64))
-                                selectedMarker = self.levelTwoMarkerArray[i] as! GMSMarker
-                                selectedMarkerImage = image
-                            } else {
-                                (self.levelTwoMarkerArray[i] as! GMSMarker).icon = image
-                            }
-                        }
+                        KingfisherManager.shared.retrieveImage(with: URL(string: imageUrl)!, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+                            (self.levelTwoMarkerArray[i] as! GMSMarker).icon = image
+                        })
+                   
                     }
                 }
-            //}
+            }
                 if((self.levelTwoMarkerArray[i] as! GMSMarker).icon == nil) {
                     (self.levelTwoMarkerArray[i] as! GMSMarker).map = nil
                 } else {
@@ -1377,57 +1370,56 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                 (self.levelTwoMarkerArray[i] as! GMSMarker).map = nil
             }
         }
+        self.loadingView.stopLoading()
+        self.loadingView.isHidden = true
     }
     func showOrHideLevelThreeHighlightTour() {
+        self.loadingView.isHidden = false
+        self.loadingView.showLoading()
         for i in 0 ... self.levelThreePositionArray.count-1 {
             if let searchResult = self.floorMapArray.first(where: {$0.artifactPosition! == self.levelThreePositionArray[i] as! String}) {
                 if(self.selectedScienceTourLevel == "3") {
                     (self.levelThreeMarkerArray[i] as! GMSMarker).map = self.viewForMap
             }
-                
-//                if(searchResult.artifactImg != nil) {
-//                    let artImg = UIImage(data: searchResult.artifactImg!)
-//                    if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour! == (self.levelThreePositionArray[i] as! String))) {
-//                        (self.levelThreeMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: artImg!, scaledToSize: CGSize(width:54, height: 64))
-//                        selectedMarker = self.levelThreeMarkerArray[i] as! GMSMarker
-//                        selectedMarkerImage = artImg!
-//                    } else {
-//                        (self.levelThreeMarkerArray[i] as! GMSMarker).icon = artImg
-//                    }
-//                } else {
-                if let imageUrl = searchResult.thumbImage{
-                    if(imageUrl != "") {
-                        if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
-                            let image: UIImage = UIImage(data: data)!
-                            if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour! == (self.levelThreePositionArray[i] as! String))) {
-                                (self.levelThreeMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: image, scaledToSize: CGSize(width:54, height: 64))
-                                selectedMarker = self.levelThreeMarkerArray[i] as! GMSMarker
-                                selectedMarkerImage = image
-                            } else {
-                                (self.levelThreeMarkerArray[i] as! GMSMarker).icon = image
-                            }
-                        }
+
+                if(searchResult.artifactImg != nil) {
+                    let artImg = UIImage(data: searchResult.artifactImg!)
+                    if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour! == (self.levelThreePositionArray[i] as! String))) {
+                        (self.levelThreeMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: artImg!, scaledToSize: CGSize(width:54, height: 64))
+                        selectedMarker = self.levelThreeMarkerArray[i] as! GMSMarker
+                        selectedMarkerImage = artImg!
+                    } else {
+                        (self.levelThreeMarkerArray[i] as! GMSMarker).icon = artImg
                     }
                 }
-              //  }
+                else {
+                if let imageUrl = searchResult.thumbImage{
+                    if(imageUrl != "") {
+                        KingfisherManager.shared.retrieveImage(with: URL(string: imageUrl)!, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+                             (self.levelThreeMarkerArray[i] as! GMSMarker).icon = image
+                        })
+                       
+                    }
+                }
+                }
                 if((self.levelThreeMarkerArray[i] as! GMSMarker).icon == nil) {
                     (self.levelThreeMarkerArray[i] as! GMSMarker).map = nil
                 } else {
                     self.loadedLevelThreeMarkerArray.add(self.levelThreeMarkerArray[i])
                 }
-                
+
             } else {
                 (self.levelThreeMarkerArray[i] as! GMSMarker).map = nil
             }
         }
-//        if (self.fromTourString == fromTour.exploreTour) {
-//            self.stopLoadingView(delayInSeconds: 0.3)
-//        }
 
+        self.loadingView.stopLoading()
+        self.loadingView.isHidden = true
     }
-    
+
     func showOrHideLevelTwoScienceTour() {
-        
+        self.loadingView.isHidden = false
+        self.loadingView.showLoading()
         for i in 0 ... self.levelTwoPositionArray.count-1 {
             if let searchResult = self.floorMapArray.first(where: {$0.artifactPosition! == self.levelTwoPositionArray[i] as! String}) {
                 if(searchResult.floorLevel != "") {
@@ -1435,31 +1427,26 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                     (self.levelTwoMarkerArray[i] as! GMSMarker).map = self.viewForMap
                 }
                 
-//                if(searchResult.artifactImg != nil) {
-//                    let artImg = UIImage(data: searchResult.artifactImg!)
-//                    if((fromTourString == fromTour.scienceTour) && (selectedScienceTour! == (self.levelTwoPositionArray[i] as! String))) {
-//                        (self.levelTwoMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: artImg!, scaledToSize: CGSize(width:54, height: 64))
-//                        selectedMarker = self.levelTwoMarkerArray[i] as! GMSMarker
-//                        selectedMarkerImage = artImg!
-//                    } else {
-//                        (self.levelTwoMarkerArray[i] as! GMSMarker).icon = artImg
-//                    }
-//                } else {
-                if let imageUrl = searchResult.thumbImage{
-                    if(imageUrl != "") {
-                        if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
-                            let image: UIImage = UIImage(data: data)!
-                            if((fromTourString == fromTour.scienceTour) && (selectedScienceTour! == (self.levelTwoPositionArray[i] as! String))) {
-                                (self.levelTwoMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: image, scaledToSize: CGSize(width:54, height: 64))
-                                selectedMarker = self.levelTwoMarkerArray[i] as! GMSMarker
-                                selectedMarkerImage = image
-                            } else {
-                                (self.levelTwoMarkerArray[i] as! GMSMarker).icon = image
-                            }
-                        }
+                if(searchResult.artifactImg != nil) {
+                    let artImg = UIImage(data: searchResult.artifactImg!)
+                    if((fromTourString == fromTour.scienceTour) && (selectedScienceTour! == (self.levelTwoPositionArray[i] as! String))) {
+                        (self.levelTwoMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: artImg!, scaledToSize: CGSize(width:54, height: 64))
+                        selectedMarker = self.levelTwoMarkerArray[i] as! GMSMarker
+                        selectedMarkerImage = artImg!
+                    } else {
+                        (self.levelTwoMarkerArray[i] as! GMSMarker).icon = artImg
                     }
                 }
-              //  }
+                else {
+                if let imageUrl = searchResult.thumbImage{
+                    if(imageUrl != "") {
+                        KingfisherManager.shared.retrieveImage(with: URL(string: imageUrl)!, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+                            (self.levelTwoMarkerArray[i] as! GMSMarker).icon = image
+                            
+                        })
+                    }
+                }
+                }
                     if((self.levelTwoMarkerArray[i] as! GMSMarker).icon == nil) {
                         (self.levelTwoMarkerArray[i] as! GMSMarker).map = nil
                     } else {
@@ -1473,42 +1460,39 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                 (self.levelTwoMarkerArray[i] as! GMSMarker).map = nil
             }
         }
-
+        self.loadingView.stopLoading()
+        self.loadingView.isHidden = true
     }
     
     func showOrHideLevelThreeScienceTour() {
+        self.loadingView.isHidden = false
+        self.loadingView.showLoading()
         for i in 0 ... self.levelThreePositionArray.count-1 {
             if let searchResult = self.floorMapArray.first(where: {$0.artifactPosition! == self.levelThreePositionArray[i] as! String}) {
                 if(self.selectedScienceTourLevel == "3") {
                     (self.levelThreeMarkerArray[i] as! GMSMarker).map = self.viewForMap
                 }
                 
-//                if(searchResult.artifactImg != nil) {
-//                    let artImg = UIImage(data: searchResult.artifactImg!)
-//                    if((fromTourString == fromTour.scienceTour) && (selectedScienceTour! == (self.levelThreePositionArray[i] as! String))) {
-//                        (self.levelThreeMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: artImg!, scaledToSize: CGSize(width:54, height: 64))
-//                        selectedMarker = self.levelThreeMarkerArray[i] as! GMSMarker
-//                        selectedMarkerImage = artImg!
-//                    } else {
-//                        (self.levelThreeMarkerArray[i] as! GMSMarker).icon = artImg
-//                    }
-//                } else {
+                if(searchResult.artifactImg != nil) {
+                    let artImg = UIImage(data: searchResult.artifactImg!)
+                    if((fromTourString == fromTour.scienceTour) && (selectedScienceTour! == (self.levelThreePositionArray[i] as! String))) {
+                        (self.levelThreeMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: artImg!, scaledToSize: CGSize(width:54, height: 64))
+                        selectedMarker = self.levelThreeMarkerArray[i] as! GMSMarker
+                        selectedMarkerImage = artImg!
+                    } else {
+                        (self.levelThreeMarkerArray[i] as! GMSMarker).icon = artImg
+                    }
+                }
+                else {
                 if let imageUrl = searchResult.thumbImage{
                      if(imageUrl != "") {
-                        if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
-                            let image: UIImage = UIImage(data: data)!
-                            if((fromTourString == fromTour.scienceTour) && (selectedScienceTour! == (self.levelThreePositionArray[i] as! String))) {
-                                (self.levelThreeMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: image, scaledToSize: CGSize(width:54, height: 64))
-                                selectedMarker = self.levelThreeMarkerArray[i] as! GMSMarker
-                                selectedMarkerImage = image
-                            } else {
-                                (self.levelThreeMarkerArray[i] as! GMSMarker).icon = image
-                            }
-                        }
+                        KingfisherManager.shared.retrieveImage(with: URL(string: imageUrl)!, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+                            (self.levelThreeMarkerArray[i] as! GMSMarker).icon = image
+                        })
                     }
                     
                 }
-               // }
+                }
                 if((self.levelThreeMarkerArray[i] as! GMSMarker).icon == nil) {
                      (self.levelThreeMarkerArray[i] as! GMSMarker).map = nil
                 } else {
@@ -1519,7 +1503,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             }
         }
         //self.stopLoadingView()
-
+        self.loadingView.stopLoading()
+        self.loadingView.isHidden = true
     }
     
     //MARK: TourGuide DataBase
@@ -1714,11 +1699,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                     
                 }
             }
-            if((loadedLevelThreeMarkerArray.count == 0) && (loadedLevelTwoMarkerArray.count == 0)){
-                DispatchQueue.main.async{
-                    self.fetchTourGuideFromCoredata()
-                }
-            }
+//            if((loadedLevelThreeMarkerArray.count == 0) && (loadedLevelTwoMarkerArray.count == 0)){
+//                DispatchQueue.main.async{
+//                    self.fetchTourGuideFromCoredata()
+//                }
+//            }
         }
     }
     func saveToCoreData(tourGuideDetailDict: TourGuideFloorMap, managedObjContext: NSManagedObjectContext) {
@@ -1886,11 +1871,19 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                         
                         
                     } else if (self.floorMapArray.count == 0) {
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                    
                 } else {
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
                 }
                 
                 
@@ -1941,10 +1934,18 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                             }
                         }
                     } else {
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                 } else {
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
                 }
             }
         } catch let error as NSError {

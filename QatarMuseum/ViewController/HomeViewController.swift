@@ -51,7 +51,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     var loginArray : LoginData?
     var userInfoArray : UserInfoData?
     var userEventList: [NMoQUserEventList]! = []
-
+    var alreadyFetch : Bool? = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -828,6 +828,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     //MARK: Coredata Method
     
     func fetchHomeInfoFromCoredata() {
+        if(alreadyFetch == false) {
         DispatchQueue.main.async {
         let managedContext = getContext()
 
@@ -844,11 +845,20 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                                              at: i)
                 }
                 if(self.homeList.count == 0){
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
                 }
                 self.homeCollectionView.reloadData()
+                self.alreadyFetch = true
             } else{
-                self.showNoNetwork()
+                if(self.networkReachability?.isReachable == false) {
+                    self.showNoNetwork()
+                } else {
+                    self.loadingView.showNoDataView()
+                }
             }
         } else {
                 var homeArray = [HomeEntityArabic]()
@@ -861,11 +871,20 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                                              at: i)
                     }
                     if(self.homeList.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
+                    self.alreadyFetch = true
                     self.homeCollectionView.reloadData()
                 } else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
                 }
             }
         } catch let error as NSError {
@@ -877,6 +896,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 self.getHomeList()
             }
         }
+    }
     }
     //MARK: EventRegistrationCoreData
     func saveOrUpdateEventReistratedCoredata() {

@@ -5,14 +5,14 @@
 //  Created by Exalture on 06/06/18.
 //  Copyright © 2018 Exalture. All rights reserved.
 //
-
+import Alamofire
 import CoreData
 import Firebase
 import GoogleMaps
 import GooglePlaces
+import Kingfisher
 import UIKit
 import UserNotifications
-import Alamofire
 var tokenValue : String? = nil
 
 var languageKey = 1
@@ -528,9 +528,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(lang!,["tour_guide_id": tourGuideId!])).responseObject(queue: queue) { (response: DataResponse<TourGuideFloorMaps>) -> Void in
             switch response.result {
             case .success(let data):
-                DispatchQueue.main.async{
+               // DispatchQueue.main.async{
                 self.saveOrUpdateFloormapCoredata(tourGuideId: tourGuideId, floorMapArray: data.tourGuideFloorMap, lang: lang)
-                }
+                //}
             case .failure( _):
                 print("error")
                 
@@ -559,6 +559,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
     func floormapCoreDataInBackgroundThread(tourGuideId: String?,managedContext: NSManagedObjectContext,floorMapArray: [TourGuideFloorMap]?,lang: String?) {
+
         let tourIdDict = ["id":tourGuideId]
         if ((floorMapArray?.count)! > 0) {
             if (lang == ENG_LANGUAGE) {
@@ -600,14 +601,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                             tourguidedbDict.periodOrStyle = tourGuideDeatilDict.periodOrStyle
                             tourguidedbDict.techniqueAndMaterials = tourGuideDeatilDict.techniqueAndMaterials
                             tourguidedbDict.thumbImage = tourGuideDeatilDict.thumbImage
-//                            if let imageUrl = tourGuideDeatilDict.thumbImage{
-//                                if(imageUrl != "") {
-//                                    if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
-//                                        let image: UIImage = UIImage(data: data)!
-//                                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
-//                                    }
-//                                }
-//                            }
+                            KingfisherManager.shared.retrieveImage(with: URL(string: tourGuideDeatilDict.thumbImage!)!, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+                                tourguidedbDict.artifactImg = UIImagePNGRepresentation(image!)
+                            })
                             if(tourGuideDeatilDict.images != nil) {
                                 if((tourGuideDeatilDict.images?.count)! > 0) {
                                     for i in 0 ... (tourGuideDeatilDict.images?.count)!-1 {
@@ -685,14 +681,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                             tourguidedbDict.periodOrStyle = tourGuideDeatilDict.periodOrStyle
                             tourguidedbDict.techniqueAndMaterials = tourGuideDeatilDict.techniqueAndMaterials
                             tourguidedbDict.thumbImage = tourGuideDeatilDict.thumbImage
-//                            if let imageUrl = tourGuideDeatilDict.thumbImage{
-//                                if(imageUrl != "") {
-//                                    if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
-//                                        let image: UIImage = UIImage(data: data)!
-//                                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
-//                                    }
-//                                }
-//                            }
+                            KingfisherManager.shared.retrieveImage(with: URL(string: tourGuideDeatilDict.thumbImage!)!, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+                                tourguidedbDict.artifactImg = UIImagePNGRepresentation(image!)
+                            })
                             if(tourGuideDeatilDict.images != nil) {
                                 if((tourGuideDeatilDict.images?.count)! > 0) {
                                     for i in 0 ... (tourGuideDeatilDict.images?.count)!-1 {
@@ -736,6 +727,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
     func saveFloormapToCoreData(tourGuideDetailDict: TourGuideFloorMap, managedObjContext: NSManagedObjectContext,lang: String?) {
+
         if (lang == ENG_LANGUAGE) {
             let tourguidedbDict: FloorMapTourGuideEntity = NSEntityDescription.insertNewObject(forEntityName: "FloorMapTourGuideEntity", into: managedObjContext) as! FloorMapTourGuideEntity
             tourguidedbDict.title = tourGuideDetailDict.title
@@ -764,7 +756,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             tourguidedbDict.periodOrStyle = tourGuideDetailDict.periodOrStyle
             tourguidedbDict.techniqueAndMaterials = tourGuideDetailDict.techniqueAndMaterials
             tourguidedbDict.thumbImage = tourGuideDetailDict.thumbImage
-
+            KingfisherManager.shared.retrieveImage(with: URL(string: tourGuideDetailDict.thumbImage!)!, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+                tourguidedbDict.artifactImg = UIImagePNGRepresentation(image!)
+            })
             if(tourGuideDetailDict.images != nil) {
                 if((tourGuideDetailDict.images?.count)! > 0) {
                     for i in 0 ... (tourGuideDetailDict.images?.count)!-1 {
@@ -813,17 +807,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             tourguidedbDict.periodOrStyle = tourGuideDetailDict.periodOrStyle
             tourguidedbDict.techniqueAndMaterials = tourGuideDetailDict.techniqueAndMaterials
             tourguidedbDict.thumbImage = tourGuideDetailDict.thumbImage
-            //tourguidedbDict.thumbImage = tourGuideDetailDict.thumbImage
-//            if let imageUrl = tourGuideDetailDict.thumbImage{
-//                if(imageUrl != "") {
-//                    if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
-//                        let image: UIImage = UIImage(data: data)!
-//                        //DispatchQueue.main.async {
-//                            tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
-//                        //}
-//                    }
-//                }
-//            }
+            KingfisherManager.shared.retrieveImage(with: URL(string: tourGuideDetailDict.thumbImage!)!, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+                tourguidedbDict.artifactImg = UIImagePNGRepresentation(image!)
+            })
             if(tourGuideDetailDict.images != nil) {
                 if((tourGuideDetailDict.images?.count)! > 0) {
                     for i in 0 ... (tourGuideDetailDict.images?.count)!-1 {
