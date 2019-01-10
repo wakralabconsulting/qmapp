@@ -64,6 +64,8 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        loadingView.stopLoading()
+        loadingView.isHidden = true
         let cell : HomeCollectionViewCell = miaTourCollectionView.dequeueReusableCell(withReuseIdentifier: "homeCellId", for: indexPath) as! HomeCollectionViewCell
         cell.setScienceTourGuideCellData(homeCellData: miaTourDataFullArray[indexPath.row])
         return cell
@@ -340,8 +342,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     }
     
     func fetchTourGuideListFromCoredata() {
-        self.loadingView.stopLoading()
-        self.loadingView.isHidden = true
+
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
@@ -359,13 +360,24 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
                         }
                         self.miaTourDataFullArray.insert(TourGuide(title: tourGuideArray[i].title, tourGuideDescription: tourGuideArray[i].tourGuideDescription, multimediaFile: multimediaArray, museumsEntity: tourGuideArray[i].museumsEntity, nid: tourGuideArray[i].nid), at: i)
                     }
-                    if(miaTourDataFullArray.count == 0){
-                        self.showNoNetwork()
+                    DispatchQueue.main.async {
+                        self.miaTourCollectionView.reloadData()
                     }
-                    miaTourCollectionView.reloadData()
+                    if(miaTourDataFullArray.count == 0){
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
+                    }
+                    
                 }
                 else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
                 }
             }
             else {
@@ -384,12 +396,20 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
                         
                     }
                     if(miaTourDataFullArray.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                     miaTourCollectionView.reloadData()
                 }
                 else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
                 }
             }
         } catch let error as NSError {

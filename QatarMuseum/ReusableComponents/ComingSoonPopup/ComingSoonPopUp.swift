@@ -110,6 +110,14 @@ class ComingSoonPopUp: UIView {
         let buttonTitle = NSLocalizedString("CLOSEBUTTON_TITLE", comment: "CLOSEBUTTON_TITLE Label in the Popup")
         closeButton.setTitle(buttonTitle, for: .normal)
     }
+    func loadNoEndTimePopupMessage() {
+        titleLabel.isHidden = true
+        messageLabel.font = UIFont.collectionFirstDescriptionFont
+        messageLabel.text = NO_END_TIME
+        stayTunedLabel.isHidden = true
+        let buttonTitle = OK_MSG
+        closeButton.setTitle(buttonTitle, for: .normal)
+    }
     
     @IBAction func closeButtonTouchDown(_ sender: UIButton) {
         

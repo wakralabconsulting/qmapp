@@ -15,7 +15,10 @@ class LocalizationLanguage {
         let langArray = userdef.object(forKey: APPLE_LANGUAGE_KEY) as! NSArray
         let current = langArray.firstObject as! String
         let endIndex = current.startIndex
-        let currentWithoutLocale = current.substring(to: current.index(endIndex, offsetBy: 2))
+        var currentWithoutLocale = current.substring(to: current.index(endIndex, offsetBy: 2))
+        if ((currentWithoutLocale != "en") && (currentWithoutLocale != "ar")){
+            currentWithoutLocale = "en"
+        }
         return currentWithoutLocale
     }
     

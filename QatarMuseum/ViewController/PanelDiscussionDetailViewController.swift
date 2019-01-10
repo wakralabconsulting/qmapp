@@ -178,19 +178,24 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         } else {
             selectedCell?.interestSwitch.tintColor = UIColor.settingsSwitchOnTint
             selectedCell?.interestSwitch.backgroundColor = UIColor.settingsSwitchOnTint
-            if(userEventList.count == 0) {
-                self.getEntityRegistrationFromServer(currentRow: currentRow, selectedCell: selectedCell)
-            } else {
-                
-                let haveConflict = checkConflictWithAlreadyRegisteredEvent(currentRow: currentRow)
-                if((haveConflict == false) || (haveConflict == nil)) {
+            let time = nmoqTourDetail[currentRow].date?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+            let timeArray = time?.components(separatedBy: "-")
+            if((timeArray?.count)! != 3) {
+                self.loadNoEndTimePopup()
+            }else {
+                if(userEventList.count == 0) {
                     self.getEntityRegistrationFromServer(currentRow: currentRow, selectedCell: selectedCell)
                 } else {
-                    loadAlreadyRegisteredPopup()
-                    //setRegistrationSwitchOff(selectedCell: selectedCell)
+                    
+                    let haveConflict = checkConflictWithAlreadyRegisteredEvent(currentRow: currentRow)
+                    if((haveConflict == false) || (haveConflict == nil)) {
+                        self.getEntityRegistrationFromServer(currentRow: currentRow, selectedCell: selectedCell)
+                    } else {
+                        loadAlreadyRegisteredPopup()
+                        //setRegistrationSwitchOff(selectedCell: selectedCell)
+                    }
                 }
             }
-            
             
 
         }
@@ -745,8 +750,15 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         popupView.loadAlreadyRegisteredPopupMessage()
         self.view.addSubview(popupView)
     }
+    func loadNoEndTimePopup() {
+        popupView  = ComingSoonPopUp(frame: self.view.frame)
+        popupView.comingSoonPopupDelegate = self
+        popupView.tag = 2
+        popupView.loadNoEndTimePopupMessage()
+        self.view.addSubview(popupView)
+    }
     func closeButtonPressed() {
-        if (popupView.tag == 1) {
+        if ((popupView.tag == 1) || (popupView.tag == 2))  {
             self.popupView.removeFromSuperview()
             setRegistrationSwitchOff(selectedCell: selectedPanelCell)
         }

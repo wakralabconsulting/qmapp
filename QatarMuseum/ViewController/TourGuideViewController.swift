@@ -307,7 +307,11 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                                              at: i)
                     }
                     if(museumsList.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     } else {
                         //Removed Exhibition from Tour List
                         if let arrayOffset = self.museumsList.index(where: {$0.id == searchstring}) {
@@ -317,7 +321,11 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                     tourCollectionView.reloadData()
                 }
                 else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
                 }
             }
             else {
@@ -331,7 +339,11 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                                              at: i)
                     }
                     if(museumsList.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     } else {
                         //Removed Exhibition from Tour List
                         if let arrayOffset = self.museumsList.index(where: {$0.id == searchstring}) {
@@ -341,7 +353,11 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                     tourCollectionView.reloadData()
                 }
                 else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
                 }
             }
         } catch let error as NSError {
