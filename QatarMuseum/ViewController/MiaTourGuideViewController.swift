@@ -37,7 +37,9 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
                 self.getTourGuideDataFromServer()
             }
         }
+        DispatchQueue.main.async {
         self.fetchTourGuideListFromCoredata()
+        }
         topbarView.headerViewDelegate = self
         topbarView.headerTitle.isHidden = true
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -421,9 +423,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
         let data = notification.userInfo as? [String:String]
         if (data?.count)!>0 {
             if(museumId == data!["id"]) {
-                DispatchQueue.main.async{
                     self.fetchTourGuideListFromCoredata()
-                }
             }
         }
         

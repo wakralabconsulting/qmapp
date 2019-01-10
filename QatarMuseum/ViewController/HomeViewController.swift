@@ -825,14 +825,17 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    //MARK: Coredata Method
     
     func fetchHomeInfoFromCoredata() {
+        DispatchQueue.main.async {
         let managedContext = getContext()
+
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var homeArray = [HomeEntity]()
                 let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntity")
-            homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntity])!
+                homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntity])!
             if (homeArray.count > 0) {
                 for i in 0 ... homeArray.count-1 {
                     
@@ -840,10 +843,10 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                                                   tourguide_available: homeArray[i].tourguideavailable, sort_id: homeArray[i].sortid),
                                              at: i)
                 }
-                if(homeList.count == 0){
+                if(self.homeList.count == 0){
                     self.showNoNetwork()
                 }
-                homeCollectionView.reloadData()
+                self.homeCollectionView.reloadData()
             } else{
                 self.showNoNetwork()
             }
@@ -857,16 +860,17 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                                                   tourguide_available: homeArray[i].arabictourguideavailable, sort_id: homeArray[i].arabicsortid),
                                              at: i)
                     }
-                    if(homeList.count == 0){
+                    if(self.homeList.count == 0){
                         self.showNoNetwork()
                     }
-                    homeCollectionView.reloadData()
+                    self.homeCollectionView.reloadData()
                 } else{
                     self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
+        }
         }
         if (networkReachability?.isReachable)! {
             DispatchQueue.global(qos: .background).async {
@@ -993,10 +997,10 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                         self.homeBannerList.insert(HomeBanner(title: homeArray[i].title, fullContentID: homeArray[i].fullContentID, bannerTitle: homeArray[i].bannerTitle, bannerLink: homeArray[i].bannerLink,image: imagesArray, introductionText: nil, email: nil, contactNumber: nil, promotionalCode: nil, claimOffer: nil), at: i)
                         
                     }
-                    if(homeList.count == 0){
+                    if(self.homeList.count == 0){
                         self.showNoNetwork()
                     }
-                    homeCollectionView.reloadData()
+                    self.homeCollectionView.reloadData()
                 } else{
                     self.showNoNetwork()
                 }
@@ -1004,6 +1008,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
+        
     }
     func deleteExistingEvent(managedContext:NSManagedObjectContext,entityName : String?) ->Bool? {
         

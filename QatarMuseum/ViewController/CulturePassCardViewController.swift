@@ -23,25 +23,26 @@ class CulturePassCardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI ()
-        
+        barcodeView.isHidden = true
+        membershipLabel.isHidden = true
     }
     func setUI() {
         tapToFlipButton.setTitle(NSLocalizedString("TAP_TO_FLIP", comment: "TAP_TO_FLIP"), for: .normal)
         tapToFlipButton.titleLabel?.font = UIFont.tryAgainFont
-        membershipLabel.text = NSLocalizedString("MEMBERSHIP_NUMBER", comment: "MEMBERSHIP_NUMBER in the CulturePassCard page") + " " + membershipNumber!
-        membershipLabel.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
-        membershipLabel.font = UIFont.settingsUpdateLabelFont
-        let image = generateBarcode(from: membershipNumber!)
-        
-        barcodeImage.image = image
-        barcodeView.layer.cornerRadius = 9
-        barcodeView.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            numberTrailing.constant = -90
-        } else {
-            numberTrailing.constant = 50
-        }
-        tapToFlipButton.layer.cornerRadius = 25
+        //membershipLabel.text = NSLocalizedString("MEMBERSHIP_NUMBER", comment: "MEMBERSHIP_NUMBER in the CulturePassCard page") + " " + membershipNumber!
+        //membershipLabel.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
+        //membershipLabel.font = UIFont.settingsUpdateLabelFont
+//        let image = generateBarcode(from: membershipNumber!)
+//
+//        barcodeImage.image = image
+//        barcodeView.layer.cornerRadius = 9
+//        barcodeView.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
+//        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+//            numberTrailing.constant = -90
+//        } else {
+//            numberTrailing.constant = 50
+//        }
+//        tapToFlipButton.layer.cornerRadius = 25
     }
     func generateBarcode(from string: String) -> UIImage? {
         let data = string.data(using: String.Encoding.ascii)

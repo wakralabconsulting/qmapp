@@ -34,9 +34,9 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
             }
         } else {
             if(fromHome == true) {
-                fetchDiningListFromCoredata()
+                    self.fetchDiningListFromCoredata()
             } else {
-                fetchMuseumDiningListFromCoredata()
+                self.fetchMuseumDiningListFromCoredata()
             }
         }
         registerNib()

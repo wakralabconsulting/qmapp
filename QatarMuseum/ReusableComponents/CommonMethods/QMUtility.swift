@@ -133,12 +133,14 @@ func changeDateFormat(dateString: String?) -> String? {
     }
     return nil
 }
-
+let appDelegate =  UIApplication.shared.delegate as? AppDelegate
 func getContext() -> NSManagedObjectContext {
-    let appDelegate =  UIApplication.shared.delegate as? AppDelegate
-    if #available(iOS 10.0, *) {
-        return appDelegate!.persistentContainer.viewContext
-    } else {
-        return appDelegate!.managedObjectContext
-    }
+        if #available(iOS 10.0, *) {
+            return (appDelegate?.persistentContainer.viewContext)!
+           
+        } else {
+            return appDelegate!.managedObjectContext
+        }
 }
+    
+

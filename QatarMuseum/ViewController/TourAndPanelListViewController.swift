@@ -91,11 +91,12 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (pageNameString == NMoQPageName.Tours) {
-            loadTourViewPage(selectedRow: indexPath.row)
-        } else if (pageNameString == NMoQPageName.PanelDiscussion) {
-            loadPanelDiscussionDetailPage(selectedRow: indexPath.row)
-        }
+        //if (pageNameString == NMoQPageName.Tours) {
+          //  loadTourViewPage(selectedRow: indexPath.row)
+//        } else if (pageNameString == NMoQPageName.PanelDiscussion) {
+//            loadPanelDiscussionDetailPage(selectedRow: indexPath.row)
+//        }
+        loadTourViewPage(selectedRow: indexPath.row)
     }
     
     func loadTourViewPage(selectedRow: Int?) {
