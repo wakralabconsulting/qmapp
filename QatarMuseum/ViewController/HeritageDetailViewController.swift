@@ -59,6 +59,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 //saveOrUpdateAboutCoredata()
             } else {
                 self.fetchAboutDetailsFromCoredata()
+                
             }
         }
         recordScreenView()

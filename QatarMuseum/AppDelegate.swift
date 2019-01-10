@@ -538,17 +538,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
     //MARK: FloorMap Coredata Method
+
     func saveOrUpdateFloormapCoredata(tourGuideId: String?,floorMapArray: [TourGuideFloorMap]?,lang: String?) {
         if ((floorMapArray?.count)! > 0) {
             if #available(iOS 10.0, *) {
-                let container = self.persistentContainer
-                container.performBackgroundTask() {(managedContext) in
-                    self.floormapCoreDataInBackgroundThread(tourGuideId: tourGuideId, managedContext: managedContext, floorMapArray: floorMapArray, lang: lang)
-                }
+                let context = self.persistentContainer.viewContext
+                let privateManagedObjectContext: NSManagedObjectContext = {
+                    let moc = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+                    moc.parent = context
+
+                    return moc
+                }()
+                self.floormapCoreDataInBackgroundThread(tourGuideId: tourGuideId, managedContext: privateManagedObjectContext, floorMapArray: floorMapArray, lang: lang)
             } else {
                 let managedContext = self.managedObjectContext
                 managedContext.perform {
-                    self.floormapCoreDataInBackgroundThread(tourGuideId: tourGuideId, managedContext : managedContext, floorMapArray: floorMapArray, lang: lang)
+                self.floormapCoreDataInBackgroundThread(tourGuideId: tourGuideId, managedContext : managedContext, floorMapArray: floorMapArray, lang: lang)
                 }
             }
         }
@@ -595,7 +600,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                             tourguidedbDict.periodOrStyle = tourGuideDeatilDict.periodOrStyle
                             tourguidedbDict.techniqueAndMaterials = tourGuideDeatilDict.techniqueAndMaterials
                             tourguidedbDict.thumbImage = tourGuideDeatilDict.thumbImage
-
+//                            if let imageUrl = tourGuideDeatilDict.thumbImage{
+//                                if(imageUrl != "") {
+//                                    if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
+//                                        let image: UIImage = UIImage(data: data)!
+//                                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
+//                                    }
+//                                }
+//                            }
                             if(tourGuideDeatilDict.images != nil) {
                                 if((tourGuideDeatilDict.images?.count)! > 0) {
                                     for i in 0 ... (tourGuideDeatilDict.images?.count)!-1 {
@@ -605,14 +617,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                                         
                                         tourGuideImgEntity = tourGuideImg
                                         tourguidedbDict.addToImagesRelation(tourGuideImgEntity)
-                                       // DispatchQueue.main.async(execute: {
                                             do {
                                                 try managedContext.save()
                                                 
                                             } catch let error as NSError {
                                                 print("Could not save. \(error), \(error.userInfo)")
                                             }
-                                       // })
                                     }
                                 }
                             }
@@ -633,7 +643,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }//if
                 else {
                     for i in 0 ... (floorMapArray?.count)!-1 {
-                        //let managedContext = getContext()
                         let tourGuideDetailDict : TourGuideFloorMap?
                         tourGuideDetailDict = floorMapArray?[i]
                         self.saveFloormapToCoreData(tourGuideDetailDict: tourGuideDetailDict!, managedObjContext: managedContext, lang: lang)
@@ -645,7 +654,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 let fetchData = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey:"tourGuideId" , idValue: tourGuideId, managedContext: managedContext) as! [FloorMapTourGuideEntityAr]
                 if (fetchData.count > 0) {
                     for i in 0 ... (floorMapArray?.count)!-1 {
-                        //let managedContext = getContext()
                         let tourGuideDeatilDict = floorMapArray![i]
                         let fetchResult = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey: "nid", idValue: floorMapArray![i].nid, managedContext: managedContext) as! [FloorMapTourGuideEntityAr]
                         //update
@@ -677,6 +685,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                             tourguidedbDict.periodOrStyle = tourGuideDeatilDict.periodOrStyle
                             tourguidedbDict.techniqueAndMaterials = tourGuideDeatilDict.techniqueAndMaterials
                             tourguidedbDict.thumbImage = tourGuideDeatilDict.thumbImage
+//                            if let imageUrl = tourGuideDeatilDict.thumbImage{
+//                                if(imageUrl != "") {
+//                                    if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
+//                                        let image: UIImage = UIImage(data: data)!
+//                                        tourguidedbDict.artifactImg = UIImagePNGRepresentation(image)
+//                                    }
+//                                }
+//                            }
                             if(tourGuideDeatilDict.images != nil) {
                                 if((tourGuideDeatilDict.images?.count)! > 0) {
                                     for i in 0 ... (tourGuideDeatilDict.images?.count)!-1 {
@@ -686,26 +702,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                                         
                                         tourGuideImgEntity = tourGuideImg
                                         tourguidedbDict.addToImagesRelation(tourGuideImgEntity)
-                                        //DispatchQueue.main.async(execute: {
                                             do {
                                                 try managedContext.save()
                                                 
                                             } catch let error as NSError {
                                                 print("Could not save. \(error), \(error.userInfo)")
                                             }
-                                       // })
                                         
                                     }
                                 }
                             }
-                           // DispatchQueue.main.async(execute: {
                                 do{
                                     try managedContext.save()
                                 }
                                 catch{
                                     print(error)
                                 }
-                           // })
                         } else {
                             self.saveFloormapToCoreData(tourGuideDetailDict: tourGuideDeatilDict, managedObjContext: managedContext, lang: lang)
                         }
@@ -714,7 +726,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 } //if
                 else {
                     for i in 0 ... (floorMapArray?.count)!-1 {
-                        //let managedContext = getContext()
                         let tourGuideDetailDict : TourGuideFloorMap?
                         tourGuideDetailDict = floorMapArray?[i]
                         self.saveFloormapToCoreData(tourGuideDetailDict: tourGuideDetailDict!, managedObjContext: managedContext, lang: lang)
@@ -763,14 +774,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         
                         tourGuideImgEntity = tourGuideImg
                         tourguidedbDict.addToImagesRelation(tourGuideImgEntity)
-                       // DispatchQueue.main.async(execute: {
                             do {
                                 try managedObjContext.save()
                                 
                             } catch let error as NSError {
                                 print("Could not save. \(error), \(error.userInfo)")
                             }
-                       // })
                     }
                 }
             }
@@ -836,13 +845,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
             }
         }
-        //DispatchQueue.main.async(execute: {
         do {
                 try managedObjContext.save()
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
-       // })
     }
     //MARK: Exhibitions Service call
     func getExhibitionDataFromServer() {

@@ -975,8 +975,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var educationArray = [EducationEventEntity]()
-                let dateID = getUniqueDate()
-                educationArray = checkAddedToCoredata(entityName: "EducationEventEntity", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EducationEventEntity]
+                let dateID = self.getUniqueDate()
+                educationArray = self.checkAddedToCoredata(entityName: "EducationEventEntity", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EducationEventEntity]
                 if (educationArray.count > 0) {
                     for i in 0 ... educationArray.count-1 {
                         var dateArray : [String] = []
@@ -1009,7 +1009,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                         
                         self.educationEventArray.insert(EducationEvent(itemId: educationArray[i].itemId, introductionText: educationArray[i].introductionText, register: educationArray[i].register, fieldRepeatDate: dateArray, title: educationArray[i].title, programType: educationArray[i].pgmType, mainDescription: educationArray[i].mainDesc, ageGroup: ageGrpArray, associatedTopics: topicsArray, museumDepartMent: educationArray[i].museumDepartMent, startDate: startDateArray, endDate: endDateArray), at: i)
                     }
-                    if(educationEventArray.count == 0){
+                    if(self.educationEventArray.count == 0){
                         self.showNoNetwork()
                     }
                         self.eventCollectionView.reloadData()
@@ -1018,8 +1018,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 }
             } else {
                 var educationArray = [EducationEventEntityAr]()
-                let dateID = getUniqueDate()
-                educationArray = checkAddedToCoredata(entityName: "EducationEventEntityAr", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EducationEventEntityAr]
+                let dateID = self.getUniqueDate()
+                educationArray = self.checkAddedToCoredata(entityName: "EducationEventEntityAr", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EducationEventEntityAr]
                 if (educationArray.count > 0) {
                     for i in 0 ... educationArray.count-1 {
                         var dateArray : [String] = []

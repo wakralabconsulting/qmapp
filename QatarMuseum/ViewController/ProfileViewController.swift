@@ -77,6 +77,16 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
             headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         } else {
             headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+            membershipNumKeyLabel.textAlignment = .right
+            emailKeyLabel.textAlignment = .right
+            dateOfBirthKeyLabel.textAlignment = .right
+            countryKeyLabel.textAlignment = .right
+            nationalityKeyLabel.textAlignment = .right
+            membershipNumText.textAlignment = .left
+            emailText.textAlignment = .left
+            dateOfBirthText.textAlignment = .left
+            countryText.textAlignment = .left
+            nationalityText.textAlignment = .left
         }
         headerView.settingsButton.isHidden = false
         headerView.settingsButton.setImage(UIImage(named: "logoutX1"), for: .normal)

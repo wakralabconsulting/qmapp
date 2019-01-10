@@ -40,7 +40,6 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
             }
         }
         self.fetchMuseumsInfoFromCoredata()
-       
         topbarView.headerViewDelegate = self
         topbarView.headerTitle.isHidden = true
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {

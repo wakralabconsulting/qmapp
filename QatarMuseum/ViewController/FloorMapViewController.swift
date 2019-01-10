@@ -24,7 +24,6 @@ enum fromTour{
     case scienceTour
     case HighlightTour
 }
-//fetchTourGuideFromCoredata
 
 class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewProtocol,UIGestureRecognizerDelegate,MapDetailProtocol,LoadingViewProtocol {
     
@@ -380,7 +379,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                 tourGuideId = "12916"
             }
         }
-            fetchTourGuideFromCoredata()
+        DispatchQueue.main.async {
+            self.fetchTourGuideFromCoredata()
+        }
         NotificationCenter.default.addObserver(self, selector: #selector(FloorMapViewController.receiveFloormapNotification(notification:)), name: NSNotification.Name(floormapNotification), object: nil)
     }
     
@@ -1341,17 +1342,17 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                     
                 }
                 
-                if(searchResult.artifactImg != nil) {
-                    let artImg = UIImage(data: searchResult.artifactImg!)
-                    if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour! == (self.levelTwoPositionArray[i] as! String))) {
-                        (self.levelTwoMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: artImg!, scaledToSize: CGSize(width:54, height: 64))
-                        selectedMarker = self.levelTwoMarkerArray[i] as! GMSMarker
-                        selectedMarkerImage = artImg!
-                    } else {
-                        (self.levelTwoMarkerArray[i] as! GMSMarker).icon = artImg
-                    }
-                    
-                } else {
+//                if(searchResult.artifactImg != nil) {
+//                    let artImg = UIImage(data: searchResult.artifactImg!)
+//                    if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour! == (self.levelTwoPositionArray[i] as! String))) {
+//                        (self.levelTwoMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: artImg!, scaledToSize: CGSize(width:54, height: 64))
+//                        selectedMarker = self.levelTwoMarkerArray[i] as! GMSMarker
+//                        selectedMarkerImage = artImg!
+//                    } else {
+//                        (self.levelTwoMarkerArray[i] as! GMSMarker).icon = artImg
+//                    }
+//
+//                } else {
                 if let imageUrl = searchResult.thumbImage{
                     if(imageUrl != "") {
                         if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
@@ -1366,23 +1367,16 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                         }
                     }
                 }
-            }
+            //}
                 if((self.levelTwoMarkerArray[i] as! GMSMarker).icon == nil) {
                     (self.levelTwoMarkerArray[i] as! GMSMarker).map = nil
                 } else {
                     self.loadedLevelTwoMarkerArray.add(self.levelTwoMarkerArray[i])
                 }
-                
-
             } else {
                 (self.levelTwoMarkerArray[i] as! GMSMarker).map = nil
             }
-            
-            
         }
-//        if (self.fromTourString == fromTour.exploreTour) {
-//            self.stopLoadingView(delayInSeconds: 0.4)
-//        }
     }
     func showOrHideLevelThreeHighlightTour() {
         for i in 0 ... self.levelThreePositionArray.count-1 {
@@ -1391,16 +1385,16 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                     (self.levelThreeMarkerArray[i] as! GMSMarker).map = self.viewForMap
             }
                 
-                if(searchResult.artifactImg != nil) {
-                    let artImg = UIImage(data: searchResult.artifactImg!)
-                    if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour! == (self.levelThreePositionArray[i] as! String))) {
-                        (self.levelThreeMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: artImg!, scaledToSize: CGSize(width:54, height: 64))
-                        selectedMarker = self.levelThreeMarkerArray[i] as! GMSMarker
-                        selectedMarkerImage = artImg!
-                    } else {
-                        (self.levelThreeMarkerArray[i] as! GMSMarker).icon = artImg
-                    }
-                } else {
+//                if(searchResult.artifactImg != nil) {
+//                    let artImg = UIImage(data: searchResult.artifactImg!)
+//                    if((fromTourString == fromTour.HighlightTour) && (selectedScienceTour! == (self.levelThreePositionArray[i] as! String))) {
+//                        (self.levelThreeMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: artImg!, scaledToSize: CGSize(width:54, height: 64))
+//                        selectedMarker = self.levelThreeMarkerArray[i] as! GMSMarker
+//                        selectedMarkerImage = artImg!
+//                    } else {
+//                        (self.levelThreeMarkerArray[i] as! GMSMarker).icon = artImg
+//                    }
+//                } else {
                 if let imageUrl = searchResult.thumbImage{
                     if(imageUrl != "") {
                         if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
@@ -1415,7 +1409,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                         }
                     }
                 }
-                }
+              //  }
                 if((self.levelThreeMarkerArray[i] as! GMSMarker).icon == nil) {
                     (self.levelThreeMarkerArray[i] as! GMSMarker).map = nil
                 } else {
@@ -1441,16 +1435,16 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                     (self.levelTwoMarkerArray[i] as! GMSMarker).map = self.viewForMap
                 }
                 
-                if(searchResult.artifactImg != nil) {
-                    let artImg = UIImage(data: searchResult.artifactImg!)
-                    if((fromTourString == fromTour.scienceTour) && (selectedScienceTour! == (self.levelTwoPositionArray[i] as! String))) {
-                        (self.levelTwoMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: artImg!, scaledToSize: CGSize(width:54, height: 64))
-                        selectedMarker = self.levelTwoMarkerArray[i] as! GMSMarker
-                        selectedMarkerImage = artImg!
-                    } else {
-                        (self.levelTwoMarkerArray[i] as! GMSMarker).icon = artImg
-                    }
-                } else {
+//                if(searchResult.artifactImg != nil) {
+//                    let artImg = UIImage(data: searchResult.artifactImg!)
+//                    if((fromTourString == fromTour.scienceTour) && (selectedScienceTour! == (self.levelTwoPositionArray[i] as! String))) {
+//                        (self.levelTwoMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: artImg!, scaledToSize: CGSize(width:54, height: 64))
+//                        selectedMarker = self.levelTwoMarkerArray[i] as! GMSMarker
+//                        selectedMarkerImage = artImg!
+//                    } else {
+//                        (self.levelTwoMarkerArray[i] as! GMSMarker).icon = artImg
+//                    }
+//                } else {
                 if let imageUrl = searchResult.thumbImage{
                     if(imageUrl != "") {
                         if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
@@ -1465,7 +1459,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                         }
                     }
                 }
-                }
+              //  }
                     if((self.levelTwoMarkerArray[i] as! GMSMarker).icon == nil) {
                         (self.levelTwoMarkerArray[i] as! GMSMarker).map = nil
                     } else {
@@ -1489,16 +1483,16 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                     (self.levelThreeMarkerArray[i] as! GMSMarker).map = self.viewForMap
                 }
                 
-                if(searchResult.artifactImg != nil) {
-                    let artImg = UIImage(data: searchResult.artifactImg!)
-                    if((fromTourString == fromTour.scienceTour) && (selectedScienceTour! == (self.levelThreePositionArray[i] as! String))) {
-                        (self.levelThreeMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: artImg!, scaledToSize: CGSize(width:54, height: 64))
-                        selectedMarker = self.levelThreeMarkerArray[i] as! GMSMarker
-                        selectedMarkerImage = artImg!
-                    } else {
-                        (self.levelThreeMarkerArray[i] as! GMSMarker).icon = artImg
-                    }
-                } else {
+//                if(searchResult.artifactImg != nil) {
+//                    let artImg = UIImage(data: searchResult.artifactImg!)
+//                    if((fromTourString == fromTour.scienceTour) && (selectedScienceTour! == (self.levelThreePositionArray[i] as! String))) {
+//                        (self.levelThreeMarkerArray[i] as! GMSMarker).icon = self.imageWithImage(image: artImg!, scaledToSize: CGSize(width:54, height: 64))
+//                        selectedMarker = self.levelThreeMarkerArray[i] as! GMSMarker
+//                        selectedMarkerImage = artImg!
+//                    } else {
+//                        (self.levelThreeMarkerArray[i] as! GMSMarker).icon = artImg
+//                    }
+//                } else {
                 if let imageUrl = searchResult.thumbImage{
                      if(imageUrl != "") {
                         if let data = try? Data(contentsOf: URL(string: imageUrl)!) {
@@ -1514,7 +1508,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                     }
                     
                 }
-                }
+               // }
                 if((self.levelThreeMarkerArray[i] as! GMSMarker).icon == nil) {
                      (self.levelThreeMarkerArray[i] as! GMSMarker).map = nil
                 } else {
@@ -1548,13 +1542,13 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
     func floormapCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,floorMapArray: [TourGuideFloorMap]?) {
         if ((floorMapArray?.count)! > 0) {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-                let fetchData = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "tourGuideId" , idValue: tourGuideId ) as! [FloorMapTourGuideEntity]
+                let fetchData = checkAddedToCoredata(managedContext: managedContext, entityName: "FloorMapTourGuideEntity", idKey: "tourGuideId" , idValue: tourGuideId ) as! [FloorMapTourGuideEntity]
                 
                 if (fetchData.count > 0) {
                     for i in 0 ... (floorMapArray?.count)!-1 {
-                        let managedContext = getContext()
+                       // let managedContext = getContext()
                         let tourGuideDeatilDict = floorMapArray![i]
-                        let fetchResult = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "nid", idValue: floorMapArray![i].nid) as! [FloorMapTourGuideEntity]
+                        let fetchResult = checkAddedToCoredata(managedContext: managedContext, entityName: "FloorMapTourGuideEntity", idKey: "nid", idValue: floorMapArray![i].nid) as! [FloorMapTourGuideEntity]
                         
                         if(fetchResult.count != 0) {
                             
@@ -1628,7 +1622,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                 }//if
                 else {
                     for i in 0 ... (floorMapArray?.count)!-1 {
-                        let managedContext = getContext()
+                       // let managedContext = getContext()
                         let tourGuideDetailDict : TourGuideFloorMap?
                         tourGuideDetailDict = floorMapArray?[i]
                         self.saveToCoreData(tourGuideDetailDict: tourGuideDetailDict!, managedObjContext: managedContext)
@@ -1637,12 +1631,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                 }
             }
             else {
-                let fetchData = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey:"tourGuideId" , idValue: tourGuideId) as! [FloorMapTourGuideEntityAr]
+                let fetchData = checkAddedToCoredata(managedContext: managedContext, entityName: "FloorMapTourGuideEntityAr", idKey:"tourGuideId" , idValue: tourGuideId) as! [FloorMapTourGuideEntityAr]
                 if (fetchData.count > 0) {
                     for i in 0 ... (floorMapArray?.count)!-1 {
-                        let managedContext = getContext()
+                       // let managedContext = getContext()
                         let tourGuideDeatilDict = floorMapArray![i]
-                        let fetchResult = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey: "nid", idValue: floorMapArray![i].nid) as! [FloorMapTourGuideEntityAr]
+                        let fetchResult = checkAddedToCoredata(managedContext: managedContext, entityName: "FloorMapTourGuideEntityAr", idKey: "nid", idValue: floorMapArray![i].nid) as! [FloorMapTourGuideEntityAr]
                         //update
                         if(fetchResult.count != 0) {
                             let tourguidedbDict = fetchResult[0]
@@ -1712,7 +1706,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                 } //if
                 else {
                     for i in 0 ... (floorMapArray?.count)!-1 {
-                        let managedContext = getContext()
+                       // let managedContext = getContext()
                         let tourGuideDetailDict : TourGuideFloorMap?
                         tourGuideDetailDict = floorMapArray?[i]
                         self.saveToCoreData(tourGuideDetailDict: tourGuideDetailDict!, managedObjContext: managedContext)
@@ -1848,10 +1842,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
         }
     }
     func fetchTourGuideFromCoredata() {
+        let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var tourGuideArray = [FloorMapTourGuideEntity]()
-                tourGuideArray = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "tourGuideId", idValue: tourGuideId) as! [FloorMapTourGuideEntity]
+                tourGuideArray = checkAddedToCoredata(managedContext: managedContext, entityName: "FloorMapTourGuideEntity", idKey: "tourGuideId", idValue: tourGuideId) as! [FloorMapTourGuideEntity]
                 if (tourGuideArray.count > 0) {
                     for i in 0 ... tourGuideArray.count-1 {
                         let tourGuideDict = tourGuideArray[i] as FloorMapTourGuideEntity
@@ -1874,29 +1869,20 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                     if (self.floorMapArray.count > 0) {
                         
                         if ((self.fromTourString == fromTour.HighlightTour) || (self.fromTourString == fromTour.exploreTour)){
-                            //if(self.selectedScienceTourLevel == "2" ) {
                                 self.showOrHideLevelTwoHighlightTour()
-                           // } else if (self.selectedScienceTourLevel == "3" ) {
                                 self.showOrHideLevelThreeHighlightTour()
-                            //}
-                            
                             if let arrayOffset = floorMapArray.index(where: {$0.nid == selectednid}) {
                                 self.addBottomSheetView(index: arrayOffset)
                             }
                         } else if(self.fromTourString == fromTour.scienceTour) {
-                            //if(self.selectedScienceTourLevel == "2" ) {
                                 self.showOrHideLevelTwoScienceTour()
-                           // } else if(self.selectedScienceTourLevel == "3") {
                                 self.showOrHideLevelThreeScienceTour()
-                            //}
                             if let arrayOffset = floorMapArray.index(where: {$0.nid == selectednid}) {
                                 self.addBottomSheetView(index: arrayOffset)
                             }
                         }
-                        //if (self.fromTourString != fromTour.exploreTour) {
                             self.loadingView.stopLoading()
                             self.loadingView.isHidden = true
-                        //}
                         
                         
                     } else if (self.floorMapArray.count == 0) {
@@ -1912,7 +1898,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             }
             else {
                 var tourGuideArray = [FloorMapTourGuideEntityAr]()
-                tourGuideArray = checkAddedToCoredata(entityName: "FloorMapTourGuideEntityAr", idKey: "tourGuideId", idValue: tourGuideId) as! [FloorMapTourGuideEntityAr]
+                tourGuideArray = checkAddedToCoredata(managedContext: managedContext, entityName: "FloorMapTourGuideEntityAr", idKey: "tourGuideId", idValue: tourGuideId) as! [FloorMapTourGuideEntityAr]
                 if(tourGuideArray.count > 0) {
 //                    if  (networkReachability?.isReachable)! {
 //                        getFloorMapDataFromServer()
@@ -1965,19 +1951,19 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-    func getContext() -> NSManagedObjectContext{
-        
-        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
-        if #available(iOS 10.0, *) {
-            return
-                appDelegate!.persistentContainer.viewContext
-        } else {
-            return appDelegate!.managedObjectContext
-        }
-    }
-    func checkAddedToCoredata(entityName: String?,idKey:String?, idValue: String?) -> [NSManagedObject]
+//    func getContext() -> NSManagedObjectContext{
+//        
+//        let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+//        if #available(iOS 10.0, *) {
+//            return
+//                appDelegate!.persistentContainer.viewContext
+//        } else {
+//            return appDelegate!.managedObjectContext
+//        }
+//    }
+    func checkAddedToCoredata(managedContext: NSManagedObjectContext,entityName: String?,idKey:String?, idValue: String?) -> [NSManagedObject]
     {
-        let managedContext = getContext()
+        //let managedContext = getContext()
         var fetchResults : [NSManagedObject] = []
         
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
@@ -1985,7 +1971,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             fetchRequest.predicate = NSPredicate(format: "\(idKey!) == %@", idValue!)
             
         }
-        fetchResults = try! managedContext.fetch(fetchRequest)
+        fetchResults = (try! managedContext.fetch(fetchRequest))
         return fetchResults
     }
     func showNodata() {

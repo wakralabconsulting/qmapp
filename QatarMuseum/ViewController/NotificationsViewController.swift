@@ -29,7 +29,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
         let notificationData = UserDefaults.standard.object(forKey: "pushNotificationList") as? NSData
         if let notificationData = notificationData, let notifications = NSKeyedUnarchiver.unarchiveObject(with: notificationData as Data) as?
             [Notification] {
-            fetchNotificationsFromCoredata()
+            self.fetchNotificationsFromCoredata()
             notificationArray = []
             for notification in notifications {
                // notificationArray.insert(notification, at: 0)
@@ -39,7 +39,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
             saveOrUpdateNotificationsCoredata()
             //UserDefaults.standard.removeObject(forKey: "pushNotificationList")
         } else {
-            fetchNotificationsFromCoredata()
+            self.fetchNotificationsFromCoredata()
         }
     }
 

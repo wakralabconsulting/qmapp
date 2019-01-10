@@ -406,8 +406,8 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var exhibitionArray = [ExhibitionsEntity]()
                 let exhibitionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ExhibitionsEntity")
-                if(exhibitionId != nil) {
-                    exhibitionFetchRequest.predicate = NSPredicate.init(format: "id == \(exhibitionId!)")
+                if(self.exhibitionId != nil) {
+                    exhibitionFetchRequest.predicate = NSPredicate.init(format: "id == \(self.exhibitionId!)")
                 }
                 exhibitionArray = (try managedContext.fetch(exhibitionFetchRequest) as? [ExhibitionsEntity])!
                 let exhibitionDict = exhibitionArray[0]
@@ -415,11 +415,11 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
                    
                     self.exhibition.insert(Exhibition(id: exhibitionDict.id, name: exhibitionDict.detailName, image: nil,detailImage:exhibitionDict.detailImage, startDate: exhibitionDict.detailStartDate, endDate: exhibitionDict.detailEndDate, location: exhibitionDict.detailLocation, latitude: exhibitionDict.detailLatitude, longitude: exhibitionDict.detailLongitude, shortDescription: exhibitionDict.detailShortDesc, longDescription: exhibitionDict.detailLongDesc,museumId:nil,status: exhibitionDict.status), at: 0)
                     
-                    if(exhibition.count == 0){
+                    if(self.exhibition.count == 0){
                         self.showNoNetwork()
                     }
                     self.self.setTopImageUI()
-                    exhibitionDetailTableView.reloadData()
+                    self.exhibitionDetailTableView.reloadData()
                 }
                 else{
                     self.showNoNetwork()
@@ -428,8 +428,8 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
             else {
                 var exhibitionArray = [ExhibitionsEntityArabic]()
                 let exhibitionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ExhibitionsEntityArabic")
-                if(exhibitionId != nil) {
-                    exhibitionFetchRequest.predicate = NSPredicate.init(format: "id == \(exhibitionId!)")
+                if(self.exhibitionId != nil) {
+                    exhibitionFetchRequest.predicate = NSPredicate.init(format: "id == \(self.exhibitionId!)")
                 }
                 exhibitionArray = (try managedContext.fetch(exhibitionFetchRequest) as? [ExhibitionsEntityArabic])!
                 let exhibitionDict = exhibitionArray[0]
@@ -438,11 +438,11 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
                     self.exhibition.insert(Exhibition(id: exhibitionDict.id, name: exhibitionDict.detailNameAr, image: nil,detailImage:exhibitionDict.detailImgeAr, startDate: exhibitionDict.detailStartDateAr, endDate: exhibitionDict.detailendDateAr, location: exhibitionDict.detailLocationAr, latitude: exhibitionDict.detailLatituedeAr, longitude: exhibitionDict.detailLongitudeAr, shortDescription: exhibitionDict.detailShortDescAr, longDescription: exhibitionDict.detailLongDescAr,museumId:nil,status: exhibitionDict.status), at: 0)
                     
                     
-                    if(exhibition.count == 0){
+                    if(self.exhibition.count == 0){
                         self.showNoNetwork()
                     }
                     self.setTopImageUI()
-                    exhibitionDetailTableView.reloadData()
+                    self.exhibitionDetailTableView.reloadData()
                 }
                 else{
                     self.showNoNetwork()
