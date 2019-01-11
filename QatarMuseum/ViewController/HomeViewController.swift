@@ -55,11 +55,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationEn(notification:)), name: NSNotification.Name(homepageNotificationEn), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationAr(notification:)), name: NSNotification.Name(homepageNotificationAr), object: nil)
         registerNib()
-        self.fetchHomeInfoFromCoredata()
-        
         setUpUI()
         NotificationCenter.default.addObserver(self, selector: #selector(self.receivedNotification(notification:)), name: NSNotification.Name("NotificationIdentifier"), object: nil)
         
@@ -210,6 +206,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         diningLabel.font = UIFont.exhibitionDateLabelFont
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             if(UserDefaults.standard.value(forKey: "firstTimeLaunch") as? String == nil) {
+                loadingView.isHidden = false
+                loadingView.showLoading()
                 if (networkReachability?.isReachable)! {
                     loadLoginPopup()
                     UserDefaults.standard.set("false", forKey: "firstTimeLaunch")
@@ -224,6 +222,10 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 }
             }
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationEn(notification:)), name: NSNotification.Name(homepageNotificationEn), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationAr(notification:)), name: NSNotification.Name(homepageNotificationAr), object: nil)
+        self.fetchHomeInfoFromCoredata()
     }
     
     func registerNib() {
@@ -265,10 +267,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             }
         }else {
             let cell : HomeCollectionViewCell = homeCollectionView.dequeueReusableCell(withReuseIdentifier: "homeCellId", for: indexPath) as! HomeCollectionViewCell
-            
             cell.setHomeCellData(home: homeList[indexPath.row])
-            
-            
             return cell
         }
         
@@ -829,7 +828,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     func fetchHomeInfoFromCoredata() {
         if(alreadyFetch == false) {
-        DispatchQueue.main.async {
+        //DispatchQueue.main.async {
         let managedContext = getContext()
 
         do {
@@ -837,12 +836,18 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 var homeArray = [HomeEntity]()
                 let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntity")
                 homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntity])!
+                var j:Int? = 0
             if (homeArray.count > 0) {
                 for i in 0 ... homeArray.count-1 {
+                        if let duplicateId = homeList.first(where: {$0.id == homeArray[i].id}) {
+                            print("duplicate found")
+                        } else {
+                            self.homeList.insert(Home(id:homeArray[i].id , name: homeArray[i].name,image: homeArray[i].image,
+                                                      tourguide_available: homeArray[i].tourguideavailable, sort_id: homeArray[i].sortid),
+                                                 at: j!)
+                            j = j!+1
+                        }
                     
-                        self.homeList.insert(Home(id:homeArray[i].id , name: homeArray[i].name,image: homeArray[i].image,
-                                                  tourguide_available: homeArray[i].tourguideavailable, sort_id: homeArray[i].sortid),
-                                             at: i)
                 }
                 if(self.homeList.count == 0){
                     if(self.networkReachability?.isReachable == false) {
@@ -890,7 +895,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
-        }
+       // }
         if (networkReachability?.isReachable)! {
             DispatchQueue.global(qos: .background).async {
                 self.getHomeList()
