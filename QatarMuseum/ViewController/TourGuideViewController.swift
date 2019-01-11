@@ -299,12 +299,17 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                 var museumsArray = [HomeEntity]()
                 let museumsFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntity")
                 museumsArray = (try managedContext.fetch(museumsFetchRequest) as? [HomeEntity])!
+                var j:Int? = 0
                 if (museumsArray.count > 0) {
                     for i in 0 ... museumsArray.count-1 {
-                        
+                        if let duplicateId = museumsList.first(where: {$0.id == museumsArray[i].id}) {
+                            print("duplicate Tour found")
+                        } else {
                         self.museumsList.insert(Home(id:museumsArray[i].id , name: museumsArray[i].name,image: museumsArray[i].image,
                                                   tourguide_available: museumsArray[i].tourguideavailable, sort_id: museumsArray[i].sortid),
-                                             at: i)
+                                                at: j!)
+                            j = j!+1
+                        }
                     }
                     if(museumsList.count == 0){
                         if(self.networkReachability?.isReachable == false) {

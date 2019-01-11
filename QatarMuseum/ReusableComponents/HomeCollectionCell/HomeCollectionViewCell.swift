@@ -19,7 +19,13 @@ class HomeCollectionViewCell: UICollectionViewCell {
         super.layoutSubviews()
         setGradientLayer()
     }
-    
+    override func awakeFromNib() {
+       if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            homeTitleLabel.textAlignment = .left
+        } else {
+            homeTitleLabel.textAlignment = .right
+        }
+    }
     func setHomeCellData(home: Home) {
         let titleString = home.name
         homeTitleLabel.text = titleString
