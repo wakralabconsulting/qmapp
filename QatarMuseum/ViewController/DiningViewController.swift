@@ -26,15 +26,16 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
         super.viewDidLoad()
         
         setupDiningArtsUi()
-        if  (networkReachability?.isReachable)! {
-            if(fromHome == true) {
-                getDiningListFromServer()
-            } else {
-                getMuseumDiningListFromServer()
+        if(fromHome) {
+             self.fetchDiningListFromCoredata()
+            if  (networkReachability?.isReachable)! {
+                DispatchQueue.global(qos: .background).async {
+                    self.getDiningListFromServer()
+                }
             }
         } else {
-            if(fromHome == true) {
-                    self.fetchDiningListFromCoredata()
+            if  (networkReachability?.isReachable)! {
+                self.getMuseumDiningListFromServer()
             } else {
                 self.fetchMuseumDiningListFromCoredata()
             }
@@ -133,30 +134,31 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
     //MARK: WebServiceCall
     func getDiningListFromServer()
     {
-        _ = Alamofire.request(QatarMuseumRouter.DiningList()).responseObject { (response: DataResponse<Dinings>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.DiningList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<Dinings>) -> Void in
             //URLCache.shared.removeAllCachedResponses()
             switch response.result {
             case .success(let data):
-                self.diningListArray = data.dinings
-                self.saveOrUpdateDiningCoredata()
-                self.diningCollectionView.reloadData()
-                self.loadingView.stopLoading()
-                self.loadingView.isHidden = true
-                if (self.diningListArray.count == 0) {
-                    self.loadingView.stopLoading()
-                    self.loadingView.noDataView.isHidden = false
-                    self.loadingView.isHidden = false
-                    self.loadingView.showNoDataView()
-                }
+                //self.diningListArray = data.dinings
+                self.saveOrUpdateDiningCoredata(diningListArray: data.dinings, lang: LocalizationLanguage.currentAppleLanguage())
+                //self.diningCollectionView.reloadData()
+//                self.loadingView.stopLoading()
+//                self.loadingView.isHidden = true
+//                if (self.diningListArray.count == 0) {
+//                    self.loadingView.stopLoading()
+//                    self.loadingView.noDataView.isHidden = false
+//                    self.loadingView.isHidden = false
+//                    self.loadingView.showNoDataView()
+//                }
             case .failure(let error):
-                    var errorMessage: String
-                    errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
-                                                                    comment: "Setting the content of the alert"))
-                    self.loadingView.stopLoading()
-                    self.loadingView.noDataView.isHidden = false
-                    self.loadingView.isHidden = false
-                    self.loadingView.showNoDataView()
-                    self.loadingView.noDataLabel.text = errorMessage
+                print("error")
+//                    var errorMessage: String
+//                    errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+//                                                                    comment: "Setting the content of the alert"))
+//                    self.loadingView.stopLoading()
+//                    self.loadingView.noDataView.isHidden = false
+//                    self.loadingView.isHidden = false
+//                    self.loadingView.showNoDataView()
+//                    self.loadingView.noDataLabel.text = errorMessage
             }
         }
     }
@@ -168,7 +170,7 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
             switch response.result {
             case .success(let data):
                 self.diningListArray = data.dinings
-                self.saveOrUpdateDiningCoredata()
+                self.saveOrUpdateDiningCoredata(diningListArray: data.dinings, lang: LocalizationLanguage.currentAppleLanguage())
                 self.diningCollectionView.reloadData()
                 self.loadingView.stopLoading()
                 self.loadingView.isHidden = true
@@ -191,31 +193,32 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
         }
     }
     
-    //MARK: Coredata Method
-    func saveOrUpdateDiningCoredata() {
-        if (diningListArray.count > 0) {
+    
+    //MARK: Dining Coredata Method
+    func saveOrUpdateDiningCoredata(diningListArray : [Dining]?,lang: String?) {
+        if ((diningListArray?.count)! > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
-                let container = appDelegate!.persistentContainer
-                container.performBackgroundTask() {(managedContext) in
-                    self.coreDataInBackgroundThread(managedContext: managedContext)
+                let container = appDelegate?.persistentContainer
+                container?.performBackgroundTask() {(managedContext) in
+                    self.diningCoreDataInBackgroundThread(managedContext: managedContext, diningListArray: diningListArray!, lang: lang)
                 }
             } else {
-                let managedContext = appDelegate!.managedObjectContext
-                managedContext.perform {
-                    self.coreDataInBackgroundThread(managedContext : managedContext)
+                let managedContext = appDelegate?.managedObjectContext
+                managedContext?.perform {
+                    self.diningCoreDataInBackgroundThread(managedContext : managedContext!, diningListArray: diningListArray!, lang: lang)
                 }
             }
         }
     }
     
-    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+    func diningCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,diningListArray : [Dining]?,lang: String?) {
+        if (lang == "en") {
             let fetchData = checkAddedToCoredata(entityName: "DiningEntity", idKey: "id", idValue: nil, managedContext: managedContext) as! [DiningEntity]
             if (fetchData.count > 0) {
-                for i in 0 ... diningListArray.count-1 {
-                    let diningListDict = diningListArray[i]
-                    let fetchResult = checkAddedToCoredata(entityName: "DiningEntity", idKey: "id", idValue: diningListArray[i].id, managedContext: managedContext)
+                for i in 0 ... (diningListArray?.count)!-1 {
+                    let diningListDict = diningListArray![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "DiningEntity", idKey: "id", idValue: diningListArray![i].id, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
                         let diningdbDict = fetchResult[0] as! DiningEntity
@@ -223,7 +226,7 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
                         diningdbDict.image = diningListDict.image
                         diningdbDict.sortid =  diningListDict.sortid
                         diningdbDict.museumId =  diningListDict.museumId
-
+                        
                         do{
                             try managedContext.save()
                         }
@@ -233,24 +236,24 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
                     }
                     else {
                         //save
-                        self.saveToCoreData(diningListDict: diningListDict, managedObjContext: managedContext)
+                        self.saveToDiningCoreData(diningListDict: diningListDict, managedObjContext: managedContext, lang: lang)
                         
                     }
                 }
             }
             else {
-                for i in 0 ... diningListArray.count-1 {
+                for i in 0 ... (diningListArray?.count)!-1 {
                     let diningListDict : Dining?
-                    diningListDict = diningListArray[i]
-                    self.saveToCoreData(diningListDict: diningListDict!, managedObjContext: managedContext)
+                    diningListDict = diningListArray?[i]
+                    self.saveToDiningCoreData(diningListDict: diningListDict!, managedObjContext: managedContext, lang: lang)
                 }
             }
         } else {
             let fetchData = checkAddedToCoredata(entityName: "DiningEntityArabic", idKey: "id", idValue: nil, managedContext: managedContext) as! [DiningEntityArabic]
             if (fetchData.count > 0) {
-                for i in 0 ... diningListArray.count-1 {
-                    let diningListDict = diningListArray[i]
-                    let fetchResult = checkAddedToCoredata(entityName: "DiningEntityArabic", idKey: "id" , idValue: diningListArray[i].id, managedContext: managedContext)
+                for i in 0 ... (diningListArray?.count)!-1 {
+                    let diningListDict = diningListArray![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "DiningEntityArabic", idKey: "id" , idValue: diningListArray![i].id, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
                         let diningdbDict = fetchResult[0] as! DiningEntityArabic
@@ -268,24 +271,24 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
                     }
                     else {
                         //save
-                        self.saveToCoreData(diningListDict: diningListDict, managedObjContext: managedContext)
+                        self.saveToDiningCoreData(diningListDict: diningListDict, managedObjContext: managedContext, lang: lang)
                         
                     }
                 }
             }
             else {
-                for i in 0 ... diningListArray.count-1 {
+                for i in 0 ... (diningListArray?.count)!-1 {
                     let diningListDict : Dining?
-                    diningListDict = diningListArray[i]
-                    self.saveToCoreData(diningListDict: diningListDict!, managedObjContext: managedContext)
+                    diningListDict = diningListArray?[i]
+                    self.saveToDiningCoreData(diningListDict: diningListDict!, managedObjContext: managedContext, lang: lang)
                     
                 }
             }
         }
     }
     
-    func saveToCoreData(diningListDict: Dining, managedObjContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+    func saveToDiningCoreData(diningListDict: Dining, managedObjContext: NSManagedObjectContext,lang: String?) {
+        if (lang == "en") {
             let diningInfoInfo: DiningEntity = NSEntityDescription.insertNewObject(forEntityName: "DiningEntity", into: managedObjContext) as! DiningEntity
             diningInfoInfo.id = diningListDict.id
             diningInfoInfo.name = diningListDict.name
@@ -315,6 +318,7 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    
     
     func fetchMuseumDiningListFromCoredata() {
         let managedContext = getContext()

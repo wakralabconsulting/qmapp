@@ -98,8 +98,8 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
         
         let width = self.bounds.width
         let height = self.bounds.height
-        let sHeight:CGFloat = 70.0
-        let shadow = UIColor.black.withAlphaComponent(0.7).cgColor
+        let sHeight:CGFloat = 110.0
+        let shadow = UIColor.black.withAlphaComponent(0.8).cgColor
         
         let bottomImageGradient = CAGradientLayer()
         bottomImageGradient.frame = CGRect(x: 0, y: height - sHeight, width: width, height: sHeight)
