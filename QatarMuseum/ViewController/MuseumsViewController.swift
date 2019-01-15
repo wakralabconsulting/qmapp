@@ -109,8 +109,8 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     func setSlideShow(imgArray: NSArray) {
         //KASlideshow
         museumsSlideView.delegate = self
-        museumsSlideView.delay = 1
-        museumsSlideView.transitionDuration = 2.7
+        museumsSlideView.delay = 0.5
+        museumsSlideView.transitionDuration = 1.2
         museumsSlideView.transitionType = KASlideShowTransitionType.fade
         museumsSlideView.imagesContentMode = .scaleAspectFill
         museumsSlideView.images = imgArray as! NSMutableArray

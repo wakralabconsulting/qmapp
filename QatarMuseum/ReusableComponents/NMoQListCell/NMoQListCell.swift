@@ -22,7 +22,7 @@ class NMoQListCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        titleLabel.font = UIFont.tourListTitleFont
+        titleLabel.font = UIFont.homeTitleFont
         dayLabel.font  = UIFont.settingsUpdateLabelFont
         dateLabel.font = UIFont.sideMenuLabelFont
     }
@@ -43,8 +43,10 @@ class NMoQListCell: UITableViewCell {
         }
     }
     func setTourMiddleDate(tourList: NMoQTourDetail?) {
-        titleLabel.text = tourList?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-        dayLabel.isHidden = true
+        dayLabel.font  = UIFont.homeTitleFont
+        dayLabel.text = tourList?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+        titleLabel.isHidden = true
+        dayLabel.isHidden = false
         dateLabel.isHidden = true
         //dayLabel.text = tourList?.title
         //dateLabel.text = changeDateFormat(dateString: tourList?.eventDate)
@@ -71,8 +73,8 @@ class NMoQListCell: UITableViewCell {
         
         let width = self.bounds.width
         let height = self.bounds.height
-        let sHeight:CGFloat = 70.0
-        let shadow = UIColor.black.withAlphaComponent(0.7).cgColor
+        let sHeight:CGFloat = 110.0
+        let shadow = UIColor.black.withAlphaComponent(0.8).cgColor
         
         let bottomImageGradient = CAGradientLayer()
         bottomImageGradient.frame = CGRect(x: 0, y: height - sHeight, width: width, height: sHeight)

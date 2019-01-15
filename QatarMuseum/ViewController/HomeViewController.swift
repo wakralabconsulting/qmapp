@@ -840,7 +840,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             if (homeArray.count > 0) {
                 for i in 0 ... homeArray.count-1 {
                         if let duplicateId = homeList.first(where: {$0.id == homeArray[i].id}) {
-                            print("duplicate found")
                         } else {
                             self.homeList.insert(Home(id:homeArray[i].id , name: homeArray[i].name,image: homeArray[i].image,
                                                       tourguide_available: homeArray[i].tourguideavailable, sort_id: homeArray[i].sortid),

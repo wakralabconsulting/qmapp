@@ -75,6 +75,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             self.getNMoQTourList()
             self.getTravelList()
             self.getNMoQSpecialEventList()
+            self.getDiningListFromServer(lang: ENG_LANGUAGE)
+            self.getDiningListFromServer(lang: AR_LANGUAGE)
         }
         
     }
@@ -1349,6 +1351,143 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
     }
+    //MARK: DiningList WebServiceCall
+    func getDiningListFromServer(lang: String?)
+    {
+        let queue = DispatchQueue(label: "DiningListThread", qos: .background, attributes: .concurrent)
+        _ = Alamofire.request(QatarMuseumRouter.DiningList(lang!)).responseObject(queue: queue) { (response: DataResponse<Dinings>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.saveOrUpdateDiningCoredata(diningListArray: data.dinings, lang: lang)
+            case .failure( _):
+               print("error")
+            }
+        }
+    }
+    //MARK: Dining Coredata Method
+    func saveOrUpdateDiningCoredata(diningListArray : [Dining]?,lang: String?) {
+        if ((diningListArray?.count)! > 0) {
+            if #available(iOS 10.0, *) {
+                let container = self.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.diningCoreDataInBackgroundThread(managedContext: managedContext, diningListArray: diningListArray!, lang: lang)
+                }
+            } else {
+                let managedContext = self.managedObjectContext
+                managedContext.perform {
+                    self.diningCoreDataInBackgroundThread(managedContext : managedContext, diningListArray: diningListArray!, lang: lang)
+                }
+            }
+        }
+    }
+    
+    func diningCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,diningListArray : [Dining]?,lang: String?) {
+        if (lang == "en") {
+            let fetchData = checkAddedToCoredata(entityName: "DiningEntity", idKey: "id", idValue: nil, managedContext: managedContext) as! [DiningEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... (diningListArray?.count)!-1 {
+                    let diningListDict = diningListArray![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "DiningEntity", idKey: "id", idValue: diningListArray![i].id, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let diningdbDict = fetchResult[0] as! DiningEntity
+                        diningdbDict.name = diningListDict.name
+                        diningdbDict.image = diningListDict.image
+                        diningdbDict.sortid =  diningListDict.sortid
+                        diningdbDict.museumId =  diningListDict.museumId
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    }
+                    else {
+                        //save
+                        self.saveToDiningCoreData(diningListDict: diningListDict, managedObjContext: managedContext, lang: lang)
+                        
+                    }
+                }
+            }
+            else {
+                for i in 0 ... (diningListArray?.count)!-1 {
+                    let diningListDict : Dining?
+                    diningListDict = diningListArray?[i]
+                    self.saveToDiningCoreData(diningListDict: diningListDict!, managedObjContext: managedContext, lang: lang)
+                }
+            }
+        } else {
+            let fetchData = checkAddedToCoredata(entityName: "DiningEntityArabic", idKey: "id", idValue: nil, managedContext: managedContext) as! [DiningEntityArabic]
+            if (fetchData.count > 0) {
+                for i in 0 ... (diningListArray?.count)!-1 {
+                    let diningListDict = diningListArray![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "DiningEntityArabic", idKey: "id" , idValue: diningListArray![i].id, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let diningdbDict = fetchResult[0] as! DiningEntityArabic
+                        diningdbDict.namearabic = diningListDict.name
+                        diningdbDict.imagearabic = diningListDict.image
+                        diningdbDict.sortidarabic =  diningListDict.sortid
+                        diningdbDict.museumId =  diningListDict.museumId
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    }
+                    else {
+                        //save
+                        self.saveToDiningCoreData(diningListDict: diningListDict, managedObjContext: managedContext, lang: lang)
+                        
+                    }
+                }
+            }
+            else {
+                for i in 0 ... (diningListArray?.count)!-1 {
+                    let diningListDict : Dining?
+                    diningListDict = diningListArray?[i]
+                    self.saveToDiningCoreData(diningListDict: diningListDict!, managedObjContext: managedContext, lang: lang)
+                    
+                }
+            }
+        }
+    }
+    
+    func saveToDiningCoreData(diningListDict: Dining, managedObjContext: NSManagedObjectContext,lang: String?) {
+        if (lang == "en") {
+            let diningInfoInfo: DiningEntity = NSEntityDescription.insertNewObject(forEntityName: "DiningEntity", into: managedObjContext) as! DiningEntity
+            diningInfoInfo.id = diningListDict.id
+            diningInfoInfo.name = diningListDict.name
+            
+            diningInfoInfo.image = diningListDict.image
+            if(diningListDict.sortid != nil) {
+                diningInfoInfo.sortid = diningListDict.sortid
+            }
+            diningInfoInfo.museumId = diningListDict.museumId
+        }
+        else {
+            let diningInfoInfo: DiningEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "DiningEntityArabic", into: managedObjContext) as! DiningEntityArabic
+            diningInfoInfo.id = diningListDict.id
+            diningInfoInfo.namearabic = diningListDict.name
+            
+            diningInfoInfo.imagearabic = diningListDict.image
+            if(diningListDict.sortid != nil) {
+                diningInfoInfo.sortidarabic = diningListDict.sortid
+            }
+            diningInfoInfo.museumId = diningListDict.museumId
+        }
+        do {
+            try managedObjContext.save()
+            
+            
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    
     func deleteExistingEvent(managedContext:NSManagedObjectContext,entityName : String?) ->Bool? {
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName!)
