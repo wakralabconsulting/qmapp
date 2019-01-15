@@ -127,9 +127,9 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         pageControl.addTarget(self, action: #selector(MuseumsViewController.pageChanged), for: .valueChanged)
     }
     func setImageArray(imageArray: [String]?) {
-        self.sliderImgArray[0] = UIImage(named: "sliderPlaceholder")!
-        self.sliderImgArray[1] = UIImage(named: "sliderPlaceholder")!
-        self.sliderImgArray[2] = UIImage(named: "sliderPlaceholder")!
+        //self.sliderImgArray[0] = UIImage(named: "sliderPlaceholder")!
+       // self.sliderImgArray[1] = UIImage(named: "sliderPlaceholder")!
+        //self.sliderImgArray[2] = UIImage(named: "sliderPlaceholder")!
 
         if ((imageArray?.count)! >= 4) {
             totalImgCount = 3
@@ -146,30 +146,29 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             }
         }
     }
-    
+
     func downloadImage(imageUrlString : String?)  {
-            if (imageUrlString != nil) {
-                let imageUrl = URL(string: imageUrlString!)
-                ImageDownloader.default.downloadImage(with: imageUrl!, options: [], progressBlock: nil) {
-                    (image, error, url, data) in
-                    if let image = image {
-                        self.sliderImgCount = self.sliderImgCount!+1
-                        self.sliderImgArray[self.sliderImgCount!-1] = image
-                        self.setSlideShow(imgArray: self.sliderImgArray)
-                        self.museumsSlideView.start()
+        if (imageUrlString != nil) {
+            let imageUrl = URL(string: imageUrlString!)
+            KingfisherManager.shared.retrieveImage(with: imageUrl!, options: [], progressBlock: nil) {
+                (image, error, url, data) in
+                if let image = image {
+                    self.sliderImgCount = self.sliderImgCount!+1
+                    self.sliderImgArray[self.sliderImgCount!-1] = image
+                    self.setSlideShow(imgArray: self.sliderImgArray)
+                    self.museumsSlideView.start()
+                } else {
+                    if(self.sliderImgCount == 0) {
+                        self.sliderImgArray[0] = UIImage(named: "sliderPlaceholder")!
                     } else {
-                        print(error)
-                        if(self.sliderImgCount == 0) {
-                           self.sliderImgArray[0] = UIImage(named: "sliderPlaceholder")!
-                        } else {
-                            self.sliderImgArray[self.sliderImgCount!-1] = UIImage(named: "sliderPlaceholder")!
-                        }
-                        self.sliderImgCount = self.sliderImgCount!+1
-                        self.setSlideShow(imgArray: self.sliderImgArray)
-                        self.museumsSlideView.start()
+                        self.sliderImgArray[self.sliderImgCount!-1] = UIImage(named: "sliderPlaceholder")!
                     }
+                    self.sliderImgCount = self.sliderImgCount!+1
+                    self.setSlideShow(imgArray: self.sliderImgArray)
+                    self.museumsSlideView.start()
                 }
             }
+        }
     }
 
     func updateNotificationBadge() {

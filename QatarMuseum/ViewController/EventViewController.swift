@@ -598,6 +598,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         dateFormatter.dateFormat = "dd-MM-yyyy"
         
         dateFormatter.dateFormat = "M"
+        dateFormatter.locale = Locale(identifier: "en")
         let selectedMonth: String = dateFormatter.string(from: date)
         dateFormatter.dateFormat = "d"
         let selectedDay: String = dateFormatter.string(from: date)

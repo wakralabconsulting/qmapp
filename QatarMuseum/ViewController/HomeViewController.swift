@@ -868,11 +868,16 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 var homeArray = [HomeEntityArabic]()
                 let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntityArabic")
                 homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntityArabic])!
+                var j:Int? = 0
                 if (homeArray.count > 0) {
                     for i in 0 ... homeArray.count-1 {
+                        if let duplicateId = homeList.first(where: {$0.id == homeArray[i].id}) {
+                        } else {
                         self.homeList.insert(Home(id:homeArray[i].id , name: homeArray[i].arabicname,image: homeArray[i].arabicimage,
                                                   tourguide_available: homeArray[i].arabictourguideavailable, sort_id: homeArray[i].arabicsortid),
-                                             at: i)
+                                             at: j!)
+                            j = j!+1
+                        }
                     }
                     if(self.homeList.count == 0){
                         if(self.networkReachability?.isReachable == false) {

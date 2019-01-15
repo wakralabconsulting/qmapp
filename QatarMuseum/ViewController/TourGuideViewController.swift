@@ -336,11 +336,16 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                 var museumsArray = [HomeEntityArabic]()
                 let museumFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntityArabic")
                 museumsArray = (try managedContext.fetch(museumFetchRequest) as? [HomeEntityArabic])!
+                var j:Int? = 0
                 if (museumsArray.count > 0) {
                     for i in 0 ... museumsArray.count-1 {
+                        if let duplicateId = museumsList.first(where: {$0.id == museumsArray[i].id}) {
+                        } else {
                         self.museumsList.insert(Home(id:museumsArray[i].id , name: museumsArray[i].arabicname,image: museumsArray[i].arabicimage,
                                                   tourguide_available: museumsArray[i].arabictourguideavailable, sort_id: museumsArray[i].arabicsortid),
-                                             at: i)
+                                             at: j!)
+                            j = j!+1
+                        }
                     }
                     if(museumsList.count == 0){
                         if(self.networkReachability?.isReachable == false) {
