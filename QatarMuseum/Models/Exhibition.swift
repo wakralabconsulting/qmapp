@@ -16,6 +16,7 @@ struct Exhibition: ResponseObjectSerializable, ResponseCollectionSerializable {
     var endDate: String? = nil
     var location: String? = nil
     var museumId : String? = nil
+    var displayDate : String? = nil
 
     var detailImage: String? = nil
     var latitude: String? = nil
@@ -40,9 +41,10 @@ struct Exhibition: ResponseObjectSerializable, ResponseCollectionSerializable {
             self.longDescription  = representation["Long_description"] as? String
             self.museumId  = representation["museum_id"] as? String
             self.status  = representation["Status"] as? String
+            self.displayDate  = representation["Display_date"] as? String
         }
     }
-    init(id:String?, name:String?, image:String?,detailImage:String?, startDate:String?, endDate:String?, location:String?, latitude:String?, longitude:String?, shortDescription:String?, longDescription:String?, museumId : String?, status : String?) {
+    init(id:String?, name:String?, image:String?,detailImage:String?, startDate:String?, endDate:String?, location:String?, latitude:String?, longitude:String?, shortDescription:String?, longDescription:String?, museumId : String?, status : String?, displayDate : String?) {
         self.id = id
         self.name = name
         self.image = image
@@ -56,6 +58,7 @@ struct Exhibition: ResponseObjectSerializable, ResponseCollectionSerializable {
         self.longDescription = longDescription
         self.museumId = museumId
         self.status = museumId
+        self.displayDate = displayDate
     }
 }
 

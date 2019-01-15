@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17C88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18A391" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="AboutDescriptionEntity" representedClassName="AboutDescriptionEntity" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="mobileDesc" optional="YES" attributeType="String" syncable="YES"/>
@@ -260,6 +260,7 @@
         <attribute name="detailName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="detailShortDesc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="detailStartDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dispalyDate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="endDate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
@@ -279,6 +280,7 @@
         <attribute name="detailNameAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="detailShortDescAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="detailStartDateAr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="displayDateAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="endDateArabic" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="imageArabic" optional="YES" attributeType="String" syncable="YES"/>
@@ -567,6 +569,7 @@
         <element name="EdStartDateEntityAr" positionX="27" positionY="171" width="128" height="75"/>
         <element name="EducationEventEntity" positionX="-36" positionY="108" width="128" height="255"/>
         <element name="EducationEventEntityAr" positionX="-27" positionY="144" width="128" height="255"/>
+        <element name="Entity" positionX="-9" positionY="135" width="128" height="45"/>
         <element name="EventAgeGroupEntity" positionX="-27" positionY="135" width="128" height="75"/>
         <element name="EventAgeGroupEntityAr" positionX="-18" positionY="144" width="128" height="75"/>
         <element name="EventDateEntity" positionX="-27" positionY="144" width="128" height="75"/>
@@ -579,8 +582,8 @@
         <element name="EventStartDateEntityAr" positionX="9" positionY="153" width="128" height="75"/>
         <element name="EventTopicsEntity" positionX="9" positionY="171" width="128" height="75"/>
         <element name="EventTopicsEntityAr" positionX="18" positionY="180" width="128" height="75"/>
-        <element name="ExhibitionsEntity" positionX="-54" positionY="108" width="128" height="300"/>
-        <element name="ExhibitionsEntityArabic" positionX="-45" positionY="126" width="128" height="300"/>
+        <element name="ExhibitionsEntity" positionX="-54" positionY="108" width="128" height="315"/>
+        <element name="ExhibitionsEntityArabic" positionX="-45" positionY="126" width="128" height="315"/>
         <element name="FloorMapImagesEntity" positionX="0" positionY="144" width="128" height="75"/>
         <element name="FloorMapImagesEntityAr" positionX="18" positionY="162" width="128" height="75"/>
         <element name="FloorMapTourGuideEntity" positionX="-9" positionY="135" width="128" height="420"/>
@@ -611,6 +614,5 @@
         <element name="TourGuideEntityAr" positionX="0" positionY="144" width="128" height="120"/>
         <element name="TourGuideMultimediaEntity" positionX="9" positionY="153" width="128" height="75"/>
         <element name="TourGuideMultimediaEntityAr" positionX="18" positionY="162" width="128" height="75"/>
-        <element name="Entity" positionX="-9" positionY="135" width="128" height="45"/>
     </elements>
 </model>
