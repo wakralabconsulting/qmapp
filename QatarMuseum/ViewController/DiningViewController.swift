@@ -34,10 +34,11 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
                 }
             }
         } else {
+            self.fetchMuseumDiningListFromCoredata()
             if  (networkReachability?.isReachable)! {
-                self.getMuseumDiningListFromServer()
-            } else {
-                self.fetchMuseumDiningListFromCoredata()
+                DispatchQueue.global(qos: .background).async {
+                    self.getMuseumDiningListFromServer()
+                }
             }
         }
         registerNib()
@@ -166,29 +167,29 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
     func getMuseumDiningListFromServer()
     {
         _ = Alamofire.request(QatarMuseumRouter.MuseumDiningList(["museum_id": museumId ?? 0])).responseObject { (response: DataResponse<Dinings>) -> Void in
-            //URLCache.shared.removeAllCachedResponses()
             switch response.result {
             case .success(let data):
-                self.diningListArray = data.dinings
+                //self.diningListArray = data.dinings
                 self.saveOrUpdateDiningCoredata(diningListArray: data.dinings, lang: LocalizationLanguage.currentAppleLanguage())
-                self.diningCollectionView.reloadData()
-                self.loadingView.stopLoading()
-                self.loadingView.isHidden = true
-                if (self.diningListArray.count == 0) {
-                    self.loadingView.stopLoading()
-                    self.loadingView.noDataView.isHidden = false
-                    self.loadingView.isHidden = false
-                    self.loadingView.showNoDataView()
-                }
+//                self.diningCollectionView.reloadData()
+//                self.loadingView.stopLoading()
+//                self.loadingView.isHidden = true
+//                if (self.diningListArray.count == 0) {
+//                    self.loadingView.stopLoading()
+//                    self.loadingView.noDataView.isHidden = false
+//                    self.loadingView.isHidden = false
+//                    self.loadingView.showNoDataView()
+//                }
             case .failure(let error):
-                var errorMessage: String
-                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
-                                                                comment: "Setting the content of the alert"))
-                self.loadingView.stopLoading()
-                self.loadingView.noDataView.isHidden = false
-                self.loadingView.isHidden = false
-                self.loadingView.showNoDataView()
-                self.loadingView.noDataLabel.text = errorMessage
+                print("error")
+//                var errorMessage: String
+//                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+//                                                                comment: "Setting the content of the alert"))
+//                self.loadingView.stopLoading()
+//                self.loadingView.noDataView.isHidden = false
+//                self.loadingView.isHidden = false
+//                self.loadingView.showNoDataView()
+//                self.loadingView.noDataLabel.text = errorMessage
             }
         }
     }
