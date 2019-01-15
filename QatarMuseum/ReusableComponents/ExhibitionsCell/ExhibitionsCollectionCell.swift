@@ -29,8 +29,10 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
     func setExhibitionCellValues(exhibition: Exhibition) {
         titleLabel.text = exhibition.name?.uppercased()
         //Hide Date and Location from Exhibition List page.
-        dateLabel.text = ((exhibition.startDate?.uppercased())!).replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil) + " - " + ((exhibition.endDate?.uppercased())!).replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+//        dateLabel.text = ((exhibition.startDate?.uppercased())!).replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil) + " - " + ((exhibition.endDate?.uppercased())!).replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
         //addressLabel.text = exhibition.location?.uppercased()
+        
+        dateLabel.text = exhibition.displayDate
         titleLabel.font = UIFont.heritageTitleFont
         dateLabel.font = UIFont.downloadLabelFont
         addressLabel.font = UIFont.exhibitionDateLabelFont

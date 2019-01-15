@@ -413,7 +413,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
                 let exhibitionDict = exhibitionArray[0]
                 if ((exhibitionArray.count > 0) && (exhibitionDict.detailLongDesc != nil) && (exhibitionDict.detailShortDesc != nil) ){
                    
-                    self.exhibition.insert(Exhibition(id: exhibitionDict.id, name: exhibitionDict.detailName, image: nil,detailImage:exhibitionDict.detailImage, startDate: exhibitionDict.detailStartDate, endDate: exhibitionDict.detailEndDate, location: exhibitionDict.detailLocation, latitude: exhibitionDict.detailLatitude, longitude: exhibitionDict.detailLongitude, shortDescription: exhibitionDict.detailShortDesc, longDescription: exhibitionDict.detailLongDesc,museumId:nil,status: exhibitionDict.status), at: 0)
+                    self.exhibition.insert(Exhibition(id: exhibitionDict.id, name: exhibitionDict.detailName, image: nil,detailImage:exhibitionDict.detailImage, startDate: exhibitionDict.detailStartDate, endDate: exhibitionDict.detailEndDate, location: exhibitionDict.detailLocation, latitude: exhibitionDict.detailLatitude, longitude: exhibitionDict.detailLongitude, shortDescription: exhibitionDict.detailShortDesc, longDescription: exhibitionDict.detailLongDesc,museumId:nil,status: exhibitionDict.status, displayDate: exhibitionDict.dispalyDate), at: 0)
                     
                     if(self.exhibition.count == 0){
                         self.showNoNetwork()
@@ -435,7 +435,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
                 let exhibitionDict = exhibitionArray[0]
                 if ((exhibitionArray.count > 0) && (exhibitionDict.detailLongDescAr != nil) && (exhibitionDict.detailShortDescAr != nil)) {
                     
-                    self.exhibition.insert(Exhibition(id: exhibitionDict.id, name: exhibitionDict.detailNameAr, image: nil,detailImage:exhibitionDict.detailImgeAr, startDate: exhibitionDict.detailStartDateAr, endDate: exhibitionDict.detailendDateAr, location: exhibitionDict.detailLocationAr, latitude: exhibitionDict.detailLatituedeAr, longitude: exhibitionDict.detailLongitudeAr, shortDescription: exhibitionDict.detailShortDescAr, longDescription: exhibitionDict.detailLongDescAr,museumId:nil,status: exhibitionDict.status), at: 0)
+                    self.exhibition.insert(Exhibition(id: exhibitionDict.id, name: exhibitionDict.detailNameAr, image: nil,detailImage:exhibitionDict.detailImgeAr, startDate: exhibitionDict.detailStartDateAr, endDate: exhibitionDict.detailendDateAr, location: exhibitionDict.detailLocationAr, latitude: exhibitionDict.detailLatituedeAr, longitude: exhibitionDict.detailLongitudeAr, shortDescription: exhibitionDict.detailShortDescAr, longDescription: exhibitionDict.detailLongDescAr,museumId:nil,status: exhibitionDict.status, displayDate: exhibitionDict.displayDateAr), at: 0)
                     
                     
                     if(self.exhibition.count == 0){
