@@ -848,14 +848,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                             }
                         }
                         
-                        DispatchQueue.main.async(execute: {
                             do{
                                 try managedContext.save()
                             }
                             catch{
                                 print(error)
                             }
-                        })
                     }
                     else {
                         //save
@@ -907,14 +905,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                                 }
                             }
                         }
-                        DispatchQueue.main.async(execute: {
                             do{
                                 try managedContext.save()
                             }
                             catch{
                                 print(error)
                             }
-                        })
                     }
                     else {
                         //save
@@ -988,13 +984,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
             }
         }
-        DispatchQueue.main.async(execute: {
             do {
                 try managedObjContext.save()
             } catch let error as NSError {
                 print("Could not save. \(error), \(error.userInfo)")
             }
-        })
+        
     }
     //MARK: NMoQ ABoutEvent Webservice
     func getNmoQAboutDetailsFromServer(museumId:String?) {
