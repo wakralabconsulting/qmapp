@@ -136,30 +136,11 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
     func getDiningListFromServer()
     {
         _ = Alamofire.request(QatarMuseumRouter.DiningList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<Dinings>) -> Void in
-            //URLCache.shared.removeAllCachedResponses()
             switch response.result {
             case .success(let data):
-                //self.diningListArray = data.dinings
                 self.saveOrUpdateDiningCoredata(diningListArray: data.dinings, lang: LocalizationLanguage.currentAppleLanguage())
-                //self.diningCollectionView.reloadData()
-//                self.loadingView.stopLoading()
-//                self.loadingView.isHidden = true
-//                if (self.diningListArray.count == 0) {
-//                    self.loadingView.stopLoading()
-//                    self.loadingView.noDataView.isHidden = false
-//                    self.loadingView.isHidden = false
-//                    self.loadingView.showNoDataView()
-//                }
             case .failure(let error):
                 print("error")
-//                    var errorMessage: String
-//                    errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
-//                                                                    comment: "Setting the content of the alert"))
-//                    self.loadingView.stopLoading()
-//                    self.loadingView.noDataView.isHidden = false
-//                    self.loadingView.isHidden = false
-//                    self.loadingView.showNoDataView()
-//                    self.loadingView.noDataLabel.text = errorMessage
             }
         }
     }
@@ -169,27 +150,9 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
         _ = Alamofire.request(QatarMuseumRouter.MuseumDiningList(["museum_id": museumId ?? 0])).responseObject { (response: DataResponse<Dinings>) -> Void in
             switch response.result {
             case .success(let data):
-                //self.diningListArray = data.dinings
                 self.saveOrUpdateDiningCoredata(diningListArray: data.dinings, lang: LocalizationLanguage.currentAppleLanguage())
-//                self.diningCollectionView.reloadData()
-//                self.loadingView.stopLoading()
-//                self.loadingView.isHidden = true
-//                if (self.diningListArray.count == 0) {
-//                    self.loadingView.stopLoading()
-//                    self.loadingView.noDataView.isHidden = false
-//                    self.loadingView.isHidden = false
-//                    self.loadingView.showNoDataView()
-//                }
             case .failure(let error):
                 print("error")
-//                var errorMessage: String
-//                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
-//                                                                comment: "Setting the content of the alert"))
-//                self.loadingView.stopLoading()
-//                self.loadingView.noDataView.isHidden = false
-//                self.loadingView.isHidden = false
-//                self.loadingView.showNoDataView()
-//                self.loadingView.noDataLabel.text = errorMessage
             }
         }
     }
@@ -374,11 +337,19 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
 
                     }
                     if(diningListArray.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                     diningCollectionView.reloadData()
                 } else {
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
                 }
             } else {
                 var diningArray = [DiningEntityArabic]()
@@ -389,12 +360,20 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
                         self.diningListArray.insert(Dining(id: diningArray[i].id, name: diningArray[i].namearabic, location: diningArray[i].locationarabic, description: diningArray[i].descriptionarabic, image: diningArray[i].imagearabic, openingtime: diningArray[i].openingtimearabic, closetime: diningArray[i].closetimearabic, sortid: diningArray[i].sortidarabic,museumId: diningArray[i].museumId, images: nil), at: i)
                     }
                     if(diningListArray.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                     diningCollectionView.reloadData()
                 }
                 else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
                 }
             }
         } catch let error as NSError {

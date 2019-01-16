@@ -1102,6 +1102,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     }
                 }
             }
+            //Download File
+            if(aboutDetailDict.downloadable != nil){
+                if((aboutDetailDict.downloadable?.count)! > 0) {
+                    for i in 0 ... (aboutDetailDict.downloadable?.count)!-1 {
+                        var aboutImage: AboutDownloadLinkEntity
+                        let aboutImgaeArray: AboutDownloadLinkEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutDownloadLinkEntity", into: managedObjContext) as! AboutDownloadLinkEntity
+                        aboutImgaeArray.downloadLink = aboutDetailDict.downloadable![i]
+                        
+                        aboutImage = aboutImgaeArray
+                        aboutdbDict.addToDownloadLinkRelation(aboutImage)
+                        do {
+                            try managedObjContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                    }
+                }
+            }
             
         }
         do {

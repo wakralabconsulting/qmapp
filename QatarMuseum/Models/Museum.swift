@@ -54,7 +54,7 @@ struct Museum: ResponseObjectSerializable, ResponseCollectionSerializable {
         }
     }
   
-    init(name:String?, id: String?,tourguideAvailable:String?,contactNumber:String?,contactEmail:String?,mobileLongtitude:String?,subtitle:String?,openingTime:String?,mobileDescription:[String]?,multimediaFile:[String]?,mobileLatitude:String?,tourGuideAvailability:String?,multimediaVideo:[String]?) {
+    init(name:String?, id: String?,tourguideAvailable:String?,contactNumber:String?,contactEmail:String?,mobileLongtitude:String?,subtitle:String?,openingTime:String?,mobileDescription:[String]?,multimediaFile:[String]?,mobileLatitude:String?,tourGuideAvailability:String?,multimediaVideo:[String]?,downloadable:[String]?) {
             self.name = name
             self.id = id
             self.tourguideAvailable = tourguideAvailable
@@ -68,6 +68,7 @@ struct Museum: ResponseObjectSerializable, ResponseCollectionSerializable {
             self.mobileLatitude = mobileLatitude
             self.tourGuideAvailability = tourGuideAvailability
             self.multimediaVideo = multimediaVideo
+            self.downloadable = downloadable
     }
 }
 
