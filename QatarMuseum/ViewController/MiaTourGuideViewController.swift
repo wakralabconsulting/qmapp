@@ -355,9 +355,12 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
                         var multimediaArray : [String] = []
                         let tourguideInfo = tourGuideArray[i]
                         let tourGuideInfoArray = (tourguideInfo.tourGuideMultimediaRelation?.allObjects) as! [TourGuideMultimediaEntity]
-                        for i in 0 ... tourGuideInfoArray.count-1 {
-                            multimediaArray.append(tourGuideInfoArray[i].multimediaFile!)
+                        if(tourGuideInfoArray.count > 0) {
+                            for i in 0 ... tourGuideInfoArray.count-1 {
+                                multimediaArray.append(tourGuideInfoArray[i].multimediaFile!)
+                            }
                         }
+                        
                         self.miaTourDataFullArray.insert(TourGuide(title: tourGuideArray[i].title, tourGuideDescription: tourGuideArray[i].tourGuideDescription, multimediaFile: multimediaArray, museumsEntity: tourGuideArray[i].museumsEntity, nid: tourGuideArray[i].nid), at: i)
                     }
                     DispatchQueue.main.async {
@@ -388,8 +391,10 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
                         var multimediaArray : [String] = []
                         let tourguideInfo = tourGuideArray[i]
                         let tourGuideInfoArray = (tourguideInfo.tourGuideMultimediaRelation?.allObjects) as! [TourGuideMultimediaEntityAr]
-                        for i in 0 ... tourGuideInfoArray.count-1 {
-                            multimediaArray.append(tourGuideInfoArray[i].multimediaFile!)
+                        if(tourGuideInfoArray.count > 0) {
+                            for i in 0 ... tourGuideInfoArray.count-1 {
+                                multimediaArray.append(tourGuideInfoArray[i].multimediaFile!)
+                            }
                         }
                         self.miaTourDataFullArray.insert(TourGuide(title: tourGuideArray[i].title, tourGuideDescription: tourGuideArray[i].tourGuideDescription, multimediaFile: multimediaArray, museumsEntity: tourGuideArray[i].museumsEntity, nid: tourGuideArray[i].nid), at: i)
                         
