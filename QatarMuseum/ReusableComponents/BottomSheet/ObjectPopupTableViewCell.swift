@@ -42,7 +42,7 @@ class ObjectPopupTableViewCell: UITableViewCell {
         if(popupImgeView.image == nil) {
             popupImgeView.image = UIImage(named: "default_imageX2")
         }
-        title.font = UIFont.eventPopupTitleFont
+        title.font = UIFont.tryAgainFont
         productionTitle.font = UIFont.settingResetButtonFont
         productionDateTitle.font = UIFont.settingResetButtonFont
         periodTitle.font = UIFont.settingResetButtonFont

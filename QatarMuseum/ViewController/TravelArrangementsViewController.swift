@@ -198,7 +198,6 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
                 travelListArray = (try managedContext.fetch(fetchRequest) as? [NMoQTravelListEntity])!
                 if (travelListArray.count > 0) {
                     for i in 0 ... travelListArray.count-1 {
-                        let travelListDict = travelListArray[i]
                         self.travelList.insert(HomeBanner(title: travelListArray[i].title, fullContentID: travelListArray[i].fullContentID, bannerTitle: travelListArray[i].bannerTitle, bannerLink: travelListArray[i].bannerLink, image: nil, introductionText: travelListArray[i].introductionText, email: travelListArray[i].email, contactNumber: travelListArray[i].contactNumber, promotionalCode: travelListArray[i].promotionalCode, claimOffer: travelListArray[i].claimOffer), at: i)
                     }
                     if(travelList.count == 0){
