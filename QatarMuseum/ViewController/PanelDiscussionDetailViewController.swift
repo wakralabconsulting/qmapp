@@ -54,12 +54,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             headerView.headerBackButton.setImage(UIImage(named: "closeX1"), for: .normal)
             headerView.headerBackButton.contentEdgeInsets = UIEdgeInsets(top:12, left:17, bottom: 12, right:17)
         fetchUserEventListFromCoredata()
-        if (pageNameString == NMoQPanelPage.PanelDetailPage) {
-            //getNMoQSpecialEventDetail()
-            getNMoQTourDetail()
-        } else if (pageNameString == NMoQPanelPage.TourDetailPage) {
-            //getNMoQTourDetail()
-        }
+        
         
     }
     func registerCell() {
@@ -67,8 +62,9 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(pageNameString == NMoQPanelPage.PanelDetailPage) {
-            //return nmoqSpecialEventDetail.count
-            return nmoqTourDetail.count
+            if(nmoqTourDetail[selectedRow!] != nil) {
+                return 1
+            }
         } else if(pageNameString == NMoQPanelPage.TourDetailPage){
             //return nmoqTourDetail.count
             if(nmoqTourDetail[selectedRow!] != nil) {
@@ -84,10 +80,11 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         cell.selectionStyle = .none
         if(pageNameString == NMoQPanelPage.PanelDetailPage) {
             //cell.setPanelDetailCellContent(panelDetailData: nmoqSpecialEventDetail[indexPath.row])
+            cell.setTourSecondDetailCellContent(tourDetailData: nmoqTourDetail[self.selectedRow!], userEventList: userEventList, fromTour: false)
             cell.topDescription.textAlignment = .left
             cell.descriptionLeftConstraint.constant = 30
-            selectedRow = indexPath.row
-            cell.setTourSecondDetailCellContent(tourDetailData: nmoqTourDetail[indexPath.row], userEventList: userEventList, fromTour: false)
+            //selectedRow = indexPath.row
+            
             cell.registerOrUnRegisterAction = {
                 () in
                 self.selectedPanelCell = cell
