@@ -18,6 +18,8 @@ var miaTourNotification = "MiaTourNotification"
 var nmoqAboutNotification = "NmoqAboutNotification"
 var nmoqTourlistNotification = "NmoqTourlistNotification"
 var nmoqTravelListNotification = "NmoqTravelListNotification"
+var publicArtsListNotificationEn = "PublicArtsListNotificationEn"
+var publicArtsListNotificationAr = "PublicArtsListNotificationAr"
 // Utility method for presenting alert without any completion handler
 func presentAlert(_ viewController: UIViewController, title: String, message: String) {
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)

@@ -35,6 +35,10 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
     
     @IBOutlet weak var descriptionLeftConstraint: NSLayoutConstraint!
     @IBOutlet weak var contactTitleLine: UILabel!
+    
+    @IBOutlet weak var switchTopConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var switchBottomConstraint: NSLayoutConstraint!
     var loadMapView : (()->())?
     var loadEmailComposer : (()->())?
     var callPhone : (()->())?
@@ -150,11 +154,30 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
         
     }
     
-    func setTourSecondDetailCellContent(tourDetailData: NMoQTourDetail?,userEventList : [NMoQUserEventList]) {
+    func setTourSecondDetailCellContent(tourDetailData: NMoQTourDetail?,userEventList : [NMoQUserEventList],fromTour:Bool?) {
+        if(fromTour)! {
+            interestedLabel.text = REGISTER
+            notInterestedLabel.text = UNREGISTER
+            interestedLabel.isHidden = false
+            notInterestedLabel.isHidden = false
+            interestSwitch.isHidden = false
+            switchTopConstraint.constant = 30
+            switchBottomConstraint.constant = 32
+            if let arrayOffset = userEventList.index(where: {$0.eventID == tourDetailData?.nid}) {
+                setRegistrationSwitchOn()
+            } else {
+                setRegistrationSwitchOff()
+            }
+        } else {
+            interestedLabel.isHidden = true
+            notInterestedLabel.isHidden = true
+            interestSwitch.isHidden = true
+            switchTopConstraint.constant = 0
+            switchBottomConstraint.constant = 0
+        }
         topTitle.text = tourDetailData?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         topDescription.text = tourDetailData?.body?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-        interestedLabel.text = REGISTER
-        notInterestedLabel.text = UNREGISTER
+        
         secondImg.isHidden = true
         secondTitle.isHidden = true
         secondDescription.isHidden = true
@@ -216,11 +239,7 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
 
         // activate the constraints
         NSLayoutConstraint.activate([verticalSpace])
-        if let arrayOffset = userEventList.index(where: {$0.eventID == tourDetailData?.nid}) {
-            setRegistrationSwitchOn()
-        } else {
-            setRegistrationSwitchOff()
-        }
+        
     }
     func setRegistrationSwitchOn() {
         interestSwitch.tintColor = UIColor.settingsSwitchOnTint

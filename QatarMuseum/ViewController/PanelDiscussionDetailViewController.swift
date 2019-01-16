@@ -87,7 +87,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             cell.topDescription.textAlignment = .left
             cell.descriptionLeftConstraint.constant = 30
             selectedRow = indexPath.row
-            cell.setTourSecondDetailCellContent(tourDetailData: nmoqTourDetail[indexPath.row], userEventList: userEventList)
+            cell.setTourSecondDetailCellContent(tourDetailData: nmoqTourDetail[indexPath.row], userEventList: userEventList, fromTour: false)
             cell.registerOrUnRegisterAction = {
                 () in
                 self.selectedPanelCell = cell
@@ -107,7 +107,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             }
             
         } else if (pageNameString == NMoQPanelPage.TourDetailPage){
-            cell.setTourSecondDetailCellContent(tourDetailData: nmoqTourDetail[self.selectedRow!], userEventList: userEventList)
+            cell.setTourSecondDetailCellContent(tourDetailData: nmoqTourDetail[self.selectedRow!], userEventList: userEventList, fromTour: true)
             cell.topDescription.textAlignment = .left
             cell.descriptionLeftConstraint.constant = 30
             cell.registerOrUnRegisterAction = {

@@ -37,7 +37,6 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-       
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -51,7 +50,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             self.setImageArray(imageArray: bannerImageArray)
         }
         museumsSlideView.imagesContentMode = .scaleAspectFill
-        self.museumsSlideView.addImage(UIImage(named: "sliderPlaceholder"))
+        
         let aboutName = NSLocalizedString("ABOUT", comment: "ABOUT  in the Museum")
         let tourGuideName = NSLocalizedString("TOURGUIDE_LABEL", comment: "TOURGUIDE_LABEL  in the Museum page")
         let exhibitionsName = NSLocalizedString("EXHIBITIONS_LABEL", comment: "EXHIBITIONS_LABEL  in the Museum page")
@@ -102,56 +101,28 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        //museumsSlideView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-    }
-    
-    func setSlideShow(imgArray: NSArray) {
-        //KASlideshow
-        museumsSlideView.delegate = self
-        museumsSlideView.delay = 0.5
-        museumsSlideView.transitionDuration = 1.2
-        museumsSlideView.transitionType = KASlideShowTransitionType.fade
-        museumsSlideView.imagesContentMode = .scaleAspectFill
-        museumsSlideView.images = imgArray as! NSMutableArray
-        museumsSlideView.add(KASlideShowGestureType.swipe)
-        museumsSlideView.imagesContentMode = .scaleAspectFill
-        museumsSlideView.start()
-        pageControl.numberOfPages = imgArray.count
-        if museumsSlideView.images.count > 0 {
-            let dot = pageControl.subviews[0]
-            dot.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
-        }
-        
-        pageControl.currentPage = Int(museumsSlideView.currentIndex)
-        pageControl.addTarget(self, action: #selector(MuseumsViewController.pageChanged), for: .valueChanged)
-    }
+   
     func setImageArray(imageArray: [String]?) {
-        //self.sliderImgArray[0] = UIImage(named: "sliderPlaceholder")!
-       // self.sliderImgArray[1] = UIImage(named: "sliderPlaceholder")!
-        //self.sliderImgArray[2] = UIImage(named: "sliderPlaceholder")!
-
         if ((imageArray?.count)! >= 4) {
             totalImgCount = 3
         } else if ((imageArray?.count)! > 1){
-            //totalImgCount = (imageArray?.count)!-1
-            totalImgCount = (imageArray?.count)!
+            totalImgCount = (imageArray?.count)!-1
         } else {
             totalImgCount = 0
         }
         if (totalImgCount > 0) {
-            for  var i in 0 ... totalImgCount-1 {
+            for  var i in 1 ... totalImgCount {
                 let imageUrlString = imageArray![i]
                 downloadImage(imageUrlString: imageUrlString)
             }
         }
     }
-
+    
     func downloadImage(imageUrlString : String?)  {
         if (imageUrlString != nil) {
             let imageUrl = URL(string: imageUrlString!)
-            KingfisherManager.shared.retrieveImage(with: imageUrl!, options: [], progressBlock: nil) {
-                (image, error, url, data) in
+            
+            KingfisherManager.shared.retrieveImage(with: imageUrl!, options: [], progressBlock: nil, completionHandler: {  (image, error, cacheType, imageUrl) in
                 if let image = image {
                     self.sliderImgCount = self.sliderImgCount!+1
                     self.sliderImgArray[self.sliderImgCount!-1] = image
@@ -167,10 +138,29 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                     self.setSlideShow(imgArray: self.sliderImgArray)
                     self.museumsSlideView.start()
                 }
-            }
+            })
+            
         }
     }
-
+    func setSlideShow(imgArray: NSArray) {
+        //KASlideshow
+        museumsSlideView.delegate = self
+        museumsSlideView.delay = 0.5
+        museumsSlideView.transitionDuration = 1.2
+        museumsSlideView.transitionType = KASlideShowTransitionType.fade
+        museumsSlideView.imagesContentMode = .scaleAspectFill
+        museumsSlideView.images = imgArray as! NSMutableArray
+        museumsSlideView.add(KASlideShowGestureType.swipe)
+        museumsSlideView.start()
+        pageControl.numberOfPages = imgArray.count
+        if museumsSlideView.images.count > 0 {
+            let dot = pageControl.subviews[0]
+            dot.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
+        }
+        
+        pageControl.currentPage = Int(museumsSlideView.currentIndex)
+        pageControl.addTarget(self, action: #selector(MuseumsViewController.pageChanged), for: .valueChanged)
+    }
     func updateNotificationBadge() {
         museumsTopbar.updateNotificationBadgeCount()
     }
@@ -198,25 +188,24 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     
     func customizePageControlDot(currentIndex: Int) {
-        for i in 0...2 {
+        for i in 0...pageControl.numberOfPages-1 {
+            let dot = pageControl.subviews[i]
             if (i == currentIndex) {
-                let dot = pageControl.subviews[i]
-                for j in 0...2 {
-                    let dot1 = pageControl.subviews[j]
-                    dot1.transform = CGAffineTransform(scaleX: 1, y: 1)
-                }
-                dot.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
-                break
+                 dot.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
+            } else {
+                dot.transform = CGAffineTransform(scaleX: 1, y: 1)
+              //  break
             }
         }
-      
-       
+        
+        
     }
     @objc func pageChanged() {
         
     }
     //MARK: Topbar delegate
     func backButtonPressed() {
+        museumsSlideView.stop()
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush
@@ -555,7 +544,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             }
         }
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
