@@ -91,18 +91,20 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //if (pageNameString == NMoQPageName.Tours) {
-          //  loadTourViewPage(selectedRow: indexPath.row)
-//        } else if (pageNameString == NMoQPageName.PanelDiscussion) {
-//            loadPanelDiscussionDetailPage(selectedRow: indexPath.row)
-//        }
-        loadTourViewPage(selectedRow: indexPath.row)
+        if (pageNameString == NMoQPageName.Tours) {
+            loadTourViewPage(selectedRow: indexPath.row, isFromTour: true)
+        } else if (pageNameString == NMoQPageName.PanelDiscussion) {
+            loadTourViewPage(selectedRow: indexPath.row, isFromTour: false)
+            //loadPanelDiscussionDetailPage(selectedRow: indexPath.row)
+        }
+       // loadTourViewPage(selectedRow: indexPath.row)
     }
     
-    func loadTourViewPage(selectedRow: Int?) {
+    func loadTourViewPage(selectedRow: Int?,isFromTour:Bool?) {
         let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "nMoQTourId") as! NMoQTourViewController
         tourView.tourDetailId = nmoqTourList[selectedRow!].nid
         tourView.headerTitle = nmoqTourList[selectedRow!].subtitle
+        tourView.isFromTour = isFromTour
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionPush

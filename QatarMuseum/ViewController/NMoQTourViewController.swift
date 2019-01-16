@@ -22,6 +22,7 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
     var tourDetailId : String? = nil
     var headerTitle : String? = nil
     var nmoqTourDetail: [NMoQTourDetail]! = []
+    var isFromTour: Bool? =  false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,19 +73,26 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        loadTourSecondDetailPage(selectedRow: indexPath.row)
-
+        if (isFromTour)! {
+            loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: true)
+        } else {
+            loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: false)
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
             let heightValue = UIScreen.main.bounds.height/100
             return heightValue*27
     }
-    func loadTourSecondDetailPage(selectedRow: Int?) {
+    func loadTourSecondDetailPage(selectedRow: Int?,fromTour:Bool?) {
         let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
         panelView.nmoqTourDetail = nmoqTourDetail
         panelView.selectedRow = selectedRow
-        panelView.pageNameString = NMoQPanelPage.TourDetailPage
+        if (fromTour)! {
+            panelView.pageNameString = NMoQPanelPage.TourDetailPage
+        } else {
+            panelView.pageNameString = NMoQPanelPage.PanelDetailPage
+        }
         panelView.panelDetailId = tourDetailId
         let transition = CATransition()
         transition.duration = 0.25

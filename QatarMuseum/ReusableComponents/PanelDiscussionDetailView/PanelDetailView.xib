@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -295,6 +295,8 @@
                 <outlet property="secondTitle" destination="ydL-EE-9qH" id="ox0-xg-hpc"/>
                 <outlet property="secondTitleLine" destination="l9H-t8-4hX" id="iyZ-0P-rrd"/>
                 <outlet property="secondView" destination="Um5-0B-7U7" id="mI2-V9-L0y"/>
+                <outlet property="switchBottomConstraint" destination="0QG-b3-rue" id="pUl-RZ-l2L"/>
+                <outlet property="switchTopConstraint" destination="nXw-ig-Hen" id="EWU-vd-mNS"/>
                 <outlet property="thirdView" destination="6Dv-EH-tOV" id="jS2-fO-vB4"/>
                 <outlet property="topDescription" destination="E7Y-Ea-3S9" id="5XN-TC-Giz"/>
                 <outlet property="topImg" destination="8yc-Tg-wQQ" id="lDS-JQ-RvK"/>
