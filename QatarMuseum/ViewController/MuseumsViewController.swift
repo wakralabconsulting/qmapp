@@ -7,6 +7,7 @@
 //
 
 import Alamofire
+import CoreData
 import Crashlytics
 import Kingfisher
 import UIKit
@@ -33,6 +34,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     var fromHomeBanner : Bool? = false
     var bannerId: String? = nil
     var bannerImageArray : [String]? = []
+    let networkReachability = NetworkReachabilityManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +47,9 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     
     func setupUI() {
         if (fromHomeBanner == false) {
-            getMuseumDataFromServer()
+            //getMuseumDataFromServer()
+            fetchAboutDetailsFromCoredata()
+            
         } else {
             self.setImageArray(imageArray: bannerImageArray)
         }
@@ -535,16 +539,335 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         _ = Alamofire.request(QatarMuseumRouter.LandingPageMuseums(["nid": museumId ?? 0])).responseObject { (response: DataResponse<Museums>) -> Void in
             switch response.result {
             case .success(let data):
-                self.museumArray = data.museum!
+                if(self.museumArray.count == 0) {
+                    self.museumArray = data.museum!
+                }
+                
                 if(self.museumArray.count > 0) {
-                    self.setImageArray(imageArray: self.museumArray[0].multimediaFile)
+                        self.setImageArray(imageArray: self.museumArray[0].multimediaFile)
+                     self.saveOrUpdateAboutCoredata(aboutDetailtArray: data.museum)
                 }
             case .failure(let error):
                 print(error)
             }
         }
     }
-
+    //MARK: About CoreData
+    func saveOrUpdateAboutCoredata(aboutDetailtArray:[Museum]?) {
+        if ((aboutDetailtArray?.count)! > 0) {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.aboutCoreDataInBackgroundThread(managedContext: managedContext, aboutDetailtArray: aboutDetailtArray)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.aboutCoreDataInBackgroundThread(managedContext : managedContext, aboutDetailtArray: aboutDetailtArray)
+                }
+            }
+        }
+    }
+    
+    
+    func aboutCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,aboutDetailtArray:[Museum]?) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "AboutEntity", idKey: "id" , idValue: aboutDetailtArray![0].id, managedContext: managedContext) as! [AboutEntity]
+            
+            if (fetchData.count > 0) {
+                let aboutDetailDict = aboutDetailtArray![0]
+                let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutEntity")
+                if(isDeleted == true) {
+                    // self.saveToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
+                    self.saveToCoreData(aboutDetailDict: aboutDetailDict, managedObjContext: managedContext)
+                }
+                
+            } else {
+                let aboutDetailDict : Museum?
+                aboutDetailDict = aboutDetailtArray?[0]
+                self.saveToCoreData(aboutDetailDict: aboutDetailDict!, managedObjContext: managedContext)
+            }
+        } else {
+            let fetchData = checkAddedToCoredata(entityName: "AboutEntityArabic", idKey:"id" , idValue: aboutDetailtArray![0].id, managedContext: managedContext) as! [AboutEntityArabic]
+            if (fetchData.count > 0) {
+                let aboutDetailDict = aboutDetailtArray![0]
+                let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutEntityArabic")
+                if(isDeleted == true) {
+                    self.saveToCoreData(aboutDetailDict: aboutDetailDict, managedObjContext: managedContext)
+                }
+                
+            } else {
+                let aboutDetailDict : Museum?
+                aboutDetailDict = aboutDetailtArray?[0]
+                self.saveToCoreData(aboutDetailDict: aboutDetailDict!, managedObjContext: managedContext)
+            }
+        }
+    }
+    
+    func saveToCoreData(aboutDetailDict: Museum, managedObjContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let aboutdbDict: AboutEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutEntity", into: managedObjContext) as! AboutEntity
+            
+            aboutdbDict.name = aboutDetailDict.name
+            aboutdbDict.id = aboutDetailDict.id
+            aboutdbDict.tourguideAvailable = aboutDetailDict.tourguideAvailable
+            aboutdbDict.contactNumber = aboutDetailDict.contactNumber
+            aboutdbDict.contactEmail = aboutDetailDict.contactEmail
+            aboutdbDict.mobileLongtitude = aboutDetailDict.mobileLongtitude
+            aboutdbDict.subtitle = aboutDetailDict.subtitle
+            aboutdbDict.openingTime = aboutDetailDict.openingTime
+            
+            aboutdbDict.mobileLatitude = aboutDetailDict.mobileLatitude
+            aboutdbDict.tourGuideAvailability = aboutDetailDict.tourGuideAvailability
+            
+            if((aboutDetailDict.mobileDescription?.count)! > 0) {
+                for i in 0 ... (aboutDetailDict.mobileDescription?.count)!-1 {
+                    var aboutDescEntity: AboutDescriptionEntity!
+                    let aboutDesc: AboutDescriptionEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutDescriptionEntity", into: managedObjContext) as! AboutDescriptionEntity
+                    aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+                    aboutDesc.id = Int16(i)
+                    aboutDescEntity = aboutDesc
+                    aboutdbDict.addToMobileDescRelation(aboutDescEntity)
+                    
+                    do {
+                        try managedObjContext.save()
+                        
+                        
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                    
+                }
+            }
+            
+            //MultimediaFile
+            if(aboutDetailDict.multimediaFile != nil){
+                if((aboutDetailDict.multimediaFile?.count)! > 0) {
+                    for i in 0 ... (aboutDetailDict.multimediaFile?.count)!-1 {
+                        var aboutImage: AboutMultimediaFileEntity!
+                        let aboutImgaeArray: AboutMultimediaFileEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutMultimediaFileEntity", into: managedObjContext) as! AboutMultimediaFileEntity
+                        aboutImgaeArray.image = aboutDetailDict.multimediaFile![i]
+                        
+                        aboutImage = aboutImgaeArray
+                        aboutdbDict.addToMultimediaRelation(aboutImage)
+                        do {
+                            try managedObjContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                    }
+                }
+            }
+            //Download File
+            if(aboutDetailDict.downloadable != nil){
+                if((aboutDetailDict.downloadable?.count)! > 0) {
+                    for i in 0 ... (aboutDetailDict.downloadable?.count)!-1 {
+                        var aboutImage: AboutDownloadLinkEntity
+                        let aboutImgaeArray: AboutDownloadLinkEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutDownloadLinkEntity", into: managedObjContext) as! AboutDownloadLinkEntity
+                        aboutImgaeArray.downloadLink = aboutDetailDict.downloadable![i]
+                        
+                        aboutImage = aboutImgaeArray
+                        aboutdbDict.addToDownloadLinkRelation(aboutImage)
+                        do {
+                            try managedObjContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                    }
+                }
+            }
+        } else {
+            let aboutdbDict: AboutEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "AboutEntityArabic", into: managedObjContext) as! AboutEntityArabic
+            aboutdbDict.nameAr = aboutDetailDict.name
+            aboutdbDict.id = aboutDetailDict.id
+            aboutdbDict.tourguideAvailableAr = aboutDetailDict.tourguideAvailable
+            aboutdbDict.contactNumberAr = aboutDetailDict.contactNumber
+            aboutdbDict.contactEmailAr = aboutDetailDict.contactEmail
+            aboutdbDict.mobileLongtitudeAr = aboutDetailDict.mobileLongtitude
+            aboutdbDict.subtitleAr = aboutDetailDict.subtitle
+            aboutdbDict.openingTimeAr = aboutDetailDict.openingTime
+            
+            aboutdbDict.mobileLatitudear = aboutDetailDict.mobileLatitude
+            aboutdbDict.tourGuideAvlblyAr = aboutDetailDict.tourGuideAvailability
+            
+            if((aboutDetailDict.mobileDescription?.count)! > 0) {
+                for i in 0 ... (aboutDetailDict.mobileDescription?.count)!-1 {
+                    var aboutDescEntity: AboutDescriptionEntityAr!
+                    let aboutDesc: AboutDescriptionEntityAr = NSEntityDescription.insertNewObject(forEntityName: "AboutDescriptionEntityAr", into: managedObjContext) as! AboutDescriptionEntityAr
+                    aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+                    aboutDesc.id = Int16(i)
+                    aboutDescEntity = aboutDesc
+                    aboutdbDict.addToMobileDescRelation(aboutDescEntity)
+                    
+                    do {
+                        try managedObjContext.save()
+                        
+                        
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                    
+                }
+            }
+            
+            //MultimediaFile
+            if(aboutDetailDict.multimediaFile != nil){
+                if((aboutDetailDict.multimediaFile?.count)! > 0) {
+                    for i in 0 ... (aboutDetailDict.multimediaFile?.count)!-1 {
+                        var aboutImage: AboutMultimediaFileEntityAr!
+                        let aboutImgaeArray: AboutMultimediaFileEntityAr = NSEntityDescription.insertNewObject(forEntityName: "AboutMultimediaFileEntityAr", into: managedObjContext) as! AboutMultimediaFileEntityAr
+                        aboutImgaeArray.image = aboutDetailDict.multimediaFile![i]
+                        
+                        aboutImage = aboutImgaeArray
+                        aboutdbDict.addToMultimediaRelation(aboutImage)
+                        do {
+                            try managedObjContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                    }
+                }
+            }
+        }
+        do {
+            try managedObjContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    func deleteExistingEvent(managedContext:NSManagedObjectContext,entityName : String?) ->Bool? {
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName!)
+        //fetchRequest.predicate = NSPredicate.init(format: "\("dateId") == \(dateID!)")
+        let deleteRequest = NSBatchDeleteRequest( fetchRequest: fetchRequest)
+        do{
+            try managedContext.execute(deleteRequest)
+            return true
+        }catch let error as NSError {
+            //handle error here
+            return false
+        }
+        
+    }
+    func fetchAboutDetailsFromCoredata() {
+        let managedContext = getContext()
+        do {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                var aboutArray = [AboutEntity]()
+                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "AboutEntity")
+                
+                if(museumId != nil) {
+                    //fetchRequest.predicate = NSPredicate.init(format: "id == \(museumId!)")
+                    fetchRequest.predicate = NSPredicate(format: "id == %@", museumId!)
+                    aboutArray = (try managedContext.fetch(fetchRequest) as? [AboutEntity])!
+                    
+                    if (aboutArray.count > 0 ){
+                        let aboutDict = aboutArray[0]
+//                        var descriptionArray : [String] = []
+//                        let aboutInfoArray = (aboutDict.mobileDescRelation?.allObjects) as! [AboutDescriptionEntity]
+//
+//                        if(aboutInfoArray.count > 0) {
+//                            for i in 0 ... aboutInfoArray.count-1 {
+//                                descriptionArray.append("")
+//                            }
+//                            for i in 0 ... aboutInfoArray.count-1 {
+//                                descriptionArray.remove(at: Int(aboutInfoArray[i].id))
+//                                descriptionArray.insert(aboutInfoArray[i].mobileDesc!, at: Int(aboutInfoArray[i].id))
+//
+//                            }
+//
+//                        }
+                        var multimediaArray : [String] = []
+                        let mutimediaInfoArray = (aboutDict.multimediaRelation?.allObjects) as! [AboutMultimediaFileEntity]
+                        if(mutimediaInfoArray.count > 0) {
+                            for i in 0 ... mutimediaInfoArray.count-1 {
+                                multimediaArray.append(mutimediaInfoArray[i].image!)
+                            }
+                        }
+                        
+//                        var downloadArray : [String] = []
+//                        let downloadInfoArray = (aboutDict.downloadLinkRelation?.allObjects) as! [AboutDownloadLinkEntity]
+//                        if(downloadInfoArray.count > 0) {
+//                            for i in 0 ... downloadInfoArray.count-1 {
+//                                downloadArray.append(downloadInfoArray[i].downloadLink!)
+//                            }
+//                        }
+                        self.museumArray.insert(Museum(name: aboutDict.name, id: aboutDict.id, tourguideAvailable: nil, contactNumber: nil, contactEmail: nil, mobileLongtitude: nil, subtitle: nil, openingTime: nil, mobileDescription: nil, multimediaFile: multimediaArray, mobileLatitude: nil, tourGuideAvailability: nil,multimediaVideo: nil, downloadable:nil),at: 0)
+                        
+                        
+                        if(museumArray.count == 0){
+                            //self.showNoNetwork()
+                        } else {
+                            self.setImageArray(imageArray: self.museumArray[0].multimediaFile)
+                        }
+                       
+                    } else {
+                        if (networkReachability?.isReachable)! {
+                            DispatchQueue.global(qos: .background).async {
+                                self.getMuseumDataFromServer()
+                            }
+                        }
+                        
+                       // self.showNoNetwork()
+                    }
+                }
+            } else {
+                var aboutArray = [AboutEntityArabic]()
+                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "AboutEntityArabic")
+                if(museumId != nil) {
+                    fetchRequest.predicate = NSPredicate.init(format: "id == \(museumId!)")
+                    aboutArray = (try managedContext.fetch(fetchRequest) as? [AboutEntityArabic])!
+                    
+                    if (aboutArray.count > 0) {
+                        let aboutDict = aboutArray[0]
+//                        var descriptionArray : [String] = []
+//                        let aboutInfoArray = (aboutDict.mobileDescRelation?.allObjects) as! [AboutDescriptionEntityAr]
+//                        if(aboutInfoArray.count > 0){
+//                            for i in 0 ... aboutInfoArray.count-1 {
+//                                descriptionArray.append("")
+//                            }
+//                            for i in 0 ... aboutInfoArray.count-1 {
+//                                //descriptionArray.append(aboutInfoArray[i].mobileDesc!)
+//                                descriptionArray.insert(aboutInfoArray[i].mobileDesc!, at: Int(aboutInfoArray[i].id))
+//                            }
+//                        }
+                        var multimediaArray : [String] = []
+                        let mutimediaInfoArray = (aboutDict.multimediaRelation?.allObjects) as! [AboutMultimediaFileEntity]
+                        if(mutimediaInfoArray.count > 0){
+                            for i in 0 ... mutimediaInfoArray.count-1 {
+                                multimediaArray.append(mutimediaInfoArray[i].image!)
+                            }
+                        }
+                        self.museumArray.insert(Museum(name: aboutDict.nameAr, id: aboutDict.id, tourguideAvailable: nil, contactNumber: nil, contactEmail: nil, mobileLongtitude: nil, subtitle: nil, openingTime: nil, mobileDescription: nil, multimediaFile: multimediaArray, mobileLatitude: nil, tourGuideAvailability: nil,multimediaVideo: nil,downloadable:nil),at: 0)
+                        if(museumArray.count == 0){
+                            //self.showNoNetwork()
+                        } else {
+                            self.setImageArray(imageArray: self.museumArray[0].multimediaFile)
+                        }
+                       
+                    }
+                    else{
+                        //self.showNoNetwork()
+                    }
+                }
+                
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func checkAddedToCoredata(entityName: String?,idKey:String?, idValue: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
+        var fetchResults : [NSManagedObject] = []
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
+        if (idValue != nil) {
+            fetchRequest.predicate = NSPredicate.init(format: "\(idKey!) == \(idValue!)")
+        }
+        fetchResults = try! managedContext.fetch(fetchRequest)
+        return fetchResults
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
