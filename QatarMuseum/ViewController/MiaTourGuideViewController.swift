@@ -407,7 +407,9 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
                             self.loadingView.showNoDataView()
                         }
                     }
-                    miaTourCollectionView.reloadData()
+                    DispatchQueue.main.async {
+                        self.miaTourCollectionView.reloadData()
+                    }
                 }
                 else{
                     if(self.networkReachability?.isReachable == false) {
