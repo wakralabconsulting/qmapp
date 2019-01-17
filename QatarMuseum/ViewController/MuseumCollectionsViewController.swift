@@ -56,27 +56,28 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
             switch response.result {
             case .success(let data):
                 self.collection = data.collections!
-                self.loadingView.stopLoading()
-                self.loadingView.isHidden = true
-                if (self.collection.count == 0) {
-                    self.loadingView.stopLoading()
-                    self.loadingView.noDataView.isHidden = false
-                    self.loadingView.isHidden = false
-                    self.loadingView.showNoDataView()
-                }
-                else {
-                    self.saveOrUpdateCollectionCoredata()
-                    self.museumCollectionView.reloadData()
-                }
+//                self.loadingView.stopLoading()
+//                self.loadingView.isHidden = true
+//                if (self.collection.count == 0) {
+//                    self.loadingView.stopLoading()
+//                    self.loadingView.noDataView.isHidden = false
+//                    self.loadingView.isHidden = false
+//                    self.loadingView.showNoDataView()
+//                }
+                //else {
+                self.saveOrUpdateCollectionCoredata(collection: data.collections)
+                   // self.museumCollectionView.reloadData()
+                //}
             case .failure( _):
-                var errorMessage: String
-                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
-                                                                comment: "Setting the content of the alert"))
-                self.loadingView.stopLoading()
-                self.loadingView.noDataView.isHidden = false
-                self.loadingView.isHidden = false
-                self.loadingView.showNoDataView()
-                self.loadingView.noDataLabel.text = errorMessage
+                print("error")
+//                var errorMessage: String
+//                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+//                                                                comment: "Setting the content of the alert"))
+//                self.loadingView.stopLoading()
+//                self.loadingView.noDataView.isHidden = false
+//                self.loadingView.isHidden = false
+//                self.loadingView.showNoDataView()
+//                self.loadingView.noDataLabel.text = errorMessage
             }
         }
     }
@@ -143,30 +144,30 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
     }
     
     //MARK: Coredata Method
-    func saveOrUpdateCollectionCoredata() {
-        if (collection.count > 0) {
+    func saveOrUpdateCollectionCoredata(collection: [Collection]?) {
+        if ((collection?.count)! > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
                 let container = appDelegate!.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
-                    self.coreDataInBackgroundThread(managedContext: managedContext)
+                    self.coreDataInBackgroundThread(managedContext: managedContext, collection: collection!)
                 }
             } else {
                 let managedContext = appDelegate!.managedObjectContext
                 managedContext.perform {
-                    self.coreDataInBackgroundThread(managedContext : managedContext)
+                    self.coreDataInBackgroundThread(managedContext : managedContext, collection: collection!)
                 }
             }
         }
     }
     
-    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,collection: [Collection]?) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: nil, managedContext: managedContext) as! [CollectionsEntity]
             if (fetchData.count > 0) {
-                for i in 0 ... collection.count-1 {
+                for i in 0 ... (collection?.count)!-1 {
                     let collectionListDict : Collection?
-                    collectionListDict = collection[i]
+                    collectionListDict = collection?[i]
                     let fetchResult = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: museumId, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
@@ -186,18 +187,18 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
                 }
             }
             else {
-                for i in 0 ... collection.count-1 {
+                for i in 0 ... (collection?.count)!-1 {
                     let collectionListDict : Collection?
-                    collectionListDict = collection[i]
+                    collectionListDict = collection?[i]
                     self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
                 }
             }
         } else { // For Arabic Database
             let fetchData = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "museumId", idValue: nil, managedContext: managedContext) as! [CollectionsEntityArabic]
             if (fetchData.count > 0) {
-                for i in 0 ... collection.count-1 {
+                for i in 0 ... (collection?.count)!-1 {
                     let collectionListDict : Collection?
-                    collectionListDict = collection[i]
+                    collectionListDict = collection?[i]
                     let fetchResult = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "museumId", idValue: museumId, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
@@ -217,9 +218,9 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
                 }
             }
             else {
-                for i in 0 ... collection.count-1 {
+                for i in 0 ... (collection?.count)!-1 {
                     let collectionListDict : Collection?
-                    collectionListDict = collection[i]
+                    collectionListDict = collection?[i]
                     self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
                 }
             }
