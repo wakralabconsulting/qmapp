@@ -31,6 +31,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
     @IBOutlet weak var contactTitleLabel: UILabel!
     @IBOutlet weak var contactLine: UIView!
     @IBOutlet weak var contactLabel: UILabel!
+    @IBOutlet weak var contactPhoneLabel: UILabel!
     @IBOutlet weak var locationFirstLabel: UILabel!
     @IBOutlet weak var subTitleHeight: NSLayoutConstraint!
 //    @IBOutlet weak var locationTotalTopConstraint: NSLayoutConstraint!
@@ -67,6 +68,8 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
     var loadAboutVideo : (()->())?
     var downloadBtnTapAction : (()->())?
     var claimOfferBtnTapAction : (()->())?
+    var loadEmailComposer : (()->())?
+    var callPhone : (()->())?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -79,6 +82,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
         tap.delegate = self // This is not required
         mapOverlayView.addGestureRecognizer(tap)
         //loadVideo()
+        
     }
     
     func loadVideo(urlString:String?) {
@@ -138,12 +142,21 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
         locationButton.titleLabel?.font = UIFont.sideMenuLabelFont
         contactTitleLabel.font = UIFont.closeButtonFont
         contactLabel.font = UIFont.sideMenuLabelFont
+        contactPhoneLabel.font = UIFont.sideMenuLabelFont
         favoriteBtnViewHeight.constant = 0
         offerCodeViewHeight.constant = 0
         downloadLabel.font = UIFont.downloadLabelFont
         claimOfferButton.titleLabel?.font = UIFont.popupProductionFont
         codeLabel.font = UIFont.artifactNumberFont
         offerCodeTitleLabel.font = UIFont.closeButtonFont
+        
+        let emailTap = UITapGestureRecognizer(target: self, action: #selector(emailTapFunction))
+        contactLabel.isUserInteractionEnabled = true
+        contactLabel.addGestureRecognizer(emailTap)
+        
+        let phoneTap = UITapGestureRecognizer(target: self, action: #selector(phoneTapFunction))
+        contactPhoneLabel.isUserInteractionEnabled = true
+        contactPhoneLabel.addGestureRecognizer(phoneTap)
     }
     
     func setHeritageDetailData(heritageDetail: Heritage) {
@@ -337,7 +350,9 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
         if ((aboutData.contactEmail != nil) && (aboutData.contactEmail != "") || (aboutData.contactNumber != nil) && (aboutData.contactEmail != "")) {
             contactTitleLabel.text = NSLocalizedString("CONTACT_TITLE",
                                                        comment: "CONTACT_TITLE in the Heritage detail")
-            contactLabel.text = aboutData.contactEmail! + "\n\n" + aboutData.contactNumber!
+            contactLabel.text = aboutData.contactEmail!
+                //+ "\n\n" + aboutData.contactNumber!
+            contactPhoneLabel.text = aboutData.contactNumber!
             contactLine.isHidden = false
         }
         //Description
@@ -572,5 +587,16 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
     
     @IBAction func didTapClaimOffer(_ sender: UIButton) {
         self.claimOfferBtnTapAction?()
+    }
+    @objc func emailTapFunction(sender:UITapGestureRecognizer) {
+        
+        print("email label tapped ...")
+        self.loadEmailComposer?()
+    }
+    
+    @objc func phoneTapFunction(sender:UITapGestureRecognizer) {
+        
+        print("phone label tapped ...")
+        self.callPhone?()
     }
 }
