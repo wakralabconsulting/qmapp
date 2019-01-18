@@ -67,6 +67,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if  (networkReachability?.isReachable)! {
             self.getHomeList(lang: ENG_LANGUAGE)
             self.getHomeList(lang: AR_LANGUAGE)
+            self.getExhibitionDataFromServer(lang: ENG_LANGUAGE)
+            self.getExhibitionDataFromServer(lang: AR_LANGUAGE)
             self.getHeritageDataFromServer(lang: ENG_LANGUAGE)
             self.getHeritageDataFromServer(lang: AR_LANGUAGE)
             self.getMiaTourGuideDataFromServer(museumId: "63", lang: ENG_LANGUAGE)
@@ -79,6 +81,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             self.getDiningListFromServer(lang: AR_LANGUAGE)
             self.getPublicArtsListDataFromServer(lang: ENG_LANGUAGE)
             self.getPublicArtsListDataFromServer(lang: AR_LANGUAGE)
+            self.getCollectionList(museumId: "63", lang: ENG_LANGUAGE)
+            self.getCollectionList(museumId: "96", lang: AR_LANGUAGE)
         }
         
     }
@@ -523,36 +527,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
     //MARK: Exhibitions Service call
-    func getExhibitionDataFromServer() {
+    func getExhibitionDataFromServer(lang: String?) {
         let queue = DispatchQueue(label: "ExhibitionThread", qos: .background, attributes: .concurrent)
-        _ = Alamofire.request(QatarMuseumRouter.ExhibitionList()).responseObject(queue: queue) { (response: DataResponse<Exhibitions>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.ExhibitionList(lang!)).responseObject(queue: queue) { (response: DataResponse<Exhibitions>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateExhibitionsCoredata(exhibition: data.exhibitions)
+                self.saveOrUpdateExhibitionsCoredata(exhibition: data.exhibitions, lang: lang)
             case .failure( _):
                 print("error")
             }
         }
     }
     //MARK: Exhibitions Coredata Method
-    func saveOrUpdateExhibitionsCoredata(exhibition: [Exhibition]?) {
+    func saveOrUpdateExhibitionsCoredata(exhibition: [Exhibition]?,lang: String?) {
         if ((exhibition?.count)! > 0) {
             if #available(iOS 10.0, *) {
                 let container = self.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
-                    self.exhibitionCoreDataInBackgroundThread(managedContext: managedContext, exhibition: exhibition)
+                    self.exhibitionCoreDataInBackgroundThread(managedContext: managedContext, exhibition: exhibition, lang: lang)
                 }
             } else {
                 let managedContext = self.managedObjectContext
                 managedContext.perform {
-                    self.exhibitionCoreDataInBackgroundThread(managedContext : managedContext, exhibition: exhibition)
+                    self.exhibitionCoreDataInBackgroundThread(managedContext : managedContext, exhibition: exhibition, lang: lang)
                 }
             }
         }
     }
     
-    func exhibitionCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,exhibition: [Exhibition]?) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+    func exhibitionCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,exhibition: [Exhibition]?,lang: String?) {
+        if (lang == ENG_LANGUAGE) {
             let fetchData = self.checkAddedToCoredata(entityName: "ExhibitionsEntity", idKey: "id", idValue: nil, managedContext: managedContext) as! [ExhibitionsEntity]
             if (fetchData.count > 0) {
                 for i in 0 ... (exhibition?.count)!-1 {
@@ -576,14 +580,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         }
                     } else {
                         //save
-                        self.saveExhibitionListToCoreData(exhibitionDict: exhibitionsListDict, managedObjContext: managedContext)
+                        self.saveExhibitionListToCoreData(exhibitionDict: exhibitionsListDict, managedObjContext: managedContext, lang: lang)
                     }
                 }//for
             } else {
                 for i in 0 ... (exhibition?.count)!-1 {
                     let exhibitionListDict : Exhibition?
                     exhibitionListDict = exhibition?[i]
-                    self.saveExhibitionListToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext)
+                    self.saveExhibitionListToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext, lang: lang)
                 }
             }
         } else {
@@ -610,21 +614,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         }
                     } else {
                         //save
-                        self.saveExhibitionListToCoreData(exhibitionDict: exhibitionListDict, managedObjContext: managedContext)
+                        self.saveExhibitionListToCoreData(exhibitionDict: exhibitionListDict, managedObjContext: managedContext, lang: lang)
                     }
                 }
             } else {
                 for i in 0 ... (exhibition?.count)!-1 {
                     let exhibitionListDict : Exhibition?
                     exhibitionListDict = exhibition?[i]
-                    self.saveExhibitionListToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext)
+                    self.saveExhibitionListToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext, lang: lang)
                 }
             }
         }
     }
     
-    func saveExhibitionListToCoreData(exhibitionDict: Exhibition, managedObjContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+    func saveExhibitionListToCoreData(exhibitionDict: Exhibition, managedObjContext: NSManagedObjectContext,lang: String?) {
+        if (lang == ENG_LANGUAGE) {
             let exhibitionInfo: ExhibitionsEntity = NSEntityDescription.insertNewObject(forEntityName: "ExhibitionsEntity", into: managedObjContext) as! ExhibitionsEntity
             
             exhibitionInfo.id = exhibitionDict.id
@@ -1642,11 +1646,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
     //MARK: Webservice call
-    func getCollectionList(museumId:String?) {
-        _ = Alamofire.request(QatarMuseumRouter.CollectionList(["museum_id": museumId ?? 0])).responseObject { (response: DataResponse<Collections>) -> Void in
+    func getCollectionList(museumId:String?,lang: String?) {
+        let queue = DispatchQueue(label: "CollectionListThread", qos: .background, attributes: .concurrent)
+        _ = Alamofire.request(QatarMuseumRouter.CollectionList(lang!,["museum_id": museumId ?? 0])).responseObject(queue: queue) { (response: DataResponse<Collections>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateCollectionCoredata(collection: data.collections, museumId: museumId)
+                self.saveOrUpdateCollectionCoredata(collection: data.collections, museumId: museumId, lang: lang)
                
             case .failure( _):
                 print("error")
@@ -1654,25 +1659,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
     //MARK: Coredata Method
-    func saveOrUpdateCollectionCoredata(collection: [Collection]?,museumId:String?) {
+    func saveOrUpdateCollectionCoredata(collection: [Collection]?,museumId:String?,lang: String?) {
         if ((collection?.count)! > 0) {
-            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
-                let container = appDelegate!.persistentContainer
+                let container = self.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
-                    self.collectionsListCoreDataInBackgroundThread(managedContext: managedContext, collection: collection!, museumId: museumId)
+                    self.collectionsListCoreDataInBackgroundThread(managedContext: managedContext, collection: collection!, museumId: museumId, lang: lang)
                 }
             } else {
-                let managedContext = appDelegate!.managedObjectContext
+                let managedContext = self.managedObjectContext
                 managedContext.perform {
-                    self.collectionsListCoreDataInBackgroundThread(managedContext : managedContext, collection: collection!, museumId: museumId)
+                    self.collectionsListCoreDataInBackgroundThread(managedContext : managedContext, collection: collection!, museumId: museumId, lang: lang)
                 }
             }
         }
     }
     
-    func collectionsListCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,collection: [Collection]?,museumId:String?) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+    func collectionsListCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,collection: [Collection]?,museumId:String?,lang: String?) {
+        if (lang == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: nil, managedContext: managedContext) as! [CollectionsEntity]
             if (fetchData.count > 0) {
                 for i in 0 ... (collection?.count)!-1 {
@@ -1692,16 +1696,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                             print(error)
                         }
                     } else {
-                        self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
+                        self.saveCollectionListToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext, lang: lang)
                     }
                 }
+                NotificationCenter.default.post(name: NSNotification.Name(collectionsListNotificationEn), object: self)
             }
             else {
                 for i in 0 ... (collection?.count)!-1 {
                     let collectionListDict : Collection?
                     collectionListDict = collection?[i]
-                    self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
+                    self.saveCollectionListToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext, lang: lang)
                 }
+                NotificationCenter.default.post(name: NSNotification.Name(collectionsListNotificationEn), object: self)
             }
         } else { // For Arabic Database
             let fetchData = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "museumId", idValue: nil, managedContext: managedContext) as! [CollectionsEntityArabic]
@@ -1723,22 +1729,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                             print(error)
                         }
                     } else {
-                        self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
+                        self.saveCollectionListToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext, lang: lang)
                     }
                 }
+                NotificationCenter.default.post(name: NSNotification.Name(collectionsListNotificationAr), object: self)
             }
             else {
                 for i in 0 ... (collection?.count)!-1 {
                     let collectionListDict : Collection?
                     collectionListDict = collection?[i]
-                    self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
+                    self.saveCollectionListToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext, lang: lang)
                 }
+                NotificationCenter.default.post(name: NSNotification.Name(collectionsListNotificationAr), object: self)
             }
         }
     }
     
-    func saveToCoreData(collectionListDict: Collection, managedObjContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+    func saveCollectionListToCoreData(collectionListDict: Collection, managedObjContext: NSManagedObjectContext,lang: String?) {
+        if (lang == ENG_LANGUAGE) {
             let collectionInfo: CollectionsEntity = NSEntityDescription.insertNewObject(forEntityName: "CollectionsEntity", into: managedObjContext) as! CollectionsEntity
             collectionInfo.listName = collectionListDict.name?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
             collectionInfo.listImage = collectionListDict.image

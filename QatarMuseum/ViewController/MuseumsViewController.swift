@@ -48,7 +48,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     func setupUI() {
         if (fromHomeBanner == false) {
             //getMuseumDataFromServer()
-            fetchAboutDetailsFromCoredata()
+            fetchMuseumLandingImagesFromCoredata()
             
         } else {
             self.setImageArray(imageArray: bannerImageArray)
@@ -750,7 +750,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         }
         
     }
-    func fetchAboutDetailsFromCoredata() {
+    func fetchMuseumLandingImagesFromCoredata() {
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -764,20 +764,6 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                     
                     if (aboutArray.count > 0 ){
                         let aboutDict = aboutArray[0]
-//                        var descriptionArray : [String] = []
-//                        let aboutInfoArray = (aboutDict.mobileDescRelation?.allObjects) as! [AboutDescriptionEntity]
-//
-//                        if(aboutInfoArray.count > 0) {
-//                            for i in 0 ... aboutInfoArray.count-1 {
-//                                descriptionArray.append("")
-//                            }
-//                            for i in 0 ... aboutInfoArray.count-1 {
-//                                descriptionArray.remove(at: Int(aboutInfoArray[i].id))
-//                                descriptionArray.insert(aboutInfoArray[i].mobileDesc!, at: Int(aboutInfoArray[i].id))
-//
-//                            }
-//
-//                        }
                         var multimediaArray : [String] = []
                         let mutimediaInfoArray = (aboutDict.multimediaRelation?.allObjects) as! [AboutMultimediaFileEntity]
                         if(mutimediaInfoArray.count > 0) {
@@ -785,14 +771,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                                 multimediaArray.append(mutimediaInfoArray[i].image!)
                             }
                         }
-                        
-//                        var downloadArray : [String] = []
-//                        let downloadInfoArray = (aboutDict.downloadLinkRelation?.allObjects) as! [AboutDownloadLinkEntity]
-//                        if(downloadInfoArray.count > 0) {
-//                            for i in 0 ... downloadInfoArray.count-1 {
-//                                downloadArray.append(downloadInfoArray[i].downloadLink!)
-//                            }
-//                        }
+
                         self.museumArray.insert(Museum(name: aboutDict.name, id: aboutDict.id, tourguideAvailable: nil, contactNumber: nil, contactEmail: nil, mobileLongtitude: nil, subtitle: nil, openingTime: nil, mobileDescription: nil, multimediaFile: multimediaArray, mobileLatitude: nil, tourGuideAvailability: nil,multimediaVideo: nil, downloadable:nil),at: 0)
                         
                         
@@ -821,19 +800,8 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                     
                     if (aboutArray.count > 0) {
                         let aboutDict = aboutArray[0]
-//                        var descriptionArray : [String] = []
-//                        let aboutInfoArray = (aboutDict.mobileDescRelation?.allObjects) as! [AboutDescriptionEntityAr]
-//                        if(aboutInfoArray.count > 0){
-//                            for i in 0 ... aboutInfoArray.count-1 {
-//                                descriptionArray.append("")
-//                            }
-//                            for i in 0 ... aboutInfoArray.count-1 {
-//                                //descriptionArray.append(aboutInfoArray[i].mobileDesc!)
-//                                descriptionArray.insert(aboutInfoArray[i].mobileDesc!, at: Int(aboutInfoArray[i].id))
-//                            }
-//                        }
                         var multimediaArray : [String] = []
-                        let mutimediaInfoArray = (aboutDict.multimediaRelation?.allObjects) as! [AboutMultimediaFileEntity]
+                        let mutimediaInfoArray = (aboutDict.multimediaRelation?.allObjects) as! [AboutMultimediaFileEntityAr]
                         if(mutimediaInfoArray.count > 0){
                             for i in 0 ... mutimediaInfoArray.count-1 {
                                 multimediaArray.append(mutimediaInfoArray[i].image!)
@@ -848,7 +816,11 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                        
                     }
                     else{
-                        //self.showNoNetwork()
+                        if (networkReachability?.isReachable)! {
+                            DispatchQueue.global(qos: .background).async {
+                                self.getMuseumDataFromServer()
+                            }
+                        }
                     }
                 }
                 

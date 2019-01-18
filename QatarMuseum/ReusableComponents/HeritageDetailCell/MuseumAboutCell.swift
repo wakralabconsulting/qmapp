@@ -30,7 +30,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
     @IBOutlet weak var openingTimeLine: UIView!
     @IBOutlet weak var contactTitleLabel: UILabel!
     @IBOutlet weak var contactLine: UIView!
-    @IBOutlet weak var contactLabel: UILabel!
+    @IBOutlet weak var contactLabel: UnderlinedLabel!
     @IBOutlet weak var contactPhoneLabel: UILabel!
     @IBOutlet weak var locationFirstLabel: UILabel!
     @IBOutlet weak var subTitleHeight: NSLayoutConstraint!
