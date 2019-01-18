@@ -44,19 +44,17 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
         openCloseView.isHidden = false
         openCloseLabel.isHidden = false
         openCloseLabel.font = UIFont.closeButtonFont
-        if (exhibition.status == "Now open") {
+        let nowOpenString = NSLocalizedString("NOW_OPEN_TITLE", comment: "NOW_OPEN_TITLE in the exhibition page")
+        if (exhibition.status == nowOpenString)  {
             openCloseView.backgroundColor = UIColor.yellow
-            //openCloseLabel.text = NSLocalizedString("NOW_OPEN_TITLE", comment: "NOW_OPEN_TITLE in the exhibition page")
             openCloseLabel.text = exhibition.status
             openCloseLabel.textColor = UIColor.black
         } else {
             openCloseView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.45)
-            //openCloseLabel.text = NSLocalizedString("CLOSED_TITLE", comment: "CLOSED_TITLE in the exhibition page")
             openCloseLabel.text = exhibition.status
             openCloseLabel.textColor = UIColor.white
         }
         if let imageUrl = exhibition.image {
-           // exhibitionImageView.kf.indicatorType = .activity
             exhibitionImageView.kf.setImage(with: URL(string: imageUrl))
         }
         if (exhibitionImageView.image == nil) {
@@ -77,13 +75,14 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
         } else {
             favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
         }
-        if (exhibition.status == "Now open") {
+        let nowOpenString = NSLocalizedString("NOW_OPEN_TITLE", comment: "NOW_OPEN_TITLE in the exhibition page")
+        if (exhibition.status == nowOpenString) {
             openCloseView.backgroundColor = UIColor.yellow
-            openCloseLabel.text = NSLocalizedString("NOW_OPEN_TITLE", comment: "NOW_OPEN_TITLE in the exhibition page")
+            openCloseLabel.text = exhibition.status
             openCloseLabel.textColor = UIColor.black
         } else {
             openCloseView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.45)
-            openCloseLabel.text = NSLocalizedString("CLOSED_TITLE", comment: "CLOSED_TITLE in the exhibition page")
+            openCloseLabel.text = exhibition.status
             openCloseLabel.textColor = UIColor.white
         }
         if let imageUrl = exhibition.image {

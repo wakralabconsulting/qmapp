@@ -31,17 +31,22 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
         super.viewDidLoad()
         setUpExhibitionPageUi()
         registerNib()
+        NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveExhibitionListNotificationEn(notification:)), name: NSNotification.Name(exhibitionsListNotificationEn), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveExhibitionListNotificationAr(notification:)), name: NSNotification.Name(exhibitionsListNotificationAr), object: nil)
         if  (networkReachability?.isReachable)! {
             if (exhibitionsPageNameString == ExhbitionPageName.homeExhibition) {
-                getExhibitionDataFromServer()
+                DispatchQueue.global(qos: .background).async {
+                    self.getExhibitionDataFromServer()
+                }
+                self.fetchExhibitionsListFromCoredata()
             } else {
                 getMuseumExhibitionDataFromServer()
             }
             
         } else {
-             if (exhibitionsPageNameString == ExhbitionPageName.homeExhibition) {
+            if (exhibitionsPageNameString == ExhbitionPageName.homeExhibition) {
                 self.fetchExhibitionsListFromCoredata()
-             } else {
+            } else {
                 self.fetchMuseumExhibitionsListFromCoredata()
             }
         }
@@ -76,27 +81,14 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
     
     //MARK: Service call
     func getExhibitionDataFromServer() {
-       // if (exhibitionsPageNameString == ExhbitionPageName.homeExhibition) {
-        _ = Alamofire.request(QatarMuseumRouter.ExhibitionList()).responseObject { (response: DataResponse<Exhibitions>) -> Void in
-                switch response.result {
-                case .success(let data):
-                    self.exhibition = data.exhibitions
-                    self.saveOrUpdateExhibitionsCoredata()
-                    self.exhibitionCollectionView.reloadData()
-                case .failure(let error):
-                    var errorMessage: String
-                    errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
-                                                                    comment: "Setting the content of the alert"))
-                    self.exbtnLoadingView.stopLoading()
-                    self.exbtnLoadingView.noDataView.isHidden = false
-                    self.exbtnLoadingView.isHidden = false
-                    self.exbtnLoadingView.showNoDataView()
-                    self.exbtnLoadingView.noDataLabel.text = errorMessage
-                }
+        _ = Alamofire.request(QatarMuseumRouter.ExhibitionList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<Exhibitions>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.saveOrUpdateExhibitionsCoredata(exhibition: data.exhibitions)
+            case .failure(let error):
+                print("error")
             }
-//        } else {
-//           //for museums exhibition API
-//        }
+        }
     }
     //MARK: MuseumExhibitions Service Call
     func getMuseumExhibitionDataFromServer() {
@@ -105,7 +97,7 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
             switch response.result {
             case .success(let data):
                 self.exhibition = data.exhibitions
-                self.saveOrUpdateExhibitionsCoredata()
+                self.saveOrUpdateExhibitionsCoredata(exhibition: data.exhibitions)
                 self.exhibitionCollectionView.reloadData()
                 self.exbtnLoadingView.stopLoading()
                 self.exbtnLoadingView.isHidden = true
@@ -245,24 +237,24 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
     }
     
     //MARK: Coredata Method
-    func saveOrUpdateExhibitionsCoredata() {
-        if (exhibition.count > 0) {
+    func saveOrUpdateExhibitionsCoredata(exhibition:[Exhibition]?) {
+        if ((exhibition?.count)! > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
                 let container = appDelegate!.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
-                    self.coreDataInBackgroundThread(managedContext: managedContext)
+                    self.coreDataInBackgroundThread(managedContext: managedContext, exhibition: exhibition)
                 }
             } else {
                 let managedContext = appDelegate!.managedObjectContext
                 managedContext.perform {
-                    self.coreDataInBackgroundThread(managedContext : managedContext)
+                    self.coreDataInBackgroundThread(managedContext : managedContext, exhibition: exhibition)
                 }
             }
         }
     }
     
-    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,exhibition:[Exhibition]?) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = self.checkAddedToCoredata(entityName: "ExhibitionsEntity", idKey: "id", idValue: nil, managedContext: managedContext) as! [ExhibitionsEntity]
             if (fetchData.count > 0) {
@@ -287,14 +279,14 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
                         }
                     } else {
                         //save
-                        self.saveToCoreData(exhibitionDict: exhibitionsListDict, managedObjContext: managedContext)
+                        self.saveToCoreData(exhibitionDict: exhibitionsListDict, managedObjContext: managedContext, exhibition: exhibition)
                     }
                 }//for
             } else {
                 for i in 0 ... self.exhibition.count-1 {
                     let exhibitionListDict : Exhibition?
                     exhibitionListDict = self.exhibition[i]
-                    self.saveToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext)
+                    self.saveToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext, exhibition: exhibition)
                 }
             }
         } else {
@@ -321,23 +313,23 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
                         }
                     } else {
                         //save
-                        self.saveToCoreData(exhibitionDict: exhibitionListDict, managedObjContext: managedContext)
+                        self.saveToCoreData(exhibitionDict: exhibitionListDict, managedObjContext: managedContext, exhibition: exhibition)
                     }
                 }
             } else {
                 for i in 0 ... self.exhibition.count-1 {
                     let exhibitionListDict : Exhibition?
                     exhibitionListDict = self.exhibition[i]
-                    self.saveToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext)
+                    self.saveToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext, exhibition: exhibition)
                 }
             }
         }
     }
     
-    func saveToCoreData(exhibitionDict: Exhibition, managedObjContext: NSManagedObjectContext) {
+    func saveToCoreData(exhibitionDict: Exhibition, managedObjContext: NSManagedObjectContext,exhibition:[Exhibition]?) {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             let exhibitionInfo: ExhibitionsEntity = NSEntityDescription.insertNewObject(forEntityName: "ExhibitionsEntity", into: managedObjContext) as! ExhibitionsEntity
-          
+            
             exhibitionInfo.id = exhibitionDict.id
             exhibitionInfo.name = exhibitionDict.name
             exhibitionInfo.image = exhibitionDict.image
@@ -368,7 +360,7 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
     func fetchExhibitionsListFromCoredata() {
         let managedContext = getContext()
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var exhibitionArray = [ExhibitionsEntity]()
                 let exhibitionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ExhibitionsEntity")
                 exhibitionArray = (try managedContext.fetch(exhibitionFetchRequest) as? [ExhibitionsEntity])!
@@ -484,6 +476,16 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
         self.exbtnLoadingView.noDataView.isHidden = false
         self.exbtnLoadingView.isHidden = false
         self.exbtnLoadingView.showNoNetworkView()
+    }
+    @objc func receiveExhibitionListNotificationEn(notification: NSNotification) {
+        if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (exhibition.count == 0)){
+            self.fetchExhibitionsListFromCoredata()
+        }
+    }
+    @objc func receiveExhibitionListNotificationAr(notification: NSNotification) {
+        if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (exhibition.count == 0)){
+            self.fetchExhibitionsListFromCoredata()
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

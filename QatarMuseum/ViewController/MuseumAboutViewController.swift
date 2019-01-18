@@ -1213,7 +1213,11 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.setTopBarImage()
                         heritageDetailTableView.reloadData()
                     } else {
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                 }
             } else {
@@ -1237,7 +1241,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                             }
                         }
                         var multimediaArray : [String] = []
-                        let mutimediaInfoArray = (aboutDict.multimediaRelation?.allObjects) as! [AboutMultimediaFileEntity]
+                        let mutimediaInfoArray = (aboutDict.multimediaRelation?.allObjects) as! [AboutMultimediaFileEntityAr]
                         if(mutimediaInfoArray.count > 0){
                             for i in 0 ... mutimediaInfoArray.count-1 {
                                 multimediaArray.append(mutimediaInfoArray[i].image!)

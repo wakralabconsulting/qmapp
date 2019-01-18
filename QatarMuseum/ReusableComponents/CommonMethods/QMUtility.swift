@@ -20,6 +20,10 @@ var nmoqTourlistNotification = "NmoqTourlistNotification"
 var nmoqTravelListNotification = "NmoqTravelListNotification"
 var publicArtsListNotificationEn = "PublicArtsListNotificationEn"
 var publicArtsListNotificationAr = "PublicArtsListNotificationAr"
+var collectionsListNotificationEn = "CollectionsListNotificationEn"
+var collectionsListNotificationAr = "CollectionsListNotificationAr"
+var exhibitionsListNotificationEn = "ExhibitionsListNotificationEn"
+var exhibitionsListNotificationAr = "ExhibitionsListNotificationAr"
 // Utility method for presenting alert without any completion handler
 func presentAlert(_ viewController: UIViewController, title: String, message: String) {
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -144,5 +148,17 @@ func getContext() -> NSManagedObjectContext {
             return appDelegate!.managedObjectContext
         }
 }
+class UnderlinedLabel: UILabel {
     
+    override var text: String? {
+        didSet {
+            guard let text = text else { return }
+            let textRange = NSMakeRange(0, text.characters.count)
+            let attributedText = NSMutableAttributedString(string: text)
+            attributedText.addAttribute(NSAttributedStringKey.underlineStyle , value: NSUnderlineStyle.styleSingle.rawValue, range: textRange)
+            // Add other attributes if needed
+            self.attributedText = attributedText
+        }
+    }
+}
 

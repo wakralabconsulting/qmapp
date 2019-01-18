@@ -1434,7 +1434,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                         
                         
                         var multimediaArray : [String] = []
-                        let mutimediaInfoArray = (aboutDict.multimediaRelation?.allObjects) as! [AboutMultimediaFileEntity]
+                        let mutimediaInfoArray = (aboutDict.multimediaRelation?.allObjects) as! [AboutMultimediaFileEntityAr]
                         if(mutimediaInfoArray.count > 0) {
                             for i in 0 ... mutimediaInfoArray.count-1 {
                                 multimediaArray.append(mutimediaInfoArray[i].image!)

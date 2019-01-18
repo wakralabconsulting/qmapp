@@ -25,11 +25,23 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
         super.viewDidLoad()
         setUpUI()
         registerNib()
-        if (networkReachability?.isReachable)! {
-            getCollectionList()
-        } else {
+        NotificationCenter.default.addObserver(self, selector: #selector(MuseumCollectionsViewController.receiveCollectionListNotificationEn(notification:)), name: NSNotification.Name(collectionsListNotificationEn), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MuseumCollectionsViewController.receiveCollectionListNotificationAr(notification:)), name: NSNotification.Name(collectionsListNotificationAr), object: nil)
+        if((museumId == "63") || (museumId == "96")) {
+            if (networkReachability?.isReachable)! {
+                DispatchQueue.global(qos: .background).async {
+                    self.getCollectionList()
+                }
+            }
             self.fetchCollectionListFromCoredata()
+        } else {
+            if (networkReachability?.isReachable)! {
+                self.getCollectionList()
+            } else {
+                self.fetchCollectionListFromCoredata()
+            }
         }
+        
     }
     
     func setUpUI() {
@@ -52,31 +64,36 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
     
     //MARK: Webservice call
     func getCollectionList() {
-        _ = Alamofire.request(QatarMuseumRouter.CollectionList(["museum_id": museumId ?? 0])).responseObject { (response: DataResponse<Collections>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.CollectionList(LocalizationLanguage.currentAppleLanguage(),["museum_id": museumId ?? 0])).responseObject { (response: DataResponse<Collections>) -> Void in
             switch response.result {
             case .success(let data):
-                self.collection = data.collections!
-                self.loadingView.stopLoading()
-                self.loadingView.isHidden = true
-                if (self.collection.count == 0) {
+                if((self.museumId != "63") && (self.museumId != "96")) {
+                    self.collection = data.collections!
+                    self.loadingView.stopLoading()
+                    self.loadingView.isHidden = true
+                    if (self.collection.count == 0) {
+                            self.loadingView.stopLoading()
+                            self.loadingView.noDataView.isHidden = false
+                            self.loadingView.isHidden = false
+                            self.loadingView.showNoDataView()
+                    } else {
+                          self.museumCollectionView.reloadData()
+                    }
+                }
+                    self.saveOrUpdateCollectionCoredata(collection: data.collections)
+                
+            case .failure( _):
+                print("error")
+                if((self.museumId != "63") && (self.museumId != "96")) {
+                    var errorMessage: String
+                    errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                    comment: "Setting the content of the alert"))
                     self.loadingView.stopLoading()
                     self.loadingView.noDataView.isHidden = false
                     self.loadingView.isHidden = false
                     self.loadingView.showNoDataView()
+                    self.loadingView.noDataLabel.text = errorMessage
                 }
-                else {
-                    self.saveOrUpdateCollectionCoredata()
-                    self.museumCollectionView.reloadData()
-                }
-            case .failure( _):
-                var errorMessage: String
-                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
-                                                                comment: "Setting the content of the alert"))
-                self.loadingView.stopLoading()
-                self.loadingView.noDataView.isHidden = false
-                self.loadingView.isHidden = false
-                self.loadingView.showNoDataView()
-                self.loadingView.noDataLabel.text = errorMessage
             }
         }
     }
@@ -143,30 +160,30 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
     }
     
     //MARK: Coredata Method
-    func saveOrUpdateCollectionCoredata() {
-        if (collection.count > 0) {
+    func saveOrUpdateCollectionCoredata(collection: [Collection]?) {
+        if ((collection?.count)! > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
                 let container = appDelegate!.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
-                    self.coreDataInBackgroundThread(managedContext: managedContext)
+                    self.coreDataInBackgroundThread(managedContext: managedContext, collection: collection!)
                 }
             } else {
                 let managedContext = appDelegate!.managedObjectContext
                 managedContext.perform {
-                    self.coreDataInBackgroundThread(managedContext : managedContext)
+                    self.coreDataInBackgroundThread(managedContext : managedContext, collection: collection!)
                 }
             }
         }
     }
     
-    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,collection: [Collection]?) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: nil, managedContext: managedContext) as! [CollectionsEntity]
             if (fetchData.count > 0) {
-                for i in 0 ... collection.count-1 {
+                for i in 0 ... (collection?.count)!-1 {
                     let collectionListDict : Collection?
-                    collectionListDict = collection[i]
+                    collectionListDict = collection?[i]
                     let fetchResult = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: museumId, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
@@ -186,18 +203,18 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
                 }
             }
             else {
-                for i in 0 ... collection.count-1 {
+                for i in 0 ... (collection?.count)!-1 {
                     let collectionListDict : Collection?
-                    collectionListDict = collection[i]
+                    collectionListDict = collection?[i]
                     self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
                 }
             }
         } else { // For Arabic Database
             let fetchData = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "museumId", idValue: nil, managedContext: managedContext) as! [CollectionsEntityArabic]
             if (fetchData.count > 0) {
-                for i in 0 ... collection.count-1 {
+                for i in 0 ... (collection?.count)!-1 {
                     let collectionListDict : Collection?
-                    collectionListDict = collection[i]
+                    collectionListDict = collection?[i]
                     let fetchResult = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "museumId", idValue: museumId, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
@@ -217,9 +234,9 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
                 }
             }
             else {
-                for i in 0 ... collection.count-1 {
+                for i in 0 ... (collection?.count)!-1 {
                     let collectionListDict : Collection?
-                    collectionListDict = collection[i]
+                    collectionListDict = collection?[i]
                     self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
                 }
             }
@@ -256,19 +273,24 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
                 collectionArray = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: museumId, managedContext: managedContext) as! [CollectionsEntity]
                 if (collectionArray.count > 0) {
                     for i in 0 ... collectionArray.count-1 {
-                        
-//                        self.collection.insert(Collection(name: collectionArray[i].listName?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil), image: collectionArray[i].listImage, museumId: collectionArray[i].museumId, title: nil, body: nil, nid: nil, categoryCollection: nil), at: i)
-                        
                         self.collection.insert(Collection(name: collectionArray[i].listName?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil), image: collectionArray[i].listImage, museumId: collectionArray[i].museumId), at: i)
                         
                     }
                     if(collection.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                     museumCollectionView.reloadData()
                 }
                 else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
                 }
             }
             else {
@@ -277,17 +299,23 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
                 if (collectionArray.count > 0) {
                     for i in 0 ... collectionArray.count-1 {
                         
-//                        self.collection.insert(Collection(name: collectionArray[i].listName?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil), image: collectionArray[i].listImageAr, museumId: collectionArray[i].museumId, title: nil, body: nil, nid: nil, categoryCollection: nil), at: i)
-                        
                         self.collection.insert(Collection(name: collectionArray[i].listName?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil), image: collectionArray[i].listImageAr, museumId: collectionArray[i].museumId), at: i)
                     }
                     if(collection.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                     museumCollectionView.reloadData()
                 }
                 else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
                 }
             }
         } catch let error as NSError {
@@ -326,6 +354,16 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
+    }
+    @objc func receiveCollectionListNotificationEn(notification: NSNotification) {
+        if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (collection.count == 0)){
+            self.fetchCollectionListFromCoredata()
+        }
+    }
+    @objc func receiveCollectionListNotificationAr(notification: NSNotification) {
+        if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (collection.count == 0)){
+            self.fetchCollectionListFromCoredata()
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

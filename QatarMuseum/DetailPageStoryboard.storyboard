@@ -217,7 +217,7 @@
                                                                     <rect key="frame" x="0.0" y="184.33333333333331" width="384" height="200"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OFFER CODE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7I5-HZ-Oca">
-                                                                            <rect key="frame" x="136" y="20" width="113.33333333333331" height="21"/>
+                                                                            <rect key="frame" x="142.66666666666666" y="20" width="100.33333333333334" height="21"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="21" id="P7g-t3-n6j"/>
                                                                             </constraints>
@@ -234,7 +234,7 @@
                                                                             </constraints>
                                                                         </view>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QANMOQ-VIP1" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ku0-TG-hSf">
-                                                                            <rect key="frame" x="87.333333333333329" y="68" width="209.66666666666669" height="47"/>
+                                                                            <rect key="frame" x="100.00000000000001" y="68" width="184.33333333333337" height="47"/>
                                                                             <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="30"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -280,7 +280,7 @@
                                                                     </constraints>
                                                                 </view>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OPENING TIMINGS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y91-ye-xUv">
-                                                                    <rect key="frame" x="112.33333333333333" y="404.99999999999994" width="159.33333333333337" height="21"/>
+                                                                    <rect key="frame" x="120" y="404.99999999999994" width="144" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="21" id="Yvm-Cp-tbJ"/>
                                                                     </constraints>
@@ -308,7 +308,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOCATIONS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fBT-Ut-cGZ">
-                                                                    <rect key="frame" x="142.66666666666666" y="484.99999999999994" width="100.33333333333334" height="21"/>
+                                                                    <rect key="frame" x="146.66666666666666" y="484.99999999999994" width="90.666666666666657" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="21" id="lbR-uZ-6xs"/>
                                                                     </constraints>
@@ -317,7 +317,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hSu-dr-bze">
-                                                                    <rect key="frame" x="178" y="515" width="29" height="3"/>
+                                                                    <rect key="frame" x="177" y="515" width="29" height="3"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="3" id="dMg-eL-noH"/>
@@ -333,7 +333,7 @@
                                                                     </constraints>
                                                                 </view>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RcA-O5-1Dd">
-                                                                    <rect key="frame" x="142.66666666666666" y="518" width="100.33333333333334" height="0.0"/>
+                                                                    <rect key="frame" x="146.66666666666666" y="518" width="90.666666666666657" height="0.0"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -345,7 +345,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqM-56-omt">
-                                                                    <rect key="frame" x="76" y="798" width="233" height="35"/>
+                                                                    <rect key="frame" x="83.666666666666686" y="798" width="218" height="35"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="35" id="7hi-Dh-SeJ"/>
                                                                     </constraints>
@@ -358,14 +358,14 @@
                                                                         <action selector="locationButtonTouchDown:" destination="Akh-2R-i7o" eventType="touchDown" id="sE3-iJ-5py"/>
                                                                     </connections>
                                                                 </button>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZSR-Lu-lsl">
-                                                                    <rect key="frame" x="192" y="863" width="0.0" height="0.0"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZSR-Lu-lsl" customClass="UnderlinedLabel" customModule="QatarMuseums" customModuleProvider="target">
+                                                                    <rect key="frame" x="192.33333333333334" y="863" width="0.0" height="0.0"/>
                                                                     <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="15"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Dg-5x-g2L">
-                                                                    <rect key="frame" x="192" y="865" width="0.0" height="15"/>
+                                                                    <rect key="frame" x="192.33333333333334" y="869" width="0.0" height="25"/>
                                                                     <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="15"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -403,7 +403,7 @@
                                                                 <constraint firstItem="fBT-Ut-cGZ" firstAttribute="top" secondItem="4fK-U9-TFx" secondAttribute="bottom" id="4Zy-WG-Z4m"/>
                                                                 <constraint firstItem="IG7-Mi-k82" firstAttribute="leading" secondItem="DsF-np-ZdL" secondAttribute="leading" id="5qj-Zn-Xbs"/>
                                                                 <constraint firstItem="eUH-lb-eDo" firstAttribute="top" secondItem="cNV-Hg-bLd" secondAttribute="bottom" constant="13.000000000000028" id="5vb-Jl-gD7"/>
-                                                                <constraint firstAttribute="bottom" secondItem="1Dg-5x-g2L" secondAttribute="bottom" constant="26" id="607-pW-Rd4"/>
+                                                                <constraint firstAttribute="bottom" secondItem="1Dg-5x-g2L" secondAttribute="bottom" constant="12" id="607-pW-Rd4"/>
                                                                 <constraint firstItem="dGv-dr-SC8" firstAttribute="leading" secondItem="DsF-np-ZdL" secondAttribute="leading" id="6Uq-sZ-DqC"/>
                                                                 <constraint firstAttribute="trailing" secondItem="dGv-dr-SC8" secondAttribute="trailing" id="Be4-at-dxp"/>
                                                                 <constraint firstItem="fBT-Ut-cGZ" firstAttribute="centerX" secondItem="DsF-np-ZdL" secondAttribute="centerX" id="Bir-uC-jtT"/>
@@ -418,7 +418,7 @@
                                                                 <constraint firstItem="qa0-nk-rek" firstAttribute="leading" secondItem="DsF-np-ZdL" secondAttribute="leading" id="Lbf-gE-N6U"/>
                                                                 <constraint firstItem="xOc-VW-Qtf" firstAttribute="top" secondItem="aXK-nl-XNw" secondAttribute="bottom" constant="9" id="OdL-sB-3NK"/>
                                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="4fK-U9-TFx" secondAttribute="trailing" constant="25" id="OfI-bJ-fRE"/>
-                                                                <constraint firstItem="1Dg-5x-g2L" firstAttribute="top" secondItem="ZSR-Lu-lsl" secondAttribute="bottom" constant="2" id="Oor-Zh-FjN"/>
+                                                                <constraint firstItem="1Dg-5x-g2L" firstAttribute="top" secondItem="ZSR-Lu-lsl" secondAttribute="bottom" constant="6" id="Oor-Zh-FjN"/>
                                                                 <constraint firstItem="cNV-Hg-bLd" firstAttribute="centerX" secondItem="y91-ye-xUv" secondAttribute="centerX" id="OqN-yv-G2z"/>
                                                                 <constraint firstAttribute="bottom" secondItem="ZSR-Lu-lsl" secondAttribute="bottom" constant="43" id="PW0-if-qmi"/>
                                                                 <constraint firstItem="DSB-CZ-BAS" firstAttribute="top" secondItem="dGv-dr-SC8" secondAttribute="top" id="TNF-fB-iC9"/>
@@ -534,7 +534,7 @@
                                         <connections>
                                             <outlet property="claimOfferButton" destination="cVV-4I-kW9" id="Tio-4e-S5e"/>
                                             <outlet property="codeLabel" destination="Ku0-TG-hSf" id="kND-he-Ii7"/>
-                                            <outlet property="contactLabel" destination="ZSR-Lu-lsl" id="t7t-0P-Ajf"/>
+                                            <outlet property="contactLabel" destination="ZSR-Lu-lsl" id="qXl-5M-0mt"/>
                                             <outlet property="contactLine" destination="xOc-VW-Qtf" id="68Y-1b-tNe"/>
                                             <outlet property="contactPhoneLabel" destination="1Dg-5x-g2L" id="rK9-ex-k26"/>
                                             <outlet property="contactTitleLabel" destination="aXK-nl-XNw" id="rdW-Yu-1SB"/>

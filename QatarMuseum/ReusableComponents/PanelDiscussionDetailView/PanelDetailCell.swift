@@ -272,27 +272,6 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
         print("phone label tapped ...")
         self.callPhone?()
     }
-    
-//    func underlinedString(stringName:String) -> String {
-//        
-//        let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: stringName)
-//        attributeString.addAttribute(NSAttributedStringKey.underlineStyle, value: 1, range: NSMakeRange(0, attributeString.length))
-//        
-//        return attributeString.string
-//    }
-    
 }
 
-class UnderlinedLabel: UILabel {
-    
-    override var text: String? {
-        didSet {
-            guard let text = text else { return }
-            let textRange = NSMakeRange(0, text.characters.count)
-            let attributedText = NSMutableAttributedString(string: text)
-            attributedText.addAttribute(NSAttributedStringKey.underlineStyle , value: NSUnderlineStyle.styleSingle.rawValue, range: textRange)
-            // Add other attributes if needed
-            self.attributedText = attributedText
-        }
-    }
-}
+
