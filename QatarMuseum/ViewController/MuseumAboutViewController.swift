@@ -267,6 +267,12 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                 () in
                 self.claimOfferButtonAction(offerLink: self.travelDetail?.claimOffer)
             }
+            heritageCell.loadEmailComposer = {
+                self.openEmail(email:self.travelDetail?.email ?? "nmoq@qm.org.qa")
+            }
+            heritageCell.callPhone = {
+                self.dialNumber(number: self.travelDetail?.contactNumber ?? "+974 4402 8202")
+            }
         }
         
         heritageCell.favBtnTapAction = {
@@ -1027,8 +1033,11 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             aboutdbDict.contactEmail = aboutDetailDict.contactEmail
             aboutdbDict.mobileLongtitude = aboutDetailDict.mobileLongtitude
             aboutdbDict.subtitle = aboutDetailDict.subtitle
-            aboutdbDict.openingTime = aboutDetailDict.openingTime
-            
+            if(pageNameString == PageName2.museumAbout) {
+                aboutdbDict.openingTime = aboutDetailDict.openingTime
+            } else if (pageNameString == PageName2.museumEvent){
+                aboutdbDict.openingTime = aboutDetailDict.eventDate
+            }
             aboutdbDict.mobileLatitude = aboutDetailDict.mobileLatitude
             aboutdbDict.tourGuideAvailability = aboutDetailDict.tourGuideAvailability
             
@@ -1097,7 +1106,12 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             aboutdbDict.contactEmailAr = aboutDetailDict.contactEmail
             aboutdbDict.mobileLongtitudeAr = aboutDetailDict.mobileLongtitude
             aboutdbDict.subtitleAr = aboutDetailDict.subtitle
-            aboutdbDict.openingTimeAr = aboutDetailDict.openingTime
+            if(pageNameString == PageName2.museumAbout) {
+                aboutdbDict.openingTimeAr = aboutDetailDict.openingTime
+            } else if (pageNameString == PageName2.museumEvent){
+                aboutdbDict.openingTimeAr = aboutDetailDict.eventDate
+            }
+            
             
             aboutdbDict.mobileLatitudear = aboutDetailDict.mobileLatitude
             aboutdbDict.tourGuideAvlblyAr = aboutDetailDict.tourGuideAvailability
@@ -1204,7 +1218,14 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                                 downloadArray.append(downloadInfoArray[i].downloadLink!)
                             }
                         }
-                        self.aboutDetailtArray.insert(Museum(name: aboutDict.name, id: aboutDict.id, tourguideAvailable: aboutDict.tourguideAvailable, contactNumber: aboutDict.contactNumber, contactEmail: aboutDict.contactEmail, mobileLongtitude: aboutDict.mobileLongtitude, subtitle: aboutDict.subtitle, openingTime: aboutDict.openingTime, mobileDescription: descriptionArray, multimediaFile: multimediaArray, mobileLatitude: aboutDict.mobileLatitude, tourGuideAvailability: aboutDict.tourGuideAvailability,multimediaVideo: nil, downloadable:downloadArray),at: 0)
+                        var nmoqTime : String? = nil
+                        var aboutTime : String? = nil
+                        if(pageNameString == PageName2.museumAbout) {
+                            aboutTime = aboutDict.openingTime!
+                        } else if (pageNameString == PageName2.museumEvent){
+                            nmoqTime = aboutDict.openingTime!
+                        }
+                        self.aboutDetailtArray.insert(Museum(name: aboutDict.name, id: aboutDict.id, tourguideAvailable: aboutDict.tourguideAvailable, contactNumber: aboutDict.contactNumber, contactEmail: aboutDict.contactEmail, mobileLongtitude: aboutDict.mobileLongtitude, subtitle: aboutDict.subtitle, openingTime: aboutTime, mobileDescription: descriptionArray, multimediaFile: multimediaArray, mobileLatitude: aboutDict.mobileLatitude, tourGuideAvailability: aboutDict.tourGuideAvailability,multimediaVideo: nil, downloadable:downloadArray,eventDate:nmoqTime),at: 0)
                         
                         
                         if(aboutDetailtArray.count == 0){
@@ -1247,7 +1268,14 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                                 multimediaArray.append(mutimediaInfoArray[i].image!)
                             }
                         }
-                        self.aboutDetailtArray.insert(Museum(name: aboutDict.nameAr, id: aboutDict.id, tourguideAvailable: aboutDict.tourguideAvailableAr, contactNumber: aboutDict.contactNumberAr, contactEmail: aboutDict.contactEmailAr, mobileLongtitude: aboutDict.mobileLongtitudeAr, subtitle: aboutDict.subtitleAr, openingTime: aboutDict.openingTimeAr, mobileDescription: descriptionArray, multimediaFile: multimediaArray, mobileLatitude: aboutDict.mobileLatitudear, tourGuideAvailability: aboutDict.tourGuideAvlblyAr,multimediaVideo: nil,downloadable:nil),at: 0)
+                        var nmoqTime : String? = nil
+                        var aboutTime : String? = nil
+                        if(pageNameString == PageName2.museumAbout) {
+                            aboutTime = aboutDict.openingTimeAr!
+                        } else if (pageNameString == PageName2.museumEvent){
+                            nmoqTime = aboutDict.openingTimeAr!
+                        }
+                        self.aboutDetailtArray.insert(Museum(name: aboutDict.nameAr, id: aboutDict.id, tourguideAvailable: aboutDict.tourguideAvailableAr, contactNumber: aboutDict.contactNumberAr, contactEmail: aboutDict.contactEmailAr, mobileLongtitude: aboutDict.mobileLongtitudeAr, subtitle: aboutDict.subtitleAr, openingTime: aboutDict.openingTimeAr, mobileDescription: descriptionArray, multimediaFile: multimediaArray, mobileLatitude: aboutDict.mobileLatitudear, tourGuideAvailability: aboutDict.tourGuideAvlblyAr,multimediaVideo: nil,downloadable:nil,eventDate:nmoqTime),at: 0)
                         if(aboutDetailtArray.count == 0){
                             self.showNoNetwork()
                         }

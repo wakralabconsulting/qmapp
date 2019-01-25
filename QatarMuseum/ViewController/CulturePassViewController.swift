@@ -459,8 +459,10 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
                 for i in 0 ... userEventList.count-1 {
                     let userEventInfo: RegisteredEventListEntity = NSEntityDescription.insertNewObject(forEntityName: "RegisteredEventListEntity", into: managedContext) as! RegisteredEventListEntity
                     let userEventListDict = userEventList[i]
+                    userEventInfo.title = userEventListDict.title
                     userEventInfo.eventId = userEventListDict.eventID
                     userEventInfo.regId = userEventListDict.regID
+                    userEventInfo.seats = userEventListDict.seats
                     do{
                         try managedContext.save()
                     }

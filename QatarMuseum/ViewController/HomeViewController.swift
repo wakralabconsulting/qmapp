@@ -274,7 +274,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")  && (self.homeBannerList.count > 0)) {
+        if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "") && (self.homeBannerList.count > 0)) {
             if(indexPath.row == 0) {
                 let museumsView =  self.storyboard?.instantiateViewController(withIdentifier: "museumViewId") as! MuseumsViewController
                 museumsView.fromHomeBanner = true
@@ -930,8 +930,10 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 for i in 0 ... userEventList.count-1 {
                     let userEventInfo: RegisteredEventListEntity = NSEntityDescription.insertNewObject(forEntityName: "RegisteredEventListEntity", into: managedContext) as! RegisteredEventListEntity
                         let userEventListDict = userEventList[i]
+                        userEventInfo.title = userEventListDict.title
                         userEventInfo.eventId = userEventListDict.eventID
                         userEventInfo.regId = userEventListDict.regID
+                        userEventInfo.seats = userEventListDict.seats
                         do{
                             try managedContext.save()
                         }

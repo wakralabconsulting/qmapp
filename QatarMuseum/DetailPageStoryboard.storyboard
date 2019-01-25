@@ -279,8 +279,8 @@
                                                                         <constraint firstItem="Ku0-TG-hSf" firstAttribute="centerX" secondItem="qa0-nk-rek" secondAttribute="centerX" id="qS4-nM-uc1"/>
                                                                     </constraints>
                                                                 </view>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OPENING TIMINGS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y91-ye-xUv">
-                                                                    <rect key="frame" x="120" y="404.99999999999994" width="144" height="21"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y91-ye-xUv">
+                                                                    <rect key="frame" x="192" y="404.99999999999994" width="0.0" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="21" id="Yvm-Cp-tbJ"/>
                                                                     </constraints>
@@ -307,8 +307,8 @@
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOCATIONS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fBT-Ut-cGZ">
-                                                                    <rect key="frame" x="146.66666666666666" y="484.99999999999994" width="90.666666666666657" height="21"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fBT-Ut-cGZ">
+                                                                    <rect key="frame" x="192" y="484.99999999999994" width="0.0" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="21" id="lbR-uZ-6xs"/>
                                                                     </constraints>
@@ -333,7 +333,7 @@
                                                                     </constraints>
                                                                 </view>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RcA-O5-1Dd">
-                                                                    <rect key="frame" x="146.66666666666666" y="518" width="90.666666666666657" height="0.0"/>
+                                                                    <rect key="frame" x="192" y="518" width="0.0" height="0.0"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -416,6 +416,7 @@
                                                                 <constraint firstAttribute="trailing" secondItem="IG7-Mi-k82" secondAttribute="trailing" id="ItW-dJ-R8j"/>
                                                                 <constraint firstItem="4fK-U9-TFx" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DsF-np-ZdL" secondAttribute="leading" constant="25" id="Kv1-yZ-yp4"/>
                                                                 <constraint firstItem="qa0-nk-rek" firstAttribute="leading" secondItem="DsF-np-ZdL" secondAttribute="leading" id="Lbf-gE-N6U"/>
+                                                                <constraint firstItem="DSB-CZ-BAS" firstAttribute="height" secondItem="dGv-dr-SC8" secondAttribute="height" id="MJt-A1-qPG"/>
                                                                 <constraint firstItem="xOc-VW-Qtf" firstAttribute="top" secondItem="aXK-nl-XNw" secondAttribute="bottom" constant="9" id="OdL-sB-3NK"/>
                                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="4fK-U9-TFx" secondAttribute="trailing" constant="25" id="OfI-bJ-fRE"/>
                                                                 <constraint firstItem="1Dg-5x-g2L" firstAttribute="top" secondItem="ZSR-Lu-lsl" secondAttribute="bottom" constant="6" id="Oor-Zh-FjN"/>
@@ -572,6 +573,7 @@
                                             <outlet property="sundayTimeLabel" destination="eUH-lb-eDo" id="Z4C-eP-snR"/>
                                             <outlet property="titleDescriptionLabel" destination="Ell-97-t0K" id="UnV-04-75r"/>
                                             <outlet property="titleLabel" destination="Psv-bB-spw" id="Qyy-5L-3Kh"/>
+                                            <outlet property="travelView" destination="qa0-nk-rek" id="qJg-lh-ruv"/>
                                             <outlet property="videoImageView" destination="3R2-dE-lAa" id="XRu-V8-MjH"/>
                                             <outlet property="videoOuterView" destination="IG7-Mi-k82" id="Hrd-mA-6fu"/>
                                             <outlet property="videoOuterViewHeight" destination="t9i-7K-c7U" id="Kuu-F8-kqB"/>

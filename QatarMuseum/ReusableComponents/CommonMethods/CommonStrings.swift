@@ -16,5 +16,5 @@ var UNREGISTER = "UnRegister"
 var YES = "Yes"
 var NO = "No"
 var LOCATION_ERROR = "Unfortunately we cannot open Map.";
-var NO_END_TIME = "NO END TIME PROVIDED"
+var NO_END_TIME = "NO END TIME AVAILABLE"
 var OK_MSG = "OK"

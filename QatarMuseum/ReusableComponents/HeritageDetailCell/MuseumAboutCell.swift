@@ -60,6 +60,8 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
     @IBOutlet weak var mainView: UIView!
     
     @IBOutlet weak var favouriteView: UIView!
+    @IBOutlet weak var travelView: UIView!
+    
     var imgArray = NSArray()
     var favBtnTapAction : (()->())?
     var shareBtnTapAction : (()->())?
@@ -448,13 +450,13 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
         midTitleDescriptionLabel.isHidden = true
         middleLabelLine.isHidden = true
         fridayTimeLabel.isHidden = true
-        contactTitleLabel.isHidden = true
-        contactLine.isHidden = true
-        contactLabel.isHidden = true
+       // contactTitleLabel.isHidden = true
+        //contactLine.isHidden = true
+        //contactLabel.isHidden = true
         locationLine.isHidden = true
-        openingTimeTitleLabel.isHidden = false
-        openingTimeLine.isHidden = false
-        sundayTimeLabel.isHidden = false
+        openingTimeTitleLabel.isHidden = true
+        openingTimeLine.isHidden = true
+        sundayTimeLabel.isHidden = true
         
         subTitleLabel.isHidden = true
         
@@ -473,18 +475,28 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
         
         titleLabel.text = travelDetailData.title
         titleDescriptionLabel.text = travelDetailData.introductionText
-        offerCodeTitleLabel.text = NSLocalizedString("OFFER_CODE", comment: "OFFER_CODE in Travel Page")
+        offerCodeTitleLabel.text = NSLocalizedString("SPECIAL_OFFER", comment: "SPECIAL_OFFER in Travel Page")
         claimOfferButton.setTitle(NSLocalizedString("CLAIM_OFFER", comment: "CLAIM_OFFER in Travel Page"), for: .normal)
         codeLabel.text = travelDetailData.promotionalCode
         if ((travelDetailData.contactNumber != nil) && (travelDetailData.email != nil)) {
-            openingTimeTitleLabel.text =  NSLocalizedString("CONTACT_TITLE",
-                                                            comment: "CONTACT_TITLE in the Heritage detail")
-            sundayTimeLabel.text = travelDetailData.contactNumber! + "\n" + travelDetailData.email!
+//            openingTimeTitleLabel.text =  NSLocalizedString("CONTACT_TITLE",
+//                                                            comment: "CONTACT_TITLE in the Heritage detail")
+//            sundayTimeLabel.text = travelDetailData.contactNumber! + "\n" + travelDetailData.email!
+            
+            
+            
+            contactTitleLabel.text = NSLocalizedString("CONTACT_TITLE",
+                                                       comment: "CONTACT_TITLE in the Heritage detail")
+            contactLabel.text = travelDetailData.email!
+            //+ "\n\n" + aboutData.contactNumber!
+            contactPhoneLabel.text = travelDetailData.contactNumber!
+            contactLine.isHidden = false
         }
-        let verticalSpace = NSLayoutConstraint(item: self.sundayTimeLabel, attribute: .bottom, relatedBy: .equal, toItem: self.favouriteView, attribute: .top, multiplier: 1, constant: -40)
-        
-        // activate the constraints
-        NSLayoutConstraint.activate([verticalSpace])
+//        let verticalSpace = NSLayoutConstraint(item: self.sundayTimeLabel, attribute: .bottom, relatedBy: .equal, toItem: self.favouriteView, attribute: .top, multiplier: 1, constant: -40)
+
+       let verticalSpace = NSLayoutConstraint(item: self.travelView, attribute: .bottom, relatedBy: .equal, toItem: self.contactTitleLabel, attribute: .top, multiplier: 1, constant: -30)
+//        // activate the constraints
+       NSLayoutConstraint.activate([verticalSpace])
         
     }
     func setHyperLinkText(originalString: String?) -> NSMutableAttributedString? {

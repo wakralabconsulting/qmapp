@@ -1060,7 +1060,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             aboutdbDict.contactEmail = aboutDetailDict.contactEmail
             aboutdbDict.mobileLongtitude = aboutDetailDict.mobileLongtitude
             aboutdbDict.subtitle = aboutDetailDict.subtitle
-            aboutdbDict.openingTime = aboutDetailDict.openingTime
+            aboutdbDict.openingTime = aboutDetailDict.eventDate
             
             aboutdbDict.mobileLatitude = aboutDetailDict.mobileLatitude
             aboutdbDict.tourGuideAvailability = aboutDetailDict.tourGuideAvailability
