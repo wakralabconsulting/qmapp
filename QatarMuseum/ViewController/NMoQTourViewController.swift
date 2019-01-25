@@ -207,6 +207,7 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         tourDetaildbDict.body = tourDetailDict.body
                         tourDetaildbDict.registered =  tourDetailDict.registered
                         tourDetaildbDict.nid =  tourDetailDict.nid
+                        tourDetaildbDict.seatsRemaining =  tourDetailDict.seatsRemaining
                         
                         if(tourDetailDict.imageBanner != nil){
                             if((tourDetailDict.imageBanner?.count)! > 0) {
@@ -265,6 +266,7 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
         tourDetaildbDict.body = tourDetailDict.body
         tourDetaildbDict.registered =  tourDetailDict.registered
         tourDetaildbDict.nid =  tourDetailDict.nid
+        tourDetaildbDict.seatsRemaining =  tourDetailDict.seatsRemaining
         if(tourDetailDict.imageBanner != nil){
             if((tourDetailDict.imageBanner?.count)! > 0) {
                 for i in 0 ... (tourDetailDict.imageBanner?.count)!-1 {
@@ -306,7 +308,8 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                 imagesArray.append(imagesInfoArray[i].imgBanner!)
                             }
                         }
-                        self.nmoqTourDetail.insert(NMoQTourDetail(title: tourDetailArray[i].title, imageBanner: imagesArray, date: tourDetailArray[i].date, nmoqEvent: tourDetailArray[i].nmoqEvent, register: tourDetailArray[i].register, contactEmail: tourDetailArray[i].contactEmail, contactPhone: tourDetailArray[i].contactPhone, mobileLatitude: tourDetailArray[i].mobileLatitude, longitude: tourDetailArray[i].longitude, sortId: tourDetailArray[i].sort_id, body: tourDetailArray[i].body, registered: tourDetailArray[i].registered, nid: tourDetailArray[i].nid), at: i)
+                        
+                        self.nmoqTourDetail.insert(NMoQTourDetail(title: tourDetailArray[i].title, imageBanner: imagesArray, date: tourDetailArray[i].date, nmoqEvent: tourDetailArray[i].nmoqEvent, register: tourDetailArray[i].register, contactEmail: tourDetailArray[i].contactEmail, contactPhone: tourDetailArray[i].contactPhone, mobileLatitude: tourDetailArray[i].mobileLatitude, longitude: tourDetailArray[i].longitude, sortId: tourDetailArray[i].sort_id, body: tourDetailArray[i].body, registered: tourDetailArray[i].registered, nid: tourDetailArray[i].nid,seatsRemaining: tourDetailArray[i].seatsRemaining), at: i)
                         
                     }
                     if(nmoqTourDetail.count == 0){

@@ -118,6 +118,14 @@ class ComingSoonPopUp: UIView {
         let buttonTitle = OK_MSG
         closeButton.setTitle(buttonTitle, for: .normal)
     }
+    func loadNoSeatAvailableMessage() {
+        titleLabel.isHidden = true
+        messageLabel.font = UIFont.collectionFirstDescriptionFont
+        messageLabel.text = NSLocalizedString("NO_SEAT_AVAILABLE", comment: "NO_SEAT_AVAILABLE Label in the Popup")
+        stayTunedLabel.isHidden = true
+        let buttonTitle = NSLocalizedString("CLOSEBUTTON_TITLE", comment: "CLOSEBUTTON_TITLE Label in the Popup")
+        closeButton.setTitle(buttonTitle, for: .normal)
+    }
     
     @IBAction func closeButtonTouchDown(_ sender: UIButton) {
         

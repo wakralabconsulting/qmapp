@@ -78,7 +78,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             previousButton.setImage(UIImage(named: "nextImg"), for: .normal)
         }
         if(fromHomeBanner)! {
-            let aboutBanner = NSLocalizedString("ABOUT_EVENT", comment: "ABOUT_EVENT  in the Museum")
+            let aboutBanner = NSLocalizedString("ABOUT", comment: "ABOUT  in the Museum")
             let tourBanner = NSLocalizedString("TOURS", comment: "TOURS  in the Museum page")
             let travelBanner = NSLocalizedString("TRAVEL_ARRANGEMENTS", comment: "TRAVEL_ARRANGEMENTS  in the Museum page")
             let panelBanner = NSLocalizedString("PANEL_DISCUSSION", comment: "PANEL_DISCUSSION  in the Museum page")
@@ -307,7 +307,11 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     func loadBottomCellPages(cellObj: MuseumBottomCell, selectedItem: String?) {
         if(fromHomeBanner)! {
-            if (selectedItem == "About Event") {
+            let aboutBanner = NSLocalizedString("ABOUT", comment: "ABOUT  in the Museum")
+            let tourBanner = NSLocalizedString("TOURS", comment: "TOURS  in the Museum page")
+            let travelBanner = NSLocalizedString("TRAVEL_ARRANGEMENTS", comment: "TRAVEL_ARRANGEMENTS  in the Museum page")
+            let panelBanner = NSLocalizedString("PANEL_DISCUSSION", comment: "PANEL_DISCUSSION  in the Museum page")
+            if (selectedItem == aboutBanner) {
                 let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
 
                 let heritageDtlView = detailStoryboard.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
@@ -320,7 +324,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
                 view.window!.layer.add(transition, forKey: kCATransition)
                 self.present(heritageDtlView, animated: false, completion: nil)
-            } else if (selectedItem == "Tours") {
+            } else if (selectedItem == tourBanner) {
                 let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "tourAndPanelId") as! TourAndPanelListViewController
                 tourView.pageNameString = NMoQPageName.Tours
                 let transition = CATransition()
@@ -330,7 +334,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 view.window!.layer.add(transition, forKey: kCATransition)
                 self.present(tourView, animated: false, completion: nil)
                 
-            } else if (selectedItem == "Travel Arrangements") {
+            } else if (selectedItem == travelBanner) {
                 let travelView =  self.storyboard?.instantiateViewController(withIdentifier: "travelId") as! TravelArrangementsViewController
                 travelView.bannerId = bannerId
                 let transition = CATransition()
@@ -340,7 +344,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 view.window!.layer.add(transition, forKey: kCATransition)
                 self.present(travelView, animated: false, completion: nil)
             }
-            else if (selectedItem == "Special Events") {
+            else if (selectedItem == panelBanner) {
                 let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "tourAndPanelId") as! TourAndPanelListViewController
                 panelView.pageNameString = NMoQPageName.PanelDiscussion
                 let transition = CATransition()
@@ -616,8 +620,11 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             aboutdbDict.contactEmail = aboutDetailDict.contactEmail
             aboutdbDict.mobileLongtitude = aboutDetailDict.mobileLongtitude
             aboutdbDict.subtitle = aboutDetailDict.subtitle
-            aboutdbDict.openingTime = aboutDetailDict.openingTime
-            
+            if(fromHomeBanner == false) {
+                aboutdbDict.openingTime = aboutDetailDict.openingTime
+            } else {
+                aboutdbDict.openingTime = aboutDetailDict.eventDate
+            }            
             aboutdbDict.mobileLatitude = aboutDetailDict.mobileLatitude
             aboutdbDict.tourGuideAvailability = aboutDetailDict.tourGuideAvailability
             
@@ -772,7 +779,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                             }
                         }
 
-                        self.museumArray.insert(Museum(name: aboutDict.name, id: aboutDict.id, tourguideAvailable: nil, contactNumber: nil, contactEmail: nil, mobileLongtitude: nil, subtitle: nil, openingTime: nil, mobileDescription: nil, multimediaFile: multimediaArray, mobileLatitude: nil, tourGuideAvailability: nil,multimediaVideo: nil, downloadable:nil),at: 0)
+                        self.museumArray.insert(Museum(name: aboutDict.name, id: aboutDict.id, tourguideAvailable: nil, contactNumber: nil, contactEmail: nil, mobileLongtitude: nil, subtitle: nil, openingTime: nil, mobileDescription: nil, multimediaFile: multimediaArray, mobileLatitude: nil, tourGuideAvailability: nil,multimediaVideo: nil, downloadable:nil,eventDate:nil),at: 0)
                         
                         
                         if(museumArray.count == 0){
@@ -807,7 +814,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                                 multimediaArray.append(mutimediaInfoArray[i].image!)
                             }
                         }
-                        self.museumArray.insert(Museum(name: aboutDict.nameAr, id: aboutDict.id, tourguideAvailable: nil, contactNumber: nil, contactEmail: nil, mobileLongtitude: nil, subtitle: nil, openingTime: nil, mobileDescription: nil, multimediaFile: multimediaArray, mobileLatitude: nil, tourGuideAvailability: nil,multimediaVideo: nil,downloadable:nil),at: 0)
+                        self.museumArray.insert(Museum(name: aboutDict.nameAr, id: aboutDict.id, tourguideAvailable: nil, contactNumber: nil, contactEmail: nil, mobileLongtitude: nil, subtitle: nil, openingTime: nil, mobileDescription: nil, multimediaFile: multimediaArray, mobileLatitude: nil, tourGuideAvailability: nil,multimediaVideo: nil,downloadable:nil,eventDate:nil),at: 0)
                         if(museumArray.count == 0){
                             //self.showNoNetwork()
                         } else {

@@ -490,7 +490,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EVENTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWB-Sh-j4n">
-                                        <rect key="frame" x="163.66666666666666" y="308.66666666666669" width="87" height="29"/>
+                                        <rect key="frame" x="164" y="308.66666666666669" width="87" height="29"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="29" id="guL-0K-jjs"/>
                                         </constraints>
@@ -6746,6 +6746,11 @@
                                     <outlet property="delegate" destination="3V7-zS-GQO" id="aNk-vK-qnR"/>
                                 </connections>
                             </tableView>
+                            <view alpha="0.59999999999999998" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vad-ah-1pF">
+                                <rect key="frame" x="0.0" y="85" width="414" height="651"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RYz-sf-Eke" customClass="LoadingView" customModule="QatarMuseums" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="85" width="414" height="651"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -6768,6 +6773,7 @@
                     <connections>
                         <outlet property="headerView" destination="T1S-8X-1eP" id="3gp-3S-4eM"/>
                         <outlet property="loadingView" destination="RYz-sf-Eke" id="mim-tR-eZo"/>
+                        <outlet property="overlayView" destination="vad-ah-1pF" id="QIC-fu-KsS"/>
                         <outlet property="tableView" destination="Vdp-OO-e6L" id="LIk-Go-BcO"/>
                     </connections>
                 </viewController>

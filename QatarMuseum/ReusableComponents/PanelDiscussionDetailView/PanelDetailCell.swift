@@ -14,9 +14,9 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
     
     @IBOutlet weak var topTitle: UILabel!
     @IBOutlet weak var topDescription: UITextView!
-    @IBOutlet weak var interestedLabel: UILabel!
-    @IBOutlet weak var notInterestedLabel: UILabel!
-    @IBOutlet weak var interestSwitch: UISwitch!
+   // @IBOutlet weak var interestedLabel: UILabel!
+    //@IBOutlet weak var notInterestedLabel: UILabel!
+    //@IBOutlet weak var interestSwitch: UISwitch!
     @IBOutlet weak var secondImg: UIImageView!
     @IBOutlet weak var secondTitle: UITextView!
     @IBOutlet weak var secondDescription: UITextView!
@@ -32,13 +32,13 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
     @IBOutlet weak var thirdView: UIView!
     @IBOutlet weak var secondTitleLine: UILabel!
     @IBOutlet weak var mapOverlayView: UIView!
-    
     @IBOutlet weak var descriptionLeftConstraint: NSLayoutConstraint!
     @IBOutlet weak var contactTitleLine: UILabel!
-    
     @IBOutlet weak var switchTopConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var switchBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var registerButton: UIButton!
+    @IBOutlet weak var numbOfRservationsLabel: UILabel!
+    
     var loadMapView : (()->())?
     var loadEmailComposer : (()->())?
     var callPhone : (()->())?
@@ -50,8 +50,8 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
     func setUI() {
         topTitle.font = UIFont.selfGuidedFont
         topDescription.font = UIFont.collectionFirstDescriptionFont
-        interestedLabel.font = UIFont.collectionFirstDescriptionFont
-        notInterestedLabel.font = UIFont.collectionFirstDescriptionFont
+       // interestedLabel.font = UIFont.collectionFirstDescriptionFont
+        //notInterestedLabel.font = UIFont.collectionFirstDescriptionFont
         secondTitle.font = UIFont.selfGuidedFont
         secondDescription.font = UIFont.collectionFirstDescriptionFont
         dateTitle.font = UIFont.tryAgainFont
@@ -60,6 +60,8 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
         contactTitle.font = UIFont.tryAgainFont
         contactNumberLabel.font = UIFont.collectionFirstDescriptionFont
         contactEmailLabel.font = UIFont.collectionFirstDescriptionFont
+        registerButton.titleLabel?.font = UIFont.popupProductionFont
+        numbOfRservationsLabel.font = UIFont.settingsUpdateLabelFont
         topView.layer.cornerRadius = 7.0
         secondView.layer.cornerRadius = 7.0
         thirdView.layer.cornerRadius = 7.0
@@ -87,8 +89,8 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
     func setPanelDetailCellContent(panelDetailData: NMoQTour?) {
         topTitle.text = panelDetailData?.subtitle
         topDescription.text = panelDetailData?.dayDescription
-        interestedLabel.text = REGISTER
-        notInterestedLabel.text = UNREGISTER
+        //interestedLabel.text = REGISTER
+        //notInterestedLabel.text = UNREGISTER
         secondTitle.text = panelDetailData?.moderatorName
         secondDescription.text = panelDetailData?.descriptioForModerator
         dateTitle.text = NSLocalizedString("DATE", comment: "DATE in Paneldetail Page")
@@ -155,24 +157,55 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
     }
     
     func setTourSecondDetailCellContent(tourDetailData: NMoQTourDetail?,userEventList : [NMoQUserEventList],fromTour:Bool?) {
+        numbOfRservationsLabel.numberOfLines = 2
         if(fromTour)! {
-            interestedLabel.text = REGISTER
-            notInterestedLabel.text = UNREGISTER
-            interestedLabel.isHidden = false
-            notInterestedLabel.isHidden = false
-            interestSwitch.isHidden = false
-            switchTopConstraint.constant = 30
+            
+            //interestedLabel.isHidden = false
+           //// notInterestedLabel.isHidden = false
+           // interestSwitch.isHidden = false
+           // switchTopConstraint.constant = 30
+            numbOfRservationsLabel.isHidden = false
+            registerButton.isHidden = false
             switchBottomConstraint.constant = 32
             if let arrayOffset = userEventList.index(where: {$0.eventID == tourDetailData?.nid}) {
-                setRegistrationSwitchOn()
+                //setRegistrationSwitchOn()
+                numbOfRservationsLabel.isHidden = false
+                if(userEventList[arrayOffset].seats! == "1") {
+                    let reservationCount = NSLocalizedString("NUMB_OF_RESERVATIONS", comment: "NUMB_OF_RESERVATIONS in panel detail") + userEventList[arrayOffset].seats! +  NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING3", comment: "TOUR_SEAT_AVAILABILITY_STRING3 in panel detail")
+                    numbOfRservationsLabel.text = reservationCount
+                } else {
+                    let reservationCount = NSLocalizedString("NUMB_OF_RESERVATIONS", comment: "NUMB_OF_RESERVATIONS in panel detail") + userEventList[arrayOffset].seats! +  NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING2", comment: "TOUR_SEAT_AVAILABILITY_STRING2 in panel detail")
+                    numbOfRservationsLabel.text = reservationCount
+                }
+                
+                
+                registerButton.tag = 1
+                registerButton.backgroundColor = UIColor.red
+                registerButton.setTitle(UNREGISTER, for: .normal)
             } else {
-                setRegistrationSwitchOff()
+                if (tourDetailData?.seatsRemaining == "0") {
+                    numbOfRservationsLabel.text = NSLocalizedString("NO_SEAT_AVAILABLE", comment: "NO_SEAT_AVAILABLE in panel detail")
+                    registerButton.backgroundColor = UIColor.lightGray
+                    registerButton.isEnabled = false
+                } else if (tourDetailData?.seatsRemaining == "1") {
+                    numbOfRservationsLabel.text = NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING1", comment: "TOUR_SEAT_AVAILABILITY_STRING1 in panel detail") + (tourDetailData?.seatsRemaining)! + NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING3", comment: "TOUR_SEAT_AVAILABILITY_STRING3 in panel detail")
+                    registerButton.isEnabled = true
+                    registerButton.backgroundColor = UIColor(red: 60/255, green: 135/255, blue: 66/255, alpha: 1)
+                } else {
+                    numbOfRservationsLabel.text = NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING1", comment: "TOUR_SEAT_AVAILABILITY_STRING1 in panel detail") + (tourDetailData?.seatsRemaining)! + NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING2", comment: "TOUR_SEAT_AVAILABILITY_STRING2 in panel detail")
+                    registerButton.isEnabled = true
+                    registerButton.backgroundColor = UIColor(red: 60/255, green: 135/255, blue: 66/255, alpha: 1)
+                }
+                registerButton.tag = 0
+                
+                registerButton.setTitle(REGISTER, for: .normal)
+                //setRegistrationSwitchOff()
             }
         } else {
-            interestedLabel.isHidden = true
-            notInterestedLabel.isHidden = true
-            interestSwitch.isHidden = true
-            switchTopConstraint.constant = 0
+//            interestedLabel.isHidden = true
+            numbOfRservationsLabel.isHidden = true
+            registerButton.isHidden = true
+           // switchTopConstraint.constant = 0
             switchBottomConstraint.constant = 0
         }
         topTitle.text = tourDetailData?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
@@ -242,21 +275,25 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
         
     }
     func setRegistrationSwitchOn() {
-        interestSwitch.tintColor = UIColor.settingsSwitchOnTint
-        interestSwitch.layer.cornerRadius = 16
-        interestSwitch.backgroundColor = UIColor.settingsSwitchOnTint
-        interestSwitch.isOn = false
+//        interestSwitch.tintColor = UIColor.settingsSwitchOnTint
+//        interestSwitch.layer.cornerRadius = 16
+//        interestSwitch.backgroundColor = UIColor.settingsSwitchOnTint
+//        interestSwitch.isOn = false
     }
     func setRegistrationSwitchOff() {
-        interestSwitch.onTintColor = UIColor.red
-        interestSwitch.layer.cornerRadius = 16
-        interestSwitch.backgroundColor = UIColor.red
-        interestSwitch.isOn = true
+//        interestSwitch.onTintColor = UIColor.red
+//        interestSwitch.layer.cornerRadius = 16
+//        interestSwitch.backgroundColor = UIColor.red
+//        interestSwitch.isOn = true
     }
-    @IBAction func didTapRegisterButton(_ sender: UISwitch) {
+//    @IBAction func didTapRegisterButton(_ sender: UISwitch) {
+//        self.registerOrUnRegisterAction?()
+//    }
+    
+    @IBAction func didTapRegisterButton(_ sender: UIButton) {
+        
         self.registerOrUnRegisterAction?()
     }
-    
     @objc func handleTap(sender: UITapGestureRecognizer? = nil) {
         self.loadMapView?()
     }

@@ -21,6 +21,7 @@ class EventPopupView: UIView {
     @IBOutlet weak var addToCalendarButton: UIButton!
     @IBOutlet weak var eventTitle: UILabel!
     @IBOutlet weak var eventPopupHeight: NSLayoutConstraint!
+    @IBOutlet weak var titleLine: UIView!
     
     @IBOutlet weak var eventDescription: UILabel!
     var eventPopupDelegate : EventPopUpProtocol?
@@ -51,6 +52,15 @@ class EventPopupView: UIView {
         addToCalendarButton.titleLabel?.font = UIFont.closeButtonFont
         
         
+    }
+    func loadRegistrationPopup() {
+        eventTitle.isHidden = true
+        titleLine.isHidden = true
+        eventDescription.font = UIFont.collectionFirstDescriptionFont
+        eventDescription.text = "Thank u for showing interest in the tour. We will make necessary arrangements for it during your visit. You will receive further details on your email. For any queries, please contact Qatar Museums Authority via: \n info@Qm.org.qa \n +9744452555"
+        
+        let buttonTitle = NSLocalizedString("POPUP_ADD_BUTTON_TITLE", comment: "POPUP_ADD_BUTTON_TITLE Label in the Popup")
+        addToCalendarButton.setTitle(buttonTitle, for: .normal)
     }
     @IBAction func didTapEventCloseButton(_ sender: UIButton) {
         eventPopupDelegate?.eventCloseButtonPressed()
