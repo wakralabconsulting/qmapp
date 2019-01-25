@@ -195,7 +195,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .GetNMoQTourDetail( _):
             return "/list_tour_per_day.json"
         case .NMoQEventListUserRegistration( _):
-            return "/list_event_user_registration.json"
+            return "/user_registeration_event.json"
         case .NMoQEntityRegistration( _):
             return "/entity_registration.json"
         case .SetUserRegistrationComplete(let registrationId, _):
