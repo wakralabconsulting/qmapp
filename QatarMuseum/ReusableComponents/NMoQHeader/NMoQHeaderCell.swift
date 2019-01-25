@@ -16,10 +16,12 @@ class NMoQHeaderCell: UICollectionViewCell {
         bannerTitle.font = UIFont.eventPopupTitleFont
     }
     func setBannerData(bannerData: HomeBanner) {
+        bannerTitle.textColor = UIColor.gray
         bannerTitle.text = bannerData.bannerTitle
         if let imageUrl = bannerData.bannerLink {
             if(imageUrl != "") {
                 bannerImg.kf.setImage(with: URL(string: imageUrl))
+                bannerTitle.textColor = UIColor.white
             }else {
                 bannerImg.image = UIImage(named: "default_imageX2")
             }

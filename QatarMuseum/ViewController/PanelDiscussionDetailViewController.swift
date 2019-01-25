@@ -18,13 +18,11 @@ enum NMoQPanelPage {
     case TourDetailPage
 }
 class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,UITableViewDelegate,UITableViewDataSource,HeaderViewProtocol,comingSoonPopUpProtocol,DeclinePopupProtocol, MFMailComposeViewControllerDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UIGestureRecognizerDelegate,EventPopUpProtocol {
-    
-    
-    
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var headerView: CommonHeaderView!
+    @IBOutlet weak var overlayView: UIView!
     var panelTitle : String? = ""
     var pageNameString : NMoQPanelPage?
     var panelDetailId : String? = nil
@@ -45,7 +43,8 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     var selectedCount : String? = "1"
     var addToCalendarPopup : EventPopupView = EventPopupView()
     let store = EKEventStore()
-    @IBOutlet weak var overlayView: UIView!
+    
+    let networkReachability = NetworkReachabilityManager()
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCell()
@@ -97,14 +96,11 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             cell.setTourSecondDetailCellContent(tourDetailData: nmoqTourDetail[self.selectedRow!], userEventList: userEventList, fromTour: false)
             cell.topDescription.textAlignment = .left
             cell.descriptionLeftConstraint.constant = 30
-            //selectedRow = indexPath.row
-            
             cell.registerOrUnRegisterAction = {
                 () in
                 self.selectedPanelCell = cell
                 self.currentPanelRow = indexPath.row
                  self.reisterOrUnregisterTapAction(currentRow: indexPath.row, selectedCell: cell)
-                //self.reisterOrUnregisterTapAction(currentRow: self.selectedRow!, selectedCell: cell)
             }
             cell.loadMapView = {
                 () in
@@ -185,68 +181,33 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             showLocationErrorPopup()
         }
     }
-//    func reisterOrUnregisterTapAction(currentRow: Int,selectedCell : PanelDetailCell?) {
-//        if (selectedCell?.interestSwitch.isOn)! {
-//            loadConfirmationPopup()
-//        } else {
-//            selectedCell?.interestSwitch.tintColor = UIColor.settingsSwitchOnTint
-//            selectedCell?.interestSwitch.backgroundColor = UIColor.settingsSwitchOnTint
-//            let time = nmoqTourDetail[currentRow].date?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-//            let timeArray = time?.components(separatedBy: "-")
-//            if((timeArray?.count)! != 3) {
-//                self.loadNoEndTimePopup()
-//            }else {
-//                if(userEventList.count == 0) {
-//                    self.getEntityRegistrationFromServer(currentRow: currentRow, selectedCell: selectedCell)
-//                } else {
-//
-//                    let haveConflict = checkConflictWithAlreadyRegisteredEvent(currentRow: currentRow)
-//                    if((haveConflict == false) || (haveConflict == nil)) {
-//                        self.getEntityRegistrationFromServer(currentRow: currentRow, selectedCell: selectedCell)
-//                    } else {
-//                        loadAlreadyRegisteredPopup()
-//                        //setRegistrationSwitchOff(selectedCell: selectedCell)
-//                    }
-//                }
-//            }
-//
-//
-//        }
-//
-//    }
     func reisterOrUnregisterTapAction(currentRow: Int,selectedCell : PanelDetailCell?) {
-        if (selectedCell?.registerButton.tag == 0) {
-            
-            let time = nmoqTourDetail[currentRow].date?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-            let timeArray = time?.components(separatedBy: "-")
-            if((timeArray?.count)! != 3) {
-                self.loadNoEndTimePopup()
-            }else {
-                if(userEventList.count == 0) {
-                    
-                    addPickerView()
-                    //self.getEntityRegistrationFromServer(currentRow: currentRow, selectedCell: selectedCell)
-                } else {
-                    
-                    let haveConflict = checkConflictWithAlreadyRegisteredEvent(currentRow: currentRow)
-                    if((haveConflict == false) || (haveConflict == nil)) {
+        
+        if (networkReachability?.isReachable)! {
+            if (selectedCell?.registerButton.tag == 0) {
+                let time = nmoqTourDetail[currentRow].date?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+                let timeArray = time?.components(separatedBy: "-")
+                if((timeArray?.count)! != 3) {
+                    self.loadNoEndTimePopup()
+                }else {
+                    if(userEventList.count == 0) {
                         addPickerView()
-                       // self.getEntityRegistrationFromServer(currentRow: currentRow, selectedCell: selectedCell)
                     } else {
-                        loadAlreadyRegisteredPopup()
+                        let haveConflict = checkConflictWithAlreadyRegisteredEvent(currentRow: currentRow)
+                        if((haveConflict == false) || (haveConflict == nil)) {
+                            addPickerView()
+                        } else {
+                            loadAlreadyRegisteredPopup()
+                        }
                     }
                 }
+            } else {
+                loadConfirmationPopup()
             }
-            
-            
-            
-            
-            
-           // addPickerView()
-            
         } else {
-            loadConfirmationPopup()
-            
+            self.view.hideAllToasts()
+            let noNetworkMessage =  NSLocalizedString("CHECK_NETWORK", comment: "CHECK_NETWORK")
+            self.view.makeToast(noNetworkMessage)
         }
         
     }
@@ -287,7 +248,6 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                 switch response.result {
                 case .success(let data):
                     self.nmoqSpecialEventDetail = data.nmoqTourList
-                    //self.saveOrUpdateHomeCoredata()
                     self.tableView.reloadData()
                     if(self.nmoqSpecialEventDetail.count == 0) {
                         let noResultMsg = NSLocalizedString("NO_RESULT_MESSAGE",
@@ -404,8 +364,6 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             _ = Alamofire.request(QatarMuseumRouter.NMoQEntityRegistration(["type" : "nmoq_event_registration","entity_id": entityId!,"entity_type" :"node","user_uid": userId,"count": selectedCount!,"author_uid": userId,"state": "pending","created": timestampInString,"updated": timestampInString,"field_confirm_attendance" :fieldConfirmAttendance,"field_number_of_attendees" : fieldNumberOfAttendees, "field_first_name_": fieldFirstName,"field_nmoq_last_name" : fieldNmoqLastName,"field_membership_number": fieldMembershipNumber,"field_qma_edu_reg_date":fieldQmaEduRegDate])).responseObject { (response: DataResponse<NMoQEntityRegistration>) -> Void in
                 switch response.result {
                 case .success(let data):
-                    //self.loadingView.stopLoading()
-                    //self.loadingView.isHidden = true
                     self.entityRegistration = data
                     self.newRegistrationId = self.entityRegistration?.registrationId
                     self.setEntityRegistrationAsComplete(currentRow: currentRow, timestamp: timestampInString, selectedCell: selectedCell)
@@ -621,10 +579,6 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             }
             return false
         }
-        
-
-        
-
     }
     // Converts the string to date with given format if require
     
@@ -649,15 +603,9 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             }
             previous = previous?.intersection(with: element)
             if previous == nil {
-                
                 break
-                
             }
-            
         }
-        
-        
-        
         return previous
         
     }
@@ -774,25 +722,6 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         }
         return (nil,nil)
     }
-//    func setRegistrationSwitchOn(selectedCell: PanelDetailCell?) {
-//        selectedCell?.interestSwitch.tintColor = UIColor.settingsSwitchOnTint
-//        selectedCell?.interestSwitch.layer.cornerRadius = 16
-//        selectedCell?.interestSwitch.backgroundColor = UIColor.settingsSwitchOnTint
-//        selectedCell?.interestSwitch.isOn = false
-//    }
-//    func setRegistrationSwitchOff(selectedCell: PanelDetailCell?) {
-//        selectedCell?.interestSwitch.onTintColor = UIColor.red
-//        selectedCell?.interestSwitch.layer.cornerRadius = 16
-//        selectedCell?.interestSwitch.backgroundColor = UIColor.red
-//        selectedCell?.interestSwitch.isOn = true
-//    }
-//    func registrationSuccessMessagePopup() {
-//        popupView  = ComingSoonPopUp(frame: self.view.frame)
-//        popupView.comingSoonPopupDelegate = self
-//        popupView.tag = 0
-//        popupView.loadRegistrationPopup()
-//        self.view.addSubview(popupView)
-//    }
     func loadAddToCalendarPopup() {
         addToCalendarPopup.tag = 0
         addToCalendarPopup  = EventPopupView(frame: self.view.frame)
@@ -819,17 +748,12 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     func closeButtonPressed() {
         if ((popupView.tag == 1) || (popupView.tag == 2))  {
             self.popupView.removeFromSuperview()
-            //setRegistrationSwitchOff(selectedCell: selectedPanelCell)
         }
-//        else if(popupView.tag == 0) {
-//            setUnRegisteredButton()
-//        }
         self.popupView.removeFromSuperview()
 
     }
     func loadConfirmationPopup() {
         unRegisterPopupView  = AcceptDeclinePopup(frame: self.view.frame)
-        //unRegisterPopupView.popupViewHeight.constant = 280
         unRegisterPopupView.showUnregisterYesOrNoMessage()
         unRegisterPopupView.declinePopupDelegate = self
         self.view.addSubview(unRegisterPopupView)
@@ -852,7 +776,6 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     
     func noButtonPressed() {
-        //setRegistrationSwitchOn(selectedCell: selectedPanelCell)
         self.unRegisterPopupView.removeFromSuperview()
     }
     func showLocationErrorPopup() {
@@ -923,16 +846,12 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         }
     }
     @objc func dismissOverlay(sender: UITapGestureRecognizer? = nil) {
-        //loadingView.isHidden = false
-        //loadingView.showLoading()
-        //self.getEntityRegistrationFromServer(currentRow: currentPanelRow!, selectedCell: selectedPanelCell)
         overlayView.isHidden = true
         picker.removeFromSuperview()
         toolBar.removeFromSuperview()
     }
     //MARK: PickerView
     func addPickerView() {
-        //picker.translatesAutoresizingMaskIntoConstraints = false
         picker.frame = CGRect(x: 0, y: UIScreen.main.bounds.height-200, width: self.view.frame.width , height: 200)
         picker.backgroundColor = UIColor(red: 225/255, green: 225/255, blue: 225/255, alpha: 1)
         picker.showsSelectionIndicator = true
@@ -974,7 +893,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     @objc func donePicker() {
         
         let countValue : Int? = Int(selectedCount!)
-        let remainingSeat : Int? = Int(nmoqTourDetail[currentPanelRow!].seatsRemaining!)
+        let remainingSeat : Int? = Int(nmoqTourDetail[currentPanelRow!].seatsRemaining ?? "3")
         if (countValue! > remainingSeat!) {
             loadNoSeatAvailablePopup()
         } else {
@@ -1011,7 +930,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             selectedPanelCell?.registerButton.isEnabled = true
             selectedPanelCell?.registerButton.backgroundColor = UIColor(red: 60/255, green: 135/255, blue: 66/255, alpha: 1)
         } else {
-            selectedPanelCell?.numbOfRservationsLabel.text = NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING1", comment: "TOUR_SEAT_AVAILABILITY_STRING1 in panel detail") + (nmoqTourDetail[currentPanelRow!].seatsRemaining)! + NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING2", comment: "TOUR_SEAT_AVAILABILITY_STRING2 in panel detail")
+            selectedPanelCell?.numbOfRservationsLabel.text = NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING1", comment: "TOUR_SEAT_AVAILABILITY_STRING1 in panel detail") + (nmoqTourDetail[currentPanelRow!].seatsRemaining ?? "3") + NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING2", comment: "TOUR_SEAT_AVAILABILITY_STRING2 in panel detail")
             selectedPanelCell?.registerButton.isEnabled = true
             selectedPanelCell?.registerButton.backgroundColor = UIColor(red: 60/255, green: 135/255, blue: 66/255, alpha: 1)
         }
@@ -1029,7 +948,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     
     func addToCalendarButtonPressed() {
         self.addToCalendarPopup.removeFromSuperview()
-        if (addToCalendarPopup.addToCalendarButton.tag == 0) {
+        if (addToCalendarPopup.tag == 0) {
             setUnRegisteredButton()
             
             let time = nmoqTourDetail[currentPanelRow!].date?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
@@ -1040,13 +959,11 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                 let endTime = timeArray![0] + "" + timeArray![2]
                 let start = convertStringToDate(string: startTime, withFormat: dateFormat)
                 let end = convertStringToDate(string: endTime, withFormat: dateFormat)
-    //            if(times.count == 0) {
-    //                times = [["start": startTime, "end":endTime]]
-    //            } else {
-    //                times.append(["start": startTime, "end":endTime])
-    //
-    //            }
+                self.addEventToCalendar(title: nmoqTourDetail[currentPanelRow!].title!, description: nmoqTourDetail[currentPanelRow!].title, startDate: start, endDate: end)
             }
+        } else {
+            let openSettingsUrl = URL(string: UIApplicationOpenSettingsURLString)
+            UIApplication.shared.openURL(openSettingsUrl!)
         }
     }
     

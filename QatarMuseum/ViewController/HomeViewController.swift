@@ -1162,7 +1162,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     self.loginPopUpView.loadingView.stopLoading()
                     self.loginPopUpView.loadingView.isHidden = true
                     UserDefaults.standard.setValue(self.loginPopUpView.passwordText.text, forKey: "userPassword")
-                    self.loginPopUpView.removeFromSuperview()
+                   // self.loginPopUpView.removeFromSuperview()
                     if(response.response?.statusCode == 200) {
                         self.loginArray = data
                         UserDefaults.standard.setValue(self.loginArray?.token, forKey: "accessToken")
@@ -1180,7 +1180,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     }
                     
                 case .failure( _):
-                    self.loginPopUpView.removeFromSuperview()
+                    //self.loginPopUpView.removeFromSuperview()
                     self.loginPopUpView.loadingView.stopLoading()
                     self.loginPopUpView.loadingView.isHidden = true
                     
@@ -1230,7 +1230,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     func getEventListUserRegistrationFromServer() {
         if((accessToken != nil) && (UserDefaults.standard.value(forKey: "uid") != nil)){
             let userId = UserDefaults.standard.value(forKey: "uid") as! String
-            _ = Alamofire.request(QatarMuseumRouter.NMoQEventListUserRegistration(["user_id" : userId])).responseObject { (response: DataResponse<NMoQUserEventListValues>) -> Void in
+            _ = Alamofire.request(QatarMuseumRouter.NMoQEventListUserRegistration(["uid" : userId])).responseObject { (response: DataResponse<NMoQUserEventListValues>) -> Void in
                 switch response.result {
                 case .success(let data):
                     self.userEventList = data.eventList
