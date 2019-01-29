@@ -373,7 +373,10 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                     
                 }
             }
-    }
+         } else {
+            self.loadingView.stopLoading()
+            self.loadingView.isHidden = true
+            }
     }
         
     }
@@ -921,12 +924,12 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         selectedPanelCell?.registerButton.setTitle(UNREGISTER, for: .normal)
     }
     func setRegisteredButton() {
-        if (nmoqTourDetail[currentPanelRow!].seatsRemaining == "0") {
+        if ((nmoqTourDetail[currentPanelRow!].seatsRemaining == "0") || (nmoqTourDetail[currentPanelRow!].seatsRemaining == nil)) {
             selectedPanelCell?.numbOfRservationsLabel.text = NSLocalizedString("NO_SEAT_AVAILABLE", comment: "NO_SEAT_AVAILABLE in panel detail")
             selectedPanelCell?.registerButton.backgroundColor = UIColor.lightGray
             selectedPanelCell?.registerButton.isEnabled = false
         } else if (nmoqTourDetail[currentPanelRow!].seatsRemaining == "1") {
-            selectedPanelCell?.numbOfRservationsLabel.text = NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING1", comment: "TOUR_SEAT_AVAILABILITY_STRING1 in panel detail") + (nmoqTourDetail[currentPanelRow!].seatsRemaining)! + NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING3", comment: "TOUR_SEAT_AVAILABILITY_STRING3 in panel detail")
+            selectedPanelCell?.numbOfRservationsLabel.text = NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING1", comment: "TOUR_SEAT_AVAILABILITY_STRING1 in panel detail") + (nmoqTourDetail[currentPanelRow!].seatsRemaining ?? "1") + NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING3", comment: "TOUR_SEAT_AVAILABILITY_STRING3 in panel detail")
             selectedPanelCell?.registerButton.isEnabled = true
             selectedPanelCell?.registerButton.backgroundColor = UIColor(red: 60/255, green: 135/255, blue: 66/255, alpha: 1)
         } else {

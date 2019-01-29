@@ -157,8 +157,8 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
             switchBottomConstraint.constant = 32
             if let arrayOffset = userEventList.index(where: {$0.eventID == tourDetailData?.nid}) {
                 numbOfRservationsLabel.isHidden = false
-                if(userEventList[arrayOffset].seats! == "1") {
-                    let reservationCount = NSLocalizedString("NUMB_OF_RESERVATIONS", comment: "NUMB_OF_RESERVATIONS in panel detail") + userEventList[arrayOffset].seats! +  NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING3", comment: "TOUR_SEAT_AVAILABILITY_STRING3 in panel detail")
+                if(userEventList[arrayOffset].seats == "1") {
+                    let reservationCount = NSLocalizedString("NUMB_OF_RESERVATIONS", comment: "NUMB_OF_RESERVATIONS in panel detail") + (userEventList[arrayOffset].seats ?? "1") +  NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING3", comment: "TOUR_SEAT_AVAILABILITY_STRING3 in panel detail")
                     numbOfRservationsLabel.text = reservationCount
                 } else {
                     let reservationCount = NSLocalizedString("NUMB_OF_RESERVATIONS", comment: "NUMB_OF_RESERVATIONS in panel detail") + (userEventList[arrayOffset].seats ?? "2") +  NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING2", comment: "TOUR_SEAT_AVAILABILITY_STRING2 in panel detail")
@@ -169,12 +169,12 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
                 registerButton.backgroundColor = UIColor.red
                 registerButton.setTitle(UNREGISTER, for: .normal)
             } else {
-                if (tourDetailData?.seatsRemaining == "0") {
+                if ((tourDetailData?.seatsRemaining == "0") || (tourDetailData?.seatsRemaining == nil)){
                     numbOfRservationsLabel.text = NSLocalizedString("NO_SEAT_AVAILABLE", comment: "NO_SEAT_AVAILABLE in panel detail")
                     registerButton.backgroundColor = UIColor.lightGray
                     registerButton.isEnabled = false
                 } else if (tourDetailData?.seatsRemaining == "1") {
-                    numbOfRservationsLabel.text = NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING1", comment: "TOUR_SEAT_AVAILABILITY_STRING1 in panel detail") + (tourDetailData?.seatsRemaining)! + NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING3", comment: "TOUR_SEAT_AVAILABILITY_STRING3 in panel detail")
+                    numbOfRservationsLabel.text = NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING1", comment: "TOUR_SEAT_AVAILABILITY_STRING1 in panel detail") + (tourDetailData?.seatsRemaining ?? "1") + NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING3", comment: "TOUR_SEAT_AVAILABILITY_STRING3 in panel detail")
                     registerButton.isEnabled = true
                     registerButton.backgroundColor = UIColor(red: 60/255, green: 135/255, blue: 66/255, alpha: 1)
                 } else {

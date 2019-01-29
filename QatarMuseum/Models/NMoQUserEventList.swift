@@ -18,7 +18,7 @@ struct NMoQUserEventList: ResponseObjectSerializable, ResponseCollectionSerializ
             self.title = representation["Title"] as? String
             self.eventID = representation["event_ID"] as? String
             self.regID = representation["reg_id"] as? String
-            self.seats = representation["seats"] as? String
+            self.seats = representation["Seats"] as? String
             
         }
     }
