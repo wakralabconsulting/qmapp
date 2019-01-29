@@ -129,8 +129,8 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
         //commented bcz now tour and panel have same data
         panelView.pageNameString = NMoQPanelPage.PanelDetailPage
-        //panelView.pageNameString = NMoQPanelPage.TourDetailPage
         panelView.panelDetailId = nmoqTourList[selectedRow!].nid
+        panelView.selectedRow = selectedRow
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionPush

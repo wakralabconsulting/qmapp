@@ -37,7 +37,7 @@ struct NMoQTourDetail: ResponseObjectSerializable, ResponseCollectionSerializabl
             self.sortId = representation["sort_id"] as? String
             self.body = representation["Body"] as? String
             self.registered = representation["registered"] as? String
-            self.nid = representation["nid"] as? String
+            self.nid = representation["node_id"] as? String
             self.seatsRemaining = representation["Seats_remaining"] as? String
         }
     }
