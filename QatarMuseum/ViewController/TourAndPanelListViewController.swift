@@ -79,7 +79,12 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "nMoQListCellId", for: indexPath) as! NMoQListCell
-        cell.setTourListDate(tourList: nmoqTourList[indexPath.row])
+        if (pageNameString == NMoQPageName.Tours) {
+            cell.setTourListDate(tourList: nmoqTourList[indexPath.row], isTour: true)
+        } else {
+            cell.setTourListDate(tourList: nmoqTourList[indexPath.row], isTour: false)
+        }
+        
         loadingView.stopLoading()
         loadingView.isHidden = true
         return cell
