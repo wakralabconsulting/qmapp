@@ -9,6 +9,7 @@
 import Alamofire
 import CoreData
 import Crashlytics
+import Firebase
 import Kingfisher
 import UIKit
 class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,comingSoonPopUpProtocol {
@@ -39,6 +40,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        self.recordScreenView()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -306,6 +308,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         return CGSize(width: museumsBottomCollectionView.frame.width/4, height: 110)
     }
     func loadBottomCellPages(cellObj: MuseumBottomCell, selectedItem: String?) {
+        
         if(fromHomeBanner)! {
             let aboutBanner = NSLocalizedString("ABOUT", comment: "ABOUT  in the Museum")
             let tourBanner = NSLocalizedString("TOURS", comment: "TOURS  in the Museum page")
@@ -846,7 +849,10 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         fetchResults = try! managedContext.fetch(fetchRequest)
         return fetchResults
     }
-    
+    func recordScreenView() {
+        let screenClass = String(describing: type(of: self))
+        Analytics.setScreenName(MUSEUM_VC, screenClass: screenClass)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

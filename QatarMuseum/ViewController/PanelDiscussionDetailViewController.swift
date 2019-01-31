@@ -11,6 +11,7 @@ import CoreData
 import EventKit
 import MapKit
 import MessageUI
+import Firebase
 import UIKit
 
 enum NMoQPanelPage {
@@ -49,6 +50,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         super.viewDidLoad()
         registerCell()
         setupUI()
+        self.recordScreenView()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -1031,7 +1033,14 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         addToCalendarPopup.tag = 1
         self.view.addSubview(addToCalendarPopup)
     }
-    
+    func recordScreenView() {
+        let screenClass = String(describing: type(of: self))
+        if (pageNameString == NMoQPanelPage.TourDetailPage) {
+            Analytics.setScreenName(NMOQ_TOUR_DETAIL, screenClass: screenClass)
+        } else {
+            Analytics.setScreenName(NMOQ_ACTIVITY_DETAIL, screenClass: screenClass)
+        }
+    }
 
     
 }

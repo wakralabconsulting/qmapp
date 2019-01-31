@@ -9,6 +9,7 @@
 import Alamofire
 import CoreData
 import Crashlytics
+import Firebase
 import UIKit
 
 class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,LoadingViewProtocol, iCarouselDelegate,iCarouselDataSource {
@@ -35,6 +36,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
             self.fetchDiningDetailsFromCoredata()
         }
         setTopBarImage()
+        self.recordScreenView()
     }
     
     func setupUIContents() {
@@ -585,6 +587,10 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
+    }
+    func recordScreenView() {
+        let screenClass = String(describing: type(of: self))
+        Analytics.setScreenName(DINING_DETAIL, screenClass: screenClass)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -9,6 +9,7 @@
 import Alamofire
 import CoreData
 import Crashlytics
+import Firebase
 import UIKit
 
 class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,comingSoonPopUpProtocol,LoadingViewProtocol {
@@ -33,6 +34,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             self.fetchParksFromCoredata()
         }
         registerCell()
+        self.recordScreenView()
     }
     func setupUIContents() {
         loadingView.isHidden = false
@@ -464,6 +466,10 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
+    }
+    func recordScreenView() {
+        let screenClass = String(describing: type(of: self))
+        Analytics.setScreenName(PARKS_VC, screenClass: screenClass)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

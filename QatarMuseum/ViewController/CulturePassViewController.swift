@@ -9,6 +9,7 @@
 import Alamofire
 import CoreData
 import Crashlytics
+import Firebase
 import UIKit
 
 class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoonPopUpProtocol,LoginPopUpProtocol,UITextFieldDelegate {
@@ -41,6 +42,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        self.recordScreenView()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
@@ -170,6 +172,10 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     
     func loginButtonPressed() {
+        Analytics.logEvent("Login", parameters: [
+            "user_name":loginPopUpView.userNameText.text ?? "",
+            "login_id":"1"
+            ])
         loginPopUpView.userNameText.resignFirstResponder()
         loginPopUpView.passwordText.resignFirstResponder()
         self.loginPopUpView.loadingView.isHidden = false
@@ -473,5 +479,8 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
             }
         }
     }
-
+    func recordScreenView() {
+        let screenClass = String(describing: type(of: self))
+        Analytics.setScreenName(CULTUREPASS_VC, screenClass: screenClass)
+    }
 }

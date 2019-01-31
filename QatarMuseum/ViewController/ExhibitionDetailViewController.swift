@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import Crashlytics
+import Firebase
 import Alamofire
 
 class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,LoadingViewProtocol {
@@ -34,6 +35,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
                 self.fetchExhibitionDetailsFromCoredata()
             }
         }
+        self.recordScreenView()
     }
     
     func setUi() {
@@ -488,6 +490,10 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    func recordScreenView() {
+        let screenClass = String(describing: type(of: self))
+        Analytics.setScreenName(EXHIBITION_DETAIL, screenClass: screenClass)
     }
 
 }

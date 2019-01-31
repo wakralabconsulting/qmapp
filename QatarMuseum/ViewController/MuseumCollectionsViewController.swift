@@ -10,6 +10,7 @@ import Alamofire
 import UIKit
 import CoreData
 import Crashlytics
+import Firebase
 
 class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol,LoadingViewProtocol {
     @IBOutlet weak var museumCollectionView: UICollectionView!
@@ -41,7 +42,7 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
                 self.fetchCollectionListFromCoredata()
             }
         }
-        
+        self.recordScreenView()
     }
     
     func setUpUI() {
@@ -364,6 +365,10 @@ class MuseumCollectionsViewController: UIViewController,UICollectionViewDelegate
         if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (collection.count == 0)){
             self.fetchCollectionListFromCoredata()
         }
+    }
+    func recordScreenView() {
+        let screenClass = String(describing: type(of: self))
+        Analytics.setScreenName(MUSEUM_COLLECTION, screenClass: screenClass)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

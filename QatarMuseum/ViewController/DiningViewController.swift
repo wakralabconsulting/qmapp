@@ -9,6 +9,7 @@
 import Alamofire
 import CoreData
 import Crashlytics
+import Firebase
 import UIKit
 
 class DiningViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, HeaderViewProtocol,comingSoonPopUpProtocol,LoadingViewProtocol {
@@ -42,6 +43,7 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
             }
         }
         registerNib()
+        self.recordScreenView()
     }
     
     func setupDiningArtsUi() {
@@ -417,7 +419,10 @@ class DiningViewController: UIViewController,UICollectionViewDelegate,UICollecti
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
     }
-    
+    func recordScreenView() {
+        let screenClass = String(describing: type(of: self))
+        Analytics.setScreenName(DINING_LIST, screenClass: screenClass)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

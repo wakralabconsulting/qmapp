@@ -8,6 +8,7 @@
 
 import Alamofire
 import CoreData
+import Firebase
 import UIKit
 
 class TravelArrangementsViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol {
@@ -23,7 +24,7 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
-        
+        self.recordScreenView()
     }
     func setUI() {
         loadingView.isHidden = false
@@ -239,6 +240,10 @@ class TravelArrangementsViewController: UIViewController,UICollectionViewDelegat
         if (travelList.count == 0) {
             self.fetchTravelInfoFromCoredata()
         }
+    }
+    func recordScreenView() {
+        let screenClass = String(describing: type(of: self))
+        Analytics.setScreenName(TRAVEL_ARRANGEMENT_VC, screenClass: screenClass)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

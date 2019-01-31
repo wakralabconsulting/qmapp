@@ -9,6 +9,7 @@
 import Alamofire
 import CoreData
 import Crashlytics
+import Firebase
 import UIKit
 
 class PreviewContainerViewController: UIViewController,UIPageViewControllerDelegate,UIPageViewControllerDataSource,HeaderViewProtocol,UIGestureRecognizerDelegate,LoadingViewProtocol {
@@ -63,6 +64,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         super.viewDidLoad()
         
         loadUI()
+        self.recordScreenView()
     }
     
     func loadUI() {
@@ -1205,5 +1207,9 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    func recordScreenView() {
+        let screenClass = String(describing: type(of: self))
+        Analytics.setScreenName(PREVIEW_CONTAINER_VC, screenClass: screenClass)
     }
 }

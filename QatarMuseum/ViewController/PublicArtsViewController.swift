@@ -360,14 +360,7 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
         // Dispose of any resources that can be recreated.
     }
     
-    func recordScreenView() {
-        title = self.nibName
-        guard let screenName = title else {
-            return
-        }
-        let screenClass = classForCoder.description()
-        Analytics.setScreenName(screenName, screenClass: screenClass)
-    }
+    
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
         if  (networkReachability?.isReachable)! {
@@ -389,6 +382,10 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
         if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (publicArtsListArray.count == 0)){
             self.fetchPublicArtsListFromCoredata()
         }
+    }
+    func recordScreenView() {
+        let screenClass = String(describing: type(of: self))
+        Analytics.setScreenName(PUBLIC_ARTS_LIST, screenClass: screenClass)
     }
 
 }

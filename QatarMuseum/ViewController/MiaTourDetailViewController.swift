@@ -7,6 +7,7 @@
 //
 import Alamofire
 import Crashlytics
+import Firebase
 import Kingfisher
 import UIKit
 
@@ -39,6 +40,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
         setDetails()
         setupUI()
         setGradientLayer()
+        self.recordScreenView()
     }
 
     func setupUI() {
@@ -237,8 +239,6 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
         }
     }
     func setGradientLayer() {
-
-        
         let gradient: CAGradientLayer = CAGradientLayer()
         
         gradient.colors = [UIColor.white.cgColor, UIColor.clear.cgColor]
@@ -246,8 +246,11 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
         gradient.startPoint = CGPoint(x: 0.0, y: 1.0)
         gradient.endPoint = CGPoint(x: 0.0, y: 0.0)
         gradient.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: self.view.frame.size.height)
-        
         self.overlayView.layer.insertSublayer(gradient, at: 0)
         
+    }
+    func recordScreenView() {
+        let screenClass = String(describing: type(of: self))
+        Analytics.setScreenName(MIA_TOUR_DETAIL, screenClass: screenClass)
     }
 }

@@ -59,7 +59,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         setUpUI()
         NotificationCenter.default.addObserver(self, selector: #selector(self.receivedNotification(notification:)), name: NSNotification.Name("NotificationIdentifier"), object: nil)
         
-        
+        self.recordScreenView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -1326,6 +1326,11 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 self.fetchHomeInfoFromCoredata()
             }
         }
+    }
+    func recordScreenView() {
+       // let screenClass = classForCoder.description()
+        let screenClass = String(describing: type(of: self))
+        Analytics.setScreenName(HOME, screenClass: screenClass)
     }
 
 }

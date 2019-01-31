@@ -337,14 +337,7 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         // Dispose of any resources that can be recreated.
     }
     
-    func recordScreenView() {
-        title = self.nibName
-        guard let screenName = title else {
-            return
-        }
-        let screenClass = classForCoder.description()
-        Analytics.setScreenName(screenName, screenClass: screenClass)
-    }
+    
     
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
@@ -370,5 +363,13 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
         if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (heritageListArray.count == 0)){
             self.fetchHeritageListFromCoredata()
         }
+    }
+    func recordScreenView() {
+        //        title = self.nibName
+        //        guard let screenName = title else {
+        //            return
+        //        }
+        let screenClass = String(describing: type(of: self))
+        Analytics.setScreenName(HERITAGE_LIST, screenClass: screenClass)
     }
 }

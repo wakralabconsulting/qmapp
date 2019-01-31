@@ -1313,14 +1313,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         self.loadingView.showNoDataView()
         self.loadingView.noDataLabel.text = errorMessage
     }
-    func recordScreenView() {
-        title = self.nibName
-        guard let screenName = title else {
-            return
-        }
-        let screenClass = classForCoder.description()
-        Analytics.setScreenName(screenName, screenClass: screenClass)
-    }
+    
     
     //MARK: iCarousel Delegate
     func numberOfItems(in carousel: iCarousel) -> Int {
@@ -1471,6 +1464,10 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             
             print("Error in calling phone ...")
         }
+    }
+    func recordScreenView() {
+        let screenClass = String(describing: type(of: self))
+        Analytics.setScreenName(MUSEUMS_ABOUT_VC, screenClass: screenClass)
     }
     
 }
