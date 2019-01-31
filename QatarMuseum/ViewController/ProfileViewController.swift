@@ -9,6 +9,7 @@
 import Alamofire
 import CoreData
 import Crashlytics
+import Firebase
 import Kingfisher
 import UIKit
 
@@ -62,10 +63,8 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         } else {
            getCountryListsArabicFromJson()
         }
-        
-        
         setUpProfileUI()
-        
+        self.recordScreenView()
     }
 
     func setUpProfileUI() {
@@ -480,6 +479,10 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
             }
         }
     }
+    }
+    func recordScreenView() {
+        let screenClass = String(describing: type(of: self))
+        Analytics.setScreenName(PROFILE_VC, screenClass: screenClass)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

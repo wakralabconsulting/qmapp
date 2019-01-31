@@ -9,6 +9,7 @@
 import Alamofire
 import CoreData
 import Crashlytics
+import Firebase
 import UIKit
 
 class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,HeaderViewProtocol,LoadingViewProtocol {
@@ -23,7 +24,7 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
         super.viewDidLoad()
         registerCell()
         setUI()
-        
+        self.recordScreenView()
     }
     func setUI() {
         loadingView.isHidden = false
@@ -323,6 +324,10 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
+    }
+    func recordScreenView() {
+        let screenClass = String(describing: type(of: self))
+        Analytics.setScreenName(COLLECTION_DETAIL, screenClass: screenClass)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

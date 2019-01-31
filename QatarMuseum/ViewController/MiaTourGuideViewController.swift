@@ -9,6 +9,7 @@
 import Alamofire
 import CoreData
 import Crashlytics
+import Firebase
 import UIKit
 
 class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,HeaderViewProtocol,comingSoonPopUpProtocol,UICollectionViewDelegateFlowLayout,MiaTourProtocol,LoadingViewProtocol {
@@ -25,6 +26,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
         super.viewDidLoad()
         setUpUI()
         registerNib()
+        self.recordScreenView()
     }
 
     func setUpUI() {
@@ -453,7 +455,10 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
                     self.fetchTourGuideListFromCoredata()
             }
         }
-        
+    }
+    func recordScreenView() {
+        let screenClass = String(describing: type(of: self))
+        Analytics.setScreenName(MIA_TOUR_GUIDE, screenClass: screenClass)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

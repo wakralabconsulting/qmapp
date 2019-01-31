@@ -9,6 +9,7 @@
 import Alamofire
 import CoreData
 import Crashlytics
+import Firebase
 import UIKit
 
 enum NMoQPageName {
@@ -33,6 +34,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         setupUI()
         collectionTableView.delegate = self
         collectionTableView.dataSource = self
+        self.recordScreenView()
     }
     
     func setupUI() {
@@ -386,6 +388,15 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 }
             }
     }
+        
+    }
+    func recordScreenView() {
+        let screenClass = String(describing: type(of: self))
+        if(pageNameString == NMoQPageName.Tours) {
+            Analytics.setScreenName(NMOQ_TOUR_LIST, screenClass: screenClass)
+        } else {
+            Analytics.setScreenName(NMOQ_ACTIVITY_LIST, screenClass: screenClass)
+        }
         
     }
     override func didReceiveMemoryWarning() {

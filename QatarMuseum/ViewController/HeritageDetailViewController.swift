@@ -1480,14 +1480,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         self.loadingView.showNoDataView()
         self.loadingView.noDataLabel.text = errorMessage
     }
-    func recordScreenView() {
-        title = self.nibName
-        guard let screenName = title else {
-            return
-        }
-        let screenClass = classForCoder.description()
-        Analytics.setScreenName(screenName, screenClass: screenClass)
-    }
+   
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
         if  (networkReachability?.isReachable)! {
@@ -1505,6 +1498,15 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
+    }
+    func recordScreenView() {
+        let screenClass = String(describing: type(of: self))
+        if (pageNameString == PageName.publicArtsDetail) {
+            Analytics.setScreenName(PUBLICARTS_DETAIL, screenClass: screenClass)
+        } else {
+            Analytics.setScreenName(HERITAGE_DETAIL, screenClass: screenClass)
+        }
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

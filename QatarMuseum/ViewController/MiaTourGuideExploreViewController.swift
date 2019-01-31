@@ -7,6 +7,7 @@
 //
 
 import Crashlytics
+import Firebase
 import UIKit
 
 class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol, comingSoonPopUpProtocol {
@@ -21,6 +22,7 @@ class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol, co
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        self.recordScreenView()
     }
     
     func setupUI() {
@@ -96,5 +98,9 @@ class MiaTourGuideExploreViewController: UIViewController,HeaderViewProtocol, co
         transition.subtype = kCATransitionFromLeft
         self.view.window!.layer.add(transition, forKey: kCATransition)
         self.dismiss(animated: false, completion: nil)
+    }
+    func recordScreenView() {
+        let screenClass = String(describing: type(of: self))
+        Analytics.setScreenName(MIA_TOURGUIDE_EXPLORE, screenClass: screenClass)
     }
 }

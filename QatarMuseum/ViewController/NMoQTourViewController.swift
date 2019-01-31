@@ -9,6 +9,7 @@
 import Alamofire
 import CoreData
 import Crashlytics
+import Firebase
 import UIKit
 
 class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,HeaderViewProtocol,LoadingViewProtocol {
@@ -28,6 +29,7 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
         super.viewDidLoad()
         registerCell()
         setupUI()
+        self.recordScreenView()
     }
     
     func setupUI() {
@@ -333,6 +335,10 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
         fetchResults = try! managedContext.fetch(fetchRequest)
         return fetchResults
+    }
+    func recordScreenView() {
+        let screenClass = String(describing: type(of: self))
+        Analytics.setScreenName(NMOQ_TOUR_SECOND_LIST, screenClass: screenClass)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -10,6 +10,7 @@ import Alamofire
 import CoreData
 import Crashlytics
 import EventKit
+import Firebase
 import UIKit
 
 
@@ -62,7 +63,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         institutionType = anyString
         ageGroupType = anyString
         programmeType = anyString
-        
+        self.recordScreenView()
         
     }
 
@@ -1515,5 +1516,9 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
+    }
+    func recordScreenView() {
+        let screenClass = String(describing: type(of: self))
+        Analytics.setScreenName(EVENT_VC, screenClass: screenClass)
     }
 }

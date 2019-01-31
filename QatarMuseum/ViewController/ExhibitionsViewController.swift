@@ -5,11 +5,11 @@
 //  Created by Exalture on 10/06/18.
 //  Copyright © 2018 Exalture. All rights reserved.
 //
-
-import UIKit
+import Alamofire
 import CoreData
 import Crashlytics
-import Alamofire
+import Firebase
+import UIKit
 
 enum ExhbitionPageName {
     case homeExhibition
@@ -50,7 +50,7 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
                 self.fetchMuseumExhibitionsListFromCoredata()
             }
         }
-        
+        self.recordScreenView()
     }
     
     func setUpExhibitionPageUi() {
@@ -486,6 +486,10 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
         if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (exhibition.count == 0)){
             self.fetchExhibitionsListFromCoredata()
         }
+    }
+    func recordScreenView() {
+        let screenClass = String(describing: type(of: self))
+        Analytics.setScreenName(EXHIBITION_LIST, screenClass: screenClass)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
