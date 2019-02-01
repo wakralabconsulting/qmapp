@@ -336,7 +336,9 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
                         showAlertView(title: NSLocalizedString("WEBVIEW_TITLE", comment: "WEBVIEW_TITLE in profile page"), message: NSLocalizedString("LOGOUT_ERROR", comment: "LOGOUT_ERROR in profile page"), viewController: self)
                     }
                 case .failure(let error):
-                    print(error)
+                    self.view.hideAllToasts()
+                    let logOutFailture =  NSLocalizedString("LOGOUT_ERROR", comment: "LOGOUT_ERROR")
+                    self.view.makeToast(logOutFailture)
                     
                 }
             }

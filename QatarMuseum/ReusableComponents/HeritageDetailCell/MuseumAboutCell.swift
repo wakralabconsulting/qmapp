@@ -159,6 +159,14 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
         let phoneTap = UITapGestureRecognizer(target: self, action: #selector(phoneTapFunction))
         contactPhoneLabel.isUserInteractionEnabled = true
         contactPhoneLabel.addGestureRecognizer(phoneTap)
+        
+        titleDescriptionLabel.delegate = self
+        titleDescriptionLabel.isUserInteractionEnabled = true
+        titleDescriptionLabel.isEditable = false
+        
+        midTitleDescriptionLabel.delegate = self
+        midTitleDescriptionLabel.isUserInteractionEnabled = true
+        midTitleDescriptionLabel.isEditable = false
     }
     
     func setHeritageDetailData(heritageDetail: Heritage) {
@@ -475,6 +483,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
         
         titleLabel.text = travelDetailData.title
         titleDescriptionLabel.text = travelDetailData.introductionText
+        titleDescriptionLabel.textAlignment = .left
         offerCodeTitleLabel.text = NSLocalizedString("SPECIAL_OFFER", comment: "SPECIAL_OFFER in Travel Page")
         claimOfferButton.setTitle(NSLocalizedString("CLAIM_OFFER", comment: "CLAIM_OFFER in Travel Page"), for: .normal)
         codeLabel.text = travelDetailData.promotionalCode

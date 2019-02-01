@@ -898,7 +898,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     @objc func donePicker() {
         
         let countValue : Int? = Int(selectedCount!)
-        let remainingSeat : Int? = Int(nmoqTourDetail[currentPanelRow!].seatsRemaining ?? "3")
+        let remainingSeat : Int? = Int(nmoqTourDetail[currentPanelRow!].seatsRemaining ?? "0")
         if (countValue! > remainingSeat!) {
             loadNoSeatAvailablePopup()
         } else {
@@ -914,19 +914,21 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     func setUnRegisteredButton() {
         selectedPanelCell?.numbOfRservationsLabel.isHidden = false
         if(selectedCount == "1") {
-            let reservationCount = NSLocalizedString("NUMB_OF_RESERVATIONS", comment: "NUMB_OF_RESERVATIONS in panel detail") + selectedCount! +  NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING3", comment: "TOUR_SEAT_AVAILABILITY_STRING3 in panel detail")
+            let reservationCount = NSLocalizedString("NUMB_OF_RESERVATIONS", comment: "NUMB_OF_RESERVATIONS in panel detail") + selectedCount! +  NSLocalizedString("SPACE", comment: "SPACE in panel detail")
             selectedPanelCell?.numbOfRservationsLabel.text = reservationCount
         } else {
-            let reservationCount = NSLocalizedString("NUMB_OF_RESERVATIONS", comment: "NUMB_OF_RESERVATIONS in panel detail") + selectedCount! +  NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING2", comment: "TOUR_SEAT_AVAILABILITY_STRING2 in panel detail")
+            let reservationCount = NSLocalizedString("NUMB_OF_RESERVATIONS", comment: "NUMB_OF_RESERVATIONS in panel detail") + selectedCount! +  NSLocalizedString("SPACES", comment: "SPACES in panel detail")
             selectedPanelCell?.numbOfRservationsLabel.text = reservationCount
         }
         
         selectedPanelCell?.registerButton.tag = 1
         selectedPanelCell?.registerButton.backgroundColor = UIColor.red
-        selectedPanelCell?.registerButton.setTitle(UNREGISTER, for: .normal)
+        let cancelBookingString = NSLocalizedString("CANCEL_BOOKING_STRING", comment: "CANCEL_BOOKING_STRING in panel detail")
+        selectedPanelCell?.registerButton.setTitle(cancelBookingString, for: .normal)
     }
     func setRegisteredButton() {
-        if ((nmoqTourDetail[currentPanelRow!].seatsRemaining == "0") || (nmoqTourDetail[currentPanelRow!].seatsRemaining == nil)) {
+        let remainingSeat : Int? = Int(nmoqTourDetail[currentPanelRow!].seatsRemaining ?? "0")
+        if ((nmoqTourDetail[currentPanelRow!].seatsRemaining == "0") || (nmoqTourDetail[currentPanelRow!].seatsRemaining == nil) || (remainingSeat! < 0)) {
             selectedPanelCell?.numbOfRservationsLabel.text = NSLocalizedString("NO_SEAT_AVAILABLE", comment: "NO_SEAT_AVAILABLE in panel detail")
             selectedPanelCell?.registerButton.backgroundColor = UIColor.lightGray
             selectedPanelCell?.registerButton.isEnabled = false
@@ -941,7 +943,8 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         }
         selectedPanelCell?.registerButton.tag = 0
         
-        selectedPanelCell?.registerButton.setTitle(REGISTER, for: .normal)
+        selectedPanelCell?.registerButton.setTitle(NSLocalizedString("BOOK_TOUR_STRING", comment: "BOOK_TOUR_STRING in panel detail"), for: .normal)
+        
     }
     //MARK: AddToCalendar Delegate
     func eventCloseButtonPressed() {

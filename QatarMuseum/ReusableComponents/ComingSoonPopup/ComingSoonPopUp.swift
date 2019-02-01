@@ -95,7 +95,7 @@ class ComingSoonPopUp: UIView {
     func loadRegistrationPopup() {
         titleLabel.isHidden = true
         messageLabel.font = UIFont.collectionFirstDescriptionFont
-        messageLabel.text = "Thank u for showing interest in the tour. We will make necessary arrangements for it during your visit. You will receive further details on your email. For any queries, please contact Qatar Museums Authority via: \n info@Qm.org.qa \n +9744452555"
+        messageLabel.text = NSLocalizedString("REGISTER_GREETING_MESSAGE", comment: "REGISTER_GREETING_MESSAGE Label in the Popup")
         //let newMultiplier:CGFloat = 0.58
         //popUpInnerViewHeight = popUpInnerViewHeight.setMultiplier(multiplier: newMultiplier)
         stayTunedLabel.isHidden = true

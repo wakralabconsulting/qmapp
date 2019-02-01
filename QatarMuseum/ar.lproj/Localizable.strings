@@ -231,9 +231,15 @@
 "VENUE" = "VENUE";
 "SPECIAL_OFFER" = "SPECIAL OFFER";
 "CLAIM_OFFER" = "Claim Offer";
-"NUMB_OF_RESERVATIONS" = "You have registered ";
+"NUMB_OF_RESERVATIONS" = "You have booked ";
+"SPACES" = " spaces";
+"SPACE" = " space";
 "TOUR_SEAT_AVAILABILITY_STRING1" = "Hurry up only ";
-"TOUR_SEAT_AVAILABILITY_STRING2" = " seats for this tour.";
-"TOUR_SEAT_AVAILABILITY_STRING3" = " seat for this tour.";
-"NO_SEAT_AVAILABLE" = "Sorry, no seats available for the specific tour.";
+"TOUR_SEAT_AVAILABILITY_STRING2" = " spaces available.";
+"TOUR_SEAT_AVAILABILITY_STRING3" = " space available.";
+"NO_SEAT_AVAILABLE" = "Fully booked";
+"BOOK_TOUR_STRING" = "Book Tour";
+"CANCEL_BOOKING_STRING" = "Cancel Booking";
+"UNREGISTER_CONFIRMATION_MESSAGE" = "Are you sure you want to cancel this tour?";
+"REGISTER_GREETING_MESSAGE" = "Thank you for booking this tour. You receive an email with further information.\n\nAny questions, please contact \nbooking@qm.org.qa \n or \n+974 4452 5555";
 
