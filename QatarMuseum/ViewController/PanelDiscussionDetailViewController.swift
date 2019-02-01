@@ -933,11 +933,11 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             selectedPanelCell?.registerButton.backgroundColor = UIColor.lightGray
             selectedPanelCell?.registerButton.isEnabled = false
         } else if (nmoqTourDetail[currentPanelRow!].seatsRemaining == "1") {
-            selectedPanelCell?.numbOfRservationsLabel.text = NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING1", comment: "TOUR_SEAT_AVAILABILITY_STRING1 in panel detail") + (nmoqTourDetail[currentPanelRow!].seatsRemaining ?? "1") + NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING3", comment: "TOUR_SEAT_AVAILABILITY_STRING3 in panel detail")
+            selectedPanelCell?.numbOfRservationsLabel.text =  (nmoqTourDetail[currentPanelRow!].seatsRemaining ?? "1") + NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING3", comment: "TOUR_SEAT_AVAILABILITY_STRING3 in panel detail")
             selectedPanelCell?.registerButton.isEnabled = true
             selectedPanelCell?.registerButton.backgroundColor = UIColor(red: 60/255, green: 135/255, blue: 66/255, alpha: 1)
         } else {
-            selectedPanelCell?.numbOfRservationsLabel.text = NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING1", comment: "TOUR_SEAT_AVAILABILITY_STRING1 in panel detail") + (nmoqTourDetail[currentPanelRow!].seatsRemaining ?? "3") + NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING2", comment: "TOUR_SEAT_AVAILABILITY_STRING2 in panel detail")
+            selectedPanelCell?.numbOfRservationsLabel.text =  (nmoqTourDetail[currentPanelRow!].seatsRemaining ?? "3") + NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING2", comment: "TOUR_SEAT_AVAILABILITY_STRING2 in panel detail")
             selectedPanelCell?.registerButton.isEnabled = true
             selectedPanelCell?.registerButton.backgroundColor = UIColor(red: 60/255, green: 135/255, blue: 66/255, alpha: 1)
         }
