@@ -158,18 +158,20 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
             if let arrayOffset = userEventList.index(where: {$0.eventID == tourDetailData?.nid}) {
                 numbOfRservationsLabel.isHidden = false
                 if(userEventList[arrayOffset].seats == "1") {
-                    let reservationCount = NSLocalizedString("NUMB_OF_RESERVATIONS", comment: "NUMB_OF_RESERVATIONS in panel detail") + (userEventList[arrayOffset].seats ?? "1") +  NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING3", comment: "TOUR_SEAT_AVAILABILITY_STRING3 in panel detail")
+                    let reservationCount = NSLocalizedString("NUMB_OF_RESERVATIONS", comment: "NUMB_OF_RESERVATIONS in panel detail") + (userEventList[arrayOffset].seats ?? "1") +  NSLocalizedString("SPACE", comment: "SPACE in panel detail")
                     numbOfRservationsLabel.text = reservationCount
                 } else {
-                    let reservationCount = NSLocalizedString("NUMB_OF_RESERVATIONS", comment: "NUMB_OF_RESERVATIONS in panel detail") + (userEventList[arrayOffset].seats ?? "2") +  NSLocalizedString("TOUR_SEAT_AVAILABILITY_STRING2", comment: "TOUR_SEAT_AVAILABILITY_STRING2 in panel detail")
+                    let reservationCount = NSLocalizedString("NUMB_OF_RESERVATIONS", comment: "NUMB_OF_RESERVATIONS in panel detail") + (userEventList[arrayOffset].seats ?? "2") +  NSLocalizedString("SPACES", comment: "SPACES in panel detail")
                     numbOfRservationsLabel.text = reservationCount
                 }
                 
                 registerButton.tag = 1
                 registerButton.backgroundColor = UIColor.red
-                registerButton.setTitle(UNREGISTER, for: .normal)
+                let cancelBookingString = NSLocalizedString("CANCEL_BOOKING_STRING", comment: "CANCEL_BOOKING_STRING in panel detail")
+                registerButton.setTitle(cancelBookingString, for: .normal)
             } else {
-                if ((tourDetailData?.seatsRemaining == "0") || (tourDetailData?.seatsRemaining == nil)){
+                let remainingSeat : Int? = Int(tourDetailData?.seatsRemaining ?? "0")
+                if ((tourDetailData?.seatsRemaining == "0") || (tourDetailData?.seatsRemaining == nil) || (remainingSeat! < 0)){
                     numbOfRservationsLabel.text = NSLocalizedString("NO_SEAT_AVAILABLE", comment: "NO_SEAT_AVAILABLE in panel detail")
                     registerButton.backgroundColor = UIColor.lightGray
                     registerButton.isEnabled = false
@@ -184,7 +186,7 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
                 }
                 registerButton.tag = 0
                 
-                registerButton.setTitle(REGISTER, for: .normal)
+                registerButton.setTitle(NSLocalizedString("BOOK_TOUR_STRING", comment: "BOOK_TOUR_STRING in panel detail"), for: .normal)
             }
         } else {
             numbOfRservationsLabel.isHidden = true

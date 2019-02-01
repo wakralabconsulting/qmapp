@@ -21,7 +21,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wnW-Jp-WaA">
                         <rect key="frame" x="0.0" y="0.0" width="318" height="120"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_imageX2" translatesAutoresizingMaskIntoConstraints="NO" id="zmz-c4-u8i">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_imageX2" translatesAutoresizingMaskIntoConstraints="NO" id="zmz-c4-u8i">
                                 <rect key="frame" x="0.0" y="0.0" width="318" height="120"/>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="skq-Rv-fwS">
@@ -31,6 +31,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
+                        <color key="backgroundColor" red="0.79932707548141479" green="0.79627889394760132" blue="0.79611146450042725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="skq-Rv-fwS" firstAttribute="leading" secondItem="wnW-Jp-WaA" secondAttribute="leading" constant="12" id="810-ZO-E6e"/>
                             <constraint firstItem="skq-Rv-fwS" firstAttribute="centerX" secondItem="zmz-c4-u8i" secondAttribute="centerX" id="87i-zX-B6l"/>
