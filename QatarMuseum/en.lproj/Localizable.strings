@@ -241,4 +241,4 @@
 "BOOK_TOUR_STRING" = "Book Tour";
 "CANCEL_BOOKING_STRING" = "Cancel Booking";
 "UNREGISTER_CONFIRMATION_MESSAGE" = "Are you sure you want to cancel this tour?";
-"REGISTER_GREETING_MESSAGE" = "Thank you for booking this tour. You receive an email with further information.\n\nAny questions, please contact \nbooking@qm.org.qa \n or \n+974 4452 5555";
+"REGISTER_GREETING_MESSAGE" = "Thank you for booking this tour. You will receive an email with further information.\n\nAny questions, please contact \nbooking@qm.org.qa \n or \n+974 4452 5555";
