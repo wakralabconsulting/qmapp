@@ -204,7 +204,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         culturePassLabel.font = UIFont.exhibitionDateLabelFont
         giftShopLabel.font = UIFont.exhibitionDateLabelFont
         diningLabel.font = UIFont.exhibitionDateLabelFont
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+       // if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             if(UserDefaults.standard.value(forKey: "firstTimeLaunch") as? String == nil) {
                 loadingView.isHidden = false
                 loadingView.showLoading()
@@ -221,7 +221,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     fetchHomeBannerInfoFromCoredata()
                 }
             }
-        }
+        //}
         
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationEn(notification:)), name: NSNotification.Name(homepageNotificationEn), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationAr(notification:)), name: NSNotification.Name(homepageNotificationAr), object: nil)
@@ -976,42 +976,88 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                         //save
                         self.saveHomeBannerToCoreData(homeListDict: homeListDict, managedObjContext: managedContext)
                     }
+        } else {
+            let fetchData = checkAddedToCoredata(entityName: "HomeBannerEntityAr", idKey: "fullContentID", idValue: nil, managedContext: managedContext) as! [HomeBannerEntityAr]
+            let homeListDict = homeBannerList[0]
+            if (fetchData.count > 0) {
+                
+                let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "HomeBannerEntityAr")
+                if(isDeleted == true) {
+                    self.saveHomeBannerToCoreData(homeListDict: homeListDict, managedObjContext: managedContext)
+                }
+                
+            } else {
+                //save
+                self.saveHomeBannerToCoreData(homeListDict: homeListDict, managedObjContext: managedContext)
+            }
         }
     }
     func saveHomeBannerToCoreData(homeListDict: HomeBanner, managedObjContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let homeInfo: HomeBannerEntity = NSEntityDescription.insertNewObject(forEntityName: "HomeBannerEntity", into: managedObjContext) as! HomeBannerEntity
             homeInfo.title = homeListDict.title
             homeInfo.fullContentID = homeListDict.fullContentID
             homeInfo.bannerTitle = homeListDict.bannerTitle
             homeInfo.bannerLink = homeListDict.bannerLink
-        
-        if(homeListDict.image != nil){
-            if((homeListDict.image?.count)! > 0) {
-                for i in 0 ... (homeListDict.image?.count)!-1 {
-                    var bannerImage: HomeBannerImageEntity
-                    let bannerImgaeArray: HomeBannerImageEntity = NSEntityDescription.insertNewObject(forEntityName: "HomeBannerImageEntity", into: managedObjContext) as! HomeBannerImageEntity
-                    bannerImgaeArray.image = homeListDict.image![i]
-                    
-                    bannerImage = bannerImgaeArray
-                    homeInfo.addToBannerImageRelations(bannerImage)
-                    do {
-                        try managedObjContext.save()
-                    } catch let error as NSError {
-                        print("Could not save. \(error), \(error.userInfo)")
+            
+            if(homeListDict.image != nil){
+                if((homeListDict.image?.count)! > 0) {
+                    for i in 0 ... (homeListDict.image?.count)!-1 {
+                        var bannerImage: HomeBannerImageEntity
+                        let bannerImgaeArray: HomeBannerImageEntity = NSEntityDescription.insertNewObject(forEntityName: "HomeBannerImageEntity", into: managedObjContext) as! HomeBannerImageEntity
+                        bannerImgaeArray.image = homeListDict.image![i]
+                        
+                        bannerImage = bannerImgaeArray
+                        homeInfo.addToBannerImageRelations(bannerImage)
+                        do {
+                            try managedObjContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
                     }
                 }
             }
+            do {
+                try managedObjContext.save()
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
+        } else {
+            let homeInfo: HomeBannerEntityAr = NSEntityDescription.insertNewObject(forEntityName: "HomeBannerEntityAr", into: managedObjContext) as! HomeBannerEntityAr
+            homeInfo.title = homeListDict.title
+            homeInfo.fullContentID = homeListDict.fullContentID
+            homeInfo.bannerTitle = homeListDict.bannerTitle
+            homeInfo.bannerLink = homeListDict.bannerLink
+            
+            if(homeListDict.image != nil){
+                if((homeListDict.image?.count)! > 0) {
+                    for i in 0 ... (homeListDict.image?.count)!-1 {
+                        var bannerImage: HomeBannerImageEntityAr
+                        let bannerImgaeArray: HomeBannerImageEntityAr = NSEntityDescription.insertNewObject(forEntityName: "HomeBannerImageEntityAr", into: managedObjContext) as! HomeBannerImageEntityAr
+                        bannerImgaeArray.image = homeListDict.image![i]
+                        
+                        bannerImage = bannerImgaeArray
+                        homeInfo.addToBannerImageRelationsAr(bannerImage)
+                        do {
+                            try managedObjContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                    }
+                }
+            }
+            do {
+                try managedObjContext.save()
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
         }
-        do {
-            try managedObjContext.save()
-        } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
-        }
+
     }
     func fetchHomeBannerInfoFromCoredata() {
         let managedContext = getContext()
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var homeArray = [HomeBannerEntity]()
                 let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeBannerEntity")
                 homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeBannerEntity])!
@@ -1020,6 +1066,30 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                         let homeBannerDict = homeArray[i]
                         var imagesArray : [String] = []
                         let imagesInfoArray = (homeBannerDict.bannerImageRelations?.allObjects) as! [HomeBannerImageEntity]
+                        if(imagesInfoArray.count > 0) {
+                            for i in 0 ... imagesInfoArray.count-1 {
+                                imagesArray.append(imagesInfoArray[i].image!)
+                            }
+                        }
+                        self.homeBannerList.insert(HomeBanner(title: homeArray[i].title, fullContentID: homeArray[i].fullContentID, bannerTitle: homeArray[i].bannerTitle, bannerLink: homeArray[i].bannerLink,image: imagesArray, introductionText: nil, email: nil, contactNumber: nil, promotionalCode: nil, claimOffer: nil), at: i)
+                        
+                    }
+                    if(self.homeList.count == 0){
+                        self.showNoNetwork()
+                    }
+                    self.homeCollectionView.reloadData()
+                } else{
+                    self.showNoNetwork()
+                }
+            } else {
+                var homeArray = [HomeBannerEntityAr]()
+                let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeBannerEntityAr")
+                homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeBannerEntityAr])!
+                if (homeArray.count > 0) {
+                    for i in 0 ... homeArray.count-1 {
+                        let homeBannerDict = homeArray[i]
+                        var imagesArray : [String] = []
+                        let imagesInfoArray = (homeBannerDict.bannerImageRelationsAr?.allObjects) as! [HomeBannerImageEntityAr]
                         if(imagesInfoArray.count > 0) {
                             for i in 0 ... imagesInfoArray.count-1 {
                                 imagesArray.append(imagesInfoArray[i].image!)

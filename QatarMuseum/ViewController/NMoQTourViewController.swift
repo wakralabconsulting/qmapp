@@ -188,7 +188,7 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
     }
     func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "NmoqTourDetailEntity", idKey: "nmoqEvent", idValue: tourDetailId, managedContext: managedContext) as! [NmoqTourDetailEntity]
             if (fetchData.count > 0) {
                 for i in 0 ... nmoqTourDetail.count-1 {

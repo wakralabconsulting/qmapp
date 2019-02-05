@@ -959,7 +959,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     func getNmoQAboutDetailsFromServer() {
         if(museumId != nil) {
             
-            _ = Alamofire.request(QatarMuseumRouter.GetNMoQAboutEvent(["nid": museumId!])).responseObject { (response: DataResponse<Museums>) -> Void in
+            _ = Alamofire.request(QatarMuseumRouter.GetNMoQAboutEvent(LocalizationLanguage.currentAppleLanguage(),["nid": museumId!])).responseObject { (response: DataResponse<Museums>) -> Void in
             switch response.result {
             case .success(let data):
                 self.saveOrUpdateAboutCoredata(aboutDetailtArray: data.museum)
@@ -1277,13 +1277,21 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                         }
                         self.aboutDetailtArray.insert(Museum(name: aboutDict.nameAr, id: aboutDict.id, tourguideAvailable: aboutDict.tourguideAvailableAr, contactNumber: aboutDict.contactNumberAr, contactEmail: aboutDict.contactEmailAr, mobileLongtitude: aboutDict.mobileLongtitudeAr, subtitle: aboutDict.subtitleAr, openingTime: aboutDict.openingTimeAr, mobileDescription: descriptionArray, multimediaFile: multimediaArray, mobileLatitude: aboutDict.mobileLatitudear, tourGuideAvailability: aboutDict.tourGuideAvlblyAr,multimediaVideo: nil,downloadable:nil,eventDate:nmoqTime),at: 0)
                         if(aboutDetailtArray.count == 0){
-                            self.showNoNetwork()
+                            if(self.networkReachability?.isReachable == false) {
+                                self.showNoNetwork()
+                            } else {
+                                self.loadingView.showNoDataView()
+                            }
                         }
                         self.setTopBarImage()
                         heritageDetailTableView.reloadData()
                     }
                     else{
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                 }
                 
