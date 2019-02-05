@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17C88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18D42" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="AboutDescriptionEntity" representedClassName="AboutDescriptionEntity" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="mobileDesc" optional="YES" attributeType="String" syncable="YES"/>
@@ -400,9 +400,25 @@
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="bannerImageRelations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HomeBannerImageEntity" syncable="YES"/>
     </entity>
+    <entity name="HomeBannerEntityAr" representedClassName="HomeBannerEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="bannerLink" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bannerTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="claimOffer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="contactNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fullContentID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="introductionText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="promotionalCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="bannerImageRelationsAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HomeBannerImageEntityAr" syncable="YES"/>
+    </entity>
     <entity name="HomeBannerImageEntity" representedClassName="HomeBannerImageEntity" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="bannerImageRelations" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HomeBannerEntity" syncable="YES"/>
+    </entity>
+    <entity name="HomeBannerImageEntityAr" representedClassName="HomeBannerImageEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="bannerImageRelationsAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HomeBannerEntityAr" syncable="YES"/>
     </entity>
     <entity name="HomeEntity" representedClassName="HomeEntity" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
@@ -442,6 +458,10 @@
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="tourImagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQTourListEntity" syncable="YES"/>
     </entity>
+    <entity name="NMoqTourImagesEntityAr" representedClassName="NMoqTourImagesEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="tourImagesRelationAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQTourListEntityAr" syncable="YES"/>
+    </entity>
     <entity name="NMoQTourListEntity" representedClassName="NMoQTourListEntity" syncable="YES" codeGenerationType="class">
         <attribute name="contactEmail" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="contactPhone" optional="YES" attributeType="String" syncable="YES"/>
@@ -458,6 +478,23 @@
         <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="tourImagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoqTourImagesEntity" syncable="YES"/>
+    </entity>
+    <entity name="NMoQTourListEntityAr" representedClassName="NMoQTourListEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="contactEmail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="contactPhone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dateString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dayDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="descriptioForModerator" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="eventDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isTourGuide" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mobileLatitude" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="moderatorName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sortId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="tourImagesRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoqTourImagesEntityAr" syncable="YES"/>
     </entity>
     <entity name="NMoQTravelListEntity" representedClassName="NMoQTravelListEntity" syncable="YES" codeGenerationType="class">
         <attribute name="bannerLink" optional="YES" attributeType="String" syncable="YES"/>
@@ -600,7 +637,9 @@
         <element name="HeritageImagesEntity" positionX="-27" positionY="135" width="128" height="75"/>
         <element name="HeritageImagesEntityAr" positionX="-27" positionY="135" width="128" height="75"/>
         <element name="HomeBannerEntity" positionX="-9" positionY="135" width="128" height="195"/>
+        <element name="HomeBannerEntityAr" positionX="-9" positionY="135" width="128" height="195"/>
         <element name="HomeBannerImageEntity" positionX="-9" positionY="135" width="128" height="75"/>
+        <element name="HomeBannerImageEntityAr" positionX="0" positionY="144" width="128" height="75"/>
         <element name="HomeEntity" positionX="-63" positionY="-18" width="128" height="30"/>
         <element name="HomeEntityArabic" positionX="-54" positionY="63" width="128" height="120"/>
         <element name="NmoqTourDetailEntity" positionX="-9" positionY="135" width="128" height="255"/>
@@ -621,5 +660,7 @@
         <element name="TourGuideEntityAr" positionX="0" positionY="144" width="128" height="120"/>
         <element name="TourGuideMultimediaEntity" positionX="9" positionY="153" width="128" height="75"/>
         <element name="TourGuideMultimediaEntityAr" positionX="18" positionY="162" width="128" height="75"/>
+        <element name="NMoQTourListEntityAr" positionX="-9" positionY="135" width="128" height="270"/>
+        <element name="NMoqTourImagesEntityAr" positionX="0" positionY="144" width="128" height="75"/>
     </elements>
 </model>

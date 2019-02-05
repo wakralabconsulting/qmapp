@@ -25,6 +25,15 @@ class NMoQListCell: UITableViewCell {
         titleLabel.font = UIFont.homeTitleFont
         dayLabel.font  = UIFont.settingsUpdateLabelFont
         dateLabel.font = UIFont.sideMenuLabelFont
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            titleLabel.textAlignment = .left
+            dayLabel.textAlignment = .left
+            dateLabel.textAlignment = .left
+        } else {
+            titleLabel.textAlignment = .right
+            dayLabel.textAlignment = .right
+            dateLabel.textAlignment = .right
+        }
     }
     func setTourListDate(tourList: NMoQTour?,isTour: Bool?) {
         titleLabel.text = tourList?.subtitle
@@ -45,6 +54,15 @@ class NMoQListCell: UITableViewCell {
         }
         if (cellImageView.image == nil) {
             cellImageView.image = UIImage(named: "default_imageX2")
+        }
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            titleLabel.textAlignment = .left
+            dayLabel.textAlignment = .left
+            dateLabel.textAlignment = .left
+        } else {
+            titleLabel.textAlignment = .right
+            dayLabel.textAlignment = .right
+            dateLabel.textAlignment = .right
         }
     }
     func setTourMiddleDate(tourList: NMoQTourDetail?) {

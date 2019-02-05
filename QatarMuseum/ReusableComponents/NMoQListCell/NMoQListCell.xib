@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -55,10 +55,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="aNg-4e-eAj" firstAttribute="leading" secondItem="a4Y-qE-4W2" secondAttribute="leading" id="7sT-KU-90K"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ECi-Bm-oMC" secondAttribute="trailing" constant="15" id="Gbp-kG-rGy"/>
                             <constraint firstItem="OO0-Uc-M3Y" firstAttribute="leading" secondItem="ECi-Bm-oMC" secondAttribute="leading" id="Km3-bZ-fBu"/>
                             <constraint firstItem="wz6-zg-PnG" firstAttribute="leading" secondItem="ECi-Bm-oMC" secondAttribute="trailing" constant="5" id="PTe-eb-ZsY"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wz6-zg-PnG" secondAttribute="trailing" constant="15" id="Qpx-Am-R0Y"/>
                             <constraint firstItem="aNg-4e-eAj" firstAttribute="top" secondItem="a4Y-qE-4W2" secondAttribute="top" id="Wez-OF-Pfz"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wz6-zg-PnG" secondAttribute="trailing" constant="15" id="Wy6-ux-hQ5"/>
                             <constraint firstAttribute="trailing" secondItem="aNg-4e-eAj" secondAttribute="trailing" id="YVX-vj-byn"/>
                             <constraint firstItem="ECi-Bm-oMC" firstAttribute="centerY" secondItem="wz6-zg-PnG" secondAttribute="centerY" id="Zmz-GU-7sS"/>
                             <constraint firstAttribute="bottom" secondItem="aNg-4e-eAj" secondAttribute="bottom" id="grg-Nr-u87"/>
@@ -87,6 +88,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="default_imageX2" width="235" height="120"/>
+        <image name="default_imageX2" width="470" height="240"/>
     </resources>
 </document>
