@@ -454,6 +454,11 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
     }
     
     func setNMoQTravelCellData(travelDetailData: HomeBanner) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            titleDescriptionLabel.textAlignment = .left
+        } else {
+            titleDescriptionLabel.textAlignment = .right
+        }
         middleTitleLabel.isHidden = true
         midTitleDescriptionLabel.isHidden = true
         middleLabelLine.isHidden = true
@@ -483,7 +488,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
         
         titleLabel.text = travelDetailData.title
         titleDescriptionLabel.text = travelDetailData.introductionText
-        titleDescriptionLabel.textAlignment = .left
+        
         offerCodeTitleLabel.text = NSLocalizedString("SPECIAL_OFFER", comment: "SPECIAL_OFFER in Travel Page")
         claimOfferButton.setTitle(NSLocalizedString("CLAIM_OFFER", comment: "CLAIM_OFFER in Travel Page"), for: .normal)
         codeLabel.text = travelDetailData.promotionalCode
