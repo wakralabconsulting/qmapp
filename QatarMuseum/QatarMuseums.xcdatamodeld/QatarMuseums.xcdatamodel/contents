@@ -507,6 +507,17 @@
         <attribute name="promotionalCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="NMoQTravelListEntityAr" representedClassName="NMoQTravelListEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="bannerLink" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bannerTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="claimOffer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="contactNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fullContentID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="introductionText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="promotionalCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="NotificationsEntity" representedClassName="NotificationsEntity" syncable="YES" codeGenerationType="class">
         <attribute name="sortId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
@@ -645,7 +656,9 @@
         <element name="NmoqTourDetailEntity" positionX="-9" positionY="135" width="128" height="255"/>
         <element name="NMoqTourDetailImagesEntity" positionX="9" positionY="153" width="128" height="75"/>
         <element name="NMoqTourImagesEntity" positionX="9" positionY="153" width="128" height="75"/>
+        <element name="NMoqTourImagesEntityAr" positionX="0" positionY="144" width="128" height="75"/>
         <element name="NMoQTourListEntity" positionX="0" positionY="144" width="128" height="270"/>
+        <element name="NMoQTourListEntityAr" positionX="-9" positionY="135" width="128" height="270"/>
         <element name="NMoQTravelListEntity" positionX="-9" positionY="135" width="128" height="180"/>
         <element name="NotificationsEntity" positionX="-9" positionY="135" width="128" height="75"/>
         <element name="NotificationsEntityArabic" positionX="0" positionY="144" width="128" height="75"/>
@@ -660,7 +673,6 @@
         <element name="TourGuideEntityAr" positionX="0" positionY="144" width="128" height="120"/>
         <element name="TourGuideMultimediaEntity" positionX="9" positionY="153" width="128" height="75"/>
         <element name="TourGuideMultimediaEntityAr" positionX="18" positionY="162" width="128" height="75"/>
-        <element name="NMoQTourListEntityAr" positionX="-9" positionY="135" width="128" height="270"/>
-        <element name="NMoqTourImagesEntityAr" positionX="0" positionY="144" width="128" height="75"/>
+        <element name="NMoQTravelListEntityAr" positionX="-9" positionY="135" width="128" height="180"/>
     </elements>
 </model>

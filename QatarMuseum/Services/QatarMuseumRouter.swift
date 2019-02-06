@@ -39,7 +39,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case GetHomeBanner()
     case GetNMoQAboutEvent(String,[String: Any])
     case GetNMoQTourList(String)
-    case GetNMoQTravelList()
+    case GetNMoQTravelList(String)
     case GetNMoQSpecialEventList()
     case GetNMoQSpecialEventDetail([String: Any])
     case GetNMoQTourDetail([String: Any])
@@ -186,7 +186,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/nmoq_about_page.json"
         case .GetNMoQTourList( _):
             return "/nmoq_list_day.json"
-        case .GetNMoQTravelList:
+        case .GetNMoQTravelList( _):
             return "/nmoq_list_partner.json"
         case .GetNMoQSpecialEventList:
             return "/nmoq_special_event.json"
@@ -345,16 +345,17 @@ enum QatarMuseumRouter: URLRequestConvertible {
             let apiURL = NSURL(string: Config.baseURL + apiLang + Config.mobileApiURL)!
             var apiMutableURLReq = URLRequest(url: apiURL.appendingPathComponent(path)!)
             apiMutableURLReq.httpMethod = method.rawValue
-           // return try! Alamofire.JSONEncoding.default.encode(apiMutableURLReq)
             return try! Alamofire.URLEncoding.default.encode(apiMutableURLReq, with: parameters)
         case .GetNMoQTourList(let apiLang):
             let apiURL = NSURL(string: Config.baseURL + apiLang + Config.mobileApiURL)!
             var apiMutableURLReq = URLRequest(url: apiURL.appendingPathComponent(path)!)
             apiMutableURLReq.httpMethod = method.rawValue
             return try! Alamofire.JSONEncoding.default.encode(apiMutableURLReq)
-            //return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
-        case .GetNMoQTravelList():
-            return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
+        case .GetNMoQTravelList(let apiLang):
+            let apiURL = NSURL(string: Config.baseURL + apiLang + Config.mobileApiURL)!
+            var apiMutableURLReq = URLRequest(url: apiURL.appendingPathComponent(path)!)
+            apiMutableURLReq.httpMethod = method.rawValue
+            return try! Alamofire.JSONEncoding.default.encode(apiMutableURLReq)
         case .GetNMoQSpecialEventList():
             return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
         case .GetNMoQSpecialEventDetail(let parameters):

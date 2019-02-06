@@ -79,7 +79,14 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
         topDescription.delegate = self
         topDescription.isUserInteractionEnabled = true
         topDescription.isEditable = false
-        topDescription.textAlignment = .center
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            topDescription.textAlignment = .left
+            descriptionLeftConstraint.constant = 30
+        } else {
+            topDescription.textAlignment = .right
+            //descriptionLeftConstraint.constant = 30
+
+        }
     }
     func setPanelDetailCellContent(panelDetailData: NMoQTour?) {
         topTitle.text = panelDetailData?.subtitle
@@ -152,6 +159,7 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
     func setTourSecondDetailCellContent(tourDetailData: NMoQTourDetail?,userEventList : [NMoQUserEventList],fromTour:Bool?) {
         numbOfRservationsLabel.numberOfLines = 2
         if(fromTour)! {
+            
             numbOfRservationsLabel.isHidden = false
             registerButton.isHidden = false
             switchBottomConstraint.constant = 32

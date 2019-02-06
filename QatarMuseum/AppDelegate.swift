@@ -77,7 +77,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             self.getNmoQAboutDetailsFromServer(museumId: "13376", lang: AR_LANGUAGE) // Arabic id is needed
             self.getNMoQTourList(lang: ENG_LANGUAGE)
             self.getNMoQTourList(lang: AR_LANGUAGE)
-            self.getTravelList()
+            self.getTravelList(lang: ENG_LANGUAGE)
+            self.getTravelList(lang: AR_LANGUAGE)
             self.getNMoQSpecialEventList(lang: ENG_LANGUAGE)
             self.getNMoQSpecialEventList(lang: AR_LANGUAGE)
             self.getDiningListFromServer(lang: ENG_LANGUAGE)
@@ -1437,36 +1438,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
     }
     //MARK: NMoQ TravelList Service Call
-    func getTravelList() {
+    func getTravelList(lang: String?) {
         let queue = DispatchQueue(label: "NMoQTravelListThread", qos: .background, attributes: .concurrent)
-        _ = Alamofire.request(QatarMuseumRouter.GetNMoQTravelList()).responseObject(queue:queue) { (response: DataResponse<HomeBannerList>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.GetNMoQTravelList(lang!)).responseObject(queue:queue) { (response: DataResponse<HomeBannerList>) -> Void in
             switch response.result {
             case .success(let data):
-            self.saveOrUpdateTravelListCoredata(travelList: data.homeBannerList)
+                self.saveOrUpdateTravelListCoredata(travelList: data.homeBannerList, lang: lang)
             case .failure( _):
                 print("error")
             }
         }
     }
     //MARK: Travel List Coredata
-    func saveOrUpdateTravelListCoredata(travelList:[HomeBanner]?) {
+    func saveOrUpdateTravelListCoredata(travelList:[HomeBanner]?,lang:String?) {
         if ((travelList?.count)! > 0) {
             if #available(iOS 10.0, *) {
                 let container = self.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
-                    self.travelListCoreDataInBackgroundThread(travelList: travelList, managedContext: managedContext)
+                    self.travelListCoreDataInBackgroundThread(travelList: travelList, managedContext: managedContext, lang: lang)
                 }
             } else {
                 let managedContext = self.managedObjectContext
                 managedContext.perform {
-                    self.travelListCoreDataInBackgroundThread(travelList: travelList, managedContext : managedContext)
+                    self.travelListCoreDataInBackgroundThread(travelList: travelList, managedContext : managedContext, lang: lang)
                 }
             }
         }
     }
     
-    func travelListCoreDataInBackgroundThread(travelList:[HomeBanner]?,managedContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+    func travelListCoreDataInBackgroundThread(travelList:[HomeBanner]?,managedContext: NSManagedObjectContext,lang:String?) {
+        if (lang == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "NMoQTravelListEntity", idKey: "fullContentID", idValue: nil, managedContext: managedContext) as! [NMoQTravelListEntity]
             if (fetchData.count > 0) {
                 for i in 0 ... (travelList?.count)!-1 {
@@ -1494,32 +1495,84 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         }
                     } else {
                         //save
-                        self.saveTrevelListToCoreData(travelListDict: travelListDict, managedObjContext: managedContext)
+                        self.saveTrevelListToCoreData(travelListDict: travelListDict, managedObjContext: managedContext, lang: lang)
                     }
                 }
-                NotificationCenter.default.post(name: NSNotification.Name(nmoqTravelListNotification), object: self)
+                NotificationCenter.default.post(name: NSNotification.Name(nmoqTravelListNotificationEn), object: self)
             } else {
                 for i in 0 ... (travelList?.count)!-1 {
                     let travelListDict : HomeBanner?
                     travelListDict = travelList?[i]
-                    self.saveTrevelListToCoreData(travelListDict: travelListDict!, managedObjContext: managedContext)
+                    self.saveTrevelListToCoreData(travelListDict: travelListDict!, managedObjContext: managedContext, lang: lang)
                 }
-                NotificationCenter.default.post(name: NSNotification.Name(nmoqTravelListNotification), object: self)
+                NotificationCenter.default.post(name: NSNotification.Name(nmoqTravelListNotificationEn), object: self)
+            }
+        } else {
+            let fetchData = checkAddedToCoredata(entityName: "NMoQTravelListEntityAr", idKey: "fullContentID", idValue: nil, managedContext: managedContext) as! [NMoQTravelListEntityAr]
+            if (fetchData.count > 0) {
+                for i in 0 ... (travelList?.count)!-1 {
+                    let travelListDict = travelList![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "NMoQTravelListEntityAr", idKey: "fullContentID", idValue: travelListDict.fullContentID, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let travelListdbDict = fetchResult[0] as! NMoQTravelListEntityAr
+                        travelListdbDict.title = travelListDict.title
+                        travelListdbDict.fullContentID = travelListDict.fullContentID
+                        travelListdbDict.bannerTitle =  travelListDict.bannerTitle
+                        travelListdbDict.bannerLink = travelListDict.bannerLink
+                        travelListdbDict.introductionText =  travelListDict.introductionText
+                        travelListdbDict.email = travelListDict.email
+                        
+                        travelListdbDict.contactNumber = travelListDict.contactNumber
+                        travelListdbDict.promotionalCode =  travelListDict.promotionalCode
+                        travelListdbDict.claimOffer = travelListDict.claimOffer
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    } else {
+                        //save
+                        self.saveTrevelListToCoreData(travelListDict: travelListDict, managedObjContext: managedContext, lang: lang)
+                    }
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(nmoqTravelListNotificationAr), object: self)
+            } else {
+                for i in 0 ... (travelList?.count)!-1 {
+                    let travelListDict : HomeBanner?
+                    travelListDict = travelList?[i]
+                    self.saveTrevelListToCoreData(travelListDict: travelListDict!, managedObjContext: managedContext, lang: lang)
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(nmoqTravelListNotificationAr), object: self)
             }
         }
     }
-    func saveTrevelListToCoreData(travelListDict: HomeBanner, managedObjContext: NSManagedObjectContext) {
-        let travelListdbDict: NMoQTravelListEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoQTravelListEntity", into: managedObjContext) as! NMoQTravelListEntity
-        travelListdbDict.title = travelListDict.title
-        travelListdbDict.fullContentID = travelListDict.fullContentID
-        travelListdbDict.bannerTitle =  travelListDict.bannerTitle
-        travelListdbDict.bannerLink = travelListDict.bannerLink
-        travelListdbDict.introductionText =  travelListDict.introductionText
-        travelListdbDict.email = travelListDict.email
-        travelListdbDict.contactNumber = travelListDict.contactNumber
-        travelListdbDict.promotionalCode =  travelListDict.promotionalCode
-        travelListdbDict.claimOffer = travelListDict.claimOffer
-        
+    func saveTrevelListToCoreData(travelListDict: HomeBanner, managedObjContext: NSManagedObjectContext,lang:String?) {
+        if (lang == ENG_LANGUAGE) {
+            let travelListdbDict: NMoQTravelListEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoQTravelListEntity", into: managedObjContext) as! NMoQTravelListEntity
+            travelListdbDict.title = travelListDict.title
+            travelListdbDict.fullContentID = travelListDict.fullContentID
+            travelListdbDict.bannerTitle =  travelListDict.bannerTitle
+            travelListdbDict.bannerLink = travelListDict.bannerLink
+            travelListdbDict.introductionText =  travelListDict.introductionText
+            travelListdbDict.email = travelListDict.email
+            travelListdbDict.contactNumber = travelListDict.contactNumber
+            travelListdbDict.promotionalCode =  travelListDict.promotionalCode
+            travelListdbDict.claimOffer = travelListDict.claimOffer
+        } else {
+            let travelListdbDict: NMoQTravelListEntityAr = NSEntityDescription.insertNewObject(forEntityName: "NMoQTravelListEntityAr", into: managedObjContext) as! NMoQTravelListEntityAr
+            travelListdbDict.title = travelListDict.title
+            travelListdbDict.fullContentID = travelListDict.fullContentID
+            travelListdbDict.bannerTitle =  travelListDict.bannerTitle
+            travelListdbDict.bannerLink = travelListDict.bannerLink
+            travelListdbDict.introductionText =  travelListDict.introductionText
+            travelListdbDict.email = travelListDict.email
+            travelListdbDict.contactNumber = travelListDict.contactNumber
+            travelListdbDict.promotionalCode =  travelListDict.promotionalCode
+            travelListdbDict.claimOffer = travelListDict.claimOffer
+        }
         do {
             try managedObjContext.save()
         } catch let error as NSError {
@@ -1569,7 +1622,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func diningCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,diningListArray : [Dining]?,lang: String?) {
-        if (lang == "en") {
+        if (lang == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "DiningEntity", idKey: "id", idValue: nil, managedContext: managedContext) as! [DiningEntity]
             if (fetchData.count > 0) {
                 for i in 0 ... (diningListArray?.count)!-1 {

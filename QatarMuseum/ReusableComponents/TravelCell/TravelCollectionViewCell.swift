@@ -20,6 +20,11 @@ class TravelCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         titleLabel.font = UIFont.homeTitleFont
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            titleLabel.textAlignment = .left
+        } else {
+            titleLabel.textAlignment = .right
+        }
     }
     func setTravelListData(travelListData: HomeBanner) {
         titleLabel.text = travelListData.title
