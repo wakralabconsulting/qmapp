@@ -251,45 +251,140 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     
                 }
             }
+        } else {
+            let fetchData = checkAddedToCoredata(entityName: "NmoqTourDetailEntityAr", idKey: "nmoqEvent", idValue: tourDetailId, managedContext: managedContext) as! [NmoqTourDetailEntityAr]
+            if (fetchData.count > 0) {
+                for i in 0 ... nmoqTourDetail.count-1 {
+                    let tourDetailDict = nmoqTourDetail[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "NmoqTourDetailEntityAr", idKey: "nid", idValue: tourDetailDict.nid, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let tourDetaildbDict = fetchResult[0] as! NmoqTourDetailEntityAr
+                        tourDetaildbDict.title = tourDetailDict.title
+                        tourDetaildbDict.date = tourDetailDict.date
+                        tourDetaildbDict.nmoqEvent =  tourDetailDict.nmoqEvent
+                        tourDetaildbDict.register =  tourDetailDict.register
+                        tourDetaildbDict.contactEmail = tourDetailDict.contactEmail
+                        tourDetaildbDict.contactPhone = tourDetailDict.contactPhone
+                        tourDetaildbDict.mobileLatitude =  tourDetailDict.mobileLatitude
+                        tourDetaildbDict.longitude =  tourDetailDict.longitude
+                        tourDetaildbDict.sort_id = tourDetailDict.sortId
+                        tourDetaildbDict.body = tourDetailDict.body
+                        tourDetaildbDict.registered =  tourDetailDict.registered
+                        tourDetaildbDict.nid =  tourDetailDict.nid
+                        tourDetaildbDict.seatsRemaining =  tourDetailDict.seatsRemaining
+                        
+                        if(tourDetailDict.imageBanner != nil){
+                            if((tourDetailDict.imageBanner?.count)! > 0) {
+                                for i in 0 ... (tourDetailDict.imageBanner?.count)!-1 {
+                                    var tourImage: NMoqTourDetailImagesEntityAr
+                                    let tourImgaeArray: NMoqTourDetailImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "NMoqTourDetailImagesEntityAr", into: managedContext) as! NMoqTourDetailImagesEntityAr
+                                    tourImgaeArray.imgBanner = tourDetailDict.imageBanner?[i]
+                                    
+                                    tourImage = tourImgaeArray
+                                    tourDetaildbDict.addToNmoqTourDetailImgBannerRelationAr(tourImage)
+                                    do {
+                                        try managedContext.save()
+                                    } catch let error as NSError {
+                                        print("Could not save. \(error), \(error.userInfo)")
+                                    }
+                                }
+                            }
+                        }
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    }
+                    else {
+                        //save
+                        self.saveTourDetailsToCoreData(tourDetailDict: tourDetailDict, managedObjContext: managedContext)
+                        
+                    }
+                }
+            }
+            else {
+                for i in 0 ... nmoqTourDetail.count-1 {
+                    let tourDetailDict : NMoQTourDetail?
+                    tourDetailDict = nmoqTourDetail[i]
+                    self.saveTourDetailsToCoreData(tourDetailDict: tourDetailDict!, managedObjContext: managedContext)
+                    
+                }
+            }
         }
         
     }
     func saveTourDetailsToCoreData(tourDetailDict: NMoQTourDetail, managedObjContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let tourDetaildbDict: NmoqTourDetailEntity = NSEntityDescription.insertNewObject(forEntityName: "NmoqTourDetailEntity", into: managedObjContext) as! NmoqTourDetailEntity
-        tourDetaildbDict.title = tourDetailDict.title
-        tourDetaildbDict.date = tourDetailDict.date
-        tourDetaildbDict.nmoqEvent =  tourDetailDict.nmoqEvent
-        tourDetaildbDict.register =  tourDetailDict.register
-        tourDetaildbDict.contactEmail = tourDetailDict.contactEmail
-        tourDetaildbDict.contactPhone = tourDetailDict.contactPhone
-        tourDetaildbDict.mobileLatitude =  tourDetailDict.mobileLatitude
-        tourDetaildbDict.longitude =  tourDetailDict.longitude
-        tourDetaildbDict.sort_id = tourDetailDict.sortId
-        tourDetaildbDict.body = tourDetailDict.body
-        tourDetaildbDict.registered =  tourDetailDict.registered
-        tourDetaildbDict.nid =  tourDetailDict.nid
-        tourDetaildbDict.seatsRemaining =  tourDetailDict.seatsRemaining
-        if(tourDetailDict.imageBanner != nil){
-            if((tourDetailDict.imageBanner?.count)! > 0) {
-                for i in 0 ... (tourDetailDict.imageBanner?.count)!-1 {
-                    var tourImage: NMoqTourDetailImagesEntity
-                    let tourImgaeArray: NMoqTourDetailImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoqTourDetailImagesEntity", into: managedObjContext) as! NMoqTourDetailImagesEntity
-                    tourImgaeArray.imgBanner = tourDetailDict.imageBanner?[i]
-                    
-                    tourImage = tourImgaeArray
-                    tourDetaildbDict.addToNmoqTourDetailImgBannerRelation(tourImage)
-                    do {
-                        try managedObjContext.save()
-                    } catch let error as NSError {
-                        print("Could not save. \(error), \(error.userInfo)")
+            tourDetaildbDict.title = tourDetailDict.title
+            tourDetaildbDict.date = tourDetailDict.date
+            tourDetaildbDict.nmoqEvent =  tourDetailDict.nmoqEvent
+            tourDetaildbDict.register =  tourDetailDict.register
+            tourDetaildbDict.contactEmail = tourDetailDict.contactEmail
+            tourDetaildbDict.contactPhone = tourDetailDict.contactPhone
+            tourDetaildbDict.mobileLatitude =  tourDetailDict.mobileLatitude
+            tourDetaildbDict.longitude =  tourDetailDict.longitude
+            tourDetaildbDict.sort_id = tourDetailDict.sortId
+            tourDetaildbDict.body = tourDetailDict.body
+            tourDetaildbDict.registered =  tourDetailDict.registered
+            tourDetaildbDict.nid =  tourDetailDict.nid
+            tourDetaildbDict.seatsRemaining =  tourDetailDict.seatsRemaining
+            if(tourDetailDict.imageBanner != nil){
+                if((tourDetailDict.imageBanner?.count)! > 0) {
+                    for i in 0 ... (tourDetailDict.imageBanner?.count)!-1 {
+                        var tourImage: NMoqTourDetailImagesEntity
+                        let tourImgaeArray: NMoqTourDetailImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoqTourDetailImagesEntity", into: managedObjContext) as! NMoqTourDetailImagesEntity
+                        tourImgaeArray.imgBanner = tourDetailDict.imageBanner?[i]
+                        
+                        tourImage = tourImgaeArray
+                        tourDetaildbDict.addToNmoqTourDetailImgBannerRelation(tourImage)
+                        do {
+                            try managedObjContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                    }
+                }
+            }
+        } else {
+            let tourDetaildbDict: NmoqTourDetailEntityAr = NSEntityDescription.insertNewObject(forEntityName: "NmoqTourDetailEntityAr", into: managedObjContext) as! NmoqTourDetailEntityAr
+            tourDetaildbDict.title = tourDetailDict.title
+            tourDetaildbDict.date = tourDetailDict.date
+            tourDetaildbDict.nmoqEvent =  tourDetailDict.nmoqEvent
+            tourDetaildbDict.register =  tourDetailDict.register
+            tourDetaildbDict.contactEmail = tourDetailDict.contactEmail
+            tourDetaildbDict.contactPhone = tourDetailDict.contactPhone
+            tourDetaildbDict.mobileLatitude =  tourDetailDict.mobileLatitude
+            tourDetaildbDict.longitude =  tourDetailDict.longitude
+            tourDetaildbDict.sort_id = tourDetailDict.sortId
+            tourDetaildbDict.body = tourDetailDict.body
+            tourDetaildbDict.registered =  tourDetailDict.registered
+            tourDetaildbDict.nid =  tourDetailDict.nid
+            tourDetaildbDict.seatsRemaining =  tourDetailDict.seatsRemaining
+            if(tourDetailDict.imageBanner != nil){
+                if((tourDetailDict.imageBanner?.count)! > 0) {
+                    for i in 0 ... (tourDetailDict.imageBanner?.count)!-1 {
+                        var tourImage: NMoqTourDetailImagesEntityAr
+                        let tourImgaeArray: NMoqTourDetailImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "NMoqTourDetailImagesEntityAr", into: managedObjContext) as! NMoqTourDetailImagesEntityAr
+                        tourImgaeArray.imgBanner = tourDetailDict.imageBanner?[i]
+                        
+                        tourImage = tourImgaeArray
+                        tourDetaildbDict.addToNmoqTourDetailImgBannerRelationAr(tourImage)
+                        do {
+                            try managedObjContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
                     }
                 }
             }
         }
         do {
             try managedObjContext.save()
-            
-            
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
@@ -298,7 +393,7 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func fetchTourDetailsFromCoredata() {
         let managedContext = getContext()
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var tourDetailArray = [NmoqTourDetailEntity]()
                 tourDetailArray = checkAddedToCoredata(entityName: "NmoqTourDetailEntity", idKey: "nmoqEvent", idValue: tourDetailId, managedContext: managedContext) as! [NmoqTourDetailEntity]
                 if (tourDetailArray.count > 0) {
@@ -311,6 +406,29 @@ class NMoQTourViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             }
                         }
                         
+                        self.nmoqTourDetail.insert(NMoQTourDetail(title: tourDetailArray[i].title, imageBanner: imagesArray, date: tourDetailArray[i].date, nmoqEvent: tourDetailArray[i].nmoqEvent, register: tourDetailArray[i].register, contactEmail: tourDetailArray[i].contactEmail, contactPhone: tourDetailArray[i].contactPhone, mobileLatitude: tourDetailArray[i].mobileLatitude, longitude: tourDetailArray[i].longitude, sortId: tourDetailArray[i].sort_id, body: tourDetailArray[i].body, registered: tourDetailArray[i].registered, nid: tourDetailArray[i].nid,seatsRemaining: tourDetailArray[i].seatsRemaining), at: i)
+                        
+                    }
+                    if(nmoqTourDetail.count == 0){
+                        self.showNoNetwork()
+                    }
+                    tableView.reloadData()
+                }
+                else{
+                    self.showNoNetwork()
+                }
+            } else {
+                var tourDetailArray = [NmoqTourDetailEntityAr]()
+                tourDetailArray = checkAddedToCoredata(entityName: "NmoqTourDetailEntityAr", idKey: "nmoqEvent", idValue: tourDetailId, managedContext: managedContext) as! [NmoqTourDetailEntityAr]
+                if (tourDetailArray.count > 0) {
+                    for i in 0 ... tourDetailArray.count-1 {
+                        var imagesArray : [String] = []
+                        let imagesInfoArray = (tourDetailArray[i].nmoqTourDetailImgBannerRelationAr?.allObjects) as! [NMoqTourDetailImagesEntityAr]
+                        if(imagesInfoArray.count > 0) {
+                            for i in 0 ... imagesInfoArray.count-1 {
+                                imagesArray.append(imagesInfoArray[i].imgBanner!)
+                            }
+                        }
                         self.nmoqTourDetail.insert(NMoQTourDetail(title: tourDetailArray[i].title, imageBanner: imagesArray, date: tourDetailArray[i].date, nmoqEvent: tourDetailArray[i].nmoqEvent, register: tourDetailArray[i].register, contactEmail: tourDetailArray[i].contactEmail, contactPhone: tourDetailArray[i].contactPhone, mobileLatitude: tourDetailArray[i].mobileLatitude, longitude: tourDetailArray[i].longitude, sortId: tourDetailArray[i].sort_id, body: tourDetailArray[i].body, registered: tourDetailArray[i].registered, nid: tourDetailArray[i].nid,seatsRemaining: tourDetailArray[i].seatsRemaining), at: i)
                         
                     }
