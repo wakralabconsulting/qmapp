@@ -5631,7 +5631,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="651"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Jw-yT-KO9">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="354.33333333333331"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="266.33333333333331"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9t0-aM-XAs">
                                                         <rect key="frame" x="20" y="20" width="374" height="0.0"/>
@@ -5665,8 +5665,11 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qse-aS-GWU">
-                                                        <rect key="frame" x="137" y="158.33333333333334" width="140" height="20"/>
+                                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qse-aS-GWU">
+                                                        <rect key="frame" x="137" y="158.33333333333334" width="140" height="0.0"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" id="FIB-nd-OJs"/>
+                                                        </constraints>
                                                         <attributedString key="attributedText">
                                                             <fragment content="Not A Member Yet">
                                                                 <attributes>
@@ -5678,11 +5681,11 @@
                                                         </attributedString>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ocB-Rz-SlZ">
-                                                        <rect key="frame" x="25" y="186.33333333333331" width="364" height="50"/>
+                                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ocB-Rz-SlZ">
+                                                        <rect key="frame" x="25" y="166.33333333333334" width="364" height="0.0"/>
                                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="50" id="chj-da-VSH"/>
+                                                            <constraint firstAttribute="height" id="chj-da-VSH"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="17"/>
                                                         <state key="normal" title="BECOME A MEMBER">
@@ -5699,7 +5702,7 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NCR-cz-o6v">
-                                                        <rect key="frame" x="132" y="256.33333333333331" width="150" height="20"/>
+                                                        <rect key="frame" x="132" y="168.33333333333334" width="150" height="20"/>
                                                         <attributedString key="attributedText">
                                                             <fragment content="Already A Member?">
                                                                 <attributes>
@@ -5712,8 +5715,11 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e6w-5b-QuN">
-                                                        <rect key="frame" x="25" y="284.33333333333331" width="364" height="50"/>
+                                                        <rect key="frame" x="25" y="196.33333333333331" width="364" height="50"/>
                                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="Sfr-fN-7du"/>
+                                                        </constraints>
                                                         <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="17"/>
                                                         <state key="normal" title="LOG IN">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -5734,7 +5740,7 @@
                                                     <constraint firstItem="ocB-Rz-SlZ" firstAttribute="leading" secondItem="0Jw-yT-KO9" secondAttribute="leading" constant="25" id="1kP-j4-BAk"/>
                                                     <constraint firstItem="9t0-aM-XAs" firstAttribute="leading" secondItem="hbB-mQ-n0t" secondAttribute="leading" id="3CF-he-YOz"/>
                                                     <constraint firstItem="ymA-if-Utl" firstAttribute="top" secondItem="hbB-mQ-n0t" secondAttribute="bottom" constant="25" id="3X7-nw-qW8"/>
-                                                    <constraint firstItem="NCR-cz-o6v" firstAttribute="top" secondItem="ocB-Rz-SlZ" secondAttribute="bottom" constant="20" id="7Ln-nJ-TBb"/>
+                                                    <constraint firstItem="NCR-cz-o6v" firstAttribute="top" secondItem="ocB-Rz-SlZ" secondAttribute="bottom" constant="2" id="7Ln-nJ-TBb"/>
                                                     <constraint firstItem="e6w-5b-QuN" firstAttribute="top" secondItem="NCR-cz-o6v" secondAttribute="bottom" constant="8" id="Akd-cZ-HTY"/>
                                                     <constraint firstItem="ymA-if-Utl" firstAttribute="centerX" secondItem="0Jw-yT-KO9" secondAttribute="centerX" id="BT0-ux-6Wq"/>
                                                     <constraint firstItem="boj-EF-PVN" firstAttribute="top" secondItem="ymA-if-Utl" secondAttribute="bottom" constant="8" id="CvL-Ow-qqh"/>
@@ -5750,7 +5756,6 @@
                                                     <constraint firstItem="orh-jJ-cG9" firstAttribute="leading" secondItem="0Jw-yT-KO9" secondAttribute="leading" constant="20" id="VWk-dy-8yf"/>
                                                     <constraint firstItem="ocB-Rz-SlZ" firstAttribute="leading" secondItem="e6w-5b-QuN" secondAttribute="leading" id="X4P-q4-Zv5"/>
                                                     <constraint firstItem="9t0-aM-XAs" firstAttribute="top" secondItem="0Jw-yT-KO9" secondAttribute="top" constant="20" id="Z6p-Zf-skM"/>
-                                                    <constraint firstItem="ocB-Rz-SlZ" firstAttribute="height" secondItem="e6w-5b-QuN" secondAttribute="height" id="ZOs-aq-XYb"/>
                                                     <constraint firstItem="ocB-Rz-SlZ" firstAttribute="top" secondItem="Qse-aS-GWU" secondAttribute="bottom" constant="8" id="dDb-ZZ-Igk"/>
                                                     <constraint firstItem="hbB-mQ-n0t" firstAttribute="top" secondItem="9t0-aM-XAs" secondAttribute="bottom" constant="15" id="e51-9J-NSN"/>
                                                     <constraint firstItem="NCR-cz-o6v" firstAttribute="centerX" secondItem="0Jw-yT-KO9" secondAttribute="centerX" id="gzC-I9-V8M"/>
@@ -5795,6 +5800,11 @@
                             <constraint firstAttribute="trailing" secondItem="Zl7-wN-jsF" secondAttribute="trailing" id="tok-9S-r9c"/>
                             <constraint firstAttribute="bottom" secondItem="Zl7-wN-jsF" secondAttribute="bottom" id="xTl-VA-Qnz"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="XeE-ST-8IN"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="alreadyMemberLabel" destination="NCR-cz-o6v" id="3Fj-9O-uwW"/>
