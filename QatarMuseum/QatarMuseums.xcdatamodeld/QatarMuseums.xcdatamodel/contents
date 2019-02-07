@@ -450,9 +450,29 @@
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="nmoqTourDetailImgBannerRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoqTourDetailImagesEntity" syncable="YES"/>
     </entity>
+    <entity name="NmoqTourDetailEntityAr" representedClassName="NmoqTourDetailEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="contactEmail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="contactPhone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mobileLatitude" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nmoqEvent" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="register" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="registered" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="seatsRemaining" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sort_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="nmoqTourDetailImgBannerRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoqTourDetailImagesEntityAr" syncable="YES"/>
+    </entity>
     <entity name="NMoqTourDetailImagesEntity" representedClassName="NMoqTourDetailImagesEntity" syncable="YES" codeGenerationType="class">
         <attribute name="imgBanner" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="nmoqTourDetailImgBannerRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NmoqTourDetailEntity" syncable="YES"/>
+    </entity>
+    <entity name="NMoqTourDetailImagesEntityAr" representedClassName="NMoqTourDetailImagesEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="imgBanner" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="nmoqTourDetailImgBannerRelationAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NmoqTourDetailEntityAr" syncable="YES"/>
     </entity>
     <entity name="NMoqTourImagesEntity" representedClassName="NMoqTourImagesEntity" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
@@ -660,6 +680,7 @@
         <element name="NMoQTourListEntity" positionX="0" positionY="144" width="128" height="270"/>
         <element name="NMoQTourListEntityAr" positionX="-9" positionY="135" width="128" height="270"/>
         <element name="NMoQTravelListEntity" positionX="-9" positionY="135" width="128" height="180"/>
+        <element name="NMoQTravelListEntityAr" positionX="-9" positionY="135" width="128" height="180"/>
         <element name="NotificationsEntity" positionX="-9" positionY="135" width="128" height="75"/>
         <element name="NotificationsEntityArabic" positionX="0" positionY="144" width="128" height="75"/>
         <element name="ParksEntity" positionX="-54" positionY="108" width="128" height="105"/>
@@ -673,6 +694,7 @@
         <element name="TourGuideEntityAr" positionX="0" positionY="144" width="128" height="120"/>
         <element name="TourGuideMultimediaEntity" positionX="9" positionY="153" width="128" height="75"/>
         <element name="TourGuideMultimediaEntityAr" positionX="18" positionY="162" width="128" height="75"/>
-        <element name="NMoQTravelListEntityAr" positionX="-9" positionY="135" width="128" height="180"/>
+        <element name="NmoqTourDetailEntityAr" positionX="-9" positionY="135" width="128" height="255"/>
+        <element name="NMoqTourDetailImagesEntityAr" positionX="0" positionY="144" width="128" height="75"/>
     </elements>
 </model>
