@@ -364,7 +364,8 @@ class PublicArtsViewController: UIViewController,UICollectionViewDelegate,UIColl
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
         if  (networkReachability?.isReachable)! {
-            self.getPublicArtsListDataFromServer()
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            appDelegate?.getPublicArtsListDataFromServer(lang: LocalizationLanguage.currentAppleLanguage())
         }
     }
     func showNoNetwork() {

@@ -129,8 +129,10 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
                 switch response.result {
                 case .success(let data):
                     self.saveOrUpdateHeritageCoredata(heritageListArray: data.heritage)
+
                 case .failure(let error):
                     print("error")
+
                 }
             }
     }
@@ -342,8 +344,6 @@ class HeritageListViewController: UIViewController,UICollectionViewDelegate,UICo
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
         if  (networkReachability?.isReachable)! {
-            //self.getHeritageDataFromServer()
-            //self.fetchHeritageListFromCoredata()
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             appDelegate?.getHeritageDataFromServer(lang: LocalizationLanguage.currentAppleLanguage())
         }
