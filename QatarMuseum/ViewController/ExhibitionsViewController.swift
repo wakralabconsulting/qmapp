@@ -370,11 +370,21 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
                         
                     }
                     if(exhibition.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.exbtnLoadingView.showNoDataView()
+                        }
                     }
-                    exhibitionCollectionView.reloadData()
+                    DispatchQueue.main.async{
+                        self.exhibitionCollectionView.reloadData()
+                    }
                 } else {
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.exbtnLoadingView.showNoDataView()
+                    }
                 }
             } else {
                 var exhibitionArray = [ExhibitionsEntityArabic]()
@@ -387,11 +397,21 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
                         
                     }
                     if(exhibition.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.exbtnLoadingView.showNoDataView()
+                        }
                     }
-                    exhibitionCollectionView.reloadData()
+                    DispatchQueue.main.async{
+                        self.exhibitionCollectionView.reloadData()
+                    }
                 } else {
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.exbtnLoadingView.showNoDataView()
+                    }
                 }
             }
         } catch let error as NSError {
@@ -465,7 +485,8 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
     func tryAgainButtonPressed() {
         if  (networkReachability?.isReachable)! {
             if (exhibitionsPageNameString == ExhbitionPageName.homeExhibition) {
-                self.getExhibitionDataFromServer()
+                let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+                appDelegate?.getExhibitionDataFromServer(lang: LocalizationLanguage.currentAppleLanguage())
             } else {
                 self.getMuseumExhibitionDataFromServer()
             }

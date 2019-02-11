@@ -27,12 +27,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUIContents()
-        if  (networkReachability?.isReachable)! {
-            getParksDataFromServer()
-        }
-        else {
-            self.fetchParksFromCoredata()
-        }
+        
         registerCell()
         self.recordScreenView()
     }
@@ -40,6 +35,14 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         loadingView.isHidden = false
         loadingView.showLoading()
         loadingView.loadingViewDelegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(ParksViewController.receiveParksNotificationEn(notification:)), name: NSNotification.Name(parksNotificationEn), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ParksViewController.receiveParksNotificationAr(notification:)), name: NSNotification.Name(parksNotificationAr), object: nil)
+        self.fetchParksFromCoredata()
+        if  (networkReachability?.isReachable)! {
+            DispatchQueue.global(qos: .background).async {
+                self.getParksDataFromServer(retryButtonPressed: false)
+            }
+        }
         setTopbarImage()
         
         
@@ -237,59 +240,67 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         sender.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     //MARK: WebServiceCall
-    func getParksDataFromServer()
+    func getParksDataFromServer(retryButtonPressed: Bool?)
     {
-        _ = Alamofire.request(QatarMuseumRouter.ParksList()).responseObject { (response: DataResponse<ParksLists>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.ParksList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<ParksLists>) -> Void in
             switch response.result {
             case .success(let data):
-                self.parksListArray = data.parkList
-                self.setTopbarImage()
-                self.saveOrUpdateParksCoredata()
-                self.parksTableView.reloadData()
-                self.loadingView.stopLoading()
-                self.loadingView.isHidden = true
-                if (self.parksListArray.count == 0) {
+               
+                self.saveOrUpdateParksCoredata(parksListArray: data.parkList)
+                if(retryButtonPressed ?? false) {
+                    self.parksListArray = data.parkList
+                    self.setTopbarImage()
+                    self.parksTableView.reloadData()
+                    self.loadingView.stopLoading()
+                    self.loadingView.isHidden = true
+                    if (self.parksListArray.count == 0) {
+                        self.loadingView.stopLoading()
+                        self.loadingView.noDataView.isHidden = false
+                        self.loadingView.isHidden = false
+                        self.loadingView.showNoDataView()
+                    }
+                }
+                
+            case .failure(let error):
+                print("error")
+                if(retryButtonPressed ?? false) {
+                    var errorMessage: String
+                    errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                    comment: "Setting the content of the alert"))
                     self.loadingView.stopLoading()
                     self.loadingView.noDataView.isHidden = false
                     self.loadingView.isHidden = false
                     self.loadingView.showNoDataView()
+                    self.loadingView.noDataLabel.text = errorMessage
                 }
-            case .failure(let error):
-                var errorMessage: String
-                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
-                                                                comment: "Setting the content of the alert"))
-                self.loadingView.stopLoading()
-                self.loadingView.noDataView.isHidden = false
-                self.loadingView.isHidden = false
-                self.loadingView.showNoDataView()
-                self.loadingView.noDataLabel.text = errorMessage
+                
             }
         }
     }
     //MARK: Coredata Method
-    func saveOrUpdateParksCoredata() {
-        if (parksListArray.count > 0) {
+    func saveOrUpdateParksCoredata(parksListArray:[ParksList]? ) {
+        if (parksListArray!.count > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
                 let container = appDelegate!.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
-                    self.coreDataInBackgroundThread(managedContext: managedContext)
+                    self.coreDataInBackgroundThread(managedContext: managedContext, parksListArray: parksListArray)
                 }
             } else {
                 let managedContext = appDelegate!.managedObjectContext
                 managedContext.perform {
-                    self.coreDataInBackgroundThread(managedContext : managedContext)
+                    self.coreDataInBackgroundThread(managedContext : managedContext, parksListArray: parksListArray)
                 }
             }
         }
     }
     
-    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,parksListArray:[ParksList]?) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "ParksEntity", parksId: nil, managedContext: managedContext) as! [ParksEntity]
             if (fetchData.count > 0) {
-                for i in 0 ... parksListArray.count-1 {
-                    let parksDict = parksListArray[i]
+                for i in 0 ... (parksListArray?.count)!-1 {
+                    let parksDict = parksListArray![i]
                     let fetchResult = checkAddedToCoredata(entityName: "ParksEntity", parksId: nil, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
@@ -314,9 +325,9 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 }
             }
             else {
-                for i in 0 ... parksListArray.count-1 {
+                for i in 0 ... parksListArray!.count-1 {
                     let parksDict : ParksList?
-                    parksDict = parksListArray[i]
+                    parksDict = parksListArray![i]
                     self.saveToCoreData(parksDict: parksDict!, managedObjContext: managedContext)
 
                 }
@@ -325,8 +336,8 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         else {
             let fetchData = checkAddedToCoredata(entityName: "ParksEntityArabic", parksId: nil, managedContext: managedContext) as! [ParksEntityArabic]
             if (fetchData.count > 0) {
-                for i in 0 ... parksListArray.count-1 {
-                    let parksDict = parksListArray[i]
+                for i in 0 ... parksListArray!.count-1 {
+                    let parksDict = parksListArray![i]
                     let fetchResult = checkAddedToCoredata(entityName: "ParksEntityArabic", parksId: nil, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
@@ -350,9 +361,9 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 }
             }
             else {
-                for i in 0 ... parksListArray.count-1 {
+                for i in 0 ... parksListArray!.count-1 {
                     let parksDict : ParksList?
-                    parksDict = parksListArray[i]
+                    parksDict = parksListArray![i]
                     self.saveToCoreData(parksDict: parksDict!, managedObjContext: managedContext)
 
                 }
@@ -361,7 +372,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     
     func saveToCoreData(parksDict: ParksList, managedObjContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let parksInfo: ParksEntity = NSEntityDescription.insertNewObject(forEntityName: "ParksEntity", into: managedObjContext) as! ParksEntity
             parksInfo.title = parksDict.title
             parksInfo.parksDescription = parksDict.description
@@ -391,7 +402,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     func fetchParksFromCoredata() {
         let managedContext = getContext()
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var parksArray = [ParksEntity]()
                 let parksFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ParksEntity")
                 parksArray = (try managedContext.fetch(parksFetchRequest) as? [ParksEntity])!
@@ -402,13 +413,21 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
 
                     }
                     if(parksListArray.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                     self.setTopbarImage()
                     parksTableView.reloadData()
                 }
                 else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
                 }
             }
             else {
@@ -420,13 +439,21 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                         self.parksListArray.insert(ParksList(title: parksArray[i].titleArabic, description: parksArray[i].descriptionArabic, sortId: parksArray[i].sortIdArabic, image: parksArray[i].imageArabic), at: i)
                     }
                     if(parksArray.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                     self.setTopbarImage()
                     parksTableView.reloadData()
                 }
                 else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
                 }
             }
         } catch let error as NSError {
@@ -458,7 +485,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
         if  (networkReachability?.isReachable)! {
-            self.getParksDataFromServer()
+            self.getParksDataFromServer(retryButtonPressed: true)
         }
     }
     func showNoNetwork() {
@@ -470,6 +497,18 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     func recordScreenView() {
         let screenClass = String(describing: type(of: self))
         Analytics.setScreenName(PARKS_VC, screenClass: screenClass)
+    }
+    @objc func receiveParksNotificationEn(notification: NSNotification) {
+        if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (parksListArray.count == 0)){
+            self.fetchParksFromCoredata()
+        } else if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (parksListArray.count == 0)){
+            self.fetchParksFromCoredata()
+        }
+    }
+    @objc func receiveParksNotificationAr(notification: NSNotification) {
+        if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (parksListArray.count == 0)){
+            self.fetchParksFromCoredata()
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

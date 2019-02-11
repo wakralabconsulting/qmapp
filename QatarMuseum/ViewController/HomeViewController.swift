@@ -1157,7 +1157,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
         if  (networkReachability?.isReachable)! {
-            self.getHomeList()
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            appDelegate?.getHomeList(lang: LocalizationLanguage.currentAppleLanguage())
             if(UserDefaults.standard.value(forKey: "firstTimeLaunch") as? String == nil) {
                 loadLoginPopup()
                 UserDefaults.standard.set("false", forKey: "firstTimeLaunch")

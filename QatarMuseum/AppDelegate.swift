@@ -87,6 +87,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             self.getPublicArtsListDataFromServer(lang: AR_LANGUAGE)
             self.getCollectionList(museumId: "63", lang: ENG_LANGUAGE)
             self.getCollectionList(museumId: "96", lang: AR_LANGUAGE)
+            self.getParksDataFromServer(lang: ENG_LANGUAGE)
+            self.getParksDataFromServer(lang: AR_LANGUAGE)
         }
         
     }
@@ -587,12 +589,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         self.saveExhibitionListToCoreData(exhibitionDict: exhibitionsListDict, managedObjContext: managedContext, lang: lang)
                     }
                 }//for
+                NotificationCenter.default.post(name: NSNotification.Name(exhibitionsListNotificationEn), object: self)
             } else {
                 for i in 0 ... (exhibition?.count)!-1 {
                     let exhibitionListDict : Exhibition?
                     exhibitionListDict = exhibition?[i]
                     self.saveExhibitionListToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext, lang: lang)
                 }
+                NotificationCenter.default.post(name: NSNotification.Name(exhibitionsListNotificationEn), object: self)
             }
         } else {
             let fetchData = self.checkAddedToCoredata(entityName: "ExhibitionsEntityArabic", idKey: "id", idValue: nil, managedContext: managedContext) as! [ExhibitionsEntityArabic]
@@ -621,12 +625,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         self.saveExhibitionListToCoreData(exhibitionDict: exhibitionListDict, managedObjContext: managedContext, lang: lang)
                     }
                 }
+                NotificationCenter.default.post(name: NSNotification.Name(exhibitionsListNotificationAr), object: self)
             } else {
                 for i in 0 ... (exhibition?.count)!-1 {
                     let exhibitionListDict : Exhibition?
                     exhibitionListDict = exhibition?[i]
                     self.saveExhibitionListToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext, lang: lang)
                 }
+                NotificationCenter.default.post(name: NSNotification.Name(exhibitionsListNotificationAr), object: self)
             }
         }
     }
@@ -1988,6 +1994,141 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    func getParksDataFromServer(lang:String?)
+    {
+        _ = Alamofire.request(QatarMuseumRouter.ParksList(lang ?? ENG_LANGUAGE)).responseObject { (response: DataResponse<ParksLists>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.saveOrUpdateParksCoredata(parksListArray: data.parkList, lang: lang)
+            case .failure(let error):
+                print("error")
+            }
+        }
+    }
+    //MARK: Coredata Method
+    func saveOrUpdateParksCoredata(parksListArray:[ParksList]?,lang:String?) {
+        if (parksListArray!.count > 0) {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.parksCoreDataInBackgroundThread(managedContext: managedContext, parksListArray: parksListArray, lang: lang)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.parksCoreDataInBackgroundThread(managedContext : managedContext, parksListArray: parksListArray, lang: lang)
+                }
+            }
+        }
+    }
+    
+    func parksCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,parksListArray:[ParksList]?,lang:String?) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "ParksEntity", idKey: nil, idValue: nil, managedContext: managedContext) as! [ParksEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... (parksListArray?.count)!-1 {
+                    let parksDict = parksListArray![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "ParksEntity", idKey: nil, idValue: nil, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let parksdbDict = fetchResult[0] as! ParksEntity
+                        parksdbDict.title = parksDict.title
+                        parksdbDict.parksDescription = parksDict.description
+                        parksdbDict.sortId =  parksDict.sortId
+                        parksdbDict.image =  parksDict.image
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    }
+                    else {
+                        //save
+                        self.saveParksToCoreData(parksDict: parksDict, managedObjContext: managedContext, lang: lang)
+                        
+                    }
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(parksNotificationEn), object: self)
+            }
+            else {
+                for i in 0 ... parksListArray!.count-1 {
+                    let parksDict : ParksList?
+                    parksDict = parksListArray![i]
+                    self.saveParksToCoreData(parksDict: parksDict!, managedObjContext: managedContext, lang: lang)
+                    
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(parksNotificationEn), object: self)
+            }
+        }
+        else {
+            let fetchData = checkAddedToCoredata(entityName: "ParksEntityArabic", idKey: nil, idValue: nil, managedContext: managedContext) as! [ParksEntityArabic]
+            if (fetchData.count > 0) {
+                for i in 0 ... parksListArray!.count-1 {
+                    let parksDict = parksListArray![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "ParksEntityArabic", idKey: nil, idValue: nil, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let parksdbDict = fetchResult[0] as! ParksEntityArabic
+                        parksdbDict.titleArabic = parksDict.title
+                        parksdbDict.descriptionArabic = parksDict.description
+                        parksdbDict.sortIdArabic =  parksDict.sortId
+                        parksdbDict.imageArabic =  parksDict.image
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    }
+                    else {
+                        //save
+                        self.saveParksToCoreData(parksDict: parksDict, managedObjContext: managedContext, lang: lang)
+                        
+                    }
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(parksNotificationAr), object: self)
+            }
+            else {
+                for i in 0 ... parksListArray!.count-1 {
+                    let parksDict : ParksList?
+                    parksDict = parksListArray![i]
+                    self.saveParksToCoreData(parksDict: parksDict!, managedObjContext: managedContext, lang: lang)
+                    
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(parksNotificationAr), object: self)
+            }
+        }
+    }
+    
+    func saveParksToCoreData(parksDict: ParksList, managedObjContext: NSManagedObjectContext,lang:String?) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let parksInfo: ParksEntity = NSEntityDescription.insertNewObject(forEntityName: "ParksEntity", into: managedObjContext) as! ParksEntity
+            parksInfo.title = parksDict.title
+            parksInfo.parksDescription = parksDict.description
+            parksInfo.image = parksDict.image
+            if(parksDict.sortId != nil) {
+                parksInfo.sortId = parksDict.sortId
+            }
+        }
+        else {
+            let parksInfo: ParksEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "ParksEntityArabic", into: managedObjContext) as! ParksEntityArabic
+            parksInfo.titleArabic = parksDict.title
+            parksInfo.descriptionArabic = parksDict.description
+            parksInfo.imageArabic = parksDict.image
+            if(parksDict.sortId != nil) {
+                parksInfo.sortIdArabic = parksDict.sortId
+            }
+        }
+        do {
+            try managedObjContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    
     func deleteExistingEvent(managedContext:NSManagedObjectContext,entityName : String?) ->Bool? {
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName!)

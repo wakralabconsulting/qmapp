@@ -25,6 +25,8 @@ var collectionsListNotificationEn = "CollectionsListNotificationEn"
 var collectionsListNotificationAr = "CollectionsListNotificationAr"
 var exhibitionsListNotificationEn = "ExhibitionsListNotificationEn"
 var exhibitionsListNotificationAr = "ExhibitionsListNotificationAr"
+var parksNotificationEn = "ParksNotificationEn"
+var parksNotificationAr = "ParksNotificationAr"
 // Utility method for presenting alert without any completion handler
 func presentAlert(_ viewController: UIViewController, title: String, message: String) {
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
