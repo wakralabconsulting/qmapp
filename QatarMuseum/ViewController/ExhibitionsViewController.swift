@@ -15,9 +15,9 @@ enum ExhbitionPageName {
     case homeExhibition
     case museumExhibition
 }
-class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol,LoadingViewProtocol {
+class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol,LoadingViewProtocol {
     @IBOutlet weak var exhibitionHeaderView: CommonHeaderView!
-    @IBOutlet weak var exhibitionCollectionView: UICollectionView!
+    @IBOutlet weak var exhibitionCollectionView: UITableView!
     @IBOutlet weak var exbtnLoadingView: LoadingView!
     
     var exhibition: [Exhibition]! = []
@@ -58,8 +58,6 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
         exbtnLoadingView.showLoading()
         exbtnLoadingView.loadingViewDelegate = self
         exhibitionHeaderView.headerViewDelegate = self
-        //exhibitionHeaderView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
-        
         exhibitionHeaderView.headerTitle.text = NSLocalizedString("EXHIBITIONS_TITLE", comment: "EXHIBITIONS_TITLE Label in the Exhibitions page")
         popupView.comingSoonPopupDelegate = self
         
@@ -71,8 +69,7 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
     }
     
     func registerNib() {
-        let nib = UINib(nibName: "ExhibitionsCellXib", bundle: nil)
-        exhibitionCollectionView?.register(nib, forCellWithReuseIdentifier: "exhibitionCellId")
+        self.exhibitionCollectionView.register(UINib(nibName: "ExhibitionsCellXib", bundle: nil), forCellReuseIdentifier: "exhibitionCellId")
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -123,13 +120,7 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
             }
         }
     }
-    
-    //MARK: collectionview delegate
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch exhibitionsPageNameString {
         case .homeExhibition?:
             return exhibition.count
@@ -139,46 +130,31 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
             return 0
         }
     }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let exhibitionCell : ExhibitionsCollectionCell = exhibitionCollectionView.dequeueReusableCell(withReuseIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
-//        switch exhibitionsPageNameString {
-//        case .homeExhibition?:
-            exhibitionCell.setExhibitionCellValues(exhibition: exhibition[indexPath.row])
-            exhibitionCell.exhibitionCellItemBtnTapAction = {
-                () in
-                self.loadExhibitionCellPages(cellObj: exhibitionCell, selectedIndex: indexPath.row)
-            }
-//        case .museumExhibition?:
-//            exhibitionCell.setMuseumExhibitionCellValues(exhibition: exhibition[indexPath.row])
-//        default:
-//            break
-//        }
-        
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let exhibitionCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
+        exhibitionCell.setExhibitionCellValues(exhibition: exhibition[indexPath.row])
+        exhibitionCell.exhibitionCellItemBtnTapAction = {
+            () in
+            self.loadExhibitionCellPages(cellObj: exhibitionCell, selectedIndex: indexPath.row)
+        }
+        exhibitionCell.selectionStyle = .none
         exbtnLoadingView.stopLoading()
         exbtnLoadingView.isHidden = true
         return exhibitionCell
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let heightValue = UIScreen.main.bounds.height/100
-        return CGSize(width: exhibitionCollectionView.frame.width, height: heightValue*27)
+        return heightValue*27
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let exhibitionId = exhibition[indexPath.row].id {
             loadExhibitionDetailAnimation(exhibitionId: exhibitionId)
         }
-//        if exhibitionsPageNameString == ExhbitionPageName.homeExhibition, let exhibitionId = exhibition[indexPath.row].id {
-//            loadExhibitionDetailAnimation(exhibitionId: exhibitionId)
-//        } else if exhibitionsPageNameString == ExhbitionPageName.museumExhibition && indexPath.row == 0 {
-//            loadExhibitionDetailAnimation(exhibitionId: "")
-//        }
         else {
             addComingSoonPopup()
         }
     }
-    
+
     func loadExhibitionCellPages(cellObj: ExhibitionsCollectionCell, selectedIndex: Int) {
         
     }
@@ -192,12 +168,8 @@ class ExhibitionsViewController: UIViewController,UICollectionViewDelegate,UICol
     
     func loadExhibitionDetailAnimation(exhibitionId: String) {
         let exhibitionDtlView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionDtlId") as! ExhibitionDetailViewController
-       // if (exhibitionsPageNameString == ExhbitionPageName.homeExhibition) {
             exhibitionDtlView.fromHome = true
             exhibitionDtlView.exhibitionId = exhibitionId
-//        } else {
-//            exhibitionDtlView.fromHome = false
-//        }
         let transition = CATransition()
         transition.duration = 0.5
         transition.type = kCATransitionFade

@@ -9,7 +9,7 @@
 import Kingfisher
 import UIKit
 
-class ExhibitionsCollectionCell: UICollectionViewCell {
+class ExhibitionsCollectionCell: UITableViewCell {
     @IBOutlet weak var exhibitionImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
@@ -22,11 +22,12 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        setGradientLayer()
     }
     
     //MARK: HomeExhibitionList data
     func setExhibitionCellValues(exhibition: Exhibition) {
+        setGradientLayer()
+        openCloseView.layer.cornerRadius = 12
         titleLabel.text = exhibition.name?.uppercased()
         //Hide Date and Location from Exhibition List page.
 //        dateLabel.text = ((exhibition.startDate?.uppercased())!).replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil) + " - " + ((exhibition.endDate?.uppercased())!).replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
@@ -45,7 +46,7 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
         openCloseLabel.isHidden = false
         openCloseLabel.font = UIFont.closeButtonFont
         let nowOpenString = NSLocalizedString("NOW_OPEN_TITLE", comment: "NOW_OPEN_TITLE in the exhibition page")
-        if (exhibition.status == nowOpenString)  {
+        if (exhibition.status?.lowercased() == nowOpenString.lowercased())  {
             openCloseView.backgroundColor = UIColor.yellow
             openCloseLabel.text = exhibition.status
             openCloseLabel.textColor = UIColor.black
@@ -64,6 +65,8 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
     
     //MARK: MuseumExhibitionList data
     func setMuseumExhibitionCellValues(exhibition: Exhibition) {
+        setGradientLayer()
+        openCloseView.layer.cornerRadius = 12
         titleLabel.text = exhibition.name?.uppercased()
         dateLabel.text = ((exhibition.startDate?.uppercased())!).replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil) + " - " + ((exhibition.endDate?.uppercased())!).replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
         addressLabel.text = exhibition.location?.uppercased()
@@ -76,7 +79,7 @@ class ExhibitionsCollectionCell: UICollectionViewCell {
             favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
         }
         let nowOpenString = NSLocalizedString("NOW_OPEN_TITLE", comment: "NOW_OPEN_TITLE in the exhibition page")
-        if (exhibition.status == nowOpenString) {
+        if (exhibition.status?.lowercased() == nowOpenString.lowercased()) {
             openCloseView.backgroundColor = UIColor.yellow
             openCloseLabel.text = exhibition.status
             openCloseLabel.textColor = UIColor.black

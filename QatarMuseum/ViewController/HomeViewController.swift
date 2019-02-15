@@ -41,7 +41,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     var homeDBArrayArabic:[HomeEntityArabic]?
     var apnDelegate : APNProtocol?
     let imageView = UIImageView()
-    //let closeButton = UIButton()
     var blurView = UIVisualEffectView()
     var imgButton = UIButton()
     var imgLabel = UITextView()
@@ -58,7 +57,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         registerNib()
         setUpUI()
         NotificationCenter.default.addObserver(self, selector: #selector(self.receivedNotification(notification:)), name: NSNotification.Name("NotificationIdentifier"), object: nil)
-        
         self.recordScreenView()
     }
     
@@ -68,7 +66,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     func setTopImageUI() {
        
@@ -88,7 +85,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     }else {
                         imageView.image = UIImage(named: "default_imageX2")
                     }
-
                 }
                 else {
                     imageView.image = UIImage(named: "default_imageX2")
@@ -97,12 +93,9 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             else {
                 imageView.image = nil
             }
-        
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         view.addSubview(imageView)
-        
-        
         if(homeBannerList[0].bannerTitle != nil) {
             imgLabel.text = homeBannerList[0].bannerTitle
         }
@@ -118,15 +111,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         } else {
             imgLabel.frame = CGRect(x: 0, y: 95, width: UIScreen.main.bounds.size.width, height: 90)
         }
-        
         self.view.addSubview(imgLabel)
-        
         imgButton.setTitle("", for: .normal)
         imgButton.setTitleColor(UIColor.blue, for: .normal)
         imgButton.frame = imageView.frame
         imgButton.addTarget(self, action: #selector(self.imgButtonPressed(sender:)), for: .touchUpInside)
         self.view.addSubview(imgButton)
-        
         let darkBlur = UIBlurEffect(style: UIBlurEffectStyle.light)
         blurView = UIVisualEffectView(effect: darkBlur)
         blurView.frame = imageView.bounds
@@ -139,8 +129,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
    
     @objc func imgButtonPressed(sender: UIButton!) {
-      //  if((imageView.image != nil) && (imageView.image != UIImage(named: "default_imageX2"))) {
-            //loadMuseumsPage()
         let museumsView =  self.storyboard?.instantiateViewController(withIdentifier: "museumViewId") as! MuseumsViewController
         museumsView.fromHomeBanner = true
         museumsView.museumTitleString = homeBannerList[0].bannerTitle
@@ -150,8 +138,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(museumsView, animated: false, completion: nil)
-        
-        //}
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = 120 - (scrollView.contentOffset.y + 120)
@@ -204,7 +190,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         culturePassLabel.font = UIFont.exhibitionDateLabelFont
         giftShopLabel.font = UIFont.exhibitionDateLabelFont
         diningLabel.font = UIFont.exhibitionDateLabelFont
-       // if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             if(UserDefaults.standard.value(forKey: "firstTimeLaunch") as? String == nil) {
                 loadingView.isHidden = false
                 loadingView.showLoading()
@@ -221,8 +206,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     fetchHomeBannerInfoFromCoredata()
                 }
             }
-        //}
-        
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationEn(notification:)), name: NSNotification.Name(homepageNotificationEn), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationAr(notification:)), name: NSNotification.Name(homepageNotificationAr), object: nil)
         self.fetchHomeInfoFromCoredata()
@@ -347,14 +330,9 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     func loadMuseumsPage(curretRow:Int? = 0) {
         let museumsView =  self.storyboard?.instantiateViewController(withIdentifier: "museumViewId") as! MuseumsViewController
-//        if (homeBannerList.count > 0) {
-//            museumsView.fromHomeBanner = true
-//            museumsView.museumTitleString = homeBannerList[0].bannerTitle
-//        } else {
         museumsView.museumId = homeList[curretRow!].id
         museumsView.museumTitleString = homeList[curretRow!].name
         museumsView.fromHomeBanner = false
-        //}
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionPush
@@ -370,7 +348,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         transition.duration = 0.25
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
-        //transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
         view.window!.layer.add(transition, forKey: kCATransition)
         exhibitionView.exhibitionsPageNameString = ExhbitionPageName.homeExhibition
         self.present(exhibitionView, animated: false, completion: nil)
@@ -440,7 +417,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func profileButtonPressed() {
-       //topBarProfileButtonPressed()
         culturePassButtonPressed()
     }
     
@@ -492,7 +468,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     func tourGuideButtonPressed() {
         let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "tourGuidId") as! TourGuideViewController
-        //tourGuideView.fromHome = true
         tourGuideView.fromSideMenu = true
         let transition = CATransition()
         transition.duration = 0.3
@@ -565,7 +540,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     func giftShopButtonPressed() {
         let aboutUrlString = "https://inq-online.com/"
-        //"https://inq-online.com/?SID=k36n3od6ovtc5jn5hlf8o54g64"
         if let aboutUrl = URL(string: aboutUrlString) {
             // show alert to choose app
             if UIApplication.shared.canOpenURL(aboutUrl as URL) {
@@ -899,7 +873,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
-       // }
         if (networkReachability?.isReachable)! {
             DispatchQueue.global(qos: .background).async {
                 self.getHomeList()
@@ -1115,7 +1088,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName!)
-       // fetchRequest.predicate = NSPredicate.init(format: "\("dateId") == \(dateID!)")
         let deleteRequest = NSBatchDeleteRequest( fetchRequest: fetchRequest)
         do{
             try managedContext.execute(deleteRequest)
@@ -1131,7 +1103,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         var fetchResults : [NSManagedObject] = []
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
         if (idValue != nil) {
-           // homeFetchRequest.predicate = NSPredicate.init(format: "id == \(homeId!)")
             fetchRequest.predicate = NSPredicate(format: "\(idKey!) == %@", idValue!)
         }
         fetchResults = try! managedContext.fetch(fetchRequest)
@@ -1214,8 +1185,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 self.accessToken = data.accessToken
                 if(login == true) {
                     self.getCulturePassLoginFromServer()
-                } else {
-                    //self.setNewPassword()
                 }
                 
             case .failure( _):
@@ -1233,7 +1202,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     self.loginPopUpView.loadingView.stopLoading()
                     self.loginPopUpView.loadingView.isHidden = true
                     UserDefaults.standard.setValue(self.loginPopUpView.passwordText.text, forKey: "userPassword")
-                   // self.loginPopUpView.removeFromSuperview()
                     if(response.response?.statusCode == 200) {
                         self.loginArray = data
                         UserDefaults.standard.setValue(self.loginArray?.token, forKey: "accessToken")
@@ -1251,7 +1219,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     }
                     
                 case .failure( _):
-                    //self.loginPopUpView.removeFromSuperview()
                     self.loginPopUpView.loadingView.stopLoading()
                     self.loginPopUpView.loadingView.isHidden = true
                     
@@ -1279,9 +1246,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                                     if(value["value"] != nil) {
                                         UserDefaults.standard.setValue(value["value"], forKey: "acceptOrDecline")
                                         self.getHomeBanner()
-//                                        if(self.homeBannerList.count > 0) {
-//                                            self.setTopImageUI()
-//                                        }
                                     }
                                 }
                                 
@@ -1399,7 +1363,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         }
     }
     func recordScreenView() {
-       // let screenClass = classForCoder.description()
         let screenClass = String(describing: type(of: self))
         Analytics.setScreenName(HOME, screenClass: screenClass)
     }
