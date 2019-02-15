@@ -14,6 +14,7 @@ import UIKit
 enum ExhbitionPageName {
     case homeExhibition
     case museumExhibition
+    case heritageList
 }
 class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol,LoadingViewProtocol {
     @IBOutlet weak var exhibitionHeaderView: CommonHeaderView!
@@ -21,6 +22,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
     @IBOutlet weak var exbtnLoadingView: LoadingView!
     
     var exhibition: [Exhibition]! = []
+    var heritageListArray: [Heritage]! = []
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var exhibitionsPageNameString : ExhbitionPageName?
     let networkReachability = NetworkReachabilityManager()
@@ -31,25 +33,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         super.viewDidLoad()
         setUpExhibitionPageUi()
         registerNib()
-        NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveExhibitionListNotificationEn(notification:)), name: NSNotification.Name(exhibitionsListNotificationEn), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveExhibitionListNotificationAr(notification:)), name: NSNotification.Name(exhibitionsListNotificationAr), object: nil)
-        if  (networkReachability?.isReachable)! {
-            if (exhibitionsPageNameString == ExhbitionPageName.homeExhibition) {
-                DispatchQueue.global(qos: .background).async {
-                    self.getExhibitionDataFromServer()
-                }
-                self.fetchExhibitionsListFromCoredata()
-            } else {
-                getMuseumExhibitionDataFromServer()
-            }
-            
-        } else {
-            if (exhibitionsPageNameString == ExhbitionPageName.homeExhibition) {
-                self.fetchExhibitionsListFromCoredata()
-            } else {
-                self.fetchMuseumExhibitionsListFromCoredata()
-            }
-        }
+        
+       
         self.recordScreenView()
     }
     
@@ -58,18 +43,54 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         exbtnLoadingView.showLoading()
         exbtnLoadingView.loadingViewDelegate = self
         exhibitionHeaderView.headerViewDelegate = self
-        exhibitionHeaderView.headerTitle.text = NSLocalizedString("EXHIBITIONS_TITLE", comment: "EXHIBITIONS_TITLE Label in the Exhibitions page")
+        if ((exhibitionsPageNameString == ExhbitionPageName.homeExhibition) || (exhibitionsPageNameString == ExhbitionPageName.museumExhibition)) {
+            exhibitionHeaderView.headerTitle.text = NSLocalizedString("EXHIBITIONS_TITLE", comment: "EXHIBITIONS_TITLE Label in the Exhibitions page")
+            NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveExhibitionListNotificationEn(notification:)), name: NSNotification.Name(exhibitionsListNotificationEn), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveExhibitionListNotificationAr(notification:)), name: NSNotification.Name(exhibitionsListNotificationAr), object: nil)
+            if  (networkReachability?.isReachable)! {
+                if (exhibitionsPageNameString == ExhbitionPageName.homeExhibition) {
+                    DispatchQueue.global(qos: .background).async {
+                        self.getExhibitionDataFromServer()
+                    }
+                    self.fetchExhibitionsListFromCoredata()
+                } else if (exhibitionsPageNameString == ExhbitionPageName.museumExhibition){
+                    getMuseumExhibitionDataFromServer()
+                }
+                
+            } else {
+                if (exhibitionsPageNameString == ExhbitionPageName.homeExhibition) {
+                    self.fetchExhibitionsListFromCoredata()
+                } else if (exhibitionsPageNameString == ExhbitionPageName.museumExhibition){
+                    self.fetchMuseumExhibitionsListFromCoredata()
+                }
+            }
+            
+        } else if (exhibitionsPageNameString == ExhbitionPageName.heritageList) {
+            exhibitionHeaderView.headerTitle.text = NSLocalizedString("HERITAGE_SITES_TITLE", comment: "HERITAGE_SITES_TITLE  in the Heritage page")
+            exhibitionHeaderView.headerTitle.font = UIFont.headerFont
+            self.fetchHeritageListFromCoredata()
+            NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveHeritageListNotificationEn(notification:)), name: NSNotification.Name(heritageListNotificationEn), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveHeritageListNotificationAr(notification:)), name: NSNotification.Name(heritageListNotificationAr), object: nil)
+            if  (networkReachability?.isReachable)! {
+                DispatchQueue.global(qos: .background).async {
+                    self.getHeritageDataFromServer()
+                }
+            }
+        }
+        
         popupView.comingSoonPopupDelegate = self
         
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             exhibitionHeaderView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         } else {
             exhibitionHeaderView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
+        
     }
     
     func registerNib() {
         self.exhibitionCollectionView.register(UINib(nibName: "ExhibitionsCellXib", bundle: nil), forCellReuseIdentifier: "exhibitionCellId")
+        self.exhibitionCollectionView.register(UINib(nibName: "HeritageCellXib", bundle: nil), forCellReuseIdentifier: "heritageCellXibId")
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -126,33 +147,51 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             return exhibition.count
         case .museumExhibition?:
             return exhibition.count
+        case .heritageList?:
+            return heritageListArray.count
         default:
             return 0
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let exhibitionCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
-        exhibitionCell.setExhibitionCellValues(exhibition: exhibition[indexPath.row])
-        exhibitionCell.exhibitionCellItemBtnTapAction = {
-            () in
-            self.loadExhibitionCellPages(cellObj: exhibitionCell, selectedIndex: indexPath.row)
+        if ((exhibitionsPageNameString == ExhbitionPageName.homeExhibition) || (exhibitionsPageNameString == ExhbitionPageName.museumExhibition)) {
+            let exhibitionCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
+            exhibitionCell.setExhibitionCellValues(exhibition: exhibition[indexPath.row])
+            exhibitionCell.exhibitionCellItemBtnTapAction = {
+                () in
+                self.loadExhibitionCellPages(cellObj: exhibitionCell, selectedIndex: indexPath.row)
+            }
+            exhibitionCell.selectionStyle = .none
+            exbtnLoadingView.stopLoading()
+            exbtnLoadingView.isHidden = true
+            return exhibitionCell
+        } else {
+            //if (exhibitionsPageNameString == ExhbitionPageName.heritageList) {
+            let heritageCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "heritageCellXibId", for: indexPath) as! HeritageTableViewCell
+            heritageCell.setHeritageListCellValues(heritageList: heritageListArray[indexPath.row])
+            exbtnLoadingView.stopLoading()
+            exbtnLoadingView.isHidden = true
+            return heritageCell
         }
-        exhibitionCell.selectionStyle = .none
-        exbtnLoadingView.stopLoading()
-        exbtnLoadingView.isHidden = true
-        return exhibitionCell
+        
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let heightValue = UIScreen.main.bounds.height/100
         return heightValue*27
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let exhibitionId = exhibition[indexPath.row].id {
-            loadExhibitionDetailAnimation(exhibitionId: exhibitionId)
+        if ((exhibitionsPageNameString == ExhbitionPageName.homeExhibition) || (exhibitionsPageNameString == ExhbitionPageName.museumExhibition)) {
+            if let exhibitionId = exhibition[indexPath.row].id {
+                loadExhibitionDetailAnimation(exhibitionId: exhibitionId)
+            }
+            else {
+                addComingSoonPopup()
+            }
+        } else if (exhibitionsPageNameString == ExhbitionPageName.heritageList) {
+            let heritageId = heritageListArray[indexPath.row].id
+            loadHeritageDetail(heritageListId: heritageId!)
         }
-        else {
-            addComingSoonPopup()
-        }
+        
     }
 
     func loadExhibitionCellPages(cellObj: ExhibitionsCollectionCell, selectedIndex: Int) {
@@ -165,7 +204,19 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         popupView.loadPopup()
         self.view.addSubview(popupView)
     }
-    
+    func loadHeritageDetail(heritageListId: String) {
+        let heritageDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
+        heritageDtlView.pageNameString = PageName.heritageDetail
+        heritageDtlView.heritageDetailId = heritageListId
+        let transition = CATransition()
+        transition.duration = 0.25
+        transition.type = kCATransitionFade
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(heritageDtlView, animated: false, completion: nil)
+        
+        
+    }
     func loadExhibitionDetailAnimation(exhibitionId: String) {
         let exhibitionDtlView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionDtlId") as! ExhibitionDetailViewController
             exhibitionDtlView.fromHome = true
@@ -456,11 +507,13 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
         if  (networkReachability?.isReachable)! {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if (exhibitionsPageNameString == ExhbitionPageName.homeExhibition) {
-                let appDelegate =  UIApplication.shared.delegate as? AppDelegate
                 appDelegate?.getExhibitionDataFromServer(lang: LocalizationLanguage.currentAppleLanguage())
-            } else {
+            } else if (exhibitionsPageNameString == ExhbitionPageName.museumExhibition){
                 self.getMuseumExhibitionDataFromServer()
+            } else if (exhibitionsPageNameString == ExhbitionPageName.heritageList){
+                appDelegate?.getHeritageDataFromServer(lang: LocalizationLanguage.currentAppleLanguage())
             }
         }
     }
@@ -482,7 +535,211 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     func recordScreenView() {
         let screenClass = String(describing: type(of: self))
-        Analytics.setScreenName(EXHIBITION_LIST, screenClass: screenClass)
+        if ((exhibitionsPageNameString == ExhbitionPageName.homeExhibition) ||  (exhibitionsPageNameString == ExhbitionPageName.homeExhibition)) {
+            Analytics.setScreenName(EXHIBITION_LIST, screenClass: screenClass)
+        } else if (exhibitionsPageNameString == ExhbitionPageName.heritageList) {
+            Analytics.setScreenName(HERITAGE_LIST, screenClass: screenClass)
+        }
+        
+        
+    }
+    //MARK: Heritage Page
+    //MARK: WebServiceCall
+    func getHeritageDataFromServer() {
+        _ = Alamofire.request(QatarMuseumRouter.HeritageList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<Heritages>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.saveOrUpdateHeritageCoredata(heritageListArray: data.heritage)
+                
+            case .failure(let error):
+                print("error")
+                
+            }
+        }
+    }
+    //MARK: Coredata Method
+    func saveOrUpdateHeritageCoredata(heritageListArray:[Heritage]?) {
+        if ((heritageListArray?.count)! > 0) {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.coreDataInBackgroundThread(managedContext: managedContext, heritageListArray: heritageListArray)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.coreDataInBackgroundThread(managedContext : managedContext, heritageListArray: heritageListArray)
+                }
+            }
+        }
+    }
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,heritageListArray:[Heritage]?) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "HeritageEntity", idKey: "listid", idValue: nil, managedContext: managedContext) as! [HeritageEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... (heritageListArray?.count)!-1 {
+                    let heritageListDict = heritageListArray![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "HeritageEntity", idKey: "listid", idValue: heritageListArray![i].id, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let heritagedbDict = fetchResult[0] as! HeritageEntity
+                        heritagedbDict.listname = heritageListDict.name
+                        heritagedbDict.listimage = heritageListDict.image
+                        heritagedbDict.listsortid =  heritageListDict.sortid
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    } else {
+                        //save
+                        self.saveToCoreData(heritageListDict: heritageListDict, managedObjContext: managedContext)
+                        
+                    }
+                }
+            } else {
+                for i in 0 ... (heritageListArray?.count)!-1 {
+                    let heritageListDict : Heritage?
+                    heritageListDict = heritageListArray?[i]
+                    self.saveToCoreData(heritageListDict: heritageListDict!, managedObjContext: managedContext)
+                }
+            }
+        } else {
+            let fetchData = checkAddedToCoredata(entityName: "HeritageEntityArabic", idKey: "listid", idValue: nil, managedContext: managedContext) as! [HeritageEntityArabic]
+            if (fetchData.count > 0) {
+                for i in 0 ... (heritageListArray?.count)!-1 {
+                    let heritageListDict = heritageListArray![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "HeritageEntityArabic", idKey: "listid", idValue: heritageListArray![i].id, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let heritagedbDict = fetchResult[0] as! HeritageEntityArabic
+                        heritagedbDict.listnamearabic = heritageListDict.name
+                        heritagedbDict.listimagearabic = heritageListDict.image
+                        heritagedbDict.listsortidarabic =  heritageListDict.sortid
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    }
+                    else {
+                        //save
+                        self.saveToCoreData(heritageListDict: heritageListDict, managedObjContext: managedContext)
+                        
+                    }
+                }
+            }
+            else {
+                for i in 0 ... (heritageListArray?.count)!-1 {
+                    let heritageListDict : Heritage?
+                    heritageListDict = heritageListArray?[i]
+                    self.saveToCoreData(heritageListDict: heritageListDict!, managedObjContext: managedContext)
+                    
+                }
+            }
+        }
+    }
+    
+    func saveToCoreData(heritageListDict: Heritage, managedObjContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let heritageInfo: HeritageEntity = NSEntityDescription.insertNewObject(forEntityName: "HeritageEntity", into: managedObjContext) as! HeritageEntity
+            heritageInfo.listid = heritageListDict.id
+            heritageInfo.listname = heritageListDict.name
+            
+            heritageInfo.listimage = heritageListDict.image
+            if(heritageListDict.sortid != nil) {
+                heritageInfo.listsortid = heritageListDict.sortid
+            }
+        } else {
+            let heritageInfo: HeritageEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "HeritageEntityArabic", into: managedObjContext) as! HeritageEntityArabic
+            heritageInfo.listid = heritageListDict.id
+            heritageInfo.listnamearabic = heritageListDict.name
+            
+            heritageInfo.listimagearabic = heritageListDict.image
+            if(heritageListDict.sortid != nil) {
+                heritageInfo.listsortidarabic = heritageListDict.sortid
+            }
+        }
+        do {
+            try managedObjContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func fetchHeritageListFromCoredata() {
+        let managedContext = getContext()
+        do {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                var heritageArray = [HeritageEntity]()
+                let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HeritageEntity")
+                heritageArray = (try managedContext.fetch(homeFetchRequest) as? [HeritageEntity])!
+                if (heritageArray.count > 0) {
+                    for i in 0 ... heritageArray.count-1 {
+                        
+                        self.heritageListArray.insert(Heritage(id: heritageArray[i].listid, name: heritageArray[i].listname, location: nil, latitude: nil, longitude: nil, image: heritageArray[i].listimage, shortdescription: nil, longdescription: nil,images: nil, sortid: heritageArray[i].listsortid), at: i)
+                        
+                    }
+                    if(heritageListArray.count == 0){
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.exbtnLoadingView.showNoDataView()
+                        }
+                    }
+                    DispatchQueue.main.async{
+                        self.exhibitionCollectionView.reloadData()
+                    }
+                } else {
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.exbtnLoadingView.showNoDataView()
+                    }
+                }
+            } else {
+                var heritageArray = [HeritageEntityArabic]()
+                let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HeritageEntityArabic")
+                heritageArray = (try managedContext.fetch(homeFetchRequest) as? [HeritageEntityArabic])!
+                if (heritageArray.count > 0) {
+                    for i in 0 ... heritageArray.count-1 {
+                        self.heritageListArray.insert(Heritage(id: heritageArray[i].listid, name: heritageArray[i].listnamearabic, location: nil, latitude: nil, longitude: nil, image: heritageArray[i].listimagearabic, shortdescription: nil, longdescription: nil,images: nil, sortid: heritageArray[i].listsortidarabic), at: i)
+                        
+                    }
+                    if(heritageListArray.count == 0){
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.exbtnLoadingView.showNoDataView()
+                        }
+                    }
+                    exhibitionCollectionView.reloadData()
+                } else {
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.exbtnLoadingView.showNoDataView()
+                    }
+                }
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    @objc func receiveHeritageListNotificationEn(notification: NSNotification) {
+        if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (heritageListArray.count == 0)){
+            self.fetchHeritageListFromCoredata()
+        }
+    }
+    @objc func receiveHeritageListNotificationAr(notification: NSNotification) {
+        if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (heritageListArray.count == 0)){
+            self.fetchHeritageListFromCoredata()
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
