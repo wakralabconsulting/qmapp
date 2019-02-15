@@ -478,8 +478,9 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func heritageButtonPressed() {
-        let heritageView =  self.storyboard?.instantiateViewController(withIdentifier: "heritageViewId") as! HeritageListViewController
+        let heritageView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
         heritageView.fromSideMenu = true
+        heritageView.exhibitionsPageNameString = ExhbitionPageName.heritageList
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionFade
