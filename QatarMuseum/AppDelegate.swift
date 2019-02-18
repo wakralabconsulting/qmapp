@@ -1906,26 +1906,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if (lang == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: nil, managedContext: managedContext) as! [CollectionsEntity]
             if (fetchData.count > 0) {
+                let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "CollectionsEntity")
+                if(isDeleted == true) {
                 for i in 0 ... (collection?.count)!-1 {
                     let collectionListDict : Collection?
                     collectionListDict = collection?[i]
-                    let fetchResult = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: museumId, managedContext: managedContext)
-                    //update
-                    if(fetchResult.count != 0) {
-                        let collectionsdbDict = fetchResult[0] as! CollectionsEntity
-                        collectionsdbDict.listName = collectionListDict?.name?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-                        collectionsdbDict.listImage = collectionListDict?.image
-                        collectionsdbDict.museumId = collectionListDict?.museumId
-                        do {
-                            try managedContext.save()
-                        }
-                        catch {
-                            print(error)
-                        }
-                    } else {
                         self.saveCollectionListToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext, lang: lang)
-                    }
                 }
+            }
                 NotificationCenter.default.post(name: NSNotification.Name(collectionsListNotificationEn), object: self)
             }
             else {
@@ -1939,26 +1927,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         } else { // For Arabic Database
             let fetchData = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "museumId", idValue: nil, managedContext: managedContext) as! [CollectionsEntityArabic]
             if (fetchData.count > 0) {
+                let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "CollectionsEntityArabic")
+                if(isDeleted == true) {
                 for i in 0 ... (collection?.count)!-1 {
                     let collectionListDict : Collection?
                     collectionListDict = collection?[i]
-                    let fetchResult = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "museumId", idValue: museumId, managedContext: managedContext)
-                    //update
-                    if(fetchResult.count != 0) {
-                        let collectionsdbDict = fetchResult[0] as! CollectionsEntityArabic
-                        //collectionsdbDict.listNameAr = collectionListDict?.name
-                        collectionsdbDict.listImageAr = collectionListDict?.image
-                        collectionsdbDict.museumId = collectionListDict?.museumId
-                        do {
-                            try managedContext.save()
-                        }
-                        catch {
-                            print(error)
-                        }
-                    } else {
                         self.saveCollectionListToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext, lang: lang)
-                    }
                 }
+            }
                 NotificationCenter.default.post(name: NSNotification.Name(collectionsListNotificationAr), object: self)
             }
             else {
