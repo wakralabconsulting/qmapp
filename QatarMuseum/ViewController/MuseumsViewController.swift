@@ -403,8 +403,9 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 //exhibitionView.exhibitionsPageNameString = ExhbitionPageName.homeExhibition // For now changing to homeExhibition
                 self.present(exhibitionView, animated: false, completion: nil)
            } else if ((selectedItem == "Collections") || (selectedItem == "المجموعات")){
-                let musmCollectionnView = self.storyboard?.instantiateViewController(withIdentifier: "musmCollectionViewId") as! MuseumCollectionsViewController
+                let musmCollectionnView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
                 musmCollectionnView.museumId = museumId
+                musmCollectionnView.exhibitionsPageNameString = ExhbitionPageName.museumCollectionsList
                 let transition = CATransition()
                 transition.duration = 0.3
                 transition.type = kCATransitionPush
@@ -420,10 +421,11 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 view.window!.layer.add(transition, forKey: kCATransition)
                 self.present(parkView, animated: false, completion: nil)
            } else if((selectedItem == "Dining") || (selectedItem == "الطعام")) {
-                let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "diningViewId") as! DiningViewController
+                let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
                 diningView.museumId = museumId
                 diningView.fromHome = false
                 diningView.fromSideMenu = false
+                diningView.exhibitionsPageNameString = ExhbitionPageName.diningList
                 let transition = CATransition()
                 transition.duration = 0.25
                 transition.type = kCATransitionPush

@@ -490,8 +490,9 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func publicArtsButtonPressed() {
-        let publicArtsView =  self.storyboard?.instantiateViewController(withIdentifier: "publicArtsViewId") as! PublicArtsViewController
+        let publicArtsView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
         publicArtsView.fromSideMenu = true
+        publicArtsView.exhibitionsPageNameString = ExhbitionPageName.publicArtsList
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionFade
@@ -511,9 +512,10 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func diningButtonPressed() {
-        let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "diningViewId") as! DiningViewController
+        let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
         diningView.fromHome = true
         diningView.fromSideMenu = true
+        diningView.exhibitionsPageNameString = ExhbitionPageName.diningList
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionFade
@@ -607,9 +609,10 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     @IBAction func didTaprestaurantButton(_ sender: UIButton) {
         self.culturePassButton.transform = CGAffineTransform(scaleX: 1, y: 1)
-        let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "diningViewId") as! DiningViewController
+        let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
          diningView.fromHome = true
          diningView.fromSideMenu = false
+         diningView.exhibitionsPageNameString = ExhbitionPageName.diningList
          let transition = CATransition()
          transition.duration = 0.25
          transition.type = kCATransitionPush
