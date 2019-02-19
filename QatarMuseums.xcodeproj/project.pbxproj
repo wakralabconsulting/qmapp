@@ -14,7 +14,6 @@
 		1B444A3721AE9709009FF40F /* NMoQListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B444A3521AE9708009FF40F /* NMoQListCell.swift */; };
 		1B444A3821AE9709009FF40F /* NMoQListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B444A3621AE9708009FF40F /* NMoQListCell.xib */; };
 		1B444A3A21AE9F03009FF40F /* TourAndPanelListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B444A3921AE9F03009FF40F /* TourAndPanelListViewController.swift */; };
-		1B444A6121B12A25009FF40F /* NMoQTourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B444A6021B12A24009FF40F /* NMoQTourViewController.swift */; };
 		1B444A6521B137DC009FF40F /* NMoQTourDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B444A6321B137DC009FF40F /* NMoQTourDescriptionCell.swift */; };
 		1B444A6621B137DC009FF40F /* NMoQTourDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B444A6421B137DC009FF40F /* NMoQTourDescriptionCell.xib */; };
 		1B51411E215B892E0055AAF5 /* TourGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51411D215B892D0055AAF5 /* TourGuide.swift */; };
@@ -128,9 +127,6 @@
 		B85BA4AC20D01BC900E7F4D1 /* ExhibitionDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4AB20D01BC800E7F4D1 /* ExhibitionDetailTableViewCell.swift */; };
 		B85BA4B020D01D1C00E7F4D1 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4AF20D01D1C00E7F4D1 /* SplashViewController.swift */; };
 		B85BA4B720D03CE500E7F4D1 /* iOSDevCenters+GIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4B620D03CE500E7F4D1 /* iOSDevCenters+GIF.swift */; };
-		B860EE4B21AE9F340007F63B /* TravelArrangementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B860EE4A21AE9F340007F63B /* TravelArrangementsViewController.swift */; };
-		B860EE4E21AEA0B10007F63B /* TravelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B860EE4D21AEA0B10007F63B /* TravelCollectionViewCell.swift */; };
-		B860EE5021AEA0E80007F63B /* TravelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B860EE4F21AEA0E80007F63B /* TravelCell.xib */; };
 		B88F07E8217DD5F600B16875 /* CulturePassCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88F07E7217DD5F600B16875 /* CulturePassCardViewController.swift */; };
 		B891D06320DBCC3900919F30 /* HeritageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B891D06220DBCC3900919F30 /* HeritageCollectionCell.swift */; };
 		B891D06520DBCC5200919F30 /* HeritageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B891D06420DBCC5100919F30 /* HeritageCell.xib */; };
@@ -250,7 +246,6 @@
 		1B444A3521AE9708009FF40F /* NMoQListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQListCell.swift; sourceTree = "<group>"; };
 		1B444A3621AE9708009FF40F /* NMoQListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NMoQListCell.xib; sourceTree = "<group>"; };
 		1B444A3921AE9F03009FF40F /* TourAndPanelListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourAndPanelListViewController.swift; sourceTree = "<group>"; };
-		1B444A6021B12A24009FF40F /* NMoQTourViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQTourViewController.swift; sourceTree = "<group>"; };
 		1B444A6321B137DC009FF40F /* NMoQTourDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQTourDescriptionCell.swift; sourceTree = "<group>"; };
 		1B444A6421B137DC009FF40F /* NMoQTourDescriptionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NMoQTourDescriptionCell.xib; sourceTree = "<group>"; };
 		1B51411D215B892D0055AAF5 /* TourGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourGuide.swift; sourceTree = "<group>"; };
@@ -394,9 +389,6 @@
 		B85BA4AB20D01BC800E7F4D1 /* ExhibitionDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExhibitionDetailTableViewCell.swift; sourceTree = "<group>"; };
 		B85BA4AF20D01D1C00E7F4D1 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		B85BA4B620D03CE500E7F4D1 /* iOSDevCenters+GIF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "iOSDevCenters+GIF.swift"; sourceTree = "<group>"; };
-		B860EE4A21AE9F340007F63B /* TravelArrangementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelArrangementsViewController.swift; sourceTree = "<group>"; };
-		B860EE4D21AEA0B10007F63B /* TravelCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelCollectionViewCell.swift; sourceTree = "<group>"; };
-		B860EE4F21AEA0E80007F63B /* TravelCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TravelCell.xib; sourceTree = "<group>"; };
 		B88F07E7217DD5F600B16875 /* CulturePassCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturePassCardViewController.swift; sourceTree = "<group>"; };
 		B891D06220DBCC3900919F30 /* HeritageCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeritageCollectionCell.swift; sourceTree = "<group>"; };
 		B891D06420DBCC5100919F30 /* HeritageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeritageCell.xib; sourceTree = "<group>"; };
@@ -798,8 +790,6 @@
 				B88F07E7217DD5F600B16875 /* CulturePassCardViewController.swift */,
 				B807FCD0218ECFE5003CC51E /* CulturePassCardBackViewController.swift */,
 				1B444A3921AE9F03009FF40F /* TourAndPanelListViewController.swift */,
-				B860EE4A21AE9F340007F63B /* TravelArrangementsViewController.swift */,
-				1B444A6021B12A24009FF40F /* NMoQTourViewController.swift */,
 				B8DB500521B2A36E00C5DD10 /* PanelDiscussionDetailViewController.swift */,
 				B8436A9021C264CA00045242 /* GoogleMapViewController.swift */,
 			);
@@ -813,7 +803,6 @@
 				1B444A6221B13735009FF40F /* NMoQTourDescriptionCell */,
 				B81FF06921AFB9FE006A968B /* NMoQHeader */,
 				1B444A3421AE962D009FF40F /* NMoQListCell */,
-				B860EE4C21AEA0980007F63B /* TravelCell */,
 				B80B76A3218AD6AC00190967 /* RsvpPopups */,
 				B8F00C8121787CD300320DF1 /* LoginPopup */,
 				B827299321778B2F0017EC71 /* VersaPlayer */,
@@ -1006,15 +995,6 @@
 				B85BA4B620D03CE500E7F4D1 /* iOSDevCenters+GIF.swift */,
 			);
 			path = GifFiles;
-			sourceTree = "<group>";
-		};
-		B860EE4C21AEA0980007F63B /* TravelCell */ = {
-			isa = PBXGroup;
-			children = (
-				B860EE4D21AEA0B10007F63B /* TravelCollectionViewCell.swift */,
-				B860EE4F21AEA0E80007F63B /* TravelCell.xib */,
-			);
-			path = TravelCell;
 			sourceTree = "<group>";
 		};
 		B891D06120DBCC1200919F30 /* HeritageCollectionCell */ = {
@@ -1406,7 +1386,6 @@
 				B80B76AE218AD6AC00190967 /* GreetingsPopupView.xib in Resources */,
 				B806B7CD21247FB400F9F338 /* MapStyle.json in Resources */,
 				B8E2C00E20C7E9CA00F3CE41 /* ComingSoonpopup.xib in Resources */,
-				B860EE5021AEA0E80007F63B /* TravelCell.xib in Resources */,
 				B8AFA2EC20E78BA9008838A6 /* DINNextLTArabic-Light.ttf in Resources */,
 				B8CA08E72146D38400783642 /* MapDetailView.xib in Resources */,
 				B8B79AC12189B75900370AAB /* CountryList.json in Resources */,
@@ -1573,7 +1552,6 @@
 				B80B76AA218AD6AC00190967 /* AcceptDeclinePopup.swift in Sources */,
 				1BE526D72107896600C8CD51 /* Exhibition.swift in Sources */,
 				1B444A3A21AE9F03009FF40F /* TourAndPanelListViewController.swift in Sources */,
-				B860EE4B21AE9F340007F63B /* TravelArrangementsViewController.swift in Sources */,
 				B82729B821778B2F0017EC71 /* VersaPlayerControlsBehaviour.swift in Sources */,
 				1B444A6521B137DC009FF40F /* NMoQTourDescriptionCell.swift in Sources */,
 				B85BA4B020D01D1C00E7F4D1 /* SplashViewController.swift in Sources */,
@@ -1581,12 +1559,10 @@
 				B8EAB77D20CA3E6100C001B2 /* EventCollectionViewCell.swift in Sources */,
 				B806B7A5212451B200F9F338 /* FloorMapViewController.swift in Sources */,
 				B8DC40A920C9A5760044134D /* EventViewController.swift in Sources */,
-				B860EE4E21AEA0B10007F63B /* TravelCollectionViewCell.swift in Sources */,
 				B8294CEA20CBF265002AFF72 /* FSCalendar+Deprecated.m in Sources */,
 				B82C87F620E69D4100777674 /* DiningDetailTableViewCell.swift in Sources */,
 				B8294CF120CBF265002AFF72 /* FSCalendarWeekdayView.m in Sources */,
 				1B51411E215B892E0055AAF5 /* TourGuide.swift in Sources */,
-				1B444A6121B12A25009FF40F /* NMoQTourViewController.swift in Sources */,
 				B8294CF320CBF265002AFF72 /* FSCalendar.m in Sources */,
 				B8BA80B720CD8297007E880A /* ExhibitionsViewController.swift in Sources */,
 				B8BA80BC20CD831D007E880A /* ExhibitionsCollectionCell.swift in Sources */,
@@ -1875,7 +1851,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = DNV2Z9FR68;
-				ENABLE_BITCODE = YES;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1904,7 +1880,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DNV2Z9FR68;
-				ENABLE_BITCODE = YES;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

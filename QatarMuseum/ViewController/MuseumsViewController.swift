@@ -338,8 +338,9 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 self.present(tourView, animated: false, completion: nil)
                 
             } else if (selectedItem == travelBanner) {
-                let travelView =  self.storyboard?.instantiateViewController(withIdentifier: "travelId") as! TravelArrangementsViewController
+                let travelView =  self.storyboard?.instantiateViewController(withIdentifier: "tourAndPanelId") as! TourAndPanelListViewController
                 travelView.bannerId = bannerId
+                travelView.pageNameString = NMoQPageName.TravelArrangementList
                 let transition = CATransition()
                 transition.duration = 0.25
                 transition.type = kCATransitionPush

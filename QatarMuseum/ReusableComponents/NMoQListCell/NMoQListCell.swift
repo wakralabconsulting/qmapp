@@ -85,6 +85,21 @@ class NMoQListCell: UITableViewCell {
            cellImageView.image = UIImage(named: "default_imageX2")
         }
     }
+    func setTravelListData(travelListData: HomeBanner) {
+        dayLabel.font = UIFont.homeTitleFont
+        dayLabel.text = travelListData.title
+        titleLabel.isHidden = true
+        dayLabel.isHidden = false
+        dateLabel.isHidden = true
+        if let imgUrl = travelListData.bannerLink {
+            cellImageView.kf.setImage(with: URL(string: imgUrl))
+            if(imgUrl == "") {
+                cellImageView.image = UIImage(named: "default_imageX2")
+            }
+        } else {
+            cellImageView.image = UIImage(named: "default_imageX2")
+        }
+    }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
