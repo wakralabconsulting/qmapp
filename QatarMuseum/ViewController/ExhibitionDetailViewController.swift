@@ -87,7 +87,6 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     func setFavouritesAction(cellObj :ExhibitionDetailTableViewCell) {
-        //cellObj.favoriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
     }
     
     func setShareAction(cellObj :ExhibitionDetailTableViewCell) {

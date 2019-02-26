@@ -55,10 +55,8 @@
 		B807FCCF218EA8FD003CC51E /* CountryListArabic.json in Resources */ = {isa = PBXBuildFile; fileRef = B807FCCE218EA8FD003CC51E /* CountryListArabic.json */; };
 		B807FCD1218ECFE5003CC51E /* CulturePassCardBackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B807FCD0218ECFE5003CC51E /* CulturePassCardBackViewController.swift */; };
 		B80B76AA218AD6AC00190967 /* AcceptDeclinePopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80B76A4218AD6AC00190967 /* AcceptDeclinePopup.swift */; };
-		B80B76AB218AD6AC00190967 /* GreetingsPopupPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80B76A5218AD6AC00190967 /* GreetingsPopupPage.swift */; };
 		B80B76AC218AD6AC00190967 /* AcceptDeclinePopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = B80B76A6218AD6AC00190967 /* AcceptDeclinePopup.xib */; };
 		B80B76AD218AD6AC00190967 /* InvitationAcceptedPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80B76A7218AD6AC00190967 /* InvitationAcceptedPopup.swift */; };
-		B80B76AE218AD6AC00190967 /* GreetingsPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B80B76A8218AD6AC00190967 /* GreetingsPopupView.xib */; };
 		B80B76AF218AD6AC00190967 /* InvitationAcceptedPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = B80B76A9218AD6AC00190967 /* InvitationAcceptedPopup.xib */; };
 		B80DC05920C792E400E28034 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80DC05820C792E400E28034 /* AppDelegate.swift */; };
 		B80DC05E20C792E400E28034 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B80DC05C20C792E400E28034 /* Main.storyboard */; };
@@ -290,10 +288,8 @@
 		B807FCCE218EA8FD003CC51E /* CountryListArabic.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CountryListArabic.json; sourceTree = "<group>"; };
 		B807FCD0218ECFE5003CC51E /* CulturePassCardBackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturePassCardBackViewController.swift; sourceTree = "<group>"; };
 		B80B76A4218AD6AC00190967 /* AcceptDeclinePopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcceptDeclinePopup.swift; sourceTree = "<group>"; };
-		B80B76A5218AD6AC00190967 /* GreetingsPopupPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreetingsPopupPage.swift; sourceTree = "<group>"; };
 		B80B76A6218AD6AC00190967 /* AcceptDeclinePopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AcceptDeclinePopup.xib; sourceTree = "<group>"; };
 		B80B76A7218AD6AC00190967 /* InvitationAcceptedPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvitationAcceptedPopup.swift; sourceTree = "<group>"; };
-		B80B76A8218AD6AC00190967 /* GreetingsPopupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GreetingsPopupView.xib; sourceTree = "<group>"; };
 		B80B76A9218AD6AC00190967 /* InvitationAcceptedPopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InvitationAcceptedPopup.xib; sourceTree = "<group>"; };
 		B80DC05520C792E400E28034 /* QatarMuseums.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QatarMuseums.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B80DC05820C792E400E28034 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -674,10 +670,8 @@
 			isa = PBXGroup;
 			children = (
 				B80B76A4218AD6AC00190967 /* AcceptDeclinePopup.swift */,
-				B80B76A5218AD6AC00190967 /* GreetingsPopupPage.swift */,
 				B80B76A6218AD6AC00190967 /* AcceptDeclinePopup.xib */,
 				B80B76A7218AD6AC00190967 /* InvitationAcceptedPopup.swift */,
-				B80B76A8218AD6AC00190967 /* GreetingsPopupView.xib */,
 				B80B76A9218AD6AC00190967 /* InvitationAcceptedPopup.xib */,
 			);
 			path = RsvpPopups;
@@ -1383,7 +1377,6 @@
 				B8DC478720DCF8CE0007B426 /* ParkTableCellXib.xib in Resources */,
 				B806B7AD212452DC00F9F338 /* GoogleMaps.bundle in Resources */,
 				B811FBC62103406100960246 /* Localizable.strings in Resources */,
-				B80B76AE218AD6AC00190967 /* GreetingsPopupView.xib in Resources */,
 				B806B7CD21247FB400F9F338 /* MapStyle.json in Resources */,
 				B8E2C00E20C7E9CA00F3CE41 /* ComingSoonpopup.xib in Resources */,
 				B8AFA2EC20E78BA9008838A6 /* DINNextLTArabic-Light.ttf in Resources */,
@@ -1532,7 +1525,6 @@
 				B8294CF720CBF265002AFF72 /* FSCalendarDelegationProxy.m in Sources */,
 				B8D7BF452101A12E0085EF49 /* EducationViewController.swift in Sources */,
 				1B51B3D221219367002B84AA /* ObjectDetailViewController.swift in Sources */,
-				B80B76AB218AD6AC00190967 /* GreetingsPopupPage.swift in Sources */,
 				1BAA2FCF2126D15D00D785DD /* Collection.swift in Sources */,
 				B82729B521778B2F0017EC71 /* VPlayer.swift in Sources */,
 				B8C31CE2216243F800AE7788 /* iCarousel.m in Sources */,
