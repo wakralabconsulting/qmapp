@@ -306,8 +306,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 }
             }
         }
-        
-
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -318,13 +316,10 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
 
             } else {
                 return CGSize(width: homeCollectionView.frame.width, height: heightValue*27)
-
             }
-
         }
         else {
             return CGSize(width: homeCollectionView.frame.width, height: heightValue*27)
-
         }
     }
     
@@ -370,7 +365,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             switch response.result {
             case .success(let data):
                 self.saveOrUpdateHomeCoredata(homeList: data.homeList)
-            case .failure(let error):
+            case .failure( _):
                 print("error")
             }
         }
@@ -391,7 +386,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     self.saveOrUpdateHomeBannerCoredata()
                 }
                 self.homeCollectionView.reloadData()
-            case .failure(let error):
+            case .failure( _):
             print("error")
             }
         }
@@ -806,7 +801,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     func fetchHomeInfoFromCoredata() {
         if(alreadyFetch == false) {
-        //DispatchQueue.main.async {
         let managedContext = getContext()
 
         do {
@@ -817,7 +811,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 var j:Int? = 0
             if (homeArray.count > 0) {
                 for i in 0 ... homeArray.count-1 {
-                        if let duplicateId = homeList.first(where: {$0.id == homeArray[i].id}) {
+                    if homeList.first(where: {$0.id == homeArray[i].id}) != nil {
                         } else {
                             self.homeList.insert(Home(id:homeArray[i].id , name: homeArray[i].name,image: homeArray[i].image,
                                                       tourguide_available: homeArray[i].tourguideavailable, sort_id: homeArray[i].sortid),
@@ -849,7 +843,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 var j:Int? = 0
                 if (homeArray.count > 0) {
                     for i in 0 ... homeArray.count-1 {
-                        if let duplicateId = homeList.first(where: {$0.id == homeArray[i].id}) {
+                        if homeList.first(where: {$0.id == homeArray[i].id}) != nil {
                         } else {
                         self.homeList.insert(Home(id:homeArray[i].id , name: homeArray[i].arabicname,image: homeArray[i].arabicimage,
                                                   tourguide_available: homeArray[i].arabictourguideavailable, sort_id: homeArray[i].arabicsortid),
@@ -1096,7 +1090,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         do{
             try managedContext.execute(deleteRequest)
             return true
-        }catch let error as NSError {
+        }catch _ as NSError {
             //handle error here
             return false
         }
@@ -1243,10 +1237,10 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     
                     if(self.userInfoArray != nil) {
                         if(self.userInfoArray?.fieldRsvpAttendance != nil) {
-                            let undData = self.userInfoArray?.fieldRsvpAttendance!["und"] as! NSArray
+                            let undData = self.userInfoArray?.fieldRsvpAttendance!["und"] as? NSArray
                             if(undData != nil) {
-                                if(undData.count > 0) {
-                                    let value = undData[0] as! NSDictionary
+                                if((undData?.count)! > 0) {
+                                    let value = undData?[0] as! NSDictionary
                                     if(value["value"] != nil) {
                                         UserDefaults.standard.setValue(value["value"], forKey: "acceptOrDecline")
                                         self.getHomeBanner()
@@ -1281,7 +1275,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     
                 }
             }
-            
         }
     }
     
@@ -1297,16 +1290,16 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     UserDefaults.standard.setValue(userData?.fieldDateOfBirth![0], forKey: "fieldDateOfBirth")
                 }
             }
-            let firstNameData = userData?.fieldFirstName["und"] as! NSArray
-            if(firstNameData != nil && firstNameData.count > 0) {
-                let name = firstNameData[0] as! NSDictionary
+            let firstNameData = userData?.fieldFirstName["und"] as? NSArray
+            if(firstNameData != nil && (firstNameData?.count)! > 0) {
+                let name = firstNameData![0] as! NSDictionary
                 if(name["value"] != nil) {
                     UserDefaults.standard.setValue(name["value"] as! String, forKey: "fieldFirstName")
                 }
             }
-            let lastNameData = userData?.fieldLastName["und"] as! NSArray
-            if(lastNameData != nil && lastNameData.count > 0) {
-                let name = lastNameData[0] as! NSDictionary
+            let lastNameData = userData?.fieldLastName["und"] as? NSArray
+            if(lastNameData != nil && (lastNameData?.count)! > 0) {
+                let name = lastNameData?[0] as! NSDictionary
                 if(name["value"] != nil) {
                     UserDefaults.standard.setValue(name["value"] as! String, forKey: "fieldLastName")
                 }
@@ -1327,9 +1320,9 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     UserDefaults.standard.setValue(nation["iso2"] as! String , forKey: "nationality")
                 }
             }
-            let translationsData = userData?.translations["data"] as! NSDictionary
+            let translationsData = userData?.translations["data"] as? NSDictionary
             if(translationsData != nil) {
-                let arValues = translationsData["ar"] as! NSDictionary
+                let arValues = translationsData?["ar"] as! NSDictionary
                 if(arValues["entity_id"] != nil) {
                     UserDefaults.standard.setValue(arValues["entity_id"] as! String , forKey: "loginEntityID")
                 }

@@ -68,7 +68,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 } else if (exhibitionsPageNameString == ExhbitionPageName.museumExhibition){
                     getMuseumExhibitionDataFromServer()
                 }
-                
             } else {
                 if (exhibitionsPageNameString == ExhbitionPageName.homeExhibition) {
                     self.fetchExhibitionsListFromCoredata()
@@ -142,7 +141,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 fetchTourDetailsFromCoredata()
             }
         }
-        
         popupView.comingSoonPopupDelegate = self
         
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -150,9 +148,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         } else {
             exhibitionHeaderView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
-        
     }
-    
     func registerNib() {
         self.exhibitionCollectionView.register(UINib(nibName: "ExhibitionsCellXib", bundle: nil), forCellReuseIdentifier: "exhibitionCellId")
         self.exhibitionCollectionView.register(UINib(nibName: "HeritageCellXib", bundle: nil), forCellReuseIdentifier: "heritageCellXibId")
@@ -264,7 +260,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             exbtnLoadingView.isHidden = true
             return diningListCell
         } else {
-            //if (exhibitionsPageNameString == ExhbitionPageName.nmoqTourSecondList) {
             let nmoqTourSecondListCell = tableView.dequeueReusableCell(withIdentifier: "nMoQListCellId", for: indexPath) as! NMoQListCell
             nmoqTourSecondListCell.setTourMiddleDate(tourList: nmoqTourDetail[indexPath.row])
             exbtnLoadingView.stopLoading()
@@ -288,7 +283,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         } else if (exhibitionsPageNameString == ExhbitionPageName.heritageList) {
             let heritageId = heritageListArray[indexPath.row].id
             loadHeritageDetail(heritageListId: heritageId!)
-        } else if (exhibitionsPageNameString == ExhbitionPageName.heritageList) {
+        } else if (exhibitionsPageNameString == ExhbitionPageName.publicArtsList) {
             loadPublicArtsDetail(idValue: publicArtsListArray[indexPath.row].id!)
         } else if (exhibitionsPageNameString == ExhbitionPageName.museumCollectionsList) {
             loadCollectionDetail(currentRow: indexPath.row)
@@ -646,8 +641,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     self.showNoNetwork()
                 }
             }
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
     
@@ -733,17 +726,14 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
         
     }
-    //MARK: Heritage Page
-    //MARK: WebServiceCall
+    //MARK: Heritage Page WebServiceCall
     func getHeritageDataFromServer() {
         _ = Alamofire.request(QatarMuseumRouter.HeritageList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<Heritages>) -> Void in
             switch response.result {
             case .success(let data):
                 self.saveOrUpdateHeritageCoredata(heritageListArray: data.heritage)
-                
-            case .failure(let _):
+            case .failure( _):
                 print("error")
-                
             }
         }
     }
@@ -820,7 +810,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     else {
                         //save
                         self.saveToCoreData(heritageListDict: heritageListDict, managedObjContext: managedContext)
-                        
                     }
                 }
             }
@@ -829,7 +818,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     let heritageListDict : Heritage?
                     heritageListDict = heritageListArray?[i]
                     self.saveToCoreData(heritageListDict: heritageListDict!, managedObjContext: managedContext)
-                    
                 }
             }
         }
@@ -940,7 +928,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             switch response.result {
             case .success(let data):
                 self.saveOrUpdatePublicArtsCoredata(publicArtsListArray: data.publicArtsList, lang: LocalizationLanguage.currentAppleLanguage())
-            case .failure(let error):
+            case .failure( _):
                 print("error")
             }
         }
@@ -989,7 +977,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     else {
                         //save
                         self.saveToPublicArtsCoreData(publicArtsListDict: publicArtsListDict, managedObjContext: managedContext, lang: lang)
-                        
                     }
                 }
             }
@@ -998,7 +985,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     let publicArtsListDict : PublicArtsList?
                     publicArtsListDict = publicArtsListArray?[i]
                     self.saveToPublicArtsCoreData(publicArtsListDict: publicArtsListDict!, managedObjContext: managedContext, lang: lang)
-                    
                 }
             }
         }
@@ -1026,7 +1012,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     else {
                         //save
                         self.saveToPublicArtsCoreData(publicArtsListDict: publicArtsListDict, managedObjContext: managedContext, lang: lang)
-                        
                     }
                 }
             }
@@ -1050,7 +1035,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             publicArtsInfo.latitude = publicArtsListDict.name
             publicArtsInfo.longitude = publicArtsListDict.image
             publicArtsInfo.sortcoefficient = publicArtsListDict.sortcoefficient
-            
         }
         else {
             let publicArtsInfo: PublicArtsEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "PublicArtsEntityArabic", into: managedObjContext) as! PublicArtsEntityArabic
@@ -1107,7 +1091,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     for i in 0 ... publicArtsArray.count-1 {
                         
                         self.publicArtsListArray.insert(PublicArtsList(id: publicArtsArray[i].id, name: publicArtsArray[i].namearabic, latitude: publicArtsArray[i].latitudearabic, longitude: publicArtsArray[i].longitudearabic, image: publicArtsArray[i].imagearabic, sortcoefficient: publicArtsArray[i].sortcoefficientarabic), at: i)
-                        
                     }
                     if(publicArtsListArray.count == 0){
                         if(self.networkReachability?.isReachable == false) {
@@ -1204,7 +1187,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                         collectionListDict = collection?[i]
                         self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
                     }
-                    
                 }
             }
             else {
@@ -1251,8 +1233,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         }
         do {
             try managedObjContext.save()
-            
-            
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
@@ -1266,7 +1246,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 if (collectionArray.count > 0) {
                     for i in 0 ... collectionArray.count-1 {
                         self.collection.insert(Collection(name: collectionArray[i].listName?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil), image: collectionArray[i].listImage, museumId: collectionArray[i].museumId), at: i)
-                        
                     }
                     if(collection.count == 0){
                         if(self.networkReachability?.isReachable == false) {
@@ -1310,8 +1289,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     }
                 }
             }
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
     func deleteExistingEntityData(managedContext:NSManagedObjectContext,entityName : String?) ->Bool? {
@@ -1485,12 +1462,10 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
-    
-    
     func fetchMuseumDiningListFromCoredata() {
         let managedContext = getContext()
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var diningArray = [DiningEntity]()
                 diningArray = checkAddedToCoredata(entityName: "DiningEntity", idKey: "museumId", idValue: museumId, managedContext: managedContext) as! [DiningEntity]
                 
@@ -1526,15 +1501,13 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     self.showNoNetwork()
                 }
             }
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
     
     func fetchDiningListFromCoredata() {
         let managedContext = getContext()
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var diningArray = [DiningEntity]()
                 let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "DiningEntity")
                 diningArray = (try managedContext.fetch(homeFetchRequest) as? [DiningEntity])!
@@ -1614,7 +1587,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     } else {
                         self.saveOrUpdateTourDetailCoredata()
                     }
-                case .failure(let error):
+                case .failure( _):
                     var errorMessage: String
                     errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
                                                                     comment: "Setting the content of the alert"))
@@ -1676,7 +1649,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                                     var tourImage: NMoqTourDetailImagesEntity
                                     let tourImgaeArray: NMoqTourDetailImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoqTourDetailImagesEntity", into: managedContext) as! NMoqTourDetailImagesEntity
                                     tourImgaeArray.imgBanner = tourDetailDict.imageBanner?[i]
-                                    
                                     tourImage = tourImgaeArray
                                     tourDetaildbDict.addToNmoqTourDetailImgBannerRelation(tourImage)
                                     do {
@@ -1687,7 +1659,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                                 }
                             }
                         }
-                        
                         do{
                             try managedContext.save()
                         }
@@ -1698,7 +1669,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     else {
                         //save
                         self.saveTourDetailsToCoreData(tourDetailDict: tourDetailDict, managedObjContext: managedContext)
-                        
                     }
                 }
             }
@@ -1707,7 +1677,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     let tourDetailDict : NMoQTourDetail?
                     tourDetailDict = nmoqTourDetail[i]
                     self.saveTourDetailsToCoreData(tourDetailDict: tourDetailDict!, managedObjContext: managedContext)
-                    
                 }
             }
         } else {
@@ -1750,7 +1719,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                                 }
                             }
                         }
-                        
                         do{
                             try managedContext.save()
                         }
@@ -1761,7 +1729,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     else {
                         //save
                         self.saveTourDetailsToCoreData(tourDetailDict: tourDetailDict, managedObjContext: managedContext)
-                        
                     }
                 }
             }
@@ -1770,11 +1737,9 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     let tourDetailDict : NMoQTourDetail?
                     tourDetailDict = nmoqTourDetail[i]
                     self.saveTourDetailsToCoreData(tourDetailDict: tourDetailDict!, managedObjContext: managedContext)
-                    
                 }
             }
         }
-        
     }
     func saveTourDetailsToCoreData(tourDetailDict: NMoQTourDetail, managedObjContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -1866,7 +1831,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                         }
                         
                         self.nmoqTourDetail.insert(NMoQTourDetail(title: tourDetailArray[i].title, imageBanner: imagesArray, date: tourDetailArray[i].date, nmoqEvent: tourDetailArray[i].nmoqEvent, register: tourDetailArray[i].register, contactEmail: tourDetailArray[i].contactEmail, contactPhone: tourDetailArray[i].contactPhone, mobileLatitude: tourDetailArray[i].mobileLatitude, longitude: tourDetailArray[i].longitude, sortId: tourDetailArray[i].sort_id, body: tourDetailArray[i].body, registered: tourDetailArray[i].registered, nid: tourDetailArray[i].nid,seatsRemaining: tourDetailArray[i].seatsRemaining), at: i)
-                        
                     }
                     if(nmoqTourDetail.count == 0){
                         if(self.networkReachability?.isReachable == false) {
@@ -1916,13 +1880,10 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     }
                 }
             }
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
 }

@@ -33,7 +33,6 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case Logout()
     case NewPasswordRequest([String: Any])
     case GetUser(String)
-    case UpdateUser(String,[String: Any])
     case SendDeviceToken(String, [String: Any])
     case NumberSearchList([String: Any])
     case GetHomeBanner()
@@ -95,8 +94,6 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return .post
         case .GetUser:
             return .get
-        case .UpdateUser:
-            return .put
         case .SendDeviceToken:
             return .post
         case .NumberSearchList:
@@ -173,8 +170,6 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .NewPasswordRequest( _):
             return "user/request_new_password.json"
         case .GetUser(let userId):
-            return "/user/\(userId).json"
-        case .UpdateUser(let userId,_):
             return "/user/\(userId).json"
         case .SendDeviceToken( _, _):
             return "push_notifications.json"
@@ -319,15 +314,6 @@ enum QatarMuseumRouter: URLRequestConvertible {
             var passwordMutableURLReq = URLRequest(url: newPasswordURL.appendingPathComponent(path)!)
             passwordMutableURLReq.httpMethod = method.rawValue
             return try! Alamofire.JSONEncoding.default.encode(passwordMutableURLReq)
-        case .UpdateUser(_,let parameters):
-            let loginURL = NSURL(string: Config.baseURL + Config.engLang + Config.mobileApiURL)!
-            var loginMutableURLReq = URLRequest(url: loginURL.appendingPathComponent(path)!)
-            loginMutableURLReq.httpMethod = method.rawValue
-            if let accessToken = UserDefaults.standard.value(forKey: "accessToken") as? String {
-                loginMutableURLReq.setValue(accessToken, forHTTPHeaderField: "x-csrf-token")
-            }
-            loginMutableURLReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            return try! Alamofire.JSONEncoding.default.encode(loginMutableURLReq, with: parameters)
         case .SendDeviceToken(let accessToken, let parameters):
             let deviceTokenURL = NSURL(string: Config.baseURL + lang() + Config.mobileApiURL)!
             var tokenMutableURLReq = URLRequest(url: deviceTokenURL.appendingPathComponent(path)!)
