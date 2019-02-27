@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -24,22 +24,22 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_imageX2" translatesAutoresizingMaskIntoConstraints="NO" id="mq4-jT-ENc">
-                        <rect key="frame" x="0.0" y="0.0" width="318" height="177"/>
+                        <rect key="frame" x="0.0" y="0.0" width="318" height="177.5"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="64X-bh-jOh">
-                        <rect key="frame" x="12" y="160" width="301" height="0.0"/>
+                        <rect key="frame" x="12" y="160.5" width="301" height="0.0"/>
                         <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="17"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oq8-ez-4qU">
-                        <rect key="frame" x="12" y="165" width="301" height="0.0"/>
+                        <rect key="frame" x="12" y="165.5" width="301" height="0.0"/>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xyY-N1-hTb">
-                        <rect key="frame" x="12" y="165" width="301" height="0.0"/>
+                        <rect key="frame" x="12" y="165.5" width="301" height="0.0"/>
                         <constraints>
                             <constraint firstAttribute="height" id="5di-HB-Q1f"/>
                         </constraints>
@@ -61,7 +61,7 @@
                         </connections>
                     </button>
                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hyj-xL-4zU">
-                        <rect key="frame" x="206.5" y="8.5" width="86.5" height="27"/>
+                        <rect key="frame" x="206.5" y="9" width="86.5" height="27"/>
                         <subviews>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOW OPEN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D2p-o8-Fx8">
                                 <rect key="frame" x="7" y="6" width="72.5" height="15"/>
@@ -87,11 +87,12 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="Hyj-xL-4zU" firstAttribute="centerY" secondItem="S4l-w5-XL7" secondAttribute="centerY" id="147-Il-wZE"/>
-                    <constraint firstAttribute="bottom" secondItem="xyY-N1-hTb" secondAttribute="bottom" constant="12.5" id="1eU-4C-O7X"/>
+                    <constraint firstAttribute="bottom" secondItem="xyY-N1-hTb" secondAttribute="bottom" constant="12" id="1eU-4C-O7X"/>
                     <constraint firstItem="oq8-ez-4qU" firstAttribute="trailing" secondItem="64X-bh-jOh" secondAttribute="trailing" id="1ki-Xc-k2u"/>
                     <constraint firstItem="mq4-jT-ENc" firstAttribute="top" secondItem="CZz-AM-03X" secondAttribute="top" id="2SA-i8-ahY"/>
                     <constraint firstItem="oq8-ez-4qU" firstAttribute="leading" secondItem="xyY-N1-hTb" secondAttribute="leading" id="6XX-Ro-7pf"/>
                     <constraint firstItem="xyY-N1-hTb" firstAttribute="leading" secondItem="CZz-AM-03X" secondAttribute="leading" constant="12" id="9ct-SF-L7Q"/>
+                    <constraint firstAttribute="bottom" secondItem="oq8-ez-4qU" secondAttribute="bottom" constant="12" id="Jxl-Vi-M9n"/>
                     <constraint firstAttribute="trailing" secondItem="mq4-jT-ENc" secondAttribute="trailing" id="Q1X-wO-4Fi"/>
                     <constraint firstItem="oq8-ez-4qU" firstAttribute="trailing" secondItem="xyY-N1-hTb" secondAttribute="trailing" id="WLJ-CF-uiQ"/>
                     <constraint firstAttribute="trailing" secondItem="S4l-w5-XL7" secondAttribute="trailing" id="ZJJ-fI-Ijr"/>
@@ -99,7 +100,6 @@
                     <constraint firstItem="oq8-ez-4qU" firstAttribute="top" secondItem="64X-bh-jOh" secondAttribute="bottom" constant="5" id="acI-sB-33x"/>
                     <constraint firstItem="mq4-jT-ENc" firstAttribute="leading" secondItem="CZz-AM-03X" secondAttribute="leading" id="lPH-PF-a50"/>
                     <constraint firstAttribute="bottom" secondItem="mq4-jT-ENc" secondAttribute="bottom" id="ne4-Qx-3Kp"/>
-                    <constraint firstItem="oq8-ez-4qU" firstAttribute="top" secondItem="xyY-N1-hTb" secondAttribute="bottom" id="npV-af-Jva"/>
                     <constraint firstItem="S4l-w5-XL7" firstAttribute="top" secondItem="CZz-AM-03X" secondAttribute="top" constant="12" id="omc-6w-Gpx"/>
                     <constraint firstItem="S4l-w5-XL7" firstAttribute="leading" secondItem="Hyj-xL-4zU" secondAttribute="trailing" id="uJ2-t8-jkQ"/>
                     <constraint firstAttribute="trailing" secondItem="Hyj-xL-4zU" secondAttribute="trailing" constant="25" id="ugk-hd-Quc"/>
@@ -118,7 +118,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="default_imageX2" width="235" height="120"/>
-        <image name="heart_fillX1" width="101" height="93"/>
+        <image name="default_imageX2" width="470" height="240"/>
+        <image name="heart_fillX1" width="202" height="186"/>
     </resources>
 </document>

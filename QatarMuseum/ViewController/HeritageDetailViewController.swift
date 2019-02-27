@@ -968,7 +968,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             }
         }
     }
-    func showNoNetwork() {/Users/exalturemacair
+    func showNoNetwork() {
         self.loadingView.stopLoading()
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
