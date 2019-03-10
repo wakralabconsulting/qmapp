@@ -9,8 +9,9 @@
 import Crashlytics
 import Firebase
 import UIKit
+import MessageUI
 
-class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProtocol {
+class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProtocol, MFMailComposeViewControllerDelegate {
 
     @IBOutlet weak var headerView: CommonHeaderView!
     @IBOutlet weak var selectLanguageLabel: UILabel!
@@ -281,5 +282,38 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
     }
     
 
-
+    @IBAction func sendLogs(_ sender: Any) {
+        sendLogs()
+        
+    }
+    
+    private func sendLogs() {
+        guard
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+            MFMailComposeViewController.canSendMail() == true
+            else {
+                return
+        }
+        
+        let mailCompose = MFMailComposeViewController()
+        mailCompose.mailComposeDelegate = self
+        mailCompose.setSubject("Sending Logs to QM Support")
+        mailCompose.setMessageBody("", isHTML: false)
+        
+        let logURLs = appDelegate.fileLogger.logFileManager.sortedLogFilePaths
+            .map { URL.init(fileURLWithPath: $0, isDirectory: false) }
+        
+        var logsDict: [String: Data] = [:] // File Name : Log Data
+        logURLs.forEach { (fileUrl) in
+            guard let data = try? Data(contentsOf: fileUrl) else { return }
+            logsDict[fileUrl.lastPathComponent] = data
+        }
+        
+        for (fileName, logData)  in logsDict {
+            mailCompose.addAttachmentData(logData, mimeType: "text/plain", fileName: fileName)
+        }
+        
+        present(mailCompose, animated: true, completion: nil)
+    }
+    
 }

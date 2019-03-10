@@ -8,5 +8,5 @@ target 'QatarMuseums' do
  pod 'Fabric'
  pod 'Crashlytics'
  pod 'GooglePlaces'
- 
+ pod 'CocoaLumberjack/Swift'
 end
