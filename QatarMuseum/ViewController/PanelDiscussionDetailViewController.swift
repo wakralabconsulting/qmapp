@@ -192,16 +192,17 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                 if((timeArray?.count)! != 3) {
                     self.loadNoEndTimePopup()
                 }else {
-                    if(userEventList.count == 0) {
-                        addPickerView()
-                    } else {
-                        let haveConflict = checkConflictWithAlreadyRegisteredEvent(currentRow: currentRow)
-                        if((haveConflict == false) || (haveConflict == nil)) {
-                            addPickerView()
-                        } else {
-                            loadAlreadyRegisteredPopup()
-                        }
-                    }
+                    addPickerView()
+//                    if(userEventList.count == 0) {
+//                        addPickerView()
+//                    } else {
+//                        let haveConflict = checkConflictWithAlreadyRegisteredEvent(currentRow: currentRow)
+//                        if((haveConflict == false) || (haveConflict == nil)) {
+//                            addPickerView()
+//                        } else {
+//                            loadAlreadyRegisteredPopup()
+//                        }
+//                    }
                 }
             } else {
                 loadConfirmationPopup()
