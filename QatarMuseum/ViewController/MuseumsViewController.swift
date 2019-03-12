@@ -547,6 +547,9 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 let aboutDetailDict = aboutDetailtArray![0]
                 let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutEntity")
                 if(isDeleted == true) {
+                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDescriptionEntity")
+                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutMultimediaFileEntity")
+                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDownloadLinkEntity")
                     self.saveToCoreData(aboutDetailDict: aboutDetailDict, managedObjContext: managedContext)
                 }
             } else {
@@ -560,6 +563,8 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 let aboutDetailDict = aboutDetailtArray![0]
                 let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutEntityArabic")
                 if(isDeleted == true) {
+                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDescriptionEntityAr")
+                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutMultimediaFileEntityAr")
                     self.saveToCoreData(aboutDetailDict: aboutDetailDict, managedObjContext: managedContext)
                 }
             } else {

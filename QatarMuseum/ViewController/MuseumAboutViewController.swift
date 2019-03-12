@@ -997,6 +997,9 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                 let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutEntity")
                 if(isDeleted == true) {
                    // self.saveToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
+                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDescriptionEntity")
+                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutMultimediaFileEntity")
+                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDownloadLinkEntity")
                     self.saveToCoreData(aboutDetailDict: aboutDetailDict, managedObjContext: managedContext)
                 }
                
@@ -1011,6 +1014,8 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                 let aboutDetailDict = aboutDetailtArray![0]
                 let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutEntityArabic")
                 if(isDeleted == true) {
+                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDescriptionEntityAr")
+                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutMultimediaFileEntityAr")
                     self.saveToCoreData(aboutDetailDict: aboutDetailDict, managedObjContext: managedContext)
                 }
                 
@@ -1169,7 +1174,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         do{
             try managedContext.execute(deleteRequest)
             return true
-        }catch let error as NSError {
+        }catch _ as NSError {
             //handle error here
             return false
         }

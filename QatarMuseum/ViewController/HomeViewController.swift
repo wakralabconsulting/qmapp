@@ -716,7 +716,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                         let homedbDict = fetchResult[0] as! HomeEntity
                         homedbDict.name = homeListDict.name
                         homedbDict.image = homeListDict.image
-                        homedbDict.sortid =  homeListDict.sortId
+                        homedbDict.sortid =  (Int16(homeListDict.sortId!) ?? 0)
                         homedbDict.tourguideavailable = homeListDict.isTourguideAvailable
                         
                         do{
@@ -749,7 +749,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                         let homedbDict = fetchResult[0] as! HomeEntityArabic
                         homedbDict.arabicname = homeListDict.name
                         homedbDict.arabicimage = homeListDict.image
-                        homedbDict.arabicsortid =  homeListDict.sortId
+                        homedbDict.arabicsortid =  (Int16(homeListDict.sortId!) ?? 0)
                         homedbDict.arabictourguideavailable = homeListDict.isTourguideAvailable
                         do{
                             try managedContext.save()
@@ -782,14 +782,14 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             homeInfo.image = homeListDict.image
             homeInfo.tourguideavailable = homeListDict.isTourguideAvailable
             homeInfo.image = homeListDict.image
-            homeInfo.sortid = homeListDict.sortId
+            homeInfo.sortid = (Int16(homeListDict.sortId!) ?? 0)
         } else{
             let homeInfo: HomeEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "HomeEntityArabic", into: managedObjContext) as! HomeEntityArabic
             homeInfo.id = homeListDict.id
             homeInfo.arabicname = homeListDict.name
             homeInfo.arabicimage = homeListDict.image
             homeInfo.arabictourguideavailable = homeListDict.isTourguideAvailable
-            homeInfo.arabicsortid = homeListDict.sortId
+            homeInfo.arabicsortid = (Int16(homeListDict.sortId!) ?? 0)
         }
         do {
             try managedObjContext.save()
@@ -810,11 +810,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntity])!
                 var j:Int? = 0
             if (homeArray.count > 0) {
+                homeArray.sort(by: {$0.sortid < $1.sortid})
                 for i in 0 ... homeArray.count-1 {
                     if homeList.first(where: {$0.id == homeArray[i].id}) != nil {
                         } else {
                             self.homeList.insert(Home(id:homeArray[i].id , name: homeArray[i].name,image: homeArray[i].image,
-                                                      tourguide_available: homeArray[i].tourguideavailable, sort_id: homeArray[i].sortid),
+                                                      tourguide_available: homeArray[i].tourguideavailable, sort_id: String(homeArray[i].sortid)),
                                                  at: j!)
                             j = j!+1
                         }
@@ -842,11 +843,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntityArabic])!
                 var j:Int? = 0
                 if (homeArray.count > 0) {
+                    homeArray.sort(by: {$0.arabicsortid < $1.arabicsortid})
                     for i in 0 ... homeArray.count-1 {
                         if homeList.first(where: {$0.id == homeArray[i].id}) != nil {
                         } else {
                         self.homeList.insert(Home(id:homeArray[i].id , name: homeArray[i].arabicname,image: homeArray[i].arabicimage,
-                                                  tourguide_available: homeArray[i].arabictourguideavailable, sort_id: homeArray[i].arabicsortid),
+                                                  tourguide_available: homeArray[i].arabictourguideavailable, sort_id: String(homeArray[i].arabicsortid)),
                                              at: j!)
                             j = j!+1
                         }
