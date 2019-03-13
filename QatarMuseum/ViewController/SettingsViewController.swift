@@ -10,6 +10,7 @@ import Crashlytics
 import Firebase
 import UIKit
 import MessageUI
+import CocoaLumberjack
 
 class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProtocol, MFMailComposeViewControllerDelegate {
 
@@ -281,39 +282,65 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
        
     }
     
-
     @IBAction func sendLogs(_ sender: Any) {
-        sendLogs()
-        
+        openEmail(email: "mgkhan@qm.org.qa")
     }
     
-    private func sendLogs() {
-        guard
-            let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            MFMailComposeViewController.canSendMail() == true
-            else {
-                return
+    // MARK: MFMailComposeViewControllerDelegate Method
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    func openEmail(email : String) {
+        let mailComposeViewController = configuredMailComposeViewController(emailId:email)
+        if MFMailComposeViewController.canSendMail() {
+            self.present(mailComposeViewController, animated: true, completion: nil)
+        } else {
+            self.showSendMailErrorAlert()
+        }
+    }
+    
+    func configuredMailComposeViewController(emailId:String) -> MFMailComposeViewController {
+        
+        //Set up a default body
+        
+        var infoDictionary = Bundle.main.infoDictionary
+        let name = infoDictionary?["CFBundleDisplayName"] as? String
+        let version = infoDictionary?["CFBundleShortVersionString"] as? String
+        let build = infoDictionary?["CFBundleVersion"] as? String
+        let label = String(format: "What were you doing?\n1.\n2.\n3.\n\n\nVersion Information:\n%@ v%@ (build %@)", name ?? "", version ?? "", build ?? "")
+        
+        let mailComposerVC = MFMailComposeViewController()
+        mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
+    
+        mailComposerVC.setToRecipients([emailId])
+        mailComposerVC.setSubject("Please describe your problem:")
+        mailComposerVC.setMessageBody(label, isHTML: false)
+        
+        let data: Data? = snapshotAndZipLogs(true)
+        if data != nil {
+            //Send piz to get through e-mail filters!
+            if let data = data {
+                mailComposerVC.addAttachmentData(data, mimeType: "application/zip", fileName: "logs.piz")
+            }
+        } else {
+            DDLogWarn("No logs attached")
         }
         
-        let mailCompose = MFMailComposeViewController()
-        mailCompose.mailComposeDelegate = self
-        mailCompose.setSubject("Sending Logs to QM Support")
-        mailCompose.setMessageBody("", isHTML: false)
+        return mailComposerVC
+    }
+    
+    func showSendMailErrorAlert() {
         
-        let logURLs = appDelegate.fileLogger.logFileManager.sortedLogFilePaths
-            .map { URL.init(fileURLWithPath: $0, isDirectory: false) }
+        let sendMailErrorAlert = UIAlertController(title: "Could Not Send Email", message: "Your device could not send e-mail.Please check e-mail configuration and try again.", preferredStyle: UIAlertControllerStyle.alert)
         
-        var logsDict: [String: Data] = [:] // File Name : Log Data
-        logURLs.forEach { (fileUrl) in
-            guard let data = try? Data(contentsOf: fileUrl) else { return }
-            logsDict[fileUrl.lastPathComponent] = data
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default)
+        {
+            (result : UIAlertAction) -> Void in
+            DDLogVerbose("You pressed OK on send email alert")
         }
-        
-        for (fileName, logData)  in logsDict {
-            mailCompose.addAttachmentData(logData, mimeType: "text/plain", fileName: fileName)
-        }
-        
-        present(mailCompose, animated: true, completion: nil)
+        sendMailErrorAlert.addAction(okAction)
+        self.present(sendMailErrorAlert, animated: true, completion: nil)
     }
     
 }

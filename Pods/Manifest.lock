@@ -59,7 +59,9 @@ PODS:
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
+  - SSZipArchive (2.1.4)
   - YouTubePlayer (0.4.0)
+  - Zip (1.1.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.5)
@@ -69,7 +71,9 @@ DEPENDENCIES:
   - Firebase/Core
   - GooglePlaces
   - Kingfisher (<= 4.9.0)
+  - SSZipArchive
   - YouTubePlayer
+  - Zip (~> 1.1)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -87,7 +91,9 @@ SPEC REPOS:
     - GoogleUtilities
     - Kingfisher
     - nanopb
+    - SSZipArchive
     - YouTubePlayer
+    - Zip
 
 SPEC CHECKSUMS:
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
@@ -104,8 +110,10 @@ SPEC CHECKSUMS:
   GoogleUtilities: 95996bea7c7d9b8fb811b7507669a4a8762f80c7
   Kingfisher: 64539b51826b778206daa6ed815d12653caa69dd
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   YouTubePlayer: 028451f6772f372d4759866db99824c676ac1473
+  Zip: 8877eede3dda76bcac281225c20e71c25270774c
 
-PODFILE CHECKSUM: d1a1da1e35fddb7ad1af40e2c0cced1f1ef3968c
+PODFILE CHECKSUM: 7d515025c06a6defed9d8e7d7d7881189cbc04b3
 
 COCOAPODS: 1.5.3

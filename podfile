@@ -9,4 +9,7 @@ target 'QatarMuseums' do
  pod 'Crashlytics'
  pod 'GooglePlaces'
  pod 'CocoaLumberjack/Swift'
+ pod 'SSZipArchive'
+ pod 'Zip', '~> 1.1'
+
 end

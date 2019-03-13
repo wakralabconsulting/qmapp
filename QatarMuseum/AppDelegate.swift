@@ -14,8 +14,6 @@ import Kingfisher
 import UIKit
 import UserNotifications
 import CocoaLumberjack
-
-
 var tokenValue : String? = nil
 
 var languageKey = 1
@@ -26,13 +24,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var shouldRotate = false
     let networkReachability = NetworkReachabilityManager()
     var tourGuideId : String? = ""
-    public let fileLogger: DDFileLogger = DDFileLogger()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        setupLogger()
-        DDLogVerbose("Did select settings action")
-        DDLogInfo("Did clear cache")
-        DDLogError("Failed to create cell")
+        
+        setupQMLogger()
+//        DDLogVerbose("Did select settings action")
+        DDLogInfo("AppDelegate initiated ..")
+        DDLogError("Hope no Failed to create AppDelegate ..")
 //        DDLogWarn("Failed to load post details with error: \(error.localizedDescription)")
         
        // GMSServices.provideAPIKey("AIzaSyBXEzUfmsi5BidKqR1eY999pj0APP2N0k0")
@@ -74,15 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return true
     }
     
-    //Initializing logs
-    private func setupLogger() {
-        DDLog.add(DDTTYLogger.sharedInstance)
-        
-        // File logger
-        fileLogger.rollingFrequency = TimeInterval(60*60*24)
-        fileLogger.logFileManager.maximumNumberOfLogFiles = 7
-        DDLog.add(fileLogger, with: .info)
-    }
+    
     
     func apiCalls() {
         if  (networkReachability?.isReachable)! {
