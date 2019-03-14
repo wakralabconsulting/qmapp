@@ -40,6 +40,10 @@ class HomeCollectionViewCell: UICollectionViewCell {
             if let imageUrl = home.image {
             homeImageView.kf.setImage(with: URL(string: imageUrl))
         }
+        let panelAndTalks = "Panels And Talks".lowercased()
+        if home.name?.lowercased() == panelAndTalks {
+            homeImageView.image = UIImage(named: (home.image!))
+        }
         if (homeImageView.image == nil) {
             homeImageView.image = UIImage(named: "default_imageX2")
         }

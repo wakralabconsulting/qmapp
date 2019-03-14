@@ -58,8 +58,13 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         let tourGuideName = NSLocalizedString("TOURGUIDE_LABEL", comment: "TOURGUIDE_LABEL  in the Museum page")
         let exhibitionsName = NSLocalizedString("EXHIBITIONS_LABEL", comment: "EXHIBITIONS_LABEL  in the Museum page")
         let collectionsName = NSLocalizedString("COLLECTIONS_TITLE", comment: "COLLECTIONS_TITLE  in the Museum page")
+        let experienceName = NSLocalizedString("EXPERIENCE_TITLE", comment: "EXPERIENCE_TITLE  in the Museum page")
         let parkName = NSLocalizedString("PARKS_LABEL", comment: "PARKS_LABEL  in the Museum page")
         let diningName = NSLocalizedString("DINING_LABEL", comment: "DINING_LABEL  in the Museum page")
+        let highlightTourName = NSLocalizedString("HIGHLIGHTS_TOUR", comment: "HIGHLIGHTS_TOUR  in the Museum page")
+        let facilitiesName = NSLocalizedString("FACILITIES", comment: "FACILITIES  in the Museum page")
+        let eventsName = NSLocalizedString("EVENTS_LABEL", comment: "EVENTS_LABEL  in the Museum page")
+        
         museumsTopbar.topbarDelegate = self
         museumsTopbar.menuButton.isHidden = true
         museumsTopbar.backButton.isHidden = false
@@ -91,9 +96,12 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             if ((museumId != nil) && ((museumId == "63") || (museumId == "96"))) {
                 collectionViewImages = ["MIA_AboutX1","Audio CircleX1","exhibition_blackX1","collectionsX1","park_blackX1","diningX1",]
                 collectionViewNames = [aboutName,tourGuideName,exhibitionsName,collectionsName,parkName,diningName]
-            }else if ((museumId == "61") || (museumId == "66") || (museumId == "635") || (museumId == "638")) {
+            }else if ((museumId == "61") || (museumId == "635")) {
                 collectionViewImages = ["MIA_AboutX1","Audio CircleX1","exhibition_blackX1","collectionsX1","diningX1",]
                 collectionViewNames = [aboutName,tourGuideName,exhibitionsName,collectionsName,diningName]
+            }else if ((museumId == "66") || (museumId == "638")) {
+                collectionViewImages = ["about-launchX1","facilitiesX1","exhibition_blackX1","experienceX1","Audio CircleX1","events_BlackX1","park_blackX1"]
+                collectionViewNames = [aboutName,facilitiesName,exhibitionsName,experienceName,highlightTourName,eventsName,parkName]
             } else {
                 collectionViewImages = ["MIA_AboutX1","exhibition_blackX1","collectionsX1","diningX1",]
                 collectionViewNames = [aboutName,exhibitionsName,collectionsName,diningName]
@@ -229,7 +237,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
             }
         } else {
-            if((itemName == "Tour Guide") || (itemName == "الدليل السياحي")) {
+            if((itemName == "Tour Guide") || (itemName == "الدليل السياحي") || (itemName == "Highlights Tour")) {
                 museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 9, bottom: 10, right: 9)
             }
             else if((itemName == "Exhibitions") || (itemName == "المعارض")) {
@@ -243,8 +251,14 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             else if ((itemName == "Parks") || (itemName == "الحدائق"))  {
                 museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 14, left: 14, bottom: 14, right: 14)
             }
-            else if  ((itemName == "Dining") || (itemName == "العشاء")) {
+            else if  ((itemName == "Dining") || (itemName == "العشاء") ) {
                 museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 18, left: 15, bottom: 18, right: 15)
+            } else if   (itemName == "Facilities") {
+                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
+            }
+            else if(itemName == "Experience") {
+                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 16, left: 15, bottom: 16, right: 15)
+                
             }
         }
        
@@ -373,7 +387,8 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 view.window!.layer.add(transition, forKey: kCATransition)
                 exhibitionView.exhibitionsPageNameString = ExhbitionPageName.museumExhibition
                 self.present(exhibitionView, animated: false, completion: nil)
-           } else if ((selectedItem == "Collections") || (selectedItem == "المجموعات")){
+           }else if (selectedItem == "Experience"){
+           //else if ((selectedItem == "Collections") || (selectedItem == "المجموعات")){
                 let musmCollectionnView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
                 musmCollectionnView.museumId = museumId
                 musmCollectionnView.exhibitionsPageNameString = ExhbitionPageName.museumCollectionsList

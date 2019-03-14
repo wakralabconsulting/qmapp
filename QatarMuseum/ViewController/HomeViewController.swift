@@ -257,6 +257,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let panelAndTalks = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
         if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "") && (self.homeBannerList.count > 0)) {
             if(indexPath.row == 0) {
                 let museumsView =  self.storyboard?.instantiateViewController(withIdentifier: "museumViewId") as! MuseumsViewController
@@ -274,14 +275,17 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                     if (homeList[indexPath.row].id == "12181") {
                         loadExhibitionPage()
-                    }
-                    else {
+                    } else if (homeList[indexPath.row].id == "13976") {
+                        loadTourViewPage(nid: "13976", subTitle: panelAndTalks, isFromTour: false)
+                    } else {
                         loadMuseumsPage(curretRow: indexPath.row)
                     }
                 }
                 else {
                     if (homeList[indexPath.row].id == "12186") {
                         loadExhibitionPage()
+                    } else if (homeList[indexPath.row].id == "13976") {
+                        loadTourViewPage(nid: "13976", subTitle: panelAndTalks, isFromTour: false)
                     }
                     else {
                         loadMuseumsPage(curretRow: indexPath.row)
@@ -292,6 +296,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                 if (homeList[indexPath.row].id == "12181") {
                     loadExhibitionPage()
+                } else if (homeList[indexPath.row].id == "13976") {
+                    loadTourViewPage(nid: "13976", subTitle: panelAndTalks, isFromTour: false)
                 }
                 else {
                     loadMuseumsPage(curretRow: indexPath.row)
@@ -300,6 +306,9 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             else {
                 if (homeList[indexPath.row].id == "12186") {
                     loadExhibitionPage()
+                }
+                else if (homeList[indexPath.row].id == "13976") {
+                    loadTourViewPage(nid: "13976", subTitle: panelAndTalks, isFromTour: false)
                 }
                 else {
                     loadMuseumsPage(curretRow: indexPath.row)
@@ -821,6 +830,11 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                         }
                     
                 }
+                let panelAndTalksName = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
+                let panelAndTalks = "Panels And Talks".lowercased()
+                if homeList.index(where: {$0.name?.lowercased() != panelAndTalks}) != nil {
+                    self.homeList.insert(Home(id: "13976", name: panelAndTalksName, image: "panelAndTalks", tourguide_available: "false", sort_id: nil), at: self.homeList.endIndex)
+                }
                 if(self.homeList.count == 0){
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
@@ -852,6 +866,11 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                                              at: j!)
                             j = j!+1
                         }
+                    }
+                    let panelAndTalksName = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
+                    let panelAndTalks = "ندوات و محاورات"
+                    if homeList.index(where: {$0.name != panelAndTalks}) != nil {
+                        self.homeList.insert(Home(id: "13976", name: panelAndTalksName, image: "panelAndTalks", tourguide_available: "false", sort_id: nil), at: self.homeList.endIndex)
                     }
                     if(self.homeList.count == 0){
                         if(self.networkReachability?.isReachable == false) {
@@ -1345,6 +1364,19 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             loginPopUpView.passwordText.resignFirstResponder()
         }
         return true
+    }
+    func loadTourViewPage(nid: String?,subTitle:String?,isFromTour:Bool?) {
+        let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        tourView.tourDetailId = nid
+        tourView.headerTitle = subTitle
+        tourView.isFromTour = isFromTour
+        tourView.exhibitionsPageNameString = ExhbitionPageName.nmoqTourSecondList
+        let transition = CATransition()
+        transition.duration = 0.25
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(tourView, animated: false, completion: nil)
     }
     @objc func receiveHomePageNotificationEn(notification: NSNotification) {
         if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (homeList.count == 0)){
