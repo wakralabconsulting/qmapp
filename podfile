@@ -10,6 +10,6 @@ target 'QatarMuseums' do
  pod 'GooglePlaces'
  pod 'CocoaLumberjack/Swift'
  pod 'SSZipArchive'
- pod 'Zip', '~> 1.1'
+ pod 'MLeaksFinder'
 
 end
