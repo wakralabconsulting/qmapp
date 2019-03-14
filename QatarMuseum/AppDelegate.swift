@@ -304,6 +304,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
          error conditions that could cause the creation of the store to fail.
          */
         let container = NSPersistentContainer(name: "QatarMuseums")
+        print(container.persistentStoreDescriptions.first?.url)
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
@@ -710,7 +711,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         let homedbDict = fetchResult[0] as! HomeEntity
                         homedbDict.name = homeListDict.name
                         homedbDict.image = homeListDict.image
-                        homedbDict.sortid =  homeListDict.sortId
+                        homedbDict.sortid =  (Int16(homeListDict.sortId!) ?? 0)
                         homedbDict.tourguideavailable = homeListDict.isTourguideAvailable
                         
                         do{
@@ -745,7 +746,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         let homedbDict = fetchResult[0] as! HomeEntityArabic
                         homedbDict.arabicname = homeListDict.name
                         homedbDict.arabicimage = homeListDict.image
-                        homedbDict.arabicsortid =  homeListDict.sortId
+                        homedbDict.arabicsortid =  (Int16(homeListDict.sortId!) ?? 0)
                         homedbDict.arabictourguideavailable = homeListDict.isTourguideAvailable
                         do{
                             try managedContext.save()
@@ -781,14 +782,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             homeInfo.image = homeListDict.image
             homeInfo.tourguideavailable = homeListDict.isTourguideAvailable
             homeInfo.image = homeListDict.image
-            homeInfo.sortid = homeListDict.sortId
+            homeInfo.sortid = (Int16(homeListDict.sortId!) ?? 0)
         } else{
             let homeInfo: HomeEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "HomeEntityArabic", into: managedObjContext) as! HomeEntityArabic
             homeInfo.id = homeListDict.id
             homeInfo.arabicname = homeListDict.name
             homeInfo.arabicimage = homeListDict.image
             homeInfo.arabictourguideavailable = homeListDict.isTourguideAvailable
-            homeInfo.arabicsortid = homeListDict.sortId
+            homeInfo.arabicsortid = (Int16(homeListDict.sortId!) ?? 0)
         }
         do {
             try managedObjContext.save()
@@ -1048,6 +1049,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 let aboutDetailDict = aboutDetailtArray![0]
                 let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutEntity")
                 if(isDeleted == true) {
+                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDescriptionEntity")
+                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutMultimediaFileEntity")
+                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDownloadLinkEntity")
                     self.saveToCoreData(aboutDetailDict: aboutDetailDict, managedObjContext: managedContext, lang: lang)
                 }
                 
@@ -1062,6 +1066,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 let aboutDetailDict = aboutDetailtArray![0]
                 let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutEntityArabic")
                 if(isDeleted == true) {
+                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDescriptionEntityAr")
+                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutMultimediaFileEntityAr")
                     self.saveToCoreData(aboutDetailDict: aboutDetailDict, managedObjContext: managedContext, lang: lang)
                 }
                 

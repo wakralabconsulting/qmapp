@@ -196,7 +196,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                         
                         museumsdbDict.name = museumListDict.name
                         museumsdbDict.image = museumListDict.image
-                        museumsdbDict.sortid =  museumListDict.sortId
+                        museumsdbDict.sortid =  (Int16(museumListDict.sortId!) ?? 0)
                         museumsdbDict.tourguideavailable = museumListDict.isTourguideAvailable
                         
                         
@@ -236,7 +236,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                         
                         museumsdbDict.arabicname = museumsListDict.name
                         museumsdbDict.arabicimage = museumsListDict.image
-                        museumsdbDict.arabicsortid =  museumsListDict.sortId
+                        museumsdbDict.arabicsortid =  (Int16(museumsListDict.sortId!) ?? 0)
                         museumsdbDict.arabictourguideavailable = museumsListDict.isTourguideAvailable
                         do{
                             try managedContext.save()
@@ -269,7 +269,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
             museumsInfo.image = museumsListDict.image
             museumsInfo.tourguideavailable = museumsListDict.isTourguideAvailable
             museumsInfo.image = museumsListDict.image
-            museumsInfo.sortid = museumsListDict.sortId
+            museumsInfo.sortid = (Int16(museumsListDict.sortId!) ?? 0)
         }
         else{
             let museumsInfo: HomeEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "HomeEntityArabic", into: managedObjContext) as! HomeEntityArabic
@@ -277,7 +277,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
             museumsInfo.arabicname = museumsListDict.name
             museumsInfo.arabicimage = museumsListDict.image
             museumsInfo.arabictourguideavailable = museumsListDict.isTourguideAvailable
-            museumsInfo.arabicsortid = museumsListDict.sortId
+            museumsInfo.arabicsortid = (Int16(museumsListDict.sortId!) ?? 0)
         }
         do {
             try managedObjContext.save()
@@ -307,7 +307,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                         if let duplicateId = museumsList.first(where: {$0.id == museumsArray[i].id}) {
                         } else {
                         self.museumsList.insert(Home(id:museumsArray[i].id , name: museumsArray[i].name,image: museumsArray[i].image,
-                                                  tourguide_available: museumsArray[i].tourguideavailable, sort_id: museumsArray[i].sortid),
+                                                  tourguide_available: museumsArray[i].tourguideavailable, sort_id: String(museumsArray[i].sortid)),
                                                 at: j!)
                             j = j!+1
                         }
@@ -344,7 +344,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                         if let duplicateId = museumsList.first(where: {$0.id == museumsArray[i].id}) {
                         } else {
                         self.museumsList.insert(Home(id:museumsArray[i].id , name: museumsArray[i].arabicname,image: museumsArray[i].arabicimage,
-                                                  tourguide_available: museumsArray[i].arabictourguideavailable, sort_id: museumsArray[i].arabicsortid),
+                                                  tourguide_available: museumsArray[i].arabictourguideavailable, sort_id: String(museumsArray[i].arabicsortid)),
                                              at: j!)
                             j = j!+1
                         }
