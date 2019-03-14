@@ -16,6 +16,7 @@ enum NMoQPageName {
     case Tours
     case PanelDiscussion
     case TravelArrangementList
+    case Facilities
 }
 
 class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,HeaderViewProtocol,LoadingViewProtocol {
@@ -78,6 +79,8 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                     self.getTravelList()
                 }
             }
+        }  else if (pageNameString == NMoQPageName.Facilities) {
+            headerView.headerTitle.text = NSLocalizedString("FACILITIES", comment: "FACILITIES Label in the Facilities page page").uppercased()
         }
         
     }
@@ -128,7 +131,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         } else if (pageNameString == NMoQPageName.TravelArrangementList) {
             loadTravelDetailPage(selectedIndex: indexPath.row)
         }
-       // loadTourViewPage(selectedRow: indexPath.row)
+        // loadTourViewPage(selectedRow: indexPath.row)
     }
     
     func loadTourViewPage(selectedRow: Int?,isFromTour:Bool?) {
@@ -144,18 +147,18 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(tourView, animated: false, completion: nil)
         
-//        let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
-//        //panelView.panelTitle = selectedCellTitle
-//        panelView.panelDetailId = nmoqTourList[selectedRow!].nid
-//        panelView.pageNameString = NMoQPanelPage.TourDetailPage
-//        let transition = CATransition()
-//        transition.duration = 0.25
-//        transition.type = kCATransitionPush
-//        transition.subtype = kCATransitionFromRight
-//        view.window!.layer.add(transition, forKey: kCATransition)
-//        self.present(panelView, animated: false, completion: nil)
+        //        let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
+        //        //panelView.panelTitle = selectedCellTitle
+        //        panelView.panelDetailId = nmoqTourList[selectedRow!].nid
+        //        panelView.pageNameString = NMoQPanelPage.TourDetailPage
+        //        let transition = CATransition()
+        //        transition.duration = 0.25
+        //        transition.type = kCATransitionPush
+        //        transition.subtype = kCATransitionFromRight
+        //        view.window!.layer.add(transition, forKey: kCATransition)
+        //        self.present(panelView, animated: false, completion: nil)
         
-
+        
     }
     func loadPanelDiscussionDetailPage(selectedRow: Int?) {
         let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
@@ -230,21 +233,21 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         _ = Alamofire.request(QatarMuseumRouter.GetNMoQSpecialEventList()).responseObject { (response: DataResponse<NMoQTourList>) -> Void in
             switch response.result {
             case .success(let data):
-//                self.nmoqTourList = data.nmoqTourList
-//                if self.nmoqTourList.first(where: {$0.sortId != "" && $0.sortId != nil} ) != nil {
-//                    self.nmoqTourList = self.nmoqTourList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
-//                }
+                //                self.nmoqTourList = data.nmoqTourList
+                //                if self.nmoqTourList.first(where: {$0.sortId != "" && $0.sortId != nil} ) != nil {
+                //                    self.nmoqTourList = self.nmoqTourList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
+                //                }
                 self.saveOrUpdateTourListCoredata(nmoqTourList: data.nmoqTourList, isTourGuide: false)
-               // self.collectionTableView.reloadData()
+            // self.collectionTableView.reloadData()
             case .failure( _):
-//                var errorMessage: String
-//                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
-//                                                                comment: "Setting the content of the alert"))
-//                self.loadingView.stopLoading()
-//                self.loadingView.noDataView.isHidden = false
-//                self.loadingView.isHidden = false
-//                self.loadingView.showNoDataView()
-//                self.loadingView.noDataLabel.text = errorMessage
+                //                var errorMessage: String
+                //                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                //                                                                comment: "Setting the content of the alert"))
+                //                self.loadingView.stopLoading()
+                //                self.loadingView.noDataView.isHidden = false
+                //                self.loadingView.isHidden = false
+                //                self.loadingView.showNoDataView()
+                //                self.loadingView.noDataLabel.text = errorMessage
                 print("error")
             }
         }
@@ -404,8 +407,8 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
             tourListInfo.sortId = Int16(tourListDict.sortId!)!
             tourListInfo.nid = tourListDict.nid
             tourListInfo.eventDate = tourListDict.eventDate
-        
-        //specialEvent
+            
+            //specialEvent
             tourListInfo.dateString = tourListDict.date
             tourListInfo.descriptioForModerator = tourListDict.descriptioForModerator
             tourListInfo.mobileLatitude = tourListDict.mobileLatitude
@@ -566,7 +569,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                     self.fetchTourInfoFromCoredata(isTourGuide: false)
                 }
             }
-    }
+        }
         
     }
     func recordScreenView() {
