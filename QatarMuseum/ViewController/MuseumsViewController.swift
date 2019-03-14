@@ -237,11 +237,13 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
             }
         } else {
-            if((itemName == "Tour Guide") || (itemName == "الدليل السياحي") || (itemName == "Highlights Tour")) {
+            if((itemName == "About") && (museumId == "66") || (itemName == "عن") && (museumId == "638")) {
+                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 15, left: 8, bottom: 15, right: 6)
+            }else if((itemName == "Tour Guide") || (itemName == "الدليل السياحي") || (itemName == "Highlights Tour")) {
                 museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 9, bottom: 10, right: 9)
             }
             else if((itemName == "Exhibitions") || (itemName == "المعارض")) {
-                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 16, left: 14, bottom: 13, right: 14)
+                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 15, left: 13, bottom: 12, right: 13)
             }
             else if((itemName == "Collections") || (itemName == "المجموعات")) {
                 
@@ -249,16 +251,22 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 
             }
             else if ((itemName == "Parks") || (itemName == "الحدائق"))  {
-                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 14, left: 14, bottom: 14, right: 14)
+                if((museumId == "66") || (museumId == "638")) {
+                    museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 10, bottom: 12, right: 6)
+                } else {
+                    museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 14, left: 14, bottom: 14, right: 14)
+                }
+                
             }
             else if  ((itemName == "Dining") || (itemName == "العشاء") ) {
                 museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 18, left: 15, bottom: 18, right: 15)
             } else if   (itemName == "Facilities") {
-                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
+                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
             }
             else if(itemName == "Experience") {
-                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 16, left: 15, bottom: 16, right: 15)
-                
+                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 14, left: 14, bottom: 14, right: 14)
+            } else if(itemName == "Events") {
+                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 17, left: 16, bottom: 17, right: 16)
             }
         }
         
