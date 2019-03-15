@@ -833,7 +833,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 let panelAndTalksName = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
                 let panelAndTalks = "Panels And Talks".lowercased()
                 if homeList.index(where: {$0.name?.lowercased() != panelAndTalks}) != nil {
-                    self.homeList.insert(Home(id: "13976", name: panelAndTalksName, image: "panelAndTalks", tourguide_available: "false", sort_id: nil), at: self.homeList.endIndex)
+                    self.homeList.insert(Home(id: "13976", name: panelAndTalksName.uppercased(), image: "panelAndTalks", tourguide_available: "false", sort_id: nil), at: self.homeList.endIndex)
                 }
                 if(self.homeList.count == 0){
                     if(self.networkReachability?.isReachable == false) {
