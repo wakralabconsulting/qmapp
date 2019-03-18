@@ -100,6 +100,23 @@ class NMoQListCell: UITableViewCell {
             cellImageView.image = UIImage(named: "default_imageX2")
         }
     }
+    func setFacilitiesListData(facilitiesListData: Facilities?) {
+        dayLabel.font = UIFont.homeTitleFont
+        dayLabel.text = facilitiesListData!.title
+        titleLabel.isHidden = true
+        dayLabel.isHidden = false
+        dateLabel.isHidden = true
+        if ((facilitiesListData?.images?.count)! > 0) {
+            if let imageUrl = facilitiesListData?.images![0]{
+                cellImageView.kf.setImage(with: URL(string: imageUrl))
+            }
+        } else {
+            cellImageView.image = UIImage(named: "default_imageX2")
+        }
+        if (cellImageView.image == nil) {
+            cellImageView.image = UIImage(named: "default_imageX2")
+        }
+    }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

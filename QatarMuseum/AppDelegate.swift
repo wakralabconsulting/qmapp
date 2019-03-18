@@ -89,6 +89,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             self.getCollectionList(museumId: "96", lang: AR_LANGUAGE)
             self.getParksDataFromServer(lang: ENG_LANGUAGE)
             self.getParksDataFromServer(lang: AR_LANGUAGE)
+            self.getFacilitiesListFromServer(lang: ENG_LANGUAGE)
+            self.getFacilitiesListFromServer(lang: AR_LANGUAGE)
         }
         
     }
@@ -2102,6 +2104,234 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             parksInfo.imageArabic = parksDict.image
             if(parksDict.sortId != nil) {
                 parksInfo.sortIdArabic = parksDict.sortId
+            }
+        }
+        do {
+            try managedObjContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func getFacilitiesListFromServer(lang:String?)
+    {
+        _ = Alamofire.request(QatarMuseumRouter.FacilitiesList(lang ?? ENG_LANGUAGE)).responseObject { (response: DataResponse<FacilitiesData>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.saveOrUpdateFacilitiesListCoredata(facilitiesList: data.facilitiesList, lang: lang)
+            case .failure(let error):
+                print("error")
+            }
+        }
+    }
+    //MARK: Facilities List Coredata Method
+    func saveOrUpdateFacilitiesListCoredata(facilitiesList:[Facilities]?,lang:String?) {
+        if ((facilitiesList?.count)! > 0) {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.facilitiesListCoreDataInBackgroundThread(facilitiesList: facilitiesList, managedContext: managedContext, lang: lang)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.facilitiesListCoreDataInBackgroundThread(facilitiesList: facilitiesList, managedContext : managedContext, lang: lang)
+                }
+            }
+        }
+    }
+    func facilitiesListCoreDataInBackgroundThread(facilitiesList:[Facilities]?,managedContext: NSManagedObjectContext,lang:String?) {
+        if (lang == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "FacilitiesEntity", idKey: "nid", idValue: nil, managedContext: managedContext) as! [FacilitiesEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... (facilitiesList?.count)!-1 {
+                    let facilitiesListDict = facilitiesList![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "FacilitiesEntity", idKey: "nid", idValue: facilitiesListDict.nid, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let facilitiesListdbDict = fetchResult[0] as! FacilitiesEntity
+                        facilitiesListdbDict.title = facilitiesListDict.title
+                        facilitiesListdbDict.sortId = facilitiesListDict.sortId
+                        facilitiesListdbDict.nid =  facilitiesListDict.nid
+                        
+                        
+                        //eventlist
+//                        tourListdbDict.dateString = tourListDict.date
+//                        tourListdbDict.descriptioForModerator = tourListDict.descriptioForModerator
+//                        tourListdbDict.mobileLatitude = tourListDict.mobileLatitude
+//                        tourListdbDict.moderatorName = tourListDict.moderatorName
+//                        tourListdbDict.longitude = tourListDict.longitude
+//                        tourListdbDict.contactEmail = tourListDict.contactEmail
+//                        tourListdbDict.contactPhone = tourListDict.contactPhone
+//                        tourListdbDict.isTourGuide = isTourGuide
+//
+                        if(facilitiesListDict.images != nil){
+                            if((facilitiesListDict.images?.count)! > 0) {
+                                for i in 0 ... (facilitiesListDict.images?.count)!-1 {
+                                    var facilitiesImage: FacilitiesImgEntity!
+                                    let facilitiesImgaeArray: FacilitiesImgEntity = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesImgEntity", into: managedContext) as! FacilitiesImgEntity
+                                    facilitiesImgaeArray.images = facilitiesListDict.images![i]
+                                    
+                                    facilitiesImage = facilitiesImgaeArray
+                                    facilitiesListdbDict.addToFacilitiesImgRelation(facilitiesImage)
+                                    do {
+                                        try managedContext.save()
+                                    } catch let error as NSError {
+                                        print("Could not save. \(error), \(error.userInfo)")
+                                    }
+                                }
+                            }
+                        }
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    } else {
+                        //save
+                        self.saveFacilitiesListToCoreData(facilitiesListDict: facilitiesListDict, managedObjContext: managedContext, lang: lang)
+                    }
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(facilitiesListNotificationEn), object: self)
+            } else {
+                for i in 0 ... (facilitiesList?.count)!-1 {
+                    let facilitiesListDict : Facilities?
+                    facilitiesListDict = facilitiesList?[i]
+                    self.saveFacilitiesListToCoreData(facilitiesListDict: facilitiesListDict!, managedObjContext: managedContext, lang: lang)
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(facilitiesListNotificationEn), object: self)
+            }
+        } else {
+            let fetchData = checkAddedToCoredata(entityName: "FacilitiesEntityAr", idKey: "nid", idValue: nil, managedContext: managedContext) as! [FacilitiesEntityAr]
+            if (fetchData.count > 0) {
+                for i in 0 ... (facilitiesList?.count)!-1 {
+                    let facilitiesListDict = facilitiesList![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "FacilitiesEntityAr", idKey: "nid", idValue: facilitiesListDict.nid, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let facilitiesListdbDict = fetchResult[0] as! FacilitiesEntityAr
+                        facilitiesListdbDict.title = facilitiesListDict.title
+                        facilitiesListdbDict.sortId = facilitiesListDict.sortId
+                        facilitiesListdbDict.nid =  facilitiesListDict.nid
+                        
+                        
+                        //eventlist
+//                        tourListdbDict.dateString = tourListDict.date
+//                        tourListdbDict.descriptioForModerator = tourListDict.descriptioForModerator
+//                        tourListdbDict.mobileLatitude = tourListDict.mobileLatitude
+//                        tourListdbDict.moderatorName = tourListDict.moderatorName
+//                        tourListdbDict.longitude = tourListDict.longitude
+//                        tourListdbDict.contactEmail = tourListDict.contactEmail
+//                        tourListdbDict.contactPhone = tourListDict.contactPhone
+//                        tourListdbDict.isTourGuide = isTourGuide
+                        
+                        if(facilitiesListDict.images != nil){
+                            if((facilitiesListDict.images?.count)! > 0) {
+                                for i in 0 ... (facilitiesListDict.images?.count)!-1 {
+                                    var facilitiesImage: FacilitiesImgEntityAr!
+                                    let facilitiesImgaeArray: FacilitiesImgEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesImgEntityAr", into: managedContext) as! FacilitiesImgEntityAr
+                                    facilitiesImgaeArray.images = facilitiesListDict.images?[i]
+                                    
+                                    facilitiesImage = facilitiesImgaeArray
+                                    facilitiesListdbDict.addToFacilitiesImgRelationAr(facilitiesImage)
+                                    do {
+                                        try managedContext.save()
+                                    } catch let error as NSError {
+                                        print("Could not save. \(error), \(error.userInfo)")
+                                    }
+                                }
+                            }
+                        }
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    } else {
+                        //save
+                        self.saveFacilitiesListToCoreData(facilitiesListDict: facilitiesListDict, managedObjContext: managedContext, lang: lang)
+                    }
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(facilitiesListNotificationAr), object: self)
+            } else {
+                for i in 0 ... (facilitiesList?.count)!-1 {
+                    let facilitiesListDict : Facilities?
+                    facilitiesListDict = facilitiesList![i]
+                    self.saveFacilitiesListToCoreData(facilitiesListDict: facilitiesListDict!, managedObjContext: managedContext, lang: lang)
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(facilitiesListNotificationAr), object: self)
+            }
+        }
+    }
+    func saveFacilitiesListToCoreData(facilitiesListDict: Facilities, managedObjContext: NSManagedObjectContext,lang:String?) {
+        if (lang == ENG_LANGUAGE) {
+            let facilitiesListInfo: FacilitiesEntity = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesEntity", into: managedObjContext) as! FacilitiesEntity
+            facilitiesListInfo.title = facilitiesListDict.title
+            facilitiesListInfo.sortId = facilitiesListDict.sortId
+            facilitiesListInfo.nid = facilitiesListDict.nid
+            
+            //specialEvent
+//            tourListInfo.dateString = tourListDict.date
+//            tourListInfo.descriptioForModerator = tourListDict.descriptioForModerator
+//            tourListInfo.mobileLatitude = tourListDict.mobileLatitude
+//            tourListInfo.moderatorName = tourListDict.moderatorName
+//            tourListInfo.longitude = tourListDict.longitude
+//            tourListInfo.contactEmail = tourListDict.contactEmail
+//            tourListInfo.contactPhone = tourListDict.contactPhone
+//            tourListInfo.isTourGuide = isTourGuide
+            if(facilitiesListDict.images != nil){
+                if((facilitiesListDict.images?.count)! > 0) {
+                    for i in 0 ... (facilitiesListDict.images?.count)!-1 {
+                        var facilitiesImage: FacilitiesImgEntity!
+                        let facilitiesImgaeArray: FacilitiesImgEntity = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesImgEntity", into: managedObjContext) as! FacilitiesImgEntity
+                        facilitiesImgaeArray.images = facilitiesListDict.images![i]
+                        
+                        facilitiesImage = facilitiesImgaeArray
+                        facilitiesListInfo.addToFacilitiesImgRelation(facilitiesImage)
+                        do {
+                            try managedObjContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                    }
+                }
+            }
+        } else {
+            let facilitiesListInfo: FacilitiesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesEntityAr", into: managedObjContext) as! FacilitiesEntityAr
+            facilitiesListInfo.title = facilitiesListDict.title
+            facilitiesListInfo.sortId = facilitiesListDict.sortId
+            facilitiesListInfo.nid =  facilitiesListDict.nid
+            
+            //specialEvent
+//            tourListInfo.dateString = tourListDict.date
+//            tourListInfo.descriptioForModerator = tourListDict.descriptioForModerator
+//            tourListInfo.mobileLatitude = tourListDict.mobileLatitude
+//            tourListInfo.moderatorName = tourListDict.moderatorName
+//            tourListInfo.longitude = tourListDict.longitude
+//            tourListInfo.contactEmail = tourListDict.contactEmail
+//            tourListInfo.contactPhone = tourListDict.contactPhone
+//            tourListInfo.isTourGuide = isTourGuide
+            if(facilitiesListDict.images != nil){
+                if((facilitiesListDict.images?.count)! > 0) {
+                    for i in 0 ... (facilitiesListDict.images?.count)!-1 {
+                        var facilitiesImage: FacilitiesImgEntityAr!
+                        let facilitiesImgaeArray: FacilitiesImgEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesImgEntityAr", into: managedObjContext) as! FacilitiesImgEntityAr
+                        facilitiesImgaeArray.images = facilitiesListDict.images?[i]
+                        
+                        facilitiesImage = facilitiesImgaeArray
+                        facilitiesListInfo.addToFacilitiesImgRelationAr(facilitiesImage)
+                        do {
+                            try managedObjContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                    }
+                }
             }
         }
         do {

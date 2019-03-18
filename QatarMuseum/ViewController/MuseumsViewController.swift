@@ -423,15 +423,14 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 view.window!.layer.add(transition, forKey: kCATransition)
                 self.present(diningView, animated: false, completion: nil)
             }  else if(selectedItem == "Facilities") {
-                loadComingSoonPopup()
-//                let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "tourAndPanelId") as! TourAndPanelListViewController
-//                tourView.pageNameString = NMoQPageName.Facilities
-//                let transition = CATransition()
-//                transition.duration = 0.25
-//                transition.type = kCATransitionPush
-//                transition.subtype = kCATransitionFromRight
-//                view.window!.layer.add(transition, forKey: kCATransition)
-//                self.present(tourView, animated: false, completion: nil)
+                let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "tourAndPanelId") as! TourAndPanelListViewController
+                tourView.pageNameString = NMoQPageName.Facilities
+                let transition = CATransition()
+                transition.duration = 0.25
+                transition.type = kCATransitionPush
+                transition.subtype = kCATransitionFromRight
+                view.window!.layer.add(transition, forKey: kCATransition)
+                self.present(tourView, animated: false, completion: nil)
             }else {
                 loadComingSoonPopup()
             }

@@ -294,6 +294,26 @@
         <attribute name="startDateArabic" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="FacilitiesEntity" representedClassName="FacilitiesEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="nid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sortId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="facilitiesImgRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FacilitiesImgEntity" syncable="YES"/>
+    </entity>
+    <entity name="FacilitiesEntityAr" representedClassName="FacilitiesEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="nid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sortId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="facilitiesImgRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FacilitiesImgEntityAr" syncable="YES"/>
+    </entity>
+    <entity name="FacilitiesImgEntity" representedClassName="FacilitiesImgEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="facilitiesImgRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FacilitiesEntity" syncable="YES"/>
+    </entity>
+    <entity name="FacilitiesImgEntityAr" representedClassName="FacilitiesImgEntityAr" syncable="YES" codeGenerationType="class">
+        <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="facilitiesImgRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FacilitiesEntityAr" syncable="YES"/>
+    </entity>
     <entity name="FloorMapImagesEntity" representedClassName="FloorMapImagesEntity" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="imagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FloorMapTourGuideEntity" syncable="YES"/>
@@ -696,5 +716,9 @@
         <element name="TourGuideEntityAr" positionX="0" positionY="144" width="128" height="120"/>
         <element name="TourGuideMultimediaEntity" positionX="9" positionY="153" width="128" height="75"/>
         <element name="TourGuideMultimediaEntityAr" positionX="18" positionY="162" width="128" height="75"/>
+        <element name="FacilitiesEntity" positionX="-9" positionY="252" width="128" height="103"/>
+        <element name="FacilitiesEntityAr" positionX="0" positionY="261" width="128" height="105"/>
+        <element name="FacilitiesImgEntity" positionX="9" positionY="270" width="128" height="75"/>
+        <element name="FacilitiesImgEntityAr" positionX="18" positionY="279" width="128" height="75"/>
     </elements>
 </model>

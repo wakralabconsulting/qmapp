@@ -454,7 +454,10 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                 }
             }
         }
-    }
+        } else {
+            self.loadingView.stopLoading()
+            self.loadingView.isHidden = true
+        }
 
     }
     func setEntityUnRegistration(currentRow: Int,selectedCell: PanelDetailCell?) {

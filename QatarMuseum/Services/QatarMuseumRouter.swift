@@ -46,6 +46,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case NMoQEntityRegistration([String: Any])
     case SetUserRegistrationComplete(String,[String: Any])
     case SetUserUnRegistration(String,[String: Any])
+    case FacilitiesList(String)
     var method: Alamofire.HTTPMethod {
         switch self {
         case .ExhibitionList:
@@ -120,6 +121,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return .put
         case .SetUserUnRegistration:
             return .delete
+        case .FacilitiesList:
+            return .get
         }
     }
     
@@ -197,6 +200,8 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/entity_registration/\(registrationId).json"
         case .SetUserUnRegistration(let registrationId, _):
             return "/entity_registration/\(registrationId).json"
+        case .FacilitiesList( _):
+            return "list_facility_category.json"
         }
     }
 
@@ -383,6 +388,11 @@ enum QatarMuseumRouter: URLRequestConvertible {
             }
             regMutableURLReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
             return try! Alamofire.JSONEncoding.default.encode(regMutableURLReq, with: parameters)
+        case .FacilitiesList(let apiLang):
+            let apiURL = NSURL(string: Config.baseURL + apiLang + Config.mobileApiURL)!
+            var apiMutableURLReq = URLRequest(url: apiURL.appendingPathComponent(path)!)
+            apiMutableURLReq.httpMethod = method.rawValue
+            return try! Alamofire.JSONEncoding.default.encode(apiMutableURLReq)
         }
         
         
