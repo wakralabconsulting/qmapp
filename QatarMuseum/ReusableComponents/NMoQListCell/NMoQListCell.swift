@@ -136,6 +136,24 @@ class NMoQListCell: UITableViewCell {
             cellImageView.image = UIImage(named: "default_imageX2")
         }
     }
+    func setParkListData() {
+        dayLabel.font = UIFont.homeTitleFont
+        dayLabel.text = "Playround"
+        titleLabel.isHidden = true
+        dayLabel.isHidden = false
+        dateLabel.isHidden = true
+//        if ((facilitiesListData?.images?.count)! > 0) {
+//            if let imageUrl = facilitiesListData?.images![0]{
+//                cellImageView.kf.setImage(with: URL(string: imageUrl))
+//            }
+//        } else {
+//            cellImageView.image = UIImage(named: "default_imageX2")
+//        }
+        if (cellImageView.image == nil) {
+            //cellImageView.image = UIImage(named: "default_imageX2")
+            cellImageView.image = UIImage(named: "panelAndTalks")
+        }
+    }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

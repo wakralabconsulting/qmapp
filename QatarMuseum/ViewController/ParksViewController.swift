@@ -12,6 +12,10 @@ import Crashlytics
 import Firebase
 import UIKit
 
+enum ParkPageName {
+    case SideMenuPark
+    case NMoQPark
+}
 class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,comingSoonPopUpProtocol,LoadingViewProtocol {
     
     
@@ -24,6 +28,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     var parksListArray: [ParksList]! = []
     let networkReachability = NetworkReachabilityManager()
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
+    var parkPageNameString : ParkPageName? = ParkPageName.SideMenuPark
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUIContents()
@@ -37,12 +42,15 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         loadingView.loadingViewDelegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(ParksViewController.receiveParksNotificationEn(notification:)), name: NSNotification.Name(parksNotificationEn), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ParksViewController.receiveParksNotificationAr(notification:)), name: NSNotification.Name(parksNotificationAr), object: nil)
-        self.fetchParksFromCoredata()
-        if  (networkReachability?.isReachable)! {
-            DispatchQueue.global(qos: .background).async {
-                self.getParksDataFromServer(retryButtonPressed: false)
+        if (parkPageNameString == ParkPageName.SideMenuPark) {
+            self.fetchParksFromCoredata()
+            if  (networkReachability?.isReachable)! {
+                DispatchQueue.global(qos: .background).async {
+                    self.getParksDataFromServer(retryButtonPressed: false)
+                }
             }
         }
+        
         setTopbarImage()
         
         
@@ -62,7 +70,8 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 imageView.image = UIImage(named: "default_imageX2")
             }
         }else {
-            imageView.image = nil
+            imageView.image = UIImage(named: "default_imageX2")
+            //imageView.image = nil
         }
         
         imageView.contentMode = .scaleAspectFill
@@ -101,12 +110,16 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     //MARK: TableView delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (parkPageNameString == ParkPageName.SideMenuPark) {
             return parksListArray.count
-        
+        } else {
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let parkCell = tableView.dequeueReusableCell(withIdentifier: "parkCellId", for: indexPath) as! ParkTableViewCell
+        if (parkPageNameString == ParkPageName.SideMenuPark) {
             if (indexPath.row != 0) {
                 parkCell.titleLineView.isHidden = true
                 parkCell.imageViewHeight.constant = 200
@@ -116,33 +129,39 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 parkCell.titleLineView.isHidden = false
                 parkCell.imageViewHeight.constant = 0
             }
-//            if(indexPath.row == parksListArray.count-1) {
-//                parkCell.favouriteViewHeight.constant = 130
-//                parkCell.favouriteView.isHidden = false
-//                parkCell.shareView.isHidden = false
-//                parkCell.favouriteButton.isHidden = false
-//                parkCell.shareButton.isHidden = false
-//            }
-//            else {
-                parkCell.favouriteViewHeight.constant = 0
-                parkCell.favouriteView.isHidden = true
-                parkCell.shareView.isHidden = true
-                parkCell.favouriteButton.isHidden = true
-                parkCell.shareButton.isHidden = true
-           // }
-        parkCell.favouriteButtonAction = {
-            ()in
-            self.setFavouritesAction(cellObj: parkCell)
+            //            if(indexPath.row == parksListArray.count-1) {
+            //                parkCell.favouriteViewHeight.constant = 130
+            //                parkCell.favouriteView.isHidden = false
+            //                parkCell.shareView.isHidden = false
+            //                parkCell.favouriteButton.isHidden = false
+            //                parkCell.shareButton.isHidden = false
+            //            }
+            //            else {
+            
+            // }
+            parkCell.favouriteButtonAction = {
+                ()in
+                self.setFavouritesAction(cellObj: parkCell)
+            }
+            parkCell.shareButtonAction = {
+                () in
+            }
+            parkCell.locationButtonTapAction = {
+                () in
+                self.loadLocationInMap(currentRow: indexPath.row)
+            }
+            parkCell.setParksCellValues(parksList: parksListArray[indexPath.row], currentRow: indexPath.row)
+        } else {
+            parkCell.titleLineView.isHidden = false
+            parkCell.imageViewHeight.constant = 0
+            parkCell.setNmoqParkDetailValues()
         }
-        parkCell.shareButtonAction = {
-            () in
-        }
-        parkCell.locationButtonTapAction = {
-            () in
-            self.loadLocationInMap(currentRow: indexPath.row)
-        }
-        parkCell.setParksCellValues(parksList: parksListArray[indexPath.row], currentRow: indexPath.row)
         
+        parkCell.favouriteViewHeight.constant = 0
+        parkCell.favouriteView.isHidden = true
+        parkCell.shareView.isHidden = true
+        parkCell.favouriteButton.isHidden = true
+        parkCell.shareButton.isHidden = true
             loadingView.stopLoading()
             loadingView.isHidden = true
             return parkCell
