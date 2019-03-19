@@ -270,7 +270,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             }
         }
         
-        if((museumId != nil) && ((museumId == "63") || (museumId == "96"))) {
+        if((museumId != nil) && ((museumId == "63") || (museumId == "96") || (museumId == "66") || (museumId == "638"))) {
             if (museumsBottomCollectionView.contentOffset.x <= 0.0) {
                 if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                     previousButton.isHidden = true

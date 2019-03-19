@@ -30,9 +30,6 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func registerCell() {
         self.parkTableView.register(UINib(nibName: "ParkListView", bundle: nil), forCellReuseIdentifier: "parkListCellId")
         self.parkTableView.register(UINib(nibName: "NMoQListCell", bundle: nil), forCellReuseIdentifier: "nMoQListCellId")
-        
-        //let nibName = UINib(nibName: "ParkHeaderView", bundle: nil)
-       // self.parkTableView.register(nibName, forHeaderFooterViewReuseIdentifier: "parkHeaderViewId")
         parkTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
 
     }

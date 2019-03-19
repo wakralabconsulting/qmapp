@@ -286,8 +286,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 else {
                     if (homeList[indexPath.row].id == "12186") {
                         loadExhibitionPage()
-                    } else if (homeList[indexPath.row].id == "15246") {
-                        loadTourViewPage(nid: "15246", subTitle: panelAndTalks, isFromTour: false)
+                    } else if (homeList[indexPath.row].id == "15631") {
+                        loadTourViewPage(nid: "15631", subTitle: panelAndTalks, isFromTour: false)
                     }
                     else {
                         loadMuseumsPage(curretRow: indexPath.row)
@@ -309,8 +309,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 if (homeList[indexPath.row].id == "12186") {
                     loadExhibitionPage()
                 }
-                else if (homeList[indexPath.row].id == "15246") {
-                    loadTourViewPage(nid: "15246", subTitle: panelAndTalks, isFromTour: false)
+                else if (homeList[indexPath.row].id == "15631") {
+                    loadTourViewPage(nid: "15631", subTitle: panelAndTalks, isFromTour: false)
                 }
                 else {
                     loadMuseumsPage(curretRow: indexPath.row)
@@ -871,7 +871,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     }
                     let panelAndTalks = "ندوات و محاورات"
                     if homeList.index(where: {$0.name != panelAndTalks}) != nil {
-                        self.homeList.insert(Home(id: "15246", name: panelAndTalksName, image: "panelAndTalks", tourguide_available: "false", sort_id: nil), at: self.homeList.endIndex)
+                        self.homeList.insert(Home(id: "15631", name: panelAndTalksName, image: "panelAndTalks", tourguide_available: "false", sort_id: nil), at: self.homeList.endIndex)
                     }
                     if(self.homeList.count == 0){
                         if(self.networkReachability?.isReachable == false) {
