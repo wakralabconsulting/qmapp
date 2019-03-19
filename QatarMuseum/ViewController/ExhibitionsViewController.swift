@@ -19,6 +19,7 @@ enum ExhbitionPageName {
     case museumCollectionsList
     case diningList
     case nmoqTourSecondList
+    case facilitiesSecondList
 }
 class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol,LoadingViewProtocol {
     @IBOutlet weak var exhibitionHeaderView: CommonHeaderView!
@@ -31,6 +32,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
     var collection: [Collection] = []
     var diningListArray : [Dining]! = []
     var nmoqTourDetail: [NMoQTourDetail]! = []
+    var facilitiesDetail: [FacilitiesDetail]! = []
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var exhibitionsPageNameString : ExhbitionPageName?
     let networkReachability = NetworkReachabilityManager()
@@ -140,6 +142,13 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             } else {
                 fetchTourDetailsFromCoredata()
             }
+        } else if (exhibitionsPageNameString == ExhbitionPageName.facilitiesSecondList) {
+            exhibitionHeaderView.headerTitle.text = headerTitle?.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil).replacingOccurrences(of: "&amp;", with: "&", options: .regularExpression, range: nil).uppercased()
+            if (networkReachability?.isReachable)! {
+                getFacilitiesDetail()
+            } else {
+                fetchFacilitiesDetailsFromCoredata()
+            }
         }
         popupView.comingSoonPopupDelegate = self
         
@@ -219,6 +228,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             return diningListArray.count
         case .nmoqTourSecondList?:
             return nmoqTourDetail.count
+        case .facilitiesSecondList?:
+            return facilitiesDetail.count
         default:
             return 0
         }
@@ -259,12 +270,18 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             exbtnLoadingView.stopLoading()
             exbtnLoadingView.isHidden = true
             return diningListCell
-        } else {
+        } else if (exhibitionsPageNameString == ExhbitionPageName.nmoqTourSecondList){
             let nmoqTourSecondListCell = tableView.dequeueReusableCell(withIdentifier: "nMoQListCellId", for: indexPath) as! NMoQListCell
             nmoqTourSecondListCell.setTourMiddleDate(tourList: nmoqTourDetail[indexPath.row])
             exbtnLoadingView.stopLoading()
             exbtnLoadingView.isHidden = true
             return nmoqTourSecondListCell
+        } else {
+            let facilitiesSecondListCell = tableView.dequeueReusableCell(withIdentifier: "nMoQListCellId", for: indexPath) as! NMoQListCell
+            facilitiesSecondListCell.setFacilitiesDetail(FacilitiesDetailData: facilitiesDetail[indexPath.row])
+            exbtnLoadingView.stopLoading()
+            exbtnLoadingView.isHidden = true
+            return facilitiesSecondListCell
         }
         
     }
@@ -292,10 +309,12 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             loadDiningDetailAnimation(idValue: diningId!)
         }  else if (exhibitionsPageNameString == ExhbitionPageName.nmoqTourSecondList) {
             if (isFromTour)! {
-                loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: true)
+                loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: true, pageName: ExhbitionPageName.nmoqTourSecondList)
             } else {
-                loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: false)
+                loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: false, pageName: ExhbitionPageName.nmoqTourSecondList)
             }
+        } else if (exhibitionsPageNameString == ExhbitionPageName.facilitiesSecondList) {
+            loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: false, pageName: ExhbitionPageName.facilitiesSecondList)
         }
         
     }
@@ -362,16 +381,26 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         self.present(diningDetailView, animated: false, completion: nil)
         
     }
-    func loadTourSecondDetailPage(selectedRow: Int?,fromTour:Bool?) {
+    func loadTourSecondDetailPage(selectedRow: Int?,fromTour:Bool?,pageName: ExhbitionPageName?) {
         let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
-        panelView.nmoqTourDetail = nmoqTourDetail
+        
         panelView.selectedRow = selectedRow
-        if (fromTour)! {
-            panelView.pageNameString = NMoQPanelPage.TourDetailPage
-        } else {
-            panelView.pageNameString = NMoQPanelPage.PanelDetailPage
+        
+        if(pageName == ExhbitionPageName.nmoqTourSecondList) {
+            panelView.nmoqTourDetail = nmoqTourDetail
+            panelView.panelDetailId = tourDetailId
+
+            if (fromTour)! {
+                panelView.pageNameString = NMoQPanelPage.TourDetailPage
+            } else {
+                panelView.pageNameString = NMoQPanelPage.PanelDetailPage
+            }
+        } else if(pageName == ExhbitionPageName.facilitiesSecondList) {
+            panelView.pageNameString = NMoQPanelPage.FacilitiesDetailPage
+            panelView.panelDetailId = facilitiesDetail![selectedRow!].nid
+            panelView.facilitiesDetail = facilitiesDetail
+            panelView.fromCafeOrDining = true
         }
-        panelView.panelDetailId = tourDetailId
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionPush
@@ -397,7 +426,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
                 let appDelegate = UIApplication.shared.delegate
                 appDelegate?.window??.rootViewController = homeViewController
-            case .museumExhibition?,.museumCollectionsList?,.nmoqTourSecondList?:
+            case .museumExhibition?,.museumCollectionsList?,.nmoqTourSecondList?,.facilitiesSecondList?:
                 self.dismiss(animated: false, completion: nil)
             case .diningList?:
                 if (fromHome == true) {
@@ -1862,6 +1891,309 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                     }
                     if(nmoqTourDetail.count == 0){
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.exbtnLoadingView.showNoDataView()
+                        }
+                    }
+                    DispatchQueue.main.async{
+                        self.exhibitionCollectionView.reloadData()
+                    }
+                }
+                else{
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.exbtnLoadingView.showNoDataView()
+                    }
+                }
+            }
+        }
+    }
+    //MARK: Facilities SecondaryList ServiceCall
+    func getFacilitiesDetail() {
+        if(tourDetailId != nil) {
+            _ = Alamofire.request(QatarMuseumRouter.GetFacilitiesDetail(["category_id" : tourDetailId!])).responseObject { (response: DataResponse<FacilitiesDetailData>) -> Void in
+                switch response.result {
+                case .success(let data):
+                    self.facilitiesDetail = data.facilitiesDetail
+//                    if self.nmoqTourDetail.first(where: {$0.sortId != "" && $0.sortId != nil} ) != nil {
+//                        self.nmoqTourDetail = self.nmoqTourDetail.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
+//                    }
+                    self.exhibitionCollectionView.reloadData()
+                    if(self.nmoqTourDetail.count == 0) {
+                        let noResultMsg = NSLocalizedString("NO_RESULT_MESSAGE",
+                                                            comment: "Setting the content of the alert")
+                        self.exbtnLoadingView.stopLoading()
+                        self.exbtnLoadingView.noDataView.isHidden = false
+                        self.exbtnLoadingView.isHidden = false
+                        self.exbtnLoadingView.showNoDataView()
+                        self.exbtnLoadingView.noDataLabel.text = noResultMsg
+                    } else {
+                        self.saveOrUpdateFacilitiesDetailCoredata()
+                    }
+                case .failure( _):
+                    var errorMessage: String
+                    errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                    comment: "Setting the content of the alert"))
+                    self.exbtnLoadingView.stopLoading()
+                    self.exbtnLoadingView.noDataView.isHidden = false
+                    self.exbtnLoadingView.isHidden = false
+                    self.exbtnLoadingView.showNoDataView()
+                    self.exbtnLoadingView.noDataLabel.text = errorMessage
+                }
+            }
+        }
+        
+    }
+    //MARK: Coredata Method
+    func saveOrUpdateFacilitiesDetailCoredata() {
+        if (facilitiesDetail.count > 0) {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.facilitiesDetailCoreDataInBackgroundThread(managedContext: managedContext)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.facilitiesDetailCoreDataInBackgroundThread(managedContext : managedContext)
+                }
+            }
+        }
+    }
+    func facilitiesDetailCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "FacilitiesDetailEntity", idKey: "category", idValue: tourDetailId, managedContext: managedContext) as! [FacilitiesDetailEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... facilitiesDetail.count-1 {
+                    let facilitiesDetailDict = facilitiesDetail[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "FacilitiesDetailEntity", idKey: "nid", idValue: facilitiesDetailDict.nid, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let facilitiesDetaildbDict = fetchResult[0] as! FacilitiesDetailEntity
+                        facilitiesDetaildbDict.title = facilitiesDetailDict.title
+                        facilitiesDetaildbDict.subtitle = facilitiesDetailDict.subtitle
+                        facilitiesDetaildbDict.facilitiesDes =  facilitiesDetailDict.facilitiesDes
+                        facilitiesDetaildbDict.timing =  facilitiesDetailDict.timing
+                        facilitiesDetaildbDict.titleTiming = facilitiesDetailDict.titleTiming
+                        facilitiesDetaildbDict.nid = facilitiesDetailDict.nid
+                        facilitiesDetaildbDict.longtitude =  facilitiesDetailDict.longtitude
+                        facilitiesDetaildbDict.category =  facilitiesDetailDict.category
+                        facilitiesDetaildbDict.latitude = facilitiesDetailDict.latitude
+                        facilitiesDetaildbDict.locationTitle = facilitiesDetailDict.locationTitle
+                        
+                        
+                        if(facilitiesDetailDict.images != nil){
+                            if((facilitiesDetailDict.images?.count)! > 0) {
+                                for i in 0 ... (facilitiesDetailDict.images?.count)!-1 {
+                                    var facilitiesDetailImage: FacilitiesDetailImgEntity
+                                    let facilitiesImgaeArray: FacilitiesDetailImgEntity = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesDetailImgEntity", into: managedContext) as! FacilitiesDetailImgEntity
+                                    facilitiesImgaeArray.images = facilitiesDetailDict.images?[i]
+                                    facilitiesDetailImage = facilitiesImgaeArray
+                                    facilitiesDetaildbDict.addToFacilitiesDetailRelation(facilitiesDetailImage)
+                                    do {
+                                        try managedContext.save()
+                                    } catch let error as NSError {
+                                        print("Could not save. \(error), \(error.userInfo)")
+                                    }
+                                }
+                            }
+                        }
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    }
+                    else {
+                        //save
+                        self.saveFacilitiesDetailsToCoreData(facilitiesDetailDict: facilitiesDetailDict, managedObjContext: managedContext)
+                    }
+                }
+            }
+            else {
+                for i in 0 ... facilitiesDetail.count-1 {
+                    let facilitiesDetailDict : FacilitiesDetail?
+                    facilitiesDetailDict = facilitiesDetail[i]
+                    self.saveFacilitiesDetailsToCoreData(facilitiesDetailDict: facilitiesDetailDict!, managedObjContext: managedContext)
+                }
+            }
+        } else {
+            let fetchData = checkAddedToCoredata(entityName: "FacilitiesDetailEntityAr", idKey: "category", idValue: tourDetailId, managedContext: managedContext) as! [FacilitiesDetailEntityAr]
+            if (fetchData.count > 0) {
+                for i in 0 ... facilitiesDetail.count-1 {
+                    let facilitiesDetailDict = facilitiesDetail[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "FacilitiesDetailEntityAr", idKey: "nid", idValue: facilitiesDetailDict.nid, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let facilitiesDetaildbDict = fetchResult[0] as! FacilitiesDetailEntityAr
+                        facilitiesDetaildbDict.title = facilitiesDetailDict.title
+                        facilitiesDetaildbDict.subtitle = facilitiesDetailDict.subtitle
+                        facilitiesDetaildbDict.facilitiesDes =  facilitiesDetailDict.facilitiesDes
+                        facilitiesDetaildbDict.timing =  facilitiesDetailDict.timing
+                        facilitiesDetaildbDict.titleTiming = facilitiesDetailDict.titleTiming
+                        facilitiesDetaildbDict.nid = facilitiesDetailDict.nid
+                        facilitiesDetaildbDict.longtitude =  facilitiesDetailDict.longtitude
+                        facilitiesDetaildbDict.category =  facilitiesDetailDict.category
+                        facilitiesDetaildbDict.latitude = facilitiesDetailDict.latitude
+                        facilitiesDetaildbDict.locationTitle = facilitiesDetailDict.locationTitle
+                        
+                        if(facilitiesDetailDict.images != nil){
+                            if((facilitiesDetailDict.images?.count)! > 0) {
+                                for i in 0 ... (facilitiesDetailDict.images?.count)!-1 {
+                                    var facilitiesDetailImage: FacilitiesDetailImgEntityAr
+                                    let facilitiesImgaeArray: FacilitiesDetailImgEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesDetailImgEntityAr", into: managedContext) as! FacilitiesDetailImgEntityAr
+                                    facilitiesImgaeArray.images = facilitiesDetailDict.images?[i]
+                                    facilitiesDetailImage = facilitiesImgaeArray
+                                    facilitiesDetaildbDict.addToFacilitiesDetailRelationAr(facilitiesDetailImage)
+                                    do {
+                                        try managedContext.save()
+                                    } catch let error as NSError {
+                                        print("Could not save. \(error), \(error.userInfo)")
+                                    }
+                                }
+                            }
+                        }
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    }
+                    else {
+                        //save
+                        self.saveFacilitiesDetailsToCoreData(facilitiesDetailDict: facilitiesDetailDict, managedObjContext: managedContext)
+                    }
+                }
+            }
+            else {
+                for i in 0 ... facilitiesDetail.count-1 {
+                    let facilitiesDetailDict : FacilitiesDetail?
+                    facilitiesDetailDict = facilitiesDetail[i]
+                    self.saveFacilitiesDetailsToCoreData(facilitiesDetailDict: facilitiesDetailDict!, managedObjContext: managedContext)
+                }
+            }
+        }
+    }
+    func saveFacilitiesDetailsToCoreData(facilitiesDetailDict: FacilitiesDetail, managedObjContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let facilitiesDetaildbDict: FacilitiesDetailEntity = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesDetailEntity", into: managedObjContext) as! FacilitiesDetailEntity
+            facilitiesDetaildbDict.title = facilitiesDetailDict.title
+            facilitiesDetaildbDict.subtitle = facilitiesDetailDict.subtitle
+            facilitiesDetaildbDict.facilitiesDes =  facilitiesDetailDict.facilitiesDes
+            facilitiesDetaildbDict.timing =  facilitiesDetailDict.timing
+            facilitiesDetaildbDict.titleTiming = facilitiesDetailDict.titleTiming
+            facilitiesDetaildbDict.nid = facilitiesDetailDict.nid
+            facilitiesDetaildbDict.longtitude =  facilitiesDetailDict.longtitude
+            facilitiesDetaildbDict.category =  facilitiesDetailDict.category
+            facilitiesDetaildbDict.latitude = facilitiesDetailDict.latitude
+            facilitiesDetaildbDict.locationTitle = facilitiesDetailDict.locationTitle
+            
+            if(facilitiesDetailDict.images != nil){
+                if((facilitiesDetailDict.images?.count)! > 0) {
+                    for i in 0 ... (facilitiesDetailDict.images?.count)!-1 {
+                        var facilitiesDetailImage: FacilitiesDetailImgEntity
+                        let facilitiesImgaeArray: FacilitiesDetailImgEntity = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesDetailImgEntity", into: managedObjContext) as! FacilitiesDetailImgEntity
+                        facilitiesImgaeArray.images = facilitiesDetailDict.images?[i]
+                        facilitiesDetailImage = facilitiesImgaeArray
+                        facilitiesDetaildbDict.addToFacilitiesDetailRelation(facilitiesDetailImage)
+                        do {
+                            try managedObjContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                    }
+                }
+            }
+        } else {
+            let facilitiesDetaildbDict: FacilitiesDetailEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesDetailEntityAr", into: managedObjContext) as! FacilitiesDetailEntityAr
+            facilitiesDetaildbDict.title = facilitiesDetailDict.title
+            facilitiesDetaildbDict.subtitle = facilitiesDetailDict.subtitle
+            facilitiesDetaildbDict.facilitiesDes =  facilitiesDetailDict.facilitiesDes
+            facilitiesDetaildbDict.timing =  facilitiesDetailDict.timing
+            facilitiesDetaildbDict.titleTiming = facilitiesDetailDict.titleTiming
+            facilitiesDetaildbDict.nid = facilitiesDetailDict.nid
+            facilitiesDetaildbDict.longtitude =  facilitiesDetailDict.longtitude
+            facilitiesDetaildbDict.category =  facilitiesDetailDict.category
+            facilitiesDetaildbDict.latitude = facilitiesDetailDict.latitude
+            facilitiesDetaildbDict.locationTitle = facilitiesDetailDict.locationTitle
+            
+            if(facilitiesDetailDict.images != nil){
+                if((facilitiesDetailDict.images?.count)! > 0) {
+                    for i in 0 ... (facilitiesDetailDict.images?.count)!-1 {
+                        var facilitiesDetailImage: FacilitiesDetailImgEntityAr
+                        let facilitiesImgaeArray: FacilitiesDetailImgEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesDetailImgEntityAr", into: managedObjContext) as! FacilitiesDetailImgEntityAr
+                        facilitiesImgaeArray.images = facilitiesDetailDict.images?[i]
+                        facilitiesDetailImage = facilitiesImgaeArray
+                        facilitiesDetaildbDict.addToFacilitiesDetailRelationAr(facilitiesDetailImage)
+                        do {
+                            try managedObjContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                    }
+                }
+            }
+        }
+        do {
+            try managedObjContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    func fetchFacilitiesDetailsFromCoredata() {
+        let managedContext = getContext()
+        do {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                var facilitiesDetailArray = [FacilitiesDetailEntity]()
+                facilitiesDetailArray = checkAddedToCoredata(entityName: "FacilitiesDetailEntity", idKey: "category", idValue: tourDetailId, managedContext: managedContext) as! [FacilitiesDetailEntity]
+                if (facilitiesDetailArray.count > 0) {
+                    for i in 0 ... facilitiesDetailArray.count-1 {
+                        var imagesArray : [String] = []
+                        let imagesInfoArray = (facilitiesDetailArray[i].facilitiesDetailRelation!.allObjects) as! [FacilitiesDetailImgEntity]
+                        if(imagesInfoArray.count > 0) {
+                            for i in 0 ... imagesInfoArray.count-1 {
+                                imagesArray.append(imagesInfoArray[i].images!)
+                            }
+                        }
+                        self.facilitiesDetail.insert(FacilitiesDetail(title: facilitiesDetailArray[i].title, images: imagesArray, subtitle: facilitiesDetailArray[i].subtitle, facilitiesDes: facilitiesDetailArray[i].facilitiesDes, timing: facilitiesDetailArray[i].timing, titleTiming: facilitiesDetailArray[i].titleTiming, nid: facilitiesDetailArray[i].nid, longtitude: facilitiesDetailArray[i].longtitude, category: facilitiesDetailArray[i].category, latitude: facilitiesDetailArray[i].latitude, locationTitle: facilitiesDetailArray[i].locationTitle), at: i)
+                        
+                    }
+                    if(facilitiesDetail.count == 0){
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.exbtnLoadingView.showNoDataView()
+                        }
+                    }
+                    DispatchQueue.main.async{
+                        self.exhibitionCollectionView.reloadData()
+                    }
+                }
+                else{
+                    self.showNoNetwork()
+                }
+            } else {
+                var facilitiesDetailArray = [FacilitiesDetailEntityAr]()
+                facilitiesDetailArray = checkAddedToCoredata(entityName: "FacilitiesDetailEntityAr", idKey: "category", idValue: tourDetailId, managedContext: managedContext) as! [FacilitiesDetailEntityAr]
+                if (facilitiesDetailArray.count > 0) {
+                    for i in 0 ... facilitiesDetailArray.count-1 {
+                        var imagesArray : [String] = []
+                        let imagesInfoArray = (facilitiesDetailArray[i].facilitiesDetailRelationAr?.allObjects) as! [FacilitiesDetailImgEntityAr]
+                        if(imagesInfoArray.count > 0) {
+                            for i in 0 ... imagesInfoArray.count-1 {
+                                imagesArray.append(imagesInfoArray[i].images!)
+                            }
+                        }
+                        self.facilitiesDetail.insert(FacilitiesDetail(title: facilitiesDetailArray[i].title, images: imagesArray, subtitle: facilitiesDetailArray[i].subtitle, facilitiesDes: facilitiesDetailArray[i].facilitiesDes, timing: facilitiesDetailArray[i].timing, titleTiming: facilitiesDetailArray[i].titleTiming, nid: facilitiesDetailArray[i].nid, longtitude: facilitiesDetailArray[i].longtitude, category: facilitiesDetailArray[i].category, latitude: facilitiesDetailArray[i].latitude, locationTitle: facilitiesDetailArray[i].locationTitle), at: i)
+                        
+                    }
+                    if(facilitiesDetail.count == 0){
                         if(self.networkReachability?.isReachable == false) {
                             self.showNoNetwork()
                         } else {

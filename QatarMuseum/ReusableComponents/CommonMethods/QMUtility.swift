@@ -27,6 +27,8 @@ var exhibitionsListNotificationEn = "ExhibitionsListNotificationEn"
 var exhibitionsListNotificationAr = "ExhibitionsListNotificationAr"
 var parksNotificationEn = "ParksNotificationEn"
 var parksNotificationAr = "ParksNotificationAr"
+var facilitiesListNotificationEn = "FacilitiesListNotificationEn"
+var facilitiesListNotificationAr = "FacilitiesListNotificationAr"
 // Utility method for presenting alert without any completion handler
 func presentAlert(_ viewController: UIViewController, title: String, message: String) {
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -137,6 +139,7 @@ func changeDateFormat(dateString: String?) -> String? {
         inputFormatter.dateFormat = "dd/MM/yyyy"
         let showDate = inputFormatter.date(from: dateString!)
         inputFormatter.dateFormat = "dd MMMM yyyy"
+        inputFormatter.locale = NSLocale(localeIdentifier: "en") as Locale?
         let resultString = inputFormatter.string(from: showDate!)
         return resultString
     }

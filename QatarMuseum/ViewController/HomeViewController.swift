@@ -190,6 +190,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         culturePassLabel.font = UIFont.exhibitionDateLabelFont
         giftShopLabel.font = UIFont.exhibitionDateLabelFont
         diningLabel.font = UIFont.exhibitionDateLabelFont
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             if(UserDefaults.standard.value(forKey: "firstTimeLaunch") as? String == nil) {
                 loadingView.isHidden = false
                 loadingView.showLoading()
@@ -206,6 +207,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     fetchHomeBannerInfoFromCoredata()
                 }
             }
+    }
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationEn(notification:)), name: NSNotification.Name(homepageNotificationEn), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationAr(notification:)), name: NSNotification.Name(homepageNotificationAr), object: nil)
         self.fetchHomeInfoFromCoredata()
@@ -284,8 +286,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 else {
                     if (homeList[indexPath.row].id == "12186") {
                         loadExhibitionPage()
-                    } else if (homeList[indexPath.row].id == "13976") {
-                        loadTourViewPage(nid: "13976", subTitle: panelAndTalks, isFromTour: false)
+                    } else if (homeList[indexPath.row].id == "15246") {
+                        loadTourViewPage(nid: "15246", subTitle: panelAndTalks, isFromTour: false)
                     }
                     else {
                         loadMuseumsPage(curretRow: indexPath.row)
@@ -307,8 +309,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 if (homeList[indexPath.row].id == "12186") {
                     loadExhibitionPage()
                 }
-                else if (homeList[indexPath.row].id == "13976") {
-                    loadTourViewPage(nid: "13976", subTitle: panelAndTalks, isFromTour: false)
+                else if (homeList[indexPath.row].id == "15246") {
+                    loadTourViewPage(nid: "15246", subTitle: panelAndTalks, isFromTour: false)
                 }
                 else {
                     loadMuseumsPage(curretRow: indexPath.row)
@@ -811,7 +813,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     func fetchHomeInfoFromCoredata() {
         if(alreadyFetch == false) {
         let managedContext = getContext()
-
+        let panelAndTalksName = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var homeArray = [HomeEntity]()
@@ -830,7 +832,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                         }
                     
                 }
-                let panelAndTalksName = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
+                
                 let panelAndTalks = "Panels And Talks".lowercased()
                 if homeList.index(where: {$0.name?.lowercased() != panelAndTalks}) != nil {
                     self.homeList.insert(Home(id: "13976", name: panelAndTalksName.uppercased(), image: "panelAndTalks", tourguide_available: "false", sort_id: nil), at: self.homeList.endIndex)
@@ -867,10 +869,9 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                             j = j!+1
                         }
                     }
-                    let panelAndTalksName = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
                     let panelAndTalks = "ندوات و محاورات"
                     if homeList.index(where: {$0.name != panelAndTalks}) != nil {
-                        self.homeList.insert(Home(id: "13976", name: panelAndTalksName, image: "panelAndTalks", tourguide_available: "false", sort_id: nil), at: self.homeList.endIndex)
+                        self.homeList.insert(Home(id: "15246", name: panelAndTalksName, image: "panelAndTalks", tourguide_available: "false", sort_id: nil), at: self.homeList.endIndex)
                     }
                     if(self.homeList.count == 0){
                         if(self.networkReachability?.isReachable == false) {
