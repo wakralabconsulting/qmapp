@@ -147,7 +147,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         else if (pageNameString == NMoQPageName.Facilities) {
             let cafeOrDining = facilitiesList[indexPath.row].title!.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil).replacingOccurrences(of: "&amp;", with: "&", options: .regularExpression, range: nil)
             let engString = cafeOrDining.lowercased()
-            if((engString == "nmoq - cafe & dining") || (cafeOrDining == "cafe &dining - Ar" )) {
+            if((engString == "nmoq - cafe & dining") || (engString == "cafe & dining - ar" )) {
                 loadTourViewPage(selectedRow: indexPath.row, isFromTour: false, pageName: NMoQPageName.Facilities)
             } else {
                 loadPanelDiscussionDetailPage(selectedRow: indexPath.row)

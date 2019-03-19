@@ -190,6 +190,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         culturePassLabel.font = UIFont.exhibitionDateLabelFont
         giftShopLabel.font = UIFont.exhibitionDateLabelFont
         diningLabel.font = UIFont.exhibitionDateLabelFont
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             if(UserDefaults.standard.value(forKey: "firstTimeLaunch") as? String == nil) {
                 loadingView.isHidden = false
                 loadingView.showLoading()
@@ -206,6 +207,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     fetchHomeBannerInfoFromCoredata()
                 }
             }
+    }
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationEn(notification:)), name: NSNotification.Name(homepageNotificationEn), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationAr(notification:)), name: NSNotification.Name(homepageNotificationAr), object: nil)
         self.fetchHomeInfoFromCoredata()
