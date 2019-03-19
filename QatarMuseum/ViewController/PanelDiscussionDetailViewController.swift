@@ -181,41 +181,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             return UITableViewAutomaticDimension
         }
     }
-//    func loadLocationMap( tourDetail : NMoQTourDetail ) {
-//        if (tourDetail.mobileLatitude != nil && tourDetail.mobileLatitude != "" && tourDetail.longitude != nil && tourDetail.longitude != "") {
-//            let latitudeString = (tourDetail.mobileLatitude)!
-//            let longitudeString = (tourDetail.longitude)!
-//            var latitude : Double?
-//            var longitude : Double?
-//            if let lat : Double = Double(latitudeString) {
-//                latitude = lat
-//            }
-//            if let long : Double = Double(longitudeString) {
-//                longitude = long
-//            }
-//
-//            let destinationLocation = CLLocationCoordinate2D(latitude: latitude!,
-//                                                             longitude: longitude!)
-//            let destinationPlacemark = MKPlacemark(coordinate: destinationLocation, addressDictionary: nil)
-//            let destination = MKMapItem(placemark: destinationPlacemark)
-//
-//            let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
-//
-//            let mapDetailView = detailStoryboard.instantiateViewController(withIdentifier: "mapViewId") as! MapViewController
-//            mapDetailView.latitudeString = tourDetail.mobileLatitude
-//            mapDetailView.longiudeString = tourDetail.longitude
-//            mapDetailView.destination = destination
-//            let transition = CATransition()
-//            transition.duration = 0.3
-//            transition.type = kCATransitionFade
-//            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-//            view.window!.layer.add(transition, forKey: kCATransition)
-//            self.present(mapDetailView, animated: false, completion: nil)
-//        }
-//        else {
-//            showLocationErrorPopup()
-//        }
-//    }
+
     func loadLocationMap( mobileLatitude: String?, mobileLongitude: String? ) {
         if (mobileLatitude != nil && mobileLatitude != "" && mobileLongitude != nil && mobileLongitude != "") {
             let latitudeString = (mobileLatitude)!

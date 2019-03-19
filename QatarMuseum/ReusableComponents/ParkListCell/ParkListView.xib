@@ -137,16 +137,24 @@
                                     <constraint firstAttribute="height" constant="186" id="7Sf-eh-yh1"/>
                                 </constraints>
                             </mapView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qvy-y7-67f">
+                                <rect key="frame" x="8" y="61" width="412" height="186"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="Qvy-y7-67f" firstAttribute="top" secondItem="8aU-Ad-4LM" secondAttribute="top" id="3zp-di-gcp"/>
                             <constraint firstItem="nYs-td-A8h" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3X5-9M-dHX" secondAttribute="leading" constant="4" id="6va-lr-y5o"/>
                             <constraint firstItem="nYs-td-A8h" firstAttribute="top" secondItem="3X5-9M-dHX" secondAttribute="top" constant="17" id="7ym-pJ-lJa"/>
                             <constraint firstItem="jrs-5G-HNy" firstAttribute="top" secondItem="nYs-td-A8h" secondAttribute="bottom" constant="12" id="Bxp-U6-uYP"/>
+                            <constraint firstItem="Qvy-y7-67f" firstAttribute="leading" secondItem="8aU-Ad-4LM" secondAttribute="leading" id="H4w-vc-quF"/>
                             <constraint firstItem="8aU-Ad-4LM" firstAttribute="top" secondItem="jrs-5G-HNy" secondAttribute="bottom" constant="12" id="ThN-rX-Pje"/>
+                            <constraint firstItem="Qvy-y7-67f" firstAttribute="trailing" secondItem="8aU-Ad-4LM" secondAttribute="trailing" id="am1-h2-b3U"/>
                             <constraint firstAttribute="height" constant="265" id="b5s-y7-KSc"/>
                             <constraint firstAttribute="trailing" secondItem="8aU-Ad-4LM" secondAttribute="trailing" constant="8" id="bEe-6g-lW3"/>
                             <constraint firstItem="jrs-5G-HNy" firstAttribute="centerX" secondItem="3X5-9M-dHX" secondAttribute="centerX" id="dpq-xC-RMZ"/>
+                            <constraint firstItem="Qvy-y7-67f" firstAttribute="bottom" secondItem="8aU-Ad-4LM" secondAttribute="bottom" id="ejE-A1-vcy"/>
                             <constraint firstItem="8aU-Ad-4LM" firstAttribute="leading" secondItem="3X5-9M-dHX" secondAttribute="leading" constant="8" id="gp9-kJ-PFl"/>
                             <constraint firstItem="nYs-td-A8h" firstAttribute="centerX" secondItem="3X5-9M-dHX" secondAttribute="centerX" id="hrd-46-cWK"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="nYs-td-A8h" secondAttribute="trailing" constant="4" id="vbO-Ql-tZp"/>
@@ -176,6 +184,7 @@
             <connections>
                 <outlet property="descriptionLabel" destination="ULw-9c-LqX" id="ZRf-Uc-0vn"/>
                 <outlet property="locationTitle" destination="nYs-td-A8h" id="qMp-9G-ugZ"/>
+                <outlet property="mapOverlayView" destination="Qvy-y7-67f" id="8v5-Nt-Gs0"/>
                 <outlet property="mapView" destination="8aU-Ad-4LM" id="dPs-4H-kGs"/>
                 <outlet property="timimgTextLabel" destination="94M-yR-f9I" id="rqU-6t-0nu"/>
                 <outlet property="timimgTitle" destination="iPL-G0-CDv" id="iv1-qq-gGH"/>
