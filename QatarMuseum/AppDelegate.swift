@@ -1596,7 +1596,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     //MARK: NMoQSpecialEvent Lst APi
     func getNMoQSpecialEventList(lang:String?) {
          let queue = DispatchQueue(label: "NMoQSpecialEventListThread", qos: .background, attributes: .concurrent)
-        _ = Alamofire.request(QatarMuseumRouter.GetNMoQSpecialEventList()).responseObject(queue:queue) { (response: DataResponse<NMoQTourList>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.GetNMoQSpecialEventList(lang!)).responseObject(queue:queue) { (response: DataResponse<NMoQTourList>) -> Void in
             switch response.result {
             case .success(let data):
                 self.saveOrUpdateTourListCoredata(nmoqTourList: data.nmoqTourList, isTourGuide: false, lang:lang )

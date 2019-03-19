@@ -118,6 +118,7 @@
 		B839831A21196E68007090C8 /* QatarMuseums.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B839831821196E68007090C8 /* QatarMuseums.xcdatamodeld */; };
 		B8436A9121C264CA00045242 /* GoogleMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8436A9021C264CA00045242 /* GoogleMapViewController.swift */; };
 		B843D9E0223F8E14003C1DF6 /* Facilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843D9DF223F8E14003C1DF6 /* Facilities.swift */; };
+		B843D9E2223FAB82003C1DF6 /* FacilitiesDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B843D9E1223FAB82003C1DF6 /* FacilitiesDetail.swift */; };
 		B84BA060217EE3C000FD2C0D /* TokenData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84BA05F217EE3C000FD2C0D /* TokenData.swift */; };
 		B84BA062217F1A6300FD2C0D /* LoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84BA061217F1A6300FD2C0D /* LoginData.swift */; };
 		B84C9D8B21B5497E00DCB95C /* NMoQTour.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84C9D8A21B5497E00DCB95C /* NMoQTour.swift */; };
@@ -380,6 +381,7 @@
 		B839831921196E68007090C8 /* QatarMuseums.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QatarMuseums.xcdatamodel; sourceTree = "<group>"; };
 		B8436A9021C264CA00045242 /* GoogleMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapViewController.swift; sourceTree = "<group>"; };
 		B843D9DF223F8E14003C1DF6 /* Facilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Facilities.swift; sourceTree = "<group>"; };
+		B843D9E1223FAB82003C1DF6 /* FacilitiesDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacilitiesDetail.swift; sourceTree = "<group>"; };
 		B84BA05F217EE3C000FD2C0D /* TokenData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenData.swift; sourceTree = "<group>"; };
 		B84BA061217F1A6300FD2C0D /* LoginData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginData.swift; sourceTree = "<group>"; };
 		B84C9D8A21B5497E00DCB95C /* NMoQTour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQTour.swift; sourceTree = "<group>"; };
@@ -630,6 +632,7 @@
 				B8234F4A21BA7D8600760DEC /* NMoQEntityRegistration.swift */,
 				B8BCE89F21C28ED20083DC35 /* GoogleDirections.swift */,
 				B843D9DF223F8E14003C1DF6 /* Facilities.swift */,
+				B843D9E1223FAB82003C1DF6 /* FacilitiesDetail.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1605,6 +1608,7 @@
 				B8D1228D20C8EE8600772507 /* WebViewController.swift in Sources */,
 				B82729B221778B2F0017EC71 /* VersaPlayerPlaybackDelegate.swift in Sources */,
 				B8294CF220CBF265002AFF72 /* FSCalendarCell.m in Sources */,
+				B843D9E2223FAB82003C1DF6 /* FacilitiesDetail.swift in Sources */,
 				B85BA4AC20D01BC900E7F4D1 /* ExhibitionDetailTableViewCell.swift in Sources */,
 				1B902C00212D56EC00D3055B /* BenefitLabelCell.swift in Sources */,
 				1B7031EE218AFDB200B0E05B /* Notification.swift in Sources */,

@@ -139,6 +139,7 @@ func changeDateFormat(dateString: String?) -> String? {
         inputFormatter.dateFormat = "dd/MM/yyyy"
         let showDate = inputFormatter.date(from: dateString!)
         inputFormatter.dateFormat = "dd MMMM yyyy"
+        inputFormatter.locale = NSLocale(localeIdentifier: "en") as Locale?
         let resultString = inputFormatter.string(from: showDate!)
         return resultString
     }

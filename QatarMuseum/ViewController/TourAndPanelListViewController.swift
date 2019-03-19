@@ -138,23 +138,45 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (pageNameString == NMoQPageName.Tours) {
-            loadTourViewPage(selectedRow: indexPath.row, isFromTour: true)
+            loadTourViewPage(selectedRow: indexPath.row, isFromTour: true, pageName: NMoQPageName.Tours)
         } else if (pageNameString == NMoQPageName.PanelDiscussion) {
-            loadTourViewPage(selectedRow: indexPath.row, isFromTour: false)
-            //loadPanelDiscussionDetailPage(selectedRow: indexPath.row)
+            loadTourViewPage(selectedRow: indexPath.row, isFromTour: false, pageName: NMoQPageName.PanelDiscussion)
         } else if (pageNameString == NMoQPageName.TravelArrangementList) {
             loadTravelDetailPage(selectedIndex: indexPath.row)
         }
         else if (pageNameString == NMoQPageName.Facilities) {
+            let cafeOrDining = facilitiesList[indexPath.row].title!.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil).replacingOccurrences(of: "&amp;", with: "&", options: .regularExpression, range: nil)
+            let engString = cafeOrDining.lowercased()
+            if((engString == "nmoq - cafe & dining") || (cafeOrDining == "cafe &dining - Ar" )) {
+                loadTourViewPage(selectedRow: indexPath.row, isFromTour: false, pageName: NMoQPageName.Facilities)
+            } else {
+                loadPanelDiscussionDetailPage(selectedRow: indexPath.row)
+            }
+            
         }
     }
     
-    func loadTourViewPage(selectedRow: Int?,isFromTour:Bool?) {
+    func loadTourViewPage(selectedRow: Int?,isFromTour:Bool?, pageName: NMoQPageName?) {
         let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
-        tourView.tourDetailId = nmoqTourList[selectedRow!].nid
-        tourView.headerTitle = nmoqTourList[selectedRow!].subtitle
-        tourView.isFromTour = isFromTour
-        tourView.exhibitionsPageNameString = ExhbitionPageName.nmoqTourSecondList
+        
+        if pageName == NMoQPageName.Tours {
+            tourView.isFromTour = true
+            tourView.exhibitionsPageNameString = ExhbitionPageName.nmoqTourSecondList
+            tourView.tourDetailId = nmoqTourList[selectedRow!].nid
+            tourView.headerTitle = nmoqTourList[selectedRow!].subtitle
+        } else if pageName == NMoQPageName.PanelDiscussion {
+            tourView.isFromTour = false
+            tourView.exhibitionsPageNameString = ExhbitionPageName.nmoqTourSecondList
+            tourView.tourDetailId = nmoqTourList[selectedRow!].nid
+            tourView.headerTitle = nmoqTourList[selectedRow!].subtitle
+        } else if pageName == NMoQPageName.Facilities {
+            tourView.isFromTour = false
+            tourView.exhibitionsPageNameString = ExhbitionPageName.facilitiesSecondList
+            tourView.tourDetailId = facilitiesList[selectedRow!].nid
+            tourView.headerTitle = facilitiesList[selectedRow!].title
+        }
+        //tourView.isFromTour = isFromTour
+       // tourView.exhibitionsPageNameString = ExhbitionPageName.nmoqTourSecondList
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionPush
@@ -177,9 +199,8 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     }
     func loadPanelDiscussionDetailPage(selectedRow: Int?) {
         let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
-        //commented bcz now tour and panel have same data
-        panelView.pageNameString = NMoQPanelPage.PanelDetailPage
-        panelView.panelDetailId = nmoqTourList[selectedRow!].nid
+        panelView.pageNameString = NMoQPanelPage.FacilitiesDetailPage
+        panelView.panelDetailId = facilitiesList[selectedRow!].nid
         panelView.selectedRow = selectedRow
         let transition = CATransition()
         transition.duration = 0.25
@@ -245,7 +266,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         }
     }
     func getNMoQSpecialEventList() {
-        _ = Alamofire.request(QatarMuseumRouter.GetNMoQSpecialEventList()).responseObject { (response: DataResponse<NMoQTourList>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.GetNMoQSpecialEventList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<NMoQTourList>) -> Void in
             switch response.result {
             case .success(let data):
                 //                self.nmoqTourList = data.nmoqTourList

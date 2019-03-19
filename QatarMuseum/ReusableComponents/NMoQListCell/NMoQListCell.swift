@@ -102,12 +102,31 @@ class NMoQListCell: UITableViewCell {
     }
     func setFacilitiesListData(facilitiesListData: Facilities?) {
         dayLabel.font = UIFont.homeTitleFont
-        dayLabel.text = facilitiesListData!.title
+        dayLabel.text = facilitiesListData!.title!.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil).replacingOccurrences(of: "&amp;", with: "&", options: .regularExpression, range: nil)
         titleLabel.isHidden = true
         dayLabel.isHidden = false
         dateLabel.isHidden = true
         if ((facilitiesListData?.images?.count)! > 0) {
             if let imageUrl = facilitiesListData?.images![0]{
+                cellImageView.kf.setImage(with: URL(string: imageUrl))
+            }
+        } else {
+            cellImageView.image = UIImage(named: "default_imageX2")
+        }
+        if (cellImageView.image == nil) {
+            cellImageView.image = UIImage(named: "default_imageX2")
+        }
+    }
+    func setFacilitiesDetail(FacilitiesDetailData: FacilitiesDetail?) {
+        dayLabel.font  = UIFont.homeTitleFont
+        dayLabel.text = FacilitiesDetailData?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+        titleLabel.isHidden = true
+        dayLabel.isHidden = false
+        dateLabel.isHidden = true
+        
+        
+        if ((FacilitiesDetailData?.images?.count)! > 0) {
+            if let imageUrl = FacilitiesDetailData?.images![0]{
                 cellImageView.kf.setImage(with: URL(string: imageUrl))
             }
         } else {
