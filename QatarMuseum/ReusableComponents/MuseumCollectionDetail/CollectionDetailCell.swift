@@ -50,12 +50,8 @@ class CollectionDetailCell: UITableViewCell {
         fourthDescription.font = UIFont.englishTitleFont
         secondTitleLine.isHidden = true
         firstTitle.text = collectionValues.categoryCollection?.uppercased().replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-        //firstDescription.text = collectionValues.collectionDescription?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         secondTitle.text = collectionValues.title?.uppercased().replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-        //secondSubTitle.text = collectionValues.about?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         secondDescription.text = collectionValues.body?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-        //thirdDescription.text = collectionValues.shortDesc?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
-        //fourthDescription.text = collectionValues.longDesc?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         if let imageUrl = collectionValues.image {
             firstImageView.kf.setImage(with: URL(string: imageUrl))
         }
@@ -109,42 +105,19 @@ class CollectionDetailCell: UITableViewCell {
     func setParkPlayGroundValues() {
         firstTitle.font = UIFont.settingsUpdateLabelFont
         firstDescription.font = UIFont.collectionFirstDescriptionFont
-        secondTitle.font = UIFont.closeButtonFont
+        secondTitle.font = UIFont.heritageTitleFont
         secondDescription.font = UIFont.englishTitleFont
         thirdDescription.font = UIFont.englishTitleFont
         fourthDescription.font = UIFont.englishTitleFont
         secondTitle.text = "Adventure ship"
         fourthDescription.text = "sfsc dfvdvd dfdfnsdf dhbjbadcb sdcjsdjc sdcnsndcs s casbndjcbsa  sdcjbasjdbcasds dcasdjc sa djcasdcajsdcj s cjasdcjasdc s dcjbasjdbcs csd cjshrfiejvjldgb dvmdnfvkdnvk."
-        //firstTitle.text = collectionValues.categoryCollection?.uppercased().replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-        //secondTitle.text = collectionValues.title?.uppercased().replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-       // secondDescription.text = collectionValues.body?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-        //thirdDescription.text = collectionValues.shortDesc?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
-        //fourthDescription.text = collectionValues.longDesc?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
 //        if let imageUrl = collectionValues.image {
 //            firstImageView.kf.setImage(with: URL(string: imageUrl))
 //        }
 //        if (firstImageView.image == nil) {
 //            firstImageView.image = UIImage(named: "default_imageX2")
 //        }
-        
-//        if (currentRow == 0) {
-//            firstTitle.isHidden = false
-//            firstDescription.isHidden = false
-//            firstTitleLine.isHidden = false
-//            //firstTitleTopConstraint.constant = 30
-//            fistViewTopConstraint.constant = 20
-//            titleview.isHidden = false
-//            titleview.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: titleview.frame.height)
-//            firstTitle.isHidden = false
-//            firstTitleLine.isHidden = false
-//            firstDescription.isHidden = false
-//            //descriptionBottomConstraint.constant = 10
-//            //desctionTopConstraint.constant = 13
-//            firstLineTopConstraint.constant = 8
-//            firstLineHeight.constant = 3
-//            firstViewHeight.constant = 82
-//        }
-//        else {
+
             firstTitle.isHidden = false
             firstDescription.isHidden = true
             firstTitleLine.isHidden = false
@@ -161,7 +134,6 @@ class CollectionDetailCell: UITableViewCell {
             firstTitleLine.isHidden = true
             firstDescription.isHidden = true
             firstViewHeight.constant = 10
-       // }
         
     }
 

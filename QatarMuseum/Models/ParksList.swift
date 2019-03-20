@@ -38,3 +38,54 @@ struct ParksLists: ResponseObjectSerializable {
         }
     }
 }
+struct NMoQParksList: ResponseObjectSerializable, ResponseCollectionSerializable {
+    var title: String? = nil
+    var parkTitle: String? = nil
+    var mainDescription: String? = nil
+    var parkDescription: String? = nil
+    var hoursTitle: String? = nil
+    var hoursDesc: String? = nil
+    var nid: String? = nil
+    var longitude: String? = nil
+    var latitude: String? = nil
+    var locationTitle: String? = nil
+    //var nmoqParks: [String]? = []
+    
+    public init?(response: HTTPURLResponse, representation: AnyObject) {
+        if let representation = representation as? [String: Any] {
+            self.title = representation["Title"] as? String
+            self.parkTitle = representation["park_title "] as? String
+            self.mainDescription = representation["Main_description"] as? String
+            self.parkDescription = representation["park_description"] as? String
+            self.hoursTitle = representation["park_hours_title"] as? String
+            self.hoursDesc = representation["parks_hours_description"] as? String
+            
+            self.nid = representation["nid"] as? String
+            self.longitude = representation["longtitude_nmoq"] as? String
+            self.latitude = representation["latitude_nmoq"] as? String
+            self.locationTitle = representation["location_title"] as? String
+            //self.nmoqParks = representation["nmoq_parks"] as? [String]
+        }
+    }
+    init(title:String?, parkTitle:String?,mainDescription:String?, parkDescription: String?, hoursTitle: String?,hoursDesc:String?, nid:String?, longitude: String?, latitude: String?, locationTitle: String?) {
+        self.title = title
+        self.parkTitle = parkTitle
+        self.mainDescription = mainDescription
+        self.parkDescription = parkDescription
+        self.hoursTitle = hoursTitle
+        self.hoursDesc = hoursDesc
+        self.nid = nid
+        self.longitude = longitude
+        self.latitude = latitude
+        self.locationTitle = locationTitle
+    }
+}
+struct NmoqParksLists: ResponseObjectSerializable {
+    var nmoqParkList: [NMoQParksList]? = []
+    
+    public init?(response: HTTPURLResponse, representation: AnyObject) {
+        if let data = representation as? [[String: Any]] {
+            self.nmoqParkList = NMoQParksList.collection(response: response, representation: data as AnyObject)
+        }
+    }
+}

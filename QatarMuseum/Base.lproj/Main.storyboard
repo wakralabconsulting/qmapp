@@ -6280,19 +6280,28 @@
                                     <outlet property="delegate" destination="4Ag-2h-n8N" id="xCv-Sr-V1z"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XAS-I3-avB" customClass="LoadingView" customModule="QatarMuseums" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="85" width="414" height="651"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="XAS-I3-avB" secondAttribute="trailing" id="7rA-2h-Y3M"/>
                             <constraint firstItem="ABc-Fc-5jU" firstAttribute="top" secondItem="5Dk-xo-jh1" secondAttribute="bottom" id="IRE-HD-KNm"/>
                             <constraint firstItem="JeO-8L-JEF" firstAttribute="top" secondItem="ABc-Fc-5jU" secondAttribute="bottom" id="L01-Dk-kha"/>
+                            <constraint firstItem="XAS-I3-avB" firstAttribute="top" secondItem="5Dk-xo-jh1" secondAttribute="bottom" id="LgX-CB-y7Y"/>
                             <constraint firstAttribute="trailing" secondItem="ABc-Fc-5jU" secondAttribute="trailing" id="VNk-DF-DKq"/>
                             <constraint firstItem="5Dk-xo-jh1" firstAttribute="top" secondItem="Jbx-91-fxd" secondAttribute="bottom" id="WZC-mJ-GEa"/>
                             <constraint firstItem="ABc-Fc-5jU" firstAttribute="leading" secondItem="M7h-bR-LdJ" secondAttribute="leading" id="dNt-h5-PC7"/>
                             <constraint firstItem="5Dk-xo-jh1" firstAttribute="leading" secondItem="M7h-bR-LdJ" secondAttribute="leading" id="pf2-QY-ep3"/>
                             <constraint firstAttribute="trailing" secondItem="5Dk-xo-jh1" secondAttribute="trailing" id="qI6-8i-OUR"/>
+                            <constraint firstItem="JeO-8L-JEF" firstAttribute="top" secondItem="XAS-I3-avB" secondAttribute="bottom" id="u0y-ii-kfe"/>
+                            <constraint firstItem="XAS-I3-avB" firstAttribute="leading" secondItem="M7h-bR-LdJ" secondAttribute="leading" id="uWx-8C-F5M"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="headerView" destination="5Dk-xo-jh1" id="D9d-BW-2HI"/>
+                        <outlet property="loadingView" destination="XAS-I3-avB" id="ByH-sn-nTi"/>
                         <outlet property="parkTableView" destination="ABc-Fc-5jU" id="lqe-V0-Syb"/>
                     </connections>
                 </viewController>
