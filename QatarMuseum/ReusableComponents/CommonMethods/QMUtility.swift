@@ -16,7 +16,8 @@ var homepageNotificationEn = "HomepageNotificationEn"
 var homepageNotificationAr = "HomepageNotificationAr"
 var miaTourNotification = "MiaTourNotification"
 var nmoqAboutNotification = "NmoqAboutNotification"
-var nmoqTourlistNotification = "NmoqTourlistNotification"
+var nmoqTourlistNotificationEn = "NmoqTourlistNotificationEn"
+var nmoqTourlistNotificationAr = "NmoqTourlistNotificationAr"
 var nmoqTravelListNotificationEn = "NmoqTravelListNotificationEn"
 var nmoqTravelListNotificationAr = "NmoqTravelListNotificationAr"
 var publicArtsListNotificationEn = "PublicArtsListNotificationEn"
@@ -31,6 +32,8 @@ var facilitiesListNotificationEn = "FacilitiesListNotificationEn"
 var facilitiesListNotificationAr = "FacilitiesListNotificationAr"
 var nmoqParkListNotificationEn = "NmoqParkListNotificationEn"
 var nmoqParkListNotificationAr = "NmoqParkListNotificationAr"
+var nmoqActivityListNotificationEn = "NmoqParkListNotificationEn"
+var nmoqActivityListNotificationAr = "NmoqParkListNotificationAr"
 // Utility method for presenting alert without any completion handler
 func presentAlert(_ viewController: UIViewController, title: String, message: String) {
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)

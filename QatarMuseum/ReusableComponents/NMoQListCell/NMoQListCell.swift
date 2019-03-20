@@ -65,6 +65,30 @@ class NMoQListCell: UITableViewCell {
             dateLabel.textAlignment = .right
         }
     }
+    func setActivityListDate(activityList: NMoQActivitiesList?) {
+        titleLabel.text = activityList?.subtitle
+        dayLabel.text = activityList?.title
+        dateLabel.isHidden = true
+        if ((activityList?.images?.count)! > 0) {
+            if let imageUrl = activityList?.images![0]{
+                cellImageView.kf.setImage(with: URL(string: imageUrl))
+            }
+        } else {
+            cellImageView.image = UIImage(named: "default_imageX2")
+        }
+        if (cellImageView.image == nil) {
+            cellImageView.image = UIImage(named: "default_imageX2")
+        }
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            titleLabel.textAlignment = .left
+            dayLabel.textAlignment = .left
+            dateLabel.textAlignment = .left
+        } else {
+            titleLabel.textAlignment = .right
+            dayLabel.textAlignment = .right
+            dateLabel.textAlignment = .right
+        }
+    }
     func setTourMiddleDate(tourList: NMoQTourDetail?) {
         dayLabel.font  = UIFont.homeTitleFont
         dayLabel.text = tourList?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
