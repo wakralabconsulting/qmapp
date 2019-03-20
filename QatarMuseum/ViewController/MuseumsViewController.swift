@@ -270,7 +270,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             }
         }
         
-        if((museumId != nil) && ((museumId == "63") || (museumId == "96"))) {
+        if((museumId != nil) && ((museumId == "63") || (museumId == "96") || (museumId == "66") || (museumId == "638"))) {
             if (museumsBottomCollectionView.contentOffset.x <= 0.0) {
                 if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                     previousButton.isHidden = true
@@ -403,13 +403,23 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 view.window!.layer.add(transition, forKey: kCATransition)
                 self.present(musmCollectionnView, animated: false, completion: nil)
             } else if ((selectedItem == "Parks") || (selectedItem == "الحدائق")){
-                let parkView = self.storyboard?.instantiateViewController(withIdentifier: "parkViewId") as! ParksViewController
-                let transition = CATransition()
-                transition.duration = 0.3
-                transition.type = kCATransitionFade
-                transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-                view.window!.layer.add(transition, forKey: kCATransition)
-                self.present(parkView, animated: false, completion: nil)
+                if((museumId == "66") || (museumId == "638")) {
+                    let parkView = self.storyboard?.instantiateViewController(withIdentifier: "parkListId") as! ParkListViewController
+                    let transition = CATransition()
+                    transition.duration = 0.3
+                    transition.type = kCATransitionFade
+                    transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+                    view.window!.layer.add(transition, forKey: kCATransition)
+                    self.present(parkView, animated: false, completion: nil)
+                } else {
+                    let parkView = self.storyboard?.instantiateViewController(withIdentifier: "parkViewId") as! ParksViewController
+                    let transition = CATransition()
+                    transition.duration = 0.3
+                    transition.type = kCATransitionFade
+                    transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+                    view.window!.layer.add(transition, forKey: kCATransition)
+                    self.present(parkView, animated: false, completion: nil)
+                }
             } else if((selectedItem == "Dining") || (selectedItem == "الطعام")) {
                 let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
                 diningView.museumId = museumId

@@ -12,6 +12,10 @@ import Crashlytics
 import Firebase
 import UIKit
 
+enum CollectionPageName {
+    case PlayGroundPark
+    case CollectionDetail
+}
 class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,HeaderViewProtocol,LoadingViewProtocol {
     @IBOutlet weak var collectionTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
@@ -20,6 +24,7 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
     var collectionDetailArray: [CollectionDetail]! = []
     var collectionName: String? = nil
     let networkReachability = NetworkReachabilityManager()
+    var collectionPageNameString : CollectionPageName? = CollectionPageName.CollectionDetail
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCell()
@@ -30,12 +35,13 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
         loadingView.isHidden = false
         loadingView.showLoading()
         loadingView.loadingViewDelegate = self
-        if  (networkReachability?.isReachable)! {
-            getCollectioDetailsFromServer()
-        } else {
-            self.fetchCollectionDetailsFromCoredata()
+        if (collectionPageNameString == CollectionPageName.CollectionDetail) {
+            if  (networkReachability?.isReachable)! {
+                getCollectioDetailsFromServer()
+            } else {
+                self.fetchCollectionDetailsFromCoredata()
+            }
         }
-        
         headerView.headerViewDelegate = self
         headerView.headerBackButton.setImage(UIImage(named: "closeX1"), for: .normal)
         headerView.headerBackButton.contentEdgeInsets = UIEdgeInsets(top: 13, left: 18, bottom:13, right: 18)
@@ -48,32 +54,42 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
         return .lightContent
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return collectionDetailArray.count
+        if (collectionPageNameString == CollectionPageName.CollectionDetail) {
+            return collectionDetailArray.count
+        } else {
+            return 3
+        }
+        
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let collectionCell = tableView.dequeueReusableCell(withIdentifier: "collectionCellId", for: indexPath) as! CollectionDetailCell
-//        if(indexPath.row == collectionListArray.count-1) {
-//            collectionCell.favouriteHeight.constant = 130
-//            collectionCell.favouriteView.isHidden = false
-//            collectionCell.shareView.isHidden = false
-//            collectionCell.favouriteButton.isHidden = false
-//            collectionCell.shareButton.isHidden = false
-//        } else {
+        if (collectionPageNameString == CollectionPageName.CollectionDetail) {
+            //        if(indexPath.row == collectionListArray.count-1) {
+            //            collectionCell.favouriteHeight.constant = 130
+            //            collectionCell.favouriteView.isHidden = false
+            //            collectionCell.shareView.isHidden = false
+            //            collectionCell.favouriteButton.isHidden = false
+            //            collectionCell.shareButton.isHidden = false
+            //        } else {
             collectionCell.favouriteHeight.constant = 0
             collectionCell.favouriteView.isHidden = true
             collectionCell.shareView.isHidden = true
             collectionCell.favouriteButton.isHidden = true
             collectionCell.shareButton.isHidden = true
-//        }
-        collectionCell.favouriteButtonAction = {
-            () in
-            
+            //        }
+            collectionCell.favouriteButtonAction = {
+                () in
+                
+            }
+            collectionCell.shareButtonAction = {
+                () in
+                
+            }
+            collectionCell.setCollectionCellValues(collectionValues: collectionDetailArray[indexPath.row], currentRow: indexPath.row)
+        } else {
+            collectionCell.setParkPlayGroundValues()
         }
-        collectionCell.shareButtonAction = {
-            () in
-            
-        }
-        collectionCell.setCollectionCellValues(collectionValues: collectionDetailArray[indexPath.row], currentRow: indexPath.row)
+
         loadingView.stopLoading()
         loadingView.isHidden = true
         return collectionCell
