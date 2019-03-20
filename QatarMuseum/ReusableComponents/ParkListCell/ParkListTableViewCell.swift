@@ -26,45 +26,51 @@ class ParkListTableViewCell: UITableViewCell {
     }
     func setUI() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
-        tap.delegate = self // This is not required
+        tap.delegate = self 
         mapOverlayView.addGestureRecognizer(tap)
     }
-    func setParkListValues() {
-        titleLabel.font = UIFont.invitationTextFont
-        timimgTitle.font = UIFont.invitationTextFont
-        locationTitle.font = UIFont.invitationTextFont
+    func setParkListValues(parkListData: NMoQParksList?) {
+        titleLabel.font = UIFont.homeTitleFont
+        timimgTitle.font = UIFont.homeTitleFont
+        locationTitle.font = UIFont.homeTitleFont
         descriptionLabel.font = UIFont.englishTitleFont
         timimgTextLabel.font = UIFont.englishTitleFont
-        descriptionLabel.text = "adbj jdhd s kjsdskhksd  ksjdhkks d sjdksjdk sdksdhksjhdhs skdsd cskdcs sd shhsd ksdhk sdh sdhsd  sdj skd  dkhjshdk ksdjk sd skd ksdh skdjhshdk sd sdjshdhskd sd csdjh ksdhs dcksdhc sdkhkshd sdc sdhc sdc shuhriuerferjejke khgfrkgvk vjdfvhkdjhruhtrjlskjsdc ufhshfc sfch sfjcs fc scsfh sch fcisfhcsh  djsh dkfhvkfvndkjfvdk dkfvkdv dvdvd vdvdfv dfv dvhdvdbrfhriuriuerf d s csfhdfics cd"
-        /*
+        
+        titleLabel.text = parkListData?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        descriptionLabel.text = parkListData?.parkDescription?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        timimgTitle.text = parkListData?.hoursTitle?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        timimgTextLabel.text = parkListData?.hoursDesc?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        locationTitle.text = NSLocalizedString("LOCATION_TITLE", comment: "LOCATION_TITLE in ParkList Page").capitalized
+        
          //Details For Map
          var latitudeString  = String()
          var longitudeString = String()
          var latitude : Double?
          var longitude : Double?
          
-         if (facilitiesDetailData?.latitude != nil && facilitiesDetailData?.latitude != "" && facilitiesDetailData?.longtitude != nil && facilitiesDetailData?.longtitude != "") {
-         latitudeString = (facilitiesDetailData?.latitude)!
-         longitudeString = (facilitiesDetailData?.longtitude)!
-         if let lat : Double = Double(latitudeString) {
-         latitude = lat
-         }
-         if let long : Double = Double(longitudeString) {
-         longitude = long
-         }
-         
-         let location = CLLocationCoordinate2D(latitude: latitude!,
-         longitude: longitude!)
-         
-         // 2
-         let span = MKCoordinateSpanMake(0.05, 0.05)
-         let region = MKCoordinateRegion(center: location, span: span)
-         mapView.setRegion(region, animated: true)
-         //3
-         let annotation = MKPointAnnotation()
-         annotation.coordinate = location
-         mapView.addAnnotation(annotation)
- */
+         if (parkListData?.latitude != nil && parkListData?.latitude != "" && parkListData?.longitude != nil && parkListData?.longitude != "") {
+             latitudeString = (parkListData?.latitude)!
+             longitudeString = (parkListData?.longitude)!
+             if let lat : Double = Double(latitudeString) {
+                latitude = lat
+             }
+             if let long : Double = Double(longitudeString) {
+                longitude = long
+             }
+            if(latitude != nil && longitude != nil) {
+                let location = CLLocationCoordinate2D(latitude: latitude!,
+                                                      longitude: longitude!)
+                
+                // 2
+                let span = MKCoordinateSpanMake(0.05, 0.05)
+                let region = MKCoordinateRegion(center: location, span: span)
+                mapView.setRegion(region, animated: true)
+                //3
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = location
+                mapView.addAnnotation(annotation)
+            }
+        }
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

@@ -284,14 +284,6 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 self.saveOrUpdateTourListCoredata(nmoqTourList: data.nmoqTourList, isTourGuide: false)
             // self.collectionTableView.reloadData()
             case .failure( _):
-                //                var errorMessage: String
-                //                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
-                //                                                                comment: "Setting the content of the alert"))
-                //                self.loadingView.stopLoading()
-                //                self.loadingView.noDataView.isHidden = false
-                //                self.loadingView.isHidden = false
-                //                self.loadingView.showNoDataView()
-                //                self.loadingView.noDataLabel.text = errorMessage
                 print("error")
             }
         }

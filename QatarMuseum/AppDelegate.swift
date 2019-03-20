@@ -91,6 +91,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             self.getParksDataFromServer(lang: AR_LANGUAGE)
             self.getFacilitiesListFromServer(lang: ENG_LANGUAGE)
             self.getFacilitiesListFromServer(lang: AR_LANGUAGE)
+            self.getNmoqParkListFromServer(lang: ENG_LANGUAGE)
+            self.getNmoqParkListFromServer(lang: AR_LANGUAGE)
         }
         
     }
@@ -2119,7 +2121,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             switch response.result {
             case .success(let data):
                 self.saveOrUpdateFacilitiesListCoredata(facilitiesList: data.facilitiesList, lang: lang)
-            case .failure(let error):
+            case .failure( _):
                 print("error")
             }
         }
@@ -2340,7 +2342,219 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
-    
+    func getNmoqParkListFromServer(lang:String?)
+    {
+        _ = Alamofire.request(QatarMuseumRouter.GetNmoqParkList(lang ?? ENG_LANGUAGE)).responseObject { (response: DataResponse<NmoqParksLists>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.saveOrUpdateNmoqParkListCoredata(nmoqParkList: data.nmoqParkList, lang: lang)
+            case .failure( _):
+                print("error")
+            }
+        }
+    }
+    //MARK: NmoqPark List Coredata Method
+    func saveOrUpdateNmoqParkListCoredata(nmoqParkList:[NMoQParksList]?,lang:String?) {
+        if ((nmoqParkList?.count)! > 0) {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.nmoqParkListCoreDataInBackgroundThread(nmoqParkList: nmoqParkList, managedContext: managedContext, lang: lang)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.nmoqParkListCoreDataInBackgroundThread(nmoqParkList: nmoqParkList, managedContext : managedContext, lang: lang)
+                }
+            }
+        }
+    }
+    func nmoqParkListCoreDataInBackgroundThread(nmoqParkList:[NMoQParksList]?,managedContext: NSManagedObjectContext,lang:String?) {
+        if (lang == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "NMoQParkListEntity", idKey: "nid", idValue: nil, managedContext: managedContext) as! [NMoQParkListEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... (nmoqParkList?.count)!-1 {
+                    let nmoqParkListDict = nmoqParkList![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "NMoQParkListEntity", idKey: "nid", idValue: nmoqParkListDict.nid, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let nmoqParkListdbDict = fetchResult[0] as! NMoQParkListEntity
+                        nmoqParkListdbDict.title = nmoqParkListDict.title
+                        nmoqParkListdbDict.mainDescription = nmoqParkListDict.mainDescription
+                        nmoqParkListdbDict.parkDescription =  nmoqParkListDict.parkDescription
+                        nmoqParkListdbDict.hoursTitle = nmoqParkListDict.hoursTitle
+                        nmoqParkListdbDict.hoursDesc = nmoqParkListDict.hoursDesc
+                        nmoqParkListdbDict.nid =  nmoqParkListDict.nid
+                        nmoqParkListdbDict.longitude = nmoqParkListDict.longitude
+                        nmoqParkListdbDict.latitude = nmoqParkListDict.locationTitle
+                        nmoqParkListdbDict.locationTitle =  nmoqParkListDict.nid
+                        
+//                        if(facilitiesListDict.images != nil){
+//                            if((facilitiesListDict.images?.count)! > 0) {
+//                                for i in 0 ... (facilitiesListDict.images?.count)!-1 {
+//                                    var facilitiesImage: FacilitiesImgEntity!
+//                                    let facilitiesImgaeArray: FacilitiesImgEntity = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesImgEntity", into: managedContext) as! FacilitiesImgEntity
+//                                    facilitiesImgaeArray.images = facilitiesListDict.images![i]
+//
+//                                    facilitiesImage = facilitiesImgaeArray
+//                                    facilitiesListdbDict.addToFacilitiesImgRelation(facilitiesImage)
+//                                    do {
+//                                        try managedContext.save()
+//                                    } catch let error as NSError {
+//                                        print("Could not save. \(error), \(error.userInfo)")
+//                                    }
+//                                }
+//                            }
+//                        }
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    } else {
+                        //save
+                        self.saveNmoqParkListToCoreData(nmoqParkListDict: nmoqParkListDict, managedObjContext: managedContext, lang: lang)
+                    }
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(nmoqParkListNotificationEn), object: self)
+            } else {
+                for i in 0 ... (nmoqParkList?.count)!-1 {
+                    let nmoqParkListDict : NMoQParksList?
+                    nmoqParkListDict = nmoqParkList?[i]
+                    self.saveNmoqParkListToCoreData(nmoqParkListDict: nmoqParkListDict!, managedObjContext: managedContext, lang: lang)
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(nmoqParkListNotificationEn), object: self)
+            }
+        } else {
+            let fetchData = checkAddedToCoredata(entityName: "NMoQParkListEntityAr", idKey: "nid", idValue: nil, managedContext: managedContext) as! [NMoQParkListEntityAr]
+            if (fetchData.count > 0) {
+                for i in 0 ... (nmoqParkList?.count)!-1 {
+                    let nmoqParkListDict = nmoqParkList![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "NMoQParkListEntityAr", idKey: "nid", idValue: nmoqParkListDict.nid, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let nmoqParkListdbDict = fetchResult[0] as! NMoQParkListEntityAr
+                        nmoqParkListdbDict.title = nmoqParkListDict.title
+                        nmoqParkListdbDict.mainDescription = nmoqParkListDict.mainDescription
+                        nmoqParkListdbDict.parkDescription =  nmoqParkListDict.parkDescription
+                        nmoqParkListdbDict.hoursTitle = nmoqParkListDict.hoursTitle
+                        nmoqParkListdbDict.hoursDesc = nmoqParkListDict.hoursDesc
+                        nmoqParkListdbDict.nid =  nmoqParkListDict.nid
+                        nmoqParkListdbDict.longitude = nmoqParkListDict.longitude
+                        nmoqParkListdbDict.latitude = nmoqParkListDict.latitude
+                        nmoqParkListdbDict.locationTitle =  nmoqParkListDict.locationTitle
+                        
+//                        if(facilitiesListDict.images != nil){
+//                            if((facilitiesListDict.images?.count)! > 0) {
+//                                for i in 0 ... (facilitiesListDict.images?.count)!-1 {
+//                                    var facilitiesImage: FacilitiesImgEntityAr!
+//                                    let facilitiesImgaeArray: FacilitiesImgEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesImgEntityAr", into: managedContext) as! FacilitiesImgEntityAr
+//                                    facilitiesImgaeArray.images = facilitiesListDict.images?[i]
+//
+//                                    facilitiesImage = facilitiesImgaeArray
+//                                    facilitiesListdbDict.addToFacilitiesImgRelationAr(facilitiesImage)
+//                                    do {
+//                                        try managedContext.save()
+//                                    } catch let error as NSError {
+//                                        print("Could not save. \(error), \(error.userInfo)")
+//                                    }
+//                                }
+//                            }
+//                        }
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    } else {
+                        //save
+                        self.saveNmoqParkListToCoreData(nmoqParkListDict: nmoqParkListDict, managedObjContext: managedContext, lang: lang)
+                    }
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(nmoqParkListNotificationAr), object: self)
+            } else {
+                for i in 0 ... (nmoqParkList?.count)!-1 {
+                    let nmoqParkListDict : NMoQParksList?
+                    nmoqParkListDict = nmoqParkList![i]
+                    self.saveNmoqParkListToCoreData(nmoqParkListDict: nmoqParkListDict!, managedObjContext: managedContext, lang: lang)
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(nmoqParkListNotificationAr), object: self)
+            }
+        }
+    }
+    func saveNmoqParkListToCoreData(nmoqParkListDict: NMoQParksList, managedObjContext: NSManagedObjectContext,lang:String?) {
+        if (lang == ENG_LANGUAGE) {
+            let nmoqParkListdbDict: NMoQParkListEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoQParkListEntity", into: managedObjContext) as! NMoQParkListEntity
+            nmoqParkListdbDict.title = nmoqParkListDict.title
+            nmoqParkListdbDict.mainDescription = nmoqParkListDict.mainDescription
+            nmoqParkListdbDict.parkDescription =  nmoqParkListDict.parkDescription
+            nmoqParkListdbDict.hoursTitle = nmoqParkListDict.hoursTitle
+            nmoqParkListdbDict.hoursDesc = nmoqParkListDict.hoursDesc
+            nmoqParkListdbDict.nid =  nmoqParkListDict.nid
+            nmoqParkListdbDict.longitude = nmoqParkListDict.longitude
+            nmoqParkListdbDict.latitude = nmoqParkListDict.latitude
+            nmoqParkListdbDict.locationTitle =  nmoqParkListDict.locationTitle
+            
+            
+//            if(facilitiesListDict.images != nil){
+//                if((facilitiesListDict.images?.count)! > 0) {
+//                    for i in 0 ... (facilitiesListDict.images?.count)!-1 {
+//                        var facilitiesImage: FacilitiesImgEntity!
+//                        let facilitiesImgaeArray: FacilitiesImgEntity = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesImgEntity", into: managedObjContext) as! FacilitiesImgEntity
+//                        facilitiesImgaeArray.images = facilitiesListDict.images![i]
+//
+//                        facilitiesImage = facilitiesImgaeArray
+//                        facilitiesListInfo.addToFacilitiesImgRelation(facilitiesImage)
+//                        do {
+//                            try managedObjContext.save()
+//                        } catch let error as NSError {
+//                            print("Could not save. \(error), \(error.userInfo)")
+//                        }
+//                    }
+//                }
+//            }
+        } else {
+            let nmoqParkListdbDict: NMoQParkListEntityAr = NSEntityDescription.insertNewObject(forEntityName: "NMoQParkListEntityAr", into: managedObjContext) as! NMoQParkListEntityAr
+            nmoqParkListdbDict.title = nmoqParkListDict.title
+            nmoqParkListdbDict.mainDescription = nmoqParkListDict.mainDescription
+            nmoqParkListdbDict.parkDescription =  nmoqParkListDict.parkDescription
+            nmoqParkListdbDict.hoursTitle = nmoqParkListDict.hoursTitle
+            nmoqParkListdbDict.hoursDesc = nmoqParkListDict.hoursDesc
+            nmoqParkListdbDict.nid =  nmoqParkListDict.nid
+            nmoqParkListdbDict.longitude = nmoqParkListDict.longitude
+            nmoqParkListdbDict.latitude = nmoqParkListDict.latitude
+            nmoqParkListdbDict.locationTitle =  nmoqParkListDict.locationTitle
+            
+            
+//            if(facilitiesListDict.images != nil){
+//                if((facilitiesListDict.images?.count)! > 0) {
+//                    for i in 0 ... (facilitiesListDict.images?.count)!-1 {
+//                        var facilitiesImage: FacilitiesImgEntityAr!
+//                        let facilitiesImgaeArray: FacilitiesImgEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesImgEntityAr", into: managedObjContext) as! FacilitiesImgEntityAr
+//                        facilitiesImgaeArray.images = facilitiesListDict.images?[i]
+//
+//                        facilitiesImage = facilitiesImgaeArray
+//                        facilitiesListInfo.addToFacilitiesImgRelationAr(facilitiesImage)
+//                        do {
+//                            try managedObjContext.save()
+//                        } catch let error as NSError {
+//                            print("Could not save. \(error), \(error.userInfo)")
+//                        }
+//                    }
+//                }
+//            }
+        }
+        do {
+            try managedObjContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
     func deleteExistingEvent(managedContext:NSManagedObjectContext,entityName : String?) ->Bool? {
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName!)
