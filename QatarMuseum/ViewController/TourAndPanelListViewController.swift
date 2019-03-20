@@ -145,13 +145,21 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
             loadTravelDetailPage(selectedIndex: indexPath.row)
         }
         else if (pageNameString == NMoQPageName.Facilities) {
-            let cafeOrDining = facilitiesList[indexPath.row].title!.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil).replacingOccurrences(of: "&amp;", with: "&", options: .regularExpression, range: nil)
-            let engString = cafeOrDining.lowercased()
-            if((engString == "nmoq - cafe & dining") || (engString == "cafe & dining - ar" )) {
+            if((facilitiesList[indexPath.row].nid == "15256") || (facilitiesList[indexPath.row].nid == "15341")) {
                 loadTourViewPage(selectedRow: indexPath.row, isFromTour: false, pageName: NMoQPageName.Facilities)
             } else {
                 loadPanelDiscussionDetailPage(selectedRow: indexPath.row)
             }
+            
+            
+            
+//            let cafeOrDining = facilitiesList[indexPath.row].title!.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil).replacingOccurrences(of: "&amp;", with: "&", options: .regularExpression, range: nil)
+//            let engString = cafeOrDining.lowercased()
+//            if((engString.contains("cafe")) || (engString.contains("dining"))) {
+//                loadTourViewPage(selectedRow: indexPath.row, isFromTour: false, pageName: NMoQPageName.Facilities)
+//            } else {
+//                loadPanelDiscussionDetailPage(selectedRow: indexPath.row)
+//            }
             
         }
     }
@@ -818,7 +826,6 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "FacilitiesEntity")
                 facilitiesListArray = (try managedContext.fetch(fetchRequest) as? [FacilitiesEntity])!
                 if (facilitiesListArray.count > 0) {
-                   // facilitiesListArray.sort(by: {$0.sortId < $1.sortId})
                     for i in 0 ... facilitiesListArray.count-1 {
                         let facilitiesListDict = facilitiesListArray[i]
                         var imagesArray : [String] = []
@@ -836,6 +843,10 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                         } else {
                             self.loadingView.showNoDataView()
                         }
+                    } else {
+                        if self.facilitiesList.first(where: {$0.sortId != "" && $0.sortId != nil} ) != nil {
+                            self.facilitiesList = self.facilitiesList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
+                        }
                     }
                     collectionTableView.reloadData()
                 } else{
@@ -851,7 +862,6 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 //fetchRequest.predicate = NSPredicate.init(format: "isTourGuide == \(isTourGuide)")
                 facilitiesListArray = (try managedContext.fetch(fetchRequest) as? [FacilitiesEntityAr])!
                 if (facilitiesListArray.count > 0) {
-                    //facilitiesListArray.sort(by: {$0.sortId < $1.sortId})
                     for i in 0 ... facilitiesListArray.count-1 {
                         let facilitiesListDict = facilitiesListArray[i]
                         var imagesArray : [String] = []
@@ -868,6 +878,10 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                             self.showNoNetwork()
                         } else {
                             self.loadingView.showNoDataView()
+                        }
+                    } else {
+                        if self.facilitiesList.first(where: {$0.sortId != "" && $0.sortId != nil} ) != nil {
+                            self.facilitiesList = self.facilitiesList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
                         }
                     }
                     collectionTableView.reloadData()
