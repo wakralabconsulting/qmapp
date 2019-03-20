@@ -211,7 +211,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .GetFacilitiesDetail( _):
             return "/facility-detail_by_category.json"
         case .GetNmoqParkList( _):
-            return "/nmoq_parks_detail.json"
+            return "/nmoq_category.json"
         }
     }
 

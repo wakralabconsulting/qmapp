@@ -2607,14 +2607,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     if(fetchResult.count != 0) {
                         let nmoqParkListdbDict = fetchResult[0] as! NMoQParkListEntity
                         nmoqParkListdbDict.title = nmoqParkListDict.title
+                        nmoqParkListdbDict.parkTitle = nmoqParkListDict.parkTitle
                         nmoqParkListdbDict.mainDescription = nmoqParkListDict.mainDescription
                         nmoqParkListdbDict.parkDescription =  nmoqParkListDict.parkDescription
                         nmoqParkListdbDict.hoursTitle = nmoqParkListDict.hoursTitle
                         nmoqParkListdbDict.hoursDesc = nmoqParkListDict.hoursDesc
                         nmoqParkListdbDict.nid =  nmoqParkListDict.nid
                         nmoqParkListdbDict.longitude = nmoqParkListDict.longitude
-                        nmoqParkListdbDict.latitude = nmoqParkListDict.locationTitle
-                        nmoqParkListdbDict.locationTitle =  nmoqParkListDict.nid
+                        nmoqParkListdbDict.latitude = nmoqParkListDict.latitude
+                        nmoqParkListdbDict.locationTitle =  nmoqParkListDict.locationTitle
                         
 //                        if(facilitiesListDict.images != nil){
 //                            if((facilitiesListDict.images?.count)! > 0) {
@@ -2664,6 +2665,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     if(fetchResult.count != 0) {
                         let nmoqParkListdbDict = fetchResult[0] as! NMoQParkListEntityAr
                         nmoqParkListdbDict.title = nmoqParkListDict.title
+                        nmoqParkListdbDict.parkTitle = nmoqParkListDict.parkTitle
                         nmoqParkListdbDict.mainDescription = nmoqParkListDict.mainDescription
                         nmoqParkListdbDict.parkDescription =  nmoqParkListDict.parkDescription
                         nmoqParkListdbDict.hoursTitle = nmoqParkListDict.hoursTitle
@@ -2717,6 +2719,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if (lang == ENG_LANGUAGE) {
             let nmoqParkListdbDict: NMoQParkListEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoQParkListEntity", into: managedObjContext) as! NMoQParkListEntity
             nmoqParkListdbDict.title = nmoqParkListDict.title
+            nmoqParkListdbDict.parkTitle = nmoqParkListDict.parkTitle
             nmoqParkListdbDict.mainDescription = nmoqParkListDict.mainDescription
             nmoqParkListdbDict.parkDescription =  nmoqParkListDict.parkDescription
             nmoqParkListdbDict.hoursTitle = nmoqParkListDict.hoursTitle
@@ -2747,6 +2750,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         } else {
             let nmoqParkListdbDict: NMoQParkListEntityAr = NSEntityDescription.insertNewObject(forEntityName: "NMoQParkListEntityAr", into: managedObjContext) as! NMoQParkListEntityAr
             nmoqParkListdbDict.title = nmoqParkListDict.title
+            nmoqParkListdbDict.parkTitle = nmoqParkListDict.parkTitle
             nmoqParkListdbDict.mainDescription = nmoqParkListDict.mainDescription
             nmoqParkListdbDict.parkDescription =  nmoqParkListDict.parkDescription
             nmoqParkListdbDict.hoursTitle = nmoqParkListDict.hoursTitle

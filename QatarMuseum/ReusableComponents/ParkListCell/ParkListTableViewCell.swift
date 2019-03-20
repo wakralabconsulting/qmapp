@@ -36,7 +36,7 @@ class ParkListTableViewCell: UITableViewCell {
         descriptionLabel.font = UIFont.englishTitleFont
         timimgTextLabel.font = UIFont.englishTitleFont
         
-        titleLabel.text = parkListData?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+        titleLabel.text = parkListData?.parkTitle?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         descriptionLabel.text = parkListData?.parkDescription?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         timimgTitle.text = parkListData?.hoursTitle?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         timimgTextLabel.text = parkListData?.hoursDesc?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
