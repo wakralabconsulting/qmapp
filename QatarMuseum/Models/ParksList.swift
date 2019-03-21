@@ -89,3 +89,37 @@ struct NmoqParksLists: ResponseObjectSerializable {
         }
     }
 }
+
+struct NMoQPark: ResponseObjectSerializable, ResponseCollectionSerializable {
+    var images: [String]? = []
+    var nid: String? = nil
+    var sortId: String? = nil
+    var title: String? = nil
+
+    public init?(response: HTTPURLResponse, representation: AnyObject) {
+        if let representation = representation as? [String: Any] {
+            self.images = representation["images"] as? [String]
+            self.nid = representation["Nid"] as? String
+            self.sortId = representation["sort_id"] as? String
+            self.title = representation["title"] as? String
+        }
+    }
+    
+    init (title:String?, sortId: String?,nid: String?, images: [String]?) {
+        self.title = title
+        self.images = images
+        self.sortId = sortId
+        self.nid = nid
+    }
+}
+
+struct NMoQParks: ResponseObjectSerializable {
+    var nmoqParks: [NMoQPark]? = []
+    
+    public init?(response: HTTPURLResponse, representation: AnyObject) {
+        if let data = representation as? [[String: Any]] {
+            self.nmoqParks = NMoQPark.collection(response: response, representation: data as AnyObject)
+        }
+    }
+}
+
