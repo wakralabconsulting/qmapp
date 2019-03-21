@@ -55,7 +55,7 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (nmoqParkList.count > 0) {
-            return 4
+            return 2 + nmoqParks.count
         }
         return 0
     }
@@ -73,11 +73,7 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             cell.textLabel?.text = nmoqParkList[0].mainDescription?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
             return cell
-        } else if ((indexPath.row == 1) || (indexPath.row == 2)) {
-            let parkListCell = tableView.dequeueReusableCell(withIdentifier: "nMoQListCellId", for: indexPath) as! NMoQListCell
-            parkListCell.selectionStyle = .none
-            return parkListCell
-        } else {
+        } else if indexPath.row > nmoqParks.count {
             let parkListSecondCell = parkTableView.dequeueReusableCell(withIdentifier: "parkListCellId", for: indexPath) as! ParkListTableViewCell
             parkListSecondCell.selectionStyle = .none
             parkListSecondCell.setParkListValues(parkListData: nmoqParkList[0])
@@ -86,8 +82,17 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 self.loadLocationMap(mobileLatitude: self.nmoqParkList[0].latitude, mobileLongitude: self.nmoqParkList[0].longitude)
             }
             return parkListSecondCell
+        } else {
+            let parkListCell = tableView.dequeueReusableCell(withIdentifier: "nMoQListCellId", for: indexPath) as! NMoQListCell
+            parkListCell.selectionStyle = .none
+            if (nmoqParks.count > 0) {
+                parkListCell.setParkListData(parkList: nmoqParks[indexPath.row - 1])
+            }
+            
+            return parkListCell
         }
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if ((indexPath.row == 1) || (indexPath.row == 2)) {
             let heightValue = UIScreen.main.bounds.height/100
