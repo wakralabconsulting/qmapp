@@ -94,7 +94,7 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if ((indexPath.row == 1) || (indexPath.row == 2)) {
+        if ((indexPath.row != 0) && (indexPath.row <= nmoqParks.count)) {
             let heightValue = UIScreen.main.bounds.height/100
             return heightValue*27
         } else {
@@ -104,15 +104,17 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (indexPath.row == 1) {
-            loadParkPlayGroundDetail()
-        } else if (indexPath.row == 2) {
-           loadParkHeritageGardenDetail()
+            loadParkPlayGroundDetail(parkList: nmoqParks[indexPath.row - 1])
+        } else if ((indexPath.row != 0) && (indexPath.row <= nmoqParks.count)) {
+           loadParkHeritageGardenDetail(parkList: nmoqParks[indexPath.row - 1])
         }
     }
-    func loadParkPlayGroundDetail() {
+    
+    func loadParkPlayGroundDetail(parkList: NMoQPark) {
         let collectionDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "collectionDetailId") as! CollectionDetailViewController
-       // collectionDetailView.collectionName = collection[currentRow!].name?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+       // collectionDetailView.collectionName = parkList.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         collectionDetailView.collectionPageNameString = CollectionPageName.PlayGroundPark
+        collectionDetailView.nid = parkList.nid
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionFade
@@ -120,7 +122,8 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(collectionDetailView, animated: false, completion: nil)
     }
-    func loadParkHeritageGardenDetail() {
+    
+    func loadParkHeritageGardenDetail(parkList: NMoQPark) {
         let parksView =  self.storyboard?.instantiateViewController(withIdentifier: "parkViewId") as! ParksViewController
         parksView.parkPageNameString = ParkPageName.NMoQPark
         let transition = CATransition()
@@ -181,7 +184,6 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         _ = Alamofire.request(QatarMuseumRouter.GetNmoqListParks(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<NMoQParks>) -> Void in
             switch response.result {
             case .success(let data):
-                print(data)
                 self.saveOrUpdateNmoqParksCoredata(nmoqParkList: data.nmoqParks)
             case .failure( _):
                 print("error")

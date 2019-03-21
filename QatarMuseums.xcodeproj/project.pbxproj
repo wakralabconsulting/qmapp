@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B10D12D2244136100AA77E9 /* NMoQParkDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B10D12C2244136100AA77E9 /* NMoQParkDetail.swift */; };
 		1B373E95212C794700EE8DD1 /* CulturePassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B373E94212C794600EE8DD1 /* CulturePassViewController.swift */; };
 		1B3C505721270F260034E560 /* ArtifactNumberPadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3C505621270F260034E560 /* ArtifactNumberPadViewController.swift */; };
 		1B3C505B212AB3460034E560 /* ArtifactNumberPadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3C5059212AB3460034E560 /* ArtifactNumberPadCell.swift */; };
@@ -239,6 +240,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1B10D12C2244136100AA77E9 /* NMoQParkDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQParkDetail.swift; sourceTree = "<group>"; };
 		1B373E94212C794600EE8DD1 /* CulturePassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CulturePassViewController.swift; sourceTree = "<group>"; };
 		1B3C505621270F260034E560 /* ArtifactNumberPadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactNumberPadViewController.swift; sourceTree = "<group>"; };
 		1B3C5059212AB3460034E560 /* ArtifactNumberPadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactNumberPadCell.swift; sourceTree = "<group>"; };
@@ -635,6 +637,7 @@
 				B843D9DF223F8E14003C1DF6 /* Facilities.swift */,
 				B843D9E1223FAB82003C1DF6 /* FacilitiesDetail.swift */,
 				B841715E224256D300B58E27 /* NMoQActivitiesList.swift */,
+				1B10D12C2244136100AA77E9 /* NMoQParkDetail.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1605,6 +1608,7 @@
 				B80DC05920C792E400E28034 /* AppDelegate.swift in Sources */,
 				B80DC08C20C798BA00E28034 /* HomeViewController.swift in Sources */,
 				B807FCD1218ECFE5003CC51E /* CulturePassCardBackViewController.swift in Sources */,
+				1B10D12D2244136100AA77E9 /* NMoQParkDetail.swift in Sources */,
 				B8EAB7BD20CA424300C001B2 /* LunarFormatter.swift in Sources */,
 				B80DC08E20C798E400E28034 /* HomeCollectionViewCell.swift in Sources */,
 				B82729BB21778B2F0017EC71 /* VersaPlayerControlsExtension.swift in Sources */,
