@@ -34,6 +34,9 @@ var nmoqParkListNotificationEn = "NmoqParkListNotificationEn"
 var nmoqParkListNotificationAr = "NmoqParkListNotificationAr"
 var nmoqActivityListNotificationEn = "NmoqParkListNotificationEn"
 var nmoqActivityListNotificationAr = "NmoqParkListNotificationAr"
+var nmoqParkNotificationEn = "NmoqParkNotificationEn"
+var nmoqParkNotificationAr = "NmoqParkNotificationAr"
+
 // Utility method for presenting alert without any completion handler
 func presentAlert(_ viewController: UIViewController, title: String, message: String) {
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)

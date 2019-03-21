@@ -2917,7 +2917,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     nmoqParkListDict = nmoqParkList![i]
                     self.saveNmoqParkToCoreData(nmoqParkListDict: nmoqParkListDict!, managedObjContext: managedContext, lang: lang)
                 }
-                NotificationCenter.default.post(name: NSNotification.Name(nmoqParkNotificationEnAr), object: self)
+                NotificationCenter.default.post(name: NSNotification.Name(nmoqParkNotificationAr), object: self)
             }
         }
     }
