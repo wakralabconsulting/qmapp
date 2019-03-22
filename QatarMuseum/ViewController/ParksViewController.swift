@@ -55,7 +55,20 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             if  (networkReachability?.isReachable)! {
                 getNMoQParkDetailFromServer()
             } else {
-                self.fetchNMoQParkDetailFromCoredata()
+                //self.fetchNMoQParkDetailFromCoredata()
+                self.showNoNetwork()
+                if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                    closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
+                }
+                else {
+                    closeButton.frame = CGRect(x: self.view.frame.width-50, y: 30, width: 40, height: 40)
+                }
+                closeButton.setImage(UIImage(named: "closeX1"), for: .normal)
+                closeButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom:12, right: 12)
+                
+                closeButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+                closeButton.addTarget(self, action: #selector(closeTouchDownAction), for: .touchDown)
+                view.addSubview(closeButton)
             }
         }
     }
@@ -461,7 +474,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 switch response.result {
                 case .success(let data):
                     self.nmoqParkDetailArray = data.nmoqParksDetail
-                    self.saveOrUpdateNmoqParkDetailCoredata(nmoqParkList: data.nmoqParksDetail)
+                   // self.saveOrUpdateNmoqParkDetailCoredata(nmoqParkList: data.nmoqParksDetail)
                     self.parksTableView.reloadData()
                     if(self.nmoqParkDetailArray.count > 0) {
                         if ( (self.nmoqParkDetailArray[0].images?.count)! > 0) {

@@ -52,7 +52,8 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
             if  (networkReachability?.isReachable)! {
                 getNMoQParkDetailFromServer()
             } else {
-                self.fetchNMoQParkDetailFromCoredata()
+               // self.fetchNMoQParkDetailFromCoredata()
+                self.showNoNetwork()
             }
         }
         headerView.headerViewDelegate = self
@@ -148,7 +149,7 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
                             self.nmoqParkDetailArray = self.nmoqParkDetailArray.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
                         }
                     }
-                    self.saveOrUpdateNmoqParkDetailCoredata(nmoqParkList: data.nmoqParksDetail)
+                    //self.saveOrUpdateNmoqParkDetailCoredata(nmoqParkList: data.nmoqParksDetail)
                     self.collectionTableView.reloadData()
                     self.loadingView.stopLoading()
                     self.loadingView.isHidden = true
