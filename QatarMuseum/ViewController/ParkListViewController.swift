@@ -31,6 +31,11 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         loadingView.loadingViewDelegate = self
         headerView.headerViewDelegate = self
         headerView.headerTitle.text = NSLocalizedString("PARKS_HEADER_LABEL", comment: "PARKS_HEADER_LABEL Label in the Exhibitions page").uppercased()
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
+        } else {
+            headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+        }
         fetchNmoqParkListFromCoredata()
         fetchNmoqParkFromCoredata()
         NotificationCenter.default.addObserver(self, selector: #selector(ParkListViewController.receiveNmoqParkListNotificationEn(notification:)), name: NSNotification.Name(heritageListNotificationEn), object: nil)
@@ -50,6 +55,7 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func registerCell() {
         self.parkTableView.register(UINib(nibName: "ParkListView", bundle: nil), forCellReuseIdentifier: "parkListCellId")
         self.parkTableView.register(UINib(nibName: "NMoQListCell", bundle: nil), forCellReuseIdentifier: "nMoQListCellId")
+        self.parkTableView.register(UINib(nibName: "NMoQPArkTopCell", bundle: nil), forCellReuseIdentifier: "parkTopCellId")
         parkTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
 
     }
@@ -64,14 +70,11 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         self.loadingView.stopLoading()
         self.loadingView.isHidden = true
         if (indexPath.row == 0) {
-            let cell = parkTableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as UITableViewCell
-            cell.textLabel?.numberOfLines = 0
-            cell.selectionStyle = .none
-            cell.textLabel?.textAlignment = .center
-            cell.backgroundColor = UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1)
-            cell.textLabel!.font = UIFont.collectionFirstDescriptionFont
+            let cell = parkTableView.dequeueReusableCell(withIdentifier: "parkTopCellId", for: indexPath) as! NMoQParkTopTableViewCell
+            cell.setTopCellDescription(topDescription: nmoqParkList[0].mainDescription)
             
-            cell.textLabel?.text = nmoqParkList[0].mainDescription?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
+            
+            //cell.textLabel?.text = nmoqParkList[0].mainDescription?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
             return cell
         } else if indexPath.row > nmoqParks.count {
             let parkListSecondCell = parkTableView.dequeueReusableCell(withIdentifier: "parkListCellId", for: indexPath) as! ParkListTableViewCell
@@ -126,6 +129,7 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func loadParkHeritageGardenDetail(parkList: NMoQPark) {
         let parksView =  self.storyboard?.instantiateViewController(withIdentifier: "parkViewId") as! ParksViewController
         parksView.parkPageNameString = ParkPageName.NMoQPark
+        parksView.parkDetailId = parkList.nid
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionFade
@@ -229,24 +233,6 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         nmoqParkListdbDict.latitude = nmoqParkListDict.latitude
                         nmoqParkListdbDict.locationTitle =  nmoqParkListDict.locationTitle
                         
-                        //                        if(facilitiesListDict.images != nil){
-                        //                            if((facilitiesListDict.images?.count)! > 0) {
-                        //                                for i in 0 ... (facilitiesListDict.images?.count)!-1 {
-                        //                                    var facilitiesImage: FacilitiesImgEntity!
-                        //                                    let facilitiesImgaeArray: FacilitiesImgEntity = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesImgEntity", into: managedContext) as! FacilitiesImgEntity
-                        //                                    facilitiesImgaeArray.images = facilitiesListDict.images![i]
-                        //
-                        //                                    facilitiesImage = facilitiesImgaeArray
-                        //                                    facilitiesListdbDict.addToFacilitiesImgRelation(facilitiesImage)
-                        //                                    do {
-                        //                                        try managedContext.save()
-                        //                                    } catch let error as NSError {
-                        //                                        print("Could not save. \(error), \(error.userInfo)")
-                        //                                    }
-                        //                                }
-                        //                            }
-                        //                        }
-                        
                         do{
                             try managedContext.save()
                         }
@@ -287,24 +273,6 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         nmoqParkListdbDict.latitude = nmoqParkListDict.latitude
                         nmoqParkListdbDict.locationTitle =  nmoqParkListDict.locationTitle
                         
-                        //                        if(facilitiesListDict.images != nil){
-                        //                            if((facilitiesListDict.images?.count)! > 0) {
-                        //                                for i in 0 ... (facilitiesListDict.images?.count)!-1 {
-                        //                                    var facilitiesImage: FacilitiesImgEntityAr!
-                        //                                    let facilitiesImgaeArray: FacilitiesImgEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesImgEntityAr", into: managedContext) as! FacilitiesImgEntityAr
-                        //                                    facilitiesImgaeArray.images = facilitiesListDict.images?[i]
-                        //
-                        //                                    facilitiesImage = facilitiesImgaeArray
-                        //                                    facilitiesListdbDict.addToFacilitiesImgRelationAr(facilitiesImage)
-                        //                                    do {
-                        //                                        try managedContext.save()
-                        //                                    } catch let error as NSError {
-                        //                                        print("Could not save. \(error), \(error.userInfo)")
-                        //                                    }
-                        //                                }
-                        //                            }
-                        //                        }
-                        
                         do{
                             try managedContext.save()
                         }
@@ -341,24 +309,6 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
             nmoqParkListdbDict.latitude = nmoqParkListDict.latitude
             nmoqParkListdbDict.locationTitle =  nmoqParkListDict.locationTitle
             
-            
-            //            if(facilitiesListDict.images != nil){
-            //                if((facilitiesListDict.images?.count)! > 0) {
-            //                    for i in 0 ... (facilitiesListDict.images?.count)!-1 {
-            //                        var facilitiesImage: FacilitiesImgEntity!
-            //                        let facilitiesImgaeArray: FacilitiesImgEntity = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesImgEntity", into: managedObjContext) as! FacilitiesImgEntity
-            //                        facilitiesImgaeArray.images = facilitiesListDict.images![i]
-            //
-            //                        facilitiesImage = facilitiesImgaeArray
-            //                        facilitiesListInfo.addToFacilitiesImgRelation(facilitiesImage)
-            //                        do {
-            //                            try managedObjContext.save()
-            //                        } catch let error as NSError {
-            //                            print("Could not save. \(error), \(error.userInfo)")
-            //                        }
-            //                    }
-            //                }
-            //            }
         } else {
             let nmoqParkListdbDict: NMoQParkListEntityAr = NSEntityDescription.insertNewObject(forEntityName: "NMoQParkListEntityAr", into: managedObjContext) as! NMoQParkListEntityAr
             nmoqParkListdbDict.title = nmoqParkListDict.title
@@ -371,25 +321,6 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
             nmoqParkListdbDict.longitude = nmoqParkListDict.longitude
             nmoqParkListdbDict.latitude = nmoqParkListDict.latitude
             nmoqParkListdbDict.locationTitle =  nmoqParkListDict.locationTitle
-            
-            
-            //            if(facilitiesListDict.images != nil){
-            //                if((facilitiesListDict.images?.count)! > 0) {
-            //                    for i in 0 ... (facilitiesListDict.images?.count)!-1 {
-            //                        var facilitiesImage: FacilitiesImgEntityAr!
-            //                        let facilitiesImgaeArray: FacilitiesImgEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesImgEntityAr", into: managedObjContext) as! FacilitiesImgEntityAr
-            //                        facilitiesImgaeArray.images = facilitiesListDict.images?[i]
-            //
-            //                        facilitiesImage = facilitiesImgaeArray
-            //                        facilitiesListInfo.addToFacilitiesImgRelationAr(facilitiesImage)
-            //                        do {
-            //                            try managedObjContext.save()
-            //                        } catch let error as NSError {
-            //                            print("Could not save. \(error), \(error.userInfo)")
-            //                        }
-            //                    }
-            //                }
-            //            }
         }
         do {
             try managedObjContext.save()
@@ -581,19 +512,10 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var parkListArray = [NMoQParkListEntity]()
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "NMoQParkListEntity")
-                //fetchRequest.predicate = NSPredicate.init(format: "isTourGuide == \(isTourGuide)")
                 parkListArray = (try managedContext.fetch(fetchRequest) as? [NMoQParkListEntity])!
                 if (parkListArray.count > 0) {
-                    //parkListArray.sort(by: {$0.sortId < $1.sortId})
                     for i in 0 ... parkListArray.count-1 {
                         let parkListDict = parkListArray[i]
-//                        var imagesArray : [String] = []
-//                        let imagesInfoArray = (tourListDict.tourImagesRelation?.allObjects) as! [NMoqTourImagesEntity]
-//                        if(imagesInfoArray.count > 0) {
-//                            for i in 0 ... imagesInfoArray.count-1 {
-//                                imagesArray.append(imagesInfoArray[i].image!)
-//                            }
-//                        }
                         self.nmoqParkList.insert(NMoQParksList(title: parkListDict.title, parkTitle: parkListDict.parkTitle, mainDescription: parkListDict.mainDescription, parkDescription: parkListDict.parkDescription, hoursTitle: parkListDict.hoursTitle, hoursDesc: parkListDict.hoursDesc, nid: parkListDict.nid, longitude: parkListDict.longitude, latitude: parkListDict.latitude, locationTitle: parkListDict.locationTitle), at: i)
                     }
                     if(nmoqParkList.count == 0){
@@ -614,19 +536,10 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
             } else {
                 var parkListArray = [NMoQParkListEntityAr]()
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "NMoQParkListEntityAr")
-               // fetchRequest.predicate = NSPredicate.init(format: "isTourGuide == \(isTourGuide)")
                 parkListArray = (try managedContext.fetch(fetchRequest) as? [NMoQParkListEntityAr])!
                 if (parkListArray.count > 0) {
-                   // parkListArray.sort(by: {$0.sortId < $1.sortId})
                     for i in 0 ... parkListArray.count-1 {
                         let parkListDict = parkListArray[i]
-//                        var imagesArray : [String] = []
-//                        let imagesInfoArray = (tourListDict.tourImagesRelationAr?.allObjects) as! [NMoqTourImagesEntityAr]
-//                        if(imagesInfoArray.count > 0) {
-//                            for i in 0 ... imagesInfoArray.count-1 {
-//                                imagesArray.append(imagesInfoArray[i].image!)
-//                            }
-//                        }
                         self.nmoqParkList.insert(NMoQParksList(title: parkListDict.title,parkTitle: parkListDict.parkTitle, mainDescription: parkListDict.mainDescription, parkDescription: parkListDict.parkDescription, hoursTitle: parkListDict.hoursTitle, hoursDesc: parkListDict.hoursDesc, nid: parkListDict.nid, longitude: parkListDict.longitude, latitude: parkListDict.latitude, locationTitle: parkListDict.locationTitle), at: i)
                     }
                     if(nmoqParkList.count == 0){

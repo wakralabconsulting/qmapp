@@ -125,7 +125,7 @@ class ParkTableViewCell: UITableViewCell {
         favouriteButton.isHidden = true
         shareButton.isHidden = true
     }
-    func setNmoqParkDetailValues() {
+    func setNmoqParkDetailValues(parkDetails: NMoQParkDetail?) {
         subTitleTopConstraint.constant = 0
         subTitleLabel.frame = CGRect(x: self.subTitleLabel.frame.origin.x, y: self.subTitleLabel.frame.origin.x, width: 0, height: 0)
         locationsTitleLabel.isHidden = true
@@ -148,7 +148,8 @@ class ParkTableViewCell: UITableViewCell {
         favouriteButton.isHidden = true
         shareButton.isHidden = true
         
-        titleLabel.text = ""
+        titleLabel.text = parkDetails?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+        titleDescriptionLabel.text = parkDetails?.parkDesc?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         //        titleLabel.text = parksList.title?.uppercased()
         //        let parkDesc = parksList.description?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         //        titleDescriptionLabel.text = parkDesc?.replacingOccurrences(of: "&amp;", with: "&", options: .regularExpression, range: nil)

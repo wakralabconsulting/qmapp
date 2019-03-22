@@ -178,3 +178,20 @@ class UnderlinedLabel: UILabel {
     }
 }
 
+class ResizableImageView: UIImageView {
+    
+    override var image: UIImage? {
+        didSet {
+            guard let image = image else { return }
+            
+            let resizeConstraints = [
+                self.heightAnchor.constraint(equalToConstant: image.size.height),
+                self.widthAnchor.constraint(equalToConstant: image.size.width)
+            ]
+            
+            if superview != nil {
+                addConstraints(resizeConstraints)
+            }
+        }
+    }
+}

@@ -33,6 +33,8 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
         registerCell()
         setUI()
         self.recordScreenView()
+        collectionTableView.rowHeight = UITableViewAutomaticDimension
+        collectionTableView.estimatedRowHeight = 261
     }
     func setUI() {
         loadingView.isHidden = false
@@ -68,26 +70,18 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
         if (collectionPageNameString == CollectionPageName.CollectionDetail) {
             return collectionDetailArray.count
         } else {
-            return 3
+            return nmoqParkDetailArray.count
         }
         
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let collectionCell = tableView.dequeueReusableCell(withIdentifier: "collectionCellId", for: indexPath) as! CollectionDetailCell
         if (collectionPageNameString == CollectionPageName.CollectionDetail) {
-            //        if(indexPath.row == collectionListArray.count-1) {
-            //            collectionCell.favouriteHeight.constant = 130
-            //            collectionCell.favouriteView.isHidden = false
-            //            collectionCell.shareView.isHidden = false
-            //            collectionCell.favouriteButton.isHidden = false
-            //            collectionCell.shareButton.isHidden = false
-            //        } else {
             collectionCell.favouriteHeight.constant = 0
             collectionCell.favouriteView.isHidden = true
             collectionCell.shareView.isHidden = true
             collectionCell.favouriteButton.isHidden = true
             collectionCell.shareButton.isHidden = true
-            //        }
             collectionCell.favouriteButtonAction = {
                 () in
                 
@@ -98,15 +92,12 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
             }
             collectionCell.setCollectionCellValues(collectionValues: collectionDetailArray[indexPath.row], currentRow: indexPath.row)
         } else {
-            collectionCell.setParkPlayGroundValues()
+            collectionCell.setParkPlayGroundValues(parkPlaygroundDetails: nmoqParkDetailArray[indexPath.row])
         }
 
         loadingView.stopLoading()
         loadingView.isHidden = true
         return collectionCell
-    }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
     }
     func headerCloseButtonPressed() {
         let transition = CATransition()
@@ -147,15 +138,40 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     func getNMoQParkDetailFromServer() {
-        _ = Alamofire.request(QatarMuseumRouter.GetNMoQPlaygroundDetail(LocalizationLanguage.currentAppleLanguage(), ["nid": nid])).responseObject { (response: DataResponse<NMoQParksDetail>) -> Void in
-            switch response.result {
-            case .success(let data):
-                print(data)
-                self.saveOrUpdateNmoqParkDetailCoredata(nmoqParkList: data.nmoqParksDetail)
-            case .failure( _):
-                print("error")
+        if (nid != nil) {
+            _ = Alamofire.request(QatarMuseumRouter.GetNMoQPlaygroundDetail(LocalizationLanguage.currentAppleLanguage(), ["nid": nid!])).responseObject { (response: DataResponse<NMoQParksDetail>) -> Void in
+                switch response.result {
+                case .success(let data):
+                    self.nmoqParkDetailArray = data.nmoqParksDetail
+                    if (self.nmoqParkDetailArray.count > 0) {
+                        if self.nmoqParkDetailArray.first(where: {$0.sortId != "" && $0.sortId != nil} ) != nil {
+                            self.nmoqParkDetailArray = self.nmoqParkDetailArray.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
+                        }
+                    }
+                    self.saveOrUpdateNmoqParkDetailCoredata(nmoqParkList: data.nmoqParksDetail)
+                    self.collectionTableView.reloadData()
+                    self.loadingView.stopLoading()
+                    self.loadingView.isHidden = true
+                    if (self.nmoqParkDetailArray.count == 0) {
+                        self.loadingView.stopLoading()
+                        self.loadingView.noDataView.isHidden = false
+                        self.loadingView.isHidden = false
+                        self.loadingView.showNoDataView()
+                    }
+                    
+                case .failure( _):
+                    var errorMessage: String
+                    errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                    comment: "Setting the content of the alert"))
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                    self.loadingView.noDataLabel.text = errorMessage
+                }
             }
         }
+
     }
     
     //MARK: CollectionDetail Coredata Method
@@ -518,9 +534,7 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var parkListArray = [NMoQParkDetailEntity]()
-                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "NMoQParkDetailEntity")
-                parkListArray = (try managedContext.fetch(fetchRequest) as? [NMoQParkDetailEntity])!
-                
+                parkListArray = checkAddedToCoredata(entityName: "NMoQParkDetailEntity", idKey: "nid", idValue: nid, managedContext: managedContext) as! [NMoQParkDetailEntity]
                 if (parkListArray.count > 0) {
                     for i in 0 ... parkListArray.count-1 {
                         let parkListDict = parkListArray[i]
@@ -544,7 +558,9 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
                             self.nmoqParkDetailArray = self.nmoqParkDetailArray.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
                         }
                     }
-                    collectionTableView.reloadData()
+                    DispatchQueue.main.async{
+                        self.collectionTableView.reloadData()
+                    }
                 } else{
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
@@ -554,8 +570,7 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
                 }
             } else {
                 var parkListArray = [NMoQParkDetailEntityAr]()
-                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "NMoQParkDetailEntityAr")
-                parkListArray = (try managedContext.fetch(fetchRequest) as? [NMoQParkDetailEntityAr])!
+                parkListArray = checkAddedToCoredata(entityName: "NMoQParkDetailEntityAr", idKey: "nid", idValue: nid, managedContext: managedContext) as! [NMoQParkDetailEntityAr]
                 if (parkListArray.count > 0) {
                     for i in 0 ... parkListArray.count-1 {
                         let parkListDict = parkListArray[i]
@@ -579,7 +594,9 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
                             self.nmoqParkDetailArray = self.nmoqParkDetailArray.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
                         }
                     }
-                    collectionTableView.reloadData()
+                    DispatchQueue.main.async{
+                        self.collectionTableView.reloadData()
+                    }
                 } else{
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
@@ -598,7 +615,6 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
         if (idValue != nil) {
              fetchRequest.predicate = NSPredicate(format: "\(idKey!) == %@", idValue!)
-            
         }
         fetchResults = try! managedContext.fetch(fetchRequest)
         return fetchResults
