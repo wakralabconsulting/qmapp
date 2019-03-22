@@ -15,6 +15,8 @@ class CollectionDetailCell: UITableViewCell {
     @IBOutlet weak var secondDescription: UITextView!
     @IBOutlet weak var thirdDescription: UITextView!
     @IBOutlet weak var fourthDescription: UITextView!
+    //@IBOutlet weak var firstImageView: UIImageView!
+    
     @IBOutlet weak var firstImageView: UIImageView!
     @IBOutlet weak var secondImageView: UIImageView!
     @IBOutlet weak var favouriteHeight: NSLayoutConstraint!
@@ -58,26 +60,16 @@ class CollectionDetailCell: UITableViewCell {
         if (firstImageView.image == nil) {
             firstImageView.image = UIImage(named: "default_imageX2")
         }
-//        if let imageUrl = collectionValues.imageMain {
-//            secondImageView.kf.setImage(with: URL(string: imageUrl))
-//        }
-//        if (firstImageView.image == nil) {
-//            secondImageView.image = UIImage(named: "default_imageX2")
-//        }
-        
         if (currentRow == 0) {
             firstTitle.isHidden = false
             firstDescription.isHidden = false
             firstTitleLine.isHidden = false
-            //firstTitleTopConstraint.constant = 30
             fistViewTopConstraint.constant = 20
             titleview.isHidden = false
             titleview.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: titleview.frame.height)
             firstTitle.isHidden = false
             firstTitleLine.isHidden = false
             firstDescription.isHidden = false
-            //descriptionBottomConstraint.constant = 10
-            //desctionTopConstraint.constant = 13
             firstLineTopConstraint.constant = 8
             firstLineHeight.constant = 3
             firstViewHeight.constant = 82
@@ -102,22 +94,29 @@ class CollectionDetailCell: UITableViewCell {
         }
         
     }
-    func setParkPlayGroundValues() {
+    func setParkPlayGroundValues(parkPlaygroundDetails: NMoQParkDetail?) {
         firstTitle.font = UIFont.settingsUpdateLabelFont
         firstDescription.font = UIFont.collectionFirstDescriptionFont
         secondTitle.font = UIFont.heritageTitleFont
         secondDescription.font = UIFont.englishTitleFont
         thirdDescription.font = UIFont.englishTitleFont
         fourthDescription.font = UIFont.englishTitleFont
-        secondTitle.text = "Adventure ship"
-        fourthDescription.text = "sfsc dfvdvd dfdfnsdf dhbjbadcb sdcjsdjc sdcnsndcs s casbndjcbsa  sdcjbasjdbcasds dcasdjc sa djcasdcajsdcj s cjasdcjasdc s dcjbasjdbcs csd cjshrfiejvjldgb dvmdnfvkdnvk."
-//        if let imageUrl = collectionValues.image {
-//            firstImageView.kf.setImage(with: URL(string: imageUrl))
-//        }
-//        if (firstImageView.image == nil) {
-//            firstImageView.image = UIImage(named: "default_imageX2")
-//        }
-
+        
+        secondTitle.text = parkPlaygroundDetails?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+        fourthDescription.text = parkPlaygroundDetails?.parkDesc?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+        firstImageView.image = nil
+        if ((parkPlaygroundDetails?.images?.count)! > 0) {
+            if let imageUrl = parkPlaygroundDetails?.images![0]{
+                firstImageView.kf.setImage(with: URL(string: imageUrl))
+                self.layoutIfNeeded()
+            }
+        } else {
+            firstImageView.image = UIImage(named: "default_imageX2")
+        }
+        if (firstImageView.image == nil) {
+            firstImageView.image = UIImage(named: "default_imageX2")
+        }
+        
             firstTitle.isHidden = false
             firstDescription.isHidden = true
             firstTitleLine.isHidden = false

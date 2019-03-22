@@ -269,6 +269,11 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            if((pageNameString == NMoQPanelPage.FacilitiesDetailPage) && (fromCafeOrDining == false)){
+                self.getFacilitiesDetail()
+            }
+        }
     }
     
     func showNoNetwork() {

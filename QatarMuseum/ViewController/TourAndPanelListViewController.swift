@@ -236,6 +236,18 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
+        if  (networkReachability?.isReachable)! {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if(pageNameString == NMoQPageName.Tours) {
+                appDelegate?.getNMoQTourList(lang: LocalizationLanguage.currentAppleLanguage())
+            } else if(pageNameString == NMoQPageName.PanelDiscussion) {
+                appDelegate?.getNMoQSpecialEventList(lang: LocalizationLanguage.currentAppleLanguage())
+            } else if(pageNameString == NMoQPageName.TravelArrangementList) {
+                appDelegate?.getTravelList(lang: LocalizationLanguage.currentAppleLanguage())
+            } else if(pageNameString == NMoQPageName.Facilities) {
+                appDelegate?.getFacilitiesListFromServer(lang: LocalizationLanguage.currentAppleLanguage())
+            }
+        }
     }
     
     func showNoNetwork() {
@@ -507,7 +519,9 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                             self.loadingView.showNoDataView()
                         }
                     }
-                    collectionTableView.reloadData()
+                    DispatchQueue.main.async{
+                        self.collectionTableView.reloadData()
+                    }
                 } else{
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
@@ -540,7 +554,9 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                             self.loadingView.showNoDataView()
                         }
                     }
-                    collectionTableView.reloadData()
+                    DispatchQueue.main.async{
+                        self.collectionTableView.reloadData()
+                    }
                 } else{
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
@@ -558,12 +574,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         _ = Alamofire.request(QatarMuseumRouter.GetNMoQSpecialEventList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<NMoQActivitiesListData>) -> Void in
             switch response.result {
             case .success(let data):
-                //                self.nmoqTourList = data.nmoqTourList
-                //                if self.nmoqTourList.first(where: {$0.sortId != "" && $0.sortId != nil} ) != nil {
-                //                    self.nmoqTourList = self.nmoqTourList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
-                //                }
                 self.saveOrUpdateActivityListCoredata(nmoqActivityList: data.nmoqActivitiesList)
-            // self.collectionTableView.reloadData()
             case .failure( _):
                 print("error")
             }
@@ -823,7 +834,9 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                             self.nmoqActivityList = self.nmoqActivityList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
                         }
                     }
-                    collectionTableView.reloadData()
+                    DispatchQueue.main.async{
+                        self.collectionTableView.reloadData()
+                    }
                 } else{
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
@@ -858,7 +871,9 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                             self.nmoqActivityList = self.nmoqActivityList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
                         }
                     }
-                    collectionTableView.reloadData()
+                    DispatchQueue.main.async{
+                        self.collectionTableView.reloadData()
+                    }
                 } else{
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
@@ -1125,7 +1140,9 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                             self.facilitiesList = self.facilitiesList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
                         }
                     }
-                    collectionTableView.reloadData()
+                    DispatchQueue.main.async{
+                        self.collectionTableView.reloadData()
+                    }
                 } else{
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
@@ -1161,7 +1178,9 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                             self.facilitiesList = self.facilitiesList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
                         }
                     }
-                    collectionTableView.reloadData()
+                    DispatchQueue.main.async{
+                        self.collectionTableView.reloadData()
+                    }
                 } else{
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
@@ -1183,19 +1202,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         fetchResults = try! managedContext.fetch(fetchRequest)
         return fetchResults
     }
-    @objc func receiveNmoqTourListNotification(notification: NSNotification) {
-        if(nmoqTourList.count == 0) {
-            let data = notification.userInfo as? [String:Bool]
-            if ((data?.count)! > 0) {
-                if((data!["isTour"])! && (pageNameString == NMoQPageName.Tours)) {
-                    self.fetchTourInfoFromCoredata(isTourGuide: true)
-                } else if(((data!["isTour"])! == false) && (pageNameString == NMoQPageName.PanelDiscussion)){
-                    self.fetchTourInfoFromCoredata(isTourGuide: false)
-                }
-            }
-        }
-        
-    }
+    
     func recordScreenView() {
         let screenClass = String(describing: type(of: self))
         if(pageNameString == NMoQPageName.Tours) {
@@ -1371,7 +1378,9 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                             }
                         }
                     }
-                    collectionTableView.reloadData()
+                    DispatchQueue.main.async{
+                        self.collectionTableView.reloadData()
+                    }
                 } else{
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
@@ -1400,7 +1409,9 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                             }
                         }
                     }
-                    collectionTableView.reloadData()
+                    DispatchQueue.main.async{
+                        self.collectionTableView.reloadData()
+                    }
                 } else{
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
@@ -1413,6 +1424,20 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
+    @objc func receiveNmoqTourListNotification(notification: NSNotification) {
+        if(nmoqTourList.count == 0) {
+            let data = notification.userInfo as? [String:Bool]
+            if ((data?.count)! > 0) {
+                if((data!["isTour"])! && (pageNameString == NMoQPageName.Tours)) {
+                    self.fetchTourInfoFromCoredata(isTourGuide: true)
+                } else if(((data!["isTour"])! == false) && (pageNameString == NMoQPageName.PanelDiscussion)){
+                    self.fetchTourInfoFromCoredata(isTourGuide: false)
+                }
+            }
+        }
+        
+    }
+   
     @objc func receiveNmoqTravelListNotificationEn(notification: NSNotification) {
         if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (travelList.count == 0)) {
             self.fetchTravelInfoFromCoredata()

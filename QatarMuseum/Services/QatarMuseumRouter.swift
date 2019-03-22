@@ -49,6 +49,9 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case FacilitiesList(String)
     case GetFacilitiesDetail([String: Any])
     case GetNmoqParkList(String)
+    case GetNmoqListParks(String)
+    case GetNMoQPlaygroundDetail(String,[String: Any])
+
     var method: Alamofire.HTTPMethod {
         switch self {
         case .ExhibitionList:
@@ -128,6 +131,10 @@ enum QatarMuseumRouter: URLRequestConvertible {
         case .GetFacilitiesDetail:
             return .get
         case .GetNmoqParkList:
+            return .get
+        case .GetNmoqListParks:
+            return .get
+        case .GetNMoQPlaygroundDetail:
             return .get
         }
     }
@@ -212,6 +219,10 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/facility-detail_by_category.json"
         case .GetNmoqParkList( _):
             return "/nmoq_category.json"
+        case .GetNmoqListParks( _):
+            return "/nmoq_list_parks.json"
+        case .GetNMoQPlaygroundDetail( _, _):
+            return "nmoq_list_playground_by_park.json"
         }
     }
 
@@ -408,6 +419,16 @@ enum QatarMuseumRouter: URLRequestConvertible {
             var apiMutableURLReq = URLRequest(url: apiURL.appendingPathComponent(path)!)
             apiMutableURLReq.httpMethod = method.rawValue
             return try! Alamofire.JSONEncoding.default.encode(apiMutableURLReq)
+        case .GetNmoqListParks(let apiLang):
+            let apiURL = NSURL(string: Config.baseURL + apiLang + Config.mobileApiURL)!
+            var apiMutableURLReq = URLRequest(url: apiURL.appendingPathComponent(path)!)
+            apiMutableURLReq.httpMethod = method.rawValue
+            return try! Alamofire.JSONEncoding.default.encode(apiMutableURLReq)
+        case .GetNMoQPlaygroundDetail(let apiLang,let parameters):
+            let apiURL = NSURL(string: Config.baseURL + apiLang + Config.mobileApiURL)!
+            var apiMutableURLReq = URLRequest(url: apiURL.appendingPathComponent(path)!)
+            apiMutableURLReq.httpMethod = method.rawValue
+            return try! Alamofire.URLEncoding.default.encode(apiMutableURLReq, with: parameters)
         }
         
         

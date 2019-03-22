@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B10D12D2244136100AA77E9 /* NMoQParkDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B10D12C2244136100AA77E9 /* NMoQParkDetail.swift */; };
 		1B373E95212C794700EE8DD1 /* CulturePassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B373E94212C794600EE8DD1 /* CulturePassViewController.swift */; };
 		1B3C505721270F260034E560 /* ArtifactNumberPadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3C505621270F260034E560 /* ArtifactNumberPadViewController.swift */; };
 		1B3C505B212AB3460034E560 /* ArtifactNumberPadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3C5059212AB3460034E560 /* ArtifactNumberPadCell.swift */; };
@@ -87,7 +88,6 @@
 		B82729B421778B2F0017EC71 /* VPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827299D21778B2F0017EC71 /* VPlayerItem.swift */; };
 		B82729B521778B2F0017EC71 /* VPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827299E21778B2F0017EC71 /* VPlayer.swift */; };
 		B82729B621778B2F0017EC71 /* VersaPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827299F21778B2F0017EC71 /* VersaPlayer.swift */; };
-		B82729B721778B2F0017EC71 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = B82729A021778B2F0017EC71 /* .gitkeep */; };
 		B82729B821778B2F0017EC71 /* VersaPlayerControlsBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82729A321778B2F0017EC71 /* VersaPlayerControlsBehaviour.swift */; };
 		B82729B921778B2F0017EC71 /* VersaPlayerGestureRecieverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82729A421778B2F0017EC71 /* VersaPlayerGestureRecieverView.swift */; };
 		B82729BA21778B2F0017EC71 /* VersaPlayerGestureRecieverViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82729A521778B2F0017EC71 /* VersaPlayerGestureRecieverViewDelegate.swift */; };
@@ -97,7 +97,6 @@
 		B82729BE21778B2F0017EC71 /* VersaSeekbarSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82729AB21778B2F0017EC71 /* VersaSeekbarSlider.swift */; };
 		B82729BF21778B2F0017EC71 /* VersaPlayerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82729AC21778B2F0017EC71 /* VersaPlayerControls.swift */; };
 		B82729C021778B2F0017EC71 /* VersaPlayerControlsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82729AD21778B2F0017EC71 /* VersaPlayerControlsCoordinator.swift */; };
-		B82729C121778B2F0017EC71 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = B82729AF21778B2F0017EC71 /* .gitkeep */; };
 		B8294CE720CBF265002AFF72 /* FSCalendarCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = B8294CC820CBF262002AFF72 /* FSCalendarCalculator.m */; };
 		B8294CE820CBF265002AFF72 /* FSCalendarConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B8294CC920CBF262002AFF72 /* FSCalendarConstants.m */; };
 		B8294CE920CBF265002AFF72 /* FSCalendarAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = B8294CCA20CBF262002AFF72 /* FSCalendarAppearance.m */; };
@@ -180,6 +179,8 @@
 		B8CA08E72146D38400783642 /* MapDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8CA08DE2146D38400783642 /* MapDetailView.xib */; };
 		B8CAA93D20DC15FA009A936D /* HeritageDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CAA93C20DC15FA009A936D /* HeritageDetailCell.swift */; };
 		B8CAA93F20DC186E009A936D /* HeritageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CAA93E20DC186E009A936D /* HeritageDetailViewController.swift */; };
+		B8CF5AFF2244C6A4008E663E /* NMoQPArkTopCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8CF5AFE2244C6A4008E663E /* NMoQPArkTopCell.xib */; };
+		B8CF5B012244C80B008E663E /* NMoQParkTopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CF5B002244C80B008E663E /* NMoQParkTopTableViewCell.swift */; };
 		B8D1228D20C8EE8600772507 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D1228C20C8EE8600772507 /* WebViewController.swift */; };
 		B8D1229020C9092D00772507 /* LoadingXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8D1228F20C9092D00772507 /* LoadingXib.xib */; };
 		B8D1229220C9095B00772507 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D1229120C9095B00772507 /* LoadingView.swift */; };
@@ -208,7 +209,6 @@
 		B8EAA3592158D4520060D168 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8EAA3582158D4520060D168 /* GoogleService-Info.plist */; };
 		B8EAB77B20CA3E2900C001B2 /* EventCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8EAB77A20CA3E2900C001B2 /* EventCellView.xib */; };
 		B8EAB77D20CA3E6100C001B2 /* EventCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EAB77C20CA3E6100C001B2 /* EventCollectionViewCell.swift */; };
-		B8EAB7AD20CA41ED00C001B2 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8EAB79420CA41EB00C001B2 /* Info.plist */; };
 		B8EAB7BA20CA424300C001B2 /* DelegateAppearanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EAB7B520CA424300C001B2 /* DelegateAppearanceViewController.swift */; };
 		B8EAB7BB20CA424300C001B2 /* LoadViewExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EAB7B620CA424300C001B2 /* LoadViewExampleViewController.swift */; };
 		B8EAB7BC20CA424300C001B2 /* CalendarConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EAB7B720CA424300C001B2 /* CalendarConfigViewController.swift */; };
@@ -242,6 +242,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1B10D12C2244136100AA77E9 /* NMoQParkDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQParkDetail.swift; sourceTree = "<group>"; };
 		1B373E94212C794600EE8DD1 /* CulturePassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CulturePassViewController.swift; sourceTree = "<group>"; };
 		1B3C505621270F260034E560 /* ArtifactNumberPadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactNumberPadViewController.swift; sourceTree = "<group>"; };
 		1B3C5059212AB3460034E560 /* ArtifactNumberPadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactNumberPadCell.swift; sourceTree = "<group>"; };
@@ -447,6 +448,8 @@
 		B8CA08DE2146D38400783642 /* MapDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapDetailView.xib; sourceTree = "<group>"; };
 		B8CAA93C20DC15FA009A936D /* HeritageDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeritageDetailCell.swift; sourceTree = "<group>"; };
 		B8CAA93E20DC186E009A936D /* HeritageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeritageDetailViewController.swift; sourceTree = "<group>"; };
+		B8CF5AFE2244C6A4008E663E /* NMoQPArkTopCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NMoQPArkTopCell.xib; sourceTree = "<group>"; };
+		B8CF5B002244C80B008E663E /* NMoQParkTopTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQParkTopTableViewCell.swift; sourceTree = "<group>"; };
 		B8D1228C20C8EE8600772507 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		B8D1228F20C9092D00772507 /* LoadingXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingXib.xib; sourceTree = "<group>"; };
 		B8D1229120C9095B00772507 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
@@ -638,6 +641,7 @@
 				B843D9DF223F8E14003C1DF6 /* Facilities.swift */,
 				B843D9E1223FAB82003C1DF6 /* FacilitiesDetail.swift */,
 				B841715E224256D300B58E27 /* NMoQActivitiesList.swift */,
+				1B10D12C2244136100AA77E9 /* NMoQParkDetail.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -684,6 +688,8 @@
 			children = (
 				B806742F2240CFCF00885544 /* ParkListView.xib */,
 				B80674312240CFF000885544 /* ParkListTableViewCell.swift */,
+				B8CF5AFE2244C6A4008E663E /* NMoQPArkTopCell.xib */,
+				B8CF5B002244C80B008E663E /* NMoQParkTopTableViewCell.swift */,
 			);
 			path = ParkListCell;
 			sourceTree = "<group>";
@@ -1402,7 +1408,6 @@
 				B8EAB7C020CA67CD00C001B2 /* EventPopUp.xib in Resources */,
 				B80B76AF218AD6AC00190967 /* InvitationAcceptedPopup.xib in Resources */,
 				B8EAA3592158D4520060D168 /* GoogleService-Info.plist in Resources */,
-				B82729B721778B2F0017EC71 /* .gitkeep in Resources */,
 				B8DC40A520C9A3230044134D /* CommonHeader.xib in Resources */,
 				B8DC478720DCF8CE0007B426 /* ParkTableCellXib.xib in Resources */,
 				B806B7AD212452DC00F9F338 /* GoogleMaps.bundle in Resources */,
@@ -1413,13 +1418,13 @@
 				B8CA08E72146D38400783642 /* MapDetailView.xib in Resources */,
 				B8B79AC12189B75900370AAB /* CountryList.json in Resources */,
 				B8B15EEE2216D286005F62F4 /* HeritageCellXib.xib in Resources */,
+				B8CF5AFF2244C6A4008E663E /* NMoQPArkTopCell.xib in Resources */,
 				B8CA08E52146D38400783642 /* MapDetailCell.xib in Resources */,
 				B80DC06020C792E600E28034 /* Assets.xcassets in Resources */,
 				B81FF06B21AFBA1B006A968B /* NMoHeaderView.xib in Resources */,
 				B80674302240CFCF00885544 /* ParkListView.xib in Resources */,
 				1B444A6621B137DC009FF40F /* NMoQTourDescriptionCell.xib in Resources */,
 				B8AFA2ED20E78BA9008838A6 /* DINNextLTArabic-Regular.ttf in Resources */,
-				B82729C121778B2F0017EC71 /* .gitkeep in Resources */,
 				B8D1229020C9092D00772507 /* LoadingXib.xib in Resources */,
 				B8DB500221B25D9000C5DD10 /* PanelDetailView.xib in Resources */,
 				B8F00C8321787CF800320DF1 /* LoginPopupView.xib in Resources */,
@@ -1433,7 +1438,6 @@
 				B807FCCF218EA8FD003CC51E /* CountryListArabic.json in Resources */,
 				B8AFA2F120E78E09008838A6 /* DINNextLTPro-Light.otf in Resources */,
 				B8BA80BA20CD8305007E880A /* ExhibitionsCellXib.xib in Resources */,
-				B8EAB7AD20CA41ED00C001B2 /* Info.plist in Resources */,
 				B8EAB77B20CA3E2900C001B2 /* EventCellView.xib in Resources */,
 				1BAA2FCB2125FCC600D785DD /* ObjectImageXib.xib in Resources */,
 				B8E2C01320C7FD0000F3CE41 /* SideMenu.xib in Resources */,
@@ -1611,6 +1615,7 @@
 				B80DC05920C792E400E28034 /* AppDelegate.swift in Sources */,
 				B80DC08C20C798BA00E28034 /* HomeViewController.swift in Sources */,
 				B807FCD1218ECFE5003CC51E /* CulturePassCardBackViewController.swift in Sources */,
+				1B10D12D2244136100AA77E9 /* NMoQParkDetail.swift in Sources */,
 				B8EAB7BD20CA424300C001B2 /* LunarFormatter.swift in Sources */,
 				B80DC08E20C798E400E28034 /* HomeCollectionViewCell.swift in Sources */,
 				B82729BB21778B2F0017EC71 /* VersaPlayerControlsExtension.swift in Sources */,
@@ -1627,6 +1632,7 @@
 				B85BA4AC20D01BC900E7F4D1 /* ExhibitionDetailTableViewCell.swift in Sources */,
 				1B902C00212D56EC00D3055B /* BenefitLabelCell.swift in Sources */,
 				1B7031EE218AFDB200B0E05B /* Notification.swift in Sources */,
+				B8CF5B012244C80B008E663E /* NMoQParkTopTableViewCell.swift in Sources */,
 				B8DC478B20DD05BA0007B426 /* ParksViewController.swift in Sources */,
 				B8DC40A720C9A33A0044134D /* CommonHeaderView.swift in Sources */,
 				1BC909D02108E3C700D6C00B /* QMUtility.swift in Sources */,

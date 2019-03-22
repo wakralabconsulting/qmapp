@@ -243,8 +243,8 @@
 "UNREGISTER_CONFIRMATION_MESSAGE" = "هل أنت متأكد من أنك تريد إلغاء هذه الجولة؟";
 "REGISTER_GREETING_MESSAGE" = "شكرا لك على حجز هذه الجولة. سوف تتلقى رسالة بريد إلكتروني مع مزيد من المعلومات. لأي أسئلة ، يرجى التواصل على booking@qm.org.qa أو 5554 4452 974+";
 
-"EXPERIENCE_TITLE" = "Experience";
+"EXPERIENCE_TITLE" = "المحتويات";
 "HIGHLIGHTS_TOUR" = "Highlights Tour";
-"FACILITIES" = "Facilities";
+"FACILITIES" = "المرافق";
 "PANEL_AND_TALKS" = "ندوات و محاورات";
 "PARKS_HEADER_LABEL" = "Park";

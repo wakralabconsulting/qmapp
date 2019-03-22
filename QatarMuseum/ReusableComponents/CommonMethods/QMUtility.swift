@@ -34,6 +34,11 @@ var nmoqParkListNotificationEn = "NmoqParkListNotificationEn"
 var nmoqParkListNotificationAr = "NmoqParkListNotificationAr"
 var nmoqActivityListNotificationEn = "NmoqParkListNotificationEn"
 var nmoqActivityListNotificationAr = "NmoqParkListNotificationAr"
+var nmoqParkNotificationEn = "NmoqParkNotificationEn"
+var nmoqParkNotificationAr = "NmoqParkNotificationAr"
+var nmoqParkDetailNotificationEn = "NmoqParkDetailNotificationEn"
+var nmoqParkDetailNotificationAr = "NmoqParkDetailNotificationAr"
+
 // Utility method for presenting alert without any completion handler
 func presentAlert(_ viewController: UIViewController, title: String, message: String) {
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -173,3 +178,20 @@ class UnderlinedLabel: UILabel {
     }
 }
 
+class ResizableImageView: UIImageView {
+    
+    override var image: UIImage? {
+        didSet {
+            guard let image = image else { return }
+            
+            let resizeConstraints = [
+                self.heightAnchor.constraint(equalToConstant: image.size.height),
+                self.widthAnchor.constraint(equalToConstant: image.size.width)
+            ]
+            
+            if superview != nil {
+                addConstraints(resizeConstraints)
+            }
+        }
+    }
+}
