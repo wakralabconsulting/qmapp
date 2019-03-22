@@ -61,7 +61,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         let experienceName = NSLocalizedString("EXPERIENCE_TITLE", comment: "EXPERIENCE_TITLE  in the Museum page")
         let parkName = NSLocalizedString("PARKS_LABEL", comment: "PARKS_LABEL  in the Museum page")
         let diningName = NSLocalizedString("DINING_LABEL", comment: "DINING_LABEL  in the Museum page")
-        let highlightTourName = NSLocalizedString("HIGHLIGHTS_TOUR", comment: "HIGHLIGHTS_TOUR  in the Museum page")
+       // let highlightTourName = NSLocalizedString("HIGHLIGHTS_TOUR", comment: "HIGHLIGHTS_TOUR  in the Museum page")
         let facilitiesName = NSLocalizedString("FACILITIES", comment: "FACILITIES  in the Museum page")
         let eventsName = NSLocalizedString("EVENTS_LABEL", comment: "EVENTS_LABEL  in the Museum page")
         
@@ -101,7 +101,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 collectionViewNames = [aboutName,tourGuideName,exhibitionsName,collectionsName,diningName]
             }else if ((museumId == "66") || (museumId == "638")) {
                 collectionViewImages = ["about-launchX1","facilitiesX1","exhibition_blackX1","experienceX1","Audio CircleX1","events_BlackX1","park_blackX1"]
-                collectionViewNames = [aboutName,facilitiesName,exhibitionsName,experienceName,highlightTourName,eventsName,parkName]
+                collectionViewNames = [aboutName,facilitiesName,exhibitionsName,experienceName,tourGuideName,eventsName,parkName]
             } else {
                 collectionViewImages = ["MIA_AboutX1","exhibition_blackX1","collectionsX1","diningX1",]
                 collectionViewNames = [aboutName,exhibitionsName,collectionsName,diningName]
