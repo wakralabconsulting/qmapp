@@ -67,12 +67,17 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         headerView.headerTitle.text = NSLocalizedString("CULTUREPASS_TITLE", comment: "CULTUREPASS_TITLE in the Culture Pass page").uppercased()
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
+            introLabel.textAlignment = .left
+            secondIntroLabel.textAlignment = .left
+            benefitsDiscountLabel.textAlignment = .left
         } else {
             headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+            introLabel.textAlignment = .right
+            secondIntroLabel.textAlignment = .right
+            benefitsDiscountLabel.textAlignment = .right
         }
         
-        introLabel.textAlignment = .left
-        secondIntroLabel.textAlignment = .left
+        
         benefitLabel.textAlignment = .center
 
         benefitLabel.font = UIFont.eventPopupTitleFont
