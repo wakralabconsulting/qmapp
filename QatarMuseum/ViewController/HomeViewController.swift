@@ -67,6 +67,47 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    func setUpUI() {
+        topbarView.topbarDelegate = self
+        topbarView.backButton.isHidden = true
+        effect = visualEffectView.effect
+        visualEffectView.effect = nil
+        visualEffectView.isHidden = true
+        loadingView.isHidden = false
+        loadingView.loadingViewDelegate = self
+        loadingView.showLoading()
+        moreLabel.text = NSLocalizedString("MORE",comment: "MORE in Home Page")
+        culturePassLabel.text = NSLocalizedString("CULTUREPASS_TITLE",comment: "CULTUREPASS_TITLE in Home Page")
+        giftShopLabel.text = NSLocalizedString("GIFT_SHOP",comment: "GIFT_SHOP in Home Page")
+        diningLabel.text = NSLocalizedString("DINING_LABEL",comment: "DINING_LABEL in Home Page")
+        
+        moreLabel.font = UIFont.exhibitionDateLabelFont
+        culturePassLabel.font = UIFont.exhibitionDateLabelFont
+        giftShopLabel.font = UIFont.exhibitionDateLabelFont
+        diningLabel.font = UIFont.exhibitionDateLabelFont
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            if(UserDefaults.standard.value(forKey: "firstTimeLaunch") as? String == nil) {
+                loadingView.isHidden = false
+                loadingView.showLoading()
+                if (networkReachability?.isReachable)! {
+                    loadLoginPopup()
+                    UserDefaults.standard.set("false", forKey: "firstTimeLaunch")
+                } else {
+                    showNoNetwork()
+                }
+            } else {
+                if (networkReachability?.isReachable)! {
+                    getHomeBanner()
+                } else {
+                    fetchHomeBannerInfoFromCoredata()
+                }
+            }
+        }
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationEn(notification:)), name: NSNotification.Name(homepageNotificationEn), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationAr(notification:)), name: NSNotification.Name(homepageNotificationAr), object: nil)
+        self.fetchHomeInfoFromCoredata()
+    }
+    
     func setTopImageUI() {
        
         homeCollectionView.contentInset = UIEdgeInsetsMake(120, 0, 0, 0)
@@ -172,46 +213,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         self.present(notificationsView, animated: false, completion: nil)
     }
 
-    func setUpUI() {
-        topbarView.topbarDelegate = self
-        topbarView.backButton.isHidden = true
-        effect = visualEffectView.effect
-        visualEffectView.effect = nil
-        visualEffectView.isHidden = true
-        loadingView.isHidden = false
-        loadingView.loadingViewDelegate = self
-        loadingView.showLoading()
-        moreLabel.text = NSLocalizedString("MORE",comment: "MORE in Home Page")
-        culturePassLabel.text = NSLocalizedString("CULTUREPASS_TITLE",comment: "CULTUREPASS_TITLE in Home Page")
-        giftShopLabel.text = NSLocalizedString("GIFT_SHOP",comment: "GIFT_SHOP in Home Page")
-        diningLabel.text = NSLocalizedString("DINING_LABEL",comment: "DINING_LABEL in Home Page")
-        
-        moreLabel.font = UIFont.exhibitionDateLabelFont
-        culturePassLabel.font = UIFont.exhibitionDateLabelFont
-        giftShopLabel.font = UIFont.exhibitionDateLabelFont
-        diningLabel.font = UIFont.exhibitionDateLabelFont
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            if(UserDefaults.standard.value(forKey: "firstTimeLaunch") as? String == nil) {
-                loadingView.isHidden = false
-                loadingView.showLoading()
-                if (networkReachability?.isReachable)! {
-                    loadLoginPopup()
-                    UserDefaults.standard.set("false", forKey: "firstTimeLaunch")
-                } else {
-                    showNoNetwork()
-                }
-            } else {
-                if (networkReachability?.isReachable)! {
-                    getHomeBanner()
-                } else {
-                    fetchHomeBannerInfoFromCoredata()
-                }
-            }
-    }
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationEn(notification:)), name: NSNotification.Name(homepageNotificationEn), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationAr(notification:)), name: NSNotification.Name(homepageNotificationAr), object: nil)
-        self.fetchHomeInfoFromCoredata()
-    }
     
     func registerNib() {
         let nib = UINib(nibName: "HomeCollectionCell", bundle: nil)
@@ -375,7 +376,31 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         _ = Alamofire.request(QatarMuseumRouter.HomeList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<HomeList>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateHomeCoredata(homeList: data.homeList)
+                if(self.homeList.count == 0) {
+                    let panelAndTalksName = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
+                    self.homeList = data.homeList
+                    if self.homeList.first(where: {$0.sortId != "" && $0.sortId != nil} ) != nil {
+                        self.homeList = self.homeList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
+                    }
+                    if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                        let panelAndTalks = "Panels And Talks".lowercased()
+                        if self.homeList.index(where: {$0.name?.lowercased() != panelAndTalks}) != nil {
+                            
+                            self.homeList.insert(Home(id: "13976", name: panelAndTalksName.uppercased(), image: "panelAndTalks", tourguide_available: "false", sort_id: nil), at: self.homeList.endIndex)
+                        }
+                    } else {
+                        let panelAndTalks = "ندوات و محاورات"
+                        if self.homeList.index(where: {$0.name != panelAndTalks}) != nil {
+                            self.homeList.insert(Home(id: "15631", name: panelAndTalksName, image: "panelAndTalks", tourguide_available: "false", sort_id: nil), at: self.homeList.endIndex)
+                        }
+                    }
+                    
+                    
+                    self.homeCollectionView.reloadData()
+                }
+                if(self.homeList.count > 0) {
+                    self.saveOrUpdateHomeCoredata(homeList: data.homeList)
+                }
             case .failure( _):
                 print("error")
             }

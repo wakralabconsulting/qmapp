@@ -152,6 +152,19 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         _ = Alamofire.request(QatarMuseumRouter.HomeList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<HomeList>) -> Void in
             switch response.result {
             case .success(let data):
+                if(self.museumsList.count == 0) {
+                    if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                        searchstring = "12181"
+                    } else {
+                        searchstring = "12186"
+                    }
+                    self.museumsList = data.homeList
+                    //Removed Exhibition from Tour List
+                    if let arrayOffset = self.museumsList.index(where: {$0.id == searchstring}) {
+                        self.museumsList.remove(at: arrayOffset)
+                    }
+                    self.tourCollectionView.reloadData()
+                }
                 if(self.museumsList.count > 0) {
                    
                     //Removed Exhibition from Tour List

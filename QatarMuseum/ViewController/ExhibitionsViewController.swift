@@ -173,7 +173,13 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         _ = Alamofire.request(QatarMuseumRouter.ExhibitionList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<Exhibitions>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateExhibitionsCoredata(exhibition: data.exhibitions)
+                if(self.exhibition.count == 0) {
+                    self.exhibition = data.exhibitions
+                    self.exhibitionCollectionView.reloadData()
+                }
+                if(self.exhibition.count > 0) {
+                    self.saveOrUpdateExhibitionsCoredata(exhibition: data.exhibitions)
+                }
             case .failure( _):
                 print("error")
             }
@@ -760,7 +766,13 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         _ = Alamofire.request(QatarMuseumRouter.HeritageList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<Heritages>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateHeritageCoredata(heritageListArray: data.heritage)
+                if(self.heritageListArray.count == 0) {
+                    self.heritageListArray = data.heritage
+                    self.exhibitionCollectionView.reloadData()
+                }
+                if(self.heritageListArray.count > 0) {
+                    self.saveOrUpdateHeritageCoredata(heritageListArray: data.heritage)
+                }
             case .failure( _):
                 print("error")
             }
@@ -956,7 +968,13 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         _ = Alamofire.request(QatarMuseumRouter.PublicArtsList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<PublicArtsLists>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdatePublicArtsCoredata(publicArtsListArray: data.publicArtsList, lang: LocalizationLanguage.currentAppleLanguage())
+                if(self.publicArtsListArray.count == 0) {
+                    self.publicArtsListArray = data.publicArtsList
+                    self.exhibitionCollectionView.reloadData()
+                }
+                if(self.publicArtsListArray.count > 0) {
+                    self.saveOrUpdatePublicArtsCoredata(publicArtsListArray: data.publicArtsList, lang: LocalizationLanguage.currentAppleLanguage())
+                }
             case .failure( _):
                 print("error")
             }
@@ -1349,7 +1367,13 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         _ = Alamofire.request(QatarMuseumRouter.DiningList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<Dinings>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateDiningCoredata(diningListArray: data.dinings, lang: LocalizationLanguage.currentAppleLanguage())
+                if(self.diningListArray.count == 0) {
+                    self.diningListArray = data.dinings
+                    self.exhibitionCollectionView.reloadData()
+                }
+                if(self.diningListArray.count > 0) {
+                    self.saveOrUpdateDiningCoredata(diningListArray: data.dinings, lang: LocalizationLanguage.currentAppleLanguage())
+                }
             case .failure( _):
                 print("error")
             }
@@ -1918,9 +1942,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 switch response.result {
                 case .success(let data):
                     self.facilitiesDetail = data.facilitiesDetail
-//                    if self.nmoqTourDetail.first(where: {$0.sortId != "" && $0.sortId != nil} ) != nil {
-//                        self.nmoqTourDetail = self.nmoqTourDetail.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
-//                    }
                     self.exhibitionCollectionView.reloadData()
                     if(self.nmoqTourDetail.count == 0) {
                         let noResultMsg = NSLocalizedString("NO_RESULT_MESSAGE",

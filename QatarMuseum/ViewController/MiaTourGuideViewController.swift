@@ -142,7 +142,13 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
         _ = Alamofire.request(QatarMuseumRouter.MuseumTourGuide(LocalizationLanguage.currentAppleLanguage(),["museum_id": museumId])).responseObject { (response: DataResponse<TourGuides>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateTourGuideCoredata(miaTourDataFullArray: data.tourGuide)
+                if(self.miaTourDataFullArray.count == 0) {
+                    self.miaTourDataFullArray = data.tourGuide!
+                    self.miaTourCollectionView.reloadData()
+                }
+                if(self.miaTourDataFullArray.count > 0) {
+                    self.saveOrUpdateTourGuideCoredata(miaTourDataFullArray: data.tourGuide)
+                }
             case .failure(let error):
                 print("error")
             }

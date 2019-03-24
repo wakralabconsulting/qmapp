@@ -100,8 +100,10 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 collectionViewImages = ["MIA_AboutX1","Audio CircleX1","exhibition_blackX1","collectionsX1","diningX1",]
                 collectionViewNames = [aboutName,tourGuideName,exhibitionsName,collectionsName,diningName]
             }else if ((museumId == "66") || (museumId == "638")) {
-                collectionViewImages = ["about-launchX1","facilitiesX1","exhibition_blackX1","experienceX1","Audio CircleX1","events_BlackX1","park_blackX1"]
-                collectionViewNames = [aboutName,facilitiesName,exhibitionsName,experienceName,tourGuideName,eventsName,parkName]
+                collectionViewImages = ["about-launchX1","facilitiesX1","exhibition_blackX1","park_blackX1"]
+                collectionViewNames = [aboutName,facilitiesName,exhibitionsName,parkName]
+                previousButton.isHidden = true
+                nextButton.isHidden = true
             } else {
                 collectionViewImages = ["MIA_AboutX1","exhibition_blackX1","collectionsX1","diningX1",]
                 collectionViewNames = [aboutName,exhibitionsName,collectionsName,diningName]
@@ -270,7 +272,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             }
         }
         
-        if((museumId != nil) && ((museumId == "63") || (museumId == "96") || (museumId == "66") || (museumId == "638"))) {
+        if((museumId != nil) && ((museumId == "63") || (museumId == "96") )) {
             if (museumsBottomCollectionView.contentOffset.x <= 0.0) {
                 if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                     previousButton.isHidden = true

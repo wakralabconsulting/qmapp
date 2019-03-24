@@ -106,10 +106,17 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (indexPath.row == 1) {
-            loadParkPlayGroundDetail(parkList: nmoqParks[indexPath.row - 1])
-        } else if ((indexPath.row != 0) && (indexPath.row <= nmoqParks.count)) {
-           loadParkHeritageGardenDetail(parkList: nmoqParks[indexPath.row - 1])
+//        if (indexPath.row == 1) {
+//            loadParkPlayGroundDetail(parkList: nmoqParks[indexPath.row - 1])
+//        } else if ((indexPath.row != 0) && (indexPath.row <= nmoqParks.count)) {
+//           loadParkHeritageGardenDetail(parkList: nmoqParks[indexPath.row - 1])
+//        }
+        if (nmoqParks.count > 0) {
+            if((nmoqParks[indexPath.row - 1].nid == "15616") || (nmoqParks[indexPath.row - 1].nid == "15851")) {
+                loadParkPlayGroundDetail(parkList: nmoqParks[indexPath.row - 1])
+            } else {
+                loadParkHeritageGardenDetail(parkList: nmoqParks[indexPath.row - 1])
+            }
         }
     }
     
@@ -177,7 +184,13 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         _ = Alamofire.request(QatarMuseumRouter.GetNmoqParkList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<NmoqParksLists>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateNmoqParkListCoredata(nmoqParkList: data.nmoqParkList)
+                if(self.nmoqParkList.count == 0) {
+                    self.nmoqParkList = data.nmoqParkList
+                    self.parkTableView.reloadData()
+                }
+                if(self.nmoqParkList.count > 0) {
+                    self.saveOrUpdateNmoqParkListCoredata(nmoqParkList: data.nmoqParkList)
+                }
             case .failure( _):
                 print("error")
             }
@@ -188,7 +201,14 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         _ = Alamofire.request(QatarMuseumRouter.GetNmoqListParks(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<NMoQParks>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateNmoqParksCoredata(nmoqParkList: data.nmoqParks)
+                if(self.nmoqParks.count == 0) {
+                    self.nmoqParks = data.nmoqParks
+                    self.parkTableView.reloadData()
+                }
+                if(self.nmoqParks.count > 0) {
+                    self.saveOrUpdateNmoqParksCoredata(nmoqParkList: data.nmoqParks)
+                }
+                
             case .failure( _):
                 print("error")
             }

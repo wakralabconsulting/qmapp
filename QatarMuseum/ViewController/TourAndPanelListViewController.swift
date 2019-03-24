@@ -151,7 +151,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
             loadTravelDetailPage(selectedIndex: indexPath.row)
         }
         else if (pageNameString == NMoQPageName.Facilities) {
-            if((facilitiesList[indexPath.row].nid == "15256") || (facilitiesList[indexPath.row].nid == "15341")) {
+            if((facilitiesList[indexPath.row].nid == "15256") || (facilitiesList[indexPath.row].nid == "15826")) {
                 loadTourViewPage(selectedRow: indexPath.row, isFromTour: false, pageName: NMoQPageName.Facilities)
             } else {
                 loadPanelDiscussionDetailPage(selectedRow: indexPath.row)
@@ -261,7 +261,14 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         _ = Alamofire.request(QatarMuseumRouter.GetNMoQTourList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<NMoQTourList>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateTourListCoredata(nmoqTourList: data.nmoqTourList, isTourGuide: true)
+                if(self.nmoqTourList.count == 0) {
+                    self.nmoqTourList = data.nmoqTourList
+                    self.collectionTableView.reloadData()
+                }
+                if(self.nmoqTourList.count > 0) {
+                    self.saveOrUpdateTourListCoredata(nmoqTourList: data.nmoqTourList, isTourGuide: true)
+                }
+                
             case .failure(let error):
                 print("error")
             }
@@ -574,7 +581,16 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         _ = Alamofire.request(QatarMuseumRouter.GetNMoQSpecialEventList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<NMoQActivitiesListData>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateActivityListCoredata(nmoqActivityList: data.nmoqActivitiesList)
+                if(self.nmoqActivityList.count == 0) {
+                    self.nmoqActivityList = data.nmoqActivitiesList
+                    if self.nmoqActivityList.first(where: {$0.sortId != "" && $0.sortId != nil} ) != nil {
+                        self.nmoqActivityList = self.nmoqActivityList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
+                    }
+                    self.collectionTableView.reloadData()
+                }
+                if(self.nmoqActivityList.count > 0) {
+                    self.saveOrUpdateActivityListCoredata(nmoqActivityList: data.nmoqActivitiesList)
+                }
             case .failure( _):
                 print("error")
             }
@@ -892,7 +908,16 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         _ = Alamofire.request(QatarMuseumRouter.FacilitiesList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<FacilitiesData>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateFacilitiesListCoredata(facilitiesList: data.facilitiesList)
+                if(self.facilitiesList.count == 0) {
+                    self.facilitiesList = data.facilitiesList
+                    if self.facilitiesList.first(where: {$0.sortId != "" && $0.sortId != nil} ) != nil {
+                        self.facilitiesList = self.facilitiesList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
+                    }
+                    self.collectionTableView.reloadData()
+                }
+                if(self.facilitiesList.count > 0) {
+                    self.saveOrUpdateFacilitiesListCoredata(facilitiesList: data.facilitiesList)
+                }
             case .failure( _):
                 print("error")
             }
@@ -929,17 +954,6 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                         facilitiesListdbDict.sortId = facilitiesListDict.sortId
                         facilitiesListdbDict.nid =  facilitiesListDict.nid
                         
-                        
-                        //eventlist
-                        //                        tourListdbDict.dateString = tourListDict.date
-                        //                        tourListdbDict.descriptioForModerator = tourListDict.descriptioForModerator
-                        //                        tourListdbDict.mobileLatitude = tourListDict.mobileLatitude
-                        //                        tourListdbDict.moderatorName = tourListDict.moderatorName
-                        //                        tourListdbDict.longitude = tourListDict.longitude
-                        //                        tourListdbDict.contactEmail = tourListDict.contactEmail
-                        //                        tourListdbDict.contactPhone = tourListDict.contactPhone
-                        //                        tourListdbDict.isTourGuide = isTourGuide
-                        //
                         if(facilitiesListDict.images != nil){
                             if((facilitiesListDict.images?.count)! > 0) {
                                 for i in 0 ... (facilitiesListDict.images?.count)!-1 {
@@ -989,17 +1003,6 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                         facilitiesListdbDict.sortId = facilitiesListDict.sortId
                         facilitiesListdbDict.nid =  facilitiesListDict.nid
                         
-                        
-                        //eventlist
-                        //                        tourListdbDict.dateString = tourListDict.date
-                        //                        tourListdbDict.descriptioForModerator = tourListDict.descriptioForModerator
-                        //                        tourListdbDict.mobileLatitude = tourListDict.mobileLatitude
-                        //                        tourListdbDict.moderatorName = tourListDict.moderatorName
-                        //                        tourListdbDict.longitude = tourListDict.longitude
-                        //                        tourListdbDict.contactEmail = tourListDict.contactEmail
-                        //                        tourListdbDict.contactPhone = tourListDict.contactPhone
-                        //                        tourListdbDict.isTourGuide = isTourGuide
-                        
                         if(facilitiesListDict.images != nil){
                             if((facilitiesListDict.images?.count)! > 0) {
                                 for i in 0 ... (facilitiesListDict.images?.count)!-1 {
@@ -1045,15 +1048,6 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
             facilitiesListInfo.sortId = facilitiesListDict.sortId
             facilitiesListInfo.nid = facilitiesListDict.nid
             
-            //specialEvent
-            //            tourListInfo.dateString = tourListDict.date
-            //            tourListInfo.descriptioForModerator = tourListDict.descriptioForModerator
-            //            tourListInfo.mobileLatitude = tourListDict.mobileLatitude
-            //            tourListInfo.moderatorName = tourListDict.moderatorName
-            //            tourListInfo.longitude = tourListDict.longitude
-            //            tourListInfo.contactEmail = tourListDict.contactEmail
-            //            tourListInfo.contactPhone = tourListDict.contactPhone
-            //            tourListInfo.isTourGuide = isTourGuide
             if(facilitiesListDict.images != nil){
                 if((facilitiesListDict.images?.count)! > 0) {
                     for i in 0 ... (facilitiesListDict.images?.count)!-1 {
@@ -1077,15 +1071,6 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
             facilitiesListInfo.sortId = facilitiesListDict.sortId
             facilitiesListInfo.nid =  facilitiesListDict.nid
             
-            //specialEvent
-            //            tourListInfo.dateString = tourListDict.date
-            //            tourListInfo.descriptioForModerator = tourListDict.descriptioForModerator
-            //            tourListInfo.mobileLatitude = tourListDict.mobileLatitude
-            //            tourListInfo.moderatorName = tourListDict.moderatorName
-            //            tourListInfo.longitude = tourListDict.longitude
-            //            tourListInfo.contactEmail = tourListDict.contactEmail
-            //            tourListInfo.contactPhone = tourListDict.contactPhone
-            //            tourListInfo.isTourGuide = isTourGuide
             if(facilitiesListDict.images != nil){
                 if((facilitiesListDict.images?.count)! > 0) {
                     for i in 0 ... (facilitiesListDict.images?.count)!-1 {
@@ -1220,7 +1205,13 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         _ = Alamofire.request(QatarMuseumRouter.GetNMoQTravelList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<HomeBannerList>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateTravelListCoredata(travelList: data.homeBannerList)
+                if(self.travelList.count == 0) {
+                    self.travelList = data.homeBannerList
+                    self.collectionTableView.reloadData()
+                }
+                if(self.nmoqActivityList.count > 0) {
+                    self.saveOrUpdateTravelListCoredata(travelList: data.homeBannerList)
+                }
             case .failure(let error):
                 print("error")
             }
