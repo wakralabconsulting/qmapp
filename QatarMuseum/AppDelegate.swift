@@ -312,6 +312,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
          */
         let container = NSPersistentContainer(name: "QatarMuseums")
         print(container.persistentStoreDescriptions.first?.url)
+        let description = NSPersistentStoreDescription()
+        description.shouldMigrateStoreAutomatically = true
+        description.shouldInferMappingModelAutomatically = true
+        container.persistentStoreDescriptions = [description]
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
@@ -412,8 +416,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         _ = Alamofire.request(QatarMuseumRouter.HeritageList(lang!)).responseObject(queue: queue) { (response: DataResponse<Heritages>) -> Void in
             switch response.result {
             case .success(let data):
-                DispatchQueue.main.async{
-                    self.saveOrUpdateHeritageCoredata(heritageListArray: data.heritage, lang: lang)
+                if(data.heritage != nil) {
+                    if((data.heritage?.count)! > 0) {
+                    DispatchQueue.main.async{
+                        self.saveOrUpdateHeritageCoredata(heritageListArray: data.heritage, lang: lang)
+                    }
+                }
                 }
             case .failure(let error):
                print(error)
@@ -546,7 +554,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         _ = Alamofire.request(QatarMuseumRouter.ExhibitionList(lang!)).responseObject(queue: queue) { (response: DataResponse<Exhibitions>) -> Void in
             switch response.result {
             case .success(let data):
+                if(data.exhibitions != nil) {
+                    if((data.exhibitions?.count)! > 0) {
                 self.saveOrUpdateExhibitionsCoredata(exhibition: data.exhibitions, lang: lang)
+                    }
+                }
             case .failure( _):
                 print("error")
             }
@@ -681,8 +693,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         _ = Alamofire.request(QatarMuseumRouter.HomeList(lang!)).responseObject(queue:queue) { (response: DataResponse<HomeList>) -> Void in
             switch response.result {
             case .success(let data):
-                DispatchQueue.main.async{
-                self.saveOrUpdateHomeCoredata(homeList: data.homeList, lang: lang)
+                if(data.homeList != nil) {
+                    if((data.homeList?.count)! > 0) {
+                    DispatchQueue.main.async{
+                        self.saveOrUpdateHomeCoredata(homeList: data.homeList, lang: lang)
+                    }
+                }
                 }
             case .failure( _):
                 print("error")
@@ -810,8 +826,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         _ = Alamofire.request(QatarMuseumRouter.MuseumTourGuide(lang!,["museum_id": museumId!])).responseObject(queue:queue) { (response: DataResponse<TourGuides>) -> Void in
             switch response.result {
             case .success(let data):
-                DispatchQueue.main.async{
-                    self.saveOrUpdateTourGuideCoredata(miaTourDataFullArray: data.tourGuide, museumId: museumId, lang: lang)
+                if(data.tourGuide != nil) {
+                    if((data.tourGuide?.count)! > 0) {
+                    DispatchQueue.main.async{
+                        self.saveOrUpdateTourGuideCoredata(miaTourDataFullArray: data.tourGuide, museumId: museumId, lang: lang)
+                    }
+                }
                 }
             case .failure( _):
                 print("error")
@@ -1021,9 +1041,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             _ = Alamofire.request(QatarMuseumRouter.GetNMoQAboutEvent(lang!,["nid": museumId!])).responseObject(queue: queue) { (response: DataResponse<Museums>) -> Void in
                 switch response.result {
                 case .success(let data):
-                    DispatchQueue.main.async{
-                        self.saveOrUpdateAboutCoredata(aboutDetailtArray: data.museum, lang: lang)
+                    if(data.museum != nil) {
+                        if((data.museum?.count)! > 0) {
+                            DispatchQueue.main.async{
+                            self.saveOrUpdateAboutCoredata(aboutDetailtArray: data.museum, lang: lang)
+                            }
+                        }
                     }
+                    
                 case .failure( _):
                     print("error")
                 }
@@ -1222,9 +1247,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         _ = Alamofire.request(QatarMuseumRouter.GetNMoQTourList(lang!)).responseObject(queue:queue) { (response: DataResponse<NMoQTourList>) -> Void in
             switch response.result {
             case .success(let data):
-                DispatchQueue.main.async{
-                    self.saveOrUpdateTourListCoredata(nmoqTourList: data.nmoqTourList, isTourGuide: true, lang: lang)
+                if(data.nmoqTourList != nil) {
+                    if((data.nmoqTourList?.count)! > 0) {
+                        DispatchQueue.main.async{
+                            self.saveOrUpdateTourListCoredata(nmoqTourList: data.nmoqTourList, isTourGuide: true, lang: lang)
+                        }
+                    }
                 }
+                
             case .failure( _):
                 print("error")
             }
@@ -1464,7 +1494,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         _ = Alamofire.request(QatarMuseumRouter.GetNMoQTravelList(lang!)).responseObject(queue:queue) { (response: DataResponse<HomeBannerList>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateTravelListCoredata(travelList: data.homeBannerList, lang: lang)
+                if(data.homeBannerList != nil) {
+                    if((data.homeBannerList?.count)! > 0) {
+                        self.saveOrUpdateTravelListCoredata(travelList: data.homeBannerList, lang: lang)
+                    }
+                }
+                
             case .failure( _):
                 print("error")
             }
@@ -1606,7 +1641,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         _ = Alamofire.request(QatarMuseumRouter.GetNMoQSpecialEventList(lang!)).responseObject(queue:queue) { (response: DataResponse<NMoQActivitiesListData>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateActivityListCoredata(nmoqActivityList: data.nmoqActivitiesList, lang:lang )
+                if(data.nmoqActivitiesList != nil) {
+                    if((data.nmoqActivitiesList?.count)! > 0) {
+                        self.saveOrUpdateActivityListCoredata(nmoqActivityList: data.nmoqActivitiesList, lang:lang )
+                    }
+                }
+               
             case .failure( _):
                 print("error")
             }
@@ -1843,7 +1883,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         _ = Alamofire.request(QatarMuseumRouter.DiningList(lang!)).responseObject(queue: queue) { (response: DataResponse<Dinings>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateDiningCoredata(diningListArray: data.dinings, lang: lang)
+                if(data.dinings != nil) {
+                    if((data.dinings?.count)! > 0) {
+                        self.saveOrUpdateDiningCoredata(diningListArray: data.dinings, lang: lang)
+                    }
+                }
+                
             case .failure( _):
                print("error")
             }
@@ -1978,7 +2023,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         _ = Alamofire.request(QatarMuseumRouter.PublicArtsList(lang!)).responseObject(queue: queue) { (response: DataResponse<PublicArtsLists>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdatePublicArtsCoredata(publicArtsListArray: data.publicArtsList, lang: lang)
+                if(data.publicArtsList != nil) {
+                    if((data.publicArtsList?.count)! > 0) {
+                        self.saveOrUpdatePublicArtsCoredata(publicArtsListArray: data.publicArtsList, lang: lang)
+                    }
+                }
+                
             case .failure(let error):
                 print("error")
             }
@@ -2117,7 +2167,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         _ = Alamofire.request(QatarMuseumRouter.CollectionList(lang!,["museum_id": museumId ?? 0])).responseObject(queue: queue) { (response: DataResponse<Collections>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateCollectionCoredata(collection: data.collections, museumId: museumId, lang: lang)
+                if(data.collections != nil) {
+                    if((data.collections?.count)! > 0) {
+                        self.saveOrUpdateCollectionCoredata(collection: data.collections, museumId: museumId, lang: lang)
+                    }
+                }
+                
                
             case .failure( _):
                 print("error")
@@ -2214,7 +2269,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         _ = Alamofire.request(QatarMuseumRouter.ParksList(lang ?? ENG_LANGUAGE)).responseObject { (response: DataResponse<ParksLists>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateParksCoredata(parksListArray: data.parkList, lang: lang)
+                if(data.parkList != nil) {
+                    if((data.parkList?.count)! > 0) {
+                        self.saveOrUpdateParksCoredata(parksListArray: data.parkList, lang: lang)
+                    }
+                }
+                
             case .failure(let error):
                 print("error")
             }
@@ -2318,7 +2378,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         _ = Alamofire.request(QatarMuseumRouter.FacilitiesList(lang ?? ENG_LANGUAGE)).responseObject { (response: DataResponse<FacilitiesData>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateFacilitiesListCoredata(facilitiesList: data.facilitiesList, lang: lang)
+                if(data.facilitiesList != nil) {
+                    if((data.facilitiesList?.count)! > 0) {
+                        self.saveOrUpdateFacilitiesListCoredata(facilitiesList: data.facilitiesList, lang: lang)
+                    }
+                }
+                
             case .failure( _):
                 print("error")
             }
@@ -2355,17 +2420,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         facilitiesListdbDict.sortId = facilitiesListDict.sortId
                         facilitiesListdbDict.nid =  facilitiesListDict.nid
                         
-                        
-                        //eventlist
-//                        tourListdbDict.dateString = tourListDict.date
-//                        tourListdbDict.descriptioForModerator = tourListDict.descriptioForModerator
-//                        tourListdbDict.mobileLatitude = tourListDict.mobileLatitude
-//                        tourListdbDict.moderatorName = tourListDict.moderatorName
-//                        tourListdbDict.longitude = tourListDict.longitude
-//                        tourListdbDict.contactEmail = tourListDict.contactEmail
-//                        tourListdbDict.contactPhone = tourListDict.contactPhone
-//                        tourListdbDict.isTourGuide = isTourGuide
-//
                         if(facilitiesListDict.images != nil){
                             if((facilitiesListDict.images?.count)! > 0) {
                                 for i in 0 ... (facilitiesListDict.images?.count)!-1 {
@@ -2417,17 +2471,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         facilitiesListdbDict.sortId = facilitiesListDict.sortId
                         facilitiesListdbDict.nid =  facilitiesListDict.nid
                         
-                        
-                        //eventlist
-//                        tourListdbDict.dateString = tourListDict.date
-//                        tourListdbDict.descriptioForModerator = tourListDict.descriptioForModerator
-//                        tourListdbDict.mobileLatitude = tourListDict.mobileLatitude
-//                        tourListdbDict.moderatorName = tourListDict.moderatorName
-//                        tourListdbDict.longitude = tourListDict.longitude
-//                        tourListdbDict.contactEmail = tourListDict.contactEmail
-//                        tourListdbDict.contactPhone = tourListDict.contactPhone
-//                        tourListdbDict.isTourGuide = isTourGuide
-                        
                         if(facilitiesListDict.images != nil){
                             if((facilitiesListDict.images?.count)! > 0) {
                                 for i in 0 ... (facilitiesListDict.images?.count)!-1 {
@@ -2474,16 +2517,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             facilitiesListInfo.title = facilitiesListDict.title
             facilitiesListInfo.sortId = facilitiesListDict.sortId
             facilitiesListInfo.nid = facilitiesListDict.nid
-            
-            //specialEvent
-//            tourListInfo.dateString = tourListDict.date
-//            tourListInfo.descriptioForModerator = tourListDict.descriptioForModerator
-//            tourListInfo.mobileLatitude = tourListDict.mobileLatitude
-//            tourListInfo.moderatorName = tourListDict.moderatorName
-//            tourListInfo.longitude = tourListDict.longitude
-//            tourListInfo.contactEmail = tourListDict.contactEmail
-//            tourListInfo.contactPhone = tourListDict.contactPhone
-//            tourListInfo.isTourGuide = isTourGuide
             if(facilitiesListDict.images != nil){
                 if((facilitiesListDict.images?.count)! > 0) {
                     for i in 0 ... (facilitiesListDict.images?.count)!-1 {
@@ -2506,16 +2539,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             facilitiesListInfo.title = facilitiesListDict.title
             facilitiesListInfo.sortId = facilitiesListDict.sortId
             facilitiesListInfo.nid =  facilitiesListDict.nid
-            
-            //specialEvent
-//            tourListInfo.dateString = tourListDict.date
-//            tourListInfo.descriptioForModerator = tourListDict.descriptioForModerator
-//            tourListInfo.mobileLatitude = tourListDict.mobileLatitude
-//            tourListInfo.moderatorName = tourListDict.moderatorName
-//            tourListInfo.longitude = tourListDict.longitude
-//            tourListInfo.contactEmail = tourListDict.contactEmail
-//            tourListInfo.contactPhone = tourListDict.contactPhone
-//            tourListInfo.isTourGuide = isTourGuide
             if(facilitiesListDict.images != nil){
                 if((facilitiesListDict.images?.count)! > 0) {
                     for i in 0 ... (facilitiesListDict.images?.count)!-1 {
@@ -2545,7 +2568,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         _ = Alamofire.request(QatarMuseumRouter.GetNmoqParkList(lang ?? ENG_LANGUAGE)).responseObject { (response: DataResponse<NmoqParksLists>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateNmoqParkListCoredata(nmoqParkList: data.nmoqParkList, lang: lang)
+                if(data.nmoqParkList != nil) {
+                    if((data.nmoqParkList?.count)! > 0) {
+                        self.saveOrUpdateNmoqParkListCoredata(nmoqParkList: data.nmoqParkList, lang: lang)
+                    }
+                }
+                
             case .failure( _):
                 print("error")
             }
@@ -2763,7 +2791,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         _ = Alamofire.request(QatarMuseumRouter.GetNmoqListParks(lang ?? ENG_LANGUAGE)).responseObject { (response: DataResponse<NMoQParks>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateNmoqParksCoredata(nmoqParkList: data.nmoqParks, lang: lang)
+                if(data.nmoqParks != nil) {
+                    if((data.nmoqParks?.count)! > 0) {
+                        self.saveOrUpdateNmoqParksCoredata(nmoqParkList: data.nmoqParks, lang: lang)
+                    }
+                }
+                
             case .failure( _):
                 print("error")
             }

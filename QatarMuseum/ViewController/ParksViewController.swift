@@ -48,7 +48,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             self.fetchParksFromCoredata()
             if  (networkReachability?.isReachable)! {
                 DispatchQueue.global(qos: .background).async {
-                    self.getParksDataFromServer(retryButtonPressed: false)
+                    self.getParksDataFromServer()
                 }
             }
         } else {
@@ -260,25 +260,29 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         sender.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     //MARK: WebServiceCall
-    func getParksDataFromServer(retryButtonPressed: Bool?)
+    func getParksDataFromServer()
     {
         _ = Alamofire.request(QatarMuseumRouter.ParksList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<ParksLists>) -> Void in
             switch response.result {
             case .success(let data):
                
-                self.saveOrUpdateParksCoredata(parksListArray: data.parkList)
-                if(retryButtonPressed ?? false) {
-                    self.parksListArray = data.parkList
-                    
-                    self.parksTableView.reloadData()
-                    self.loadingView.stopLoading()
-                    self.loadingView.isHidden = true
+                
+//                if(retryButtonPressed ?? false) {
+//                    self.parksListArray = data.parkList
+//
+//                    self.parksTableView.reloadData()
+//                    self.loadingView.stopLoading()
+//                    self.loadingView.isHidden = true
                     if (self.parksListArray.count == 0) {
-                        self.loadingView.stopLoading()
-                        self.loadingView.noDataView.isHidden = false
-                        self.loadingView.isHidden = false
-                        self.loadingView.showNoDataView()
-                    } else {
+//                        self.loadingView.stopLoading()
+//                        self.loadingView.noDataView.isHidden = false
+//                        self.loadingView.isHidden = false
+//                        self.loadingView.showNoDataView()
+                        self.parksListArray = data.parkList
+                        self.parksTableView.reloadData()
+                    }
+                    if (self.parksListArray.count > 0)  {
+                        self.saveOrUpdateParksCoredata(parksListArray: data.parkList)
                         if let imageUrl = self.parksListArray[0].image{
                             self.setTopbarImage(imageUrl: imageUrl)
                         } else {
@@ -286,11 +290,11 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                         }
                         
                     }
-                }
+               // }
                 
-            case .failure(let _):
+            case .failure( _):
                 print("error")
-                if(retryButtonPressed ?? false) {
+                if(self.parksListArray.count == 0) {
                     var errorMessage: String
                     errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
                                                                     comment: "Setting the content of the alert"))
@@ -816,7 +820,8 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
         if  (networkReachability?.isReachable)! {
-            self.getParksDataFromServer(retryButtonPressed: true)
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            appDelegate?.getParksDataFromServer(lang: LocalizationLanguage.currentAppleLanguage())
         }
     }
     func showNoNetwork() {

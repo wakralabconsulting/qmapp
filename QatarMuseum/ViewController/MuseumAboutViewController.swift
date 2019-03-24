@@ -962,7 +962,14 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             _ = Alamofire.request(QatarMuseumRouter.GetNMoQAboutEvent(LocalizationLanguage.currentAppleLanguage(),["nid": museumId!])).responseObject { (response: DataResponse<Museums>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateAboutCoredata(aboutDetailtArray: data.museum)
+                if(self.aboutDetailtArray.count == 0) {
+                    self.aboutDetailtArray = data.museum!
+                    self.heritageDetailTableView.reloadData()
+                }
+                if(self.aboutDetailtArray.count > 0) {
+                    self.saveOrUpdateAboutCoredata(aboutDetailtArray: data.museum)
+                }
+                
             case .failure( _):
                 print("error")
             }
