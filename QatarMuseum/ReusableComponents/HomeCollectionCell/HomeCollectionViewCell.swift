@@ -46,7 +46,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
             homeImageView.kf.setImage(with: URL(string: imageUrl))
         }
         let panelAndTalks = "Panels And Talks".lowercased()
-        if ((home.name?.lowercased() == panelAndTalks) || (home.name == "ندوات و محاورات")) {
+        if ((home.name?.lowercased() == panelAndTalks) || (home.name == "قطر تبدع: فعاليات افتتاح متحف قطر الوطني")) {
             if(home.image == "panelAndTalks") {
                 homeImageView.image = UIImage(named: (home.image!))
             }
