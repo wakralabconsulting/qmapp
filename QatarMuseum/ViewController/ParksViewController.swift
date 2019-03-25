@@ -96,8 +96,9 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         blurView.alpha = 0
         imageView.addSubview(blurView)
-        
-        
+        loadCloseButton()
+    }
+    func loadCloseButton() {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
         }
@@ -111,7 +112,6 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         closeButton.addTarget(self, action: #selector(closeTouchDownAction), for: .touchDown)
         view.addSubview(closeButton)
     }
-    
     func registerCell() {
         self.parksTableView.register(UINib(nibName: "ParkTableCellXib", bundle: nil), forCellReuseIdentifier: "parkCellId")
         self.parksTableView.register(UINib(nibName: "CollectionDetailView", bundle: nil), forCellReuseIdentifier: "collectionCellId")
@@ -295,6 +295,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             case .failure( _):
                 print("error")
                 if(self.parksListArray.count == 0) {
+                    self.loadCloseButton()
                     var errorMessage: String
                     errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
                                                                     comment: "Setting the content of the alert"))
@@ -432,8 +433,10 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 else{
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
+                        self.loadCloseButton()
                     } else {
                         self.loadingView.showNoDataView()
+                        self.loadCloseButton()
                     }
                 }
             }
@@ -462,8 +465,10 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 else{
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
+                        self.loadCloseButton()
                     } else {
                         self.loadingView.showNoDataView()
+                        self.loadCloseButton()
                     }
                 }
             }
@@ -501,6 +506,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                     }
                     
                 case .failure( _):
+                    self.loadCloseButton()
                     var errorMessage: String
                     errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
                                                                     comment: "Setting the content of the alert"))
