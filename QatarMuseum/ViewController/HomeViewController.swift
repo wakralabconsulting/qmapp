@@ -389,7 +389,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                             self.homeList.insert(Home(id: "13976", name: panelAndTalksName.uppercased(), image: "panelAndTalks", tourguide_available: "false", sort_id: nil), at: self.homeList.endIndex)
                         }
                     } else {
-                        let panelAndTalks = "ندوات و محاورات"
+                        let panelAndTalks = "قطر تبدع: فعاليات افتتاح متحف قطر الوطني"
                         if self.homeList.index(where: {$0.name != panelAndTalks}) != nil {
                             self.homeList.insert(Home(id: "15631", name: panelAndTalksName, image: "panelAndTalks", tourguide_available: "false", sort_id: nil), at: self.homeList.endIndex)
                         }
@@ -894,7 +894,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                             j = j!+1
                         }
                     }
-                    let panelAndTalks = "ندوات و محاورات"
+                    let panelAndTalks = "قطر تبدع: فعاليات افتتاح متحف قطر الوطني"
                     if homeList.index(where: {$0.name != panelAndTalks}) != nil {
                         self.homeList.insert(Home(id: "15631", name: panelAndTalksName, image: "panelAndTalks", tourguide_available: "false", sort_id: nil), at: self.homeList.endIndex)
                     }
