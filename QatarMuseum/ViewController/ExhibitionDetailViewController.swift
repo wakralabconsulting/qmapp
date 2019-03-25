@@ -147,7 +147,9 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         blurView.alpha = 0
         imageView.addSubview(blurView)
-        
+        addCloseButton()
+    }
+    func addCloseButton() {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
         } else {
@@ -165,7 +167,6 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         closeButton.layer.shadowOpacity = 1.0
         view.addSubview(closeButton)
     }
-    
     func loadLocationInMap(currentRow: Int) {
         var latitudeString = String()
         var longitudeString = String()

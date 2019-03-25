@@ -724,6 +724,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 } else {
                     self.getMuseumDiningListFromServer()
                 }
+            } else if (exhibitionsPageNameString == ExhbitionPageName.nmoqTourSecondList){
+                self.getNMoQTourDetail()
             }
         }
     }

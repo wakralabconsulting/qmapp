@@ -413,7 +413,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 
                 self.homeBannerList = data.homeBannerList
                 if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")  && (self.homeBannerList.count > 0)) {
-                    self.homeList.insert(Home(id:nil , name: self.homeBannerList[0].bannerTitle,image: self.homeBannerList[0].bannerLink,
+                    self.homeList.insert(Home(id:self.homeBannerList[0].fullContentID , name: self.homeBannerList[0].bannerTitle,image: self.homeBannerList[0].bannerLink,
                                               tourguide_available: "false", sort_id: nil),
                                          at: 0)
                     
