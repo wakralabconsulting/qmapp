@@ -858,7 +858,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     
                 }
                 
-                let panelAndTalks = "Panels And Talks".lowercased()
+                let panelAndTalks = "QATAR CREATES: EVENTS FOR THE OPENING OF NMoQ".lowercased()
                 if homeList.index(where: {$0.name?.lowercased() != panelAndTalks}) != nil {
                     self.homeList.insert(Home(id: "13976", name: panelAndTalksName.uppercased(), image: "panelAndTalks", tourguide_available: "false", sort_id: nil), at: self.homeList.endIndex)
                 }
