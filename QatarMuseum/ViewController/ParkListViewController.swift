@@ -111,7 +111,7 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
 //        } else if ((indexPath.row != 0) && (indexPath.row <= nmoqParks.count)) {
 //           loadParkHeritageGardenDetail(parkList: nmoqParks[indexPath.row - 1])
 //        }
-        if (nmoqParks.count > 0) {
+        if ((nmoqParks.count > 0) && (indexPath.row != 0) && (indexPath.row != 3)) {
             if((nmoqParks[indexPath.row - 1].nid == "15616") || (nmoqParks[indexPath.row - 1].nid == "15851")) {
                 loadParkPlayGroundDetail(parkList: nmoqParks[indexPath.row - 1])
             } else {
@@ -614,7 +614,9 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             self.nmoqParks = self.nmoqParks.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
                         }
                     }
-                    parkTableView.reloadData()
+                    DispatchQueue.main.async{
+                        self.parkTableView.reloadData()
+                    }
                 } else{
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
@@ -649,7 +651,9 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             self.nmoqParks = self.nmoqParks.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
                         }
                     }
-                    parkTableView.reloadData()
+                    DispatchQueue.main.async{
+                        self.parkTableView.reloadData()
+                    }
                 } else{
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()

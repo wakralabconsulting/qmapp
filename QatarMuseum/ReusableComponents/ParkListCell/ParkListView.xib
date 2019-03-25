@@ -170,6 +170,7 @@
                 <color key="backgroundColor" red="0.90580284595489502" green="0.9059332013130188" blue="0.90577441453933716" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
                     <constraint firstItem="550-51-nVh" firstAttribute="top" secondItem="7gS-cH-UhI" secondAttribute="top" constant="15" id="5tH-b2-DiR"/>
+                    <constraint firstAttribute="bottom" secondItem="3X5-9M-dHX" secondAttribute="bottom" constant="21.5" id="I2n-i4-Dt5"/>
                     <constraint firstItem="3X5-9M-dHX" firstAttribute="trailing" secondItem="hV7-A0-d9w" secondAttribute="trailing" id="IEN-L2-1m2"/>
                     <constraint firstItem="3X5-9M-dHX" firstAttribute="leading" secondItem="hV7-A0-d9w" secondAttribute="leading" id="JiL-Hr-TV9"/>
                     <constraint firstItem="550-51-nVh" firstAttribute="leading" secondItem="7gS-cH-UhI" secondAttribute="leading" constant="15" id="YKP-LZ-5Dr"/>
@@ -177,19 +178,25 @@
                     <constraint firstAttribute="trailing" secondItem="550-51-nVh" secondAttribute="trailing" constant="15" id="h1J-cG-Lvk"/>
                     <constraint firstItem="3X5-9M-dHX" firstAttribute="top" secondItem="hV7-A0-d9w" secondAttribute="bottom" constant="12" id="iFx-fw-qTr"/>
                     <constraint firstAttribute="trailing" secondItem="hV7-A0-d9w" secondAttribute="trailing" constant="15" id="jal-mQ-rdK"/>
-                    <constraint firstAttribute="bottom" secondItem="3X5-9M-dHX" secondAttribute="bottom" constant="21.5" id="y8y-eM-1H1"/>
                     <constraint firstItem="hV7-A0-d9w" firstAttribute="leading" secondItem="7gS-cH-UhI" secondAttribute="leading" constant="15" id="yuI-Ko-ZG5"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="jgr-c3-KU3"/>
             <connections>
                 <outlet property="descriptionLabel" destination="ULw-9c-LqX" id="ZRf-Uc-0vn"/>
+                <outlet property="hoursTitleLineHeight" destination="iCq-36-scC" id="M7N-Yb-J1J"/>
+                <outlet property="hoursTitleLineView" destination="Bbz-G8-2aN" id="h7c-eU-YZH"/>
+                <outlet property="hoursView" destination="hV7-A0-d9w" id="3eK-9O-1e8"/>
                 <outlet property="locationTitle" destination="nYs-td-A8h" id="qMp-9G-ugZ"/>
+                <outlet property="locationView" destination="3X5-9M-dHX" id="1pB-L5-H3T"/>
                 <outlet property="mapOverlayView" destination="Qvy-y7-67f" id="8v5-Nt-Gs0"/>
                 <outlet property="mapView" destination="8aU-Ad-4LM" id="dPs-4H-kGs"/>
                 <outlet property="timimgTextLabel" destination="94M-yR-f9I" id="rqU-6t-0nu"/>
                 <outlet property="timimgTitle" destination="iPL-G0-CDv" id="iv1-qq-gGH"/>
                 <outlet property="titleLabel" destination="en4-XT-k5W" id="cYw-ov-dAd"/>
+                <outlet property="titleLineHeight" destination="UT9-Gx-jK1" id="FFB-JC-2cV"/>
+                <outlet property="titleLineView" destination="dSc-Ar-j39" id="vDd-zn-Q3w"/>
+                <outlet property="topView" destination="550-51-nVh" id="bqL-9Z-nOi"/>
             </connections>
             <point key="canvasLocation" x="49.600000000000001" y="138.0809595202399"/>
         </tableViewCell>

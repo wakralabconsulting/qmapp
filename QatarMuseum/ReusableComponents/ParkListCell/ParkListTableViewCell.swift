@@ -18,6 +18,17 @@ class ParkListTableViewCell: UITableViewCell {
     @IBOutlet weak var locationTitle: UILabel!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var mapOverlayView: UIView!
+    @IBOutlet weak var titleLineView: UIView!
+    @IBOutlet weak var hoursTitleLineHeight: NSLayoutConstraint!
+    @IBOutlet weak var titleLineHeight: NSLayoutConstraint!
+    @IBOutlet weak var hoursTitleLineView: UIView!
+    @IBOutlet weak var topView: UIView!
+    
+    @IBOutlet weak var hoursView: UIView!
+    
+    @IBOutlet weak var locationView: UIView!
+    
+    //@IBOutlet weak var hoursViewHeight: NSLayoutConstraint!
     var loadMapView : (()->())?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -41,6 +52,25 @@ class ParkListTableViewCell: UITableViewCell {
         timimgTitle.text = parkListData?.hoursTitle?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         timimgTextLabel.text = parkListData?.hoursDesc?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         locationTitle.text = NSLocalizedString("LOCATION_TITLE", comment: "LOCATION_TITLE in ParkList Page").capitalized
+        
+        if ((parkListData?.parkTitle == nil) || (parkListData?.parkTitle == "") && (parkListData?.parkDescription == nil) || (parkListData?.parkDescription == "")){
+            titleLineHeight.constant = 0
+            titleLineView.isHidden = true
+        } else {
+            titleLineHeight.constant = 3
+            titleLineView.isHidden = false
+        }
+        if ((parkListData?.hoursTitle == nil) || (parkListData?.hoursTitle?.trimmingCharacters(in: NSCharacterSet.whitespaces) == "") && (parkListData?.hoursDesc == nil) || (parkListData?.hoursDesc?.trimmingCharacters(in: NSCharacterSet.whitespaces) == "")){
+            hoursTitleLineHeight.constant = 0
+            
+            hoursTitleLineView.isHidden = true
+            let verticalSpace = NSLayoutConstraint(item: self.topView, attribute: .bottom, relatedBy: .equal, toItem: self.locationView, attribute: .top, multiplier: 1, constant: -16)
+           // activate the constraints
+            NSLayoutConstraint.activate([verticalSpace])
+        } else {
+            hoursTitleLineHeight.constant = 3
+            hoursTitleLineView.isHidden = false
+        }
         
          //Details For Map
          var latitudeString  = String()
