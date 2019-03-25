@@ -112,16 +112,25 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             }
         }
     }
+//    func setImageArray(imageArray: [String]?) {
+//        if ((imageArray?.count)! >= 4) {
+//            totalImgCount = 3
+//        } else if ((imageArray?.count)! > 1){
+//            totalImgCount = (imageArray?.count)!-1
+//        } else {
+//            totalImgCount = 0
+//        }
+//        if (totalImgCount > 0) {
+//            for  i in 1 ... totalImgCount {
+//                let imageUrlString = imageArray![i]
+//                downloadImage(imageUrlString: imageUrlString)
+//            }
+//        }
+//    }
     func setImageArray(imageArray: [String]?) {
-        if ((imageArray?.count)! >= 4) {
-            totalImgCount = 3
-        } else if ((imageArray?.count)! > 1){
-            totalImgCount = (imageArray?.count)!-1
-        } else {
-            totalImgCount = 0
-        }
+        totalImgCount = imageArray?.count ?? 0
         if (totalImgCount > 0) {
-            for  i in 1 ... totalImgCount {
+            for  i in 0 ... totalImgCount-1 {
                 let imageUrlString = imageArray![i]
                 downloadImage(imageUrlString: imageUrlString)
             }
