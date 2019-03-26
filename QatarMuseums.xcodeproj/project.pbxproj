@@ -260,6 +260,7 @@
 		1BAA2FCA2125FCC500D785DD /* ObjectImageXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ObjectImageXib.xib; sourceTree = "<group>"; };
 		1BAA2FCC2125FD8200D785DD /* ObjectImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectImageView.swift; sourceTree = "<group>"; };
 		1BAA2FCE2126D15D00D785DD /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
+		1BBAACAE224A591C00D09ECE /* QatarMuseums_V2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QatarMuseums_V2.xcdatamodel; sourceTree = "<group>"; };
 		1BC909CF2108E3C700D6C00B /* QMUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QMUtility.swift; sourceTree = "<group>"; };
 		1BC909D1210B277F00D6C00B /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		1BE526CF210739BE00C8CD51 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
@@ -1882,6 +1883,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = QatarMuseums.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = DNV2Z9FR68;
@@ -1895,8 +1897,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.qatarmuseums.qatarmuseumsapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "dd41b607-eb03-4040-9a5a-ad0fe55b2d74";
-				PROVISIONING_PROFILE_SPECIFIER = QatarMuseumsDistributionProfile;
+				PROVISIONING_PROFILE = "563779af-c6f7-43a8-acf8-a004ad0aadd4";
+				PROVISIONING_PROFILE_SPECIFIER = QMDevelopmentProfile;
 				SWIFT_OBJC_BRIDGING_HEADER = "QatarMuseum/ReusableComponents/FSCalendar/QatarMuseum-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
@@ -1912,6 +1914,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = QatarMuseums.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DNV2Z9FR68;
 				ENABLE_BITCODE = NO;
@@ -1924,8 +1927,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.qatarmuseums.qatarmuseumsapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "dd41b607-eb03-4040-9a5a-ad0fe55b2d74";
-				PROVISIONING_PROFILE_SPECIFIER = QatarMuseumsDistributionProfile;
+				PROVISIONING_PROFILE = "563779af-c6f7-43a8-acf8-a004ad0aadd4";
+				PROVISIONING_PROFILE_SPECIFIER = QMDevelopmentProfile;
 				SWIFT_OBJC_BRIDGING_HEADER = "QatarMuseum/ReusableComponents/FSCalendar/QatarMuseum-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2043,9 +2046,10 @@
 		B839831821196E68007090C8 /* QatarMuseums.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				1BBAACAE224A591C00D09ECE /* QatarMuseums_V2.xcdatamodel */,
 				B839831921196E68007090C8 /* QatarMuseums.xcdatamodel */,
 			);
-			currentVersion = B839831921196E68007090C8 /* QatarMuseums.xcdatamodel */;
+			currentVersion = 1BBAACAE224A591C00D09ECE /* QatarMuseums_V2.xcdatamodel */;
 			path = QatarMuseums.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
