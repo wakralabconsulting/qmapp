@@ -376,24 +376,33 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         _ = Alamofire.request(QatarMuseumRouter.HomeList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<HomeList>) -> Void in
             switch response.result {
             case .success(let data):
-                if(self.homeList.count == 0) {
+                if((self.homeList.count == 0) || (self.homeList.count == 1)) {
                     let panelAndTalksName = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
                     self.homeList = data.homeList
-                    if self.homeList.first(where: {$0.sortId != "" && $0.sortId != nil} ) != nil {
-                        self.homeList = self.homeList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
-                    }
                     if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                         let panelAndTalks = "Panels And Talks".lowercased()
                         if self.homeList.index(where: {$0.name?.lowercased() != panelAndTalks}) != nil {
                             
-                            self.homeList.insert(Home(id: "13976", name: panelAndTalksName.uppercased(), image: "panelAndTalks", tourguide_available: "false", sort_id: nil), at: self.homeList.endIndex)
+                            self.homeList.insert(Home(id: "13976", name: panelAndTalksName.uppercased(), image: "panelAndTalks", tourguide_available: "false", sort_id: "10"), at: self.homeList.endIndex)
                         }
                     } else {
                         let panelAndTalks = "قطر تبدع: فعاليات افتتاح متحف قطر الوطني"
                         if self.homeList.index(where: {$0.name != panelAndTalks}) != nil {
-                            self.homeList.insert(Home(id: "15631", name: panelAndTalksName, image: "panelAndTalks", tourguide_available: "false", sort_id: nil), at: self.homeList.endIndex)
+                            self.homeList.insert(Home(id: "15631", name: panelAndTalksName, image: "panelAndTalks", tourguide_available: "false", sort_id: "10"), at: self.homeList.endIndex)
                         }
                     }
+
+                    if let nilItem = self.homeList.first(where: {$0.sortId == "" || $0.sortId == nil}) {
+                        print("nil found")
+                    } else {
+                        self.homeList = self.homeList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
+                    }
+                    if(self.homeBannerList.count > 0) {
+                        self.homeList.insert(Home(id:self.homeBannerList[0].fullContentID , name: self.homeBannerList[0].bannerTitle,image: self.homeBannerList[0].bannerLink,
+                                                  tourguide_available: "false", sort_id: nil),
+                                             at: 0)
+                    }
+
                     
                     
                     self.homeCollectionView.reloadData()
@@ -413,9 +422,11 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 
                 self.homeBannerList = data.homeBannerList
                 if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")  && (self.homeBannerList.count > 0)) {
-                    self.homeList.insert(Home(id:self.homeBannerList[0].fullContentID , name: self.homeBannerList[0].bannerTitle,image: self.homeBannerList[0].bannerLink,
-                                              tourguide_available: "false", sort_id: nil),
-                                         at: 0)
+                    if(self.homeList.count > 0) {
+                        self.homeList.insert(Home(id:self.homeBannerList[0].fullContentID , name: self.homeBannerList[0].bannerTitle,image: self.homeBannerList[0].bannerLink,
+                                                  tourguide_available: "false", sort_id: nil),
+                                             at: 0)
+                    }
                     
                 }
                 if(self.homeBannerList.count > 0) {
@@ -846,7 +857,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntity])!
                 var j:Int? = 0
             if (homeArray.count > 0) {
-                homeArray.sort(by: {$0.sortid < $1.sortid})
+                //homeArray.sort(by: {$0.sortid < $1.sortid})
                 for i in 0 ... homeArray.count-1 {
                     if homeList.first(where: {$0.id == homeArray[i].id}) != nil {
                         } else {
@@ -858,9 +869,20 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     
                 }
                 
+                
                 let panelAndTalks = "QATAR CREATES: EVENTS FOR THE OPENING OF NMoQ".lowercased()
                 if homeList.index(where: {$0.name?.lowercased() != panelAndTalks}) != nil {
-                    self.homeList.insert(Home(id: "13976", name: panelAndTalksName.uppercased(), image: "panelAndTalks", tourguide_available: "false", sort_id: nil), at: self.homeList.endIndex)
+                    self.homeList.insert(Home(id: "13976", name: panelAndTalksName.uppercased(), image: "panelAndTalks", tourguide_available: "false", sort_id: "10"), at: self.homeList.endIndex)
+                }
+                if let nilItem = self.homeList.first(where: {$0.sortId == "" || $0.sortId == nil}) {
+                    print("nil found")
+                } else {
+                    self.homeList = self.homeList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
+                }
+                if(self.homeBannerList.count > 0) {
+                    self.homeList.insert(Home(id:self.homeBannerList[0].fullContentID , name: self.homeBannerList[0].bannerTitle,image: self.homeBannerList[0].bannerLink,
+                                              tourguide_available: "false", sort_id: nil),
+                                         at: 0)
                 }
                 if(self.homeList.count == 0){
                     if(self.networkReachability?.isReachable == false) {
@@ -884,7 +906,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntityArabic])!
                 var j:Int? = 0
                 if (homeArray.count > 0) {
-                    homeArray.sort(by: {$0.arabicsortid < $1.arabicsortid})
+                    //homeArray.sort(by: {$0.arabicsortid < $1.arabicsortid})
                     for i in 0 ... homeArray.count-1 {
                         if homeList.first(where: {$0.id == homeArray[i].id}) != nil {
                         } else {
@@ -897,6 +919,16 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     let panelAndTalks = "قطر تبدع: فعاليات افتتاح متحف قطر الوطني"
                     if homeList.index(where: {$0.name != panelAndTalks}) != nil {
                         self.homeList.insert(Home(id: "15631", name: panelAndTalksName, image: "panelAndTalks", tourguide_available: "false", sort_id: nil), at: self.homeList.endIndex)
+                    }
+                    if let nilItem = self.homeList.first(where: {$0.sortId == "" || $0.sortId == nil}) {
+                        print("nil found")
+                    } else {
+                        self.homeList = self.homeList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
+                    }
+                    if(self.homeBannerList.count > 0) {
+                        self.homeList.insert(Home(id:self.homeBannerList[0].fullContentID , name: self.homeBannerList[0].bannerTitle,image: self.homeBannerList[0].bannerLink,
+                                                  tourguide_available: "false", sort_id: nil),
+                                             at: 0)
                     }
                     if(self.homeList.count == 0){
                         if(self.networkReachability?.isReachable == false) {
@@ -917,6 +949,9 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
+            if (networkReachability?.isReachable == false) {
+                self.showNoNetwork()
+            }
         }
         if (networkReachability?.isReachable)! {
             DispatchQueue.global(qos: .background).async {

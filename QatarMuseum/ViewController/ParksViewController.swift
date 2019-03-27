@@ -474,6 +474,10 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
+            if(self.networkReachability?.isReachable == false) {
+                self.showNoNetwork()
+                self.loadCloseButton()
+            }
         }
     }
     //MARK : NMoQPark
@@ -784,6 +788,10 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
+            if(self.networkReachability?.isReachable == false) {
+                self.showNoNetwork()
+                self.loadCloseButton()
+            }
         }
     }
     

@@ -632,6 +632,9 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
+            if (networkReachability?.isReachable == false) {
+                self.showNoNetwork()
+            }
         }
     }
     //MARK: MuseumExhibitionDatabase Fetch
@@ -952,6 +955,9 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
+            if (networkReachability?.isReachable == false) {
+                self.showNoNetwork()
+            }
         }
     }
     @objc func receiveHeritageListNotificationEn(notification: NSNotification) {
@@ -1160,6 +1166,9 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
+            if (networkReachability?.isReachable == false) {
+                self.showNoNetwork()
+            }
         }
     }
     @objc func receivePublicArtsListNotificationEn(notification: NSNotification) {
@@ -1617,6 +1626,9 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
+            if (networkReachability?.isReachable == false) {
+                self.showNoNetwork()
+            }
         }
     }
     //MARK: NMoQTour SecondList Methods
