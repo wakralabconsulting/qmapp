@@ -53,7 +53,7 @@ struct NMoQParksList: ResponseObjectSerializable, ResponseCollectionSerializable
     
     public init?(response: HTTPURLResponse, representation: AnyObject) {
         if let representation = representation as? [String: Any] {
-            self.title = representation["Title"] as? String
+            self.title = representation["title"] as? String
             self.parkTitle = representation["park_title "] as? String
             self.mainDescription = representation["Main_description"] as? String
             self.parkDescription = representation["park_description"] as? String

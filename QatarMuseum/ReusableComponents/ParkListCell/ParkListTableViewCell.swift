@@ -51,7 +51,7 @@ class ParkListTableViewCell: UITableViewCell {
         descriptionLabel.text = parkListData?.parkDescription?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         timimgTitle.text = parkListData?.hoursTitle?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         timimgTextLabel.text = parkListData?.hoursDesc?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
-        locationTitle.text = NSLocalizedString("LOCATION_TITLE", comment: "LOCATION_TITLE in ParkList Page").capitalized
+        locationTitle.text = parkListData?.locationTitle?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
         
         if ((parkListData?.parkTitle == nil) || (parkListData?.parkTitle == "") && (parkListData?.parkDescription == nil) || (parkListData?.parkDescription == "")){
             titleLineHeight.constant = 0

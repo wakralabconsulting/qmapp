@@ -30,7 +30,7 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         loadingView.showLoading()
         loadingView.loadingViewDelegate = self
         headerView.headerViewDelegate = self
-        headerView.headerTitle.text = NSLocalizedString("PARKS_HEADER_LABEL", comment: "PARKS_HEADER_LABEL Label in the Exhibitions page").uppercased()
+       // headerView.headerTitle.text = NSLocalizedString("PARKS_HEADER_LABEL", comment: "PARKS_HEADER_LABEL Label in the Exhibitions page").uppercased()
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         } else {
@@ -186,6 +186,9 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
             case .success(let data):
                 if(self.nmoqParkList.count == 0) {
                     self.nmoqParkList = data.nmoqParkList
+                    if(self.nmoqParkList.count > 0) {
+                        self.headerView.headerTitle.text = self.nmoqParkList[0].title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
+                    }
                     self.parkTableView.reloadData()
                 }
                 if(self.nmoqParkList.count > 0) {
@@ -544,6 +547,8 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         } else {
                             self.loadingView.showNoDataView()
                         }
+                    } else {
+                        self.headerView.headerTitle.text = self.nmoqParkList[0].title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
                     }
                     parkTableView.reloadData()
                 } else{
@@ -568,6 +573,8 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         } else {
                             self.loadingView.showNoDataView()
                         }
+                    } else {
+                        self.headerView.headerTitle.text = self.nmoqParkList[0].title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
                     }
                     parkTableView.reloadData()
                 } else{
