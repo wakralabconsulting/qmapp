@@ -377,8 +377,9 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             switch response.result {
             case .success(let data):
                 if((self.homeList.count == 0) || (self.homeList.count == 1)) {
-                    let panelAndTalksName = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
                     self.homeList = data.homeList
+                    /* Just Commented for New Release
+                    let panelAndTalksName = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
                     if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                         let panelAndTalks = "Panels And Talks".lowercased()
                         if self.homeList.index(where: {$0.name?.lowercased() != panelAndTalks}) != nil {
@@ -391,7 +392,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                             self.homeList.insert(Home(id: "15631", name: panelAndTalksName, image: "panelAndTalks", tourguide_available: "false", sort_id: "10"), at: self.homeList.endIndex)
                         }
                     }
-
+*/
                     if let nilItem = self.homeList.first(where: {$0.sortId == "" || $0.sortId == nil}) {
                         print("nil found")
                     } else {
@@ -849,7 +850,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     func fetchHomeInfoFromCoredata() {
         if(alreadyFetch == false) {
         let managedContext = getContext()
-        let panelAndTalksName = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
+       // let panelAndTalksName = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var homeArray = [HomeEntity]()
@@ -869,11 +870,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     
                 }
                 
-                
+                /* Just Commented for New Release
                 let panelAndTalks = "QATAR CREATES: EVENTS FOR THE OPENING OF NMoQ".lowercased()
                 if homeList.index(where: {$0.name?.lowercased() != panelAndTalks}) != nil {
                     self.homeList.insert(Home(id: "13976", name: panelAndTalksName.uppercased(), image: "panelAndTalks", tourguide_available: "false", sort_id: "10"), at: self.homeList.endIndex)
                 }
+ */
                 if let nilItem = self.homeList.first(where: {$0.sortId == "" || $0.sortId == nil}) {
                     print("nil found")
                 } else {
@@ -916,10 +918,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                             j = j!+1
                         }
                     }
+                    /* Just Commented for New Release
                     let panelAndTalks = "قطر تبدع: فعاليات افتتاح متحف قطر الوطني"
                     if homeList.index(where: {$0.name != panelAndTalks}) != nil {
                         self.homeList.insert(Home(id: "15631", name: panelAndTalksName, image: "panelAndTalks", tourguide_available: "false", sort_id: nil), at: self.homeList.endIndex)
                     }
+ */
                     if let nilItem = self.homeList.first(where: {$0.sortId == "" || $0.sortId == nil}) {
                         print("nil found")
                     } else {
