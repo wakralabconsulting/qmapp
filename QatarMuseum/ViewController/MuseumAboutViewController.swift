@@ -77,11 +77,11 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         } else if (pageNameString == PageName2.museumEvent) {
              NotificationCenter.default.addObserver(self, selector: #selector(MuseumAboutViewController.receiveNmoqAboutNotification(notification:)), name: NSNotification.Name(nmoqAboutNotification), object: nil)
             self.fetchAboutDetailsFromCoredata()
-            if  (networkReachability?.isReachable)! {
-                DispatchQueue.global(qos: .background).async {
-                    self.getNmoQAboutDetailsFromServer()
-                }
-            }
+//            if  (networkReachability?.isReachable)! {
+//                DispatchQueue.global(qos: .background).async {
+//                    self.getNmoQAboutDetailsFromServer()
+//                }
+//            }
         }
         recordScreenView()
     }
@@ -1200,6 +1200,11 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                     aboutArray = (try managedContext.fetch(fetchRequest) as? [AboutEntity])!
                     
                     if (aboutArray.count > 0 ){
+                        if  (networkReachability?.isReachable)! {
+                            DispatchQueue.global(qos: .background).async {
+                                self.getNmoQAboutDetailsFromServer()
+                            }
+                        }
                         let aboutDict = aboutArray[0]
                         var descriptionArray : [String] = []
                         let aboutInfoArray = (aboutDict.mobileDescRelation?.allObjects) as! [AboutDescriptionEntity]
@@ -1249,7 +1254,8 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                         if(self.networkReachability?.isReachable == false) {
                             self.showNoNetwork()
                         } else {
-                            self.loadingView.showNoDataView()
+                           // self.loadingView.showNoDataView()
+                            self.getNmoQAboutDetailsFromServer() //coreDataMigratio  solution
                         }
                     }
                 }
@@ -1261,6 +1267,11 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                     aboutArray = (try managedContext.fetch(fetchRequest) as? [AboutEntityArabic])!
                     
                     if (aboutArray.count > 0) {
+                        if  (networkReachability?.isReachable)! {
+                            DispatchQueue.global(qos: .background).async {
+                                self.getNmoQAboutDetailsFromServer()
+                            }
+                        }
                         let aboutDict = aboutArray[0]
                         var descriptionArray : [String] = []
                         let aboutInfoArray = (aboutDict.mobileDescRelation?.allObjects) as! [AboutDescriptionEntityAr]
@@ -1302,7 +1313,8 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                         if(self.networkReachability?.isReachable == false) {
                             self.showNoNetwork()
                         } else {
-                            self.loadingView.showNoDataView()
+                            //self.loadingView.showNoDataView()
+                            self.getNmoQAboutDetailsFromServer() //coreDataMigratio  solution
                         }
                     }
                 }

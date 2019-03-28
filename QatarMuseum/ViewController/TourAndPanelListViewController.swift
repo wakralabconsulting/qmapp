@@ -56,21 +56,21 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         if (pageNameString == NMoQPageName.Tours) {
             headerView.headerTitle.text = NSLocalizedString("TOUR_TITLE", comment: "TOUR_TITLE in the NMoQ page")
             fetchTourInfoFromCoredata(isTourGuide: true)
-            if  (networkReachability?.isReachable)! {
-                DispatchQueue.global(qos: .background).async {
-                    self.getNMoQTourList()
-                }
-            }
+//            if  (networkReachability?.isReachable)! {
+//                DispatchQueue.global(qos: .background).async {
+//                    self.getNMoQTourList()
+//                }
+//            }
             NotificationCenter.default.addObserver(self, selector: #selector(TourAndPanelListViewController.receiveNmoqTourListNotification(notification:)), name: NSNotification.Name(nmoqTourlistNotificationEn), object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(TourAndPanelListViewController.receiveNmoqTourListNotification(notification:)), name: NSNotification.Name(nmoqTourlistNotificationAr), object: nil)
         } else if (pageNameString == NMoQPageName.PanelDiscussion) {
             headerView.headerTitle.text = NSLocalizedString("PANEL_DISCUSSION", comment: "PANEL_DISCUSSION in the NMoQ page").uppercased()
             fetchActivityListFromCoredata()
-            if  (networkReachability?.isReachable)! {
-                DispatchQueue.global(qos: .background).async {
-                    self.getNMoQSpecialEventList()
-                }
-            }
+//            if  (networkReachability?.isReachable)! {
+//                DispatchQueue.global(qos: .background).async {
+//                    self.getNMoQSpecialEventList()
+//                }
+//            }
             NotificationCenter.default.addObserver(self, selector: #selector(TourAndPanelListViewController.receiveActivityListNotificationEn(notification:)), name: NSNotification.Name(nmoqActivityListNotificationEn), object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(TourAndPanelListViewController.receiveActivityListNotificationEn(notification:)), name: NSNotification.Name(nmoqActivityListNotificationAr), object: nil)
             
@@ -79,21 +79,21 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
             NotificationCenter.default.addObserver(self, selector: #selector(TourAndPanelListViewController.receiveNmoqTravelListNotificationEn(notification:)), name: NSNotification.Name(nmoqTravelListNotificationEn), object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(TourAndPanelListViewController.receiveNmoqTravelListNotificationAr(notification:)), name: NSNotification.Name(nmoqTravelListNotificationAr), object: nil)
             fetchTravelInfoFromCoredata()
-            if (networkReachability?.isReachable)! {
-                DispatchQueue.global(qos: .background).async {
-                    self.getTravelList()
-                }
-            }
+//            if (networkReachability?.isReachable)! {
+//                DispatchQueue.global(qos: .background).async {
+//                    self.getTravelList()
+//                }
+//            }
         }  else if (pageNameString == NMoQPageName.Facilities) {
             headerView.headerTitle.text = NSLocalizedString("FACILITIES", comment: "FACILITIES Label in the Facilities page page").uppercased()
             NotificationCenter.default.addObserver(self, selector: #selector(TourAndPanelListViewController.receiveFacilitiesListNotificationEn(notification:)), name: NSNotification.Name(facilitiesListNotificationEn), object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(TourAndPanelListViewController.receiveFacilitiesListNotificationAr(notification:)), name: NSNotification.Name(facilitiesListNotificationAr), object: nil)
             fetchFacilitiesListFromCoredata()
-            if (networkReachability?.isReachable)! {
-                DispatchQueue.global(qos: .background).async {
-                    self.getFacilitiesListFromServer()
-                }
-            }
+//            if (networkReachability?.isReachable)! {
+//                DispatchQueue.global(qos: .background).async {
+//                    self.getFacilitiesListFromServer()
+//                }
+//            }
         }
         
     }
@@ -507,6 +507,11 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 fetchRequest.predicate = NSPredicate.init(format: "isTourGuide == \(isTourGuide)")
                 tourListArray = (try managedContext.fetch(fetchRequest) as? [NMoQTourListEntity])!
                 if (tourListArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getNMoQTourList()
+                        }
+                    }
                     tourListArray.sort(by: {$0.sortId < $1.sortId})
                     for i in 0 ... tourListArray.count-1 {
                         let tourListDict = tourListArray[i]
@@ -533,7 +538,8 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.loadingView.showNoDataView()
+                        //self.loadingView.showNoDataView()
+                        self.getNMoQTourList() //coreDataMigratio  solution
                     }
                 }
             } else {
@@ -542,6 +548,11 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 fetchRequest.predicate = NSPredicate.init(format: "isTourGuide == \(isTourGuide)")
                 tourListArray = (try managedContext.fetch(fetchRequest) as? [NMoQTourListEntityAr])!
                 if (tourListArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getNMoQTourList()
+                        }
+                    }
                     tourListArray.sort(by: {$0.sortId < $1.sortId})
                     for i in 0 ... tourListArray.count-1 {
                         let tourListDict = tourListArray[i]
@@ -568,7 +579,8 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.loadingView.showNoDataView()
+                        //self.loadingView.showNoDataView()
+                        self.getNMoQTourList() //coreDataMigratio  solution
                     }
                 }
             }
@@ -828,6 +840,11 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "NMoQActivitiesEntity")
                 activityListArray = (try managedContext.fetch(fetchRequest) as? [NMoQActivitiesEntity])!
                 if (activityListArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getNMoQSpecialEventList()
+                        }
+                    }
                     for i in 0 ... activityListArray.count-1 {
                         let activityListDict = activityListArray[i]
                         var imagesArray : [String] = []
@@ -857,7 +874,8 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.loadingView.showNoDataView()
+                        //self.loadingView.showNoDataView()
+                        self.getNMoQSpecialEventList()//coreDataMigratio  solution
                     }
                 }
             } else {
@@ -865,6 +883,11 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "NMoQActivitiesEntityAr")
                 activityListArray = (try managedContext.fetch(fetchRequest) as? [NMoQActivitiesEntityAr])!
                 if (activityListArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getNMoQSpecialEventList()
+                        }
+                    }
                     for i in 0 ... activityListArray.count-1 {
                         let activityListDict = activityListArray[i]
                         var imagesArray : [String] = []
@@ -894,7 +917,8 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.loadingView.showNoDataView()
+                        //self.loadingView.showNoDataView()
+                        self.getNMoQSpecialEventList()//coreDataMigratio  solution
                     }
                 }
             }
@@ -1103,6 +1127,11 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "FacilitiesEntity")
                 facilitiesListArray = (try managedContext.fetch(fetchRequest) as? [FacilitiesEntity])!
                 if (facilitiesListArray.count > 0) {
+                    if (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getFacilitiesListFromServer()
+                        }
+                    }
                     for i in 0 ... facilitiesListArray.count-1 {
                         let facilitiesListDict = facilitiesListArray[i]
                         var imagesArray : [String] = []
@@ -1132,7 +1161,8 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.loadingView.showNoDataView()
+                        //self.loadingView.showNoDataView()
+                        self.getFacilitiesListFromServer()//coreDataMigratio  solution
                     }
                 }
             } else {
@@ -1141,6 +1171,11 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 //fetchRequest.predicate = NSPredicate.init(format: "isTourGuide == \(isTourGuide)")
                 facilitiesListArray = (try managedContext.fetch(fetchRequest) as? [FacilitiesEntityAr])!
                 if (facilitiesListArray.count > 0) {
+                    if (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getFacilitiesListFromServer()
+                        }
+                    }
                     for i in 0 ... facilitiesListArray.count-1 {
                         let facilitiesListDict = facilitiesListArray[i]
                         var imagesArray : [String] = []
@@ -1170,7 +1205,8 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.loadingView.showNoDataView()
+                        //self.loadingView.showNoDataView()
+                        self.getFacilitiesListFromServer()//coreDataMigratio  solution
                     }
                 }
             }
@@ -1353,6 +1389,11 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "NMoQTravelListEntity")
                 travelListArray = (try managedContext.fetch(fetchRequest) as? [NMoQTravelListEntity])!
                 if (travelListArray.count > 0) {
+                    if (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getTravelList()
+                        }
+                    }
                     for i in 0 ... travelListArray.count-1 {
                         self.travelList.insert(HomeBanner(title: travelListArray[i].title, fullContentID: travelListArray[i].fullContentID, bannerTitle: travelListArray[i].bannerTitle, bannerLink: travelListArray[i].bannerLink, image: nil, introductionText: travelListArray[i].introductionText, email: travelListArray[i].email, contactNumber: travelListArray[i].contactNumber, promotionalCode: travelListArray[i].promotionalCode, claimOffer: travelListArray[i].claimOffer), at: i)
                     }
@@ -1376,7 +1417,8 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.loadingView.showNoDataView()
+                        //self.loadingView.showNoDataView()
+                        self.getTravelList()//coreDataMigratio  solution
                     }
                 }
             } else {
@@ -1384,6 +1426,12 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "NMoQTravelListEntityAr")
                 travelListArray = (try managedContext.fetch(fetchRequest) as? [NMoQTravelListEntityAr])!
                 if (travelListArray.count > 0) {
+                    if (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getTravelList()
+                        }
+                    }
+
                     for i in 0 ... travelListArray.count-1 {
                         self.travelList.insert(HomeBanner(title: travelListArray[i].title, fullContentID: travelListArray[i].fullContentID, bannerTitle: travelListArray[i].bannerTitle, bannerLink: travelListArray[i].bannerLink, image: nil, introductionText: travelListArray[i].introductionText, email: travelListArray[i].email, contactNumber: travelListArray[i].contactNumber, promotionalCode: travelListArray[i].promotionalCode, claimOffer: travelListArray[i].claimOffer), at: i)
                     }
@@ -1407,7 +1455,8 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.loadingView.showNoDataView()
+                        //self.loadingView.showNoDataView()
+                        self.getTravelList()//coreDataMigratio  solution
                     }
                 }
             }

@@ -46,11 +46,11 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         NotificationCenter.default.addObserver(self, selector: #selector(ParksViewController.receiveParksNotificationAr(notification:)), name: NSNotification.Name(parksNotificationAr), object: nil)
         if (parkPageNameString == ParkPageName.SideMenuPark) {
             self.fetchParksFromCoredata()
-            if  (networkReachability?.isReachable)! {
-                DispatchQueue.global(qos: .background).async {
-                    self.getParksDataFromServer()
-                }
-            }
+//            if  (networkReachability?.isReachable)! {
+//                DispatchQueue.global(qos: .background).async {
+//                    self.getParksDataFromServer()
+//                }
+//            }
         } else {
             if  (networkReachability?.isReachable)! {
                 getNMoQParkDetailFromServer()
@@ -411,6 +411,11 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 parksArray = (try managedContext.fetch(parksFetchRequest) as? [ParksEntity])!
                 
                 if (parksArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getParksDataFromServer()
+                        }
+                    }
                     for i in 0 ... parksArray.count-1 {
                         self.parksListArray.insert(ParksList(title: parksArray[i].title, description: parksArray[i].parksDescription, sortId: parksArray[i].sortId, image: parksArray[i].image), at: i)
 
@@ -435,7 +440,8 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                         self.showNoNetwork()
                         self.loadCloseButton()
                     } else {
-                        self.loadingView.showNoDataView()
+                        //self.loadingView.showNoDataView()
+                        self.getParksDataFromServer()//coreDataMigratio  solution
                         self.loadCloseButton()
                     }
                 }
@@ -445,6 +451,11 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 let parksFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ParksEntityArabic")
                 parksArray = (try managedContext.fetch(parksFetchRequest) as? [ParksEntityArabic])!
                 if (parksArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getParksDataFromServer()
+                        }
+                    }
                     for i in 0 ... parksArray.count-1 {
                         self.parksListArray.insert(ParksList(title: parksArray[i].titleArabic, description: parksArray[i].descriptionArabic, sortId: parksArray[i].sortIdArabic, image: parksArray[i].imageArabic), at: i)
                     }
@@ -467,7 +478,8 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                         self.showNoNetwork()
                         self.loadCloseButton()
                     } else {
-                        self.loadingView.showNoDataView()
+                        //self.loadingView.showNoDataView()
+                        self.getParksDataFromServer()//coreDataMigratio  solution
                         self.loadCloseButton()
                     }
                 }

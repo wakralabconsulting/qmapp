@@ -61,13 +61,16 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             exhibitionHeaderView.headerTitle.text = NSLocalizedString("EXHIBITIONS_TITLE", comment: "EXHIBITIONS_TITLE Label in the Exhibitions page")
             NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveExhibitionListNotificationEn(notification:)), name: NSNotification.Name(exhibitionsListNotificationEn), object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveExhibitionListNotificationAr(notification:)), name: NSNotification.Name(exhibitionsListNotificationAr), object: nil)
+            
+            
             if  (networkReachability?.isReachable)! {
                 if (exhibitionsPageNameString == ExhbitionPageName.homeExhibition) {
-                    DispatchQueue.global(qos: .background).async {
-                        self.getExhibitionDataFromServer()
-                    }
+//                    DispatchQueue.global(qos: .background).async {
+//                        self.getExhibitionDataFromServer()
+//                    }
                     self.fetchExhibitionsListFromCoredata()
-                } else if (exhibitionsPageNameString == ExhbitionPageName.museumExhibition){
+                } else
+                    if (exhibitionsPageNameString == ExhbitionPageName.museumExhibition){
                     getMuseumExhibitionDataFromServer()
                 }
             } else {
@@ -84,18 +87,18 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             self.fetchHeritageListFromCoredata()
             NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveHeritageListNotificationEn(notification:)), name: NSNotification.Name(heritageListNotificationEn), object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveHeritageListNotificationAr(notification:)), name: NSNotification.Name(heritageListNotificationAr), object: nil)
-            if  (networkReachability?.isReachable)! {
-                DispatchQueue.global(qos: .background).async {
-                    self.getHeritageDataFromServer()
-                }
-            }
+//            if  (networkReachability?.isReachable)! {
+//                DispatchQueue.global(qos: .background).async {
+//                    self.getHeritageDataFromServer()
+//                }
+//            }
         } else if (exhibitionsPageNameString == ExhbitionPageName.publicArtsList) {
             exhibitionHeaderView.headerTitle.text = NSLocalizedString("PUBLIC_ARTS_TITLE", comment: "PUBLIC_ARTS_TITLE Label in the PublicArts page")
-            if  (networkReachability?.isReachable)! {
-                DispatchQueue.global(qos: .background).async {
-                    self.getPublicArtsListDataFromServer()
-                }
-            }
+//            if  (networkReachability?.isReachable)! {
+//                DispatchQueue.global(qos: .background).async {
+//                    self.getPublicArtsListDataFromServer()
+//                }
+//            }
             self.fetchPublicArtsListFromCoredata()
             NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receivePublicArtsListNotificationEn(notification:)), name: NSNotification.Name(publicArtsListNotificationEn), object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receivePublicArtsListNotificationAr(notification:)), name: NSNotification.Name(publicArtsListNotificationAr), object: nil)
@@ -104,11 +107,11 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveCollectionListNotificationEn(notification:)), name: NSNotification.Name(collectionsListNotificationEn), object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveCollectionListNotificationAr(notification:)), name: NSNotification.Name(collectionsListNotificationAr), object: nil)
             if((museumId == "63") || (museumId == "96")) {
-                if (networkReachability?.isReachable)! {
-                    DispatchQueue.global(qos: .background).async {
-                        self.getCollectionList()
-                    }
-                }
+//                if (networkReachability?.isReachable)! {
+//                    DispatchQueue.global(qos: .background).async {
+//                        self.getCollectionList()
+//                    }
+//                }
                 self.fetchCollectionListFromCoredata()
             } else {
                 if (networkReachability?.isReachable)! {
@@ -121,11 +124,11 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             exhibitionHeaderView.headerTitle.text = NSLocalizedString("DINING_TITLE", comment: "DINING_TITLE in the Dining page")
             if(fromHome) {
                 self.fetchDiningListFromCoredata()
-                if  (networkReachability?.isReachable)! {
-                    DispatchQueue.global(qos: .background).async {
-                        self.getDiningListFromServer()
-                    }
-                }
+//                if  (networkReachability?.isReachable)! {
+//                    DispatchQueue.global(qos: .background).async {
+//                        self.getDiningListFromServer()
+//                    }
+//                }
             } else {
                 self.fetchMuseumDiningListFromCoredata()
                 if  (networkReachability?.isReachable)! {
@@ -581,6 +584,11 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 let exhibitionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ExhibitionsEntity")
                 exhibitionArray = (try managedContext.fetch(exhibitionFetchRequest) as? [ExhibitionsEntity])!
                 if (exhibitionArray.count > 0) {
+                    if((self.networkReachability?.isReachable)!) {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getExhibitionDataFromServer()
+                        }
+                }
                     for i in 0 ... exhibitionArray.count-1 {
                         self.exhibition.insert(Exhibition(id: exhibitionArray[i].id, name: exhibitionArray[i].name, image: exhibitionArray[i].image,detailImage:nil, startDate: exhibitionArray[i].startDate, endDate: exhibitionArray[i].endDate, location: exhibitionArray[i].location, latitude: nil, longitude: nil, shortDescription: nil, longDescription: nil,museumId :exhibitionArray[i].museumId,status :exhibitionArray[i].status,displayDate :exhibitionArray[i].dispalyDate), at: i)
                         
@@ -599,7 +607,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.exbtnLoadingView.showNoDataView()
+                        //self.exbtnLoadingView.showNoDataView()
+                        self.getExhibitionDataFromServer() //coreDataMigratio  solution
                     }
                 }
             } else {
@@ -607,6 +616,11 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 let exhibitionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ExhibitionsEntityArabic")
                 exhibitionArray = (try managedContext.fetch(exhibitionFetchRequest) as? [ExhibitionsEntityArabic])!
                 if (exhibitionArray.count > 0) {
+                    if((self.networkReachability?.isReachable)!) {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getExhibitionDataFromServer()
+                        }
+                    }
                     for i in 0 ... exhibitionArray.count-1 {
                         
                         self.exhibition.insert(Exhibition(id: exhibitionArray[i].id, name: exhibitionArray[i].nameArabic, image: exhibitionArray[i].imageArabic,detailImage:nil, startDate: exhibitionArray[i].startDateArabic, endDate: exhibitionArray[i].endDateArabic, location: exhibitionArray[i].locationArabic, latitude: nil, longitude: nil, shortDescription: nil, longDescription: nil,museumId :exhibitionArray[i].museumId,status :exhibitionArray[i].status,displayDate :exhibitionArray[i].displayDateAr), at: i)
@@ -626,7 +640,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.exbtnLoadingView.showNoDataView()
+                       // self.exbtnLoadingView.showNoDataView()
+                        self.getExhibitionDataFromServer() //coreDataMigratio  solution
                     }
                 }
             }
@@ -904,6 +919,11 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HeritageEntity")
                 heritageArray = (try managedContext.fetch(homeFetchRequest) as? [HeritageEntity])!
                 if (heritageArray.count > 0) {
+                    if((self.networkReachability?.isReachable)!) {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getHeritageDataFromServer()
+                        }
+                    }
                     for i in 0 ... heritageArray.count-1 {
                         
                         self.heritageListArray.insert(Heritage(id: heritageArray[i].listid, name: heritageArray[i].listname, location: nil, latitude: nil, longitude: nil, image: heritageArray[i].listimage, shortdescription: nil, longdescription: nil,images: nil, sortid: heritageArray[i].listsortid), at: i)
@@ -923,7 +943,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.exbtnLoadingView.showNoDataView()
+                        //self.exbtnLoadingView.showNoDataView()
+                        self.getHeritageDataFromServer() //coreDataMigratio  solution
                     }
                 }
             } else {
@@ -931,6 +952,11 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HeritageEntityArabic")
                 heritageArray = (try managedContext.fetch(homeFetchRequest) as? [HeritageEntityArabic])!
                 if (heritageArray.count > 0) {
+                    if((self.networkReachability?.isReachable)!) {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getHeritageDataFromServer()
+                        }
+                    }
                     for i in 0 ... heritageArray.count-1 {
                         self.heritageListArray.insert(Heritage(id: heritageArray[i].listid, name: heritageArray[i].listnamearabic, location: nil, latitude: nil, longitude: nil, image: heritageArray[i].listimagearabic, shortdescription: nil, longdescription: nil,images: nil, sortid: heritageArray[i].listsortidarabic), at: i)
                         
@@ -949,7 +975,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.exbtnLoadingView.showNoDataView()
+                        //self.exbtnLoadingView.showNoDataView()
+                        self.getHeritageDataFromServer() //coreDataMigratio  solution
                     }
                 }
             }
@@ -1116,6 +1143,11 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 let publicArtsFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "PublicArtsEntity")
                 publicArtsArray = (try managedContext.fetch(publicArtsFetchRequest) as? [PublicArtsEntity])!
                 if (publicArtsArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getPublicArtsListDataFromServer()
+                        }
+                    }
                     for i in 0 ... publicArtsArray.count-1 {
                         
                         self.publicArtsListArray.insert(PublicArtsList(id: publicArtsArray[i].id, name: publicArtsArray[i].name, latitude: publicArtsArray[i].latitude, longitude: publicArtsArray[i].longitude, image: publicArtsArray[i].image, sortcoefficient: publicArtsArray[i].sortcoefficient), at: i)
@@ -1134,7 +1166,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.exbtnLoadingView.showNoDataView()
+                        //self.exbtnLoadingView.showNoDataView()
+                        self.getPublicArtsListDataFromServer()//coreDataMigratio  solution
                     }
                 }
             }
@@ -1143,6 +1176,11 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 let publicArtsFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "PublicArtsEntityArabic")
                 publicArtsArray = (try managedContext.fetch(publicArtsFetchRequest) as? [PublicArtsEntityArabic])!
                 if (publicArtsArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getPublicArtsListDataFromServer()
+                        }
+                    }
                     for i in 0 ... publicArtsArray.count-1 {
                         
                         self.publicArtsListArray.insert(PublicArtsList(id: publicArtsArray[i].id, name: publicArtsArray[i].namearabic, latitude: publicArtsArray[i].latitudearabic, longitude: publicArtsArray[i].longitudearabic, image: publicArtsArray[i].imagearabic, sortcoefficient: publicArtsArray[i].sortcoefficientarabic), at: i)
@@ -1160,7 +1198,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.exbtnLoadingView.showNoDataView()
+                        //self.exbtnLoadingView.showNoDataView()
+                         self.getPublicArtsListDataFromServer()//coreDataMigratio  solution
                     }
                 }
             }
@@ -1302,6 +1341,13 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 var collectionArray = [CollectionsEntity]()
                 collectionArray = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: museumId, managedContext: managedContext) as! [CollectionsEntity]
                 if (collectionArray.count > 0) {
+                    if((museumId == "63") || (museumId == "96")) {
+                        if (networkReachability?.isReachable)! {
+                            DispatchQueue.global(qos: .background).async {
+                                self.getCollectionList()
+                            }
+                        }
+                    }
                     for i in 0 ... collectionArray.count-1 {
                         self.collection.insert(Collection(name: collectionArray[i].listName?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil), image: collectionArray[i].listImage, museumId: collectionArray[i].museumId), at: i)
                     }
@@ -1318,7 +1364,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.exbtnLoadingView.showNoDataView()
+                       // self.exbtnLoadingView.showNoDataView()
+                        self.getCollectionList()//coreDataMigratio  solution
                     }
                 }
             }
@@ -1326,6 +1373,13 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 var collectionArray = [CollectionsEntityArabic]()
                 collectionArray = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "museumId", idValue: museumId, managedContext: managedContext) as! [CollectionsEntityArabic]
                 if (collectionArray.count > 0) {
+                    if((museumId == "63") || (museumId == "96")) {
+                        if (networkReachability?.isReachable)! {
+                            DispatchQueue.global(qos: .background).async {
+                                self.getCollectionList()
+                            }
+                        }
+                    }
                     for i in 0 ... collectionArray.count-1 {
                         
                         self.collection.insert(Collection(name: collectionArray[i].listName?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil), image: collectionArray[i].listImageAr, museumId: collectionArray[i].museumId), at: i)
@@ -1343,7 +1397,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.exbtnLoadingView.showNoDataView()
+                       // self.exbtnLoadingView.showNoDataView()
+                        self.getCollectionList()//coreDataMigratio  solution
                     }
                 }
             }
@@ -1576,6 +1631,11 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "DiningEntity")
                 diningArray = (try managedContext.fetch(homeFetchRequest) as? [DiningEntity])!
                 if (diningArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getDiningListFromServer()
+                        }
+                    }
                     for i in 0 ... diningArray.count-1 {
                         self.diningListArray.insert(Dining(id: diningArray[i].id, name: diningArray[i].name, location: diningArray[i].location, description: diningArray[i].diningdescription, image: diningArray[i].image, openingtime: diningArray[i].openingtime, closetime: diningArray[i].closetime, sortid: diningArray[i].sortid,museumId: diningArray[i].museumId, images: nil), at: i)
                         
@@ -1594,7 +1654,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.exbtnLoadingView.showNoDataView()
+                       // self.exbtnLoadingView.showNoDataView()
+                        self.getDiningListFromServer()//coreDataMigratio  solution
                     }
                 }
             } else {
@@ -1602,6 +1663,11 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 let diningFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "DiningEntityArabic")
                 diningArray = (try managedContext.fetch(diningFetchRequest) as? [DiningEntityArabic])!
                 if (diningArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getDiningListFromServer()
+                        }
+                    }
                     for i in 0 ... diningArray.count-1 {
                         self.diningListArray.insert(Dining(id: diningArray[i].id, name: diningArray[i].namearabic, location: diningArray[i].locationarabic, description: diningArray[i].descriptionarabic, image: diningArray[i].imagearabic, openingtime: diningArray[i].openingtimearabic, closetime: diningArray[i].closetimearabic, sortid: diningArray[i].sortidarabic,museumId: diningArray[i].museumId, images: nil), at: i)
                     }
@@ -1620,7 +1686,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.exbtnLoadingView.showNoDataView()
+                        //self.exbtnLoadingView.showNoDataView()
+                        self.getDiningListFromServer()//coreDataMigratio  solution
                     }
                 }
             }

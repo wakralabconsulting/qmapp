@@ -34,11 +34,11 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
         loadingView.loadingViewDelegate = self
         loadingView.showLoading()
         NotificationCenter.default.addObserver(self, selector: #selector(MiaTourGuideViewController.receiveMiaTourNotification(notification:)), name: NSNotification.Name(miaTourNotification), object: nil)
-        if  (networkReachability?.isReachable)! {
-            DispatchQueue.global(qos: .background).async {
-                self.getTourGuideDataFromServer()
-            }
-        }
+//        if  (networkReachability?.isReachable)! {
+//            DispatchQueue.global(qos: .background).async {
+//                self.getTourGuideDataFromServer()
+//            }
+//        }
         DispatchQueue.main.async {
         self.fetchTourGuideListFromCoredata()
         }
@@ -353,11 +353,16 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
 
         let managedContext = getContext()
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var tourGuideArray = [TourGuideEntity]()
                 tourGuideArray = checkAddedToCoredata(entityName: "TourGuideEntity", idKey: "museumsEntity", idValue: museumId, managedContext: managedContext) as! [TourGuideEntity]
                 
                 if (tourGuideArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getTourGuideDataFromServer()
+                        }
+                    }
                     for i in 0 ... tourGuideArray.count-1 {
                         
                         var multimediaArray : [String] = []
@@ -387,7 +392,8 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.loadingView.showNoDataView()
+                        //self.loadingView.showNoDataView()
+                        self.getTourGuideDataFromServer() //coreDataMigratio  solution
                     }
                 }
             }
@@ -395,6 +401,11 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
                 var tourGuideArray = [TourGuideEntityAr]()
                 tourGuideArray = checkAddedToCoredata(entityName: "TourGuideEntityAr", idKey: "museumsEntity", idValue: museumId, managedContext: managedContext) as! [TourGuideEntityAr]
                 if (tourGuideArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getTourGuideDataFromServer()
+                        }
+                    }
                     for i in 0 ... tourGuideArray.count-1 {
                         var multimediaArray : [String] = []
                         let tourguideInfo = tourGuideArray[i]
@@ -423,7 +434,8 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.loadingView.showNoDataView()
+                       // self.loadingView.showNoDataView()
+                         self.getTourGuideDataFromServer() //coreDataMigratio  solution
                     }
                 }
             }

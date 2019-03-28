@@ -42,12 +42,12 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         NotificationCenter.default.addObserver(self, selector: #selector(ParkListViewController.receiveNmoqParkListNotificationAr(notification:)), name: NSNotification.Name(heritageListNotificationAr), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ParkListViewController.receiveNmoqParkNotificationEn(notification:)), name: NSNotification.Name(nmoqParkNotificationEn), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ParkListViewController.receiveNmoqParkNotificationAr(notification:)), name: NSNotification.Name(nmoqParkNotificationAr), object: nil)
-        if  (networkReachability?.isReachable)! {
-            DispatchQueue.global(qos: .background).async {
-                self.getNmoqParkListFromServer()
-                self.getNmoqListOfParksFromServer()
-            }
-        }
+//        if  (networkReachability?.isReachable)! {
+//            DispatchQueue.global(qos: .background).async {
+//                self.getNmoqParkListFromServer()
+//                self.getNmoqListOfParksFromServer()
+//            }
+//        }
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -537,6 +537,11 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "NMoQParkListEntity")
                 parkListArray = (try managedContext.fetch(fetchRequest) as? [NMoQParkListEntity])!
                 if (parkListArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getNmoqParkListFromServer()
+                        }
+                    }
                     for i in 0 ... parkListArray.count-1 {
                         let parkListDict = parkListArray[i]
                         self.nmoqParkList.insert(NMoQParksList(title: parkListDict.title, parkTitle: parkListDict.parkTitle, mainDescription: parkListDict.mainDescription, parkDescription: parkListDict.parkDescription, hoursTitle: parkListDict.hoursTitle, hoursDesc: parkListDict.hoursDesc, nid: parkListDict.nid, longitude: parkListDict.longitude, latitude: parkListDict.latitude, locationTitle: parkListDict.locationTitle), at: i)
@@ -555,7 +560,8 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.loadingView.showNoDataView()
+                        //self.loadingView.showNoDataView()
+                        self.getNmoqParkListFromServer()//coreDataMigratio  solution
                     }
                 }
             } else {
@@ -563,6 +569,11 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "NMoQParkListEntityAr")
                 parkListArray = (try managedContext.fetch(fetchRequest) as? [NMoQParkListEntityAr])!
                 if (parkListArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getNmoqParkListFromServer()
+                        }
+                    }
                     for i in 0 ... parkListArray.count-1 {
                         let parkListDict = parkListArray[i]
                         self.nmoqParkList.insert(NMoQParksList(title: parkListDict.title,parkTitle: parkListDict.parkTitle, mainDescription: parkListDict.mainDescription, parkDescription: parkListDict.parkDescription, hoursTitle: parkListDict.hoursTitle, hoursDesc: parkListDict.hoursDesc, nid: parkListDict.nid, longitude: parkListDict.longitude, latitude: parkListDict.latitude, locationTitle: parkListDict.locationTitle), at: i)
@@ -581,7 +592,8 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.loadingView.showNoDataView()
+                        //self.loadingView.showNoDataView()
+                         self.getNmoqParkListFromServer()//coreDataMigratio  solution
                     }
                 }
             }
@@ -599,6 +611,11 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 parkListArray = (try managedContext.fetch(fetchRequest) as? [NMoQParksEntity])!
                     
                 if (parkListArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getNmoqListOfParksFromServer()
+                        }
+                    }
                     for i in 0 ... parkListArray.count-1 {
                         let parkListDict = parkListArray[i]
                         var imagesArray : [String] = []
@@ -628,7 +645,8 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.loadingView.showNoDataView()
+                        //self.loadingView.showNoDataView()
+                        self.getNmoqListOfParksFromServer()//coreDataMigratio  solution
                     }
                 }
             } else {
@@ -636,6 +654,11 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "NMoQParksEntityAr")
                 parkListArray = (try managedContext.fetch(fetchRequest) as? [NMoQParksEntityAr])!
                 if (parkListArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getNmoqListOfParksFromServer()
+                        }
+                    }
                     for i in 0 ... parkListArray.count-1 {
                         let parkListDict = parkListArray[i]
                         var imagesArray : [String] = []
@@ -665,7 +688,8 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.loadingView.showNoDataView()
+                       // self.loadingView.showNoDataView()
+                        self.getNmoqListOfParksFromServer()//coreDataMigratio  solution
                     }
                 }
             }
