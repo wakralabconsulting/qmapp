@@ -56,6 +56,8 @@ class ParkListTableViewCell: UITableViewCell {
         if ((parkListData?.parkTitle == nil) || (parkListData?.parkTitle == "") && (parkListData?.parkDescription == nil) || (parkListData?.parkDescription == "")){
             titleLineHeight.constant = 0
             titleLineView.isHidden = true
+            let verticalSpace = NSLayoutConstraint(item: self.topView, attribute: .top, relatedBy: .equal, toItem: self.hoursView, attribute: .top, multiplier: 1, constant: 0)
+            NSLayoutConstraint.activate([verticalSpace])
         } else {
             titleLineHeight.constant = 3
             titleLineView.isHidden = false
