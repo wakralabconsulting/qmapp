@@ -30,7 +30,6 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         loadingView.showLoading()
         loadingView.loadingViewDelegate = self
         headerView.headerViewDelegate = self
-       // headerView.headerTitle.text = NSLocalizedString("PARKS_HEADER_LABEL", comment: "PARKS_HEADER_LABEL Label in the Exhibitions page").uppercased()
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
         } else {

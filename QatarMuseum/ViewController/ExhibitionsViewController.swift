@@ -44,6 +44,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
     var tourDesc: String = ""
     var tourDetailId : String? = nil
     var headerTitle : String? = nil
+    var dataInCoreData : Bool? = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -181,7 +182,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     self.exhibitionCollectionView.reloadData()
                 }
                 if(self.exhibition.count > 0) {
-                    self.saveOrUpdateExhibitionsCoredata(exhibition: data.exhibitions)
+                    self.saveOrUpdateExhibitionsCoredata(exhibition: data.exhibitions, isHomeExhibition: "1")
                 }
             case .failure( _):
                 print("error")
@@ -195,7 +196,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             switch response.result {
             case .success(let data):
                 self.exhibition = data.exhibitions
-                self.saveOrUpdateExhibitionsCoredata(exhibition: data.exhibitions)
+                self.saveOrUpdateExhibitionsCoredata(exhibition: data.exhibitions, isHomeExhibition: "0")
                 self.exhibitionCollectionView.reloadData()
                 self.exbtnLoadingView.stopLoading()
                 self.exbtnLoadingView.isHidden = true
@@ -456,24 +457,24 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     //MARK: Coredata Method
-    func saveOrUpdateExhibitionsCoredata(exhibition:[Exhibition]?) {
+    func saveOrUpdateExhibitionsCoredata(exhibition:[Exhibition]?,isHomeExhibition : String?) {
         if ((exhibition?.count)! > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
                 let container = appDelegate!.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
-                    self.coreDataInBackgroundThread(managedContext: managedContext, exhibition: exhibition)
+                    self.coreDataInBackgroundThread(managedContext: managedContext, exhibition: exhibition,isHomeExhibition :isHomeExhibition)
                 }
             } else {
                 let managedContext = appDelegate!.managedObjectContext
                 managedContext.perform {
-                    self.coreDataInBackgroundThread(managedContext : managedContext, exhibition: exhibition)
+                    self.coreDataInBackgroundThread(managedContext : managedContext, exhibition: exhibition,isHomeExhibition :isHomeExhibition)
                 }
             }
         }
     }
     
-    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,exhibition:[Exhibition]?) {
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,exhibition:[Exhibition]?,isHomeExhibition : String?) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = self.checkAddedToCoredata(entityName: "ExhibitionsEntity", idKey: "id", idValue: nil, managedContext: managedContext) as! [ExhibitionsEntity]
             if (fetchData.count > 0) {
@@ -490,6 +491,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                         exhibitionsdbDict.location =  exhibitionsListDict.location
                         exhibitionsdbDict.museumId = exhibitionsListDict.museumId
                         exhibitionsdbDict.status = exhibitionsListDict.status
+                        exhibitionsdbDict.isHomeExhibition = isHomeExhibition
                         do {
                             try managedContext.save()
                         }
@@ -498,14 +500,14 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                         }
                     } else {
                         //save
-                        self.saveToCoreData(exhibitionDict: exhibitionsListDict, managedObjContext: managedContext, exhibition: exhibition)
+                        self.saveToCoreData(exhibitionDict: exhibitionsListDict, managedObjContext: managedContext, exhibition: exhibition,isHomeExhibition :isHomeExhibition)
                     }
                 }//for
             } else {
                 for i in 0 ... self.exhibition.count-1 {
                     let exhibitionListDict : Exhibition?
                     exhibitionListDict = self.exhibition[i]
-                    self.saveToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext, exhibition: exhibition)
+                    self.saveToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext, exhibition: exhibition,isHomeExhibition :isHomeExhibition)
                 }
             }
         } else {
@@ -524,6 +526,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                         exhibitiondbDict.locationArabic =  exhibitionListDict.location
                         exhibitiondbDict.museumId =  exhibitionListDict.museumId
                         exhibitiondbDict.status =  exhibitionListDict.status
+                        exhibitiondbDict.isHomeExhibition =  isHomeExhibition
                         do {
                             try managedContext.save()
                         }
@@ -532,20 +535,20 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                         }
                     } else {
                         //save
-                        self.saveToCoreData(exhibitionDict: exhibitionListDict, managedObjContext: managedContext, exhibition: exhibition)
+                        self.saveToCoreData(exhibitionDict: exhibitionListDict, managedObjContext: managedContext, exhibition: exhibition,isHomeExhibition :isHomeExhibition)
                     }
                 }
             } else {
                 for i in 0 ... self.exhibition.count-1 {
                     let exhibitionListDict : Exhibition?
                     exhibitionListDict = self.exhibition[i]
-                    self.saveToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext, exhibition: exhibition)
+                    self.saveToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext, exhibition: exhibition,isHomeExhibition :isHomeExhibition)
                 }
             }
         }
     }
     
-    func saveToCoreData(exhibitionDict: Exhibition, managedObjContext: NSManagedObjectContext,exhibition:[Exhibition]?) {
+    func saveToCoreData(exhibitionDict: Exhibition, managedObjContext: NSManagedObjectContext,exhibition:[Exhibition]?,isHomeExhibition : String?) {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             let exhibitionInfo: ExhibitionsEntity = NSEntityDescription.insertNewObject(forEntityName: "ExhibitionsEntity", into: managedObjContext) as! ExhibitionsEntity
             
@@ -557,6 +560,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             exhibitionInfo.location =  exhibitionDict.location
             exhibitionInfo.museumId =  exhibitionDict.museumId
             exhibitionInfo.status =  exhibitionDict.status
+            exhibitionInfo.isHomeExhibition =  isHomeExhibition
         } else {
             let exhibitionInfo: ExhibitionsEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "ExhibitionsEntityArabic", into: managedObjContext) as! ExhibitionsEntityArabic
             exhibitionInfo.id = exhibitionDict.id
@@ -567,6 +571,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             exhibitionInfo.locationArabic =  exhibitionDict.location
             exhibitionInfo.museumId =  exhibitionDict.museumId
             exhibitionInfo.status =  exhibitionDict.status
+            exhibitionInfo.isHomeExhibition =  isHomeExhibition
         }
         do {
             try managedObjContext.save()
@@ -581,8 +586,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var exhibitionArray = [ExhibitionsEntity]()
-                let exhibitionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ExhibitionsEntity")
-                exhibitionArray = (try managedContext.fetch(exhibitionFetchRequest) as? [ExhibitionsEntity])!
+                exhibitionArray = checkAddedToCoredata(entityName: "ExhibitionsEntity", idKey: "isHomeExhibition", idValue: "1", managedContext: managedContext) as! [ExhibitionsEntity]
                 if (exhibitionArray.count > 0) {
                     if((self.networkReachability?.isReachable)!) {
                         DispatchQueue.global(qos: .background).async {
@@ -599,7 +603,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                         } else {
                             self.exbtnLoadingView.showNoDataView()
                         }
-                    }
+                    } 
                     DispatchQueue.main.async{
                         self.exhibitionCollectionView.reloadData()
                     }
@@ -613,8 +617,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 }
             } else {
                 var exhibitionArray = [ExhibitionsEntityArabic]()
-                let exhibitionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ExhibitionsEntityArabic")
-                exhibitionArray = (try managedContext.fetch(exhibitionFetchRequest) as? [ExhibitionsEntityArabic])!
+                exhibitionArray = checkAddedToCoredata(entityName: "ExhibitionsEntityArabic", idKey: "isHomeExhibition", idValue: "1", managedContext: managedContext) as! [ExhibitionsEntityArabic]
                 if (exhibitionArray.count > 0) {
                     if((self.networkReachability?.isReachable)!) {
                         DispatchQueue.global(qos: .background).async {

@@ -609,6 +609,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         exhibitionsdbDict.location =  exhibitionsListDict.location
                         exhibitionsdbDict.museumId = exhibitionsListDict.museumId
                         exhibitionsdbDict.status = exhibitionsListDict.status
+                        exhibitionsdbDict.isHomeExhibition = "1"
                         do {
                             try managedContext.save()
                         }
@@ -645,6 +646,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         exhibitiondbDict.locationArabic =  exhibitionListDict.location
                         exhibitiondbDict.museumId =  exhibitionListDict.museumId
                         exhibitiondbDict.status =  exhibitionListDict.status
+                        exhibitiondbDict.isHomeExhibition = "1"
                         do {
                             try managedContext.save()
                         }
@@ -680,6 +682,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             exhibitionInfo.location =  exhibitionDict.location
             exhibitionInfo.museumId =  exhibitionDict.museumId
             exhibitionInfo.status =  exhibitionDict.status
+            exhibitionInfo.isHomeExhibition = "1"
         } else {
             let exhibitionInfo: ExhibitionsEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "ExhibitionsEntityArabic", into: managedObjContext) as! ExhibitionsEntityArabic
             exhibitionInfo.id = exhibitionDict.id
@@ -690,6 +693,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             exhibitionInfo.locationArabic =  exhibitionDict.location
             exhibitionInfo.museumId =  exhibitionDict.museumId
             exhibitionInfo.status =  exhibitionDict.status
+            exhibitionInfo.isHomeExhibition = "1"
         }
         do {
             try managedObjContext.save()
