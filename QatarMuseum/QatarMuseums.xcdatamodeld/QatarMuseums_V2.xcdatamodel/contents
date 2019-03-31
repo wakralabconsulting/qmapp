@@ -307,7 +307,7 @@
         <attribute name="timing" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="titleTiming" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="facilitiesDetailRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FacilitiesDetailImgEntity" syncable="YES"/>
+        <relationship name="facilitiesDetailRelation" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="FacilitiesDetailImgEntity" syncable="YES"/>
     </entity>
     <entity name="FacilitiesDetailEntityAr" representedClassName="FacilitiesDetailEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
@@ -320,35 +320,35 @@
         <attribute name="timing" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="titleTiming" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="facilitiesDetailRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FacilitiesDetailImgEntityAr" syncable="YES"/>
+        <relationship name="facilitiesDetailRelationAr" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="FacilitiesDetailImgEntityAr" syncable="YES"/>
     </entity>
     <entity name="FacilitiesDetailImgEntity" representedClassName="FacilitiesDetailImgEntity" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="facilitiesDetailRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FacilitiesDetailEntity" syncable="YES"/>
+        <relationship name="facilitiesDetailRelation" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="FacilitiesDetailEntity" syncable="YES"/>
     </entity>
     <entity name="FacilitiesDetailImgEntityAr" representedClassName="FacilitiesDetailImgEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="facilitiesDetailRelationAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FacilitiesDetailEntityAr" syncable="YES"/>
+        <relationship name="facilitiesDetailRelationAr" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="FacilitiesDetailEntityAr" syncable="YES"/>
     </entity>
     <entity name="FacilitiesEntity" representedClassName="FacilitiesEntity" syncable="YES" codeGenerationType="class">
         <attribute name="nid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="facilitiesImgRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FacilitiesImgEntity" syncable="YES"/>
+        <relationship name="facilitiesImgRelation" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="FacilitiesImgEntity" syncable="YES"/>
     </entity>
     <entity name="FacilitiesEntityAr" representedClassName="FacilitiesEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="nid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="facilitiesImgRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FacilitiesImgEntityAr" syncable="YES"/>
+        <relationship name="facilitiesImgRelationAr" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="FacilitiesImgEntityAr" syncable="YES"/>
     </entity>
     <entity name="FacilitiesImgEntity" representedClassName="FacilitiesImgEntity" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="facilitiesImgRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FacilitiesEntity" syncable="YES"/>
+        <relationship name="facilitiesImgRelation" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="FacilitiesEntity" syncable="YES"/>
     </entity>
     <entity name="FacilitiesImgEntityAr" representedClassName="FacilitiesImgEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="facilitiesImgRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FacilitiesEntityAr" syncable="YES"/>
+        <relationship name="facilitiesImgRelation" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="FacilitiesEntityAr" syncable="YES"/>
     </entity>
     <entity name="FloorMapImagesEntity" representedClassName="FloorMapImagesEntity" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
@@ -466,7 +466,7 @@
         <attribute name="introductionText" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="promotionalCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="bannerImageRelationsAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HomeBannerImageEntityAr" syncable="YES"/>
+        <relationship name="bannerImageRelationsAr" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="HomeBannerImageEntityAr" syncable="YES"/>
     </entity>
     <entity name="HomeBannerImageEntity" representedClassName="HomeBannerImageEntity" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
@@ -474,7 +474,7 @@
     </entity>
     <entity name="HomeBannerImageEntityAr" representedClassName="HomeBannerImageEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="bannerImageRelationsAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HomeBannerEntityAr" syncable="YES"/>
+        <relationship name="bannerImageRelationsAr" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="HomeBannerEntityAr" syncable="YES"/>
     </entity>
     <entity name="HomeEntity" representedClassName="HomeEntity" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
@@ -504,7 +504,7 @@
         <attribute name="sortId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="activityImgRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoqActivityImgEntity" syncable="YES"/>
+        <relationship name="activityImgRelation" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="NMoqActivityImgEntity" syncable="YES"/>
     </entity>
     <entity name="NMoQActivitiesEntityAr" representedClassName="NMoQActivitiesEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="contactEmail" optional="YES" attributeType="String" syncable="YES"/>
@@ -520,45 +520,45 @@
         <attribute name="sortId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="activityImgRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoqActivityImgEntityAr" syncable="YES"/>
+        <relationship name="activityImgRelationAr" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="NMoqActivityImgEntityAr" syncable="YES"/>
     </entity>
     <entity name="NMoqActivityImgEntity" representedClassName="NMoqActivityImgEntity" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="activityImgRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQActivitiesEntity" syncable="YES"/>
+        <relationship name="activityImgRelation" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="NMoQActivitiesEntity" syncable="YES"/>
     </entity>
     <entity name="NMoqActivityImgEntityAr" representedClassName="NMoqActivityImgEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="activityImgRelationAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQActivitiesEntityAr" syncable="YES"/>
+        <relationship name="activityImgRelationAr" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="NMoQActivitiesEntityAr" syncable="YES"/>
     </entity>
     <entity name="NMoQParkDetailEntity" representedClassName="NMoQParkDetailEntity" syncable="YES" codeGenerationType="class">
         <attribute name="nid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="parkDesc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="parkDetailImgRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoQParkDetailImgEntity" syncable="YES"/>
+        <relationship name="parkDetailImgRelation" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="NMoQParkDetailImgEntity" syncable="YES"/>
     </entity>
     <entity name="NMoQParkDetailEntityAr" representedClassName="NMoQParkDetailEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="nid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="parkDesc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="parkDetailImgRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoQParkDetailImgEntityAr" syncable="YES"/>
+        <relationship name="parkDetailImgRelationAr" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="NMoQParkDetailImgEntityAr" syncable="YES"/>
     </entity>
     <entity name="NMoQParkDetailImgEntity" representedClassName="NMoQParkDetailImgEntity" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="parkDetailImgRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQParkDetailEntity" syncable="YES"/>
+        <relationship name="parkDetailImgRelation" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="NMoQParkDetailEntity" syncable="YES"/>
     </entity>
     <entity name="NMoQParkDetailImgEntityAr" representedClassName="NMoQParkDetailImgEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="parkDetailImgRelationAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQParkDetailEntityAr" syncable="YES"/>
+        <relationship name="parkDetailImgRelationAr" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="NMoQParkDetailEntityAr" syncable="YES"/>
     </entity>
     <entity name="NMoQParkImgEntity" representedClassName="NMoQParkImgEntity" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="parkImgRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQParksEntity" syncable="YES"/>
+        <relationship name="parkImgRelation" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="NMoQParksEntity" syncable="YES"/>
     </entity>
     <entity name="NMoQParkImgEntityAr" representedClassName="NMoQParkImgEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="parkImgRelationAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQParksEntityAr" syncable="YES"/>
+        <relationship name="parkImgRelationAr" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="NMoQParksEntityAr" syncable="YES"/>
     </entity>
     <entity name="NMoQParkListEntity" representedClassName="NMoQParkListEntity" syncable="YES" codeGenerationType="class">
         <attribute name="hoursDesc" optional="YES" attributeType="String" syncable="YES"/>
@@ -588,13 +588,13 @@
         <attribute name="nid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="parkImgRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoQParkImgEntity" syncable="YES"/>
+        <relationship name="parkImgRelation" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="NMoQParkImgEntity" syncable="YES"/>
     </entity>
     <entity name="NMoQParksEntityAr" representedClassName="NMoQParksEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="nid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="parkImgRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoQParkImgEntityAr" syncable="YES"/>
+        <relationship name="parkImgRelationAr" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="NMoQParkImgEntityAr" syncable="YES"/>
     </entity>
     <entity name="NmoqTourDetailEntity" representedClassName="NmoqTourDetailEntity" syncable="YES" codeGenerationType="class">
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
@@ -626,7 +626,7 @@
         <attribute name="seatsRemaining" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sort_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="nmoqTourDetailImgBannerRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoqTourDetailImagesEntityAr" syncable="YES"/>
+        <relationship name="nmoqTourDetailImgBannerRelationAr" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="NMoqTourDetailImagesEntityAr" syncable="YES"/>
     </entity>
     <entity name="NMoqTourDetailImagesEntity" representedClassName="NMoqTourDetailImagesEntity" syncable="YES" codeGenerationType="class">
         <attribute name="imgBanner" optional="YES" attributeType="String" syncable="YES"/>
@@ -634,7 +634,7 @@
     </entity>
     <entity name="NMoqTourDetailImagesEntityAr" representedClassName="NMoqTourDetailImagesEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="imgBanner" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="nmoqTourDetailImgBannerRelationAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NmoqTourDetailEntityAr" syncable="YES"/>
+        <relationship name="nmoqTourDetailImgBannerRelationAr" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="NmoqTourDetailEntityAr" syncable="YES"/>
     </entity>
     <entity name="NMoqTourImagesEntity" representedClassName="NMoqTourImagesEntity" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
@@ -642,7 +642,7 @@
     </entity>
     <entity name="NMoqTourImagesEntityAr" representedClassName="NMoqTourImagesEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="tourImagesRelationAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQTourListEntityAr" syncable="YES"/>
+        <relationship name="tourImagesRelationAr" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="NMoQTourListEntityAr" syncable="YES"/>
     </entity>
     <entity name="NMoQTourListEntity" representedClassName="NMoQTourListEntity" syncable="YES" codeGenerationType="class">
         <attribute name="contactEmail" optional="YES" attributeType="String" syncable="YES"/>
@@ -676,7 +676,7 @@
         <attribute name="sortId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="tourImagesRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoqTourImagesEntityAr" syncable="YES"/>
+        <relationship name="tourImagesRelationAr" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="NMoqTourImagesEntityAr" syncable="YES"/>
     </entity>
     <entity name="NMoQTravelListEntity" representedClassName="NMoQTravelListEntity" syncable="YES" codeGenerationType="class">
         <attribute name="bannerLink" optional="YES" attributeType="String" syncable="YES"/>
@@ -821,14 +821,6 @@
         <element name="EventTopicsEntityAr" positionX="18" positionY="180" width="128" height="75"/>
         <element name="ExhibitionsEntity" positionX="-54" positionY="108" width="128" height="330"/>
         <element name="ExhibitionsEntityArabic" positionX="-45" positionY="126" width="128" height="330"/>
-        <element name="FacilitiesDetailEntity" positionX="27" positionY="171" width="128" height="210"/>
-        <element name="FacilitiesDetailEntityAr" positionX="0" positionY="144" width="128" height="210"/>
-        <element name="FacilitiesDetailImgEntity" positionX="-9" positionY="135" width="128" height="75"/>
-        <element name="FacilitiesDetailImgEntityAr" positionX="9" positionY="153" width="128" height="75"/>
-        <element name="FacilitiesEntity" positionX="-9" positionY="252" width="128" height="103"/>
-        <element name="FacilitiesEntityAr" positionX="0" positionY="261" width="128" height="105"/>
-        <element name="FacilitiesImgEntity" positionX="9" positionY="270" width="128" height="75"/>
-        <element name="FacilitiesImgEntityAr" positionX="18" positionY="279" width="128" height="75"/>
         <element name="FloorMapImagesEntity" positionX="0" positionY="144" width="128" height="75"/>
         <element name="FloorMapImagesEntityAr" positionX="18" positionY="162" width="128" height="75"/>
         <element name="FloorMapTourGuideEntity" positionX="-9" positionY="135" width="128" height="420"/>
@@ -838,35 +830,14 @@
         <element name="HeritageImagesEntity" positionX="-27" positionY="135" width="128" height="75"/>
         <element name="HeritageImagesEntityAr" positionX="-27" positionY="135" width="128" height="75"/>
         <element name="HomeBannerEntity" positionX="-9" positionY="135" width="128" height="195"/>
-        <element name="HomeBannerEntityAr" positionX="-9" positionY="135" width="128" height="195"/>
         <element name="HomeBannerImageEntity" positionX="-9" positionY="135" width="128" height="75"/>
-        <element name="HomeBannerImageEntityAr" positionX="0" positionY="144" width="128" height="75"/>
         <element name="HomeEntity" positionX="-63" positionY="-18" width="128" height="120"/>
         <element name="HomeEntityArabic" positionX="-54" positionY="63" width="128" height="120"/>
-        <element name="NMoQActivitiesEntity" positionX="9" positionY="153" width="128" height="255"/>
-        <element name="NMoQActivitiesEntityAr" positionX="18" positionY="162" width="128" height="255"/>
-        <element name="NMoqActivityImgEntity" positionX="27" positionY="171" width="128" height="75"/>
-        <element name="NMoqActivityImgEntityAr" positionX="36" positionY="180" width="128" height="75"/>
-        <element name="NMoQParkDetailEntity" positionX="9" positionY="153" width="128" height="120"/>
-        <element name="NMoQParkDetailEntityAr" positionX="18" positionY="162" width="128" height="120"/>
-        <element name="NMoQParkDetailImgEntity" positionX="-9" positionY="135" width="128" height="75"/>
-        <element name="NMoQParkDetailImgEntityAr" positionX="0" positionY="144" width="128" height="75"/>
-        <element name="NMoQParkImgEntity" positionX="9" positionY="153" width="128" height="75"/>
-        <element name="NMoQParkImgEntityAr" positionX="18" positionY="162" width="128" height="75"/>
-        <element name="NMoQParkListEntity" positionX="-9" positionY="135" width="128" height="195"/>
-        <element name="NMoQParkListEntityAr" positionX="0" positionY="144" width="128" height="195"/>
-        <element name="NMoQParksEntity" positionX="-9" positionY="135" width="128" height="105"/>
-        <element name="NMoQParksEntityAr" positionX="0" positionY="144" width="128" height="105"/>
         <element name="NmoqTourDetailEntity" positionX="-9" positionY="135" width="128" height="255"/>
-        <element name="NmoqTourDetailEntityAr" positionX="-9" positionY="135" width="128" height="255"/>
         <element name="NMoqTourDetailImagesEntity" positionX="9" positionY="153" width="128" height="75"/>
-        <element name="NMoqTourDetailImagesEntityAr" positionX="0" positionY="144" width="128" height="75"/>
         <element name="NMoqTourImagesEntity" positionX="9" positionY="153" width="128" height="75"/>
-        <element name="NMoqTourImagesEntityAr" positionX="0" positionY="144" width="128" height="75"/>
         <element name="NMoQTourListEntity" positionX="0" positionY="144" width="128" height="270"/>
-        <element name="NMoQTourListEntityAr" positionX="-9" positionY="135" width="128" height="270"/>
         <element name="NMoQTravelListEntity" positionX="-9" positionY="135" width="128" height="180"/>
-        <element name="NMoQTravelListEntityAr" positionX="-9" positionY="135" width="128" height="180"/>
         <element name="NotificationsEntity" positionX="-9" positionY="135" width="128" height="75"/>
         <element name="NotificationsEntityArabic" positionX="0" positionY="144" width="128" height="75"/>
         <element name="ParksEntity" positionX="-54" positionY="108" width="128" height="105"/>
@@ -880,5 +851,34 @@
         <element name="TourGuideEntityAr" positionX="0" positionY="144" width="128" height="120"/>
         <element name="TourGuideMultimediaEntity" positionX="9" positionY="153" width="128" height="75"/>
         <element name="TourGuideMultimediaEntityAr" positionX="18" positionY="162" width="128" height="75"/>
+        <element name="FacilitiesDetailEntity" positionX="0" positionY="144" width="128" height="210"/>
+        <element name="FacilitiesDetailEntityAr" positionX="9" positionY="153" width="128" height="210"/>
+        <element name="FacilitiesDetailImgEntity" positionX="18" positionY="162" width="128" height="75"/>
+        <element name="FacilitiesDetailImgEntityAr" positionX="27" positionY="171" width="128" height="75"/>
+        <element name="FacilitiesEntity" positionX="36" positionY="180" width="128" height="105"/>
+        <element name="FacilitiesEntityAr" positionX="45" positionY="189" width="128" height="105"/>
+        <element name="FacilitiesImgEntity" positionX="-9" positionY="135" width="128" height="75"/>
+        <element name="FacilitiesImgEntityAr" positionX="0" positionY="144" width="128" height="75"/>
+        <element name="HomeBannerEntityAr" positionX="9" positionY="153" width="128" height="195"/>
+        <element name="HomeBannerImageEntityAr" positionX="18" positionY="162" width="128" height="75"/>
+        <element name="NMoQActivitiesEntity" positionX="27" positionY="171" width="128" height="255"/>
+        <element name="NMoQActivitiesEntityAr" positionX="36" positionY="180" width="128" height="255"/>
+        <element name="NMoqActivityImgEntity" positionX="45" positionY="189" width="128" height="75"/>
+        <element name="NMoqActivityImgEntityAr" positionX="-9" positionY="135" width="128" height="75"/>
+        <element name="NMoQParkDetailEntity" positionX="0" positionY="144" width="128" height="120"/>
+        <element name="NMoQParkDetailEntityAr" positionX="9" positionY="153" width="128" height="120"/>
+        <element name="NMoQParkDetailImgEntity" positionX="18" positionY="162" width="128" height="75"/>
+        <element name="NMoQParkDetailImgEntityAr" positionX="27" positionY="171" width="128" height="75"/>
+        <element name="NMoQParkImgEntity" positionX="36" positionY="180" width="128" height="75"/>
+        <element name="NMoQParkImgEntityAr" positionX="45" positionY="189" width="128" height="75"/>
+        <element name="NMoQParkListEntity" positionX="-9" positionY="135" width="128" height="195"/>
+        <element name="NMoQParkListEntityAr" positionX="0" positionY="144" width="128" height="195"/>
+        <element name="NMoQParksEntity" positionX="9" positionY="153" width="128" height="105"/>
+        <element name="NMoQParksEntityAr" positionX="18" positionY="162" width="128" height="105"/>
+        <element name="NmoqTourDetailEntityAr" positionX="27" positionY="171" width="128" height="255"/>
+        <element name="NMoqTourDetailImagesEntityAr" positionX="36" positionY="180" width="128" height="75"/>
+        <element name="NMoQTourListEntityAr" positionX="45" positionY="189" width="128" height="270"/>
+        <element name="NMoQTravelListEntityAr" positionX="-9" positionY="135" width="128" height="180"/>
+        <element name="NMoqTourImagesEntityAr" positionX="0" positionY="144" width="128" height="75"/>
     </elements>
 </model>
