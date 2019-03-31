@@ -99,10 +99,12 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         if ((indexPath.row != 0) && (indexPath.row <= nmoqParks.count)) {
             let heightValue = UIScreen.main.bounds.height/100
             return heightValue*27
-        } else {
-            return UITableViewAutomaticDimension
+        } else if(indexPath.row == 0) {
+            if((nmoqParkList[0].mainDescription == nil) || (nmoqParkList[0].mainDescription?.trimmingCharacters(in: NSCharacterSet.whitespaces) == "")) {
+                return 0
+            }
         }
-        
+            return UITableViewAutomaticDimension
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        if (indexPath.row == 1) {
