@@ -195,3 +195,19 @@ class ResizableImageView: UIImageView {
         }
     }
 }
+extension String {
+    var htmlAttributedString: NSAttributedString? {
+        do {
+            return try NSAttributedString(data: data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))!,
+                                          options: [.documentType: NSAttributedString.DocumentType.html,
+                                                    .characterEncoding: String.Encoding.utf8.rawValue],
+                                          documentAttributes: nil)
+        } catch {
+            print("error: ", error)
+            return nil
+        }
+    }
+    var htmlString: String {
+        return htmlAttributedString?.string ?? ""
+    }
+}

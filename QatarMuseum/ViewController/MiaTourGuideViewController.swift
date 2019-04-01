@@ -150,7 +150,12 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
                     self.saveOrUpdateTourGuideCoredata(miaTourDataFullArray: data.tourGuide)
                 }
             case .failure(let error):
-                print("error")
+                if(self.miaTourDataFullArray.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
             }
         }
     }

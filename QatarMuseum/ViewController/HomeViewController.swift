@@ -441,7 +441,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     self.saveOrUpdateHomeCoredata(homeList: data.homeList)
                 }
             case .failure( _):
-                print("error")
+                if((self.homeList.count == 0) || (self.homeList.count == 1)) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
             }
         }
     }
@@ -887,9 +892,6 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntity])!
                 var j:Int? = 0
             if (homeArray.count > 0) {
-                let alert = UIAlertController(title: "Alert", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
                 //homeArray.sort(by: {$0.sortid < $1.sortid})
                 for i in 0 ... homeArray.count-1 {
                     if homeList.first(where: {$0.id == homeArray[i].id}) != nil {

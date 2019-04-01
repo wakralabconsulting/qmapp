@@ -180,7 +180,8 @@ class NMoQListCell: UITableViewCell {
     }
     
     func setParkListData(parkList: NMoQPark) {
-        titleLabel.text = parkList.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+        titleLabel.text = parkList.title?.htmlString
+            //?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         dateLabel.isHidden = true
         if ((parkList.images?.count)! > 0) {
             if let imageUrl = parkList.images?[0]{

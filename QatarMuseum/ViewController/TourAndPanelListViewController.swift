@@ -270,7 +270,12 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 }
                 
             case .failure(let error):
-                print("error")
+                if(self.nmoqTourList.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
             }
         }
     }
@@ -604,7 +609,12 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                     self.saveOrUpdateActivityListCoredata(nmoqActivityList: data.nmoqActivitiesList)
                 }
             case .failure( _):
-                print("error")
+                if(self.nmoqActivityList.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
             }
         }
     }
@@ -943,7 +953,12 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                     self.saveOrUpdateFacilitiesListCoredata(facilitiesList: data.facilitiesList)
                 }
             case .failure( _):
-                print("error")
+                if(self.facilitiesList.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
             }
         }
     }
@@ -1249,7 +1264,12 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                     self.saveOrUpdateTravelListCoredata(travelList: data.homeBannerList)
                 }
             case .failure(let error):
-                print("error")
+                if(self.travelList.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
             }
         }
     }

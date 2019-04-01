@@ -185,7 +185,12 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     self.saveOrUpdateExhibitionsCoredata(exhibition: data.exhibitions, isHomeExhibition: "1")
                 }
             case .failure( _):
-                print("error")
+                if(self.exhibition.count == 0) {
+                    self.exbtnLoadingView.stopLoading()
+                    self.exbtnLoadingView.noDataView.isHidden = false
+                    self.exbtnLoadingView.isHidden = false
+                    self.exbtnLoadingView.showNoDataView()
+                }
             }
         }
     }
@@ -797,7 +802,12 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     self.saveOrUpdateHeritageCoredata(heritageListArray: data.heritage)
                 }
             case .failure( _):
-                print("error")
+                if(self.heritageListArray.count == 0) {
+                    self.exbtnLoadingView.stopLoading()
+                    self.exbtnLoadingView.noDataView.isHidden = false
+                    self.exbtnLoadingView.isHidden = false
+                    self.exbtnLoadingView.showNoDataView()
+                }
             }
         }
     }
@@ -1014,7 +1024,12 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     self.saveOrUpdatePublicArtsCoredata(publicArtsListArray: data.publicArtsList, lang: LocalizationLanguage.currentAppleLanguage())
                 }
             case .failure( _):
-                print("error")
+                if(self.publicArtsListArray.count == 0) {
+                    self.exbtnLoadingView.stopLoading()
+                    self.exbtnLoadingView.noDataView.isHidden = false
+                    self.exbtnLoadingView.isHidden = false
+                    self.exbtnLoadingView.showNoDataView()
+                }
             }
         }
     }
@@ -1444,7 +1459,12 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     self.saveOrUpdateDiningCoredata(diningListArray: data.dinings, lang: LocalizationLanguage.currentAppleLanguage())
                 }
             case .failure( _):
-                print("error")
+                if(self.diningListArray.count == 0) {
+                    self.exbtnLoadingView.stopLoading()
+                    self.exbtnLoadingView.noDataView.isHidden = false
+                    self.exbtnLoadingView.isHidden = false
+                    self.exbtnLoadingView.showNoDataView()
+                }
             }
         }
     }

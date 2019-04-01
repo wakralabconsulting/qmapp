@@ -71,9 +71,6 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         if (indexPath.row == 0) {
             let cell = parkTableView.dequeueReusableCell(withIdentifier: "parkTopCellId", for: indexPath) as! NMoQParkTopTableViewCell
             cell.setTopCellDescription(topDescription: nmoqParkList[0].mainDescription)
-            
-            
-            //cell.textLabel?.text = nmoqParkList[0].mainDescription?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
             return cell
         } else if indexPath.row > nmoqParks.count {
             let parkListSecondCell = parkTableView.dequeueReusableCell(withIdentifier: "parkListCellId", for: indexPath) as! ParkListTableViewCell
@@ -196,7 +193,12 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     self.saveOrUpdateNmoqParkListCoredata(nmoqParkList: data.nmoqParkList)
                 }
             case .failure( _):
-                print("error")
+                if(self.nmoqParkList.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
             }
         }
     }
@@ -214,7 +216,12 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 }
                 
             case .failure( _):
-                print("error")
+                if(self.nmoqParks.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
             }
         }
     }

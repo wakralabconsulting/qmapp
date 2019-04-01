@@ -971,7 +971,12 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                 }
                 
             case .failure( _):
-                print("error")
+                if(self.aboutDetailtArray.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
             }
         }
     }
