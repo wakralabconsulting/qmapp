@@ -264,6 +264,12 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 if(self.nmoqTourList.count == 0) {
                     self.nmoqTourList = data.nmoqTourList
                     self.collectionTableView.reloadData()
+                    if(self.nmoqTourList.count == 0) {
+                        self.loadingView.stopLoading()
+                        self.loadingView.noDataView.isHidden = false
+                        self.loadingView.isHidden = false
+                        self.loadingView.showNoDataView()
+                    }
                 }
                 if(self.nmoqTourList.count > 0) {
                     self.saveOrUpdateTourListCoredata(nmoqTourList: data.nmoqTourList, isTourGuide: true)
@@ -604,6 +610,12 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                         self.nmoqActivityList = self.nmoqActivityList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
                     }
                     self.collectionTableView.reloadData()
+                    if(self.nmoqActivityList.count == 0) {
+                        self.loadingView.stopLoading()
+                        self.loadingView.noDataView.isHidden = false
+                        self.loadingView.isHidden = false
+                        self.loadingView.showNoDataView()
+                    }
                 }
                 if(self.nmoqActivityList.count > 0) {
                     self.saveOrUpdateActivityListCoredata(nmoqActivityList: data.nmoqActivitiesList)
@@ -948,6 +960,12 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                         self.facilitiesList = self.facilitiesList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
                     }
                     self.collectionTableView.reloadData()
+                    if(self.facilitiesList.count == 0) {
+                        self.loadingView.stopLoading()
+                        self.loadingView.noDataView.isHidden = false
+                        self.loadingView.isHidden = false
+                        self.loadingView.showNoDataView()
+                    }
                 }
                 if(self.facilitiesList.count > 0) {
                     self.saveOrUpdateFacilitiesListCoredata(facilitiesList: data.facilitiesList)
@@ -1259,6 +1277,12 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 if(self.travelList.count == 0) {
                     self.travelList = data.homeBannerList
                     self.collectionTableView.reloadData()
+                    if(self.travelList.count == 0) {
+                        self.loadingView.stopLoading()
+                        self.loadingView.noDataView.isHidden = false
+                        self.loadingView.isHidden = false
+                        self.loadingView.showNoDataView()
+                    }
                 }
                 if(self.nmoqActivityList.count > 0) {
                     self.saveOrUpdateTravelListCoredata(travelList: data.homeBannerList)

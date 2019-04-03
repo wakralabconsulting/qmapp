@@ -280,6 +280,17 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
 //                        self.loadingView.showNoDataView()
                         self.parksListArray = data.parkList
                         self.parksTableView.reloadData()
+                        if(self.parksListArray.count == 0) {
+                            self.loadCloseButton()
+                            var errorMessage: String
+                            errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                            comment: "Setting the content of the alert"))
+                            self.loadingView.stopLoading()
+                            self.loadingView.noDataView.isHidden = false
+                            self.loadingView.isHidden = false
+                            self.loadingView.showNoDataView()
+                            self.loadingView.noDataLabel.text = errorMessage
+                        }
                     }
                     if (self.parksListArray.count > 0)  {
                         self.saveOrUpdateParksCoredata(parksListArray: data.parkList)

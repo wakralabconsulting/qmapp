@@ -180,6 +180,12 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 if(self.exhibition.count == 0) {
                     self.exhibition = data.exhibitions
                     self.exhibitionCollectionView.reloadData()
+                    if(self.exhibition.count == 0) {
+                        self.exbtnLoadingView.stopLoading()
+                        self.exbtnLoadingView.noDataView.isHidden = false
+                        self.exbtnLoadingView.isHidden = false
+                        self.exbtnLoadingView.showNoDataView()
+                    }
                 }
                 if(self.exhibition.count > 0) {
                     self.saveOrUpdateExhibitionsCoredata(exhibition: data.exhibitions, isHomeExhibition: "1")
@@ -797,6 +803,12 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 if(self.heritageListArray.count == 0) {
                     self.heritageListArray = data.heritage
                     self.exhibitionCollectionView.reloadData()
+                    if(self.heritageListArray.count == 0) {
+                        self.exbtnLoadingView.stopLoading()
+                        self.exbtnLoadingView.noDataView.isHidden = false
+                        self.exbtnLoadingView.isHidden = false
+                        self.exbtnLoadingView.showNoDataView()
+                    }
                 }
                 if(self.heritageListArray.count > 0) {
                     self.saveOrUpdateHeritageCoredata(heritageListArray: data.heritage)
@@ -1019,6 +1031,12 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 if(self.publicArtsListArray.count == 0) {
                     self.publicArtsListArray = data.publicArtsList
                     self.exhibitionCollectionView.reloadData()
+                    if(self.publicArtsListArray.count == 0) {
+                        self.exbtnLoadingView.stopLoading()
+                        self.exbtnLoadingView.noDataView.isHidden = false
+                        self.exbtnLoadingView.isHidden = false
+                        self.exbtnLoadingView.showNoDataView()
+                    }
                 }
                 if(self.publicArtsListArray.count > 0) {
                     self.saveOrUpdatePublicArtsCoredata(publicArtsListArray: data.publicArtsList, lang: LocalizationLanguage.currentAppleLanguage())
@@ -1454,6 +1472,12 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 if(self.diningListArray.count == 0) {
                     self.diningListArray = data.dinings
                     self.exhibitionCollectionView.reloadData()
+                    if(self.diningListArray.count == 0) {
+                        self.exbtnLoadingView.stopLoading()
+                        self.exbtnLoadingView.noDataView.isHidden = false
+                        self.exbtnLoadingView.isHidden = false
+                        self.exbtnLoadingView.showNoDataView()
+                    }
                 }
                 if(self.diningListArray.count > 0) {
                     self.saveOrUpdateDiningCoredata(diningListArray: data.dinings, lang: LocalizationLanguage.currentAppleLanguage())

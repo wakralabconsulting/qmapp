@@ -433,7 +433,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                                              at: 0)
                     }
 
-                    
+                    if((self.homeList.count == 0) || (self.homeList.count == 1)) {
+                        self.loadingView.stopLoading()
+                        self.loadingView.noDataView.isHidden = false
+                        self.loadingView.isHidden = false
+                        self.loadingView.showNoDataView()
+                    }
                     
                     self.homeCollectionView.reloadData()
                 }

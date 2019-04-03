@@ -54,6 +54,10 @@
                                         <integer key="value" value="23"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="didTapExplore:" destination="gqe-s7-sXA" eventType="touchUpInside" id="OEe-V8-ItV"/>
+                                    <action selector="exploreButtonTouchDown:" destination="gqe-s7-sXA" eventType="touchUpInside" id="4Kc-Vn-hvo"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="explore_icon" translatesAutoresizingMaskIntoConstraints="NO" id="Vih-ot-ZJW">
                                 <rect key="frame" x="144" y="48.5" width="22" height="23"/>

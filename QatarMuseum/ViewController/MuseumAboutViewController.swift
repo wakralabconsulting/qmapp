@@ -965,6 +965,12 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                 if(self.aboutDetailtArray.count == 0) {
                     self.aboutDetailtArray = data.museum!
                     self.heritageDetailTableView.reloadData()
+                    if(self.aboutDetailtArray.count == 0) {
+                        self.loadingView.stopLoading()
+                        self.loadingView.noDataView.isHidden = false
+                        self.loadingView.isHidden = false
+                        self.loadingView.showNoDataView()
+                    }
                 }
                 if(self.aboutDetailtArray.count > 0) {
                     self.saveOrUpdateAboutCoredata(aboutDetailtArray: data.museum)

@@ -7,9 +7,9 @@
 //
 
 import UIKit
-protocol MiaTourProtocol {
-    func exploreButtonTapAction( miaHeader: MiaCollectionReusableView)
-}
+//protocol MiaTourProtocol {
+//    func exploreButtonTapAction( miaHeader: MiaCollectionReusableView)
+//}
 class MiaCollectionReusableView: UICollectionViewCell {
     @IBOutlet weak var miaTourGuideText: UILabel!
     @IBOutlet weak var selfGuidedText: UILabel!
@@ -18,10 +18,9 @@ class MiaCollectionReusableView: UICollectionViewCell {
     @IBOutlet weak var selfGuidedTitle: UILabel!
     @IBOutlet weak var exploreButtonHeight: NSLayoutConstraint!
     @IBOutlet weak var miaTitle: UILabel!
-    
     @IBOutlet weak var tourGuideTextBottomConstraint: NSLayoutConstraint!
-    var miaTourDelegate : MiaTourProtocol?
-    
+   // var miaTourDelegate : MiaTourProtocol?
+    var exploreButtonTapAction : (()->())?
     override func awakeFromNib() {
         super.awakeFromNib()
         miaTourGuideText.font = UIFont.settingsUpdateLabelFont
@@ -61,7 +60,8 @@ class MiaCollectionReusableView: UICollectionViewCell {
                                 self.exploreButton.transform = CGAffineTransform.identity
                                 
                             })
-                            self.miaTourDelegate?.exploreButtonTapAction(miaHeader: self)
+                            //self.miaTourDelegate?.exploreButtonTapAction(miaHeader: self)
+                            self.exploreButtonTapAction?()
         })
     }
     

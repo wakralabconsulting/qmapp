@@ -12,7 +12,7 @@ import Crashlytics
 import Firebase
 import UIKit
 
-class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,HeaderViewProtocol,comingSoonPopUpProtocol,UICollectionViewDelegateFlowLayout,MiaTourProtocol,LoadingViewProtocol {
+class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,HeaderViewProtocol,comingSoonPopUpProtocol,UICollectionViewDelegateFlowLayout,LoadingViewProtocol {
     @IBOutlet weak var miaTourCollectionView: UICollectionView!
     @IBOutlet weak var topbarView: CommonHeaderView!
     
@@ -82,6 +82,10 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
                     cell.setNMoQHeaderData()
                 } else {
                     cell.setHeader()
+                    cell.exploreButtonTapAction = {
+                        () in
+                        self.exploreButtonAction()
+                    }
                 }
             }
             return cell
@@ -151,7 +155,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     }
     
     //MARK: Mia Tour Guide Delegate
-    func exploreButtonTapAction(miaHeader: MiaCollectionReusableView) {
+    func exploreButtonAction() {
         let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as! FloorMapViewController
         floorMapView.fromTourString = fromTour.exploreTour
         let transition = CATransition()

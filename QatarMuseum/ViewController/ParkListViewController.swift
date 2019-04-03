@@ -188,6 +188,12 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         self.headerView.headerTitle.text = self.nmoqParkList[0].title?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil).uppercased()
                     }
                     self.parkTableView.reloadData()
+                    if(self.nmoqParkList.count == 0) {
+                        self.loadingView.stopLoading()
+                        self.loadingView.noDataView.isHidden = false
+                        self.loadingView.isHidden = false
+                        self.loadingView.showNoDataView()
+                    }
                 }
                 if(self.nmoqParkList.count > 0) {
                     self.saveOrUpdateNmoqParkListCoredata(nmoqParkList: data.nmoqParkList)
@@ -210,6 +216,12 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 if(self.nmoqParks.count == 0) {
                     self.nmoqParks = data.nmoqParks
                     self.parkTableView.reloadData()
+                    if(self.nmoqParks.count == 0) {
+                        self.loadingView.stopLoading()
+                        self.loadingView.noDataView.isHidden = false
+                        self.loadingView.isHidden = false
+                        self.loadingView.showNoDataView()
+                    }
                 }
                 if(self.nmoqParks.count > 0) {
                     self.saveOrUpdateNmoqParksCoredata(nmoqParkList: data.nmoqParks)
