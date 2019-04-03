@@ -2401,120 +2401,11 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="lWr-VJ-ieF">
                                     <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="50" height="350"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="pvE-iS-hBn">
-                                        <rect key="frame" x="0.0" y="350" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </view>
-                                    </collectionViewCell>
-                                </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="miaTourHeader" id="MRh-xH-luv" customClass="MiaCollectionReusableView" customModule="QatarMuseums" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="350"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gEh-NP-pHh">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="350"/>
-                                            <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="phd-AW-qrD">
-                                                    <rect key="frame" x="12" y="0.0" width="390" height="33"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                </textView>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XT2-K6-knf">
-                                                    <rect key="frame" x="12" y="33" width="390" height="38"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="18"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                </textView>
-                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ucg-Hq-Op9">
-                                                    <rect key="frame" x="60" y="79" width="294" height="46"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="46" id="BuN-UH-b1Y"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="20"/>
-                                                    <state key="normal" title="Explore">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </state>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                            <integer key="value" value="23"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
-                                                    <connections>
-                                                        <action selector="didTapExplore:" destination="MRh-xH-luv" eventType="touchUpInside" id="hBM-70-5Bv"/>
-                                                        <action selector="exploreButtonTouchDown:" destination="MRh-xH-luv" eventType="touchDown" id="Hg7-je-8VF"/>
-                                                    </connections>
-                                                </button>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="explore_icon" translatesAutoresizingMaskIntoConstraints="NO" id="iVW-1V-6GS">
-                                                    <rect key="frame" x="144" y="87.666666666666671" width="22" height="23"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="23" id="Dzj-2W-EMt"/>
-                                                        <constraint firstAttribute="width" constant="22" id="MIx-PI-VgW"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V9O-xL-MBQ">
-                                                    <rect key="frame" x="207" y="149" width="0.0" height="40"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="gc0-4P-k27"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="26"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="249" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WW3-h2-vrM">
-                                                    <rect key="frame" x="24" y="206" width="378" height="129"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                </textView>
-                                            </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="Ucg-Hq-Op9" secondAttribute="trailing" constant="60" id="7uQ-FH-N3S"/>
-                                                <constraint firstItem="V9O-xL-MBQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gEh-NP-pHh" secondAttribute="leading" constant="6" id="BG2-q2-3mP"/>
-                                                <constraint firstAttribute="trailing" secondItem="phd-AW-qrD" secondAttribute="trailing" constant="12" id="EmZ-hj-DGa"/>
-                                                <constraint firstAttribute="bottom" secondItem="WW3-h2-vrM" secondAttribute="bottom" constant="15" id="Fuo-aC-bdc"/>
-                                                <constraint firstItem="V9O-xL-MBQ" firstAttribute="centerX" secondItem="gEh-NP-pHh" secondAttribute="centerX" id="Ij3-nG-50y"/>
-                                                <constraint firstAttribute="trailing" secondItem="XT2-K6-knf" secondAttribute="trailing" constant="12" id="SB6-PL-HtN"/>
-                                                <constraint firstItem="WW3-h2-vrM" firstAttribute="top" secondItem="V9O-xL-MBQ" secondAttribute="bottom" constant="17" id="SHW-nk-cnc"/>
-                                                <constraint firstItem="Ucg-Hq-Op9" firstAttribute="leading" secondItem="gEh-NP-pHh" secondAttribute="leading" constant="60" id="XwG-pP-2ou"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="V9O-xL-MBQ" secondAttribute="trailing" constant="6" id="dYz-Sn-BQ1"/>
-                                                <constraint firstItem="XT2-K6-knf" firstAttribute="leading" secondItem="gEh-NP-pHh" secondAttribute="leading" constant="12" id="eNl-Ux-ltn"/>
-                                                <constraint firstItem="WW3-h2-vrM" firstAttribute="leading" secondItem="gEh-NP-pHh" secondAttribute="leading" constant="24" id="fzm-AZ-6f7"/>
-                                                <constraint firstItem="phd-AW-qrD" firstAttribute="top" secondItem="gEh-NP-pHh" secondAttribute="top" id="g54-GF-0mL"/>
-                                                <constraint firstItem="Ucg-Hq-Op9" firstAttribute="top" secondItem="XT2-K6-knf" secondAttribute="bottom" constant="8" id="jzF-aV-ZTu"/>
-                                                <constraint firstItem="V9O-xL-MBQ" firstAttribute="top" secondItem="Ucg-Hq-Op9" secondAttribute="bottom" constant="24" id="lVf-oh-M4m"/>
-                                                <constraint firstItem="XT2-K6-knf" firstAttribute="top" secondItem="phd-AW-qrD" secondAttribute="bottom" id="mMa-mO-rh2"/>
-                                                <constraint firstAttribute="trailing" secondItem="WW3-h2-vrM" secondAttribute="trailing" constant="12" id="oFA-0q-MC8"/>
-                                                <constraint firstItem="iVW-1V-6GS" firstAttribute="centerX" secondItem="Ucg-Hq-Op9" secondAttribute="centerX" constant="-52" id="pCC-4f-TkP"/>
-                                                <constraint firstItem="phd-AW-qrD" firstAttribute="leading" secondItem="gEh-NP-pHh" secondAttribute="leading" constant="12" id="s1i-lY-4Q7"/>
-                                                <constraint firstItem="iVW-1V-6GS" firstAttribute="centerY" secondItem="Ucg-Hq-Op9" secondAttribute="centerY" constant="-3" id="tkQ-wL-vhm"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="gEh-NP-pHh" firstAttribute="leading" secondItem="MRh-xH-luv" secondAttribute="leading" id="Mv3-WT-5uP"/>
-                                        <constraint firstAttribute="bottom" secondItem="gEh-NP-pHh" secondAttribute="bottom" id="VOR-Ul-mCy"/>
-                                        <constraint firstItem="gEh-NP-pHh" firstAttribute="top" secondItem="MRh-xH-luv" secondAttribute="top" id="g1c-4k-hMm"/>
-                                        <constraint firstAttribute="trailing" secondItem="gEh-NP-pHh" secondAttribute="trailing" id="gbX-b5-t2K"/>
-                                    </constraints>
-                                    <connections>
-                                        <outlet property="audioCircleImage" destination="iVW-1V-6GS" id="dAf-XX-Pbe"/>
-                                        <outlet property="exploreButton" destination="Ucg-Hq-Op9" id="vhl-sw-YW9"/>
-                                        <outlet property="miaTitle" destination="phd-AW-qrD" id="XFX-FA-txU"/>
-                                        <outlet property="miaTourGuideText" destination="XT2-K6-knf" id="7Za-wF-VZJ"/>
-                                        <outlet property="selfGuidedText" destination="WW3-h2-vrM" id="LJJ-Ug-dqb"/>
-                                        <outlet property="selfGuidedTitle" destination="V9O-xL-MBQ" id="kM7-0b-AjQ"/>
-                                    </connections>
-                                </collectionReusableView>
+                                <cells/>
                                 <connections>
                                     <outlet property="dataSource" destination="kXG-Fm-aO3" id="R4y-C0-qFM"/>
                                     <outlet property="delegate" destination="kXG-Fm-aO3" id="JQ0-W6-aR0"/>
@@ -6375,7 +6266,6 @@
         <image name="culturepass_back" width="414" height="736"/>
         <image name="culturepass_card" width="414" height="736"/>
         <image name="down_arrowX2" width="279" height="162"/>
-        <image name="explore_icon" width="270" height="279"/>
         <image name="gift_shopX1" width="306" height="279"/>
         <image name="heart_emptyX1" width="303" height="279"/>
         <image name="moreX1" width="303" height="279"/>

@@ -39,9 +39,12 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
 //                self.getTourGuideDataFromServer()
 //            }
 //        }
-        DispatchQueue.main.async {
-        self.fetchTourGuideListFromCoredata()
-        }
+       // if((museumId != "66") || (museumId != "638")) {
+            DispatchQueue.main.async {
+                self.fetchTourGuideListFromCoredata()
+            }
+       // }
+        
         topbarView.headerViewDelegate = self
         topbarView.headerTitle.isHidden = true
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -58,38 +61,60 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     func registerNib() {
         let nib = UINib(nibName: "HomeCollectionCell", bundle: nil)
         miaTourCollectionView?.register(nib, forCellWithReuseIdentifier: "homeCellId")
-        
+        let nib2 = UINib(nibName: "MiaTourHeaderView", bundle: nil)
+        miaTourCollectionView?.register(nib2, forCellWithReuseIdentifier: "miaHeaderId")
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return miaTourDataFullArray.count
+        if (miaTourDataFullArray.count > 0) {
+            return miaTourDataFullArray.count+1
+        }
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         loadingView.stopLoading()
         loadingView.isHidden = true
-        let cell : HomeCollectionViewCell = miaTourCollectionView.dequeueReusableCell(withReuseIdentifier: "homeCellId", for: indexPath) as! HomeCollectionViewCell
-        cell.setScienceTourGuideCellData(homeCellData: miaTourDataFullArray[indexPath.row])
-        return cell
+        if (indexPath.row == 0) {
+            let cell : MiaCollectionReusableView = miaTourCollectionView.dequeueReusableCell(withReuseIdentifier: "miaHeaderId", for: indexPath) as! MiaCollectionReusableView
+            if (miaTourDataFullArray.count > 0) {
+                if((museumId == "66") || (museumId == "638")) {
+                    cell.setNMoQHeaderData()
+                } else {
+                    cell.setHeader()
+                }
+            }
+            return cell
+        } else {
+            let cell : HomeCollectionViewCell = miaTourCollectionView.dequeueReusableCell(withReuseIdentifier: "homeCellId", for: indexPath) as! HomeCollectionViewCell
+            cell.setScienceTourGuideCellData(homeCellData: miaTourDataFullArray[indexPath.row-1])
+            return cell
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        loadMiaTourDetail(currentRow: indexPath.row)
+        if (indexPath.row != 0) {
+            loadMiaTourDetail(currentRow: indexPath.row - 1)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if (indexPath.row == 0) {
+            if((museumId == "66") || (museumId == "638")) {
+                return CGSize(width: self.miaTourCollectionView.bounds.size.width, height: 220)
+            } else {
+                if(UIScreen.main.bounds.height <= 568.0) {
+                    return CGSize(width: self.miaTourCollectionView.bounds.size.width, height: 340)
+                } else {
+                    return CGSize(width: self.miaTourCollectionView.bounds.size.width, height: 300)
+                }
+                
+            }
+        }
         let heightValue = UIScreen.main.bounds.height/100
         return CGSize(width: miaTourCollectionView.frame.width, height: heightValue*27)
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let miaTourHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "miaTourHeader", for: indexPath) as! MiaCollectionReusableView
-        if (miaTourDataFullArray.count > 0) {
-            miaTourHeaderView.setHeader()
-        }
-        miaTourHeaderView.miaTourDelegate = self
-        return miaTourHeaderView
-    }
 
     func loadMiaTourDetail(currentRow: Int?) {
         let transition = CATransition()
@@ -145,6 +170,13 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
                 if(self.miaTourDataFullArray.count == 0) {
                     self.miaTourDataFullArray = data.tourGuide!
                     self.miaTourCollectionView.reloadData()
+                    //if no result after api call
+                    if(self.miaTourDataFullArray.count == 0) {
+                        self.loadingView.stopLoading()
+                        self.loadingView.noDataView.isHidden = false
+                        self.loadingView.isHidden = false
+                        self.loadingView.showNoDataView()
+                    }
                 }
                 if(self.miaTourDataFullArray.count > 0) {
                     self.saveOrUpdateTourGuideCoredata(miaTourDataFullArray: data.tourGuide)

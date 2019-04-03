@@ -70,7 +70,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         museumsTopbar.backButton.isHidden = false
         museumTitle.text = museumTitleString
         museumTitle.font = UIFont.museumTitleFont
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             museumsTopbar.backButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
             previousButton.isHidden = true
             nextButton.isHidden = false
@@ -100,8 +100,8 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 collectionViewImages = ["MIA_AboutX1","Audio CircleX1","exhibition_blackX1","collectionsX1","diningX1",]
                 collectionViewNames = [aboutName,tourGuideName,exhibitionsName,collectionsName,diningName]
             }else if ((museumId == "66") || (museumId == "638")) {
-                collectionViewImages = ["about-launchX1","facilitiesX1","exhibition_blackX1","park_blackX1"]
-                collectionViewNames = [aboutName,facilitiesName,exhibitionsName,parkName]
+                collectionViewImages = ["about-launchX1","facilitiesX1","exhibition_blackX1","Audio CircleX1","park_blackX1"]
+                collectionViewNames = [aboutName,facilitiesName,exhibitionsName,tourGuideName,parkName]
                 previousButton.isHidden = true
                 nextButton.isHidden = true
             } else {
@@ -281,9 +281,9 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             }
         }
         
-        if((museumId != nil) && ((museumId == "63") || (museumId == "96") )) {
+        if((museumId != nil) && ((museumId == "63") || (museumId == "66") || (museumId == "638") || (museumId == "96") )) {
             if (museumsBottomCollectionView.contentOffset.x <= 0.0) {
-                if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                     previousButton.isHidden = true
                     nextButton.isHidden = false
                 }
@@ -295,7 +295,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 }
             }
             else {
-                if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                     previousButton.isHidden = false
                     nextButton.isHidden = true
                     
@@ -380,7 +380,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 view.window!.layer.add(transition, forKey: kCATransition)
                 self.present(heritageDtlView, animated: false, completion: nil)
             } else if ((selectedItem == "Tour Guide") || (selectedItem == "الدليل السياحي")){
-                if((museumId == "63") || (museumId == "96")) {
+                if((museumId == "63") || (museumId == "96") || (museumId == "66") || (museumId == "638")) {
                     let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "miaTourGuideId") as! MiaTourGuideViewController
                     tourGuideView.museumId = museumId!
                     let transition = CATransition()

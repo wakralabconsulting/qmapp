@@ -10,14 +10,16 @@ import UIKit
 protocol MiaTourProtocol {
     func exploreButtonTapAction( miaHeader: MiaCollectionReusableView)
 }
-class MiaCollectionReusableView: UICollectionReusableView {
-    @IBOutlet weak var miaTourGuideText: UITextView!
-    @IBOutlet weak var selfGuidedText: UITextView!
+class MiaCollectionReusableView: UICollectionViewCell {
+    @IBOutlet weak var miaTourGuideText: UILabel!
+    @IBOutlet weak var selfGuidedText: UILabel!
     @IBOutlet weak var exploreButton: UIButton!
     @IBOutlet weak var audioCircleImage: UIImageView!
     @IBOutlet weak var selfGuidedTitle: UILabel!
+    @IBOutlet weak var exploreButtonHeight: NSLayoutConstraint!
+    @IBOutlet weak var miaTitle: UILabel!
     
-    @IBOutlet weak var miaTitle: UITextView!
+    @IBOutlet weak var tourGuideTextBottomConstraint: NSLayoutConstraint!
     var miaTourDelegate : MiaTourProtocol?
     
     override func awakeFromNib() {
@@ -36,6 +38,15 @@ class MiaCollectionReusableView: UICollectionReusableView {
         miaTitle.text = NSLocalizedString("MIA_TOUR_GUIDE_TITLE", comment: "MIA_TOUR_GUIDE_TITLE in TourGuide page")
         miaTourGuideText.text = NSLocalizedString("TOUR_GUIDE_TEXT", comment: "TOUR_GUIDE_TEXT in TourGuide page")
         exploreButton.setTitle(NSLocalizedString("EXPLORE_BUTTON", comment: "EXPLORE_BUTTON in TourGuide page"), for: .normal)
+        selfGuidedTitle.text = NSLocalizedString("SELF_GUIDED_TOUR_TITLE", comment: "SELF_GUIDED_TOUR_TITLE in TourGuide page")
+        selfGuidedText.text = NSLocalizedString("SELF_GUIDED_TEXT1", comment: "SELF_GUIDED_TEXT1 in TourGuide page") + "\n" + NSLocalizedString("SELF_GUIDED_TEXT2", comment: "SELF_GUIDED_TEXT2 in TourGuide page")
+    }
+    func setNMoQHeaderData() {
+        exploreButton.isHidden = true
+        miaTourGuideText.isHidden = true
+        exploreButtonHeight.constant = 0
+        tourGuideTextBottomConstraint.constant = 0
+        miaTitle.text = NSLocalizedString("NMOQ_TOUR_HEADER", comment: "NMOQ_TOUR_HEADER in TourGuide page")
         selfGuidedTitle.text = NSLocalizedString("SELF_GUIDED_TOUR_TITLE", comment: "SELF_GUIDED_TOUR_TITLE in TourGuide page")
         selfGuidedText.text = NSLocalizedString("SELF_GUIDED_TEXT1", comment: "SELF_GUIDED_TEXT1 in TourGuide page") + "\n" + NSLocalizedString("SELF_GUIDED_TEXT2", comment: "SELF_GUIDED_TEXT2 in TourGuide page")
     }

@@ -59,6 +59,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     let networkReachability = NetworkReachabilityManager()
     var currentContentViewController: PreviewContentViewController!
     let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+    var museumId :String = "63"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -669,7 +670,9 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                 self.countValue = self.tourGuideArray.count
                 if(self.tourGuideArray.count != 0) {
                     self.headerView.settingsButton.isHidden = false
-                    self.headerView.settingsButton.setImage(UIImage(named: "locationImg"), for: .normal)
+                    if((self.museumId == "63") || (self.museumId == "96")) {
+                        self.headerView.settingsButton.setImage(UIImage(named: "locationImg"), for: .normal)
+                    }
                     self.headerView.settingsButton.contentEdgeInsets = UIEdgeInsets(top: 9, left: 10, bottom:9, right: 10)
                     self.setUpPageControl()
                     self.showOrHidePageControlView(countValue: self.tourGuideArray.count, scrolling: false)

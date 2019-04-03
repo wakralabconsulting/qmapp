@@ -171,6 +171,7 @@
 		B8C31CE2216243F800AE7788 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = B8C31CE0216243F700AE7788 /* iCarousel.m */; };
 		B8C31CE421626E9100AE7788 /* MuseumAboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31CE321626E9100AE7788 /* MuseumAboutViewController.swift */; };
 		B8C31CE62162821300AE7788 /* MuseumAboutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31CE52162821300AE7788 /* MuseumAboutCell.swift */; };
+		B8C367F82254D325005E4305 /* MiaTourHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8C367F72254D325005E4305 /* MiaTourHeaderView.xib */; };
 		B8C64C9C20FE380D00D7CD63 /* MiaTourDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C64C9B20FE380D00D7CD63 /* MiaTourDetailViewController.swift */; };
 		B8C64D4720FDC71400C2D51A /* TourGuideCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C64D4620FDC71400C2D51A /* TourGuideCollectionReusableView.swift */; };
 		B8C64D4B20FDDB7E00C2D51A /* MiaTourGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C64D4A20FDDB7E00C2D51A /* MiaTourGuideViewController.swift */; };
@@ -446,6 +447,7 @@
 		B8C31CE1216243F700AE7788 /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		B8C31CE321626E9100AE7788 /* MuseumAboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseumAboutViewController.swift; sourceTree = "<group>"; };
 		B8C31CE52162821300AE7788 /* MuseumAboutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseumAboutCell.swift; sourceTree = "<group>"; };
+		B8C367F72254D325005E4305 /* MiaTourHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MiaTourHeaderView.xib; sourceTree = "<group>"; };
 		B8C64C9B20FE380D00D7CD63 /* MiaTourDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiaTourDetailViewController.swift; sourceTree = "<group>"; };
 		B8C64D4620FDC71400C2D51A /* TourGuideCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourGuideCollectionReusableView.swift; sourceTree = "<group>"; };
 		B8C64D4A20FDDB7E00C2D51A /* MiaTourGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiaTourGuideViewController.swift; sourceTree = "<group>"; };
@@ -1123,6 +1125,7 @@
 			children = (
 				B8C64D4620FDC71400C2D51A /* TourGuideCollectionReusableView.swift */,
 				B8C64D4C20FDDBB700C2D51A /* MiaCollectionReusableView.swift */,
+				B8C367F72254D325005E4305 /* MiaTourHeaderView.xib */,
 			);
 			path = TourGuideHeader;
 			sourceTree = "<group>";
@@ -1448,6 +1451,7 @@
 				B8CF5AFF2244C6A4008E663E /* NMoQPArkTopCell.xib in Resources */,
 				B8CA08E52146D38400783642 /* MapDetailCell.xib in Resources */,
 				B80DC06020C792E600E28034 /* Assets.xcassets in Resources */,
+				B8C367F82254D325005E4305 /* MiaTourHeaderView.xib in Resources */,
 				B81FF06B21AFBA1B006A968B /* NMoHeaderView.xib in Resources */,
 				B80674302240CFCF00885544 /* ParkListView.xib in Resources */,
 				1B444A6621B137DC009FF40F /* NMoQTourDescriptionCell.xib in Resources */,
