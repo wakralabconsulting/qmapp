@@ -425,25 +425,9 @@
         <attribute name="listsortid" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="imagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HeritageImagesEntity" syncable="YES"/>
     </entity>
-    <entity name="HeritageEntityArabic" representedClassName="HeritageEntityArabic" syncable="YES" codeGenerationType="class">
-        <attribute name="detaillatitudearabic" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="detaillocationarabic" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="detaillongdescriptionarabic" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="detaillongitudearabic" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="detailshortdescarabic" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="listid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="listimagearabic" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="listnamearabic" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="listsortidarabic" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="imagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HeritageImagesEntityAr" syncable="YES"/>
-    </entity>
     <entity name="HeritageImagesEntity" representedClassName="HeritageImagesEntity" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="imagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HeritageEntity" syncable="YES"/>
-    </entity>
-    <entity name="HeritageImagesEntityAr" representedClassName="HeritageImagesEntityAr" syncable="YES" codeGenerationType="class">
-        <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="imagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HeritageEntityArabic" syncable="YES"/>
     </entity>
     <entity name="HomeBannerEntity" representedClassName="HomeBannerEntity" syncable="YES" codeGenerationType="class">
         <attribute name="bannerLink" optional="YES" attributeType="String" syncable="YES"/>
@@ -835,9 +819,7 @@
         <element name="FloorMapTourGuideEntity" positionX="-9" positionY="135" width="128" height="420"/>
         <element name="FloorMapTourGuideEntityAr" positionX="-9" positionY="135" width="128" height="420"/>
         <element name="HeritageEntity" positionX="-63" positionY="27" width="128" height="210"/>
-        <element name="HeritageEntityArabic" positionX="-54" positionY="63" width="128" height="195"/>
         <element name="HeritageImagesEntity" positionX="-27" positionY="135" width="128" height="75"/>
-        <element name="HeritageImagesEntityAr" positionX="-27" positionY="135" width="128" height="75"/>
         <element name="HomeBannerEntity" positionX="-9" positionY="135" width="128" height="195"/>
         <element name="HomeBannerEntityAr" positionX="-9" positionY="135" width="128" height="195"/>
         <element name="HomeBannerImageEntity" positionX="-9" positionY="135" width="128" height="75"/>

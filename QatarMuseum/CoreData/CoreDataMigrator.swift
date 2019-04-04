@@ -31,7 +31,6 @@ class CoreDataMigrator {
         guard let sourceMigrationModel = CoreDataMigrationSourceModel(storeURL: sourceURL as URL) else {
             fatalError("unknown store version at URL \(sourceURL)")
         }
-        
         forceWALCheckpointingForStore(at: sourceURL)
         
         var currentURL = sourceURL
