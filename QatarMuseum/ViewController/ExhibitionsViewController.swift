@@ -680,13 +680,21 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                     }
                     if(exhibition.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.exbtnLoadingView.showNoDataView()
+                        }
                     }
                     DispatchQueue.main.async{
                         self.exhibitionCollectionView.reloadData()
                     }
                 } else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.exbtnLoadingView.showNoDataView()
+                    }
                 }
             } else {
                 var exhibitionArray = [ExhibitionsEntityArabic]()
@@ -698,14 +706,22 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                     }
                     if(exhibition.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.exbtnLoadingView.showNoDataView()
+                        }
                     }
                     DispatchQueue.main.async{
                         self.exhibitionCollectionView.reloadData()
                     }
                 }
                 else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.exbtnLoadingView.showNoDataView()
+                    }
                 }
             }
         }
@@ -1640,13 +1656,21 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.diningListArray.insert(Dining(id: diningArray[i].id, name: diningArray[i].name, location: diningArray[i].location, description: diningArray[i].diningdescription, image: diningArray[i].image, openingtime: diningArray[i].openingtime, closetime: diningArray[i].closetime, sortid: diningArray[i].sortid,museumId: diningArray[i].museumId, images: nil), at: i)
                     }
                     if(diningListArray.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.exbtnLoadingView.showNoDataView()
+                        }
                     }
                     DispatchQueue.main.async{
                         self.exhibitionCollectionView.reloadData()
                     }
                 } else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                         self.exbtnLoadingView.showNoDataView()
+                    }
                 }
             } else {
                 var diningArray = [DiningEntityArabic]()
@@ -1657,14 +1681,22 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.diningListArray.insert(Dining(id: diningArray[i].id, name: diningArray[i].namearabic, location: diningArray[i].locationarabic, description: diningArray[i].descriptionarabic, image: diningArray[i].imagearabic, openingtime: diningArray[i].openingtimearabic, closetime: diningArray[i].closetimearabic, sortid: diningArray[i].sortidarabic,museumId: diningArray[i].museumId, images: nil), at: i)
                     }
                     if(diningListArray.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.exbtnLoadingView.showNoDataView()
+                        }
                     }
                     DispatchQueue.main.async{
                         self.exhibitionCollectionView.reloadData()
                     }
                 }
                 else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.exbtnLoadingView.showNoDataView()
+                    }
                 }
             }
         }
@@ -2025,7 +2057,11 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     }
                 }
                 else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.exbtnLoadingView.showNoDataView()
+                    }
                 }
             } else {
                 var tourDetailArray = [NmoqTourDetailEntityAr]()
@@ -2325,7 +2361,11 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     }
                 }
                 else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.exbtnLoadingView.showNoDataView()
+                    }
                 }
             } else {
                 var facilitiesDetailArray = [FacilitiesDetailEntityAr]()

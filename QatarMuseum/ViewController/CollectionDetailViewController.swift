@@ -312,11 +312,19 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
                            
                         }
                         if(collectionDetailArray.count == 0){
-                            self.showNoNetwork()
+                            if(self.networkReachability?.isReachable == false) {
+                                self.showNoNetwork()
+                            } else {
+                                self.loadingView.showNoDataView()
+                            }
                         }
                         collectionTableView.reloadData()
                     } else{
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
             } else {
                 var collectionArray = [CollectionDetailsEntityAr]()
@@ -325,14 +333,22 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
                     for i in 0 ... collectionArray.count-1 {
                         let collectionDict = collectionArray[i]
                         if((collectionDict.titleAr == nil) && (collectionDict.bodyAr == nil)) {
-                            self.showNoNetwork()
+                            if(self.networkReachability?.isReachable == false) {
+                                self.showNoNetwork()
+                            } else {
+                                self.loadingView.showNoDataView()
+                            }
                         } else {
                            self.collectionDetailArray.insert(CollectionDetail(title: collectionDict.titleAr, image: collectionDict.imageAr, body: collectionDict.bodyAr, nid: collectionDict.nid, categoryCollection: collectionDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)), at: 0)
                         
                         }
                     }
                     if(collectionDetailArray.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                     collectionTableView.reloadData()
                 } else {

@@ -418,13 +418,21 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
                     self.exhibition.insert(Exhibition(id: exhibitionDict.id, name: exhibitionDict.detailName, image: nil,detailImage:exhibitionDict.detailImage, startDate: exhibitionDict.detailStartDate, endDate: exhibitionDict.detailEndDate, location: exhibitionDict.detailLocation, latitude: exhibitionDict.detailLatitude, longitude: exhibitionDict.detailLongitude, shortDescription: exhibitionDict.detailShortDesc, longDescription: exhibitionDict.detailLongDesc,museumId:nil,status: exhibitionDict.status, displayDate: exhibitionDict.dispalyDate), at: 0)
                     
                     if(self.exhibition.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                     self.self.setTopImageUI()
                     self.exhibitionDetailTableView.reloadData()
                 }
                 else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
                 }
             }
             else {
@@ -441,13 +449,21 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
                     
                     
                     if(self.exhibition.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                     self.setTopImageUI()
                     self.exhibitionDetailTableView.reloadData()
                 }
                 else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
                 }
             }
         } catch let error as NSError {

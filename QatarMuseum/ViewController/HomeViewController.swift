@@ -1170,12 +1170,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                         self.homeBannerList.insert(HomeBanner(title: homeArray[i].title, fullContentID: homeArray[i].fullContentID, bannerTitle: homeArray[i].bannerTitle, bannerLink: homeArray[i].bannerLink,image: imagesArray, introductionText: nil, email: nil, contactNumber: nil, promotionalCode: nil, claimOffer: nil), at: i)
                         
                     }
-                    if(self.homeList.count == 0){
-                        self.showNoNetwork()
-                    }
+//                    if(self.homeList.count == 0){
+//                        self.showNoNetwork()
+//                    }
                     self.homeCollectionView.reloadData()
                 } else{
-                    self.showNoNetwork()
+                    //self.showNoNetwork()
                 }
             } else {
                 var homeArray = [HomeBannerEntityAr]()
@@ -1195,11 +1195,11 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                         
                     }
                     if(self.homeList.count == 0){
-                        self.showNoNetwork()
+                       // self.showNoNetwork()
                     }
                     self.homeCollectionView.reloadData()
                 } else{
-                    self.showNoNetwork()
+                    //self.showNoNetwork()
                 }
             }
         } catch let error as NSError {

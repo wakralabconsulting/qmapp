@@ -1257,7 +1257,11 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                         
                         if(aboutDetailtArray.count == 0){
-                            self.showNoNetwork()
+                            if(self.networkReachability?.isReachable == false) {
+                                self.showNoNetwork()
+                            } else {
+                                self.loadingView.showNoDataView()
+                            }
                         }
                         self.setTopBarImage()
                         heritageDetailTableView.reloadData()

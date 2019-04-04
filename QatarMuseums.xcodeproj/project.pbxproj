@@ -176,7 +176,6 @@
 		B8C64D4720FDC71400C2D51A /* TourGuideCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C64D4620FDC71400C2D51A /* TourGuideCollectionReusableView.swift */; };
 		B8C64D4B20FDDB7E00C2D51A /* MiaTourGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C64D4A20FDDB7E00C2D51A /* MiaTourGuideViewController.swift */; };
 		B8C64D4D20FDDBB700C2D51A /* MiaCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C64D4C20FDDBB700C2D51A /* MiaCollectionReusableView.swift */; };
-		B8C64D5120FDF22800C2D51A /* MiaTourGuideExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C64D5020FDF22800C2D51A /* MiaTourGuideExploreViewController.swift */; };
 		B8C700852116F833006F3653 /* PublicArtsDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C700842116F833006F3653 /* PublicArtsDetail.swift */; };
 		B8CA08DF2146D38400783642 /* ObjectPopupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CA08D62146D38400783642 /* ObjectPopupTableViewCell.swift */; };
 		B8CA08E02146D38400783642 /* MapDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CA08D72146D38400783642 /* MapDetailView.swift */; };
@@ -452,7 +451,6 @@
 		B8C64D4620FDC71400C2D51A /* TourGuideCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourGuideCollectionReusableView.swift; sourceTree = "<group>"; };
 		B8C64D4A20FDDB7E00C2D51A /* MiaTourGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiaTourGuideViewController.swift; sourceTree = "<group>"; };
 		B8C64D4C20FDDBB700C2D51A /* MiaCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiaCollectionReusableView.swift; sourceTree = "<group>"; };
-		B8C64D5020FDF22800C2D51A /* MiaTourGuideExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiaTourGuideExploreViewController.swift; sourceTree = "<group>"; };
 		B8C700842116F833006F3653 /* PublicArtsDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicArtsDetail.swift; sourceTree = "<group>"; };
 		B8CA08D62146D38400783642 /* ObjectPopupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectPopupTableViewCell.swift; sourceTree = "<group>"; };
 		B8CA08D72146D38400783642 /* MapDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapDetailView.swift; sourceTree = "<group>"; };
@@ -808,7 +806,6 @@
 				B8B81FE220DE2C8A004885D0 /* MuseumsViewController.swift */,
 				B82C87F120E69C9700777674 /* DiningDetailViewController.swift */,
 				B8C64D4A20FDDB7E00C2D51A /* MiaTourGuideViewController.swift */,
-				B8C64D5020FDF22800C2D51A /* MiaTourGuideExploreViewController.swift */,
 				B8C64C9B20FE380D00D7CD63 /* MiaTourDetailViewController.swift */,
 				B8B7604B2100E7FC00CEE280 /* NotificationsViewController.swift */,
 				B8A1479A20FCA2AB00833B7B /* TourGuideViewController.swift */,
@@ -1579,7 +1576,6 @@
 				B8C1C2BD21160B7300531AB3 /* PublicArtsList.swift in Sources */,
 				B80DC09420C7A9F500E28034 /* TopBarView.swift in Sources */,
 				B8E01BFE21060FDC008D7F33 /* LocalizationLanguage.swift in Sources */,
-				B8C64D5120FDF22800C2D51A /* MiaTourGuideExploreViewController.swift in Sources */,
 				B8DC478920DCF8DF0007B426 /* ParkTableViewCell.swift in Sources */,
 				B82729B921778B2F0017EC71 /* VersaPlayerGestureRecieverView.swift in Sources */,
 				B85BA4B720D03CE500E7F4D1 /* iOSDevCenters+GIF.swift in Sources */,

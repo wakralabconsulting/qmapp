@@ -72,21 +72,21 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         loadingView.isHidden = false
         loadingView.showLoading()
         loadingView.loadingViewDelegate = self
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            if (fromScienceTour) {
-                tourGuideId = "12216"
-            } else {
-                //tourGuideId = "12476"
-                //tourGuideId = "12216"
-                tourGuideId = "12471"
-            }
-        } else {
-            if (fromScienceTour) {
-                tourGuideId = "12226"
-            } else {
-                tourGuideId = "12916"
-            }
-        }
+//        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+//            if (fromScienceTour) {
+//                tourGuideId = "12216"
+//            } else {
+//                //tourGuideId = "12476"
+//                //tourGuideId = "12216"
+//                tourGuideId = "12471"
+//            }
+//        } else {
+//            if (fromScienceTour) {
+//                tourGuideId = "12226"
+//            } else {
+//                tourGuideId = "12916"
+//            }
+//        }
         fetchTourGuideFromCoredata()
         if (networkReachability?.isReachable)! {
             getTourGuideDataFromServerInBackgound()

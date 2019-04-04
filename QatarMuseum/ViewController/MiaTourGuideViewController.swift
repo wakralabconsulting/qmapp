@@ -391,7 +391,6 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     }
     
     func fetchTourGuideListFromCoredata() {
-
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {

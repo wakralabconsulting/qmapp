@@ -1323,6 +1323,11 @@
                             <constraint firstItem="o2u-nn-4xe" firstAttribute="leading" secondItem="Kak-k4-CME" secondAttribute="leading" id="mkP-1z-npg"/>
                             <constraint firstItem="UpB-na-9ki" firstAttribute="top" secondItem="lWr-Mk-OyP" secondAttribute="bottom" id="p6g-H8-fX2"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="UpB-na-9ki"/>
+                            </mask>
+                        </variation>
                     </view>
                     <size key="freeformSize" width="414" height="870"/>
                     <connections>
@@ -2447,114 +2452,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BRm-Cs-wA5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="11666.666666666668" y="89.673913043478265"/>
-        </scene>
-        <!--Mia Tour Guide Explore View Controller-->
-        <scene sceneID="h2m-ri-WQc">
-            <objects>
-                <viewController storyboardIdentifier="miaExploreId" id="duk-V2-qU0" customClass="MiaTourGuideExploreViewController" customModule="QatarMuseums" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Duo-v0-lqH"/>
-                        <viewControllerLayoutGuide type="bottom" id="bku-li-CTw"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="eQi-bY-SCY">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FJk-jI-3fc">
-                                <rect key="frame" x="0.0" y="85" width="414" height="651"/>
-                            </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wFM-oa-Gc4" customClass="CommonHeaderView" customModule="QatarMuseums" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="20" width="414" height="65"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="65" id="oEh-n7-4Yd"/>
-                                </constraints>
-                            </view>
-                            <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mKA-PJ-D6L">
-                                <rect key="frame" x="0.0" y="85" width="414" height="651"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MIA TOUR GUIDE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="BrH-h2-Ubb">
-                                <rect key="frame" x="67.666666666666657" y="505.66666666666674" width="278.66666666666674" height="38"/>
-                                <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="38"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zqA-Ww-L2X">
-                                <rect key="frame" x="30" y="566.66666666666663" width="354" height="36.333333333333371"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6wp-F8-p8q">
-                                <rect key="frame" x="162" y="390.66666666666669" width="90" height="90"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="90" id="KYR-op-aUJ"/>
-                                    <constraint firstAttribute="width" constant="90" id="prq-Tx-n0c"/>
-                                </constraints>
-                                <connections>
-                                    <action selector="didTapPlayButton:" destination="duk-V2-qU0" eventType="touchUpInside" id="fjX-Ax-Dc5"/>
-                                    <action selector="playButtonTouchDown:" destination="duk-V2-qU0" eventType="touchDown" id="er9-qb-fSN"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QXG-N5-Ns3">
-                                <rect key="frame" x="50" y="626" width="314" height="50"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="CvW-CK-Xg9"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="19"/>
-                                <state key="normal" title="START TOUR">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="25"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="didTapStartTour:" destination="duk-V2-qU0" eventType="touchUpInside" id="1bk-XT-UiG"/>
-                                    <action selector="startTourButtonTouchDown:" destination="duk-V2-qU0" eventType="touchDown" id="Qfv-hk-eEr"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="BrH-h2-Ubb" firstAttribute="centerX" secondItem="eQi-bY-SCY" secondAttribute="centerX" id="6p6-dA-BdG"/>
-                            <constraint firstItem="QXG-N5-Ns3" firstAttribute="top" secondItem="zqA-Ww-L2X" secondAttribute="bottom" constant="23" id="7HF-PW-XPx"/>
-                            <constraint firstItem="6wp-F8-p8q" firstAttribute="centerX" secondItem="eQi-bY-SCY" secondAttribute="centerX" id="952-8M-1iP"/>
-                            <constraint firstItem="FJk-jI-3fc" firstAttribute="leading" secondItem="eQi-bY-SCY" secondAttribute="leading" id="GgK-kG-C5b"/>
-                            <constraint firstItem="BrH-h2-Ubb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eQi-bY-SCY" secondAttribute="leading" constant="6" id="IRt-LF-TE4"/>
-                            <constraint firstItem="wFM-oa-Gc4" firstAttribute="leading" secondItem="eQi-bY-SCY" secondAttribute="leading" id="IvV-Jl-KL0"/>
-                            <constraint firstItem="BrH-h2-Ubb" firstAttribute="top" secondItem="6wp-F8-p8q" secondAttribute="bottom" constant="25" id="Ixz-uH-7pa"/>
-                            <constraint firstItem="bku-li-CTw" firstAttribute="top" secondItem="QXG-N5-Ns3" secondAttribute="bottom" constant="60" id="Kvn-vH-yHD"/>
-                            <constraint firstItem="zqA-Ww-L2X" firstAttribute="top" secondItem="BrH-h2-Ubb" secondAttribute="bottom" constant="23" id="Tu8-xX-d98"/>
-                            <constraint firstAttribute="trailing" secondItem="wFM-oa-Gc4" secondAttribute="trailing" id="Uf5-32-FAo"/>
-                            <constraint firstItem="mKA-PJ-D6L" firstAttribute="top" secondItem="wFM-oa-Gc4" secondAttribute="bottom" id="V3p-Tp-PWa"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="BrH-h2-Ubb" secondAttribute="trailing" constant="6" id="W1X-2R-XWg"/>
-                            <constraint firstAttribute="trailing" secondItem="zqA-Ww-L2X" secondAttribute="trailing" constant="30" id="Xtg-Vu-YIq"/>
-                            <constraint firstItem="mKA-PJ-D6L" firstAttribute="leading" secondItem="eQi-bY-SCY" secondAttribute="leading" id="e9l-rF-aC2"/>
-                            <constraint firstItem="zqA-Ww-L2X" firstAttribute="leading" secondItem="eQi-bY-SCY" secondAttribute="leading" constant="30" id="fbV-bM-LHv"/>
-                            <constraint firstItem="FJk-jI-3fc" firstAttribute="top" secondItem="wFM-oa-Gc4" secondAttribute="bottom" id="ihk-ta-Bp5"/>
-                            <constraint firstItem="wFM-oa-Gc4" firstAttribute="top" secondItem="Duo-v0-lqH" secondAttribute="bottom" id="juC-W8-uVD"/>
-                            <constraint firstAttribute="trailing" secondItem="mKA-PJ-D6L" secondAttribute="trailing" id="n0w-T0-7Ba"/>
-                            <constraint firstItem="QXG-N5-Ns3" firstAttribute="leading" secondItem="eQi-bY-SCY" secondAttribute="leading" constant="50" id="oJt-I8-GrR"/>
-                            <constraint firstAttribute="bottom" secondItem="FJk-jI-3fc" secondAttribute="bottom" id="oKW-ez-xfk"/>
-                            <constraint firstAttribute="trailing" secondItem="QXG-N5-Ns3" secondAttribute="trailing" constant="50" id="rGC-6Q-ect"/>
-                            <constraint firstAttribute="bottom" secondItem="mKA-PJ-D6L" secondAttribute="bottom" id="uCJ-w9-t3j"/>
-                            <constraint firstAttribute="trailing" secondItem="FJk-jI-3fc" secondAttribute="trailing" id="xwC-MF-rwk"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="headerView" destination="wFM-oa-Gc4" id="561-6H-R1C"/>
-                        <outlet property="miaTitle" destination="BrH-h2-Ubb" id="a6s-rK-2Ge"/>
-                        <outlet property="playButton" destination="6wp-F8-p8q" id="AhZ-Bv-lya"/>
-                        <outlet property="startTourButton" destination="QXG-N5-Ns3" id="jcm-1u-RyB"/>
-                        <outlet property="tourGuideDescription" destination="zqA-Ww-L2X" id="G88-RU-dyP"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Y2o-iT-PIY" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="12362.318840579712" y="98.641304347826093"/>
         </scene>
         <!--Mia Tour Detail View Controller-->
         <scene sceneID="oX5-rD-Oiq">

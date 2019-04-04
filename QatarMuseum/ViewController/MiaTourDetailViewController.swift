@@ -143,10 +143,12 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
         view.window!.layer.add(transition, forKey: kCATransition)
         let shortDetailsView =  self.storyboard?.instantiateViewController(withIdentifier: "previewContainerId") as! PreviewContainerViewController
         shortDetailsView.museumId = museumId
+        shortDetailsView.tourGuideId = tourGuideDetail?.nid
         if ((tourGuideDetail?.nid == "12216") || (tourGuideDetail?.nid == "12226")) {
             shortDetailsView.fromScienceTour = true
             self.present(shortDetailsView, animated: false, completion: nil)
-        } else if (tourGuideDetail?.nid == "12471") || (tourGuideDetail?.nid == "12916") {
+        } else {
+            //if (tourGuideDetail?.nid == "12471") || (tourGuideDetail?.nid == "12916") {
             shortDetailsView.fromScienceTour = false
             self.present(shortDetailsView, animated: false, completion: nil)
         }

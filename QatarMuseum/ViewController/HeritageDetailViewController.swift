@@ -641,15 +641,27 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                             }
                             self.heritageDetailtArray.insert(Heritage(id: heritageDict.listid, name: heritageDict.listname, location: heritageDict.detaillocation, latitude: heritageDict.detaillatitude, longitude: heritageDict.detaillongitude, image: heritageDict.listimage, shortdescription: heritageDict.detailshortdescription, longdescription: heritageDict.detaillongdescription, images: imagesArray, sortid: heritageDict.listsortid), at: 0)
                             if(heritageDetailtArray.count == 0){
-                                self.showNoNetwork()
+                                if(self.networkReachability?.isReachable == false) {
+                                    self.showNoNetwork()
+                                } else {
+                                    self.loadingView.showNoDataView()
+                                }
                             }
                             self.setTopBarImage()
                             heritageDetailTableView.reloadData()
                         }else{
-                            self.showNoNetwork()
+                            if(self.networkReachability?.isReachable == false) {
+                                self.showNoNetwork()
+                            } else {
+                                self.loadingView.showNoDataView()
+                            }
                         }
                     }else{
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                 }
             }
@@ -673,17 +685,29 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                             }
                             self.heritageDetailtArray.insert(Heritage(id: heritageDict.listid, name: heritageDict.listnamearabic, location: heritageDict.detaillocationarabic, latitude: heritageDict.detaillatitudearabic, longitude: heritageDict.detaillongitudearabic, image: heritageDict.listimagearabic, shortdescription: heritageDict.detailshortdescarabic, longdescription: heritageDict.detaillongdescriptionarabic,images: imagesArray, sortid: heritageDict.listsortidarabic), at: 0)
                             if(heritageDetailtArray.count == 0){
-                                self.showNoNetwork()
+                                if(self.networkReachability?.isReachable == false) {
+                                    self.showNoNetwork()
+                                } else {
+                                    self.loadingView.showNoDataView()
+                                }
                             }
                             self.setTopBarImage()
                             heritageDetailTableView.reloadData()
                             
                         }else{
-                            self.showNoNetwork()
+                            if(self.networkReachability?.isReachable == false) {
+                                self.showNoNetwork()
+                            } else {
+                                self.loadingView.showNoDataView()
+                            }
                         }
                     }
                     else{
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                 }
             }
@@ -883,16 +907,28 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                             self.publicArtsDetailtArray.insert(PublicArtsDetail(id:publicArtsDict.id , name:publicArtsDict.name, description: publicArtsDict.detaildescription, shortdescription: publicArtsDict.shortdescription, image: publicArtsDict.image, images: imagesArray,longitude: publicArtsDict.longitude, latitude: publicArtsDict.latitude), at: 0)
                             
                             if(publicArtsDetailtArray.count == 0){
-                                self.showNoNetwork()
+                                if(self.networkReachability?.isReachable == false) {
+                                    self.showNoNetwork()
+                                } else {
+                                    self.loadingView.showNoDataView()
+                                }
                             }
                             self.setTopBarImage()
                             heritageDetailTableView.reloadData()
                         }else {
-                            self.showNoNetwork()
+                            if(self.networkReachability?.isReachable == false) {
+                                self.showNoNetwork()
+                            } else {
+                                self.loadingView.showNoDataView()
+                            }
                         }
                     }
                     else{
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                 }
 
@@ -918,17 +954,29 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                             
                             
                             if(publicArtsDetailtArray.count == 0){
-                                self.showNoNetwork()
+                                if(self.networkReachability?.isReachable == false) {
+                                    self.showNoNetwork()
+                                } else {
+                                    self.loadingView.showNoDataView()
+                                }
                             }
                             self.setTopBarImage()
                             heritageDetailTableView.reloadData()
                         }
                         else{
-                            self.showNoNetwork()
+                            if(self.networkReachability?.isReachable == false) {
+                                self.showNoNetwork()
+                            } else {
+                                self.loadingView.showNoDataView()
+                            }
                         }
                     }
                     else{
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                 }
             }

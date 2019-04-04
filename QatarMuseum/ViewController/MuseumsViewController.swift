@@ -269,7 +269,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 }
                 
             }
-            else if  ((itemName == "Dining") || (itemName == "العشاء") ) {
+            else if  ((itemName == "Dining") || (itemName == "الطعام") ) {
                 museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 18, left: 15, bottom: 18, right: 15)
             } else if ((itemName == "Facilities") || (itemName == "المرافق")) {
                 museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)

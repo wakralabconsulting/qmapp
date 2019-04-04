@@ -1343,7 +1343,11 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                     }
                 }
                 else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
                 }
             } else {
                 var facilitiesDetailArray = [FacilitiesDetailEntityAr]()
