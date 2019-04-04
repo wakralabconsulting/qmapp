@@ -11,6 +11,7 @@ import Foundation
 enum CoreDataVersion: Int {
     case version1 = 1
     case version2
+    case version3
     
     // MARK: - Accessors
     

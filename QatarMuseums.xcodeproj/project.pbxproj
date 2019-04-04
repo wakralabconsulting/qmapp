@@ -502,6 +502,7 @@
 		B8F00C8221787CF800320DF1 /* LoginPopupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginPopupView.xib; sourceTree = "<group>"; };
 		B8F00C8421787D0D00320DF1 /* LoginPopupPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPopupPage.swift; sourceTree = "<group>"; };
 		B8F00C862178D74800320DF1 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
+		B8F305F42256136500117478 /* QatarMuseums_V3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QatarMuseums_V3.xcdatamodel; sourceTree = "<group>"; };
 		B8F3A93F212728EE005360AD /* CommonStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonStrings.swift; sourceTree = "<group>"; };
 		B8FC190020DE854400D00E6B /* MuseumBottomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseumBottomCell.swift; sourceTree = "<group>"; };
 		B8FEC77B2112E57100648F66 /* Dining.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dining.swift; sourceTree = "<group>"; };
@@ -2078,10 +2079,11 @@
 		B8D712FE2250B463000ED7AA /* QatarMuseums.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				B8F305F42256136500117478 /* QatarMuseums_V3.xcdatamodel */,
 				B8D713012250B4AB000ED7AA /* QatarMuseums_V2.xcdatamodel */,
 				B8D712FF2250B463000ED7AA /* QatarMuseums.xcdatamodel */,
 			);
-			currentVersion = B8D713012250B4AB000ED7AA /* QatarMuseums_V2.xcdatamodel */;
+			currentVersion = B8F305F42256136500117478 /* QatarMuseums_V3.xcdatamodel */;
 			path = QatarMuseums.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

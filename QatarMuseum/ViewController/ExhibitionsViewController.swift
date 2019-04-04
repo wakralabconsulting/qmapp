@@ -951,7 +951,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
-    
+    /*
     func fetchHeritageListFromCoredata() {
         let managedContext = getContext()
         do {
@@ -1021,6 +1021,92 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     }
                 }
             }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+            if (networkReachability?.isReachable == false) {
+                self.showNoNetwork()
+            }
+        }
+    }
+ */
+    func fetchHeritageListFromCoredata() {
+        let managedContext = getContext()
+        do {
+          //  if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                var heritageArray = [HeritageEntity]()
+               // let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HeritageEntity")
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                heritageArray = checkAddedToCoredata(entityName: "HeritageEntity", idKey: "lang", idValue: "1", managedContext: managedContext) as! [HeritageEntity]
+
+            } else {
+                heritageArray = checkAddedToCoredata(entityName: "HeritageEntity", idKey: "lang", idValue: "0", managedContext: managedContext) as! [HeritageEntity]
+
+            }
+               // heritageArray = (try managedContext.fetch(homeFetchRequest) as? [HeritageEntity])!
+                if (heritageArray.count > 0) {
+                    if((self.networkReachability?.isReachable)!) {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getHeritageDataFromServer()
+                        }
+                    }
+                    for i in 0 ... heritageArray.count-1 {
+                        
+                        self.heritageListArray.insert(Heritage(id: heritageArray[i].listid, name: heritageArray[i].listname, location: nil, latitude: nil, longitude: nil, image: heritageArray[i].listimage, shortdescription: nil, longdescription: nil,images: nil, sortid: heritageArray[i].listsortid), at: i)
+                        
+                    }
+                    if(heritageListArray.count == 0){
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.exbtnLoadingView.showNoDataView()
+                        }
+                    }
+                    DispatchQueue.main.async{
+                        self.exhibitionCollectionView.reloadData()
+                    }
+                } else {
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        //self.exbtnLoadingView.showNoDataView()
+                        self.getHeritageDataFromServer() //coreDataMigratio  solution
+                    }
+                }
+           // }
+            /*else {
+                var heritageArray = [HeritageEntityArabic]()
+                let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HeritageEntityArabic")
+                heritageArray = (try managedContext.fetch(homeFetchRequest) as? [HeritageEntityArabic])!
+                if (heritageArray.count > 0) {
+                    if((self.networkReachability?.isReachable)!) {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getHeritageDataFromServer()
+                        }
+                    }
+                    for i in 0 ... heritageArray.count-1 {
+                        self.heritageListArray.insert(Heritage(id: heritageArray[i].listid, name: heritageArray[i].listnamearabic, location: nil, latitude: nil, longitude: nil, image: heritageArray[i].listimagearabic, shortdescription: nil, longdescription: nil,images: nil, sortid: heritageArray[i].listsortidarabic), at: i)
+                        
+                    }
+                    if(heritageListArray.count == 0){
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.exbtnLoadingView.showNoDataView()
+                        }
+                    }
+                    DispatchQueue.main.async{
+                        self.exhibitionCollectionView.reloadData()
+                    }
+                } else {
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        //self.exbtnLoadingView.showNoDataView()
+                        self.getHeritageDataFromServer() //coreDataMigratio  solution
+                    }
+                }
+            }
+            */
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
             if (networkReachability?.isReachable == false) {
