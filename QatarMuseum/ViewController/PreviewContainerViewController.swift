@@ -59,7 +59,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     let networkReachability = NetworkReachabilityManager()
     var currentContentViewController: PreviewContentViewController!
     let appDelegate =  UIApplication.shared.delegate as? AppDelegate
-    var museumId :String = "63"
+    var museumId :String? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -672,6 +672,8 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                     self.headerView.settingsButton.isHidden = false
                     if((self.museumId == "63") || (self.museumId == "96")) {
                         self.headerView.settingsButton.setImage(UIImage(named: "locationImg"), for: .normal)
+                    } else {
+                        self.headerView.settingsButton.isHidden = true
                     }
                     self.headerView.settingsButton.contentEdgeInsets = UIEdgeInsets(top: 9, left: 10, bottom:9, right: 10)
                     self.setUpPageControl()
@@ -1104,8 +1106,12 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                     self.loadingView.isHidden = true
                     if (self.tourGuideArray.count > 0) {
                         self.headerView.settingsButton.isHidden = false
-                        self.headerView.settingsButton.setImage(UIImage(named: "locationImg"), for: .normal)
-                        self.headerView.settingsButton.contentEdgeInsets = UIEdgeInsets(top: 9, left: 10, bottom:9, right: 10)
+                        if((self.museumId == "63") || (self.museumId == "96")) {
+                            self.headerView.settingsButton.setImage(UIImage(named: "locationImg"), for: .normal)
+                            self.headerView.settingsButton.contentEdgeInsets = UIEdgeInsets(top: 9, left: 10, bottom:9, right: 10)
+                        } else {
+                            self.headerView.settingsButton.isHidden = true
+                        }
                         self.setUpPageControl()
                         self.showOrHidePageControlView(countValue: self.tourGuideArray.count, scrolling: false)
                         self.showPageControlAtFirstTime()
@@ -1148,8 +1154,12 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                     self.loadingView.isHidden = true
                     if (self.tourGuideArray.count > 0) {
                         self.headerView.settingsButton.isHidden = false
-                        self.headerView.settingsButton.setImage(UIImage(named: "locationImg"), for: .normal)
-                        self.headerView.settingsButton.contentEdgeInsets = UIEdgeInsets(top: 9, left: 10, bottom:9, right: 10)
+                        if((self.museumId == "63") || (self.museumId == "96")) {
+                            self.headerView.settingsButton.setImage(UIImage(named: "locationImg"), for: .normal)
+                            self.headerView.settingsButton.contentEdgeInsets = UIEdgeInsets(top: 9, left: 10, bottom:9, right: 10)
+                        } else {
+                            self.headerView.settingsButton.isHidden = true
+                        }
                         self.setUpPageControl()
                         self.showOrHidePageControlView(countValue: self.tourGuideArray.count, scrolling: false)
                         self.showPageControlAtFirstTime()

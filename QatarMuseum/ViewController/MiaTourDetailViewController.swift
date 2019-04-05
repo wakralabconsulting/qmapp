@@ -25,7 +25,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     var slideshowImages : NSArray!
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var i = 0
-    var museumId :String = "63"
+    var museumId :String? = nil
     var tourGuide: [TourGuide] = []
     var tourGuideDetail : TourGuide?
     var totalImgCount = Int()
@@ -142,7 +142,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
         let shortDetailsView =  self.storyboard?.instantiateViewController(withIdentifier: "previewContainerId") as! PreviewContainerViewController
-        shortDetailsView.museumId = museumId
+        shortDetailsView.museumId = museumId ?? "0"
         shortDetailsView.tourGuideId = tourGuideDetail?.nid
         if ((tourGuideDetail?.nid == "12216") || (tourGuideDetail?.nid == "12226")) {
             shortDetailsView.fromScienceTour = true

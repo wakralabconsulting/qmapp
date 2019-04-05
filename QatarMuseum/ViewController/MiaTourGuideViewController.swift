@@ -20,7 +20,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
  
     let networkReachability = NetworkReachabilityManager()
-    var museumId :String = "63"
+    var museumId :String? = nil
     var miaTourDataFullArray: [TourGuide] = []
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,6 +128,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
         view.window!.layer.add(transition, forKey: kCATransition)
         
         let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "miaDetailId") as! MiaTourDetailViewController
+        miaView.museumId = museumId ?? "0"
         if (miaTourDataFullArray != nil) {
             miaView.tourGuideDetail = miaTourDataFullArray[currentRow!]
         }
