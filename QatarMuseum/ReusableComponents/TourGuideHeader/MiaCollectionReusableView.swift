@@ -10,7 +10,7 @@ import UIKit
 //protocol MiaTourProtocol {
 //    func exploreButtonTapAction( miaHeader: MiaCollectionReusableView)
 //}
-class MiaCollectionReusableView: UICollectionViewCell {
+class MiaCollectionReusableView: UITableViewCell {
     @IBOutlet weak var miaTourGuideText: UILabel!
     @IBOutlet weak var selfGuidedText: UILabel!
     @IBOutlet weak var exploreButton: UIButton!

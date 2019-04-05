@@ -20,12 +20,22 @@ class HeritageTableViewCell: UITableViewCell {
     @IBOutlet weak var lineLabelHeight: NSLayoutConstraint!
     @IBOutlet weak var titleBottomConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var tourGuideImage: UIImageView!
     let networkReachability = NetworkReachabilityManager()
     
     
     override func layoutSubviews() {
         super.layoutSubviews()
         setGradientLayer()
+    }
+    override func awakeFromNib() {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            titleLabel.textAlignment = .left
+            subTitle.textAlignment = .left
+        } else {
+            titleLabel.textAlignment = .right
+            subTitle.textAlignment = .right
+        }
     }
     //MARK: HeritageList data
     func setHeritageListCellValues(heritageList: Heritage) {
@@ -113,7 +123,28 @@ class HeritageTableViewCell: UITableViewCell {
         }
         titleLabel.font = UIFont.heritageTitleFont
     }
-    
+    func setScienceTourGuideCellData(homeCellData: TourGuide) {
+        subTitle.font = UIFont.homeTitleFont
+        subTitle.text = homeCellData.title
+        tourGuideImage.isHidden = false
+        if (homeCellData.nid == "12216") || (homeCellData.nid == "12226") {
+            tourGuideImage.isHidden = true
+        } else {
+            tourGuideImage.isHidden = false
+        }
+        if let multimedia = homeCellData.multimediaFile{
+            if (multimedia.count > 0) {
+                if (homeCellData.multimediaFile![0] != nil) {
+                    heritageImageView.kf.setImage(with: URL(string: homeCellData.multimediaFile![0]))
+                }
+            }
+        }
+        if(heritageImageView.image == nil) {
+            heritageImageView.image = UIImage(named: "default_imageX2")
+        }
+        heritageImageView.contentMode = .scaleAspectFill
+        
+    }
     func setGradientLayer() {
         self.heritageImageView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
         

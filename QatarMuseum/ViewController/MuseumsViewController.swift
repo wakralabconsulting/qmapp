@@ -381,7 +381,8 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 self.present(heritageDtlView, animated: false, completion: nil)
             } else if ((selectedItem == "Tour Guide") || (selectedItem == "الدليل السياحي")){
                 if((museumId == "63") || (museumId == "96") || (museumId == "66") || (museumId == "638")) {
-                    let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "miaTourGuideId") as! MiaTourGuideViewController
+                    let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+                    tourGuideView.exhibitionsPageNameString = ExhbitionPageName.miaTourGuideList
                     tourGuideView.museumId = museumId!
                     let transition = CATransition()
                     transition.duration = 0.3

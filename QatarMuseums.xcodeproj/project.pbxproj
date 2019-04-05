@@ -174,7 +174,6 @@
 		B8C367F82254D325005E4305 /* MiaTourHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8C367F72254D325005E4305 /* MiaTourHeaderView.xib */; };
 		B8C64C9C20FE380D00D7CD63 /* MiaTourDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C64C9B20FE380D00D7CD63 /* MiaTourDetailViewController.swift */; };
 		B8C64D4720FDC71400C2D51A /* TourGuideCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C64D4620FDC71400C2D51A /* TourGuideCollectionReusableView.swift */; };
-		B8C64D4B20FDDB7E00C2D51A /* MiaTourGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C64D4A20FDDB7E00C2D51A /* MiaTourGuideViewController.swift */; };
 		B8C64D4D20FDDBB700C2D51A /* MiaCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C64D4C20FDDBB700C2D51A /* MiaCollectionReusableView.swift */; };
 		B8C700852116F833006F3653 /* PublicArtsDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C700842116F833006F3653 /* PublicArtsDetail.swift */; };
 		B8CA08DF2146D38400783642 /* ObjectPopupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CA08D62146D38400783642 /* ObjectPopupTableViewCell.swift */; };
@@ -449,7 +448,6 @@
 		B8C367F72254D325005E4305 /* MiaTourHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MiaTourHeaderView.xib; sourceTree = "<group>"; };
 		B8C64C9B20FE380D00D7CD63 /* MiaTourDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiaTourDetailViewController.swift; sourceTree = "<group>"; };
 		B8C64D4620FDC71400C2D51A /* TourGuideCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourGuideCollectionReusableView.swift; sourceTree = "<group>"; };
-		B8C64D4A20FDDB7E00C2D51A /* MiaTourGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiaTourGuideViewController.swift; sourceTree = "<group>"; };
 		B8C64D4C20FDDBB700C2D51A /* MiaCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiaCollectionReusableView.swift; sourceTree = "<group>"; };
 		B8C700842116F833006F3653 /* PublicArtsDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicArtsDetail.swift; sourceTree = "<group>"; };
 		B8CA08D62146D38400783642 /* ObjectPopupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectPopupTableViewCell.swift; sourceTree = "<group>"; };
@@ -806,7 +804,6 @@
 				B8CAA93E20DC186E009A936D /* HeritageDetailViewController.swift */,
 				B8B81FE220DE2C8A004885D0 /* MuseumsViewController.swift */,
 				B82C87F120E69C9700777674 /* DiningDetailViewController.swift */,
-				B8C64D4A20FDDB7E00C2D51A /* MiaTourGuideViewController.swift */,
 				B8C64C9B20FE380D00D7CD63 /* MiaTourDetailViewController.swift */,
 				B8B7604B2100E7FC00CEE280 /* NotificationsViewController.swift */,
 				B8A1479A20FCA2AB00833B7B /* TourGuideViewController.swift */,
@@ -1670,7 +1667,6 @@
 				1BC909D02108E3C700D6C00B /* QMUtility.swift in Sources */,
 				B843D9E0223F8E14003C1DF6 /* Facilities.swift in Sources */,
 				1B3C505B212AB3460034E560 /* ArtifactNumberPadCell.swift in Sources */,
-				B8C64D4B20FDDB7E00C2D51A /* MiaTourGuideViewController.swift in Sources */,
 				B8B760512100E88E00CEE280 /* NotificationsTableViewCell.swift in Sources */,
 				B85BA4AA20D01B2600E7F4D1 /* ExhibitionDetailViewController.swift in Sources */,
 				B8DDBC7D21AD78AA007B3A06 /* HomeBanner.swift in Sources */,

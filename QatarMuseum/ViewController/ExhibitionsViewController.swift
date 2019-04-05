@@ -20,6 +20,7 @@ enum ExhbitionPageName {
     case diningList
     case nmoqTourSecondList
     case facilitiesSecondList
+    case miaTourGuideList
 }
 class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol,LoadingViewProtocol {
     @IBOutlet weak var exhibitionHeaderView: CommonHeaderView!
@@ -33,6 +34,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
     var diningListArray : [Dining]! = []
     var nmoqTourDetail: [NMoQTourDetail]! = []
     var facilitiesDetail: [FacilitiesDetail]! = []
+    var miaTourDataFullArray: [TourGuide] = []
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var exhibitionsPageNameString : ExhbitionPageName?
     let networkReachability = NetworkReachabilityManager()
@@ -153,6 +155,12 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             } else {
                 fetchFacilitiesDetailsFromCoredata()
             }
+        } else if (exhibitionsPageNameString == ExhbitionPageName.miaTourGuideList) {
+            NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveMiaTourNotification(notification:)), name: NSNotification.Name(miaTourNotification), object: nil)
+            DispatchQueue.main.async {
+                self.fetchTourGuideListFromCoredata()
+            }
+            exhibitionHeaderView.headerTitle.isHidden = true
         }
         popupView.comingSoonPopupDelegate = self
         
@@ -166,6 +174,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         self.exhibitionCollectionView.register(UINib(nibName: "ExhibitionsCellXib", bundle: nil), forCellReuseIdentifier: "exhibitionCellId")
         self.exhibitionCollectionView.register(UINib(nibName: "HeritageCellXib", bundle: nil), forCellReuseIdentifier: "heritageCellXibId")
         self.exhibitionCollectionView.register(UINib(nibName: "NMoQListCell", bundle: nil), forCellReuseIdentifier: "nMoQListCellId")
+        self.exhibitionCollectionView.register(UINib(nibName: "MiaTourHeaderView", bundle: nil), forCellReuseIdentifier: "miaHeaderId")
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -251,11 +260,18 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             return nmoqTourDetail.count
         case .facilitiesSecondList?:
             return facilitiesDetail.count
+        case .miaTourGuideList?:
+            if (miaTourDataFullArray.count > 0) {
+                return miaTourDataFullArray.count+1
+            }
+            return 0
         default:
             return 0
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        exbtnLoadingView.stopLoading()
+        exbtnLoadingView.isHidden = true
         if ((exhibitionsPageNameString == ExhbitionPageName.homeExhibition) || (exhibitionsPageNameString == ExhbitionPageName.museumExhibition)) {
             let exhibitionCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
             exhibitionCell.setExhibitionCellValues(exhibition: exhibition[indexPath.row])
@@ -264,51 +280,67 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.loadExhibitionCellPages(cellObj: exhibitionCell, selectedIndex: indexPath.row)
             }
             exhibitionCell.selectionStyle = .none
-            exbtnLoadingView.stopLoading()
-            exbtnLoadingView.isHidden = true
+            
             return exhibitionCell
         } else if (exhibitionsPageNameString == ExhbitionPageName.heritageList) {
             let heritageCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "heritageCellXibId", for: indexPath) as! HeritageTableViewCell
             heritageCell.setHeritageListCellValues(heritageList: heritageListArray[indexPath.row])
-            exbtnLoadingView.stopLoading()
-            exbtnLoadingView.isHidden = true
             return heritageCell
         } else if (exhibitionsPageNameString == ExhbitionPageName.publicArtsList) {
             let publicArtsCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "heritageCellXibId", for: indexPath) as! HeritageTableViewCell
             publicArtsCell.setPublicArtsListCellValues(publicArtsList: publicArtsListArray[indexPath.row])
-            exbtnLoadingView.stopLoading()
-            exbtnLoadingView.isHidden = true
             return publicArtsCell
         } else if (exhibitionsPageNameString == ExhbitionPageName.museumCollectionsList) {
             let collectionsCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "heritageCellXibId", for: indexPath) as! HeritageTableViewCell
             collectionsCell.setCollectionsCellValues(collectionList: collection[indexPath.row])
-            exbtnLoadingView.stopLoading()
-            exbtnLoadingView.isHidden = true
             return collectionsCell
         } else if (exhibitionsPageNameString == ExhbitionPageName.diningList) {
             let diningListCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "heritageCellXibId", for: indexPath) as! HeritageTableViewCell
             diningListCell.setDiningListValues(diningList: diningListArray[indexPath.row])
-            exbtnLoadingView.stopLoading()
-            exbtnLoadingView.isHidden = true
             return diningListCell
         } else if (exhibitionsPageNameString == ExhbitionPageName.nmoqTourSecondList){
             let nmoqTourSecondListCell = tableView.dequeueReusableCell(withIdentifier: "nMoQListCellId", for: indexPath) as! NMoQListCell
             nmoqTourSecondListCell.setTourMiddleDate(tourList: nmoqTourDetail[indexPath.row])
-            exbtnLoadingView.stopLoading()
-            exbtnLoadingView.isHidden = true
             return nmoqTourSecondListCell
-        } else {
+        } else if (exhibitionsPageNameString == ExhbitionPageName.facilitiesSecondList){
             let facilitiesSecondListCell = tableView.dequeueReusableCell(withIdentifier: "nMoQListCellId", for: indexPath) as! NMoQListCell
             facilitiesSecondListCell.setFacilitiesDetail(FacilitiesDetailData: facilitiesDetail[indexPath.row])
-            exbtnLoadingView.stopLoading()
-            exbtnLoadingView.isHidden = true
             return facilitiesSecondListCell
+        } else {
+            if (indexPath.row == 0) {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "miaHeaderId", for: indexPath) as! MiaCollectionReusableView
+                if (miaTourDataFullArray.count > 0) {
+                    if((museumId == "66") || (museumId == "638")) {
+                        cell.setNMoQHeaderData()
+                    } else {
+                        cell.setHeader()
+                        cell.exploreButtonTapAction = {
+                            () in
+                            self.exploreButtonAction()
+                        }
+                    }
+                }
+                return cell
+            } else {
+                let tourGuideCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "heritageCellXibId", for: indexPath) as! HeritageTableViewCell
+                tourGuideCell.setScienceTourGuideCellData(homeCellData: miaTourDataFullArray[indexPath.row-1])
+                return tourGuideCell
+            }
         }
         
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let heightValue = UIScreen.main.bounds.height/100
-        return heightValue*27
+        if (exhibitionsPageNameString == ExhbitionPageName.miaTourGuideList) {
+            if (indexPath.row == 0) {
+                return UITableViewAutomaticDimension
+            } else {
+                let heightValue = UIScreen.main.bounds.height/100
+                return heightValue*27
+            }
+        } else {
+            let heightValue = UIScreen.main.bounds.height/100
+            return heightValue*27
+        }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if ((exhibitionsPageNameString == ExhbitionPageName.homeExhibition) || (exhibitionsPageNameString == ExhbitionPageName.museumExhibition)) {
@@ -334,7 +366,12 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             } else {
                 loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: false, pageName: ExhbitionPageName.nmoqTourSecondList)
             }
-        } else if (exhibitionsPageNameString == ExhbitionPageName.facilitiesSecondList) {
+        } else if (exhibitionsPageNameString == ExhbitionPageName.miaTourGuideList) {
+            if (indexPath.row != 0) {
+                loadMiaTourDetail(currentRow: indexPath.row - 1)
+            }
+        }
+        else if (exhibitionsPageNameString == ExhbitionPageName.facilitiesSecondList) {
             loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: false, pageName: ExhbitionPageName.facilitiesSecondList)
         }
         
@@ -447,7 +484,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
                 let appDelegate = UIApplication.shared.delegate
                 appDelegate?.window??.rootViewController = homeViewController
-            case .museumExhibition?,.museumCollectionsList?,.nmoqTourSecondList?,.facilitiesSecondList?:
+            case .museumExhibition?,.museumCollectionsList?,.nmoqTourSecondList?,.facilitiesSecondList?,.miaTourGuideList?:
                 self.dismiss(animated: false, completion: nil)
             case .diningList?:
                 if (fromHome == true) {
@@ -774,6 +811,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 }
             } else if (exhibitionsPageNameString == ExhbitionPageName.nmoqTourSecondList){
                 self.getNMoQTourDetail()
+            } else if (exhibitionsPageNameString == ExhbitionPageName.miaTourGuideList){
+                self.getTourGuideDataFromServer()
             }
         }
     }
@@ -793,6 +832,14 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             self.fetchExhibitionsListFromCoredata()
         }
     }
+    @objc func receiveMiaTourNotification(notification: NSNotification) {
+        let data = notification.userInfo as? [String:String]
+        if (data?.count)!>0 {
+            if(museumId == data!["id"]) {
+                self.fetchTourGuideListFromCoredata()
+            }
+        }
+    }
     func recordScreenView() {
         let screenClass = String(describing: type(of: self))
         if ((exhibitionsPageNameString == ExhbitionPageName.homeExhibition) ||  (exhibitionsPageNameString == ExhbitionPageName.homeExhibition)) {
@@ -807,6 +854,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             Analytics.setScreenName(DINING_LIST, screenClass: screenClass)
         } else if (exhibitionsPageNameString == ExhbitionPageName.nmoqTourSecondList) {
             Analytics.setScreenName(NMOQ_TOUR_SECOND_LIST, screenClass: screenClass)
+        } else if (exhibitionsPageNameString == ExhbitionPageName.miaTourGuideList) {
+            Analytics.setScreenName(MIA_TOUR_GUIDE, screenClass: screenClass)
         }
         
         
@@ -2342,6 +2391,348 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 }
             }
         }
+    }
+    //MARK: WebServiceCall
+    func getTourGuideDataFromServer() {
+        _ = Alamofire.request(QatarMuseumRouter.MuseumTourGuide(LocalizationLanguage.currentAppleLanguage(),["museum_id": museumId ?? 0])).responseObject { (response: DataResponse<TourGuides>) -> Void in
+            switch response.result {
+            case .success(let data):
+                if(self.miaTourDataFullArray.count == 0) {
+                    self.miaTourDataFullArray = data.tourGuide!
+                    self.exhibitionCollectionView.reloadData()
+                    //if no result after api call
+                    if(self.miaTourDataFullArray.count == 0) {
+                        self.exbtnLoadingView.stopLoading()
+                        self.exbtnLoadingView.noDataView.isHidden = false
+                        self.exbtnLoadingView.isHidden = false
+                        self.exbtnLoadingView.showNoDataView()
+                    }
+                }
+                if(self.miaTourDataFullArray.count > 0) {
+                    self.saveOrUpdateTourGuideCoredata(miaTourDataFullArray: data.tourGuide)
+                }
+            case .failure(let error):
+                if(self.miaTourDataFullArray.count == 0) {
+                    self.exbtnLoadingView.stopLoading()
+                    self.exbtnLoadingView.noDataView.isHidden = false
+                    self.exbtnLoadingView.isHidden = false
+                    self.exbtnLoadingView.showNoDataView()
+                }
+            }
+        }
+    }
+    
+    //MARK: Coredata Method
+    func saveOrUpdateTourGuideCoredata(miaTourDataFullArray:[TourGuide]?) {
+        if ((miaTourDataFullArray?.count)! > 0) {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.coreDataInBackgroundThread(managedContext: managedContext, miaTourDataFullArray: miaTourDataFullArray)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.coreDataInBackgroundThread(managedContext : managedContext, miaTourDataFullArray: miaTourDataFullArray)
+                }
+            }
+        }
+    }
+    
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,miaTourDataFullArray:[TourGuide]?) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            let fetchData = checkAddedToCoredata(entityName: "TourGuideEntity", idKey: "museumsEntity", idValue: museumId, managedContext: managedContext) as! [TourGuideEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... (miaTourDataFullArray?.count)!-1 {
+                    let tourGuideListDict = miaTourDataFullArray![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "TourGuideEntity", idKey: "nid", idValue: miaTourDataFullArray![i].nid, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let tourguidedbDict = fetchResult[0] as! TourGuideEntity
+                        tourguidedbDict.title = tourGuideListDict.title
+                        tourguidedbDict.tourGuideDescription = tourGuideListDict.tourGuideDescription
+                        tourguidedbDict.museumsEntity =  tourGuideListDict.museumsEntity
+                        tourguidedbDict.nid =  tourGuideListDict.nid
+                        
+                        if(tourGuideListDict.multimediaFile != nil) {
+                            if((tourGuideListDict.multimediaFile?.count)! > 0) {
+                                for i in 0 ... (tourGuideListDict.multimediaFile?.count)!-1 {
+                                    var multimediaEntity: TourGuideMultimediaEntity!
+                                    let multimediaArray: TourGuideMultimediaEntity = NSEntityDescription.insertNewObject(forEntityName: "TourGuideMultimediaEntity", into: managedContext) as! TourGuideMultimediaEntity
+                                    multimediaArray.multimediaFile = tourGuideListDict.multimediaFile![i]
+                                    
+                                    multimediaEntity = multimediaArray
+                                    tourguidedbDict.addToTourGuideMultimediaRelation(multimediaEntity)
+                                    do {
+                                        try managedContext.save()
+                                    } catch let error as NSError {
+                                        print("Could not save. \(error), \(error.userInfo)")
+                                    }
+                                    
+                                }
+                            }
+                        }
+                        
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    }
+                    else {
+                        //save
+                        self.saveToCoreData(tourguideListDict: tourGuideListDict, managedObjContext: managedContext)
+                        
+                    }
+                }
+            }
+            else {
+                for i in 0 ... (miaTourDataFullArray?.count)!-1 {
+                    let tourGuideListDict : TourGuide?
+                    tourGuideListDict = miaTourDataFullArray?[i]
+                    self.saveToCoreData(tourguideListDict: tourGuideListDict!, managedObjContext: managedContext)
+                    
+                }
+            }
+        }
+        else {
+            let fetchData = checkAddedToCoredata(entityName: "TourGuideEntityAr", idKey: "museumsEntity", idValue: museumId, managedContext: managedContext) as! [TourGuideEntityAr]
+            if (fetchData.count > 0) {
+                for i in 0 ... (miaTourDataFullArray?.count)!-1 {
+                    let tourGuideListDict = miaTourDataFullArray![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "TourGuideEntityAr", idKey: "nid" , idValue: miaTourDataFullArray![i].nid, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let tourguidedbDict = fetchResult[0] as! TourGuideEntityAr
+                        tourguidedbDict.title = tourGuideListDict.title
+                        tourguidedbDict.tourGuideDescription = tourGuideListDict.tourGuideDescription
+                        tourguidedbDict.museumsEntity =  tourGuideListDict.museumsEntity
+                        tourguidedbDict.nid =  tourGuideListDict.nid
+                        
+                        if(tourGuideListDict.multimediaFile != nil) {
+                            if((tourGuideListDict.multimediaFile?.count)! > 0) {
+                                for i in 0 ... (tourGuideListDict.multimediaFile?.count)!-1 {
+                                    var multimediaEntity: TourGuideMultimediaEntityAr!
+                                    let multimediaArray: TourGuideMultimediaEntityAr = NSEntityDescription.insertNewObject(forEntityName: "TourGuideMultimediaEntityAr", into: managedContext) as! TourGuideMultimediaEntityAr
+                                    multimediaArray.multimediaFile = tourGuideListDict.multimediaFile![i]
+                                    
+                                    multimediaEntity = multimediaArray
+                                    tourguidedbDict.addToTourGuideMultimediaRelation(multimediaEntity)
+                                    do {
+                                        try managedContext.save()
+                                    } catch let error as NSError {
+                                        print("Could not save. \(error), \(error.userInfo)")
+                                    }
+                                    
+                                }
+                            }
+                        }
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    }
+                    else {
+                        //save
+                        self.saveToCoreData(tourguideListDict: tourGuideListDict, managedObjContext: managedContext)
+                        
+                    }
+                }
+            }
+            else {
+                for i in 0 ... (miaTourDataFullArray?.count)!-1 {
+                    let tourGuideListDict : TourGuide?
+                    tourGuideListDict = miaTourDataFullArray?[i]
+                    self.saveToCoreData(tourguideListDict: tourGuideListDict!, managedObjContext: managedContext)
+                    
+                }
+            }
+        }
+    }
+    
+    func saveToCoreData(tourguideListDict: TourGuide, managedObjContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            let tourGuideInfo: TourGuideEntity = NSEntityDescription.insertNewObject(forEntityName: "TourGuideEntity", into: managedObjContext) as! TourGuideEntity
+            tourGuideInfo.title = tourguideListDict.title
+            tourGuideInfo.tourGuideDescription = tourguideListDict.tourGuideDescription
+            tourGuideInfo.museumsEntity = tourguideListDict.museumsEntity
+            tourGuideInfo.nid = tourguideListDict.nid
+            
+            if(tourguideListDict.multimediaFile != nil) {
+                if((tourguideListDict.multimediaFile?.count)! > 0) {
+                    for i in 0 ... (tourguideListDict.multimediaFile?.count)!-1 {
+                        var multimediaEntity: TourGuideMultimediaEntity!
+                        let multimediaArray: TourGuideMultimediaEntity = NSEntityDescription.insertNewObject(forEntityName: "TourGuideMultimediaEntity", into: managedObjContext) as! TourGuideMultimediaEntity
+                        multimediaArray.multimediaFile = tourguideListDict.multimediaFile![i]
+                        
+                        multimediaEntity = multimediaArray
+                        tourGuideInfo.addToTourGuideMultimediaRelation(multimediaEntity)
+                        do {
+                            try managedObjContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                        
+                    }
+                }
+            }
+        }
+        else {
+            let tourGuideInfo: TourGuideEntityAr = NSEntityDescription.insertNewObject(forEntityName: "TourGuideEntityAr", into: managedObjContext) as! TourGuideEntityAr
+            tourGuideInfo.title = tourguideListDict.title
+            tourGuideInfo.tourGuideDescription = tourguideListDict.tourGuideDescription
+            tourGuideInfo.museumsEntity = tourguideListDict.museumsEntity
+            tourGuideInfo.nid = tourguideListDict.nid
+            if(tourguideListDict.multimediaFile != nil) {
+                if((tourguideListDict.multimediaFile?.count)! > 0) {
+                    for i in 0 ... (tourguideListDict.multimediaFile?.count)!-1 {
+                        var multimediaEntity: TourGuideMultimediaEntityAr!
+                        let multimediaArray: TourGuideMultimediaEntityAr = NSEntityDescription.insertNewObject(forEntityName: "TourGuideMultimediaEntityAr", into: managedObjContext) as! TourGuideMultimediaEntityAr
+                        multimediaArray.multimediaFile = tourguideListDict.multimediaFile![i]
+                        
+                        multimediaEntity = multimediaArray
+                        tourGuideInfo.addToTourGuideMultimediaRelation(multimediaEntity)
+                        do {
+                            try managedObjContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                        
+                    }
+                }
+            }
+        }
+        do {
+            try managedObjContext.save()
+            
+            
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    func fetchTourGuideListFromCoredata() {
+        let managedContext = getContext()
+        do {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                var tourGuideArray = [TourGuideEntity]()
+                tourGuideArray = checkAddedToCoredata(entityName: "TourGuideEntity", idKey: "museumsEntity", idValue: museumId, managedContext: managedContext) as! [TourGuideEntity]
+                
+                if (tourGuideArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getTourGuideDataFromServer()
+                        }
+                    }
+                    for i in 0 ... tourGuideArray.count-1 {
+                        
+                        var multimediaArray : [String] = []
+                        let tourguideInfo = tourGuideArray[i]
+                        let tourGuideInfoArray = (tourguideInfo.tourGuideMultimediaRelation?.allObjects) as! [TourGuideMultimediaEntity]
+                        if(tourGuideInfoArray.count > 0) {
+                            for i in 0 ... tourGuideInfoArray.count-1 {
+                                multimediaArray.append(tourGuideInfoArray[i].multimediaFile!)
+                            }
+                        }
+                        
+                        self.miaTourDataFullArray.insert(TourGuide(title: tourGuideArray[i].title, tourGuideDescription: tourGuideArray[i].tourGuideDescription, multimediaFile: multimediaArray, museumsEntity: tourGuideArray[i].museumsEntity, nid: tourGuideArray[i].nid), at: i)
+                    }
+                    DispatchQueue.main.async {
+                        self.exhibitionCollectionView.reloadData()
+                    }
+                    if(miaTourDataFullArray.count == 0){
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.exbtnLoadingView.showNoDataView()
+                        }
+                    }
+                    
+                }
+                else{
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        //self.loadingView.showNoDataView()
+                        self.getTourGuideDataFromServer() //coreDataMigratio  solution
+                    }
+                }
+            }
+            else {
+                var tourGuideArray = [TourGuideEntityAr]()
+                tourGuideArray = checkAddedToCoredata(entityName: "TourGuideEntityAr", idKey: "museumsEntity", idValue: museumId, managedContext: managedContext) as! [TourGuideEntityAr]
+                if (tourGuideArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getTourGuideDataFromServer()
+                        }
+                    }
+                    for i in 0 ... tourGuideArray.count-1 {
+                        var multimediaArray : [String] = []
+                        let tourguideInfo = tourGuideArray[i]
+                        let tourGuideInfoArray = (tourguideInfo.tourGuideMultimediaRelation?.allObjects) as! [TourGuideMultimediaEntityAr]
+                        if(tourGuideInfoArray.count > 0) {
+                            for i in 0 ... tourGuideInfoArray.count-1 {
+                                multimediaArray.append(tourGuideInfoArray[i].multimediaFile!)
+                            }
+                        }
+                        self.miaTourDataFullArray.insert(TourGuide(title: tourGuideArray[i].title, tourGuideDescription: tourGuideArray[i].tourGuideDescription, multimediaFile: multimediaArray, museumsEntity: tourGuideArray[i].museumsEntity, nid: tourGuideArray[i].nid), at: i)
+                        
+                        
+                    }
+                    if(miaTourDataFullArray.count == 0){
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.exbtnLoadingView.showNoDataView()
+                        }
+                    }
+                    DispatchQueue.main.async {
+                        self.exhibitionCollectionView.reloadData()
+                    }
+                }
+                else{
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        // self.loadingView.showNoDataView()
+                        self.getTourGuideDataFromServer() //coreDataMigratio  solution
+                    }
+                }
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    //MARK: Mia Tour Guide Delegate
+    func exploreButtonAction() {
+        let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as! FloorMapViewController
+        floorMapView.fromTourString = fromTour.exploreTour
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(floorMapView, animated: false, completion: nil)
+        
+    }
+    func loadMiaTourDetail(currentRow: Int?) {
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        
+        let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "miaDetailId") as! MiaTourDetailViewController
+        miaView.museumId = museumId ?? "0"
+        if (miaTourDataFullArray != nil) {
+            miaView.tourGuideDetail = miaTourDataFullArray[currentRow!]
+        }
+        self.present(miaView, animated: false, completion: nil)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

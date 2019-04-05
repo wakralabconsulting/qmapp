@@ -102,7 +102,8 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
-        let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "miaTourGuideId") as! MiaTourGuideViewController
+        let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        miaView.exhibitionsPageNameString = ExhbitionPageName.miaTourGuideList
         if (museumsList != nil) {
             miaView.museumId = museumsList[currentRow!].id!
             self.present(miaView, animated: false, completion: nil)
