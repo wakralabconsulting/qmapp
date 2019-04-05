@@ -35,10 +35,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     var isSideMenuLoaded : Bool = false
     var homeList: [Home]! = []
     var homeEntity: HomeEntity?
-    var homeEntityArabic: HomeEntityArabic?
     let networkReachability = NetworkReachabilityManager()
     var homeDBArray:[HomeEntity]?
-    var homeDBArrayArabic:[HomeEntityArabic]?
     var apnDelegate : APNProtocol?
     let imageView = UIImageView()
     var blurView = UIVisualEffectView()
@@ -107,34 +105,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         */
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationEn(notification:)), name: NSNotification.Name(homepageNotificationEn), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationAr(notification:)), name: NSNotification.Name(homepageNotificationAr), object: nil)
-       // self.fetchHomeInfoFromCoredata()
-        
-        //Temporary solution for Migration Problem
-        
-        let managedContext = getContext()
-        do{
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            var homeArray = [HomeEntity]()
-            let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntity")
-            homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntity])!
-            if (homeArray.count > 0) {
-                self.fetchHomeInfoFromCoredata()
-            } else {
-                getHomeList()
-            }
-        } else {
-            var homeArray = [HomeEntityArabic]()
-            let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntityArabic")
-            homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntityArabic])!
-            if (homeArray.count > 0) {
-                self.fetchHomeInfoFromCoredata()
-            } else {
-                getHomeList()
-            }
-            }
-        }catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
+        self.fetchHomeInfoFromCoredata()
     }
     
     func setTopImageUI() {
@@ -241,28 +212,21 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         notificationsView.fromHome = true
         self.present(notificationsView, animated: false, completion: nil)
     }
-
-    
     func registerNib() {
         let nib = UINib(nibName: "HomeCollectionCell", bundle: nil)
         homeCollectionView?.register(nib, forCellWithReuseIdentifier: "homeCellId")
         let nib2 = UINib(nibName: "NMoHeaderView", bundle: nil)
         homeCollectionView?.register(nib2, forCellWithReuseIdentifier: "bannerCellId")
     }
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-       
         return homeList.count
     }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         loadingView.stopLoading()
         loadingView.isHidden = true
@@ -443,7 +407,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     self.homeCollectionView.reloadData()
                 }
                 if(self.homeList.count > 0) {
-                    self.saveOrUpdateHomeCoredata(homeList: data.homeList)
+                   // self.saveOrUpdateHomeCoredata(homeList: data.homeList)
                 }
             case .failure( _):
                 if((self.homeList.count == 0) || (self.homeList.count == 1)) {
@@ -792,8 +756,15 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,homeList: [Home]?) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            let fetchData = checkAddedToCoredata(entityName: "HomeEntity", idKey: "id", idValue: nil, managedContext: managedContext) as! [HomeEntity]
+        var fetchData = [HomeEntity]()
+        var langVar : String? = nil
+        if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+            langVar = "1"
+            
+        } else {
+            langVar = "0"
+        }
+        fetchData = checkAddedToCoredata(entityName: "HomeEntity", idKey: "lang", idValue: langVar, managedContext: managedContext) as! [HomeEntity]
             if (fetchData.count > 0) {
                 for i in 0 ... (homeList?.count)!-1 {
                     let homeListDict = homeList![i]
@@ -805,7 +776,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                         homedbDict.image = homeListDict.image
                         homedbDict.sortid =  (Int16(homeListDict.sortId!) ?? 0)
                         homedbDict.tourguideavailable = homeListDict.isTourguideAvailable
-                        
+                        homedbDict.lang = langVar
                         do{
                             try managedContext.save()
                         }
@@ -824,60 +795,24 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     self.saveToCoreData(homeListDict: homeListDict!, managedObjContext: managedContext)
                 }
             }
-        } else {
-            let fetchData = checkAddedToCoredata(entityName: "HomeEntityArabic", idKey: "id", idValue: nil, managedContext: managedContext) as! [HomeEntityArabic]
-            if (fetchData.count > 0) {
-                for i in 0 ... (homeList?.count)!-1 {
-                    let homeListDict = homeList![i]
-                    
-                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntityArabic", idKey: "id", idValue: homeList![i].id, managedContext: managedContext)
-                    //update
-                    if(fetchResult.count != 0) {
-                        let homedbDict = fetchResult[0] as! HomeEntityArabic
-                        homedbDict.arabicname = homeListDict.name
-                        homedbDict.arabicimage = homeListDict.image
-                        homedbDict.arabicsortid =  (Int16(homeListDict.sortId!) ?? 0)
-                        homedbDict.arabictourguideavailable = homeListDict.isTourguideAvailable
-                        do{
-                            try managedContext.save()
-                        }
-                        catch{
-                            print(error)
-                        }
-                    } else {
-                        //save
-                        self.saveToCoreData(homeListDict: homeListDict, managedObjContext: managedContext)
-                        
-                    }
-                }
-            } else {
-                for i in 0 ... (homeList?.count)!-1 {
-                    let homeListDict : Home?
-                    homeListDict = homeList?[i]
-                    self.saveToCoreData(homeListDict: homeListDict!, managedObjContext: managedContext)
-                    
-                }
-            }
-        }
     }
     
     func saveToCoreData(homeListDict: Home, managedObjContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-             let homeInfo: HomeEntity = NSEntityDescription.insertNewObject(forEntityName: "HomeEntity", into: managedObjContext) as! HomeEntity
-            homeInfo.id = homeListDict.id
-            homeInfo.name = homeListDict.name
-            homeInfo.image = homeListDict.image
-            homeInfo.tourguideavailable = homeListDict.isTourguideAvailable
-            homeInfo.image = homeListDict.image
-            homeInfo.sortid = (Int16(homeListDict.sortId!) ?? 0)
-        } else{
-            let homeInfo: HomeEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "HomeEntityArabic", into: managedObjContext) as! HomeEntityArabic
-            homeInfo.id = homeListDict.id
-            homeInfo.arabicname = homeListDict.name
-            homeInfo.arabicimage = homeListDict.image
-            homeInfo.arabictourguideavailable = homeListDict.isTourguideAvailable
-            homeInfo.arabicsortid = (Int16(homeListDict.sortId!) ?? 0)
+        var langVar : String? = nil
+        if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+            langVar = "1"
+            
+        } else {
+            langVar = "0"
         }
+        let homeInfo: HomeEntity = NSEntityDescription.insertNewObject(forEntityName: "HomeEntity", into: managedObjContext) as! HomeEntity
+        homeInfo.id = homeListDict.id
+        homeInfo.name = homeListDict.name
+        homeInfo.image = homeListDict.image
+        homeInfo.tourguideavailable = homeListDict.isTourguideAvailable
+        homeInfo.image = homeListDict.image
+        homeInfo.sortid = (Int16(homeListDict.sortId!) ?? 0)
+        homeInfo.lang = langVar
         do {
             try managedObjContext.save()
         } catch let error as NSError {
@@ -891,12 +826,22 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         let managedContext = getContext()
        // let panelAndTalksName = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var homeArray = [HomeEntity]()
-                let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntity")
-                homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntity])!
+                var langVar : String? = nil
+                if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+                    langVar = "1"
+                    
+                } else {
+                    langVar = "0"
+                }
+                homeArray = checkAddedToCoredata(entityName: "HomeEntity", idKey: "lang", idValue: langVar, managedContext: managedContext) as! [HomeEntity]
                 var j:Int? = 0
             if (homeArray.count > 0) {
+                if((self.networkReachability?.isReachable)!) {
+                    DispatchQueue.global(qos: .background).async {
+                        self.getHomeList()
+                    }
+                }
                 //homeArray.sort(by: {$0.sortid < $1.sortid})
                 for i in 0 ... homeArray.count-1 {
                     if homeList.first(where: {$0.id == homeArray[i].id}) != nil {
@@ -938,67 +883,14 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 if(self.networkReachability?.isReachable == false) {
                     self.showNoNetwork()
                 } else {
-                    self.loadingView.showNoDataView()
-                }
-            }
-        } else {
-                var homeArray = [HomeEntityArabic]()
-                let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntityArabic")
-                homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntityArabic])!
-                var j:Int? = 0
-                if (homeArray.count > 0) {
-                    //homeArray.sort(by: {$0.arabicsortid < $1.arabicsortid})
-                    for i in 0 ... homeArray.count-1 {
-                        if homeList.first(where: {$0.id == homeArray[i].id}) != nil {
-                        } else {
-                        self.homeList.insert(Home(id:homeArray[i].id , name: homeArray[i].arabicname,image: homeArray[i].arabicimage,
-                                                  tourguide_available: homeArray[i].arabictourguideavailable, sort_id: String(homeArray[i].arabicsortid)),
-                                             at: j!)
-                            j = j!+1
-                        }
-                    }
-                    /* Just Commented for New Release
-                    let panelAndTalks = "قطر تبدع: فعاليات افتتاح متحف قطر الوطني"
-                    if homeList.index(where: {$0.name != panelAndTalks}) != nil {
-                        self.homeList.insert(Home(id: "15631", name: panelAndTalksName, image: "panelAndTalks", tourguide_available: "false", sort_id: nil), at: self.homeList.endIndex)
-                    }
- */
-                    if let nilItem = self.homeList.first(where: {$0.sortId == "" || $0.sortId == nil}) {
-                        print("nil found")
-                    } else {
-                        self.homeList = self.homeList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
-                    }
-                    if(self.homeBannerList.count > 0) {
-                        self.homeList.insert(Home(id:self.homeBannerList[0].fullContentID , name: self.homeBannerList[0].bannerTitle,image: self.homeBannerList[0].bannerLink,
-                                                  tourguide_available: "false", sort_id: nil),
-                                             at: 0)
-                    }
-                    if(self.homeList.count == 0){
-                        if(self.networkReachability?.isReachable == false) {
-                            self.showNoNetwork()
-                        } else {
-                            self.loadingView.showNoDataView()
-                        }
-                    }
-                    self.alreadyFetch = true
-                    self.homeCollectionView.reloadData()
-                } else{
-                    if(self.networkReachability?.isReachable == false) {
-                        self.showNoNetwork()
-                    } else {
-                        self.loadingView.showNoDataView()
-                    }
+                    //self.loadingView.showNoDataView()
+                    self.getHomeList()
                 }
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
             if (networkReachability?.isReachable == false) {
                 self.showNoNetwork()
-            }
-        }
-        if (networkReachability?.isReachable)! {
-            DispatchQueue.global(qos: .background).async {
-                self.getHomeList()
             }
         }
     }
