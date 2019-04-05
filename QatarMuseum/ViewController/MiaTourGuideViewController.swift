@@ -169,7 +169,7 @@ class MiaTourGuideViewController: UIViewController,UICollectionViewDelegate,UICo
     }
     //MARK: WebServiceCall
     func getTourGuideDataFromServer() {
-        _ = Alamofire.request(QatarMuseumRouter.MuseumTourGuide(LocalizationLanguage.currentAppleLanguage(),["museum_id": museumId])).responseObject { (response: DataResponse<TourGuides>) -> Void in
+        _ = Alamofire.request(QatarMuseumRouter.MuseumTourGuide(LocalizationLanguage.currentAppleLanguage(),["museum_id": museumId ?? 0])).responseObject { (response: DataResponse<TourGuides>) -> Void in
             switch response.result {
             case .success(let data):
                 if(self.miaTourDataFullArray.count == 0) {

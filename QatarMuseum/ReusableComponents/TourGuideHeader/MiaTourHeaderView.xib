@@ -116,12 +116,14 @@
             <connections>
                 <outlet property="audioCircleImage" destination="Vih-ot-ZJW" id="cRM-EW-fAk"/>
                 <outlet property="exploreButton" destination="vgf-Dy-W6i" id="GbA-Pd-OvO"/>
+                <outlet property="exploreButtonBottom" destination="aFM-qr-Cnl" id="9Ow-j3-aKh"/>
                 <outlet property="exploreButtonHeight" destination="GbF-bN-bAZ" id="dav-iW-6bL"/>
                 <outlet property="miaTitle" destination="S7m-pO-Svs" id="uS0-KO-3AR"/>
                 <outlet property="miaTourGuideText" destination="cle-Ci-ov5" id="8AL-Oy-hBx"/>
                 <outlet property="selfGuidedText" destination="H1N-XD-5uF" id="1SB-4F-A8z"/>
                 <outlet property="selfGuidedTitle" destination="rNl-rP-Jl7" id="S1Q-9s-ZTA"/>
                 <outlet property="tourGuideTextBottomConstraint" destination="huG-AF-QZv" id="v7K-WT-EoQ"/>
+                <outlet property="tourGuideTextTop" destination="vfz-c4-zXA" id="e2d-Cr-Fc7"/>
             </connections>
             <point key="canvasLocation" x="56" y="-5.3973013493253381"/>
         </collectionViewCell>

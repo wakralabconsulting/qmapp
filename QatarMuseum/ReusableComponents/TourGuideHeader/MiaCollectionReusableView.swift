@@ -20,6 +20,9 @@ class MiaCollectionReusableView: UICollectionViewCell {
     @IBOutlet weak var miaTitle: UILabel!
     @IBOutlet weak var tourGuideTextBottomConstraint: NSLayoutConstraint!
    // var miaTourDelegate : MiaTourProtocol?
+    @IBOutlet weak var tourGuideTextTop: NSLayoutConstraint!
+    
+    @IBOutlet weak var exploreButtonBottom: NSLayoutConstraint!
     var exploreButtonTapAction : (()->())?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -45,6 +48,8 @@ class MiaCollectionReusableView: UICollectionViewCell {
         miaTourGuideText.isHidden = true
         exploreButtonHeight.constant = 0
         tourGuideTextBottomConstraint.constant = 0
+        tourGuideTextTop.constant = 0
+        exploreButtonBottom.constant = 5
         miaTitle.text = NSLocalizedString("NMOQ_TOUR_HEADER", comment: "NMOQ_TOUR_HEADER in TourGuide page")
         selfGuidedTitle.text = NSLocalizedString("SELF_GUIDED_TOUR_TITLE", comment: "SELF_GUIDED_TOUR_TITLE in TourGuide page")
         selfGuidedText.text = NSLocalizedString("SELF_GUIDED_TEXT1", comment: "SELF_GUIDED_TEXT1 in TourGuide page") + "\n" + NSLocalizedString("SELF_GUIDED_TEXT2", comment: "SELF_GUIDED_TEXT2 in TourGuide page")

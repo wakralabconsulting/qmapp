@@ -648,44 +648,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
                 NotificationCenter.default.post(name: NSNotification.Name(homepageNotificationEn), object: self)
             }
-       /* } else {
-            let fetchData = checkAddedToCoredata(entityName: "HomeEntityArabic", idKey: "id", idValue: nil, managedContext: managedContext) as! [HomeEntityArabic]
-            if (fetchData.count > 0) {
-                for i in 0 ... (homeList?.count)!-1 {
-                    let homeListDict = homeList![i]
-                    
-                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntityArabic", idKey: "id", idValue: homeList![i].id, managedContext: managedContext)
-                    //update
-                    if(fetchResult.count != 0) {
-                        let homedbDict = fetchResult[0] as! HomeEntityArabic
-                        homedbDict.arabicname = homeListDict.name
-                        homedbDict.arabicimage = homeListDict.image
-                        homedbDict.arabicsortid =  (Int16(homeListDict.sortId!) ?? 0)
-                        homedbDict.arabictourguideavailable = homeListDict.isTourguideAvailable
-                        do{
-                            try managedContext.save()
-                        }
-                        catch{
-                            print(error)
-                        }
-                    } else {
-                        //save
-                        self.saveHomeDataToCoreData(homeListDict: homeListDict, managedObjContext: managedContext, lang: lang)
-                        
-                    }
-                }
-                NotificationCenter.default.post(name: NSNotification.Name(homepageNotificationAr), object: self)
-            } else {
-                for i in 0 ... (homeList?.count)!-1 {
-                    let homeListDict : Home?
-                    homeListDict = homeList?[i]
-                    self.saveHomeDataToCoreData(homeListDict: homeListDict!, managedObjContext: managedContext, lang: lang)
-                    
-                }
-                NotificationCenter.default.post(name: NSNotification.Name(homepageNotificationAr), object: self)
-            }
-        }*/
-        
     }
     
     func saveHomeDataToCoreData(homeListDict: Home, managedObjContext: NSManagedObjectContext,lang: String?) {
@@ -704,14 +666,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             homeInfo.image = homeListDict.image
             homeInfo.sortid = (Int16(homeListDict.sortId!) ?? 0)
             homeInfo.lang = langVar
-       /* } else{
-            let homeInfo: HomeEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "HomeEntityArabic", into: managedObjContext) as! HomeEntityArabic
-            homeInfo.id = homeListDict.id
-            homeInfo.arabicname = homeListDict.name
-            homeInfo.arabicimage = homeListDict.image
-            homeInfo.arabictourguideavailable = homeListDict.isTourguideAvailable
-            homeInfo.arabicsortid = (Int16(homeListDict.sortId!) ?? 0)
-        }*/
         do {
             try managedObjContext.save()
         } catch let error as NSError {
