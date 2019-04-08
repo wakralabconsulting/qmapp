@@ -173,7 +173,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
     func registerNib() {
         self.exhibitionCollectionView.register(UINib(nibName: "ExhibitionsCellXib", bundle: nil), forCellReuseIdentifier: "exhibitionCellId")
         self.exhibitionCollectionView.register(UINib(nibName: "HeritageCellXib", bundle: nil), forCellReuseIdentifier: "heritageCellXibId")
-        self.exhibitionCollectionView.register(UINib(nibName: "NMoQListCell", bundle: nil), forCellReuseIdentifier: "nMoQListCellId")
+        //self.exhibitionCollectionView.register(UINib(nibName: "NMoQListCell", bundle: nil), forCellReuseIdentifier: "nMoQListCellId")
         self.exhibitionCollectionView.register(UINib(nibName: "MiaTourHeaderView", bundle: nil), forCellReuseIdentifier: "miaHeaderId")
     }
     
@@ -283,27 +283,27 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             
             return exhibitionCell
         } else if (exhibitionsPageNameString == ExhbitionPageName.heritageList) {
-            let heritageCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "heritageCellXibId", for: indexPath) as! HeritageTableViewCell
+            let heritageCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
             heritageCell.setHeritageListCellValues(heritageList: heritageListArray[indexPath.row])
             return heritageCell
         } else if (exhibitionsPageNameString == ExhbitionPageName.publicArtsList) {
-            let publicArtsCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "heritageCellXibId", for: indexPath) as! HeritageTableViewCell
+            let publicArtsCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
             publicArtsCell.setPublicArtsListCellValues(publicArtsList: publicArtsListArray[indexPath.row])
             return publicArtsCell
         } else if (exhibitionsPageNameString == ExhbitionPageName.museumCollectionsList) {
-            let collectionsCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "heritageCellXibId", for: indexPath) as! HeritageTableViewCell
+            let collectionsCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
             collectionsCell.setCollectionsCellValues(collectionList: collection[indexPath.row])
             return collectionsCell
         } else if (exhibitionsPageNameString == ExhbitionPageName.diningList) {
-            let diningListCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "heritageCellXibId", for: indexPath) as! HeritageTableViewCell
+            let diningListCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
             diningListCell.setDiningListValues(diningList: diningListArray[indexPath.row])
             return diningListCell
         } else if (exhibitionsPageNameString == ExhbitionPageName.nmoqTourSecondList){
-            let nmoqTourSecondListCell = tableView.dequeueReusableCell(withIdentifier: "nMoQListCellId", for: indexPath) as! NMoQListCell
+            let nmoqTourSecondListCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
             nmoqTourSecondListCell.setTourMiddleDate(tourList: nmoqTourDetail[indexPath.row])
             return nmoqTourSecondListCell
         } else if (exhibitionsPageNameString == ExhbitionPageName.facilitiesSecondList){
-            let facilitiesSecondListCell = tableView.dequeueReusableCell(withIdentifier: "nMoQListCellId", for: indexPath) as! NMoQListCell
+            let facilitiesSecondListCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
             facilitiesSecondListCell.setFacilitiesDetail(FacilitiesDetailData: facilitiesDetail[indexPath.row])
             return facilitiesSecondListCell
         } else {
@@ -322,7 +322,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 }
                 return cell
             } else {
-                let tourGuideCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "heritageCellXibId", for: indexPath) as! HeritageTableViewCell
+                let tourGuideCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
                 tourGuideCell.setScienceTourGuideCellData(homeCellData: miaTourDataFullArray[indexPath.row-1])
                 return tourGuideCell
             }

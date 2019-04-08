@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -25,7 +24,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZLu-iy-cb4">
-                        <rect key="frame" x="0.0" y="-1" width="414" height="130"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="130"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sbc-5n-Z9N">
                                 <rect key="frame" x="12" y="16" width="390" height="0.0"/>
@@ -101,14 +100,13 @@
                             <constraint firstAttribute="trailing" secondItem="pXq-KB-CRY" secondAttribute="trailing" constant="12" id="wU2-XG-Ara"/>
                             <constraint firstItem="sbc-5n-Z9N" firstAttribute="leading" secondItem="ZLu-iy-cb4" secondAttribute="leading" constant="12" id="y7w-oi-PMp"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="OWI-2n-zHa"/>
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="ZLu-iy-cb4" secondAttribute="trailing" id="8DU-Jx-xSj"/>
                     <constraint firstItem="ZLu-iy-cb4" firstAttribute="top" secondItem="jws-N1-9e0" secondAttribute="top" id="BBR-5b-TOs"/>
                     <constraint firstAttribute="bottom" secondItem="ZLu-iy-cb4" secondAttribute="bottom" id="FkA-Rr-EDD"/>
                     <constraint firstItem="ZLu-iy-cb4" firstAttribute="leading" secondItem="jws-N1-9e0" secondAttribute="leading" id="aq3-iS-EQh"/>
+                    <constraint firstAttribute="trailing" secondItem="ZLu-iy-cb4" secondAttribute="trailing" id="cwa-q1-P6N"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
