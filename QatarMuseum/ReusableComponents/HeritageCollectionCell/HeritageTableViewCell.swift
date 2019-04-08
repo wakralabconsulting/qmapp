@@ -126,7 +126,6 @@ class HeritageTableViewCell: UITableViewCell {
     func setScienceTourGuideCellData(homeCellData: TourGuide) {
         subTitle.font = UIFont.homeTitleFont
         subTitle.text = homeCellData.title
-        tourGuideImage.isHidden = false
         if (homeCellData.nid == "12216") || (homeCellData.nid == "12226") {
             tourGuideImage.isHidden = true
         } else {
