@@ -16,7 +16,8 @@ var homepageNotificationEn = "HomepageNotificationEn"
 var homepageNotificationAr = "HomepageNotificationAr"
 var miaTourNotification = "MiaTourNotification"
 var nmoqAboutNotification = "NmoqAboutNotification"
-var nmoqTourlistNotification = "NmoqTourlistNotification"
+var nmoqTourlistNotificationEn = "NmoqTourlistNotificationEn"
+var nmoqTourlistNotificationAr = "NmoqTourlistNotificationAr"
 var nmoqTravelListNotificationEn = "NmoqTravelListNotificationEn"
 var nmoqTravelListNotificationAr = "NmoqTravelListNotificationAr"
 var publicArtsListNotificationEn = "PublicArtsListNotificationEn"
@@ -27,6 +28,17 @@ var exhibitionsListNotificationEn = "ExhibitionsListNotificationEn"
 var exhibitionsListNotificationAr = "ExhibitionsListNotificationAr"
 var parksNotificationEn = "ParksNotificationEn"
 var parksNotificationAr = "ParksNotificationAr"
+var facilitiesListNotificationEn = "FacilitiesListNotificationEn"
+var facilitiesListNotificationAr = "FacilitiesListNotificationAr"
+var nmoqParkListNotificationEn = "NmoqParkListNotificationEn"
+var nmoqParkListNotificationAr = "NmoqParkListNotificationAr"
+var nmoqActivityListNotificationEn = "NmoqParkListNotificationEn"
+var nmoqActivityListNotificationAr = "NmoqParkListNotificationAr"
+var nmoqParkNotificationEn = "NmoqParkNotificationEn"
+var nmoqParkNotificationAr = "NmoqParkNotificationAr"
+var nmoqParkDetailNotificationEn = "NmoqParkDetailNotificationEn"
+var nmoqParkDetailNotificationAr = "NmoqParkDetailNotificationAr"
+
 // Utility method for presenting alert without any completion handler
 func presentAlert(_ viewController: UIViewController, title: String, message: String) {
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -137,6 +149,7 @@ func changeDateFormat(dateString: String?) -> String? {
         inputFormatter.dateFormat = "dd/MM/yyyy"
         let showDate = inputFormatter.date(from: dateString!)
         inputFormatter.dateFormat = "dd MMMM yyyy"
+        inputFormatter.locale = NSLocale(localeIdentifier: "en") as Locale?
         let resultString = inputFormatter.string(from: showDate!)
         return resultString
     }
@@ -165,3 +178,36 @@ class UnderlinedLabel: UILabel {
     }
 }
 
+class ResizableImageView: UIImageView {
+    
+    override var image: UIImage? {
+        didSet {
+            guard let image = image else { return }
+            
+            let resizeConstraints = [
+                self.heightAnchor.constraint(equalToConstant: image.size.height),
+                self.widthAnchor.constraint(equalToConstant: image.size.width)
+            ]
+            
+            if superview != nil {
+                addConstraints(resizeConstraints)
+            }
+        }
+    }
+}
+extension String {
+    var htmlAttributedString: NSAttributedString? {
+        do {
+            return try NSAttributedString(data: data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))!,
+                                          options: [.documentType: NSAttributedString.DocumentType.html,
+                                                    .characterEncoding: String.Encoding.utf8.rawValue],
+                                          documentAttributes: nil)
+        } catch {
+            print("error: ", error)
+            return nil
+        }
+    }
+    var htmlString: String {
+        return htmlAttributedString?.string ?? ""
+    }
+}

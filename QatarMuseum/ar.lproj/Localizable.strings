@@ -65,7 +65,6 @@
 "CHANGE_LANGUAGE_TITLE" = "تغيير اللغة";
 "CONTINUE_TITLE" = "المتابعة";
 "MUSEUM_TITLE" = "متحف الفن الإسلامي";
-"NO_RESULT_MESSAGE" = "قريباً";
 "CHECK_INTERNET" = "تأكد من اتصالك بالانترنت";
 "LOCATION_TITLE" = "الموقع";
 "TO" = "إلى";
@@ -243,3 +242,9 @@
 "UNREGISTER_CONFIRMATION_MESSAGE" = "هل أنت متأكد من أنك تريد إلغاء هذه الجولة؟";
 "REGISTER_GREETING_MESSAGE" = "شكرا لك على حجز هذه الجولة. سوف تتلقى رسالة بريد إلكتروني مع مزيد من المعلومات. لأي أسئلة ، يرجى التواصل على booking@qm.org.qa أو 5554 4452 974+";
 
+"EXPERIENCE_TITLE" = "المحتويات";
+"HIGHLIGHTS_TOUR" = "Highlights Tour";
+"FACILITIES" = "المرافق";
+"PANEL_AND_TALKS" = "قطر تبدع: فعاليات افتتاح متحف قطر الوطني";
+"PARKS_HEADER_LABEL" = "Park";
+"NMOQ_TOUR_HEADER" = "الدليل السياحي متحف قطر الوطني";

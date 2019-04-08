@@ -65,7 +65,7 @@
 "CHANGE_LANGUAGE_TITLE" = "Change Language?";
 "CONTINUE_TITLE" = "Continue";
 "MUSEUM_TITLE" = "Museum of Islamic Art";
-"NO_RESULT_MESSAGE" = "Coming Soon";
+"NO_RESULT_MESSAGE" = "No results found";
 "CHECK_INTERNET" = "Check your internet connections";
 "LOCATION_TITLE" = "LOCATION";
 "TO" = "to";
@@ -242,3 +242,10 @@
 "CANCEL_BOOKING_STRING" = "Cancel Booking";
 "UNREGISTER_CONFIRMATION_MESSAGE" = "Are you sure you want to cancel this tour?";
 "REGISTER_GREETING_MESSAGE" = "Thank you for booking this tour. You will receive an email with further information.\n\nAny questions, please contact \nbooking@qm.org.qa \n or \n+974 4452 5555";
+
+"EXPERIENCE_TITLE" = "Experience";
+"HIGHLIGHTS_TOUR" = "Highlights Tour";
+"FACILITIES" = "Facilities";
+"PANEL_AND_TALKS" = "QATAR CREATES: EVENTS FOR THE OPENING OF NMoQ";
+"PARKS_HEADER_LABEL" = "Park";
+"NMOQ_TOUR_HEADER" = "NMoQ TOUR GUIDE";

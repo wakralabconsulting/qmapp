@@ -65,6 +65,30 @@ class NMoQListCell: UITableViewCell {
             dateLabel.textAlignment = .right
         }
     }
+    func setActivityListDate(activityList: NMoQActivitiesList?) {
+        titleLabel.text = activityList?.subtitle
+        dayLabel.text = activityList?.title
+        dateLabel.isHidden = true
+        if ((activityList?.images?.count)! > 0) {
+            if let imageUrl = activityList?.images![0]{
+                cellImageView.kf.setImage(with: URL(string: imageUrl))
+            }
+        } else {
+            cellImageView.image = UIImage(named: "default_imageX2")
+        }
+        if (cellImageView.image == nil) {
+            cellImageView.image = UIImage(named: "default_imageX2")
+        }
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            titleLabel.textAlignment = .left
+            dayLabel.textAlignment = .left
+            dateLabel.textAlignment = .left
+        } else {
+            titleLabel.textAlignment = .right
+            dayLabel.textAlignment = .right
+            dateLabel.textAlignment = .right
+        }
+    }
     func setTourMiddleDate(tourList: NMoQTourDetail?) {
         dayLabel.font  = UIFont.homeTitleFont
         dayLabel.text = tourList?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
@@ -100,6 +124,86 @@ class NMoQListCell: UITableViewCell {
             cellImageView.image = UIImage(named: "default_imageX2")
         }
     }
+    func setFacilitiesListData(facilitiesListData: Facilities?) {
+        dayLabel.font = UIFont.homeTitleFont
+        dayLabel.text = facilitiesListData!.title!.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil).replacingOccurrences(of: "&amp;", with: "&", options: .regularExpression, range: nil)
+        titleLabel.isHidden = true
+        dayLabel.isHidden = false
+        dateLabel.isHidden = true
+        if ((facilitiesListData?.images?.count)! > 0) {
+            if let imageUrl = facilitiesListData?.images![0]{
+                cellImageView.kf.setImage(with: URL(string: imageUrl))
+            }
+        } else {
+            cellImageView.image = UIImage(named: "default_imageX2")
+        }
+        if (cellImageView.image == nil) {
+            cellImageView.image = UIImage(named: "default_imageX2")
+        }
+    }
+    func setFacilitiesDetail(FacilitiesDetailData: FacilitiesDetail?) {
+        dayLabel.font  = UIFont.homeTitleFont
+        dayLabel.text = FacilitiesDetailData?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+        titleLabel.isHidden = true
+        dayLabel.isHidden = false
+        dateLabel.isHidden = true
+        
+        
+        if ((FacilitiesDetailData?.images?.count)! > 0) {
+            if let imageUrl = FacilitiesDetailData?.images![0]{
+                cellImageView.kf.setImage(with: URL(string: imageUrl))
+            }
+        } else {
+            cellImageView.image = UIImage(named: "default_imageX2")
+        }
+        if (cellImageView.image == nil) {
+            cellImageView.image = UIImage(named: "default_imageX2")
+        }
+    }
+    func setParkListData() {
+        dayLabel.font = UIFont.homeTitleFont
+        dayLabel.text = "Playround"
+        titleLabel.isHidden = true
+        dayLabel.isHidden = false
+        dateLabel.isHidden = true
+//        if ((facilitiesListData?.images?.count)! > 0) {
+//            if let imageUrl = facilitiesListData?.images![0]{
+//                cellImageView.kf.setImage(with: URL(string: imageUrl))
+//            }
+//        } else {
+//            cellImageView.image = UIImage(named: "default_imageX2")
+//        }
+        if (cellImageView.image == nil) {
+            //cellImageView.image = UIImage(named: "default_imageX2")
+            cellImageView.image = UIImage(named: "panelAndTalks")
+        }
+    }
+    
+    func setParkListData(parkList: NMoQPark) {
+        titleLabel.text = parkList.title?.htmlString
+            //?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+        dateLabel.isHidden = true
+        if ((parkList.images?.count)! > 0) {
+            if let imageUrl = parkList.images?[0]{
+                cellImageView.kf.setImage(with: URL(string: imageUrl))
+            }
+        } else {
+            cellImageView.image = UIImage(named: "default_imageX2")
+        }
+        if (cellImageView.image == nil) {
+            cellImageView.image = UIImage(named: "default_imageX2")
+        }
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            titleLabel.textAlignment = .left
+            dayLabel.textAlignment = .left
+            dateLabel.textAlignment = .left
+        } else {
+            titleLabel.textAlignment = .right
+            dayLabel.textAlignment = .right
+            dateLabel.textAlignment = .right
+        }
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

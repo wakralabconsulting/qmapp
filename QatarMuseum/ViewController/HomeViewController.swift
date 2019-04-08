@@ -35,10 +35,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     var isSideMenuLoaded : Bool = false
     var homeList: [Home]! = []
     var homeEntity: HomeEntity?
-    var homeEntityArabic: HomeEntityArabic?
     let networkReachability = NetworkReachabilityManager()
     var homeDBArray:[HomeEntity]?
-    var homeDBArrayArabic:[HomeEntityArabic]?
     var apnDelegate : APNProtocol?
     let imageView = UIImageView()
     var blurView = UIVisualEffectView()
@@ -67,6 +65,49 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    func setUpUI() {
+        topbarView.topbarDelegate = self
+        topbarView.backButton.isHidden = true
+        effect = visualEffectView.effect
+        visualEffectView.effect = nil
+        visualEffectView.isHidden = true
+        loadingView.isHidden = false
+        loadingView.loadingViewDelegate = self
+        loadingView.showLoading()
+        moreLabel.text = NSLocalizedString("MORE",comment: "MORE in Home Page")
+        culturePassLabel.text = NSLocalizedString("CULTUREPASS_TITLE",comment: "CULTUREPASS_TITLE in Home Page")
+        giftShopLabel.text = NSLocalizedString("GIFT_SHOP",comment: "GIFT_SHOP in Home Page")
+        diningLabel.text = NSLocalizedString("DINING_LABEL",comment: "DINING_LABEL in Home Page")
+        
+        moreLabel.font = UIFont.exhibitionDateLabelFont
+        culturePassLabel.font = UIFont.exhibitionDateLabelFont
+        giftShopLabel.font = UIFont.exhibitionDateLabelFont
+        diningLabel.font = UIFont.exhibitionDateLabelFont
+        /* Just Commented for New Release
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            if(UserDefaults.standard.value(forKey: "firstTimeLaunch") as? String == nil) {
+                loadingView.isHidden = false
+                loadingView.showLoading()
+                if (networkReachability?.isReachable)! {
+                    loadLoginPopup()
+                    UserDefaults.standard.set("false", forKey: "firstTimeLaunch")
+                } else {
+                    showNoNetwork()
+                }
+            } else {
+                if (networkReachability?.isReachable)! {
+                    getHomeBanner()
+                } else {
+                    fetchHomeBannerInfoFromCoredata()
+                }
+            }
+        }
+        */
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationEn(notification:)), name: NSNotification.Name(homepageNotificationEn), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationAr(notification:)), name: NSNotification.Name(homepageNotificationAr), object: nil)
+        self.fetchHomeInfoFromCoredata()
+    }
+    
     func setTopImageUI() {
        
         homeCollectionView.contentInset = UIEdgeInsetsMake(120, 0, 0, 0)
@@ -171,66 +212,21 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         notificationsView.fromHome = true
         self.present(notificationsView, animated: false, completion: nil)
     }
-
-    func setUpUI() {
-        topbarView.topbarDelegate = self
-        topbarView.backButton.isHidden = true
-        effect = visualEffectView.effect
-        visualEffectView.effect = nil
-        visualEffectView.isHidden = true
-        loadingView.isHidden = false
-        loadingView.loadingViewDelegate = self
-        loadingView.showLoading()
-        moreLabel.text = NSLocalizedString("MORE",comment: "MORE in Home Page")
-        culturePassLabel.text = NSLocalizedString("CULTUREPASS_TITLE",comment: "CULTUREPASS_TITLE in Home Page")
-        giftShopLabel.text = NSLocalizedString("GIFT_SHOP",comment: "GIFT_SHOP in Home Page")
-        diningLabel.text = NSLocalizedString("DINING_LABEL",comment: "DINING_LABEL in Home Page")
-        
-        moreLabel.font = UIFont.exhibitionDateLabelFont
-        culturePassLabel.font = UIFont.exhibitionDateLabelFont
-        giftShopLabel.font = UIFont.exhibitionDateLabelFont
-        diningLabel.font = UIFont.exhibitionDateLabelFont
-            if(UserDefaults.standard.value(forKey: "firstTimeLaunch") as? String == nil) {
-                loadingView.isHidden = false
-                loadingView.showLoading()
-                if (networkReachability?.isReachable)! {
-                    loadLoginPopup()
-                    UserDefaults.standard.set("false", forKey: "firstTimeLaunch")
-                } else {
-                    showNoNetwork()
-                }
-            } else {
-                if (networkReachability?.isReachable)! {
-                    getHomeBanner()
-                } else {
-                    fetchHomeBannerInfoFromCoredata()
-                }
-            }
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationEn(notification:)), name: NSNotification.Name(homepageNotificationEn), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationAr(notification:)), name: NSNotification.Name(homepageNotificationAr), object: nil)
-        self.fetchHomeInfoFromCoredata()
-    }
-    
     func registerNib() {
         let nib = UINib(nibName: "HomeCollectionCell", bundle: nil)
         homeCollectionView?.register(nib, forCellWithReuseIdentifier: "homeCellId")
         let nib2 = UINib(nibName: "NMoHeaderView", bundle: nil)
         homeCollectionView?.register(nib2, forCellWithReuseIdentifier: "bannerCellId")
     }
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-       
         return homeList.count
     }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         loadingView.stopLoading()
         loadingView.isHidden = true
@@ -257,6 +253,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let panelAndTalks = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
         if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "") && (self.homeBannerList.count > 0)) {
             if(indexPath.row == 0) {
                 let museumsView =  self.storyboard?.instantiateViewController(withIdentifier: "museumViewId") as! MuseumsViewController
@@ -274,14 +271,17 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                     if (homeList[indexPath.row].id == "12181") {
                         loadExhibitionPage()
-                    }
-                    else {
+                    } else if (homeList[indexPath.row].id == "13976") {
+                        loadTourViewPage(nid: "13976", subTitle: panelAndTalks, isFromTour: false)
+                    } else {
                         loadMuseumsPage(curretRow: indexPath.row)
                     }
                 }
                 else {
                     if (homeList[indexPath.row].id == "12186") {
                         loadExhibitionPage()
+                    } else if (homeList[indexPath.row].id == "15631") {
+                        loadTourViewPage(nid: "15631", subTitle: panelAndTalks, isFromTour: false)
                     }
                     else {
                         loadMuseumsPage(curretRow: indexPath.row)
@@ -292,6 +292,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                 if (homeList[indexPath.row].id == "12181") {
                     loadExhibitionPage()
+                } else if (homeList[indexPath.row].id == "13976") {
+                    loadTourViewPage(nid: "13976", subTitle: panelAndTalks, isFromTour: false)
                 }
                 else {
                     loadMuseumsPage(curretRow: indexPath.row)
@@ -300,6 +302,9 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             else {
                 if (homeList[indexPath.row].id == "12186") {
                     loadExhibitionPage()
+                }
+                else if (homeList[indexPath.row].id == "15631") {
+                    loadTourViewPage(nid: "15631", subTitle: panelAndTalks, isFromTour: false)
                 }
                 else {
                     loadMuseumsPage(curretRow: indexPath.row)
@@ -364,9 +369,53 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         _ = Alamofire.request(QatarMuseumRouter.HomeList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<HomeList>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateHomeCoredata(homeList: data.homeList)
+                if((self.homeList.count == 0) || (self.homeList.count == 1)) {
+                    self.homeList = data.homeList
+                    /* Just Commented for New Release
+                    let panelAndTalksName = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
+                    if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                        let panelAndTalks = "Panels And Talks".lowercased()
+                        if self.homeList.index(where: {$0.name?.lowercased() != panelAndTalks}) != nil {
+                            
+                            self.homeList.insert(Home(id: "13976", name: panelAndTalksName.uppercased(), image: "panelAndTalks", tourguide_available: "false", sort_id: "10"), at: self.homeList.endIndex)
+                        }
+                    } else {
+                        let panelAndTalks = "قطر تبدع: فعاليات افتتاح متحف قطر الوطني"
+                        if self.homeList.index(where: {$0.name != panelAndTalks}) != nil {
+                            self.homeList.insert(Home(id: "15631", name: panelAndTalksName, image: "panelAndTalks", tourguide_available: "false", sort_id: "10"), at: self.homeList.endIndex)
+                        }
+                    }
+*/
+                    if let nilItem = self.homeList.first(where: {$0.sortId == "" || $0.sortId == nil}) {
+                        print("nil found")
+                    } else {
+                        self.homeList = self.homeList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
+                    }
+                    if(self.homeBannerList.count > 0) {
+                        self.homeList.insert(Home(id:self.homeBannerList[0].fullContentID , name: self.homeBannerList[0].bannerTitle,image: self.homeBannerList[0].bannerLink,
+                                                  tourguide_available: "false", sort_id: nil),
+                                             at: 0)
+                    }
+
+                    if((self.homeList.count == 0) || (self.homeList.count == 1)) {
+                        self.loadingView.stopLoading()
+                        self.loadingView.noDataView.isHidden = false
+                        self.loadingView.isHidden = false
+                        self.loadingView.showNoDataView()
+                    }
+                    
+                    self.homeCollectionView.reloadData()
+                }
+                if(self.homeList.count > 0) {
+                   // self.saveOrUpdateHomeCoredata(homeList: data.homeList)
+                }
             case .failure( _):
-                print("error")
+                if((self.homeList.count == 0) || (self.homeList.count == 1)) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
             }
         }
     }
@@ -377,9 +426,11 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 
                 self.homeBannerList = data.homeBannerList
                 if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")  && (self.homeBannerList.count > 0)) {
-                    self.homeList.insert(Home(id:nil , name: self.homeBannerList[0].bannerTitle,image: self.homeBannerList[0].bannerLink,
-                                              tourguide_available: "false", sort_id: nil),
-                                         at: 0)
+                    if(self.homeList.count > 0) {
+                        self.homeList.insert(Home(id:self.homeBannerList[0].fullContentID , name: self.homeBannerList[0].bannerTitle,image: self.homeBannerList[0].bannerLink,
+                                                  tourguide_available: "false", sort_id: nil),
+                                             at: 0)
+                    }
                     
                 }
                 if(self.homeBannerList.count > 0) {
@@ -705,8 +756,15 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,homeList: [Home]?) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            let fetchData = checkAddedToCoredata(entityName: "HomeEntity", idKey: "id", idValue: nil, managedContext: managedContext) as! [HomeEntity]
+        var fetchData = [HomeEntity]()
+        var langVar : String? = nil
+        if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+            langVar = "1"
+            
+        } else {
+            langVar = "0"
+        }
+        fetchData = checkAddedToCoredata(entityName: "HomeEntity", idKey: "lang", idValue: langVar, managedContext: managedContext) as! [HomeEntity]
             if (fetchData.count > 0) {
                 for i in 0 ... (homeList?.count)!-1 {
                     let homeListDict = homeList![i]
@@ -716,9 +774,9 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                         let homedbDict = fetchResult[0] as! HomeEntity
                         homedbDict.name = homeListDict.name
                         homedbDict.image = homeListDict.image
-                        homedbDict.sortid =  homeListDict.sortId
+                        homedbDict.sortid =  (Int16(homeListDict.sortId!) ?? 0)
                         homedbDict.tourguideavailable = homeListDict.isTourguideAvailable
-                        
+                        homedbDict.lang = langVar
                         do{
                             try managedContext.save()
                         }
@@ -737,60 +795,24 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     self.saveToCoreData(homeListDict: homeListDict!, managedObjContext: managedContext)
                 }
             }
-        } else {
-            let fetchData = checkAddedToCoredata(entityName: "HomeEntityArabic", idKey: "id", idValue: nil, managedContext: managedContext) as! [HomeEntityArabic]
-            if (fetchData.count > 0) {
-                for i in 0 ... (homeList?.count)!-1 {
-                    let homeListDict = homeList![i]
-                    
-                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntityArabic", idKey: "id", idValue: homeList![i].id, managedContext: managedContext)
-                    //update
-                    if(fetchResult.count != 0) {
-                        let homedbDict = fetchResult[0] as! HomeEntityArabic
-                        homedbDict.arabicname = homeListDict.name
-                        homedbDict.arabicimage = homeListDict.image
-                        homedbDict.arabicsortid =  homeListDict.sortId
-                        homedbDict.arabictourguideavailable = homeListDict.isTourguideAvailable
-                        do{
-                            try managedContext.save()
-                        }
-                        catch{
-                            print(error)
-                        }
-                    } else {
-                        //save
-                        self.saveToCoreData(homeListDict: homeListDict, managedObjContext: managedContext)
-                        
-                    }
-                }
-            } else {
-                for i in 0 ... (homeList?.count)!-1 {
-                    let homeListDict : Home?
-                    homeListDict = homeList?[i]
-                    self.saveToCoreData(homeListDict: homeListDict!, managedObjContext: managedContext)
-                    
-                }
-            }
-        }
     }
     
     func saveToCoreData(homeListDict: Home, managedObjContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-             let homeInfo: HomeEntity = NSEntityDescription.insertNewObject(forEntityName: "HomeEntity", into: managedObjContext) as! HomeEntity
-            homeInfo.id = homeListDict.id
-            homeInfo.name = homeListDict.name
-            homeInfo.image = homeListDict.image
-            homeInfo.tourguideavailable = homeListDict.isTourguideAvailable
-            homeInfo.image = homeListDict.image
-            homeInfo.sortid = homeListDict.sortId
-        } else{
-            let homeInfo: HomeEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "HomeEntityArabic", into: managedObjContext) as! HomeEntityArabic
-            homeInfo.id = homeListDict.id
-            homeInfo.arabicname = homeListDict.name
-            homeInfo.arabicimage = homeListDict.image
-            homeInfo.arabictourguideavailable = homeListDict.isTourguideAvailable
-            homeInfo.arabicsortid = homeListDict.sortId
+        var langVar : String? = nil
+        if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+            langVar = "1"
+            
+        } else {
+            langVar = "0"
         }
+        let homeInfo: HomeEntity = NSEntityDescription.insertNewObject(forEntityName: "HomeEntity", into: managedObjContext) as! HomeEntity
+        homeInfo.id = homeListDict.id
+        homeInfo.name = homeListDict.name
+        homeInfo.image = homeListDict.image
+        homeInfo.tourguideavailable = homeListDict.isTourguideAvailable
+        homeInfo.image = homeListDict.image
+        homeInfo.sortid = (Int16(homeListDict.sortId!) ?? 0)
+        homeInfo.lang = langVar
         do {
             try managedObjContext.save()
         } catch let error as NSError {
@@ -802,23 +824,51 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     func fetchHomeInfoFromCoredata() {
         if(alreadyFetch == false) {
         let managedContext = getContext()
-
+       // let panelAndTalksName = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var homeArray = [HomeEntity]()
-                let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntity")
-                homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntity])!
+                var langVar : String? = nil
+                if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+                    langVar = "1"
+                    
+                } else {
+                    langVar = "0"
+                }
+                homeArray = checkAddedToCoredata(entityName: "HomeEntity", idKey: "lang", idValue: langVar, managedContext: managedContext) as! [HomeEntity]
                 var j:Int? = 0
             if (homeArray.count > 0) {
+                if((self.networkReachability?.isReachable)!) {
+                    DispatchQueue.global(qos: .background).async {
+                        self.getHomeList()
+                    }
+                }
+                //homeArray.sort(by: {$0.sortid < $1.sortid})
                 for i in 0 ... homeArray.count-1 {
                     if homeList.first(where: {$0.id == homeArray[i].id}) != nil {
                         } else {
                             self.homeList.insert(Home(id:homeArray[i].id , name: homeArray[i].name,image: homeArray[i].image,
-                                                      tourguide_available: homeArray[i].tourguideavailable, sort_id: homeArray[i].sortid),
+                                                      tourguide_available: homeArray[i].tourguideavailable, sort_id: String(homeArray[i].sortid)),
                                                  at: j!)
                             j = j!+1
                         }
                     
+                }
+                
+                /* Just Commented for New Release
+                let panelAndTalks = "QATAR CREATES: EVENTS FOR THE OPENING OF NMoQ".lowercased()
+                if homeList.index(where: {$0.name?.lowercased() != panelAndTalks}) != nil {
+                    self.homeList.insert(Home(id: "13976", name: panelAndTalksName.uppercased(), image: "panelAndTalks", tourguide_available: "false", sort_id: "10"), at: self.homeList.endIndex)
+                }
+ */
+                if let nilItem = self.homeList.first(where: {$0.sortId == "" || $0.sortId == nil}) {
+                    print("nil found")
+                } else {
+                    self.homeList = self.homeList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
+                }
+                if(self.homeBannerList.count > 0) {
+                    self.homeList.insert(Home(id:self.homeBannerList[0].fullContentID , name: self.homeBannerList[0].bannerTitle,image: self.homeBannerList[0].bannerLink,
+                                              tourguide_available: "false", sort_id: nil),
+                                         at: 0)
                 }
                 if(self.homeList.count == 0){
                     if(self.networkReachability?.isReachable == false) {
@@ -833,47 +883,14 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 if(self.networkReachability?.isReachable == false) {
                     self.showNoNetwork()
                 } else {
-                    self.loadingView.showNoDataView()
-                }
-            }
-        } else {
-                var homeArray = [HomeEntityArabic]()
-                let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntityArabic")
-                homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntityArabic])!
-                var j:Int? = 0
-                if (homeArray.count > 0) {
-                    for i in 0 ... homeArray.count-1 {
-                        if homeList.first(where: {$0.id == homeArray[i].id}) != nil {
-                        } else {
-                        self.homeList.insert(Home(id:homeArray[i].id , name: homeArray[i].arabicname,image: homeArray[i].arabicimage,
-                                                  tourguide_available: homeArray[i].arabictourguideavailable, sort_id: homeArray[i].arabicsortid),
-                                             at: j!)
-                            j = j!+1
-                        }
-                    }
-                    if(self.homeList.count == 0){
-                        if(self.networkReachability?.isReachable == false) {
-                            self.showNoNetwork()
-                        } else {
-                            self.loadingView.showNoDataView()
-                        }
-                    }
-                    self.alreadyFetch = true
-                    self.homeCollectionView.reloadData()
-                } else{
-                    if(self.networkReachability?.isReachable == false) {
-                        self.showNoNetwork()
-                    } else {
-                        self.loadingView.showNoDataView()
-                    }
+                    //self.loadingView.showNoDataView()
+                    self.getHomeList()
                 }
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
-        }
-        if (networkReachability?.isReachable)! {
-            DispatchQueue.global(qos: .background).async {
-                self.getHomeList()
+            if (networkReachability?.isReachable == false) {
+                self.showNoNetwork()
             }
         }
     }
@@ -1045,12 +1062,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                         self.homeBannerList.insert(HomeBanner(title: homeArray[i].title, fullContentID: homeArray[i].fullContentID, bannerTitle: homeArray[i].bannerTitle, bannerLink: homeArray[i].bannerLink,image: imagesArray, introductionText: nil, email: nil, contactNumber: nil, promotionalCode: nil, claimOffer: nil), at: i)
                         
                     }
-                    if(self.homeList.count == 0){
-                        self.showNoNetwork()
-                    }
+//                    if(self.homeList.count == 0){
+//                        self.showNoNetwork()
+//                    }
                     self.homeCollectionView.reloadData()
                 } else{
-                    self.showNoNetwork()
+                    //self.showNoNetwork()
                 }
             } else {
                 var homeArray = [HomeBannerEntityAr]()
@@ -1070,11 +1087,11 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                         
                     }
                     if(self.homeList.count == 0){
-                        self.showNoNetwork()
+                       // self.showNoNetwork()
                     }
                     self.homeCollectionView.reloadData()
                 } else{
-                    self.showNoNetwork()
+                    //self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
@@ -1343,6 +1360,19 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             loginPopUpView.passwordText.resignFirstResponder()
         }
         return true
+    }
+    func loadTourViewPage(nid: String?,subTitle:String?,isFromTour:Bool?) {
+        let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        tourView.tourDetailId = nid
+        tourView.headerTitle = subTitle
+        tourView.isFromTour = isFromTour
+        tourView.exhibitionsPageNameString = ExhbitionPageName.nmoqTourSecondList
+        let transition = CATransition()
+        transition.duration = 0.25
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(tourView, animated: false, completion: nil)
     }
     @objc func receiveHomePageNotificationEn(notification: NSNotification) {
         if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (homeList.count == 0)){

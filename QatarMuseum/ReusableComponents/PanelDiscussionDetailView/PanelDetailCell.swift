@@ -267,7 +267,70 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
         NSLayoutConstraint.activate([verticalSpace])
         
     }
-    
+    func setFacilitiesDetailData(facilitiesDetailData: FacilitiesDetail?) {
+        numbOfRservationsLabel.isHidden = true
+        registerButton.isHidden = true
+        switchBottomConstraint.constant = 0
+        topTitle.text = facilitiesDetailData?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+        topDescription.text = facilitiesDetailData?.facilitiesDes?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+        topDescription.textAlignment = .center
+        secondImg.isHidden = true
+        secondTitle.isHidden = true
+        secondDescription.isHidden = true
+        secondView.isHidden = true
+        secondTitleLine.isHidden = true
+        contactTitle.isHidden = true
+        contactTitleLine.isHidden = true
+        dateTitle.text = NSLocalizedString("OPENING_TIME_TITLE", comment: "OPENING_TIME_TITLE in Paneldetail Page").capitalized
+        dateText.text = facilitiesDetailData?.timing?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+        venueTitle.text = NSLocalizedString("LOCATION_TITLE", comment: "LOCATION_TITLE in Paneldetail Page").capitalized
+
+        
+        if ((facilitiesDetailData?.images?.count)! > 0) {
+            if let imageUrl = facilitiesDetailData?.images![0]{
+                topImg.kf.setImage(with: URL(string: imageUrl))
+            }
+        }
+        if (topImg.image == nil) {
+            topImg.image = UIImage(named: "default_imageX2")
+        }
+        //Details For Map
+        var latitudeString  = String()
+        var longitudeString = String()
+        var latitude : Double?
+        var longitude : Double?
+        
+        if (facilitiesDetailData?.latitude != nil && facilitiesDetailData?.latitude != "" && facilitiesDetailData?.longtitude != nil && facilitiesDetailData?.longtitude != "") {
+            latitudeString = (facilitiesDetailData?.latitude)!
+            longitudeString = (facilitiesDetailData?.longtitude)!
+            if let lat : Double = Double(latitudeString) {
+                latitude = lat
+            }
+            if let long : Double = Double(longitudeString) {
+                longitude = long
+            }
+            
+            let location = CLLocationCoordinate2D(latitude: latitude!,
+                                                  longitude: longitude!)
+            
+            // 2
+            let span = MKCoordinateSpanMake(0.05, 0.05)
+            let region = MKCoordinateRegion(center: location, span: span)
+            mapView.setRegion(region, animated: true)
+            //3
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = location
+            mapView.addAnnotation(annotation)
+        }
+        
+        
+        let verticalSpace = NSLayoutConstraint(item: self.topView, attribute: .bottom, relatedBy: .equal, toItem: self.thirdView, attribute: .top, multiplier: 1, constant: -16)
+        
+        
+        // activate the constraints
+        NSLayoutConstraint.activate([verticalSpace])
+        
+    }
     @IBAction func didTapRegisterButton(_ sender: UIButton) {
         
         self.registerOrUnRegisterAction?()

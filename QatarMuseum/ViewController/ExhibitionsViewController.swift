@@ -19,6 +19,8 @@ enum ExhbitionPageName {
     case museumCollectionsList
     case diningList
     case nmoqTourSecondList
+    case facilitiesSecondList
+    case miaTourGuideList
 }
 class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol,LoadingViewProtocol {
     @IBOutlet weak var exhibitionHeaderView: CommonHeaderView!
@@ -31,6 +33,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
     var collection: [Collection] = []
     var diningListArray : [Dining]! = []
     var nmoqTourDetail: [NMoQTourDetail]! = []
+    var facilitiesDetail: [FacilitiesDetail]! = []
+    var miaTourDataFullArray: [TourGuide] = []
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var exhibitionsPageNameString : ExhbitionPageName?
     let networkReachability = NetworkReachabilityManager()
@@ -42,6 +46,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
     var tourDesc: String = ""
     var tourDetailId : String? = nil
     var headerTitle : String? = nil
+    var dataInCoreData : Bool? = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,13 +64,16 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             exhibitionHeaderView.headerTitle.text = NSLocalizedString("EXHIBITIONS_TITLE", comment: "EXHIBITIONS_TITLE Label in the Exhibitions page")
             NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveExhibitionListNotificationEn(notification:)), name: NSNotification.Name(exhibitionsListNotificationEn), object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveExhibitionListNotificationAr(notification:)), name: NSNotification.Name(exhibitionsListNotificationAr), object: nil)
+            
+            
             if  (networkReachability?.isReachable)! {
                 if (exhibitionsPageNameString == ExhbitionPageName.homeExhibition) {
-                    DispatchQueue.global(qos: .background).async {
-                        self.getExhibitionDataFromServer()
-                    }
+//                    DispatchQueue.global(qos: .background).async {
+//                        self.getExhibitionDataFromServer()
+//                    }
                     self.fetchExhibitionsListFromCoredata()
-                } else if (exhibitionsPageNameString == ExhbitionPageName.museumExhibition){
+                } else
+                    if (exhibitionsPageNameString == ExhbitionPageName.museumExhibition){
                     getMuseumExhibitionDataFromServer()
                 }
             } else {
@@ -82,18 +90,18 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             self.fetchHeritageListFromCoredata()
             NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveHeritageListNotificationEn(notification:)), name: NSNotification.Name(heritageListNotificationEn), object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveHeritageListNotificationAr(notification:)), name: NSNotification.Name(heritageListNotificationAr), object: nil)
-            if  (networkReachability?.isReachable)! {
-                DispatchQueue.global(qos: .background).async {
-                    self.getHeritageDataFromServer()
-                }
-            }
+//            if  (networkReachability?.isReachable)! {
+//                DispatchQueue.global(qos: .background).async {
+//                    self.getHeritageDataFromServer()
+//                }
+//            }
         } else if (exhibitionsPageNameString == ExhbitionPageName.publicArtsList) {
             exhibitionHeaderView.headerTitle.text = NSLocalizedString("PUBLIC_ARTS_TITLE", comment: "PUBLIC_ARTS_TITLE Label in the PublicArts page")
-            if  (networkReachability?.isReachable)! {
-                DispatchQueue.global(qos: .background).async {
-                    self.getPublicArtsListDataFromServer()
-                }
-            }
+//            if  (networkReachability?.isReachable)! {
+//                DispatchQueue.global(qos: .background).async {
+//                    self.getPublicArtsListDataFromServer()
+//                }
+//            }
             self.fetchPublicArtsListFromCoredata()
             NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receivePublicArtsListNotificationEn(notification:)), name: NSNotification.Name(publicArtsListNotificationEn), object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receivePublicArtsListNotificationAr(notification:)), name: NSNotification.Name(publicArtsListNotificationAr), object: nil)
@@ -102,11 +110,11 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveCollectionListNotificationEn(notification:)), name: NSNotification.Name(collectionsListNotificationEn), object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveCollectionListNotificationAr(notification:)), name: NSNotification.Name(collectionsListNotificationAr), object: nil)
             if((museumId == "63") || (museumId == "96")) {
-                if (networkReachability?.isReachable)! {
-                    DispatchQueue.global(qos: .background).async {
-                        self.getCollectionList()
-                    }
-                }
+//                if (networkReachability?.isReachable)! {
+//                    DispatchQueue.global(qos: .background).async {
+//                        self.getCollectionList()
+//                    }
+//                }
                 self.fetchCollectionListFromCoredata()
             } else {
                 if (networkReachability?.isReachable)! {
@@ -119,11 +127,11 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             exhibitionHeaderView.headerTitle.text = NSLocalizedString("DINING_TITLE", comment: "DINING_TITLE in the Dining page")
             if(fromHome) {
                 self.fetchDiningListFromCoredata()
-                if  (networkReachability?.isReachable)! {
-                    DispatchQueue.global(qos: .background).async {
-                        self.getDiningListFromServer()
-                    }
-                }
+//                if  (networkReachability?.isReachable)! {
+//                    DispatchQueue.global(qos: .background).async {
+//                        self.getDiningListFromServer()
+//                    }
+//                }
             } else {
                 self.fetchMuseumDiningListFromCoredata()
                 if  (networkReachability?.isReachable)! {
@@ -140,6 +148,19 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             } else {
                 fetchTourDetailsFromCoredata()
             }
+        } else if (exhibitionsPageNameString == ExhbitionPageName.facilitiesSecondList) {
+            exhibitionHeaderView.headerTitle.text = headerTitle?.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil).replacingOccurrences(of: "&amp;", with: "&", options: .regularExpression, range: nil).uppercased()
+            if (networkReachability?.isReachable)! {
+                getFacilitiesDetail()
+            } else {
+                fetchFacilitiesDetailsFromCoredata()
+            }
+        } else if (exhibitionsPageNameString == ExhbitionPageName.miaTourGuideList) {
+            NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveMiaTourNotification(notification:)), name: NSNotification.Name(miaTourNotification), object: nil)
+            DispatchQueue.main.async {
+                self.fetchTourGuideListFromCoredata()
+            }
+            exhibitionHeaderView.headerTitle.isHidden = true
         }
         popupView.comingSoonPopupDelegate = self
         
@@ -153,6 +174,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         self.exhibitionCollectionView.register(UINib(nibName: "ExhibitionsCellXib", bundle: nil), forCellReuseIdentifier: "exhibitionCellId")
         self.exhibitionCollectionView.register(UINib(nibName: "HeritageCellXib", bundle: nil), forCellReuseIdentifier: "heritageCellXibId")
         self.exhibitionCollectionView.register(UINib(nibName: "NMoQListCell", bundle: nil), forCellReuseIdentifier: "nMoQListCellId")
+        self.exhibitionCollectionView.register(UINib(nibName: "MiaTourHeaderView", bundle: nil), forCellReuseIdentifier: "miaHeaderId")
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -164,9 +186,26 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         _ = Alamofire.request(QatarMuseumRouter.ExhibitionList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<Exhibitions>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateExhibitionsCoredata(exhibition: data.exhibitions)
+                if(self.exhibition.count == 0) {
+                    self.exhibition = data.exhibitions
+                    self.exhibitionCollectionView.reloadData()
+                    if(self.exhibition.count == 0) {
+                        self.exbtnLoadingView.stopLoading()
+                        self.exbtnLoadingView.noDataView.isHidden = false
+                        self.exbtnLoadingView.isHidden = false
+                        self.exbtnLoadingView.showNoDataView()
+                    }
+                }
+                if(self.exhibition.count > 0) {
+                    self.saveOrUpdateExhibitionsCoredata(exhibition: data.exhibitions, isHomeExhibition: "1")
+                }
             case .failure( _):
-                print("error")
+                if(self.exhibition.count == 0) {
+                    self.exbtnLoadingView.stopLoading()
+                    self.exbtnLoadingView.noDataView.isHidden = false
+                    self.exbtnLoadingView.isHidden = false
+                    self.exbtnLoadingView.showNoDataView()
+                }
             }
         }
     }
@@ -177,7 +216,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             switch response.result {
             case .success(let data):
                 self.exhibition = data.exhibitions
-                self.saveOrUpdateExhibitionsCoredata(exhibition: data.exhibitions)
+                self.saveOrUpdateExhibitionsCoredata(exhibition: data.exhibitions, isHomeExhibition: "0")
                 self.exhibitionCollectionView.reloadData()
                 self.exbtnLoadingView.stopLoading()
                 self.exbtnLoadingView.isHidden = true
@@ -219,11 +258,20 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             return diningListArray.count
         case .nmoqTourSecondList?:
             return nmoqTourDetail.count
+        case .facilitiesSecondList?:
+            return facilitiesDetail.count
+        case .miaTourGuideList?:
+            if (miaTourDataFullArray.count > 0) {
+                return miaTourDataFullArray.count+1
+            }
+            return 0
         default:
             return 0
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        exbtnLoadingView.stopLoading()
+        exbtnLoadingView.isHidden = true
         if ((exhibitionsPageNameString == ExhbitionPageName.homeExhibition) || (exhibitionsPageNameString == ExhbitionPageName.museumExhibition)) {
             let exhibitionCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
             exhibitionCell.setExhibitionCellValues(exhibition: exhibition[indexPath.row])
@@ -232,45 +280,67 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.loadExhibitionCellPages(cellObj: exhibitionCell, selectedIndex: indexPath.row)
             }
             exhibitionCell.selectionStyle = .none
-            exbtnLoadingView.stopLoading()
-            exbtnLoadingView.isHidden = true
+            
             return exhibitionCell
         } else if (exhibitionsPageNameString == ExhbitionPageName.heritageList) {
             let heritageCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "heritageCellXibId", for: indexPath) as! HeritageTableViewCell
             heritageCell.setHeritageListCellValues(heritageList: heritageListArray[indexPath.row])
-            exbtnLoadingView.stopLoading()
-            exbtnLoadingView.isHidden = true
             return heritageCell
         } else if (exhibitionsPageNameString == ExhbitionPageName.publicArtsList) {
             let publicArtsCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "heritageCellXibId", for: indexPath) as! HeritageTableViewCell
             publicArtsCell.setPublicArtsListCellValues(publicArtsList: publicArtsListArray[indexPath.row])
-            exbtnLoadingView.stopLoading()
-            exbtnLoadingView.isHidden = true
             return publicArtsCell
         } else if (exhibitionsPageNameString == ExhbitionPageName.museumCollectionsList) {
             let collectionsCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "heritageCellXibId", for: indexPath) as! HeritageTableViewCell
             collectionsCell.setCollectionsCellValues(collectionList: collection[indexPath.row])
-            exbtnLoadingView.stopLoading()
-            exbtnLoadingView.isHidden = true
             return collectionsCell
         } else if (exhibitionsPageNameString == ExhbitionPageName.diningList) {
             let diningListCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "heritageCellXibId", for: indexPath) as! HeritageTableViewCell
             diningListCell.setDiningListValues(diningList: diningListArray[indexPath.row])
-            exbtnLoadingView.stopLoading()
-            exbtnLoadingView.isHidden = true
             return diningListCell
-        } else {
+        } else if (exhibitionsPageNameString == ExhbitionPageName.nmoqTourSecondList){
             let nmoqTourSecondListCell = tableView.dequeueReusableCell(withIdentifier: "nMoQListCellId", for: indexPath) as! NMoQListCell
             nmoqTourSecondListCell.setTourMiddleDate(tourList: nmoqTourDetail[indexPath.row])
-            exbtnLoadingView.stopLoading()
-            exbtnLoadingView.isHidden = true
             return nmoqTourSecondListCell
+        } else if (exhibitionsPageNameString == ExhbitionPageName.facilitiesSecondList){
+            let facilitiesSecondListCell = tableView.dequeueReusableCell(withIdentifier: "nMoQListCellId", for: indexPath) as! NMoQListCell
+            facilitiesSecondListCell.setFacilitiesDetail(FacilitiesDetailData: facilitiesDetail[indexPath.row])
+            return facilitiesSecondListCell
+        } else {
+            if (indexPath.row == 0) {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "miaHeaderId", for: indexPath) as! MiaCollectionReusableView
+                if (miaTourDataFullArray.count > 0) {
+                    if((museumId == "66") || (museumId == "638")) {
+                        cell.setNMoQHeaderData()
+                    } else {
+                        cell.setHeader()
+                        cell.exploreButtonTapAction = {
+                            () in
+                            self.exploreButtonAction()
+                        }
+                    }
+                }
+                return cell
+            } else {
+                let tourGuideCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "heritageCellXibId", for: indexPath) as! HeritageTableViewCell
+                tourGuideCell.setScienceTourGuideCellData(homeCellData: miaTourDataFullArray[indexPath.row-1])
+                return tourGuideCell
+            }
         }
         
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let heightValue = UIScreen.main.bounds.height/100
-        return heightValue*27
+        if (exhibitionsPageNameString == ExhbitionPageName.miaTourGuideList) {
+            if (indexPath.row == 0) {
+                return UITableViewAutomaticDimension
+            } else {
+                let heightValue = UIScreen.main.bounds.height/100
+                return heightValue*27
+            }
+        } else {
+            let heightValue = UIScreen.main.bounds.height/100
+            return heightValue*27
+        }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if ((exhibitionsPageNameString == ExhbitionPageName.homeExhibition) || (exhibitionsPageNameString == ExhbitionPageName.museumExhibition)) {
@@ -292,10 +362,17 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             loadDiningDetailAnimation(idValue: diningId!)
         }  else if (exhibitionsPageNameString == ExhbitionPageName.nmoqTourSecondList) {
             if (isFromTour)! {
-                loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: true)
+                loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: true, pageName: ExhbitionPageName.nmoqTourSecondList)
             } else {
-                loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: false)
+                loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: false, pageName: ExhbitionPageName.nmoqTourSecondList)
             }
+        } else if (exhibitionsPageNameString == ExhbitionPageName.miaTourGuideList) {
+            if (indexPath.row != 0) {
+                loadMiaTourDetail(currentRow: indexPath.row - 1)
+            }
+        }
+        else if (exhibitionsPageNameString == ExhbitionPageName.facilitiesSecondList) {
+            loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: false, pageName: ExhbitionPageName.facilitiesSecondList)
         }
         
     }
@@ -362,16 +439,26 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         self.present(diningDetailView, animated: false, completion: nil)
         
     }
-    func loadTourSecondDetailPage(selectedRow: Int?,fromTour:Bool?) {
+    func loadTourSecondDetailPage(selectedRow: Int?,fromTour:Bool?,pageName: ExhbitionPageName?) {
         let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
-        panelView.nmoqTourDetail = nmoqTourDetail
+        
         panelView.selectedRow = selectedRow
-        if (fromTour)! {
-            panelView.pageNameString = NMoQPanelPage.TourDetailPage
-        } else {
-            panelView.pageNameString = NMoQPanelPage.PanelDetailPage
+        
+        if(pageName == ExhbitionPageName.nmoqTourSecondList) {
+            panelView.nmoqTourDetail = nmoqTourDetail
+            panelView.panelDetailId = tourDetailId
+
+            if (fromTour)! {
+                panelView.pageNameString = NMoQPanelPage.TourDetailPage
+            } else {
+                panelView.pageNameString = NMoQPanelPage.PanelDetailPage
+            }
+        } else if(pageName == ExhbitionPageName.facilitiesSecondList) {
+            panelView.pageNameString = NMoQPanelPage.FacilitiesDetailPage
+            panelView.panelDetailId = facilitiesDetail![selectedRow!].nid
+            panelView.facilitiesDetail = facilitiesDetail
+            panelView.fromCafeOrDining = true
         }
-        panelView.panelDetailId = tourDetailId
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionPush
@@ -397,7 +484,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "homeId") as! HomeViewController
                 let appDelegate = UIApplication.shared.delegate
                 appDelegate?.window??.rootViewController = homeViewController
-            case .museumExhibition?,.museumCollectionsList?,.nmoqTourSecondList?:
+            case .museumExhibition?,.museumCollectionsList?,.nmoqTourSecondList?,.facilitiesSecondList?,.miaTourGuideList?:
                 self.dismiss(animated: false, completion: nil)
             case .diningList?:
                 if (fromHome == true) {
@@ -418,24 +505,24 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     //MARK: Coredata Method
-    func saveOrUpdateExhibitionsCoredata(exhibition:[Exhibition]?) {
+    func saveOrUpdateExhibitionsCoredata(exhibition:[Exhibition]?,isHomeExhibition : String?) {
         if ((exhibition?.count)! > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
                 let container = appDelegate!.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
-                    self.coreDataInBackgroundThread(managedContext: managedContext, exhibition: exhibition)
+                    self.coreDataInBackgroundThread(managedContext: managedContext, exhibition: exhibition,isHomeExhibition :isHomeExhibition)
                 }
             } else {
                 let managedContext = appDelegate!.managedObjectContext
                 managedContext.perform {
-                    self.coreDataInBackgroundThread(managedContext : managedContext, exhibition: exhibition)
+                    self.coreDataInBackgroundThread(managedContext : managedContext, exhibition: exhibition,isHomeExhibition :isHomeExhibition)
                 }
             }
         }
     }
     
-    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,exhibition:[Exhibition]?) {
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,exhibition:[Exhibition]?,isHomeExhibition : String?) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = self.checkAddedToCoredata(entityName: "ExhibitionsEntity", idKey: "id", idValue: nil, managedContext: managedContext) as! [ExhibitionsEntity]
             if (fetchData.count > 0) {
@@ -452,6 +539,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                         exhibitionsdbDict.location =  exhibitionsListDict.location
                         exhibitionsdbDict.museumId = exhibitionsListDict.museumId
                         exhibitionsdbDict.status = exhibitionsListDict.status
+                        exhibitionsdbDict.isHomeExhibition = isHomeExhibition
                         do {
                             try managedContext.save()
                         }
@@ -460,14 +548,14 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                         }
                     } else {
                         //save
-                        self.saveToCoreData(exhibitionDict: exhibitionsListDict, managedObjContext: managedContext, exhibition: exhibition)
+                        self.saveToCoreData(exhibitionDict: exhibitionsListDict, managedObjContext: managedContext, exhibition: exhibition,isHomeExhibition :isHomeExhibition)
                     }
                 }//for
             } else {
                 for i in 0 ... self.exhibition.count-1 {
                     let exhibitionListDict : Exhibition?
                     exhibitionListDict = self.exhibition[i]
-                    self.saveToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext, exhibition: exhibition)
+                    self.saveToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext, exhibition: exhibition,isHomeExhibition :isHomeExhibition)
                 }
             }
         } else {
@@ -486,6 +574,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                         exhibitiondbDict.locationArabic =  exhibitionListDict.location
                         exhibitiondbDict.museumId =  exhibitionListDict.museumId
                         exhibitiondbDict.status =  exhibitionListDict.status
+                        exhibitiondbDict.isHomeExhibition =  isHomeExhibition
                         do {
                             try managedContext.save()
                         }
@@ -494,20 +583,20 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                         }
                     } else {
                         //save
-                        self.saveToCoreData(exhibitionDict: exhibitionListDict, managedObjContext: managedContext, exhibition: exhibition)
+                        self.saveToCoreData(exhibitionDict: exhibitionListDict, managedObjContext: managedContext, exhibition: exhibition,isHomeExhibition :isHomeExhibition)
                     }
                 }
             } else {
                 for i in 0 ... self.exhibition.count-1 {
                     let exhibitionListDict : Exhibition?
                     exhibitionListDict = self.exhibition[i]
-                    self.saveToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext, exhibition: exhibition)
+                    self.saveToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext, exhibition: exhibition,isHomeExhibition :isHomeExhibition)
                 }
             }
         }
     }
     
-    func saveToCoreData(exhibitionDict: Exhibition, managedObjContext: NSManagedObjectContext,exhibition:[Exhibition]?) {
+    func saveToCoreData(exhibitionDict: Exhibition, managedObjContext: NSManagedObjectContext,exhibition:[Exhibition]?,isHomeExhibition : String?) {
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             let exhibitionInfo: ExhibitionsEntity = NSEntityDescription.insertNewObject(forEntityName: "ExhibitionsEntity", into: managedObjContext) as! ExhibitionsEntity
             
@@ -519,6 +608,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             exhibitionInfo.location =  exhibitionDict.location
             exhibitionInfo.museumId =  exhibitionDict.museumId
             exhibitionInfo.status =  exhibitionDict.status
+            exhibitionInfo.isHomeExhibition =  isHomeExhibition
         } else {
             let exhibitionInfo: ExhibitionsEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "ExhibitionsEntityArabic", into: managedObjContext) as! ExhibitionsEntityArabic
             exhibitionInfo.id = exhibitionDict.id
@@ -529,6 +619,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             exhibitionInfo.locationArabic =  exhibitionDict.location
             exhibitionInfo.museumId =  exhibitionDict.museumId
             exhibitionInfo.status =  exhibitionDict.status
+            exhibitionInfo.isHomeExhibition =  isHomeExhibition
         }
         do {
             try managedObjContext.save()
@@ -543,9 +634,13 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var exhibitionArray = [ExhibitionsEntity]()
-                let exhibitionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ExhibitionsEntity")
-                exhibitionArray = (try managedContext.fetch(exhibitionFetchRequest) as? [ExhibitionsEntity])!
+                exhibitionArray = checkAddedToCoredata(entityName: "ExhibitionsEntity", idKey: "isHomeExhibition", idValue: "1", managedContext: managedContext) as! [ExhibitionsEntity]
                 if (exhibitionArray.count > 0) {
+                    if((self.networkReachability?.isReachable)!) {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getExhibitionDataFromServer()
+                        }
+                }
                     for i in 0 ... exhibitionArray.count-1 {
                         self.exhibition.insert(Exhibition(id: exhibitionArray[i].id, name: exhibitionArray[i].name, image: exhibitionArray[i].image,detailImage:nil, startDate: exhibitionArray[i].startDate, endDate: exhibitionArray[i].endDate, location: exhibitionArray[i].location, latitude: nil, longitude: nil, shortDescription: nil, longDescription: nil,museumId :exhibitionArray[i].museumId,status :exhibitionArray[i].status,displayDate :exhibitionArray[i].dispalyDate), at: i)
                         
@@ -556,7 +651,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                         } else {
                             self.exbtnLoadingView.showNoDataView()
                         }
-                    }
+                    } 
                     DispatchQueue.main.async{
                         self.exhibitionCollectionView.reloadData()
                     }
@@ -564,14 +659,19 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.exbtnLoadingView.showNoDataView()
+                        //self.exbtnLoadingView.showNoDataView()
+                        self.getExhibitionDataFromServer() //coreDataMigratio  solution
                     }
                 }
             } else {
                 var exhibitionArray = [ExhibitionsEntityArabic]()
-                let exhibitionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ExhibitionsEntityArabic")
-                exhibitionArray = (try managedContext.fetch(exhibitionFetchRequest) as? [ExhibitionsEntityArabic])!
+                exhibitionArray = checkAddedToCoredata(entityName: "ExhibitionsEntityArabic", idKey: "isHomeExhibition", idValue: "1", managedContext: managedContext) as! [ExhibitionsEntityArabic]
                 if (exhibitionArray.count > 0) {
+                    if((self.networkReachability?.isReachable)!) {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getExhibitionDataFromServer()
+                        }
+                    }
                     for i in 0 ... exhibitionArray.count-1 {
                         
                         self.exhibition.insert(Exhibition(id: exhibitionArray[i].id, name: exhibitionArray[i].nameArabic, image: exhibitionArray[i].imageArabic,detailImage:nil, startDate: exhibitionArray[i].startDateArabic, endDate: exhibitionArray[i].endDateArabic, location: exhibitionArray[i].locationArabic, latitude: nil, longitude: nil, shortDescription: nil, longDescription: nil,museumId :exhibitionArray[i].museumId,status :exhibitionArray[i].status,displayDate :exhibitionArray[i].displayDateAr), at: i)
@@ -591,12 +691,16 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.exbtnLoadingView.showNoDataView()
+                       // self.exbtnLoadingView.showNoDataView()
+                        self.getExhibitionDataFromServer() //coreDataMigratio  solution
                     }
                 }
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
+            if (networkReachability?.isReachable == false) {
+                self.showNoNetwork()
+            }
         }
     }
     //MARK: MuseumExhibitionDatabase Fetch
@@ -613,13 +717,21 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                     }
                     if(exhibition.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.exbtnLoadingView.showNoDataView()
+                        }
                     }
                     DispatchQueue.main.async{
                         self.exhibitionCollectionView.reloadData()
                     }
                 } else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.exbtnLoadingView.showNoDataView()
+                    }
                 }
             } else {
                 var exhibitionArray = [ExhibitionsEntityArabic]()
@@ -631,14 +743,22 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                     }
                     if(exhibition.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.exbtnLoadingView.showNoDataView()
+                        }
                     }
                     DispatchQueue.main.async{
                         self.exhibitionCollectionView.reloadData()
                     }
                 }
                 else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.exbtnLoadingView.showNoDataView()
+                    }
                 }
             }
         }
@@ -689,6 +809,10 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 } else {
                     self.getMuseumDiningListFromServer()
                 }
+            } else if (exhibitionsPageNameString == ExhbitionPageName.nmoqTourSecondList){
+                self.getNMoQTourDetail()
+            } else if (exhibitionsPageNameString == ExhbitionPageName.miaTourGuideList){
+                self.getTourGuideDataFromServer()
             }
         }
     }
@@ -708,6 +832,14 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             self.fetchExhibitionsListFromCoredata()
         }
     }
+    @objc func receiveMiaTourNotification(notification: NSNotification) {
+        let data = notification.userInfo as? [String:String]
+        if (data?.count)!>0 {
+            if(museumId == data!["id"]) {
+                self.fetchTourGuideListFromCoredata()
+            }
+        }
+    }
     func recordScreenView() {
         let screenClass = String(describing: type(of: self))
         if ((exhibitionsPageNameString == ExhbitionPageName.homeExhibition) ||  (exhibitionsPageNameString == ExhbitionPageName.homeExhibition)) {
@@ -722,6 +854,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             Analytics.setScreenName(DINING_LIST, screenClass: screenClass)
         } else if (exhibitionsPageNameString == ExhbitionPageName.nmoqTourSecondList) {
             Analytics.setScreenName(NMOQ_TOUR_SECOND_LIST, screenClass: screenClass)
+        } else if (exhibitionsPageNameString == ExhbitionPageName.miaTourGuideList) {
+            Analytics.setScreenName(MIA_TOUR_GUIDE, screenClass: screenClass)
         }
         
         
@@ -731,9 +865,26 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         _ = Alamofire.request(QatarMuseumRouter.HeritageList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<Heritages>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateHeritageCoredata(heritageListArray: data.heritage)
+                if(self.heritageListArray.count == 0) {
+                    self.heritageListArray = data.heritage
+                    self.exhibitionCollectionView.reloadData()
+                    if(self.heritageListArray.count == 0) {
+                        self.exbtnLoadingView.stopLoading()
+                        self.exbtnLoadingView.noDataView.isHidden = false
+                        self.exbtnLoadingView.isHidden = false
+                        self.exbtnLoadingView.showNoDataView()
+                    }
+                }
+                if(self.heritageListArray.count > 0) {
+                    self.saveOrUpdateHeritageCoredata(heritageListArray: data.heritage)
+                }
             case .failure( _):
-                print("error")
+                if(self.heritageListArray.count == 0) {
+                    self.exbtnLoadingView.stopLoading()
+                    self.exbtnLoadingView.noDataView.isHidden = false
+                    self.exbtnLoadingView.isHidden = false
+                    self.exbtnLoadingView.showNoDataView()
+                }
             }
         }
     }
@@ -755,8 +906,12 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         }
     }
     func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,heritageListArray:[Heritage]?) {
+        var fetchData = [HeritageEntity]()
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            let fetchData = checkAddedToCoredata(entityName: "HeritageEntity", idKey: "listid", idValue: nil, managedContext: managedContext) as! [HeritageEntity]
+             fetchData = checkAddedToCoredata(entityName: "HeritageEntity", idKey: "lang", idValue: "1", managedContext: managedContext) as! [HeritageEntity]
+        } else {
+            fetchData = checkAddedToCoredata(entityName: "HeritageEntity", idKey: "lang", idValue: "0", managedContext: managedContext) as! [HeritageEntity]
+        }
             if (fetchData.count > 0) {
                 for i in 0 ... (heritageListArray?.count)!-1 {
                     let heritageListDict = heritageListArray![i]
@@ -767,7 +922,11 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                         heritagedbDict.listname = heritageListDict.name
                         heritagedbDict.listimage = heritageListDict.image
                         heritagedbDict.listsortid =  heritageListDict.sortid
-                        
+                        if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+                            heritagedbDict.lang =  "1"
+                        } else {
+                            heritagedbDict.lang =  "0"
+                        }
                         do{
                             try managedContext.save()
                         }
@@ -787,62 +946,24 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     self.saveToCoreData(heritageListDict: heritageListDict!, managedObjContext: managedContext)
                 }
             }
-        } else {
-            let fetchData = checkAddedToCoredata(entityName: "HeritageEntityArabic", idKey: "listid", idValue: nil, managedContext: managedContext) as! [HeritageEntityArabic]
-            if (fetchData.count > 0) {
-                for i in 0 ... (heritageListArray?.count)!-1 {
-                    let heritageListDict = heritageListArray![i]
-                    let fetchResult = checkAddedToCoredata(entityName: "HeritageEntityArabic", idKey: "listid", idValue: heritageListArray![i].id, managedContext: managedContext)
-                    //update
-                    if(fetchResult.count != 0) {
-                        let heritagedbDict = fetchResult[0] as! HeritageEntityArabic
-                        heritagedbDict.listnamearabic = heritageListDict.name
-                        heritagedbDict.listimagearabic = heritageListDict.image
-                        heritagedbDict.listsortidarabic =  heritageListDict.sortid
-                        
-                        do{
-                            try managedContext.save()
-                        }
-                        catch{
-                            print(error)
-                        }
-                    }
-                    else {
-                        //save
-                        self.saveToCoreData(heritageListDict: heritageListDict, managedObjContext: managedContext)
-                    }
-                }
-            }
-            else {
-                for i in 0 ... (heritageListArray?.count)!-1 {
-                    let heritageListDict : Heritage?
-                    heritageListDict = heritageListArray?[i]
-                    self.saveToCoreData(heritageListDict: heritageListDict!, managedObjContext: managedContext)
-                }
-            }
-        }
+        
+       
     }
     
     func saveToCoreData(heritageListDict: Heritage, managedObjContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+        //if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let heritageInfo: HeritageEntity = NSEntityDescription.insertNewObject(forEntityName: "HeritageEntity", into: managedObjContext) as! HeritageEntity
             heritageInfo.listid = heritageListDict.id
             heritageInfo.listname = heritageListDict.name
-            
             heritageInfo.listimage = heritageListDict.image
+            if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+                heritageInfo.lang =  "1"
+            } else {
+                heritageInfo.lang =  "0"
+            }
             if(heritageListDict.sortid != nil) {
                 heritageInfo.listsortid = heritageListDict.sortid
             }
-        } else {
-            let heritageInfo: HeritageEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "HeritageEntityArabic", into: managedObjContext) as! HeritageEntityArabic
-            heritageInfo.listid = heritageListDict.id
-            heritageInfo.listnamearabic = heritageListDict.name
-            
-            heritageInfo.listimagearabic = heritageListDict.image
-            if(heritageListDict.sortid != nil) {
-                heritageInfo.listsortidarabic = heritageListDict.sortid
-            }
-        }
         do {
             try managedObjContext.save()
         } catch let error as NSError {
@@ -853,11 +974,20 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
     func fetchHeritageListFromCoredata() {
         let managedContext = getContext()
         do {
+            var heritageArray = [HeritageEntity]()
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-                var heritageArray = [HeritageEntity]()
-                let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HeritageEntity")
-                heritageArray = (try managedContext.fetch(homeFetchRequest) as? [HeritageEntity])!
+                heritageArray = checkAddedToCoredata(entityName: "HeritageEntity", idKey: "lang", idValue: "1", managedContext: managedContext) as! [HeritageEntity]
+
+            } else {
+                heritageArray = checkAddedToCoredata(entityName: "HeritageEntity", idKey: "lang", idValue: "0", managedContext: managedContext) as! [HeritageEntity]
+
+            }
                 if (heritageArray.count > 0) {
+                    if((self.networkReachability?.isReachable)!) {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getHeritageDataFromServer()
+                        }
+                    }
                     for i in 0 ... heritageArray.count-1 {
                         
                         self.heritageListArray.insert(Heritage(id: heritageArray[i].listid, name: heritageArray[i].listname, location: nil, latitude: nil, longitude: nil, image: heritageArray[i].listimage, shortdescription: nil, longdescription: nil,images: nil, sortid: heritageArray[i].listsortid), at: i)
@@ -877,38 +1007,14 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.exbtnLoadingView.showNoDataView()
+                        self.getHeritageDataFromServer() //coreDataMigratio  solution
                     }
                 }
-            } else {
-                var heritageArray = [HeritageEntityArabic]()
-                let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HeritageEntityArabic")
-                heritageArray = (try managedContext.fetch(homeFetchRequest) as? [HeritageEntityArabic])!
-                if (heritageArray.count > 0) {
-                    for i in 0 ... heritageArray.count-1 {
-                        self.heritageListArray.insert(Heritage(id: heritageArray[i].listid, name: heritageArray[i].listnamearabic, location: nil, latitude: nil, longitude: nil, image: heritageArray[i].listimagearabic, shortdescription: nil, longdescription: nil,images: nil, sortid: heritageArray[i].listsortidarabic), at: i)
-                        
-                    }
-                    if(heritageListArray.count == 0){
-                        if(self.networkReachability?.isReachable == false) {
-                            self.showNoNetwork()
-                        } else {
-                            self.exbtnLoadingView.showNoDataView()
-                        }
-                    }
-                    DispatchQueue.main.async{
-                        self.exhibitionCollectionView.reloadData()
-                    }
-                } else {
-                    if(self.networkReachability?.isReachable == false) {
-                        self.showNoNetwork()
-                    } else {
-                        self.exbtnLoadingView.showNoDataView()
-                    }
-                }
-            }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
+            if (networkReachability?.isReachable == false) {
+                self.showNoNetwork()
+            }
         }
     }
     @objc func receiveHeritageListNotificationEn(notification: NSNotification) {
@@ -927,9 +1033,26 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         _ = Alamofire.request(QatarMuseumRouter.PublicArtsList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<PublicArtsLists>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdatePublicArtsCoredata(publicArtsListArray: data.publicArtsList, lang: LocalizationLanguage.currentAppleLanguage())
+                if(self.publicArtsListArray.count == 0) {
+                    self.publicArtsListArray = data.publicArtsList
+                    self.exhibitionCollectionView.reloadData()
+                    if(self.publicArtsListArray.count == 0) {
+                        self.exbtnLoadingView.stopLoading()
+                        self.exbtnLoadingView.noDataView.isHidden = false
+                        self.exbtnLoadingView.isHidden = false
+                        self.exbtnLoadingView.showNoDataView()
+                    }
+                }
+                if(self.publicArtsListArray.count > 0) {
+                    self.saveOrUpdatePublicArtsCoredata(publicArtsListArray: data.publicArtsList, lang: LocalizationLanguage.currentAppleLanguage())
+                }
             case .failure( _):
-                print("error")
+                if(self.publicArtsListArray.count == 0) {
+                    self.exbtnLoadingView.stopLoading()
+                    self.exbtnLoadingView.noDataView.isHidden = false
+                    self.exbtnLoadingView.isHidden = false
+                    self.exbtnLoadingView.showNoDataView()
+                }
             }
         }
     }
@@ -1061,6 +1184,11 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 let publicArtsFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "PublicArtsEntity")
                 publicArtsArray = (try managedContext.fetch(publicArtsFetchRequest) as? [PublicArtsEntity])!
                 if (publicArtsArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getPublicArtsListDataFromServer()
+                        }
+                    }
                     for i in 0 ... publicArtsArray.count-1 {
                         
                         self.publicArtsListArray.insert(PublicArtsList(id: publicArtsArray[i].id, name: publicArtsArray[i].name, latitude: publicArtsArray[i].latitude, longitude: publicArtsArray[i].longitude, image: publicArtsArray[i].image, sortcoefficient: publicArtsArray[i].sortcoefficient), at: i)
@@ -1079,7 +1207,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.exbtnLoadingView.showNoDataView()
+                        //self.exbtnLoadingView.showNoDataView()
+                        self.getPublicArtsListDataFromServer()//coreDataMigratio  solution
                     }
                 }
             }
@@ -1088,6 +1217,11 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 let publicArtsFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "PublicArtsEntityArabic")
                 publicArtsArray = (try managedContext.fetch(publicArtsFetchRequest) as? [PublicArtsEntityArabic])!
                 if (publicArtsArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getPublicArtsListDataFromServer()
+                        }
+                    }
                     for i in 0 ... publicArtsArray.count-1 {
                         
                         self.publicArtsListArray.insert(PublicArtsList(id: publicArtsArray[i].id, name: publicArtsArray[i].namearabic, latitude: publicArtsArray[i].latitudearabic, longitude: publicArtsArray[i].longitudearabic, image: publicArtsArray[i].imagearabic, sortcoefficient: publicArtsArray[i].sortcoefficientarabic), at: i)
@@ -1105,12 +1239,16 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.exbtnLoadingView.showNoDataView()
+                        //self.exbtnLoadingView.showNoDataView()
+                         self.getPublicArtsListDataFromServer()//coreDataMigratio  solution
                     }
                 }
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
+            if (networkReachability?.isReachable == false) {
+                self.showNoNetwork()
+            }
         }
     }
     @objc func receivePublicArtsListNotificationEn(notification: NSNotification) {
@@ -1244,6 +1382,13 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 var collectionArray = [CollectionsEntity]()
                 collectionArray = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: museumId, managedContext: managedContext) as! [CollectionsEntity]
                 if (collectionArray.count > 0) {
+                    if((museumId == "63") || (museumId == "96")) {
+                        if (networkReachability?.isReachable)! {
+                            DispatchQueue.global(qos: .background).async {
+                                self.getCollectionList()
+                            }
+                        }
+                    }
                     for i in 0 ... collectionArray.count-1 {
                         self.collection.insert(Collection(name: collectionArray[i].listName?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil), image: collectionArray[i].listImage, museumId: collectionArray[i].museumId), at: i)
                     }
@@ -1260,7 +1405,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.exbtnLoadingView.showNoDataView()
+                       // self.exbtnLoadingView.showNoDataView()
+                        self.getCollectionList()//coreDataMigratio  solution
                     }
                 }
             }
@@ -1268,6 +1414,13 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 var collectionArray = [CollectionsEntityArabic]()
                 collectionArray = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "museumId", idValue: museumId, managedContext: managedContext) as! [CollectionsEntityArabic]
                 if (collectionArray.count > 0) {
+                    if((museumId == "63") || (museumId == "96")) {
+                        if (networkReachability?.isReachable)! {
+                            DispatchQueue.global(qos: .background).async {
+                                self.getCollectionList()
+                            }
+                        }
+                    }
                     for i in 0 ... collectionArray.count-1 {
                         
                         self.collection.insert(Collection(name: collectionArray[i].listName?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil), image: collectionArray[i].listImageAr, museumId: collectionArray[i].museumId), at: i)
@@ -1285,7 +1438,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.exbtnLoadingView.showNoDataView()
+                       // self.exbtnLoadingView.showNoDataView()
+                        self.getCollectionList()//coreDataMigratio  solution
                     }
                 }
             }
@@ -1320,9 +1474,26 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         _ = Alamofire.request(QatarMuseumRouter.DiningList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<Dinings>) -> Void in
             switch response.result {
             case .success(let data):
-                self.saveOrUpdateDiningCoredata(diningListArray: data.dinings, lang: LocalizationLanguage.currentAppleLanguage())
+                if(self.diningListArray.count == 0) {
+                    self.diningListArray = data.dinings
+                    self.exhibitionCollectionView.reloadData()
+                    if(self.diningListArray.count == 0) {
+                        self.exbtnLoadingView.stopLoading()
+                        self.exbtnLoadingView.noDataView.isHidden = false
+                        self.exbtnLoadingView.isHidden = false
+                        self.exbtnLoadingView.showNoDataView()
+                    }
+                }
+                if(self.diningListArray.count > 0) {
+                    self.saveOrUpdateDiningCoredata(diningListArray: data.dinings, lang: LocalizationLanguage.currentAppleLanguage())
+                }
             case .failure( _):
-                print("error")
+                if(self.diningListArray.count == 0) {
+                    self.exbtnLoadingView.stopLoading()
+                    self.exbtnLoadingView.noDataView.isHidden = false
+                    self.exbtnLoadingView.isHidden = false
+                    self.exbtnLoadingView.showNoDataView()
+                }
             }
         }
     }
@@ -1474,13 +1645,21 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.diningListArray.insert(Dining(id: diningArray[i].id, name: diningArray[i].name, location: diningArray[i].location, description: diningArray[i].diningdescription, image: diningArray[i].image, openingtime: diningArray[i].openingtime, closetime: diningArray[i].closetime, sortid: diningArray[i].sortid,museumId: diningArray[i].museumId, images: nil), at: i)
                     }
                     if(diningListArray.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.exbtnLoadingView.showNoDataView()
+                        }
                     }
                     DispatchQueue.main.async{
                         self.exhibitionCollectionView.reloadData()
                     }
                 } else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                         self.exbtnLoadingView.showNoDataView()
+                    }
                 }
             } else {
                 var diningArray = [DiningEntityArabic]()
@@ -1491,14 +1670,22 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.diningListArray.insert(Dining(id: diningArray[i].id, name: diningArray[i].namearabic, location: diningArray[i].locationarabic, description: diningArray[i].descriptionarabic, image: diningArray[i].imagearabic, openingtime: diningArray[i].openingtimearabic, closetime: diningArray[i].closetimearabic, sortid: diningArray[i].sortidarabic,museumId: diningArray[i].museumId, images: nil), at: i)
                     }
                     if(diningListArray.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.exbtnLoadingView.showNoDataView()
+                        }
                     }
                     DispatchQueue.main.async{
                         self.exhibitionCollectionView.reloadData()
                     }
                 }
                 else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.exbtnLoadingView.showNoDataView()
+                    }
                 }
             }
         }
@@ -1512,6 +1699,11 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "DiningEntity")
                 diningArray = (try managedContext.fetch(homeFetchRequest) as? [DiningEntity])!
                 if (diningArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getDiningListFromServer()
+                        }
+                    }
                     for i in 0 ... diningArray.count-1 {
                         self.diningListArray.insert(Dining(id: diningArray[i].id, name: diningArray[i].name, location: diningArray[i].location, description: diningArray[i].diningdescription, image: diningArray[i].image, openingtime: diningArray[i].openingtime, closetime: diningArray[i].closetime, sortid: diningArray[i].sortid,museumId: diningArray[i].museumId, images: nil), at: i)
                         
@@ -1530,7 +1722,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.exbtnLoadingView.showNoDataView()
+                       // self.exbtnLoadingView.showNoDataView()
+                        self.getDiningListFromServer()//coreDataMigratio  solution
                     }
                 }
             } else {
@@ -1538,6 +1731,11 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 let diningFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "DiningEntityArabic")
                 diningArray = (try managedContext.fetch(diningFetchRequest) as? [DiningEntityArabic])!
                 if (diningArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getDiningListFromServer()
+                        }
+                    }
                     for i in 0 ... diningArray.count-1 {
                         self.diningListArray.insert(Dining(id: diningArray[i].id, name: diningArray[i].namearabic, location: diningArray[i].locationarabic, description: diningArray[i].descriptionarabic, image: diningArray[i].imagearabic, openingtime: diningArray[i].openingtimearabic, closetime: diningArray[i].closetimearabic, sortid: diningArray[i].sortidarabic,museumId: diningArray[i].museumId, images: nil), at: i)
                     }
@@ -1556,12 +1754,16 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     if(self.networkReachability?.isReachable == false) {
                         self.showNoNetwork()
                     } else {
-                        self.exbtnLoadingView.showNoDataView()
+                        //self.exbtnLoadingView.showNoDataView()
+                        self.getDiningListFromServer()//coreDataMigratio  solution
                     }
                 }
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
+            if (networkReachability?.isReachable == false) {
+                self.showNoNetwork()
+            }
         }
     }
     //MARK: NMoQTour SecondList Methods
@@ -1844,7 +2046,11 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                     }
                 }
                 else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.exbtnLoadingView.showNoDataView()
+                    }
                 }
             } else {
                 var tourDetailArray = [NmoqTourDetailEntityAr]()
@@ -1881,6 +2087,652 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 }
             }
         }
+    }
+    //MARK: Facilities SecondaryList ServiceCall
+    func getFacilitiesDetail() {
+        if(tourDetailId != nil) {
+            _ = Alamofire.request(QatarMuseumRouter.GetFacilitiesDetail(["category_id" : tourDetailId!])).responseObject { (response: DataResponse<FacilitiesDetailData>) -> Void in
+                switch response.result {
+                case .success(let data):
+                    self.facilitiesDetail = data.facilitiesDetail
+                    self.exhibitionCollectionView.reloadData()
+                    if(self.nmoqTourDetail.count == 0) {
+                        let noResultMsg = NSLocalizedString("NO_RESULT_MESSAGE",
+                                                            comment: "Setting the content of the alert")
+                        self.exbtnLoadingView.stopLoading()
+                        self.exbtnLoadingView.noDataView.isHidden = false
+                        self.exbtnLoadingView.isHidden = false
+                        self.exbtnLoadingView.showNoDataView()
+                        self.exbtnLoadingView.noDataLabel.text = noResultMsg
+                    } else {
+                        self.saveOrUpdateFacilitiesDetailCoredata()
+                    }
+                case .failure( _):
+                    var errorMessage: String
+                    errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                    comment: "Setting the content of the alert"))
+                    self.exbtnLoadingView.stopLoading()
+                    self.exbtnLoadingView.noDataView.isHidden = false
+                    self.exbtnLoadingView.isHidden = false
+                    self.exbtnLoadingView.showNoDataView()
+                    self.exbtnLoadingView.noDataLabel.text = errorMessage
+                }
+            }
+        }
+        
+    }
+    //MARK: Coredata Method
+    func saveOrUpdateFacilitiesDetailCoredata() {
+        if (facilitiesDetail.count > 0) {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.facilitiesDetailCoreDataInBackgroundThread(managedContext: managedContext)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.facilitiesDetailCoreDataInBackgroundThread(managedContext : managedContext)
+                }
+            }
+        }
+    }
+    func facilitiesDetailCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "FacilitiesDetailEntity", idKey: "category", idValue: tourDetailId, managedContext: managedContext) as! [FacilitiesDetailEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... facilitiesDetail.count-1 {
+                    let facilitiesDetailDict = facilitiesDetail[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "FacilitiesDetailEntity", idKey: "nid", idValue: facilitiesDetailDict.nid, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let facilitiesDetaildbDict = fetchResult[0] as! FacilitiesDetailEntity
+                        facilitiesDetaildbDict.title = facilitiesDetailDict.title
+                        facilitiesDetaildbDict.subtitle = facilitiesDetailDict.subtitle
+                        facilitiesDetaildbDict.facilitiesDes =  facilitiesDetailDict.facilitiesDes
+                        facilitiesDetaildbDict.timing =  facilitiesDetailDict.timing
+                        facilitiesDetaildbDict.titleTiming = facilitiesDetailDict.titleTiming
+                        facilitiesDetaildbDict.nid = facilitiesDetailDict.nid
+                        facilitiesDetaildbDict.longtitude =  facilitiesDetailDict.longtitude
+                        facilitiesDetaildbDict.category =  facilitiesDetailDict.category
+                        facilitiesDetaildbDict.latitude = facilitiesDetailDict.latitude
+                        facilitiesDetaildbDict.locationTitle = facilitiesDetailDict.locationTitle
+                        
+                        
+                        if(facilitiesDetailDict.images != nil){
+                            if((facilitiesDetailDict.images?.count)! > 0) {
+                                for i in 0 ... (facilitiesDetailDict.images?.count)!-1 {
+                                    var facilitiesDetailImage: FacilitiesDetailImgEntity
+                                    let facilitiesImgaeArray: FacilitiesDetailImgEntity = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesDetailImgEntity", into: managedContext) as! FacilitiesDetailImgEntity
+                                    facilitiesImgaeArray.images = facilitiesDetailDict.images?[i]
+                                    facilitiesDetailImage = facilitiesImgaeArray
+                                    facilitiesDetaildbDict.addToFacilitiesDetailRelation(facilitiesDetailImage)
+                                    do {
+                                        try managedContext.save()
+                                    } catch let error as NSError {
+                                        print("Could not save. \(error), \(error.userInfo)")
+                                    }
+                                }
+                            }
+                        }
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    }
+                    else {
+                        //save
+                        self.saveFacilitiesDetailsToCoreData(facilitiesDetailDict: facilitiesDetailDict, managedObjContext: managedContext)
+                    }
+                }
+            }
+            else {
+                for i in 0 ... facilitiesDetail.count-1 {
+                    let facilitiesDetailDict : FacilitiesDetail?
+                    facilitiesDetailDict = facilitiesDetail[i]
+                    self.saveFacilitiesDetailsToCoreData(facilitiesDetailDict: facilitiesDetailDict!, managedObjContext: managedContext)
+                }
+            }
+        } else {
+            let fetchData = checkAddedToCoredata(entityName: "FacilitiesDetailEntityAr", idKey: "category", idValue: tourDetailId, managedContext: managedContext) as! [FacilitiesDetailEntityAr]
+            if (fetchData.count > 0) {
+                for i in 0 ... facilitiesDetail.count-1 {
+                    let facilitiesDetailDict = facilitiesDetail[i]
+                    let fetchResult = checkAddedToCoredata(entityName: "FacilitiesDetailEntityAr", idKey: "nid", idValue: facilitiesDetailDict.nid, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let facilitiesDetaildbDict = fetchResult[0] as! FacilitiesDetailEntityAr
+                        facilitiesDetaildbDict.title = facilitiesDetailDict.title
+                        facilitiesDetaildbDict.subtitle = facilitiesDetailDict.subtitle
+                        facilitiesDetaildbDict.facilitiesDes =  facilitiesDetailDict.facilitiesDes
+                        facilitiesDetaildbDict.timing =  facilitiesDetailDict.timing
+                        facilitiesDetaildbDict.titleTiming = facilitiesDetailDict.titleTiming
+                        facilitiesDetaildbDict.nid = facilitiesDetailDict.nid
+                        facilitiesDetaildbDict.longtitude =  facilitiesDetailDict.longtitude
+                        facilitiesDetaildbDict.category =  facilitiesDetailDict.category
+                        facilitiesDetaildbDict.latitude = facilitiesDetailDict.latitude
+                        facilitiesDetaildbDict.locationTitle = facilitiesDetailDict.locationTitle
+                        
+                        if(facilitiesDetailDict.images != nil){
+                            if((facilitiesDetailDict.images?.count)! > 0) {
+                                for i in 0 ... (facilitiesDetailDict.images?.count)!-1 {
+                                    var facilitiesDetailImage: FacilitiesDetailImgEntityAr
+                                    let facilitiesImgaeArray: FacilitiesDetailImgEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesDetailImgEntityAr", into: managedContext) as! FacilitiesDetailImgEntityAr
+                                    facilitiesImgaeArray.images = facilitiesDetailDict.images?[i]
+                                    facilitiesDetailImage = facilitiesImgaeArray
+                                    facilitiesDetaildbDict.addToFacilitiesDetailRelationAr(facilitiesDetailImage)
+                                    do {
+                                        try managedContext.save()
+                                    } catch let error as NSError {
+                                        print("Could not save. \(error), \(error.userInfo)")
+                                    }
+                                }
+                            }
+                        }
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    }
+                    else {
+                        //save
+                        self.saveFacilitiesDetailsToCoreData(facilitiesDetailDict: facilitiesDetailDict, managedObjContext: managedContext)
+                    }
+                }
+            }
+            else {
+                for i in 0 ... facilitiesDetail.count-1 {
+                    let facilitiesDetailDict : FacilitiesDetail?
+                    facilitiesDetailDict = facilitiesDetail[i]
+                    self.saveFacilitiesDetailsToCoreData(facilitiesDetailDict: facilitiesDetailDict!, managedObjContext: managedContext)
+                }
+            }
+        }
+    }
+    func saveFacilitiesDetailsToCoreData(facilitiesDetailDict: FacilitiesDetail, managedObjContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let facilitiesDetaildbDict: FacilitiesDetailEntity = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesDetailEntity", into: managedObjContext) as! FacilitiesDetailEntity
+            facilitiesDetaildbDict.title = facilitiesDetailDict.title
+            facilitiesDetaildbDict.subtitle = facilitiesDetailDict.subtitle
+            facilitiesDetaildbDict.facilitiesDes =  facilitiesDetailDict.facilitiesDes
+            facilitiesDetaildbDict.timing =  facilitiesDetailDict.timing
+            facilitiesDetaildbDict.titleTiming = facilitiesDetailDict.titleTiming
+            facilitiesDetaildbDict.nid = facilitiesDetailDict.nid
+            facilitiesDetaildbDict.longtitude =  facilitiesDetailDict.longtitude
+            facilitiesDetaildbDict.category =  facilitiesDetailDict.category
+            facilitiesDetaildbDict.latitude = facilitiesDetailDict.latitude
+            facilitiesDetaildbDict.locationTitle = facilitiesDetailDict.locationTitle
+            
+            if(facilitiesDetailDict.images != nil){
+                if((facilitiesDetailDict.images?.count)! > 0) {
+                    for i in 0 ... (facilitiesDetailDict.images?.count)!-1 {
+                        var facilitiesDetailImage: FacilitiesDetailImgEntity
+                        let facilitiesImgaeArray: FacilitiesDetailImgEntity = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesDetailImgEntity", into: managedObjContext) as! FacilitiesDetailImgEntity
+                        facilitiesImgaeArray.images = facilitiesDetailDict.images?[i]
+                        facilitiesDetailImage = facilitiesImgaeArray
+                        facilitiesDetaildbDict.addToFacilitiesDetailRelation(facilitiesDetailImage)
+                        do {
+                            try managedObjContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                    }
+                }
+            }
+        } else {
+            let facilitiesDetaildbDict: FacilitiesDetailEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesDetailEntityAr", into: managedObjContext) as! FacilitiesDetailEntityAr
+            facilitiesDetaildbDict.title = facilitiesDetailDict.title
+            facilitiesDetaildbDict.subtitle = facilitiesDetailDict.subtitle
+            facilitiesDetaildbDict.facilitiesDes =  facilitiesDetailDict.facilitiesDes
+            facilitiesDetaildbDict.timing =  facilitiesDetailDict.timing
+            facilitiesDetaildbDict.titleTiming = facilitiesDetailDict.titleTiming
+            facilitiesDetaildbDict.nid = facilitiesDetailDict.nid
+            facilitiesDetaildbDict.longtitude =  facilitiesDetailDict.longtitude
+            facilitiesDetaildbDict.category =  facilitiesDetailDict.category
+            facilitiesDetaildbDict.latitude = facilitiesDetailDict.latitude
+            facilitiesDetaildbDict.locationTitle = facilitiesDetailDict.locationTitle
+            
+            if(facilitiesDetailDict.images != nil){
+                if((facilitiesDetailDict.images?.count)! > 0) {
+                    for i in 0 ... (facilitiesDetailDict.images?.count)!-1 {
+                        var facilitiesDetailImage: FacilitiesDetailImgEntityAr
+                        let facilitiesImgaeArray: FacilitiesDetailImgEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesDetailImgEntityAr", into: managedObjContext) as! FacilitiesDetailImgEntityAr
+                        facilitiesImgaeArray.images = facilitiesDetailDict.images?[i]
+                        facilitiesDetailImage = facilitiesImgaeArray
+                        facilitiesDetaildbDict.addToFacilitiesDetailRelationAr(facilitiesDetailImage)
+                        do {
+                            try managedObjContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                    }
+                }
+            }
+        }
+        do {
+            try managedObjContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    func fetchFacilitiesDetailsFromCoredata() {
+        let managedContext = getContext()
+        do {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                var facilitiesDetailArray = [FacilitiesDetailEntity]()
+                facilitiesDetailArray = checkAddedToCoredata(entityName: "FacilitiesDetailEntity", idKey: "category", idValue: tourDetailId, managedContext: managedContext) as! [FacilitiesDetailEntity]
+                if (facilitiesDetailArray.count > 0) {
+                    for i in 0 ... facilitiesDetailArray.count-1 {
+                        var imagesArray : [String] = []
+                        let imagesInfoArray = (facilitiesDetailArray[i].facilitiesDetailRelation!.allObjects) as! [FacilitiesDetailImgEntity]
+                        if(imagesInfoArray.count > 0) {
+                            for i in 0 ... imagesInfoArray.count-1 {
+                                imagesArray.append(imagesInfoArray[i].images!)
+                            }
+                        }
+                        self.facilitiesDetail.insert(FacilitiesDetail(title: facilitiesDetailArray[i].title, images: imagesArray, subtitle: facilitiesDetailArray[i].subtitle, facilitiesDes: facilitiesDetailArray[i].facilitiesDes, timing: facilitiesDetailArray[i].timing, titleTiming: facilitiesDetailArray[i].titleTiming, nid: facilitiesDetailArray[i].nid, longtitude: facilitiesDetailArray[i].longtitude, category: facilitiesDetailArray[i].category, latitude: facilitiesDetailArray[i].latitude, locationTitle: facilitiesDetailArray[i].locationTitle), at: i)
+                        
+                    }
+                    if(facilitiesDetail.count == 0){
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.exbtnLoadingView.showNoDataView()
+                        }
+                    }
+                    DispatchQueue.main.async{
+                        self.exhibitionCollectionView.reloadData()
+                    }
+                }
+                else{
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.exbtnLoadingView.showNoDataView()
+                    }
+                }
+            } else {
+                var facilitiesDetailArray = [FacilitiesDetailEntityAr]()
+                facilitiesDetailArray = checkAddedToCoredata(entityName: "FacilitiesDetailEntityAr", idKey: "category", idValue: tourDetailId, managedContext: managedContext) as! [FacilitiesDetailEntityAr]
+                if (facilitiesDetailArray.count > 0) {
+                    for i in 0 ... facilitiesDetailArray.count-1 {
+                        var imagesArray : [String] = []
+                        let imagesInfoArray = (facilitiesDetailArray[i].facilitiesDetailRelationAr?.allObjects) as! [FacilitiesDetailImgEntityAr]
+                        if(imagesInfoArray.count > 0) {
+                            for i in 0 ... imagesInfoArray.count-1 {
+                                imagesArray.append(imagesInfoArray[i].images!)
+                            }
+                        }
+                        self.facilitiesDetail.insert(FacilitiesDetail(title: facilitiesDetailArray[i].title, images: imagesArray, subtitle: facilitiesDetailArray[i].subtitle, facilitiesDes: facilitiesDetailArray[i].facilitiesDes, timing: facilitiesDetailArray[i].timing, titleTiming: facilitiesDetailArray[i].titleTiming, nid: facilitiesDetailArray[i].nid, longtitude: facilitiesDetailArray[i].longtitude, category: facilitiesDetailArray[i].category, latitude: facilitiesDetailArray[i].latitude, locationTitle: facilitiesDetailArray[i].locationTitle), at: i)
+                        
+                    }
+                    if(facilitiesDetail.count == 0){
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.exbtnLoadingView.showNoDataView()
+                        }
+                    }
+                    DispatchQueue.main.async{
+                        self.exhibitionCollectionView.reloadData()
+                    }
+                }
+                else{
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.exbtnLoadingView.showNoDataView()
+                    }
+                }
+            }
+        }
+    }
+    //MARK: WebServiceCall
+    func getTourGuideDataFromServer() {
+        _ = Alamofire.request(QatarMuseumRouter.MuseumTourGuide(LocalizationLanguage.currentAppleLanguage(),["museum_id": museumId ?? 0])).responseObject { (response: DataResponse<TourGuides>) -> Void in
+            switch response.result {
+            case .success(let data):
+                if(self.miaTourDataFullArray.count == 0) {
+                    self.miaTourDataFullArray = data.tourGuide!
+                    self.exhibitionCollectionView.reloadData()
+                    //if no result after api call
+                    if(self.miaTourDataFullArray.count == 0) {
+                        self.exbtnLoadingView.stopLoading()
+                        self.exbtnLoadingView.noDataView.isHidden = false
+                        self.exbtnLoadingView.isHidden = false
+                        self.exbtnLoadingView.showNoDataView()
+                    }
+                }
+                if(self.miaTourDataFullArray.count > 0) {
+                    self.saveOrUpdateTourGuideCoredata(miaTourDataFullArray: data.tourGuide)
+                }
+            case .failure(let error):
+                if(self.miaTourDataFullArray.count == 0) {
+                    self.exbtnLoadingView.stopLoading()
+                    self.exbtnLoadingView.noDataView.isHidden = false
+                    self.exbtnLoadingView.isHidden = false
+                    self.exbtnLoadingView.showNoDataView()
+                }
+            }
+        }
+    }
+    
+    //MARK: Coredata Method
+    func saveOrUpdateTourGuideCoredata(miaTourDataFullArray:[TourGuide]?) {
+        if ((miaTourDataFullArray?.count)! > 0) {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.coreDataInBackgroundThread(managedContext: managedContext, miaTourDataFullArray: miaTourDataFullArray)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.coreDataInBackgroundThread(managedContext : managedContext, miaTourDataFullArray: miaTourDataFullArray)
+                }
+            }
+        }
+    }
+    
+    func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,miaTourDataFullArray:[TourGuide]?) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            let fetchData = checkAddedToCoredata(entityName: "TourGuideEntity", idKey: "museumsEntity", idValue: museumId, managedContext: managedContext) as! [TourGuideEntity]
+            if (fetchData.count > 0) {
+                for i in 0 ... (miaTourDataFullArray?.count)!-1 {
+                    let tourGuideListDict = miaTourDataFullArray![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "TourGuideEntity", idKey: "nid", idValue: miaTourDataFullArray![i].nid, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let tourguidedbDict = fetchResult[0] as! TourGuideEntity
+                        tourguidedbDict.title = tourGuideListDict.title
+                        tourguidedbDict.tourGuideDescription = tourGuideListDict.tourGuideDescription
+                        tourguidedbDict.museumsEntity =  tourGuideListDict.museumsEntity
+                        tourguidedbDict.nid =  tourGuideListDict.nid
+                        
+                        if(tourGuideListDict.multimediaFile != nil) {
+                            if((tourGuideListDict.multimediaFile?.count)! > 0) {
+                                for i in 0 ... (tourGuideListDict.multimediaFile?.count)!-1 {
+                                    var multimediaEntity: TourGuideMultimediaEntity!
+                                    let multimediaArray: TourGuideMultimediaEntity = NSEntityDescription.insertNewObject(forEntityName: "TourGuideMultimediaEntity", into: managedContext) as! TourGuideMultimediaEntity
+                                    multimediaArray.multimediaFile = tourGuideListDict.multimediaFile![i]
+                                    
+                                    multimediaEntity = multimediaArray
+                                    tourguidedbDict.addToTourGuideMultimediaRelation(multimediaEntity)
+                                    do {
+                                        try managedContext.save()
+                                    } catch let error as NSError {
+                                        print("Could not save. \(error), \(error.userInfo)")
+                                    }
+                                    
+                                }
+                            }
+                        }
+                        
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    }
+                    else {
+                        //save
+                        self.saveToCoreData(tourguideListDict: tourGuideListDict, managedObjContext: managedContext)
+                        
+                    }
+                }
+            }
+            else {
+                for i in 0 ... (miaTourDataFullArray?.count)!-1 {
+                    let tourGuideListDict : TourGuide?
+                    tourGuideListDict = miaTourDataFullArray?[i]
+                    self.saveToCoreData(tourguideListDict: tourGuideListDict!, managedObjContext: managedContext)
+                    
+                }
+            }
+        }
+        else {
+            let fetchData = checkAddedToCoredata(entityName: "TourGuideEntityAr", idKey: "museumsEntity", idValue: museumId, managedContext: managedContext) as! [TourGuideEntityAr]
+            if (fetchData.count > 0) {
+                for i in 0 ... (miaTourDataFullArray?.count)!-1 {
+                    let tourGuideListDict = miaTourDataFullArray![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "TourGuideEntityAr", idKey: "nid" , idValue: miaTourDataFullArray![i].nid, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let tourguidedbDict = fetchResult[0] as! TourGuideEntityAr
+                        tourguidedbDict.title = tourGuideListDict.title
+                        tourguidedbDict.tourGuideDescription = tourGuideListDict.tourGuideDescription
+                        tourguidedbDict.museumsEntity =  tourGuideListDict.museumsEntity
+                        tourguidedbDict.nid =  tourGuideListDict.nid
+                        
+                        if(tourGuideListDict.multimediaFile != nil) {
+                            if((tourGuideListDict.multimediaFile?.count)! > 0) {
+                                for i in 0 ... (tourGuideListDict.multimediaFile?.count)!-1 {
+                                    var multimediaEntity: TourGuideMultimediaEntityAr!
+                                    let multimediaArray: TourGuideMultimediaEntityAr = NSEntityDescription.insertNewObject(forEntityName: "TourGuideMultimediaEntityAr", into: managedContext) as! TourGuideMultimediaEntityAr
+                                    multimediaArray.multimediaFile = tourGuideListDict.multimediaFile![i]
+                                    
+                                    multimediaEntity = multimediaArray
+                                    tourguidedbDict.addToTourGuideMultimediaRelation(multimediaEntity)
+                                    do {
+                                        try managedContext.save()
+                                    } catch let error as NSError {
+                                        print("Could not save. \(error), \(error.userInfo)")
+                                    }
+                                    
+                                }
+                            }
+                        }
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    }
+                    else {
+                        //save
+                        self.saveToCoreData(tourguideListDict: tourGuideListDict, managedObjContext: managedContext)
+                        
+                    }
+                }
+            }
+            else {
+                for i in 0 ... (miaTourDataFullArray?.count)!-1 {
+                    let tourGuideListDict : TourGuide?
+                    tourGuideListDict = miaTourDataFullArray?[i]
+                    self.saveToCoreData(tourguideListDict: tourGuideListDict!, managedObjContext: managedContext)
+                    
+                }
+            }
+        }
+    }
+    
+    func saveToCoreData(tourguideListDict: TourGuide, managedObjContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            let tourGuideInfo: TourGuideEntity = NSEntityDescription.insertNewObject(forEntityName: "TourGuideEntity", into: managedObjContext) as! TourGuideEntity
+            tourGuideInfo.title = tourguideListDict.title
+            tourGuideInfo.tourGuideDescription = tourguideListDict.tourGuideDescription
+            tourGuideInfo.museumsEntity = tourguideListDict.museumsEntity
+            tourGuideInfo.nid = tourguideListDict.nid
+            
+            if(tourguideListDict.multimediaFile != nil) {
+                if((tourguideListDict.multimediaFile?.count)! > 0) {
+                    for i in 0 ... (tourguideListDict.multimediaFile?.count)!-1 {
+                        var multimediaEntity: TourGuideMultimediaEntity!
+                        let multimediaArray: TourGuideMultimediaEntity = NSEntityDescription.insertNewObject(forEntityName: "TourGuideMultimediaEntity", into: managedObjContext) as! TourGuideMultimediaEntity
+                        multimediaArray.multimediaFile = tourguideListDict.multimediaFile![i]
+                        
+                        multimediaEntity = multimediaArray
+                        tourGuideInfo.addToTourGuideMultimediaRelation(multimediaEntity)
+                        do {
+                            try managedObjContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                        
+                    }
+                }
+            }
+        }
+        else {
+            let tourGuideInfo: TourGuideEntityAr = NSEntityDescription.insertNewObject(forEntityName: "TourGuideEntityAr", into: managedObjContext) as! TourGuideEntityAr
+            tourGuideInfo.title = tourguideListDict.title
+            tourGuideInfo.tourGuideDescription = tourguideListDict.tourGuideDescription
+            tourGuideInfo.museumsEntity = tourguideListDict.museumsEntity
+            tourGuideInfo.nid = tourguideListDict.nid
+            if(tourguideListDict.multimediaFile != nil) {
+                if((tourguideListDict.multimediaFile?.count)! > 0) {
+                    for i in 0 ... (tourguideListDict.multimediaFile?.count)!-1 {
+                        var multimediaEntity: TourGuideMultimediaEntityAr!
+                        let multimediaArray: TourGuideMultimediaEntityAr = NSEntityDescription.insertNewObject(forEntityName: "TourGuideMultimediaEntityAr", into: managedObjContext) as! TourGuideMultimediaEntityAr
+                        multimediaArray.multimediaFile = tourguideListDict.multimediaFile![i]
+                        
+                        multimediaEntity = multimediaArray
+                        tourGuideInfo.addToTourGuideMultimediaRelation(multimediaEntity)
+                        do {
+                            try managedObjContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                        
+                    }
+                }
+            }
+        }
+        do {
+            try managedObjContext.save()
+            
+            
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    func fetchTourGuideListFromCoredata() {
+        let managedContext = getContext()
+        do {
+            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                var tourGuideArray = [TourGuideEntity]()
+                tourGuideArray = checkAddedToCoredata(entityName: "TourGuideEntity", idKey: "museumsEntity", idValue: museumId, managedContext: managedContext) as! [TourGuideEntity]
+                
+                if (tourGuideArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getTourGuideDataFromServer()
+                        }
+                    }
+                    for i in 0 ... tourGuideArray.count-1 {
+                        
+                        var multimediaArray : [String] = []
+                        let tourguideInfo = tourGuideArray[i]
+                        let tourGuideInfoArray = (tourguideInfo.tourGuideMultimediaRelation?.allObjects) as! [TourGuideMultimediaEntity]
+                        if(tourGuideInfoArray.count > 0) {
+                            for i in 0 ... tourGuideInfoArray.count-1 {
+                                multimediaArray.append(tourGuideInfoArray[i].multimediaFile!)
+                            }
+                        }
+                        
+                        self.miaTourDataFullArray.insert(TourGuide(title: tourGuideArray[i].title, tourGuideDescription: tourGuideArray[i].tourGuideDescription, multimediaFile: multimediaArray, museumsEntity: tourGuideArray[i].museumsEntity, nid: tourGuideArray[i].nid), at: i)
+                    }
+                    DispatchQueue.main.async {
+                        self.exhibitionCollectionView.reloadData()
+                    }
+                    if(miaTourDataFullArray.count == 0){
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.exbtnLoadingView.showNoDataView()
+                        }
+                    }
+                    
+                }
+                else{
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        //self.loadingView.showNoDataView()
+                        self.getTourGuideDataFromServer() //coreDataMigratio  solution
+                    }
+                }
+            }
+            else {
+                var tourGuideArray = [TourGuideEntityAr]()
+                tourGuideArray = checkAddedToCoredata(entityName: "TourGuideEntityAr", idKey: "museumsEntity", idValue: museumId, managedContext: managedContext) as! [TourGuideEntityAr]
+                if (tourGuideArray.count > 0) {
+                    if  (networkReachability?.isReachable)! {
+                        DispatchQueue.global(qos: .background).async {
+                            self.getTourGuideDataFromServer()
+                        }
+                    }
+                    for i in 0 ... tourGuideArray.count-1 {
+                        var multimediaArray : [String] = []
+                        let tourguideInfo = tourGuideArray[i]
+                        let tourGuideInfoArray = (tourguideInfo.tourGuideMultimediaRelation?.allObjects) as! [TourGuideMultimediaEntityAr]
+                        if(tourGuideInfoArray.count > 0) {
+                            for i in 0 ... tourGuideInfoArray.count-1 {
+                                multimediaArray.append(tourGuideInfoArray[i].multimediaFile!)
+                            }
+                        }
+                        self.miaTourDataFullArray.insert(TourGuide(title: tourGuideArray[i].title, tourGuideDescription: tourGuideArray[i].tourGuideDescription, multimediaFile: multimediaArray, museumsEntity: tourGuideArray[i].museumsEntity, nid: tourGuideArray[i].nid), at: i)
+                        
+                        
+                    }
+                    if(miaTourDataFullArray.count == 0){
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.exbtnLoadingView.showNoDataView()
+                        }
+                    }
+                    DispatchQueue.main.async {
+                        self.exhibitionCollectionView.reloadData()
+                    }
+                }
+                else{
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        // self.loadingView.showNoDataView()
+                        self.getTourGuideDataFromServer() //coreDataMigratio  solution
+                    }
+                }
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    //MARK: Mia Tour Guide Delegate
+    func exploreButtonAction() {
+        let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as! FloorMapViewController
+        floorMapView.fromTourString = fromTour.exploreTour
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(floorMapView, animated: false, completion: nil)
+        
+    }
+    func loadMiaTourDetail(currentRow: Int?) {
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        
+        let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "miaDetailId") as! MiaTourDetailViewController
+        miaView.museumId = museumId ?? "0"
+        if (miaTourDataFullArray != nil) {
+            miaView.tourGuideDetail = miaTourDataFullArray[currentRow!]
+        }
+        self.present(miaView, animated: false, completion: nil)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

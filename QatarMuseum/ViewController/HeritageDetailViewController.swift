@@ -451,7 +451,6 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     }
     
     func heritageCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "HeritageEntity", idKey: "listid" , idValue: heritageDetailtArray[0].id, managedContext: managedContext) as! [HeritageEntity]
            if (fetchData.count > 0) {
                 let heritageDetailDict = heritageDetailtArray[0]
@@ -467,7 +466,11 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 heritagedbDict.detaillongdescription =  heritageDetailDict.longdescription
                 heritagedbDict.detaillatitude =  heritageDetailDict.latitude
                 heritagedbDict.detaillongitude = heritageDetailDict.longitude
-            
+                if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+                    heritagedbDict.lang =  "1"
+                } else {
+                    heritagedbDict.lang =  "0"
+                }
             
             if((heritageDetailDict.images?.count)! > 0) {
                 for i in 0 ... (heritageDetailDict.images?.count)!-1 {
@@ -499,57 +502,9 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             heritageListDict = heritageDetailtArray[0]
             self.saveToCoreData(heritageDetailDict: heritageListDict!, managedObjContext: managedContext)
             }
-        }
-        else {
-            let fetchData = checkAddedToCoredata(entityName: "HeritageEntityArabic", idKey:"listid" , idValue: heritageDetailtArray[0].id, managedContext: managedContext) as! [HeritageEntityArabic]
-            if (fetchData.count > 0) {
-                let heritageDetailDict = heritageDetailtArray[0]
-                
-                //update
-                
-                let heritagedbDict = fetchData[0]
-                heritagedbDict.listnamearabic = heritageDetailDict.name
-                heritagedbDict.listimagearabic = heritageDetailDict.image
-                heritagedbDict.listsortidarabic =  heritageDetailDict.sortid
-                heritagedbDict.detaillocationarabic = heritageDetailDict.location
-                heritagedbDict.detailshortdescarabic = heritageDetailDict.shortdescription
-                heritagedbDict.detaillongdescriptionarabic =  heritageDetailDict.longdescription
-                heritagedbDict.detaillatitudearabic =  heritageDetailDict.latitude
-                heritagedbDict.detaillongitudearabic = heritageDetailDict.longitude
-                
-                if((heritageDetailDict.images?.count)! > 0) {
-                    for i in 0 ... (heritageDetailDict.images?.count)!-1 {
-                        var heritageImagesEntity: HeritageImagesEntityAr!
-                        let heritageImage: HeritageImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "HeritageImagesEntityAr", into: managedContext) as! HeritageImagesEntityAr
-                        heritageImage.images = heritageDetailDict.images![i]
-                        
-                        heritageImagesEntity = heritageImage
-                        heritagedbDict.addToImagesRelation(heritageImagesEntity)
-                        do {
-                            try managedContext.save()
-                        } catch let error as NSError {
-                            print("Could not save. \(error), \(error.userInfo)")
-                        }
-                    }
-                }
-                
-                do{
-                    try managedContext.save()
-                }
-                catch{
-                    print(error)
-                }
-            }
-            else {
-                let heritageListDict : Heritage?
-                heritageListDict = heritageDetailtArray[0]
-                self.saveToCoreData(heritageDetailDict: heritageListDict!, managedObjContext: managedContext)
-            }
-        }
     }
     
     func saveToCoreData(heritageDetailDict: Heritage, managedObjContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let heritageInfo: HeritageEntity = NSEntityDescription.insertNewObject(forEntityName: "HeritageEntity", into: managedObjContext) as! HeritageEntity
             heritageInfo.listid = heritageDetailDict.id
             heritageInfo.listname = heritageDetailDict.name
@@ -560,6 +515,11 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             heritageInfo.detaillongdescription =  heritageDetailDict.longdescription
             heritageInfo.detaillatitude =  heritageDetailDict.latitude
             heritageInfo.detaillongitude = heritageDetailDict.longitude
+            if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+                heritageInfo.lang =  "1"
+            } else {
+                heritageInfo.lang =  "0"
+            }
             if(heritageDetailDict.sortid != nil) {
                 heritageInfo.listsortid = heritageDetailDict.sortid
             }
@@ -579,40 +539,8 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                     } catch let error as NSError {
                         print("Could not save. \(error), \(error.userInfo)")
                     }
-                    
                 }
             }
-        }
-        else {
-            let heritageInfo: HeritageEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "HeritageEntityArabic", into: managedObjContext) as! HeritageEntityArabic
-            heritageInfo.listid = heritageDetailDict.id
-            heritageInfo.listnamearabic = heritageDetailDict.name
-            
-            heritageInfo.listimagearabic = heritageDetailDict.image
-            heritageInfo.detaillocationarabic = heritageDetailDict.location
-            heritageInfo.detailshortdescarabic = heritageDetailDict.shortdescription
-            heritageInfo.detaillongdescriptionarabic =  heritageDetailDict.longdescription
-            heritageInfo.detaillatitudearabic =  heritageDetailDict.latitude
-            heritageInfo.detaillongitudearabic = heritageDetailDict.longitude
-            if(heritageDetailDict.sortid != nil) {
-                heritageInfo.listsortidarabic = heritageDetailDict.sortid
-            }
-            if((heritageDetailDict.images?.count)! > 0) {
-                for i in 0 ... (heritageDetailDict.images?.count)!-1 {
-                    var heritageImagesEntity: HeritageImagesEntityAr!
-                    let heritageImage: HeritageImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "HeritageImagesEntityAr", into: managedObjContext) as! HeritageImagesEntityAr
-                    heritageImage.images = heritageDetailDict.images![i]
-                    
-                    heritageImagesEntity = heritageImage
-                    heritageInfo.addToImagesRelation(heritageImagesEntity)
-                    do {
-                        try managedObjContext.save()
-                    } catch let error as NSError {
-                        print("Could not save. \(error), \(error.userInfo)")
-                    }
-                }
-            }
-        }
         do {
             try managedObjContext.save()
         } catch let error as NSError {
@@ -622,7 +550,6 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     func fetchHeritageDetailsFromCoredata() {
         let managedContext = getContext()
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var heritageArray = [HeritageEntity]()
                 let heritageFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HeritageEntity")
                 if(heritageDetailId != nil) {
@@ -641,52 +568,30 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                             }
                             self.heritageDetailtArray.insert(Heritage(id: heritageDict.listid, name: heritageDict.listname, location: heritageDict.detaillocation, latitude: heritageDict.detaillatitude, longitude: heritageDict.detaillongitude, image: heritageDict.listimage, shortdescription: heritageDict.detailshortdescription, longdescription: heritageDict.detaillongdescription, images: imagesArray, sortid: heritageDict.listsortid), at: 0)
                             if(heritageDetailtArray.count == 0){
-                                self.showNoNetwork()
-                            }
-                            self.setTopBarImage()
-                            heritageDetailTableView.reloadData()
-                        }else{
-                            self.showNoNetwork()
-                        }
-                    }else{
-                        self.showNoNetwork()
-                    }
-                }
-            }
-            else {
-                var heritageArray = [HeritageEntityArabic]()
-                let heritageFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HeritageEntityArabic")
-                if(heritageDetailId != nil) {
-                    heritageFetchRequest.predicate = NSPredicate.init(format: "listid == \(heritageDetailId!)")
-                    heritageArray = (try managedContext.fetch(heritageFetchRequest) as? [HeritageEntityArabic])!
-                    
-                    if (heritageArray.count > 0) {
-                        let heritageDict = heritageArray[0]
-                       
-                        if( (heritageDict.detailshortdescarabic != nil) && (heritageDict.detaillongdescriptionarabic != nil)) {
-                            var imagesArray : [String] = []
-                            let heritageImagesArray = (heritageDict.imagesRelation?.allObjects) as! [HeritageImagesEntityAr]
-                            if(heritageImagesArray.count > 0) {
-                                for i in 0 ... heritageImagesArray.count-1 {
-                                    imagesArray.append(heritageImagesArray[i].images!)
+                                if(self.networkReachability?.isReachable == false) {
+                                    self.showNoNetwork()
+                                } else {
+                                    self.loadingView.showNoDataView()
                                 }
                             }
-                            self.heritageDetailtArray.insert(Heritage(id: heritageDict.listid, name: heritageDict.listnamearabic, location: heritageDict.detaillocationarabic, latitude: heritageDict.detaillatitudearabic, longitude: heritageDict.detaillongitudearabic, image: heritageDict.listimagearabic, shortdescription: heritageDict.detailshortdescarabic, longdescription: heritageDict.detaillongdescriptionarabic,images: imagesArray, sortid: heritageDict.listsortidarabic), at: 0)
-                            if(heritageDetailtArray.count == 0){
-                                self.showNoNetwork()
-                            }
                             self.setTopBarImage()
                             heritageDetailTableView.reloadData()
-                            
                         }else{
+                            if(self.networkReachability?.isReachable == false) {
+                                self.showNoNetwork()
+                            } else {
+                                self.loadingView.showNoDataView()
+                            }
+                        }
+                    }else{
+                        if(self.networkReachability?.isReachable == false) {
                             self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
                         }
                     }
-                    else{
-                        self.showNoNetwork()
-                    }
                 }
-            }
+           
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
@@ -883,16 +788,28 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                             self.publicArtsDetailtArray.insert(PublicArtsDetail(id:publicArtsDict.id , name:publicArtsDict.name, description: publicArtsDict.detaildescription, shortdescription: publicArtsDict.shortdescription, image: publicArtsDict.image, images: imagesArray,longitude: publicArtsDict.longitude, latitude: publicArtsDict.latitude), at: 0)
                             
                             if(publicArtsDetailtArray.count == 0){
-                                self.showNoNetwork()
+                                if(self.networkReachability?.isReachable == false) {
+                                    self.showNoNetwork()
+                                } else {
+                                    self.loadingView.showNoDataView()
+                                }
                             }
                             self.setTopBarImage()
                             heritageDetailTableView.reloadData()
                         }else {
-                            self.showNoNetwork()
+                            if(self.networkReachability?.isReachable == false) {
+                                self.showNoNetwork()
+                            } else {
+                                self.loadingView.showNoDataView()
+                            }
                         }
                     }
                     else{
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                 }
 
@@ -918,17 +835,29 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                             
                             
                             if(publicArtsDetailtArray.count == 0){
-                                self.showNoNetwork()
+                                if(self.networkReachability?.isReachable == false) {
+                                    self.showNoNetwork()
+                                } else {
+                                    self.loadingView.showNoDataView()
+                                }
                             }
                             self.setTopBarImage()
                             heritageDetailTableView.reloadData()
                         }
                         else{
-                            self.showNoNetwork()
+                            if(self.networkReachability?.isReachable == false) {
+                                self.showNoNetwork()
+                            } else {
+                                self.loadingView.showNoDataView()
+                            }
                         }
                     }
                     else{
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                 }
             }

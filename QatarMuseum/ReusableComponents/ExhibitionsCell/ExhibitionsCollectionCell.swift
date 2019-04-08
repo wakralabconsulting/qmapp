@@ -23,7 +23,18 @@ class ExhibitionsCollectionCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
     }
-    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            titleLabel.textAlignment = .left
+            dateLabel.textAlignment = .left
+            addressLabel.textAlignment = .left
+        } else {
+            titleLabel.textAlignment = .right
+            dateLabel.textAlignment = .right
+            addressLabel.textAlignment = .right
+        }
+    }
     //MARK: HomeExhibitionList data
     func setExhibitionCellValues(exhibition: Exhibition) {
         setGradientLayer()

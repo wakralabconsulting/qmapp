@@ -102,7 +102,8 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
-        let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "miaTourGuideId") as! MiaTourGuideViewController
+        let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        miaView.exhibitionsPageNameString = ExhbitionPageName.miaTourGuideList
         if (museumsList != nil) {
             miaView.museumId = museumsList[currentRow!].id!
             self.present(miaView, animated: false, completion: nil)
@@ -152,6 +153,19 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         _ = Alamofire.request(QatarMuseumRouter.HomeList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<HomeList>) -> Void in
             switch response.result {
             case .success(let data):
+                if(self.museumsList.count == 0) {
+                    if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                        searchstring = "12181"
+                    } else {
+                        searchstring = "12186"
+                    }
+                    self.museumsList = data.homeList
+                    //Removed Exhibition from Tour List
+                    if let arrayOffset = self.museumsList.index(where: {$0.id == searchstring}) {
+                        self.museumsList.remove(at: arrayOffset)
+                    }
+                    self.tourCollectionView.reloadData()
+                }
                 if(self.museumsList.count > 0) {
                    
                     //Removed Exhibition from Tour List
@@ -184,21 +198,28 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
     }
     
     func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,museumsList:[Home]?) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-            let fetchData = checkAddedToCoredata(entityName: "HomeEntity", homeId: nil, managedContext: managedContext) as! [HomeEntity]
+        var fetchData = [HomeEntity]()
+        var langVar : String? = nil
+        if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+            langVar = "1"
+            
+        } else {
+            langVar = "0"
+        }
+        fetchData = checkAddedToCoredata(entityName: "HomeEntity", idKey: "lang", idValue: langVar, managedContext: managedContext) as! [HomeEntity]
             if (fetchData.count > 0) {
                 for i in 0 ... (museumsList?.count)!-1 {
                     let museumListDict = museumsList![i]
-                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntity", homeId: museumsList![i].id, managedContext: managedContext)
+                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntity", idKey: "id", idValue: museumsList![i].id, managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
                         let museumsdbDict = fetchResult[0] as! HomeEntity
                         
                         museumsdbDict.name = museumListDict.name
                         museumsdbDict.image = museumListDict.image
-                        museumsdbDict.sortid =  museumListDict.sortId
+                        museumsdbDict.sortid =  (Int16(museumListDict.sortId!) ?? 0)
                         museumsdbDict.tourguideavailable = museumListDict.isTourguideAvailable
-                        
+                        museumsdbDict.lang = langVar
                         
                         do{
                             try managedContext.save()
@@ -222,63 +243,24 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                     
                 }
             }
-        }
-        else {
-            let fetchData = checkAddedToCoredata(entityName: "HomeEntityArabic", homeId: nil, managedContext: managedContext) as! [HomeEntityArabic]
-            if (fetchData.count > 0) {
-                for i in 0 ... (museumsList?.count)!-1 {
-                    let museumsListDict = museumsList![i]
-                    
-                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntityArabic", homeId: museumsList![i].id, managedContext: managedContext)
-                    //update
-                    if(fetchResult.count != 0) {
-                        let museumsdbDict = fetchResult[0] as! HomeEntityArabic
-                        
-                        museumsdbDict.arabicname = museumsListDict.name
-                        museumsdbDict.arabicimage = museumsListDict.image
-                        museumsdbDict.arabicsortid =  museumsListDict.sortId
-                        museumsdbDict.arabictourguideavailable = museumsListDict.isTourguideAvailable
-                        do{
-                            try managedContext.save()
-                        }
-                        catch{
-                            print(error)
-                        }
-                    }
-                    else {
-                        //save
-                        self.saveToCoreData(museumsListDict: museumsListDict, managedObjContext: managedContext)
-                    }
-                }
-            } else {
-                for i in 0 ... (museumsList?.count)!-1 {
-                    let museumsListDict : Home?
-                    museumsListDict = museumsList?[i]
-                    self.saveToCoreData(museumsListDict: museumsListDict!, managedObjContext: managedContext)
-                    
-                }
-            }
-        }
     }
     
     func saveToCoreData(museumsListDict: Home, managedObjContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            var langVar : String? = nil
+            if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+                langVar = "1"
+                
+            } else {
+                langVar = "0"
+            }
             let museumsInfo: HomeEntity = NSEntityDescription.insertNewObject(forEntityName: "HomeEntity", into: managedObjContext) as! HomeEntity
             museumsInfo.id = museumsListDict.id
             museumsInfo.name = museumsListDict.name
             museumsInfo.image = museumsListDict.image
             museumsInfo.tourguideavailable = museumsListDict.isTourguideAvailable
             museumsInfo.image = museumsListDict.image
-            museumsInfo.sortid = museumsListDict.sortId
-        }
-        else{
-            let museumsInfo: HomeEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "HomeEntityArabic", into: managedObjContext) as! HomeEntityArabic
-            museumsInfo.id = museumsListDict.id
-            museumsInfo.arabicname = museumsListDict.name
-            museumsInfo.arabicimage = museumsListDict.image
-            museumsInfo.arabictourguideavailable = museumsListDict.isTourguideAvailable
-            museumsInfo.arabicsortid = museumsListDict.sortId
-        }
+            museumsInfo.sortid = (Int16(museumsListDict.sortId!) ?? 0)
+            museumsInfo.lang = langVar
         do {
             try managedObjContext.save()
         } catch let error as NSError {
@@ -291,23 +273,24 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         self.loadingView.isHidden = true
         let managedContext = getContext()
         var searchstring = String()
+        var langVar : String? = nil
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             searchstring = "12181"
+            langVar = "1"
         } else {
             searchstring = "12186"
+            langVar = "0"
         }
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                 var museumsArray = [HomeEntity]()
-                let museumsFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntity")
-                museumsArray = (try managedContext.fetch(museumsFetchRequest) as? [HomeEntity])!
+                museumsArray = checkAddedToCoredata(entityName: "HomeEntity", idKey: "lang", idValue: langVar, managedContext: managedContext) as! [HomeEntity]
                 var j:Int? = 0
                 if (museumsArray.count > 0) {
                     for i in 0 ... museumsArray.count-1 {
                         if let duplicateId = museumsList.first(where: {$0.id == museumsArray[i].id}) {
                         } else {
                         self.museumsList.insert(Home(id:museumsArray[i].id , name: museumsArray[i].name,image: museumsArray[i].image,
-                                                  tourguide_available: museumsArray[i].tourguideavailable, sort_id: museumsArray[i].sortid),
+                                                  tourguide_available: museumsArray[i].tourguideavailable, sort_id: String(museumsArray[i].sortid)),
                                                 at: j!)
                             j = j!+1
                         }
@@ -333,59 +316,21 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                         self.loadingView.showNoDataView()
                     }
                 }
-            }
-            else {
-                var museumsArray = [HomeEntityArabic]()
-                let museumFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntityArabic")
-                museumsArray = (try managedContext.fetch(museumFetchRequest) as? [HomeEntityArabic])!
-                var j:Int? = 0
-                if (museumsArray.count > 0) {
-                    for i in 0 ... museumsArray.count-1 {
-                        if let duplicateId = museumsList.first(where: {$0.id == museumsArray[i].id}) {
-                        } else {
-                        self.museumsList.insert(Home(id:museumsArray[i].id , name: museumsArray[i].arabicname,image: museumsArray[i].arabicimage,
-                                                  tourguide_available: museumsArray[i].arabictourguideavailable, sort_id: museumsArray[i].arabicsortid),
-                                             at: j!)
-                            j = j!+1
-                        }
-                    }
-                    if(museumsList.count == 0){
-                        if(self.networkReachability?.isReachable == false) {
-                            self.showNoNetwork()
-                        } else {
-                            self.loadingView.showNoDataView()
-                        }
-                    } else {
-                        //Removed Exhibition from Tour List
-                        if let arrayOffset = self.museumsList.index(where: {$0.id == searchstring}) {
-                            self.museumsList.remove(at: arrayOffset)
-                        }
-                    }
-                    tourCollectionView.reloadData()
-                }
-                else{
-                    if(self.networkReachability?.isReachable == false) {
-                        self.showNoNetwork()
-                    } else {
-                        self.loadingView.showNoDataView()
-                    }
-                }
-            }
+           
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
     
-    func checkAddedToCoredata(entityName: String?, homeId: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
+    func checkAddedToCoredata(entityName: String?, idKey:String?, idValue: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
         var fetchResults : [NSManagedObject] = []
-        let homeFetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
-        if (homeId != nil) {
-            homeFetchRequest.predicate = NSPredicate.init(format: "id == \(homeId!)")
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
+        if (idValue != nil) {
+            fetchRequest.predicate = NSPredicate(format: "\(idKey!) == %@", idValue!)
         }
-        fetchResults = try! managedContext.fetch(homeFetchRequest)
+        fetchResults = try! managedContext.fetch(fetchRequest)
         return fetchResults
     }
-    
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
         if  (networkReachability?.isReachable)! {

@@ -147,7 +147,9 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         blurView.alpha = 0
         imageView.addSubview(blurView)
-        
+        addCloseButton()
+    }
+    func addCloseButton() {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
         } else {
@@ -165,7 +167,6 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         closeButton.layer.shadowOpacity = 1.0
         view.addSubview(closeButton)
     }
-    
     func loadLocationInMap(currentRow: Int) {
         var latitudeString = String()
         var longitudeString = String()
@@ -417,13 +418,21 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
                     self.exhibition.insert(Exhibition(id: exhibitionDict.id, name: exhibitionDict.detailName, image: nil,detailImage:exhibitionDict.detailImage, startDate: exhibitionDict.detailStartDate, endDate: exhibitionDict.detailEndDate, location: exhibitionDict.detailLocation, latitude: exhibitionDict.detailLatitude, longitude: exhibitionDict.detailLongitude, shortDescription: exhibitionDict.detailShortDesc, longDescription: exhibitionDict.detailLongDesc,museumId:nil,status: exhibitionDict.status, displayDate: exhibitionDict.dispalyDate), at: 0)
                     
                     if(self.exhibition.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                     self.self.setTopImageUI()
                     self.exhibitionDetailTableView.reloadData()
                 }
                 else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
                 }
             }
             else {
@@ -440,13 +449,21 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
                     
                     
                     if(self.exhibition.count == 0){
-                        self.showNoNetwork()
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
                     }
                     self.setTopImageUI()
                     self.exhibitionDetailTableView.reloadData()
                 }
                 else{
-                    self.showNoNetwork()
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
                 }
             }
         } catch let error as NSError {

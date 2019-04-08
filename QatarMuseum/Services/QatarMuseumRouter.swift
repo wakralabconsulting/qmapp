@@ -39,13 +39,19 @@ enum QatarMuseumRouter: URLRequestConvertible {
     case GetNMoQAboutEvent(String,[String: Any])
     case GetNMoQTourList(String)
     case GetNMoQTravelList(String)
-    case GetNMoQSpecialEventList()
+    case GetNMoQSpecialEventList(String)
     case GetNMoQSpecialEventDetail([String: Any])
     case GetNMoQTourDetail([String: Any])
     case NMoQEventListUserRegistration([String: Any])
     case NMoQEntityRegistration([String: Any])
     case SetUserRegistrationComplete(String,[String: Any])
     case SetUserUnRegistration(String,[String: Any])
+    case FacilitiesList(String)
+    case GetFacilitiesDetail([String: Any])
+    case GetNmoqParkList(String)
+    case GetNmoqListParks(String)
+    case GetNMoQPlaygroundDetail(String,[String: Any])
+
     var method: Alamofire.HTTPMethod {
         switch self {
         case .ExhibitionList:
@@ -120,6 +126,16 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return .put
         case .SetUserUnRegistration:
             return .delete
+        case .FacilitiesList:
+            return .get
+        case .GetFacilitiesDetail:
+            return .get
+        case .GetNmoqParkList:
+            return .get
+        case .GetNmoqListParks:
+            return .get
+        case .GetNMoQPlaygroundDetail:
+            return .get
         }
     }
     
@@ -183,7 +199,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/nmoq_list_day.json"
         case .GetNMoQTravelList( _):
             return "/nmoq_list_partner.json"
-        case .GetNMoQSpecialEventList:
+        case .GetNMoQSpecialEventList( _):
             return "/nmoq_special_event.json"
         case .GetNMoQSpecialEventDetail( _):
             return "/nmoq_special_event.json"
@@ -197,6 +213,16 @@ enum QatarMuseumRouter: URLRequestConvertible {
             return "/entity_registration/\(registrationId).json"
         case .SetUserUnRegistration(let registrationId, _):
             return "/entity_registration/\(registrationId).json"
+        case .FacilitiesList( _):
+            return "list_facility_category.json"
+        case .GetFacilitiesDetail( _):
+            return "/facility-detail_by_category.json"
+        case .GetNmoqParkList( _):
+            return "/nmoq_category.json"
+        case .GetNmoqListParks( _):
+            return "/nmoq_list_parks.json"
+        case .GetNMoQPlaygroundDetail( _, _):
+            return "nmoq_list_playground_by_park.json"
         }
     }
 
@@ -343,17 +369,15 @@ enum QatarMuseumRouter: URLRequestConvertible {
             var apiMutableURLReq = URLRequest(url: apiURL.appendingPathComponent(path)!)
             apiMutableURLReq.httpMethod = method.rawValue
             return try! Alamofire.JSONEncoding.default.encode(apiMutableURLReq)
-        case .GetNMoQSpecialEventList():
-            return try! Alamofire.JSONEncoding.default.encode(mutableURLRequest)
+        case .GetNMoQSpecialEventList(let apiLang):
+            let apiURL = NSURL(string: Config.baseURL + apiLang + Config.mobileApiURL)!
+            var apiMutableURLReq = URLRequest(url: apiURL.appendingPathComponent(path)!)
+            apiMutableURLReq.httpMethod = method.rawValue
+            return try! Alamofire.JSONEncoding.default.encode(apiMutableURLReq)
         case .GetNMoQSpecialEventDetail(let parameters):
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         case .GetNMoQTourDetail(let parameters):
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
-//            let nmqURL = NSURL(string: Config.baseURL + Config.engLang + Config.mobileApiURL)!
-//            var nmqMutableURLReq = URLRequest(url: nmqURL.appendingPathComponent(path)!)
-//            nmqMutableURLReq.httpMethod = method.rawValue
-//           // return try! Alamofire.URLEncoding.default.encode(nmqMutableURLReq, with: parameters)
-//            return try! Alamofire.JSONEncoding.default.encode(nmqMutableURLReq, with: parameters)
         case .NMoQEventListUserRegistration(let parameters):
             return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
         case .NMoQEntityRegistration(let parameters):
@@ -383,6 +407,28 @@ enum QatarMuseumRouter: URLRequestConvertible {
             }
             regMutableURLReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
             return try! Alamofire.JSONEncoding.default.encode(regMutableURLReq, with: parameters)
+        case .FacilitiesList(let apiLang):
+            let apiURL = NSURL(string: Config.baseURL + apiLang + Config.mobileApiURL)!
+            var apiMutableURLReq = URLRequest(url: apiURL.appendingPathComponent(path)!)
+            apiMutableURLReq.httpMethod = method.rawValue
+            return try! Alamofire.JSONEncoding.default.encode(apiMutableURLReq)
+        case .GetFacilitiesDetail(let parameters):
+            return try! Alamofire.URLEncoding.default.encode(mutableURLRequest, with: parameters)
+        case .GetNmoqParkList(let apiLang):
+            let apiURL = NSURL(string: Config.baseURL + apiLang + Config.mobileApiURL)!
+            var apiMutableURLReq = URLRequest(url: apiURL.appendingPathComponent(path)!)
+            apiMutableURLReq.httpMethod = method.rawValue
+            return try! Alamofire.JSONEncoding.default.encode(apiMutableURLReq)
+        case .GetNmoqListParks(let apiLang):
+            let apiURL = NSURL(string: Config.baseURL + apiLang + Config.mobileApiURL)!
+            var apiMutableURLReq = URLRequest(url: apiURL.appendingPathComponent(path)!)
+            apiMutableURLReq.httpMethod = method.rawValue
+            return try! Alamofire.JSONEncoding.default.encode(apiMutableURLReq)
+        case .GetNMoQPlaygroundDetail(let apiLang,let parameters):
+            let apiURL = NSURL(string: Config.baseURL + apiLang + Config.mobileApiURL)!
+            var apiMutableURLReq = URLRequest(url: apiURL.appendingPathComponent(path)!)
+            apiMutableURLReq.httpMethod = method.rawValue
+            return try! Alamofire.URLEncoding.default.encode(apiMutableURLReq, with: parameters)
         }
         
         

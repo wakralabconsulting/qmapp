@@ -31,14 +31,25 @@ class HomeCollectionViewCell: UICollectionViewCell {
         homeTitleLabel.text = titleString
         homeTitleLabel.font = UIFont.homeTitleFont
         //Added Tour guide icon for MIA in home page
-        if ((home.id == "63") || (home.id == "61") || (home.id == "66") || (home.id == "96") || (home.id == "635") || (home.id == "638")) {
+//        if ((home.id == "63") || (home.id == "61") || (home.id == "66") || (home.id == "96") || (home.id == "635") || (home.id == "638")) {
+//            tourGuideImage.isHidden = false
+//        }
+//        else { //
+//            tourGuideImage.isHidden = true
+//        }
+        if((home.isTourguideAvailable?.lowercased().contains("true"))!) {
             tourGuideImage.isHidden = false
-        }
-        else { //
+        } else {
             tourGuideImage.isHidden = true
         }
             if let imageUrl = home.image {
             homeImageView.kf.setImage(with: URL(string: imageUrl))
+        }
+        let panelAndTalks = "QATAR CREATES: EVENTS FOR THE OPENING OF NMoQ".lowercased()
+        if ((home.name?.lowercased() == panelAndTalks) || (home.name == "قطر تبدع: فعاليات افتتاح متحف قطر الوطني")) {
+            if(home.image == "panelAndTalks") {
+                homeImageView.image = UIImage(named: (home.image!))
+            }
         }
         if (homeImageView.image == nil) {
             homeImageView.image = UIImage(named: "default_imageX2")

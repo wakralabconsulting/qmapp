@@ -36,7 +36,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     var bannerId: String? = nil
     var bannerImageArray : [String]? = []
     let networkReachability = NetworkReachabilityManager()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -58,14 +58,19 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         let tourGuideName = NSLocalizedString("TOURGUIDE_LABEL", comment: "TOURGUIDE_LABEL  in the Museum page")
         let exhibitionsName = NSLocalizedString("EXHIBITIONS_LABEL", comment: "EXHIBITIONS_LABEL  in the Museum page")
         let collectionsName = NSLocalizedString("COLLECTIONS_TITLE", comment: "COLLECTIONS_TITLE  in the Museum page")
+        let experienceName = NSLocalizedString("EXPERIENCE_TITLE", comment: "EXPERIENCE_TITLE  in the Museum page")
         let parkName = NSLocalizedString("PARKS_LABEL", comment: "PARKS_LABEL  in the Museum page")
         let diningName = NSLocalizedString("DINING_LABEL", comment: "DINING_LABEL  in the Museum page")
+       // let highlightTourName = NSLocalizedString("HIGHLIGHTS_TOUR", comment: "HIGHLIGHTS_TOUR  in the Museum page")
+        let facilitiesName = NSLocalizedString("FACILITIES", comment: "FACILITIES  in the Museum page")
+        let eventsName = NSLocalizedString("EVENTS_LABEL", comment: "EVENTS_LABEL  in the Museum page")
+        
         museumsTopbar.topbarDelegate = self
         museumsTopbar.menuButton.isHidden = true
         museumsTopbar.backButton.isHidden = false
         museumTitle.text = museumTitleString
         museumTitle.font = UIFont.museumTitleFont
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             museumsTopbar.backButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
             previousButton.isHidden = true
             nextButton.isHidden = false
@@ -91,9 +96,14 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             if ((museumId != nil) && ((museumId == "63") || (museumId == "96"))) {
                 collectionViewImages = ["MIA_AboutX1","Audio CircleX1","exhibition_blackX1","collectionsX1","park_blackX1","diningX1",]
                 collectionViewNames = [aboutName,tourGuideName,exhibitionsName,collectionsName,parkName,diningName]
-            }else if ((museumId == "61") || (museumId == "66") || (museumId == "635") || (museumId == "638")) {
+            }else if ((museumId == "61") || (museumId == "635")) {
                 collectionViewImages = ["MIA_AboutX1","Audio CircleX1","exhibition_blackX1","collectionsX1","diningX1",]
                 collectionViewNames = [aboutName,tourGuideName,exhibitionsName,collectionsName,diningName]
+            }else if ((museumId == "66") || (museumId == "638")) {
+                collectionViewImages = ["about-launchX1","facilitiesX1","exhibition_blackX1","Audio CircleX1","park_blackX1"]
+                collectionViewNames = [aboutName,facilitiesName,exhibitionsName,tourGuideName,parkName]
+                previousButton.isHidden = true
+                nextButton.isHidden = true
             } else {
                 collectionViewImages = ["MIA_AboutX1","exhibition_blackX1","collectionsX1","diningX1",]
                 collectionViewNames = [aboutName,exhibitionsName,collectionsName,diningName]
@@ -102,16 +112,25 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             }
         }
     }
+//    func setImageArray(imageArray: [String]?) {
+//        if ((imageArray?.count)! >= 4) {
+//            totalImgCount = 3
+//        } else if ((imageArray?.count)! > 1){
+//            totalImgCount = (imageArray?.count)!-1
+//        } else {
+//            totalImgCount = 0
+//        }
+//        if (totalImgCount > 0) {
+//            for  i in 1 ... totalImgCount {
+//                let imageUrlString = imageArray![i]
+//                downloadImage(imageUrlString: imageUrlString)
+//            }
+//        }
+//    }
     func setImageArray(imageArray: [String]?) {
-        if ((imageArray?.count)! >= 4) {
-            totalImgCount = 3
-        } else if ((imageArray?.count)! > 1){
-            totalImgCount = (imageArray?.count)!-1
-        } else {
-            totalImgCount = 0
-        }
+        totalImgCount = imageArray?.count ?? 0
         if (totalImgCount > 0) {
-            for  i in 1 ... totalImgCount {
+            for  i in 0 ... totalImgCount-1 {
                 let imageUrlString = imageArray![i]
                 downloadImage(imageUrlString: imageUrlString)
             }
@@ -165,7 +184,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     
     //KASlideShow delegate
-   
+    
     func kaSlideShowDidShowNext(_ slideshow: KASlideShow) {
         let currentIndex = Int(museumsSlideView.currentIndex)
         pageControl.currentPage = Int(museumsSlideView.currentIndex)
@@ -182,10 +201,10 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         for i in 0...pageControl.numberOfPages-1 {
             let dot = pageControl.subviews[i]
             if (i == currentIndex) {
-                 dot.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
+                dot.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
             } else {
                 dot.transform = CGAffineTransform(scaleX: 1, y: 1)
-              //  break
+                //  break
             }
         }
     }
@@ -229,11 +248,13 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
             }
         } else {
-            if((itemName == "Tour Guide") || (itemName == "الدليل السياحي")) {
+            if((itemName == "About") && (museumId == "66") || (itemName == "عن") && (museumId == "638")) {
+                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 15, left: 8, bottom: 15, right: 6)
+            }else if((itemName == "Tour Guide") || (itemName == "الدليل السياحي") || (itemName == "Highlights Tour")) {
                 museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 9, bottom: 10, right: 9)
             }
             else if((itemName == "Exhibitions") || (itemName == "المعارض")) {
-                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 16, left: 14, bottom: 13, right: 14)
+                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 15, left: 13, bottom: 12, right: 13)
             }
             else if((itemName == "Collections") || (itemName == "المجموعات")) {
                 
@@ -241,16 +262,28 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 
             }
             else if ((itemName == "Parks") || (itemName == "الحدائق"))  {
-                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 14, left: 14, bottom: 14, right: 14)
+                if((museumId == "66") || (museumId == "638")) {
+                    museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 10, bottom: 12, right: 6)
+                } else {
+                    museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 14, left: 14, bottom: 14, right: 14)
+                }
+                
             }
-            else if  ((itemName == "Dining") || (itemName == "العشاء")) {
+            else if  ((itemName == "Dining") || (itemName == "الطعام") ) {
                 museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 18, left: 15, bottom: 18, right: 15)
+            } else if ((itemName == "Facilities") || (itemName == "المرافق")) {
+                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+            }
+            else if((itemName == "Experience") || (itemName == "المحتويات")) {
+                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 14, left: 14, bottom: 14, right: 14)
+            } else if(itemName == "Events") {
+                museumsCell.itemButton.contentEdgeInsets = UIEdgeInsets(top: 17, left: 16, bottom: 17, right: 16)
             }
         }
-       
-        if((museumId != nil) && ((museumId == "63") || (museumId == "96"))) {
+        
+        if((museumId != nil) && ((museumId == "63") || (museumId == "66") || (museumId == "638") || (museumId == "96") )) {
             if (museumsBottomCollectionView.contentOffset.x <= 0.0) {
-                if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                     previousButton.isHidden = true
                     nextButton.isHidden = false
                 }
@@ -262,7 +295,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 }
             }
             else {
-                if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                     previousButton.isHidden = false
                     nextButton.isHidden = true
                     
@@ -292,11 +325,11 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             let panelBanner = NSLocalizedString("PANEL_DISCUSSION", comment: "PANEL_DISCUSSION  in the Museum page")
             if (selectedItem == aboutBanner) {
                 let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
-
+                
                 let heritageDtlView = detailStoryboard.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
                 heritageDtlView.pageNameString = PageName2.museumEvent
                 heritageDtlView.museumId = bannerId
-
+                
                 let transition = CATransition()
                 transition.duration = 0.3
                 transition.type = kCATransitionFade
@@ -335,23 +368,21 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 self.present(panelView, animated: false, completion: nil)
             }
         } else {
-           if ((selectedItem == "About") || (selectedItem == "عن")) {
-            let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
-            
-            let heritageDtlView = detailStoryboard.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
-            heritageDtlView.pageNameString = PageName2.museumAbout
-            heritageDtlView.museumId = museumId
-
-            
+            if ((selectedItem == "About") || (selectedItem == "عن")) {
+                let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
+                let heritageDtlView = detailStoryboard.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
+                heritageDtlView.pageNameString = PageName2.museumAbout
+                heritageDtlView.museumId = museumId
                 let transition = CATransition()
                 transition.duration = 0.3
                 transition.type = kCATransitionFade
                 transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
                 view.window!.layer.add(transition, forKey: kCATransition)
                 self.present(heritageDtlView, animated: false, completion: nil)
-           } else if ((selectedItem == "Tour Guide") || (selectedItem == "الدليل السياحي")){
-                if((museumId == "63") || (museumId == "96")) {
-                    let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "miaTourGuideId") as! MiaTourGuideViewController
+            } else if ((selectedItem == "Tour Guide") || (selectedItem == "الدليل السياحي")){
+                if((museumId == "63") || (museumId == "96") || (museumId == "66") || (museumId == "638")) {
+                    let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+                    tourGuideView.exhibitionsPageNameString = ExhbitionPageName.miaTourGuideList
                     tourGuideView.museumId = museumId!
                     let transition = CATransition()
                     transition.duration = 0.3
@@ -361,9 +392,9 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                     self.present(tourGuideView, animated: false, completion: nil)
                 } else {
                     self.loadComingSoonPopup()
-            }
-            
-           } else if ((selectedItem == "Exhibitions") || (selectedItem == "المعارض")){
+                }
+                
+            } else if ((selectedItem == "Exhibitions") || (selectedItem == "المعارض")){
                 let exhibitionView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
                 exhibitionView.museumId = museumId
                 let transition = CATransition()
@@ -373,7 +404,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 view.window!.layer.add(transition, forKey: kCATransition)
                 exhibitionView.exhibitionsPageNameString = ExhbitionPageName.museumExhibition
                 self.present(exhibitionView, animated: false, completion: nil)
-           } else if ((selectedItem == "Collections") || (selectedItem == "المجموعات")){
+            } else if ((selectedItem == "Collections") || (selectedItem == "المجموعات")){
                 let musmCollectionnView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
                 musmCollectionnView.museumId = museumId
                 musmCollectionnView.exhibitionsPageNameString = ExhbitionPageName.museumCollectionsList
@@ -383,15 +414,25 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 transition.subtype = kCATransitionFromRight
                 view.window!.layer.add(transition, forKey: kCATransition)
                 self.present(musmCollectionnView, animated: false, completion: nil)
-           } else if ((selectedItem == "Parks") || (selectedItem == "الحدائق")){
-                let parkView = self.storyboard?.instantiateViewController(withIdentifier: "parkViewId") as! ParksViewController
-                let transition = CATransition()
-                transition.duration = 0.3
-                transition.type = kCATransitionFade
-                transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-                view.window!.layer.add(transition, forKey: kCATransition)
-                self.present(parkView, animated: false, completion: nil)
-           } else if((selectedItem == "Dining") || (selectedItem == "الطعام")) {
+            } else if ((selectedItem == "Parks") || (selectedItem == "الحدائق")){
+                if((museumId == "66") || (museumId == "638")) {
+                    let parkView = self.storyboard?.instantiateViewController(withIdentifier: "parkListId") as! ParkListViewController
+                    let transition = CATransition()
+                    transition.duration = 0.3
+                    transition.type = kCATransitionFade
+                    transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+                    view.window!.layer.add(transition, forKey: kCATransition)
+                    self.present(parkView, animated: false, completion: nil)
+                } else {
+                    let parkView = self.storyboard?.instantiateViewController(withIdentifier: "parkViewId") as! ParksViewController
+                    let transition = CATransition()
+                    transition.duration = 0.3
+                    transition.type = kCATransitionFade
+                    transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+                    view.window!.layer.add(transition, forKey: kCATransition)
+                    self.present(parkView, animated: false, completion: nil)
+                }
+            } else if((selectedItem == "Dining") || (selectedItem == "الطعام")) {
                 let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
                 diningView.museumId = museumId
                 diningView.fromHome = false
@@ -403,9 +444,18 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 transition.subtype = kCATransitionFromRight
                 view.window!.layer.add(transition, forKey: kCATransition)
                 self.present(diningView, animated: false, completion: nil)
-           } else {
+            }  else if((selectedItem == "Facilities") || (selectedItem == "المرافق")) {
+                let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "tourAndPanelId") as! TourAndPanelListViewController
+                tourView.pageNameString = NMoQPageName.Facilities
+                let transition = CATransition()
+                transition.duration = 0.25
+                transition.type = kCATransitionPush
+                transition.subtype = kCATransitionFromRight
+                view.window!.layer.add(transition, forKey: kCATransition)
+                self.present(tourView, animated: false, completion: nil)
+            }else {
                 loadComingSoonPopup()
-           }
+            }
         }
     }
     
@@ -428,7 +478,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         }
     }
     @IBAction func didTapNext(_ sender: UIButton) {
-       
+        
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             self.museumsBottomCollectionView.isScrollEnabled = true
             let collectionBounds = self.museumsBottomCollectionView.bounds
@@ -470,7 +520,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush
-         transition.subtype = kCATransitionFromRight
+        transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(eventView, animated: false, completion: nil)
     }
@@ -514,8 +564,8 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                     self.museumArray = data.museum!
                 }
                 if(self.museumArray.count > 0) {
-                        self.setImageArray(imageArray: self.museumArray[0].multimediaFile)
-                     self.saveOrUpdateAboutCoredata(aboutDetailtArray: data.museum)
+                    self.setImageArray(imageArray: self.museumArray[0].multimediaFile)
+                    self.saveOrUpdateAboutCoredata(aboutDetailtArray: data.museum)
                 }
             case .failure(let error):
                 print(error)
@@ -547,6 +597,9 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 let aboutDetailDict = aboutDetailtArray![0]
                 let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutEntity")
                 if(isDeleted == true) {
+                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDescriptionEntity")
+                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutMultimediaFileEntity")
+                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDownloadLinkEntity")
                     self.saveToCoreData(aboutDetailDict: aboutDetailDict, managedObjContext: managedContext)
                 }
             } else {
@@ -560,6 +613,8 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 let aboutDetailDict = aboutDetailtArray![0]
                 let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutEntityArabic")
                 if(isDeleted == true) {
+                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDescriptionEntityAr")
+                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutMultimediaFileEntityAr")
                     self.saveToCoreData(aboutDetailDict: aboutDetailDict, managedObjContext: managedContext)
                 }
             } else {
@@ -585,7 +640,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 aboutdbDict.openingTime = aboutDetailDict.openingTime
             } else {
                 aboutdbDict.openingTime = aboutDetailDict.eventDate
-            }            
+            }
             aboutdbDict.mobileLatitude = aboutDetailDict.mobileLatitude
             aboutdbDict.tourGuideAvailability = aboutDetailDict.tourGuideAvailability
             

@@ -1323,6 +1323,11 @@
                             <constraint firstItem="o2u-nn-4xe" firstAttribute="leading" secondItem="Kak-k4-CME" secondAttribute="leading" id="mkP-1z-npg"/>
                             <constraint firstItem="UpB-na-9ki" firstAttribute="top" secondItem="lWr-Mk-OyP" secondAttribute="bottom" id="p6g-H8-fX2"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="UpB-na-9ki"/>
+                            </mask>
+                        </variation>
                     </view>
                     <size key="freeformSize" width="414" height="870"/>
                     <connections>
@@ -2309,12 +2314,12 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="157"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TOUR GUIDES" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wvM-rU-LBj">
-                                                    <rect key="frame" x="85" y="20" width="205" height="34"/>
+                                                    <rect key="frame" x="92.666666666666671" y="19.999999999999996" width="228.66666666666663" height="39.666666666666657"/>
                                                     <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="34"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M5m-HF-9dd">
-                                                    <rect key="frame" x="12" y="54" width="351" height="99"/>
+                                                    <rect key="frame" x="12" y="59.666666666666664" width="390" height="93.333333333333343"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="18"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -2383,287 +2388,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QYS-cA-U77" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="10936" y="89"/>
-        </scene>
-        <!--Mia Tour Guide View Controller-->
-        <scene sceneID="66T-K3-Nsa">
-            <objects>
-                <viewController storyboardIdentifier="miaTourGuideId" id="kXG-Fm-aO3" customClass="MiaTourGuideViewController" customModule="QatarMuseums" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="RN7-dd-vvH"/>
-                        <viewControllerLayoutGuide type="bottom" id="WPJ-3d-4Sz"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="zao-tZ-Ewz">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="84K-6W-Hd7">
-                                <rect key="frame" x="0.0" y="85" width="375" height="582"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="lWr-VJ-ieF">
-                                    <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="50" height="350"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="pvE-iS-hBn">
-                                        <rect key="frame" x="0.0" y="350" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </view>
-                                    </collectionViewCell>
-                                </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="miaTourHeader" id="MRh-xH-luv" customClass="MiaCollectionReusableView" customModule="QatarMuseums" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="350"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gEh-NP-pHh">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="350"/>
-                                            <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="phd-AW-qrD">
-                                                    <rect key="frame" x="12" y="0.0" width="351" height="33"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                </textView>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XT2-K6-knf">
-                                                    <rect key="frame" x="12" y="33" width="351" height="38"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="18"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                </textView>
-                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ucg-Hq-Op9">
-                                                    <rect key="frame" x="60" y="79" width="255" height="46"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="46" id="BuN-UH-b1Y"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="20"/>
-                                                    <state key="normal" title="Explore">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </state>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                            <integer key="value" value="23"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
-                                                    <connections>
-                                                        <action selector="didTapExplore:" destination="MRh-xH-luv" eventType="touchUpInside" id="hBM-70-5Bv"/>
-                                                        <action selector="exploreButtonTouchDown:" destination="MRh-xH-luv" eventType="touchDown" id="Hg7-je-8VF"/>
-                                                    </connections>
-                                                </button>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="explore_icon" translatesAutoresizingMaskIntoConstraints="NO" id="iVW-1V-6GS">
-                                                    <rect key="frame" x="124.5" y="87.5" width="22" height="23"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="23" id="Dzj-2W-EMt"/>
-                                                        <constraint firstAttribute="width" constant="22" id="MIx-PI-VgW"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V9O-xL-MBQ">
-                                                    <rect key="frame" x="187.5" y="149" width="0.0" height="40"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="gc0-4P-k27"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="26"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="249" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WW3-h2-vrM">
-                                                    <rect key="frame" x="24" y="206" width="339" height="129"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                </textView>
-                                            </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="Ucg-Hq-Op9" secondAttribute="trailing" constant="60" id="7uQ-FH-N3S"/>
-                                                <constraint firstItem="V9O-xL-MBQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gEh-NP-pHh" secondAttribute="leading" constant="6" id="BG2-q2-3mP"/>
-                                                <constraint firstAttribute="trailing" secondItem="phd-AW-qrD" secondAttribute="trailing" constant="12" id="EmZ-hj-DGa"/>
-                                                <constraint firstAttribute="bottom" secondItem="WW3-h2-vrM" secondAttribute="bottom" constant="15" id="Fuo-aC-bdc"/>
-                                                <constraint firstItem="V9O-xL-MBQ" firstAttribute="centerX" secondItem="gEh-NP-pHh" secondAttribute="centerX" id="Ij3-nG-50y"/>
-                                                <constraint firstAttribute="trailing" secondItem="XT2-K6-knf" secondAttribute="trailing" constant="12" id="SB6-PL-HtN"/>
-                                                <constraint firstItem="WW3-h2-vrM" firstAttribute="top" secondItem="V9O-xL-MBQ" secondAttribute="bottom" constant="17" id="SHW-nk-cnc"/>
-                                                <constraint firstItem="Ucg-Hq-Op9" firstAttribute="leading" secondItem="gEh-NP-pHh" secondAttribute="leading" constant="60" id="XwG-pP-2ou"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="V9O-xL-MBQ" secondAttribute="trailing" constant="6" id="dYz-Sn-BQ1"/>
-                                                <constraint firstItem="XT2-K6-knf" firstAttribute="leading" secondItem="gEh-NP-pHh" secondAttribute="leading" constant="12" id="eNl-Ux-ltn"/>
-                                                <constraint firstItem="WW3-h2-vrM" firstAttribute="leading" secondItem="gEh-NP-pHh" secondAttribute="leading" constant="24" id="fzm-AZ-6f7"/>
-                                                <constraint firstItem="phd-AW-qrD" firstAttribute="top" secondItem="gEh-NP-pHh" secondAttribute="top" id="g54-GF-0mL"/>
-                                                <constraint firstItem="Ucg-Hq-Op9" firstAttribute="top" secondItem="XT2-K6-knf" secondAttribute="bottom" constant="8" id="jzF-aV-ZTu"/>
-                                                <constraint firstItem="V9O-xL-MBQ" firstAttribute="top" secondItem="Ucg-Hq-Op9" secondAttribute="bottom" constant="24" id="lVf-oh-M4m"/>
-                                                <constraint firstItem="XT2-K6-knf" firstAttribute="top" secondItem="phd-AW-qrD" secondAttribute="bottom" id="mMa-mO-rh2"/>
-                                                <constraint firstAttribute="trailing" secondItem="WW3-h2-vrM" secondAttribute="trailing" constant="12" id="oFA-0q-MC8"/>
-                                                <constraint firstItem="iVW-1V-6GS" firstAttribute="centerX" secondItem="Ucg-Hq-Op9" secondAttribute="centerX" constant="-52" id="pCC-4f-TkP"/>
-                                                <constraint firstItem="phd-AW-qrD" firstAttribute="leading" secondItem="gEh-NP-pHh" secondAttribute="leading" constant="12" id="s1i-lY-4Q7"/>
-                                                <constraint firstItem="iVW-1V-6GS" firstAttribute="centerY" secondItem="Ucg-Hq-Op9" secondAttribute="centerY" constant="-3" id="tkQ-wL-vhm"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="gEh-NP-pHh" firstAttribute="leading" secondItem="MRh-xH-luv" secondAttribute="leading" id="Mv3-WT-5uP"/>
-                                        <constraint firstAttribute="bottom" secondItem="gEh-NP-pHh" secondAttribute="bottom" id="VOR-Ul-mCy"/>
-                                        <constraint firstItem="gEh-NP-pHh" firstAttribute="top" secondItem="MRh-xH-luv" secondAttribute="top" id="g1c-4k-hMm"/>
-                                        <constraint firstAttribute="trailing" secondItem="gEh-NP-pHh" secondAttribute="trailing" id="gbX-b5-t2K"/>
-                                    </constraints>
-                                    <connections>
-                                        <outlet property="audioCircleImage" destination="iVW-1V-6GS" id="dAf-XX-Pbe"/>
-                                        <outlet property="exploreButton" destination="Ucg-Hq-Op9" id="vhl-sw-YW9"/>
-                                        <outlet property="miaTitle" destination="phd-AW-qrD" id="XFX-FA-txU"/>
-                                        <outlet property="miaTourGuideText" destination="XT2-K6-knf" id="7Za-wF-VZJ"/>
-                                        <outlet property="selfGuidedText" destination="WW3-h2-vrM" id="LJJ-Ug-dqb"/>
-                                        <outlet property="selfGuidedTitle" destination="V9O-xL-MBQ" id="kM7-0b-AjQ"/>
-                                    </connections>
-                                </collectionReusableView>
-                                <connections>
-                                    <outlet property="dataSource" destination="kXG-Fm-aO3" id="R4y-C0-qFM"/>
-                                    <outlet property="delegate" destination="kXG-Fm-aO3" id="JQ0-W6-aR0"/>
-                                </connections>
-                            </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S9u-ED-oOD" customClass="CommonHeaderView" customModule="QatarMuseums" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="20" width="375" height="65"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="65" id="KXr-9X-s4E"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sOt-7F-jmh" customClass="LoadingView" customModule="QatarMuseums" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="85" width="375" height="582"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="84K-6W-Hd7" secondAttribute="bottom" id="3xo-oE-YWw"/>
-                            <constraint firstAttribute="trailing" secondItem="sOt-7F-jmh" secondAttribute="trailing" id="9pj-s0-qho"/>
-                            <constraint firstItem="S9u-ED-oOD" firstAttribute="top" secondItem="RN7-dd-vvH" secondAttribute="bottom" id="Eee-GN-4Lt"/>
-                            <constraint firstAttribute="trailing" secondItem="84K-6W-Hd7" secondAttribute="trailing" id="FmK-tr-Id9"/>
-                            <constraint firstAttribute="bottom" secondItem="sOt-7F-jmh" secondAttribute="bottom" id="LpU-oQ-MFn"/>
-                            <constraint firstAttribute="trailing" secondItem="S9u-ED-oOD" secondAttribute="trailing" id="RdA-hQ-iiE"/>
-                            <constraint firstItem="sOt-7F-jmh" firstAttribute="leading" secondItem="zao-tZ-Ewz" secondAttribute="leading" id="SaS-Vx-R6x"/>
-                            <constraint firstItem="S9u-ED-oOD" firstAttribute="leading" secondItem="zao-tZ-Ewz" secondAttribute="leading" id="UNS-XG-BIp"/>
-                            <constraint firstItem="84K-6W-Hd7" firstAttribute="leading" secondItem="zao-tZ-Ewz" secondAttribute="leading" id="nYl-U4-yEr"/>
-                            <constraint firstItem="sOt-7F-jmh" firstAttribute="top" secondItem="S9u-ED-oOD" secondAttribute="bottom" id="wiq-OT-X2K"/>
-                            <constraint firstItem="84K-6W-Hd7" firstAttribute="top" secondItem="S9u-ED-oOD" secondAttribute="bottom" id="zkG-tC-qk5"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="loadingView" destination="sOt-7F-jmh" id="ZbL-0y-I5B"/>
-                        <outlet property="miaTourCollectionView" destination="84K-6W-Hd7" id="6iQ-Bx-hNy"/>
-                        <outlet property="topbarView" destination="S9u-ED-oOD" id="tqA-pn-Pfu"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BRm-Cs-wA5" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="11666.666666666668" y="89.673913043478265"/>
-        </scene>
-        <!--Mia Tour Guide Explore View Controller-->
-        <scene sceneID="h2m-ri-WQc">
-            <objects>
-                <viewController storyboardIdentifier="miaExploreId" id="duk-V2-qU0" customClass="MiaTourGuideExploreViewController" customModule="QatarMuseums" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Duo-v0-lqH"/>
-                        <viewControllerLayoutGuide type="bottom" id="bku-li-CTw"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="eQi-bY-SCY">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FJk-jI-3fc">
-                                <rect key="frame" x="0.0" y="85" width="375" height="582"/>
-                            </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wFM-oa-Gc4" customClass="CommonHeaderView" customModule="QatarMuseums" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="20" width="375" height="65"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="65" id="oEh-n7-4Yd"/>
-                                </constraints>
-                            </view>
-                            <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mKA-PJ-D6L">
-                                <rect key="frame" x="0.0" y="85" width="375" height="582"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MIA TOUR GUIDE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="BrH-h2-Ubb">
-                                <rect key="frame" x="48" y="436.5" width="279" height="38"/>
-                                <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="38"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zqA-Ww-L2X">
-                                <rect key="frame" x="30" y="497.5" width="315" height="36.5"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6wp-F8-p8q">
-                                <rect key="frame" x="142.5" y="321.5" width="90" height="90"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="90" id="KYR-op-aUJ"/>
-                                    <constraint firstAttribute="width" constant="90" id="prq-Tx-n0c"/>
-                                </constraints>
-                                <connections>
-                                    <action selector="didTapPlayButton:" destination="duk-V2-qU0" eventType="touchUpInside" id="fjX-Ax-Dc5"/>
-                                    <action selector="playButtonTouchDown:" destination="duk-V2-qU0" eventType="touchDown" id="er9-qb-fSN"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QXG-N5-Ns3">
-                                <rect key="frame" x="50" y="557" width="275" height="50"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="CvW-CK-Xg9"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="19"/>
-                                <state key="normal" title="START TOUR">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="25"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="didTapStartTour:" destination="duk-V2-qU0" eventType="touchUpInside" id="1bk-XT-UiG"/>
-                                    <action selector="startTourButtonTouchDown:" destination="duk-V2-qU0" eventType="touchDown" id="Qfv-hk-eEr"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="BrH-h2-Ubb" firstAttribute="centerX" secondItem="eQi-bY-SCY" secondAttribute="centerX" id="6p6-dA-BdG"/>
-                            <constraint firstItem="QXG-N5-Ns3" firstAttribute="top" secondItem="zqA-Ww-L2X" secondAttribute="bottom" constant="23" id="7HF-PW-XPx"/>
-                            <constraint firstItem="6wp-F8-p8q" firstAttribute="centerX" secondItem="eQi-bY-SCY" secondAttribute="centerX" id="952-8M-1iP"/>
-                            <constraint firstItem="FJk-jI-3fc" firstAttribute="leading" secondItem="eQi-bY-SCY" secondAttribute="leading" id="GgK-kG-C5b"/>
-                            <constraint firstItem="BrH-h2-Ubb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eQi-bY-SCY" secondAttribute="leading" constant="6" id="IRt-LF-TE4"/>
-                            <constraint firstItem="wFM-oa-Gc4" firstAttribute="leading" secondItem="eQi-bY-SCY" secondAttribute="leading" id="IvV-Jl-KL0"/>
-                            <constraint firstItem="BrH-h2-Ubb" firstAttribute="top" secondItem="6wp-F8-p8q" secondAttribute="bottom" constant="25" id="Ixz-uH-7pa"/>
-                            <constraint firstItem="bku-li-CTw" firstAttribute="top" secondItem="QXG-N5-Ns3" secondAttribute="bottom" constant="60" id="Kvn-vH-yHD"/>
-                            <constraint firstItem="zqA-Ww-L2X" firstAttribute="top" secondItem="BrH-h2-Ubb" secondAttribute="bottom" constant="23" id="Tu8-xX-d98"/>
-                            <constraint firstAttribute="trailing" secondItem="wFM-oa-Gc4" secondAttribute="trailing" id="Uf5-32-FAo"/>
-                            <constraint firstItem="mKA-PJ-D6L" firstAttribute="top" secondItem="wFM-oa-Gc4" secondAttribute="bottom" id="V3p-Tp-PWa"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="BrH-h2-Ubb" secondAttribute="trailing" constant="6" id="W1X-2R-XWg"/>
-                            <constraint firstAttribute="trailing" secondItem="zqA-Ww-L2X" secondAttribute="trailing" constant="30" id="Xtg-Vu-YIq"/>
-                            <constraint firstItem="mKA-PJ-D6L" firstAttribute="leading" secondItem="eQi-bY-SCY" secondAttribute="leading" id="e9l-rF-aC2"/>
-                            <constraint firstItem="zqA-Ww-L2X" firstAttribute="leading" secondItem="eQi-bY-SCY" secondAttribute="leading" constant="30" id="fbV-bM-LHv"/>
-                            <constraint firstItem="FJk-jI-3fc" firstAttribute="top" secondItem="wFM-oa-Gc4" secondAttribute="bottom" id="ihk-ta-Bp5"/>
-                            <constraint firstItem="wFM-oa-Gc4" firstAttribute="top" secondItem="Duo-v0-lqH" secondAttribute="bottom" id="juC-W8-uVD"/>
-                            <constraint firstAttribute="trailing" secondItem="mKA-PJ-D6L" secondAttribute="trailing" id="n0w-T0-7Ba"/>
-                            <constraint firstItem="QXG-N5-Ns3" firstAttribute="leading" secondItem="eQi-bY-SCY" secondAttribute="leading" constant="50" id="oJt-I8-GrR"/>
-                            <constraint firstAttribute="bottom" secondItem="FJk-jI-3fc" secondAttribute="bottom" id="oKW-ez-xfk"/>
-                            <constraint firstAttribute="trailing" secondItem="QXG-N5-Ns3" secondAttribute="trailing" constant="50" id="rGC-6Q-ect"/>
-                            <constraint firstAttribute="bottom" secondItem="mKA-PJ-D6L" secondAttribute="bottom" id="uCJ-w9-t3j"/>
-                            <constraint firstAttribute="trailing" secondItem="FJk-jI-3fc" secondAttribute="trailing" id="xwC-MF-rwk"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="headerView" destination="wFM-oa-Gc4" id="561-6H-R1C"/>
-                        <outlet property="miaTitle" destination="BrH-h2-Ubb" id="a6s-rK-2Ge"/>
-                        <outlet property="playButton" destination="6wp-F8-p8q" id="AhZ-Bv-lya"/>
-                        <outlet property="startTourButton" destination="QXG-N5-Ns3" id="jcm-1u-RyB"/>
-                        <outlet property="tourGuideDescription" destination="zqA-Ww-L2X" id="G88-RU-dyP"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Y2o-iT-PIY" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="12362.318840579712" y="98.641304347826093"/>
         </scene>
         <!--Mia Tour Detail View Controller-->
         <scene sceneID="oX5-rD-Oiq">
@@ -6269,6 +5993,62 @@
             </objects>
             <point key="canvasLocation" x="25716" y="-113"/>
         </scene>
+        <!--Park List View Controller-->
+        <scene sceneID="hmB-su-F1M">
+            <objects>
+                <viewController storyboardIdentifier="parkListId" id="4Ag-2h-n8N" customClass="ParkListViewController" customModule="QatarMuseums" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Jbx-91-fxd"/>
+                        <viewControllerLayoutGuide type="bottom" id="JeO-8L-JEF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="M7h-bR-LdJ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Dk-xo-jh1" customClass="CommonHeaderView" customModule="QatarMuseums" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="20" width="414" height="65"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="65" id="Pcj-HK-MMa"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ABc-Fc-5jU">
+                                <rect key="frame" x="0.0" y="85" width="414" height="651"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="4Ag-2h-n8N" id="V8D-H0-gvr"/>
+                                    <outlet property="delegate" destination="4Ag-2h-n8N" id="xCv-Sr-V1z"/>
+                                </connections>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XAS-I3-avB" customClass="LoadingView" customModule="QatarMuseums" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="85" width="414" height="651"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="XAS-I3-avB" secondAttribute="trailing" id="7rA-2h-Y3M"/>
+                            <constraint firstItem="ABc-Fc-5jU" firstAttribute="top" secondItem="5Dk-xo-jh1" secondAttribute="bottom" id="IRE-HD-KNm"/>
+                            <constraint firstItem="XAS-I3-avB" firstAttribute="top" secondItem="5Dk-xo-jh1" secondAttribute="bottom" id="LgX-CB-y7Y"/>
+                            <constraint firstAttribute="bottom" secondItem="XAS-I3-avB" secondAttribute="bottom" id="Npb-vP-mlQ"/>
+                            <constraint firstAttribute="trailing" secondItem="ABc-Fc-5jU" secondAttribute="trailing" id="VNk-DF-DKq"/>
+                            <constraint firstItem="5Dk-xo-jh1" firstAttribute="top" secondItem="Jbx-91-fxd" secondAttribute="bottom" id="WZC-mJ-GEa"/>
+                            <constraint firstItem="ABc-Fc-5jU" firstAttribute="leading" secondItem="M7h-bR-LdJ" secondAttribute="leading" id="dNt-h5-PC7"/>
+                            <constraint firstItem="5Dk-xo-jh1" firstAttribute="leading" secondItem="M7h-bR-LdJ" secondAttribute="leading" id="pf2-QY-ep3"/>
+                            <constraint firstAttribute="trailing" secondItem="5Dk-xo-jh1" secondAttribute="trailing" id="qI6-8i-OUR"/>
+                            <constraint firstAttribute="bottom" secondItem="ABc-Fc-5jU" secondAttribute="bottom" id="t8R-be-kds"/>
+                            <constraint firstItem="XAS-I3-avB" firstAttribute="leading" secondItem="M7h-bR-LdJ" secondAttribute="leading" id="uWx-8C-F5M"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="headerView" destination="5Dk-xo-jh1" id="D9d-BW-2HI"/>
+                        <outlet property="loadingView" destination="XAS-I3-avB" id="ByH-sn-nTi"/>
+                        <outlet property="parkTableView" destination="ABc-Fc-5jU" id="lqe-V0-Syb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pAj-mc-iuN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="26443.478260869568" y="-113.31521739130436"/>
+        </scene>
         <!--Exhibitions View Controller-->
         <scene sceneID="7rW-gk-kcf">
             <objects>
@@ -6335,10 +6115,9 @@
         <image name="culturepass_back" width="414" height="736"/>
         <image name="culturepass_card" width="414" height="736"/>
         <image name="down_arrowX2" width="279" height="162"/>
-        <image name="explore_icon" width="180" height="186"/>
-        <image name="gift_shopX1" width="204" height="186"/>
-        <image name="heart_emptyX1" width="202" height="186"/>
-        <image name="moreX1" width="202" height="186"/>
+        <image name="gift_shopX1" width="306" height="279"/>
+        <image name="heart_emptyX1" width="303" height="279"/>
+        <image name="moreX1" width="303" height="279"/>
         <image name="nextImg" width="2000" height="2000"/>
         <image name="notificationX1" width="162" height="186"/>
         <image name="number_padX1" width="136" height="186"/>
