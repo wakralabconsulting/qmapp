@@ -153,7 +153,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         self.present(notificationsView, animated: false, completion: nil)
     }
     func registerNib() {
-        self.homeTableView.register(UINib(nibName: "ExhibitionsCellXib", bundle: nil), forCellReuseIdentifier: "exhibitionCellId")
+        self.homeTableView.register(UINib(nibName: "CommonListCellXib", bundle: nil), forCellReuseIdentifier: "commonListCellId")
         self.homeTableView.register(UINib(nibName: "NMoHeaderView", bundle: nil), forCellReuseIdentifier: "bannerCellId")
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -172,7 +172,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 cell.setBannerData(bannerData: homeBannerList[0])
                 return cell
             } else {
-                let cell = homeTableView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
+                let cell = homeTableView.dequeueReusableCell(withIdentifier: "commonListCellId", for: indexPath) as! CommonListCell
                 cell.setHomeCellData(home: homeList[indexPath.row])
                 
                 loadingView.stopLoading()
@@ -180,7 +180,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 return cell
             }
         }else {
-            let cell = homeTableView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
+            let cell = homeTableView.dequeueReusableCell(withIdentifier: "commonListCellId", for: indexPath) as! CommonListCell
             cell.setHomeCellData(home: homeList[indexPath.row])
             return cell
         }
@@ -273,7 +273,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func loadExhibitionPage() {
-        let exhibitionView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        let exhibitionView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionPush
@@ -407,7 +407,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     //MARK: SideMenu Delegates
     func exhibitionButtonPressed() {
-        let exhibitionView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        let exhibitionView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
         exhibitionView.fromSideMenu = true
         let transition = CATransition()
         transition.duration = 0.3
@@ -454,7 +454,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func heritageButtonPressed() {
-        let heritageView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        let heritageView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
         heritageView.fromSideMenu = true
         heritageView.exhibitionsPageNameString = ExhbitionPageName.heritageList
         let transition = CATransition()
@@ -466,7 +466,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func publicArtsButtonPressed() {
-        let publicArtsView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        let publicArtsView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
         publicArtsView.fromSideMenu = true
         publicArtsView.exhibitionsPageNameString = ExhbitionPageName.publicArtsList
         let transition = CATransition()
@@ -488,7 +488,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func diningButtonPressed() {
-        let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
         diningView.fromHome = true
         diningView.fromSideMenu = true
         diningView.exhibitionsPageNameString = ExhbitionPageName.diningList
@@ -585,7 +585,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     @IBAction func didTaprestaurantButton(_ sender: UIButton) {
         self.culturePassButton.transform = CGAffineTransform(scaleX: 1, y: 1)
-        let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
          diningView.fromHome = true
          diningView.fromSideMenu = false
          diningView.exhibitionsPageNameString = ExhbitionPageName.diningList
@@ -1292,7 +1292,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         return true
     }
     func loadTourViewPage(nid: String?,subTitle:String?,isFromTour:Bool?) {
-        let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
         tourView.tourDetailId = nid
         tourView.headerTitle = subTitle
         tourView.isFromTour = isFromTour

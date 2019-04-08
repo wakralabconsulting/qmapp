@@ -1,5 +1,5 @@
 //
-//  ExhibitionsViewController.swift
+//  CommonListViewController.swift
 //  QatarMuseum
 //
 //  Created by Exalture on 10/06/18.
@@ -22,7 +22,7 @@ enum ExhbitionPageName {
     case facilitiesSecondList
     case miaTourGuideList
 }
-class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol,LoadingViewProtocol {
+class CommonListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol,LoadingViewProtocol {
     @IBOutlet weak var exhibitionHeaderView: CommonHeaderView!
     @IBOutlet weak var exhibitionCollectionView: UITableView!
     @IBOutlet weak var exbtnLoadingView: LoadingView!
@@ -62,8 +62,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         exhibitionHeaderView.headerViewDelegate = self
         if ((exhibitionsPageNameString == ExhbitionPageName.homeExhibition) || (exhibitionsPageNameString == ExhbitionPageName.museumExhibition)) {
             exhibitionHeaderView.headerTitle.text = NSLocalizedString("EXHIBITIONS_TITLE", comment: "EXHIBITIONS_TITLE Label in the Exhibitions page")
-            NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveExhibitionListNotificationEn(notification:)), name: NSNotification.Name(exhibitionsListNotificationEn), object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveExhibitionListNotificationAr(notification:)), name: NSNotification.Name(exhibitionsListNotificationAr), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(CommonListViewController.receiveExhibitionListNotificationEn(notification:)), name: NSNotification.Name(exhibitionsListNotificationEn), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(CommonListViewController.receiveExhibitionListNotificationAr(notification:)), name: NSNotification.Name(exhibitionsListNotificationAr), object: nil)
             
             
             if  (networkReachability?.isReachable)! {
@@ -88,8 +88,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             exhibitionHeaderView.headerTitle.text = NSLocalizedString("HERITAGE_SITES_TITLE", comment: "HERITAGE_SITES_TITLE  in the Heritage page")
             exhibitionHeaderView.headerTitle.font = UIFont.headerFont
             self.fetchHeritageListFromCoredata()
-            NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveHeritageListNotificationEn(notification:)), name: NSNotification.Name(heritageListNotificationEn), object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveHeritageListNotificationAr(notification:)), name: NSNotification.Name(heritageListNotificationAr), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(CommonListViewController.receiveHeritageListNotificationEn(notification:)), name: NSNotification.Name(heritageListNotificationEn), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(CommonListViewController.receiveHeritageListNotificationAr(notification:)), name: NSNotification.Name(heritageListNotificationAr), object: nil)
 //            if  (networkReachability?.isReachable)! {
 //                DispatchQueue.global(qos: .background).async {
 //                    self.getHeritageDataFromServer()
@@ -103,12 +103,12 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
 //                }
 //            }
             self.fetchPublicArtsListFromCoredata()
-            NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receivePublicArtsListNotificationEn(notification:)), name: NSNotification.Name(publicArtsListNotificationEn), object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receivePublicArtsListNotificationAr(notification:)), name: NSNotification.Name(publicArtsListNotificationAr), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(CommonListViewController.receivePublicArtsListNotificationEn(notification:)), name: NSNotification.Name(publicArtsListNotificationEn), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(CommonListViewController.receivePublicArtsListNotificationAr(notification:)), name: NSNotification.Name(publicArtsListNotificationAr), object: nil)
         } else if (exhibitionsPageNameString == ExhbitionPageName.museumCollectionsList) {
             exhibitionHeaderView.headerTitle.text = NSLocalizedString("COLLECTIONS_TITLE", comment: "COLLECTIONS_TITLE Label in the collections page").uppercased()
-            NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveCollectionListNotificationEn(notification:)), name: NSNotification.Name(collectionsListNotificationEn), object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveCollectionListNotificationAr(notification:)), name: NSNotification.Name(collectionsListNotificationAr), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(CommonListViewController.receiveCollectionListNotificationEn(notification:)), name: NSNotification.Name(collectionsListNotificationEn), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(CommonListViewController.receiveCollectionListNotificationAr(notification:)), name: NSNotification.Name(collectionsListNotificationAr), object: nil)
             if((museumId == "63") || (museumId == "96")) {
 //                if (networkReachability?.isReachable)! {
 //                    DispatchQueue.global(qos: .background).async {
@@ -156,7 +156,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 fetchFacilitiesDetailsFromCoredata()
             }
         } else if (exhibitionsPageNameString == ExhbitionPageName.miaTourGuideList) {
-            NotificationCenter.default.addObserver(self, selector: #selector(ExhibitionsViewController.receiveMiaTourNotification(notification:)), name: NSNotification.Name(miaTourNotification), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(CommonListViewController.receiveMiaTourNotification(notification:)), name: NSNotification.Name(miaTourNotification), object: nil)
             DispatchQueue.main.async {
                 self.fetchTourGuideListFromCoredata()
             }
@@ -171,7 +171,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         }
     }
     func registerNib() {
-        self.exhibitionCollectionView.register(UINib(nibName: "ExhibitionsCellXib", bundle: nil), forCellReuseIdentifier: "exhibitionCellId")
+        self.exhibitionCollectionView.register(UINib(nibName: "CommonListCellXib", bundle: nil), forCellReuseIdentifier: "commonListCellId")
         self.exhibitionCollectionView.register(UINib(nibName: "MiaTourHeaderView", bundle: nil), forCellReuseIdentifier: "miaHeaderId")
     }
     
@@ -271,7 +271,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         exbtnLoadingView.stopLoading()
         exbtnLoadingView.isHidden = true
         if ((exhibitionsPageNameString == ExhbitionPageName.homeExhibition) || (exhibitionsPageNameString == ExhbitionPageName.museumExhibition)) {
-            let exhibitionCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
+            let exhibitionCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "commonListCellId", for: indexPath) as! CommonListCell
             exhibitionCell.setExhibitionCellValues(exhibition: exhibition[indexPath.row])
             exhibitionCell.exhibitionCellItemBtnTapAction = {
                 () in
@@ -281,27 +281,27 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
             
             return exhibitionCell
         } else if (exhibitionsPageNameString == ExhbitionPageName.heritageList) {
-            let heritageCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
+            let heritageCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "commonListCellId", for: indexPath) as! CommonListCell
             heritageCell.setHeritageListCellValues(heritageList: heritageListArray[indexPath.row])
             return heritageCell
         } else if (exhibitionsPageNameString == ExhbitionPageName.publicArtsList) {
-            let publicArtsCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
+            let publicArtsCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "commonListCellId", for: indexPath) as! CommonListCell
             publicArtsCell.setPublicArtsListCellValues(publicArtsList: publicArtsListArray[indexPath.row])
             return publicArtsCell
         } else if (exhibitionsPageNameString == ExhbitionPageName.museumCollectionsList) {
-            let collectionsCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
+            let collectionsCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "commonListCellId", for: indexPath) as! CommonListCell
             collectionsCell.setCollectionsCellValues(collectionList: collection[indexPath.row])
             return collectionsCell
         } else if (exhibitionsPageNameString == ExhbitionPageName.diningList) {
-            let diningListCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
+            let diningListCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "commonListCellId", for: indexPath) as! CommonListCell
             diningListCell.setDiningListValues(diningList: diningListArray[indexPath.row])
             return diningListCell
         } else if (exhibitionsPageNameString == ExhbitionPageName.nmoqTourSecondList){
-            let nmoqTourSecondListCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
+            let nmoqTourSecondListCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "commonListCellId", for: indexPath) as! CommonListCell
             nmoqTourSecondListCell.setTourMiddleDate(tourList: nmoqTourDetail[indexPath.row])
             return nmoqTourSecondListCell
         } else if (exhibitionsPageNameString == ExhbitionPageName.facilitiesSecondList){
-            let facilitiesSecondListCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
+            let facilitiesSecondListCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "commonListCellId", for: indexPath) as! CommonListCell
             facilitiesSecondListCell.setFacilitiesDetail(FacilitiesDetailData: facilitiesDetail[indexPath.row])
             return facilitiesSecondListCell
         } else {
@@ -321,7 +321,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 }
                 return cell
             } else {
-                let tourGuideCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
+                let tourGuideCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "commonListCellId", for: indexPath) as! CommonListCell
                 tourGuideCell.setScienceTourGuideCellData(homeCellData: miaTourDataFullArray[indexPath.row-1])
                 return tourGuideCell
             }
@@ -376,7 +376,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
     }
 
-    func loadExhibitionCellPages(cellObj: ExhibitionsCollectionCell, selectedIndex: Int) {
+    func loadExhibitionCellPages(cellObj: CommonListCell, selectedIndex: Int) {
     }
     func loadPublicArtsDetail(idValue: String) {
         let publicDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController

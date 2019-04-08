@@ -1304,11 +1304,6 @@
                             <constraint firstItem="o2u-nn-4xe" firstAttribute="leading" secondItem="Kak-k4-CME" secondAttribute="leading" id="mkP-1z-npg"/>
                             <constraint firstItem="UpB-na-9ki" firstAttribute="top" secondItem="lWr-Mk-OyP" secondAttribute="bottom" id="p6g-H8-fX2"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="UpB-na-9ki"/>
-                            </mask>
-                        </variation>
                     </view>
                     <size key="freeformSize" width="414" height="870"/>
                     <connections>
@@ -5957,10 +5952,10 @@
             </objects>
             <point key="canvasLocation" x="26443.478260869568" y="-113.31521739130436"/>
         </scene>
-        <!--Exhibitions View Controller-->
+        <!--Common List View Controller-->
         <scene sceneID="7rW-gk-kcf">
             <objects>
-                <viewController storyboardIdentifier="exhibitionViewId" id="QCk-26-GoW" customClass="ExhibitionsViewController" customModule="QatarMuseums" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="exhibitionViewId" id="QCk-26-GoW" customClass="CommonListViewController" customModule="QatarMuseums" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="OkJ-jS-gUC"/>
                         <viewControllerLayoutGuide type="bottom" id="exE-cq-qnE"/>

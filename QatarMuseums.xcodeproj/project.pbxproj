@@ -150,9 +150,9 @@
 		B8B81FE320DE2C8A004885D0 /* MuseumsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B81FE220DE2C8A004885D0 /* MuseumsViewController.swift */; };
 		B8B81FE720DE2E47004885D0 /* KASlideShow.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B81FE620DE2E47004885D0 /* KASlideShow.m */; };
 		B8BA80B520CCDDA3007E880A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BA80B420CCDDA3007E880A /* ProfileViewController.swift */; };
-		B8BA80B720CD8297007E880A /* ExhibitionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BA80B620CD8297007E880A /* ExhibitionsViewController.swift */; };
-		B8BA80BA20CD8305007E880A /* ExhibitionsCellXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8BA80B920CD8305007E880A /* ExhibitionsCellXib.xib */; };
-		B8BA80BC20CD831D007E880A /* ExhibitionsCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BA80BB20CD831D007E880A /* ExhibitionsCollectionCell.swift */; };
+		B8BA80B720CD8297007E880A /* CommonListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BA80B620CD8297007E880A /* CommonListViewController.swift */; };
+		B8BA80BA20CD8305007E880A /* CommonListCellXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8BA80B920CD8305007E880A /* CommonListCellXib.xib */; };
+		B8BA80BC20CD831D007E880A /* CommonListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BA80BB20CD831D007E880A /* CommonListCell.swift */; };
 		B8BBF459211C1AC000352706 /* ParksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBF458211C1AC000352706 /* ParksList.swift */; };
 		B8BCE8A021C28ED20083DC35 /* GoogleDirections.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BCE89F21C28ED20083DC35 /* GoogleDirections.swift */; };
 		B8BD1DA721298AA500150A01 /* EducationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BD1DA621298AA500150A01 /* EducationEvent.swift */; };
@@ -412,9 +412,9 @@
 		B8B81FE520DE2E47004885D0 /* KASlideShow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KASlideShow.h; sourceTree = "<group>"; };
 		B8B81FE620DE2E47004885D0 /* KASlideShow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KASlideShow.m; sourceTree = "<group>"; };
 		B8BA80B420CCDDA3007E880A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		B8BA80B620CD8297007E880A /* ExhibitionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitionsViewController.swift; sourceTree = "<group>"; };
-		B8BA80B920CD8305007E880A /* ExhibitionsCellXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExhibitionsCellXib.xib; sourceTree = "<group>"; };
-		B8BA80BB20CD831D007E880A /* ExhibitionsCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitionsCollectionCell.swift; sourceTree = "<group>"; };
+		B8BA80B620CD8297007E880A /* CommonListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonListViewController.swift; sourceTree = "<group>"; };
+		B8BA80B920CD8305007E880A /* CommonListCellXib.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommonListCellXib.xib; sourceTree = "<group>"; };
+		B8BA80BB20CD831D007E880A /* CommonListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonListCell.swift; sourceTree = "<group>"; };
 		B8BBF458211C1AC000352706 /* ParksList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParksList.swift; sourceTree = "<group>"; };
 		B8BCE89F21C28ED20083DC35 /* GoogleDirections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleDirections.swift; sourceTree = "<group>"; };
 		B8BD1DA621298AA500150A01 /* EducationEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationEvent.swift; sourceTree = "<group>"; };
@@ -757,7 +757,7 @@
 				B8D1228C20C8EE8600772507 /* WebViewController.swift */,
 				B8DC40A820C9A5760044134D /* EventViewController.swift */,
 				B8BA80B420CCDDA3007E880A /* ProfileViewController.swift */,
-				B8BA80B620CD8297007E880A /* ExhibitionsViewController.swift */,
+				B8BA80B620CD8297007E880A /* CommonListViewController.swift */,
 				B85BA4AF20D01D1C00E7F4D1 /* SplashViewController.swift */,
 				B8CAA93E20DC186E009A936D /* HeritageDetailViewController.swift */,
 				B8B81FE220DE2C8A004885D0 /* MuseumsViewController.swift */,
@@ -1036,8 +1036,8 @@
 		B8BA80B820CD82D5007E880A /* ExhibitionsCell */ = {
 			isa = PBXGroup;
 			children = (
-				B8BA80B920CD8305007E880A /* ExhibitionsCellXib.xib */,
-				B8BA80BB20CD831D007E880A /* ExhibitionsCollectionCell.swift */,
+				B8BA80B920CD8305007E880A /* CommonListCellXib.xib */,
+				B8BA80BB20CD831D007E880A /* CommonListCell.swift */,
 			);
 			path = ExhibitionsCell;
 			sourceTree = "<group>";
@@ -1393,7 +1393,7 @@
 				B890F0BD2238C8C9009A874A /* panelAndTalks.png in Resources */,
 				B807FCCF218EA8FD003CC51E /* CountryListArabic.json in Resources */,
 				B8AFA2F120E78E09008838A6 /* DINNextLTPro-Light.otf in Resources */,
-				B8BA80BA20CD8305007E880A /* ExhibitionsCellXib.xib in Resources */,
+				B8BA80BA20CD8305007E880A /* CommonListCellXib.xib in Resources */,
 				B8EAB77B20CA3E2900C001B2 /* EventCellView.xib in Resources */,
 				1BAA2FCB2125FCC600D785DD /* ObjectImageXib.xib in Resources */,
 				B8E2C01320C7FD0000F3CE41 /* SideMenu.xib in Resources */,
@@ -1549,8 +1549,8 @@
 				1B51411E215B892E0055AAF5 /* TourGuide.swift in Sources */,
 				B80DFF352251F6ED004E8EA6 /* CoreDataVersion.swift in Sources */,
 				B8294CF320CBF265002AFF72 /* FSCalendar.m in Sources */,
-				B8BA80B720CD8297007E880A /* ExhibitionsViewController.swift in Sources */,
-				B8BA80BC20CD831D007E880A /* ExhibitionsCollectionCell.swift in Sources */,
+				B8BA80B720CD8297007E880A /* CommonListViewController.swift in Sources */,
+				B8BA80BC20CD831D007E880A /* CommonListCell.swift in Sources */,
 				B8B49561212DBAD8006F509B /* Museum.swift in Sources */,
 				B82729B021778B2F0017EC71 /* VPlayerLayer.swift in Sources */,
 				B8C31CE62162821300AE7788 /* MuseumAboutCell.swift in Sources */,

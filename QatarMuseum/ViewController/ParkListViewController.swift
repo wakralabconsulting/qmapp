@@ -56,7 +56,7 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         self.parkTableView.register(UINib(nibName: "NMoQListCell", bundle: nil), forCellReuseIdentifier: "nMoQListCellId")
         self.parkTableView.register(UINib(nibName: "NMoQPArkTopCell", bundle: nil), forCellReuseIdentifier: "parkTopCellId")
         parkTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
-        self.parkTableView.register(UINib(nibName: "ExhibitionsCellXib", bundle: nil), forCellReuseIdentifier: "exhibitionCellId")
+        self.parkTableView.register(UINib(nibName: "CommonListCellXib", bundle: nil), forCellReuseIdentifier: "commonListCellId")
         
 
     }
@@ -84,8 +84,7 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
             }
             return parkListSecondCell
         } else {
-           // let parkListCell = tableView.dequeueReusableCell(withIdentifier: "nMoQListCellId", for: indexPath) as! NMoQListCell
-             let parkListCell = tableView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
+             let parkListCell = tableView.dequeueReusableCell(withIdentifier: "commonListCellId", for: indexPath) as! CommonListCell
             parkListCell.selectionStyle = .none
             if (nmoqParks.count > 0) {
                 parkListCell.setParkListData(parkList: nmoqParks[indexPath.row - 1])

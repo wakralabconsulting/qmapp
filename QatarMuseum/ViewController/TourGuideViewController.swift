@@ -57,7 +57,7 @@ class TourGuideViewController: UIViewController,UITableViewDelegate,UITableViewD
         return .lightContent
     }
     func registerNib() {
-        self.tourTableView.register(UINib(nibName: "ExhibitionsCellXib", bundle: nil), forCellReuseIdentifier: "exhibitionCellId")
+        self.tourTableView.register(UINib(nibName: "CommonListCellXib", bundle: nil), forCellReuseIdentifier: "commonListCellId")
         self.tourTableView.register(UINib(nibName: "MiaTourHeaderView", bundle: nil), forCellReuseIdentifier: "miaHeaderId")
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -71,7 +71,7 @@ class TourGuideViewController: UIViewController,UITableViewDelegate,UITableViewD
             cell.setTourHeader()
             return cell
         } else {
-            let cell = tourTableView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
+            let cell = tourTableView.dequeueReusableCell(withIdentifier: "commonListCellId", for: indexPath) as! CommonListCell
             cell.tourGuideImage.image = UIImage(named: "location")
             cell.setTourGuideCellData(museumsListData: museumsList[indexPath.row - 1])
             return cell
@@ -103,7 +103,7 @@ class TourGuideViewController: UIViewController,UITableViewDelegate,UITableViewD
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
-        let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
         miaView.exhibitionsPageNameString = ExhbitionPageName.miaTourGuideList
         if (museumsList != nil) {
             miaView.museumId = museumsList[currentRow!].id!

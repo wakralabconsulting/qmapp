@@ -1,5 +1,5 @@
 //
-//  ExhibitionsCollectionCell.swift
+//  CommonListCell.swift
 //  QatarMuseum
 //
 //  Created by Exalture on 10/06/18.
@@ -9,7 +9,7 @@
 import Kingfisher
 import UIKit
 
-class ExhibitionsCollectionCell: UITableViewCell {
+class CommonListCell: UITableViewCell {
     @IBOutlet weak var exhibitionImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!

@@ -104,7 +104,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     
     func registerCell() {
        // self.collectionTableView.register(UINib(nibName: "NMoQListCell", bundle: nil), forCellReuseIdentifier: "nMoQListCellId")
-         self.collectionTableView.register(UINib(nibName: "ExhibitionsCellXib", bundle: nil), forCellReuseIdentifier: "exhibitionCellId")
+         self.collectionTableView.register(UINib(nibName: "CommonListCellXib", bundle: nil), forCellReuseIdentifier: "commonListCellId")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -122,8 +122,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //let cell = tableView.dequeueReusableCell(withIdentifier: "nMoQListCellId", for: indexPath) as! NMoQListCell
-        let cell = tableView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "commonListCellId", for: indexPath) as! CommonListCell
         if (pageNameString == NMoQPageName.Tours) {
             cell.setTourListDate(tourList: nmoqTourList[indexPath.row], isTour: true)
         } else if (pageNameString == NMoQPageName.PanelDiscussion){
@@ -163,7 +162,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     func loadTourViewPage(selectedRow: Int?,isFromTour:Bool?, pageName: NMoQPageName?) {
-        let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
         
         if pageName == NMoQPageName.Tours {
             tourView.isFromTour = true
