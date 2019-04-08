@@ -10,6 +10,7 @@ import Crashlytics
 import Firebase
 import Kingfisher
 import UIKit
+import CocoaLumberjack
 
 class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingSoonPopUpProtocol, KASlideShowDelegate {
     @IBOutlet weak var tourGuideDescription: UITextView!
@@ -34,6 +35,8 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     var titleString : String? = ""
     let networkReachability = NetworkReachabilityManager()
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         loadingView.isHidden = false
         loadingView.showLoading()

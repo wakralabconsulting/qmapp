@@ -9,6 +9,7 @@
 import Crashlytics
 import Firebase
 import UIKit
+import CocoaLumberjack
 
 class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate {
     @IBOutlet weak var institutionTitleLabel: UILabel!
@@ -47,6 +48,8 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     var selectedProgrammeRow = 0
 
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
        
         setupUI()

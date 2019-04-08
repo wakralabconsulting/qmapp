@@ -9,6 +9,7 @@ import Alamofire
 import Crashlytics
 import Firebase
 import UIKit
+import CocoaLumberjack
 
 class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     @IBOutlet weak var artifactHeader: CommonHeaderView!
@@ -26,6 +27,8 @@ class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UIC
     var tourGuideId : String? = nil
     var objectDetailArray: [TourGuideFloorMap]! = []
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()        
         setupUI()
         registerNib()

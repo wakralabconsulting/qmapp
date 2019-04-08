@@ -11,6 +11,7 @@ import CoreData
 import Crashlytics
 import Firebase
 import UIKit
+import CocoaLumberjack
 
 class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,LoadingViewProtocol, iCarouselDelegate,iCarouselDataSource {
     @IBOutlet weak var diningTableView: UITableView!
@@ -27,6 +28,8 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     var transparentView = UIView()
 
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
 
         setupUIContents()

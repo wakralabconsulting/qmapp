@@ -10,6 +10,7 @@ import Alamofire
 import UIKit
 import WebKit
 import Crashlytics
+import CocoaLumberjack
 class WebViewController: UIViewController,UIWebViewDelegate,LoadingViewProtocol {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var webView: UIWebView!
@@ -21,6 +22,8 @@ class WebViewController: UIViewController,UIWebViewDelegate,LoadingViewProtocol 
     var baseUrlString : URL?
     var content : String?
     override func viewDidLoad() {
+    DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
     loadingView.isHidden = false
     loadingView.showLoading()
         loadingView.loadingViewDelegate = self

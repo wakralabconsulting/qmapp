@@ -8,11 +8,14 @@
 
 import Crashlytics
 import UIKit
+import CocoaLumberjack
 
 class SplashViewController: UIViewController {
 
     @IBOutlet weak var splashImageView: UIImageView!
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         self.splashImageView.image = UIImage.gifImageWithName("QMLogo")
         _ = Timer.scheduledTimer(timeInterval: 1.5,

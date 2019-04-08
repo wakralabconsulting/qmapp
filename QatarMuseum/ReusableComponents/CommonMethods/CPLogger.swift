@@ -42,7 +42,7 @@ func applicationCachesDirectory() -> String? {
 func setupQMLogger(){
     
     // Configure CocoaLumberjack
-    DDLog.add(DDASLLogger.sharedInstance)
+//    DDLog.add(DDASLLogger.sharedInstance)
     DDLog.add(DDTTYLogger.sharedInstance)
     
     // Enable Colors

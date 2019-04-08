@@ -11,6 +11,7 @@ import CoreData
 import Crashlytics
 import Firebase
 import UIKit
+import CocoaLumberjack
 
 class TourGuideViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,HeaderViewProtocol,comingSoonPopUpProtocol,UICollectionViewDelegateFlowLayout,LoadingViewProtocol {
     @IBOutlet weak var tourCollectionView: UICollectionView!
@@ -23,6 +24,8 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
     var fromSideMenu : Bool = false
     let networkReachability = NetworkReachabilityManager()
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
 
         setUpUI()

@@ -11,6 +11,7 @@ import CoreData
 import Crashlytics
 import Firebase
 import UIKit
+import CocoaLumberjack
 
 class PreviewContainerViewController: UIViewController,UIPageViewControllerDelegate,UIPageViewControllerDataSource,HeaderViewProtocol,UIGestureRecognizerDelegate,LoadingViewProtocol {
     @IBOutlet weak var loadingView: LoadingView!
@@ -62,6 +63,8 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     var museumId :String? = nil
 
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         
         loadUI()

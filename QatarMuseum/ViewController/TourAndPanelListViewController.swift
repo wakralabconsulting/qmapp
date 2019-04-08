@@ -11,6 +11,7 @@ import CoreData
 import Crashlytics
 import Firebase
 import UIKit
+import CocoaLumberjack
 
 enum NMoQPageName {
     case Tours
@@ -35,6 +36,8 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     var sortIdTest = String()
     var bannerId: String? = ""
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         registerCell()
         setupUI()

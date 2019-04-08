@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import CocoaLumberjack
 
 class CoreDataManager {
     
@@ -106,9 +107,11 @@ class CoreDataManager {
         if #available(iOS 10.0, *) {
             loadPersistentStore {
                 completion()
+                DDLogInfo("setup CoreDataManager ..")
             }
         } else {
             // Fallback on earlier versions
+            DDLogWarn("Fallback on earlier versions of coredata model")
         }
     }
     
@@ -121,7 +124,6 @@ class CoreDataManager {
                 guard error == nil else {
                     fatalError("was unable to load store \(error!)")
                 }
-                
                 completion()
             }
         }

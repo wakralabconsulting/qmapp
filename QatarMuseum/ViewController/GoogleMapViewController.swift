@@ -11,7 +11,7 @@ import AVFoundation
 import AVKit
 import GoogleMaps
 import GooglePlaces
-
+import CocoaLumberjack
 import UIKit
 
 class GoogleMapViewController: UIViewController,CLLocationManagerDelegate,GMSMapViewDelegate {
@@ -25,6 +25,8 @@ class GoogleMapViewController: UIViewController,CLLocationManagerDelegate,GMSMap
     var directionArray : GoogleDirections?
     let apiKey = "AIzaSyAbuv0Gx0vwyZdr90LFKeUFmMesorNZHKQ"
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
 
         loadMap()

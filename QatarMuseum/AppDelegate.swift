@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         setupQMLogger()
 //        DDLogVerbose("Did select settings action")
         DDLogInfo("AppDelegate initiated ..")
-        DDLogError("Hope no Failed to create AppDelegate ..")
+//        DDLogError("Hope no Failed to create AppDelegate ..")
 //        DDLogWarn("Failed to load post details with error: \(error.localizedDescription)")
         
         
@@ -111,6 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             self.getNmoqListOfParksFromServer(lang: ENG_LANGUAGE)
             self.getNmoqListOfParksFromServer(lang: AR_LANGUAGE)
             
+             DDLogInfo("API calls initiated .." + NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         }
     }
     
@@ -295,13 +296,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 _ = Alamofire.request(QatarMuseumRouter.SendDeviceToken(data.accessToken!, ["token": deviceToken, "type":"ios"])).responseObject { (response: DataResponse<DeviceToken>) -> Void in
                     switch response.result {
                     case .success( _):
-                        print("This token is successfully sent to server")
+                        DDLogInfo("This token is successfully sent to server")
                     case .failure( _):
-                        print("Fail to update device token")
+                        DDLogInfo("Fail to update device token")
                     }
                 }
             case .failure( _):
-                print("Failed to generate token ")
+                DDLogInfo("Failed to generate token ")
             }
         }
     }

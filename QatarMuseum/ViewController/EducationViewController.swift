@@ -12,7 +12,7 @@ import Crashlytics
 import Firebase
 import UIKit
 import YouTubePlayer
-
+import CocoaLumberjack
 
 class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,HeaderViewProtocol {
     @IBOutlet weak var headerView: CommonHeaderView!
@@ -29,6 +29,8 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
     var fromSideMenu : Bool = false
 
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         setupUI()
         loadVideo()

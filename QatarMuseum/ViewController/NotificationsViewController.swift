@@ -10,6 +10,7 @@ import CoreData
 import Crashlytics
 import Firebase
 import UIKit
+import CocoaLumberjack
 
 class NotificationsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,HeaderViewProtocol {
     @IBOutlet weak var notificationsTableView: UITableView!
@@ -20,6 +21,8 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
     var notificationArray: [Notification]! = []
 
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         setUI()
         updateNotificationTableView()

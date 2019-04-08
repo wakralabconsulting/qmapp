@@ -11,6 +11,7 @@ import CoreData
 import Crashlytics
 import Firebase
 import UIKit
+import CocoaLumberjack
 
 enum CollectionPageName {
     case PlayGroundPark
@@ -29,6 +30,8 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
     var collectionPageNameString : CollectionPageName? = CollectionPageName.CollectionDetail
     
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         registerCell()
         setUI()

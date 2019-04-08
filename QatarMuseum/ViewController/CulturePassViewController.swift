@@ -11,6 +11,7 @@ import CoreData
 import Crashlytics
 import Firebase
 import UIKit
+import CocoaLumberjack
 
 class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoonPopUpProtocol,LoginPopUpProtocol,UITextFieldDelegate {
     @IBOutlet weak var headerView: CommonHeaderView!
@@ -40,6 +41,8 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     let networkReachability = NetworkReachabilityManager()
     var userEventList: [NMoQUserEventList]! = []
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         setupUI()
         self.recordScreenView()

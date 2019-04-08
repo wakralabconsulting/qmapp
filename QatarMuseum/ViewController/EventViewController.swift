@@ -12,7 +12,7 @@ import Crashlytics
 import EventKit
 import Firebase
 import UIKit
-
+import CocoaLumberjack
 
 class EventViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource, HeaderViewProtocol,FSCalendarDelegate,FSCalendarDataSource,UICollectionViewDelegateFlowLayout,EventPopUpProtocol,UIViewControllerTransitioningDelegate,UIGestureRecognizerDelegate,comingSoonPopUpProtocol,LoadingViewProtocol {
     
@@ -57,6 +57,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         return panGesture
         }()
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         registerNib()
         institutionType = anyString

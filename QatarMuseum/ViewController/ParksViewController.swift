@@ -11,6 +11,7 @@ import CoreData
 import Crashlytics
 import Firebase
 import UIKit
+import CocoaLumberjack
 
 enum ParkPageName {
     case SideMenuPark
@@ -32,6 +33,8 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     var parkDetailId: String? = nil
     var nmoqParkDetailArray: [NMoQParkDetail]! = []
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         setupUIContents()
         

@@ -12,6 +12,7 @@ import Crashlytics
 import Firebase
 import Kingfisher
 import UIKit
+import CocoaLumberjack
 
 class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUpProtocol {
     @IBOutlet weak var headerView: CommonHeaderView!
@@ -41,6 +42,8 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     var userId: String? = nil
     var countryDictArabic : NSDictionary!
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             getCountryListsFromJson()

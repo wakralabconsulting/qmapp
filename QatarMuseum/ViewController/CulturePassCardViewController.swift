@@ -8,6 +8,7 @@
 
 import Firebase
 import UIKit
+import CocoaLumberjack
 
 class CulturePassCardViewController: UIViewController {
     
@@ -22,6 +23,8 @@ class CulturePassCardViewController: UIViewController {
     var membershipNumber : String? = nil
      var nameString : String? = nil
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         setUI ()
         barcodeView.isHidden = true

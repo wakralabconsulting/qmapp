@@ -36,6 +36,8 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
     
     var eventPopup : EventPopupView = EventPopupView()
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
 
         setupUI()

@@ -15,6 +15,7 @@ import Firebase
 import GoogleMaps
 import Kingfisher
 import UIKit
+import CocoaLumberjack
 
 enum levelNumber{
     case one
@@ -216,6 +217,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                     "http://www.qm.org.qa/sites/default/files/floor3.mp3"]
     
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         
         viewForMap.delegate = self

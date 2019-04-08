@@ -13,6 +13,7 @@ import MapKit
 import MessageUI
 import Firebase
 import UIKit
+import CocoaLumberjack
 
 enum NMoQPanelPage {
     case PanelDetailPage
@@ -50,6 +51,8 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     
     let networkReachability = NetworkReachabilityManager()
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         registerCell()
         setupUI()

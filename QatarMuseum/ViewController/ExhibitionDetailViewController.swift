@@ -11,6 +11,7 @@ import CoreData
 import Crashlytics
 import Firebase
 import Alamofire
+import CocoaLumberjack
 
 class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,LoadingViewProtocol {
     @IBOutlet weak var exhibitionDetailTableView: UITableView!
@@ -27,6 +28,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         setUi()
         if (fromHome == true) {
             if  (networkReachability?.isReachable)! {

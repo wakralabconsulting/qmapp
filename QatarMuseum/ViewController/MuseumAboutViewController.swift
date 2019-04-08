@@ -16,6 +16,7 @@ import Firebase
 import  MapKit
 import MessageUI
 import UIKit
+import CocoaLumberjack
 
 enum PageName2{
     case museumAbout
@@ -46,6 +47,8 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     var travelDetail: HomeBanner?
 
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         
         setupUIContents()

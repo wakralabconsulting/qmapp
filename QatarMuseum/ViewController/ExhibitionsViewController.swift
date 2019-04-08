@@ -10,6 +10,7 @@ import CoreData
 import Crashlytics
 import Firebase
 import UIKit
+import CocoaLumberjack
 
 enum ExhbitionPageName {
     case homeExhibition
@@ -49,6 +50,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
     var dataInCoreData : Bool? = false
 
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         setUpExhibitionPageUi()
         registerNib()

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 
 class CulturePassCardBackViewController: UIViewController {
     @IBOutlet weak var tapToFlipButton: UIButton!
@@ -20,6 +21,8 @@ class CulturePassCardBackViewController: UIViewController {
     var displayName : String? = nil
     
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
 
         setUI()

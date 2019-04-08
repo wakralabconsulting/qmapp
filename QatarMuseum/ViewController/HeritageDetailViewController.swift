@@ -10,6 +10,8 @@ import Alamofire
 import CoreData
 import Firebase
 import UIKit
+import CocoaLumberjack
+
 enum PageName{
     case heritageDetail
     case publicArtsDetail
@@ -34,6 +36,8 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     var transparentView = UIView()
     
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
 
         setupUIContents()

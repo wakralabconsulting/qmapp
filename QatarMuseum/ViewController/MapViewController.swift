@@ -9,6 +9,7 @@
 import MapKit
 import UIKit
 import CoreLocation
+import CocoaLumberjack
 
 class MapViewController: UIViewController, HeaderViewProtocol, MKMapViewDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var mapView: MKMapView!
@@ -22,6 +23,8 @@ class MapViewController: UIViewController, HeaderViewProtocol, MKMapViewDelegate
     var longiudeString : String? = nil
 
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         headerView.headerViewDelegate = self
         

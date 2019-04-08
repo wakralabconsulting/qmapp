@@ -12,6 +12,7 @@ import Crashlytics
 import Firebase
 import Kingfisher
 import UIKit
+import CocoaLumberjack
 class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,comingSoonPopUpProtocol {
     
     @IBOutlet weak var museumsTopbar: TopBarView!
@@ -38,6 +39,8 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     let networkReachability = NetworkReachabilityManager()
     
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         setupUI()
         self.recordScreenView()

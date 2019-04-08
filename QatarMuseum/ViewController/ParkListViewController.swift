@@ -10,6 +10,7 @@ import Alamofire
 import CoreData
 import MapKit
 import UIKit
+import CocoaLumberjack
 
 class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, HeaderViewProtocol,comingSoonPopUpProtocol,LoadingViewProtocol {
     
@@ -21,6 +22,8 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     var nmoqParks: [NMoQPark]! = []
     let networkReachability = NetworkReachabilityManager()
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         registerCell()
         setUI()

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 
 class RegistrationViewController: UIViewController, HeaderViewProtocol, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     @IBOutlet weak var headerView: CommonHeaderView!
@@ -60,6 +61,8 @@ class RegistrationViewController: UIViewController, HeaderViewProtocol, UIPicker
     var selectedNationality = String()
     
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         setUpUi()
     }

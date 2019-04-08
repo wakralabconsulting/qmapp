@@ -11,6 +11,7 @@ import AVKit
 import Crashlytics
 import Firebase
 import UIKit
+import CocoaLumberjack
 
 class PreviewContentViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
     @IBOutlet weak var accessNumberLabel: UILabel!
@@ -29,6 +30,8 @@ class PreviewContentViewController: UIViewController, UITableViewDelegate, UITab
     var selectedCell : ObjectDetailTableViewCell?
     
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         objectTableView.register(UITableViewCell.self, forCellReuseIdentifier: "imageCell")
         setPreviewData()
