@@ -358,6 +358,55 @@ class ExhibitionsCollectionCell: UITableViewCell {
         exhibitionImageView.contentMode = .scaleAspectFill
         
     }
+    //MARK: Home
+    func setHomeCellData(home: Home) {
+        let titleString = home.name
+        dateLabel.text = titleString
+        dateLabel.font = UIFont.homeTitleFont
+        //Added Tour guide icon for MIA in home page
+        //        if ((home.id == "63") || (home.id == "61") || (home.id == "66") || (home.id == "96") || (home.id == "635") || (home.id == "638")) {
+        //            tourGuideImage.isHidden = false
+        //        }
+        //        else { //
+        //            tourGuideImage.isHidden = true
+        //        }
+        if((home.isTourguideAvailable?.lowercased().contains("true"))!) {
+            tourGuideImage.isHidden = false
+        } else {
+            tourGuideImage.isHidden = true
+        }
+        if let imageUrl = home.image {
+            exhibitionImageView.kf.setImage(with: URL(string: imageUrl))
+        }
+        let panelAndTalks = "QATAR CREATES: EVENTS FOR THE OPENING OF NMoQ".lowercased()
+        if ((home.name?.lowercased() == panelAndTalks) || (home.name == "قطر تبدع: فعاليات افتتاح متحف قطر الوطني")) {
+            if(home.image == "panelAndTalks") {
+                exhibitionImageView.image = UIImage(named: (home.image!))
+            }
+        }
+        if (exhibitionImageView.image == nil) {
+            exhibitionImageView.image = UIImage(named: "default_imageX2")
+        }
+    }
+    //MARK:TourGuide List
+    func setTourGuideCellData(museumsListData: Home) {
+        dateLabel.font = UIFont.homeTitleFont
+        
+        dateLabel.text = museumsListData.name
+        if (museumsListData.isTourguideAvailable == "True") {
+            tourGuideImage.isHidden = false
+        } else {
+            tourGuideImage.isHidden = true
+        }
+        if let imageUrl = museumsListData.image{
+            exhibitionImageView.kf.setImage(with: URL(string: imageUrl))
+        }
+        if(exhibitionImageView.image == nil) {
+            exhibitionImageView.image = UIImage(named: "default_imageX2")
+        }
+        
+        
+    }
     func setGradientLayer() {
         self.exhibitionImageView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
         

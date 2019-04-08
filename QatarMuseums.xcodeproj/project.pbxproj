@@ -62,9 +62,7 @@
 		B80DC06320C792E600E28034 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B80DC06120C792E600E28034 /* LaunchScreen.storyboard */; };
 		B80DC06E20C792E600E28034 /* QatarMuseumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80DC06D20C792E600E28034 /* QatarMuseumTests.swift */; };
 		B80DC07920C792E600E28034 /* QatarMuseumUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80DC07820C792E600E28034 /* QatarMuseumUITests.swift */; };
-		B80DC08A20C794E100E28034 /* HomeCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B80DC08920C794E100E28034 /* HomeCollectionCell.xib */; };
 		B80DC08C20C798BA00E28034 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80DC08B20C798BA00E28034 /* HomeViewController.swift */; };
-		B80DC08E20C798E400E28034 /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80DC08D20C798E400E28034 /* HomeCollectionViewCell.swift */; };
 		B80DC09220C7A9CE00E28034 /* TopBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B80DC09120C7A9CE00E28034 /* TopBarView.xib */; };
 		B80DC09420C7A9F500E28034 /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80DC09320C7A9F500E28034 /* TopBarView.swift */; };
 		B80DFF2F2251F6A1004E8EA6 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80DFF2E2251F6A1004E8EA6 /* CoreDataManager.swift */; };
@@ -165,7 +163,6 @@
 		B8C31CE62162821300AE7788 /* MuseumAboutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C31CE52162821300AE7788 /* MuseumAboutCell.swift */; };
 		B8C367F82254D325005E4305 /* MiaTourHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8C367F72254D325005E4305 /* MiaTourHeaderView.xib */; };
 		B8C64C9C20FE380D00D7CD63 /* MiaTourDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C64C9B20FE380D00D7CD63 /* MiaTourDetailViewController.swift */; };
-		B8C64D4720FDC71400C2D51A /* TourGuideCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C64D4620FDC71400C2D51A /* TourGuideCollectionReusableView.swift */; };
 		B8C64D4D20FDDBB700C2D51A /* MiaCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C64D4C20FDDBB700C2D51A /* MiaCollectionReusableView.swift */; };
 		B8C700852116F833006F3653 /* PublicArtsDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C700842116F833006F3653 /* PublicArtsDetail.swift */; };
 		B8CA08DF2146D38400783642 /* ObjectPopupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CA08D62146D38400783642 /* ObjectPopupTableViewCell.swift */; };
@@ -303,9 +300,7 @@
 		B80DC07420C792E600E28034 /* QatarMuseumsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QatarMuseumsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B80DC07820C792E600E28034 /* QatarMuseumUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QatarMuseumUITests.swift; sourceTree = "<group>"; };
 		B80DC07A20C792E600E28034 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B80DC08920C794E100E28034 /* HomeCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCollectionCell.xib; sourceTree = "<group>"; };
 		B80DC08B20C798BA00E28034 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		B80DC08D20C798E400E28034 /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 		B80DC09120C7A9CE00E28034 /* TopBarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TopBarView.xib; sourceTree = "<group>"; };
 		B80DC09320C7A9F500E28034 /* TopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarView.swift; sourceTree = "<group>"; };
 		B80DFF2E2251F6A1004E8EA6 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -431,7 +426,6 @@
 		B8C31CE52162821300AE7788 /* MuseumAboutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseumAboutCell.swift; sourceTree = "<group>"; };
 		B8C367F72254D325005E4305 /* MiaTourHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MiaTourHeaderView.xib; sourceTree = "<group>"; };
 		B8C64C9B20FE380D00D7CD63 /* MiaTourDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiaTourDetailViewController.swift; sourceTree = "<group>"; };
-		B8C64D4620FDC71400C2D51A /* TourGuideCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourGuideCollectionReusableView.swift; sourceTree = "<group>"; };
 		B8C64D4C20FDDBB700C2D51A /* MiaCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiaCollectionReusableView.swift; sourceTree = "<group>"; };
 		B8C700842116F833006F3653 /* PublicArtsDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicArtsDetail.swift; sourceTree = "<group>"; };
 		B8CA08D62146D38400783642 /* ObjectPopupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectPopupTableViewCell.swift; sourceTree = "<group>"; };
@@ -833,18 +827,8 @@
 				B8E2C01120C7FCBA00F3CE41 /* SideMenu */,
 				B8E2C00C20C7E9B100F3CE41 /* ComingSoonPopup */,
 				B80DC08F20C7A99200E28034 /* TopBarView */,
-				B80DC08820C7948300E28034 /* HomeCollectionCell */,
 			);
 			path = ReusableComponents;
-			sourceTree = "<group>";
-		};
-		B80DC08820C7948300E28034 /* HomeCollectionCell */ = {
-			isa = PBXGroup;
-			children = (
-				B80DC08920C794E100E28034 /* HomeCollectionCell.xib */,
-				B80DC08D20C798E400E28034 /* HomeCollectionViewCell.swift */,
-			);
-			path = HomeCollectionCell;
 			sourceTree = "<group>";
 		};
 		B80DC08F20C7A99200E28034 /* TopBarView */ = {
@@ -1070,7 +1054,6 @@
 		B8C64D4520FDC2B900C2D51A /* TourGuideHeader */ = {
 			isa = PBXGroup;
 			children = (
-				B8C64D4620FDC71400C2D51A /* TourGuideCollectionReusableView.swift */,
 				B8C64D4C20FDDBB700C2D51A /* MiaCollectionReusableView.swift */,
 				B8C367F72254D325005E4305 /* MiaTourHeaderView.xib */,
 			);
@@ -1377,7 +1360,6 @@
 			files = (
 				B8AFA2EB20E78BA9008838A6 /* DINNextLTArabic-Bold.ttf in Resources */,
 				B80DC09220C7A9CE00E28034 /* TopBarView.xib in Resources */,
-				B80DC08A20C794E100E28034 /* HomeCollectionCell.xib in Resources */,
 				B8AFA2F320E78E09008838A6 /* DINNextLTPro-Bold.otf in Resources */,
 				B8B2A18120D1491900E053A9 /* QMLogo.gif in Resources */,
 				B80DC06320C792E600E28034 /* LaunchScreen.storyboard in Resources */,
@@ -1591,7 +1573,6 @@
 				B807FCD1218ECFE5003CC51E /* CulturePassCardBackViewController.swift in Sources */,
 				1B10D12D2244136100AA77E9 /* NMoQParkDetail.swift in Sources */,
 				B8EAB7BD20CA424300C001B2 /* LunarFormatter.swift in Sources */,
-				B80DC08E20C798E400E28034 /* HomeCollectionViewCell.swift in Sources */,
 				B82729BB21778B2F0017EC71 /* VersaPlayerControlsExtension.swift in Sources */,
 				B8B81FE720DE2E47004885D0 /* KASlideShow.m in Sources */,
 				B8E2C01020C7E9E900F3CE41 /* ComingSoonPopUp.swift in Sources */,
@@ -1615,7 +1596,6 @@
 				B8B760512100E88E00CEE280 /* NotificationsTableViewCell.swift in Sources */,
 				B85BA4AA20D01B2600E7F4D1 /* ExhibitionDetailViewController.swift in Sources */,
 				B8DDBC7D21AD78AA007B3A06 /* HomeBanner.swift in Sources */,
-				B8C64D4720FDC71400C2D51A /* TourGuideCollectionReusableView.swift in Sources */,
 				B8294CE820CBF265002AFF72 /* FSCalendarConstants.m in Sources */,
 				B82729B321778B2F0017EC71 /* VersaPlayerExtension.swift in Sources */,
 				B8C64D4D20FDDBB700C2D51A /* MiaCollectionReusableView.swift in Sources */,

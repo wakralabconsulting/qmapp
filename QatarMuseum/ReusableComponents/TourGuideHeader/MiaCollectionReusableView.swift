@@ -7,9 +7,6 @@
 //
 
 import UIKit
-//protocol MiaTourProtocol {
-//    func exploreButtonTapAction( miaHeader: MiaCollectionReusableView)
-//}
 class MiaCollectionReusableView: UITableViewCell {
     @IBOutlet weak var miaTourGuideText: UILabel!
     @IBOutlet weak var selfGuidedText: UILabel!
@@ -46,6 +43,7 @@ class MiaCollectionReusableView: UITableViewCell {
     func setNMoQHeaderData() {
         exploreButton.isHidden = true
         miaTourGuideText.isHidden = true
+        audioCircleImage.isHidden = true
         exploreButtonHeight.constant = 0
         tourGuideTextBottomConstraint.constant = 0
         tourGuideTextTop.constant = 0
@@ -54,7 +52,17 @@ class MiaCollectionReusableView: UITableViewCell {
         selfGuidedTitle.text = NSLocalizedString("SELF_GUIDED_TOUR_TITLE", comment: "SELF_GUIDED_TOUR_TITLE in TourGuide page")
         selfGuidedText.text = NSLocalizedString("SELF_GUIDED_TEXT1", comment: "SELF_GUIDED_TEXT1 in TourGuide page") + "\n" + NSLocalizedString("SELF_GUIDED_TEXT2", comment: "SELF_GUIDED_TEXT2 in TourGuide page")
     }
-    
+    func setTourHeader() {
+        exploreButton.isHidden = true
+        miaTourGuideText.isHidden = true
+        audioCircleImage.isHidden = true
+        exploreButtonHeight.constant = 0
+        tourGuideTextBottomConstraint.constant = 0
+        tourGuideTextTop.constant = 0
+        exploreButtonBottom.constant = 5
+        miaTitle.text = NSLocalizedString("TOUR_GUIDES", comment: "TOUR_GUIDES in TourGuide page")
+        selfGuidedText.text = NSLocalizedString("TOUR_GUIDE_TEXT", comment: "TOUR_GUIDE_TEXT in TourGuide page") 
+    }
     @IBAction func didTapExplore(_ sender: UIButton) {
         UIButton.animate(withDuration: 0.2,
                          animations: {
@@ -65,7 +73,6 @@ class MiaCollectionReusableView: UITableViewCell {
                                 self.exploreButton.transform = CGAffineTransform.identity
                                 
                             })
-                            //self.miaTourDelegate?.exploreButtonTapAction(miaHeader: self)
                             self.exploreButtonTapAction?()
         })
     }

@@ -11,13 +11,15 @@ import CoreData
 import UIKit
 import Firebase
 
-class HomeViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,TopBarProtocol,comingSoonPopUpProtocol,SideMenuProtocol,UIViewControllerTransitioningDelegate,LoadingViewProtocol,LoginPopUpProtocol,UITextFieldDelegate {
+class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, TopBarProtocol,comingSoonPopUpProtocol,SideMenuProtocol,UIViewControllerTransitioningDelegate,LoadingViewProtocol,LoginPopUpProtocol,UITextFieldDelegate {
+    
 
     @IBOutlet weak var restaurantButton: UIButton!
     @IBOutlet weak var giftShopButton: UIButton!
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var culturePassButton: UIButton!
-    @IBOutlet weak var homeCollectionView: UICollectionView!
+    
+    @IBOutlet weak var homeTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var topbarView: TopBarView!
     @IBOutlet weak var visualEffectView: UIVisualEffectView!
@@ -83,7 +85,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         culturePassLabel.font = UIFont.exhibitionDateLabelFont
         giftShopLabel.font = UIFont.exhibitionDateLabelFont
         diningLabel.font = UIFont.exhibitionDateLabelFont
-        ///* Just Commented for New Release
+        /* Just Commented for New Release
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             if(UserDefaults.standard.value(forKey: "firstTimeLaunch") as? String == nil) {
                 loadingView.isHidden = false
@@ -102,73 +104,11 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 }
             }
         }
-        //*/
+        */
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationEn(notification:)), name: NSNotification.Name(homepageNotificationEn), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationAr(notification:)), name: NSNotification.Name(homepageNotificationAr), object: nil)
         self.fetchHomeInfoFromCoredata()
     }
-    
-    func setTopImageUI() {
-       
-        homeCollectionView.contentInset = UIEdgeInsetsMake(120, 0, 0, 0)
-        if(UIScreen.main.bounds.height == 812) {
-            imageView.frame = CGRect(x: 0, y: 108, width: UIScreen.main.bounds.size.width, height: 120)
-        } else {
-            imageView.frame = CGRect(x: 0, y: 85, width: UIScreen.main.bounds.size.width, height: 120)
-        }
-        
-        imageView.backgroundColor = UIColor.white
-            if homeBannerList.count > 0 {
-
-                if let imageUrl = homeBannerList[0].bannerLink {
-                    if(imageUrl != "") {
-                        imageView.kf.setImage(with: URL(string: imageUrl))
-                    }else {
-                        imageView.image = UIImage(named: "default_imageX2")
-                    }
-                }
-                else {
-                    imageView.image = UIImage(named: "default_imageX2")
-                }
-            }
-            else {
-                imageView.image = nil
-            }
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        view.addSubview(imageView)
-        if(homeBannerList[0].bannerTitle != nil) {
-            imgLabel.text = homeBannerList[0].bannerTitle
-        }
-        imgLabel.textAlignment = .center
-        imgLabel.scrollsToTop = false
-        imgLabel.isEditable = false
-        imgLabel.isScrollEnabled = false
-        imgLabel.isSelectable = false
-        imgLabel.backgroundColor = UIColor.clear
-        imgLabel.font = UIFont.eventPopupTitleFont
-        if(UIScreen.main.bounds.height == 812) {
-            imgLabel.frame = CGRect(x: 0, y: 130, width: UIScreen.main.bounds.size.width, height: 90)
-        } else {
-            imgLabel.frame = CGRect(x: 0, y: 95, width: UIScreen.main.bounds.size.width, height: 90)
-        }
-        self.view.addSubview(imgLabel)
-        imgButton.setTitle("", for: .normal)
-        imgButton.setTitleColor(UIColor.blue, for: .normal)
-        imgButton.frame = imageView.frame
-        imgButton.addTarget(self, action: #selector(self.imgButtonPressed(sender:)), for: .touchUpInside)
-        self.view.addSubview(imgButton)
-        let darkBlur = UIBlurEffect(style: UIBlurEffectStyle.light)
-        blurView = UIVisualEffectView(effect: darkBlur)
-        blurView.frame = imageView.bounds
-        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        blurView.alpha = 0
-        imageView.addSubview(blurView)
-        self.view.layoutIfNeeded()
-        
-        
-    }
-   
     @objc func imgButtonPressed(sender: UIButton!) {
         let museumsView =  self.storyboard?.instantiateViewController(withIdentifier: "museumViewId") as! MuseumsViewController
         museumsView.fromHomeBanner = true
@@ -213,31 +153,26 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         self.present(notificationsView, animated: false, completion: nil)
     }
     func registerNib() {
-        let nib = UINib(nibName: "HomeCollectionCell", bundle: nil)
-        homeCollectionView?.register(nib, forCellWithReuseIdentifier: "homeCellId")
-        let nib2 = UINib(nibName: "NMoHeaderView", bundle: nil)
-        homeCollectionView?.register(nib2, forCellWithReuseIdentifier: "bannerCellId")
+        self.homeTableView.register(UINib(nibName: "ExhibitionsCellXib", bundle: nil), forCellReuseIdentifier: "exhibitionCellId")
+        self.homeTableView.register(UINib(nibName: "NMoHeaderView", bundle: nil), forCellReuseIdentifier: "bannerCellId")
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return homeList.count
     }
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         loadingView.stopLoading()
         loadingView.isHidden = true
         if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")  && (self.homeBannerList.count > 0)) {
             if(indexPath.row == 0) {
-                let cell1 : NMoQHeaderCell = homeCollectionView.dequeueReusableCell(withReuseIdentifier: "bannerCellId", for: indexPath) as! NMoQHeaderCell
-                cell1.setBannerData(bannerData: homeBannerList[0])
-                return cell1
+                let cell = homeTableView.dequeueReusableCell(withIdentifier: "bannerCellId", for: indexPath) as! NMoQHeaderCell
+                cell.setBannerData(bannerData: homeBannerList[0])
+                return cell
             } else {
-                let cell : HomeCollectionViewCell = homeCollectionView.dequeueReusableCell(withReuseIdentifier: "homeCellId", for: indexPath) as! HomeCollectionViewCell
-                
+                let cell = homeTableView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
                 cell.setHomeCellData(home: homeList[indexPath.row])
                 
                 loadingView.stopLoading()
@@ -245,14 +180,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 return cell
             }
         }else {
-            let cell : HomeCollectionViewCell = homeCollectionView.dequeueReusableCell(withReuseIdentifier: "homeCellId", for: indexPath) as! HomeCollectionViewCell
+            let cell = homeTableView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
             cell.setHomeCellData(home: homeList[indexPath.row])
             return cell
         }
-        
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let panelAndTalks = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
         if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "") && (self.homeBannerList.count > 0)) {
             if(indexPath.row == 0) {
@@ -312,22 +245,19 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             }
         }
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let heightValue = UIScreen.main.bounds.height/100
         if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")  && (self.homeBannerList.count > 0)) {
             if(indexPath.row == 0) {
-                return CGSize(width: homeCollectionView.frame.width, height: 120)
-
+                return 120
             } else {
-                return CGSize(width: homeCollectionView.frame.width, height: heightValue*27)
+                return heightValue*27
             }
         }
         else {
-            return CGSize(width: homeCollectionView.frame.width, height: heightValue*27)
+            return heightValue*27
         }
     }
-    
     func loadMuseumsPage(curretRow:Int? = 0) {
         let museumsView =  self.storyboard?.instantiateViewController(withIdentifier: "museumViewId") as! MuseumsViewController
         museumsView.museumId = homeList[curretRow!].id
@@ -404,7 +334,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                         self.loadingView.showNoDataView()
                     }
                     
-                    self.homeCollectionView.reloadData()
+                    self.homeTableView.reloadData()
                 }
                 if(self.homeList.count > 0) {
                    // self.saveOrUpdateHomeCoredata(homeList: data.homeList)
@@ -436,7 +366,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 if(self.homeBannerList.count > 0) {
                     self.saveOrUpdateHomeBannerCoredata()
                 }
-                self.homeCollectionView.reloadData()
+                self.homeTableView.reloadData()
             case .failure( _):
             print("error")
             }
@@ -877,7 +807,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                         self.loadingView.showNoDataView()
                     }
                 }
-                self.homeCollectionView.reloadData()
+                self.homeTableView.reloadData()
                 self.alreadyFetch = true
             } else{
                 if(self.networkReachability?.isReachable == false) {
@@ -1065,7 +995,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
 //                    if(self.homeList.count == 0){
 //                        self.showNoNetwork()
 //                    }
-                    self.homeCollectionView.reloadData()
+                    self.homeTableView.reloadData()
                 } else{
                     //self.showNoNetwork()
                 }
@@ -1089,7 +1019,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     if(self.homeList.count == 0){
                        // self.showNoNetwork()
                     }
-                    self.homeCollectionView.reloadData()
+                    self.homeTableView.reloadData()
                 } else{
                     //self.showNoNetwork()
                 }

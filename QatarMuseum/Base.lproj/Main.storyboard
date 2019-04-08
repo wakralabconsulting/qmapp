@@ -237,30 +237,15 @@
                                     <constraint firstItem="GLU-5R-3S2" firstAttribute="centerY" secondItem="7ZM-f1-ri1" secondAttribute="centerY" id="zhc-ya-UcN"/>
                                 </constraints>
                             </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="la4-Sb-yJp">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IMq-AN-rKM">
                                 <rect key="frame" x="0.0" y="85" width="414" height="554"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="vEk-cM-qKI">
-                                    <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="37d-3W-4Ov">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </view>
-                                    </collectionViewCell>
-                                </cells>
                                 <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="gX9-zb-lNg"/>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="icw-LM-pjs"/>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="mfd-d0-COY"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="2km-Y3-a9Y"/>
                                 </connections>
-                            </collectionView>
+                            </tableView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NdW-we-G9U" customClass="LoadingView" customModule="QatarMuseums" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="85" width="414" height="554"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -296,14 +281,10 @@
                             <constraint firstItem="qGw-V5-okh" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="Lcw-tM-uif"/>
                             <constraint firstItem="NdW-we-G9U" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="PDC-qi-Izp"/>
                             <constraint firstItem="qGw-V5-okh" firstAttribute="top" secondItem="NdW-we-G9U" secondAttribute="bottom" id="ayr-bP-yvL"/>
-                            <constraint firstItem="qGw-V5-okh" firstAttribute="top" secondItem="la4-Sb-yJp" secondAttribute="bottom" id="bRc-Hi-suZ"/>
                             <constraint firstAttribute="trailing" secondItem="uSs-hx-cNf" secondAttribute="trailing" id="cL4-oG-74C"/>
                             <constraint firstItem="NkB-Zv-8hj" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ePo-4u-Xab"/>
-                            <constraint firstItem="la4-Sb-yJp" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="i1y-ZC-fJO"/>
                             <constraint firstItem="NkB-Zv-8hj" firstAttribute="top" secondItem="pKf-IS-7eH" secondAttribute="bottom" id="jMm-tB-pZY"/>
-                            <constraint firstItem="la4-Sb-yJp" firstAttribute="top" secondItem="NkB-Zv-8hj" secondAttribute="bottom" id="lp9-gJ-hF9"/>
                             <constraint firstItem="qGw-V5-okh" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="mPg-mv-kJP"/>
-                            <constraint firstItem="la4-Sb-yJp" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="mVI-Tf-aZV"/>
                             <constraint firstAttribute="trailing" secondItem="NdW-we-G9U" secondAttribute="trailing" id="pyi-pk-xAv"/>
                             <constraint firstAttribute="bottom" secondItem="qGw-V5-okh" secondAttribute="bottom" id="ziZ-yA-dS1"/>
                         </constraints>
@@ -314,7 +295,7 @@
                         <outlet property="diningLabel" destination="gJN-vr-oTl" id="UNX-ia-nuh"/>
                         <outlet property="giftShopButton" destination="VoM-Cl-cdQ" id="GJU-DQ-QEq"/>
                         <outlet property="giftShopLabel" destination="GLU-5R-3S2" id="DMi-bt-IeY"/>
-                        <outlet property="homeCollectionView" destination="la4-Sb-yJp" id="8fz-L9-GxY"/>
+                        <outlet property="homeTableView" destination="IMq-AN-rKM" id="pPI-9B-HER"/>
                         <outlet property="loadingView" destination="NdW-we-G9U" id="7ED-QQ-AS3"/>
                         <outlet property="moreButton" destination="eDQ-Sa-LRi" id="ArC-1D-WBJ"/>
                         <outlet property="moreLabel" destination="FGd-h4-nh5" id="rDh-34-bQU"/>
@@ -1900,7 +1881,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pML-Ib-x5b">
-                                                                    <rect key="frame" x="33.666666666666664" y="73" width="28" height="11"/>
+                                                                    <rect key="frame" x="32.666666666666664" y="71" width="29.666666666666664" height="13"/>
                                                                     <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="11"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -2287,71 +2268,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Bvi-9i-jfb">
-                                <rect key="frame" x="0.0" y="85" width="414" height="651"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="NQk-IZ-teF">
-                                    <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="50" height="157"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="USJ-1s-Ufi">
-                                        <rect key="frame" x="0.0" y="157" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </view>
-                                    </collectionViewCell>
-                                </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="tourHeader" id="n2D-I5-Hhu" customClass="TourGuideCollectionReusableView" customModule="QatarMuseums" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="157"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fLs-aV-Rgq">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="157"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TOUR GUIDES" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wvM-rU-LBj">
-                                                    <rect key="frame" x="92.666666666666671" y="19.999999999999996" width="228.66666666666663" height="39.666666666666657"/>
-                                                    <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="34"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M5m-HF-9dd">
-                                                    <rect key="frame" x="12" y="59.666666666666664" width="390" height="93.333333333333343"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="18"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                </textView>
-                                            </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="M5m-HF-9dd" secondAttribute="trailing" constant="12" id="Lly-or-Czh"/>
-                                                <constraint firstItem="wvM-rU-LBj" firstAttribute="top" secondItem="fLs-aV-Rgq" secondAttribute="top" constant="20" id="NHr-Yw-r6r"/>
-                                                <constraint firstItem="wvM-rU-LBj" firstAttribute="centerX" secondItem="fLs-aV-Rgq" secondAttribute="centerX" id="P2B-hK-NJz"/>
-                                                <constraint firstAttribute="bottom" secondItem="M5m-HF-9dd" secondAttribute="bottom" constant="4" id="UNq-Ag-6aG"/>
-                                                <constraint firstItem="M5m-HF-9dd" firstAttribute="top" secondItem="wvM-rU-LBj" secondAttribute="bottom" id="qzj-IL-sAL"/>
-                                                <constraint firstItem="M5m-HF-9dd" firstAttribute="leading" secondItem="fLs-aV-Rgq" secondAttribute="leading" constant="12" id="xjr-xy-T2X"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="fLs-aV-Rgq" firstAttribute="leading" secondItem="n2D-I5-Hhu" secondAttribute="leading" id="PFF-e9-5xy"/>
-                                        <constraint firstItem="fLs-aV-Rgq" firstAttribute="top" secondItem="n2D-I5-Hhu" secondAttribute="top" id="QP2-pq-Yw8"/>
-                                        <constraint firstAttribute="bottom" secondItem="fLs-aV-Rgq" secondAttribute="bottom" id="eQ3-WW-9iF"/>
-                                        <constraint firstAttribute="trailing" secondItem="fLs-aV-Rgq" secondAttribute="trailing" id="yAN-2s-qQ8"/>
-                                    </constraints>
-                                    <connections>
-                                        <outlet property="tourGuideText" destination="M5m-HF-9dd" id="gbB-xF-ppk"/>
-                                        <outlet property="tourGuideTitle" destination="wvM-rU-LBj" id="DHP-Bw-6hX"/>
-                                    </connections>
-                                </collectionReusableView>
-                                <connections>
-                                    <outlet property="dataSource" destination="gvg-jw-f93" id="GoH-8U-kUN"/>
-                                    <outlet property="delegate" destination="gvg-jw-f93" id="0IW-HD-kWb"/>
-                                </connections>
-                            </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GcL-iI-otd" customClass="CommonHeaderView" customModule="QatarMuseums" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="20" width="414" height="65"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2359,6 +2275,14 @@
                                     <constraint firstAttribute="height" constant="65" id="Ora-qL-KgJ"/>
                                 </constraints>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Bmh-2A-6GH">
+                                <rect key="frame" x="0.0" y="85" width="414" height="651"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="gvg-jw-f93" id="pZU-PL-oKh"/>
+                                    <outlet property="delegate" destination="gvg-jw-f93" id="obE-pp-tF3"/>
+                                </connections>
+                            </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="675-kB-eg9" customClass="LoadingView" customModule="QatarMuseums" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="85" width="414" height="651"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2366,23 +2290,23 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="Bvi-9i-jfb" secondAttribute="bottom" id="0lw-zP-bCh"/>
                             <constraint firstItem="GcL-iI-otd" firstAttribute="top" secondItem="eNn-hZ-8UW" secondAttribute="bottom" id="2Jz-MF-DGz"/>
                             <constraint firstItem="675-kB-eg9" firstAttribute="top" secondItem="GcL-iI-otd" secondAttribute="bottom" id="2uT-cQ-B9c"/>
-                            <constraint firstAttribute="trailing" secondItem="Bvi-9i-jfb" secondAttribute="trailing" id="6UN-X8-PZG"/>
-                            <constraint firstItem="Bvi-9i-jfb" firstAttribute="top" secondItem="GcL-iI-otd" secondAttribute="bottom" id="78R-E6-Iuc"/>
                             <constraint firstItem="GcL-iI-otd" firstAttribute="leading" secondItem="4Vg-7A-FCX" secondAttribute="leading" id="9I6-OQ-ZCJ"/>
+                            <constraint firstItem="Bmh-2A-6GH" firstAttribute="leading" secondItem="4Vg-7A-FCX" secondAttribute="leading" id="LTB-jh-pg3"/>
+                            <constraint firstItem="07X-0X-1Yb" firstAttribute="top" secondItem="Bmh-2A-6GH" secondAttribute="bottom" id="Lpy-pF-lIW"/>
                             <constraint firstItem="675-kB-eg9" firstAttribute="leading" secondItem="4Vg-7A-FCX" secondAttribute="leading" id="PuS-de-yxL"/>
                             <constraint firstAttribute="trailing" secondItem="675-kB-eg9" secondAttribute="trailing" id="Tdd-rK-xdu"/>
                             <constraint firstAttribute="bottom" secondItem="675-kB-eg9" secondAttribute="bottom" id="bJf-VP-baJ"/>
+                            <constraint firstItem="Bmh-2A-6GH" firstAttribute="top" secondItem="GcL-iI-otd" secondAttribute="bottom" id="jX3-mV-DMd"/>
                             <constraint firstAttribute="trailing" secondItem="GcL-iI-otd" secondAttribute="trailing" id="lrs-cG-fs8"/>
-                            <constraint firstItem="Bvi-9i-jfb" firstAttribute="leading" secondItem="4Vg-7A-FCX" secondAttribute="leading" id="nxB-0n-2Dt"/>
+                            <constraint firstAttribute="trailing" secondItem="Bmh-2A-6GH" secondAttribute="trailing" id="wPm-hd-fcy"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="loadingView" destination="675-kB-eg9" id="qFU-OK-Dkl"/>
                         <outlet property="topbarView" destination="GcL-iI-otd" id="u3e-ou-s7t"/>
-                        <outlet property="tourCollectionView" destination="Bvi-9i-jfb" id="chQ-Vf-LmH"/>
+                        <outlet property="tourTableView" destination="Bmh-2A-6GH" id="meF-Rm-GCm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QYS-cA-U77" userLabel="First Responder" sceneMemberID="firstResponder"/>

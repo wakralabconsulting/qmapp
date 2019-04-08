@@ -12,10 +12,10 @@ import Crashlytics
 import Firebase
 import UIKit
 
-class TourGuideViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,HeaderViewProtocol,comingSoonPopUpProtocol,UICollectionViewDelegateFlowLayout,LoadingViewProtocol {
-    @IBOutlet weak var tourCollectionView: UICollectionView!
-    @IBOutlet weak var topbarView: CommonHeaderView!
+class TourGuideViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,HeaderViewProtocol,comingSoonPopUpProtocol,UICollectionViewDelegateFlowLayout,LoadingViewProtocol {
     
+    @IBOutlet weak var tourTableView: UITableView!
+    @IBOutlet weak var topbarView: CommonHeaderView!
     @IBOutlet weak var loadingView: LoadingView!
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var fromHome : Bool = false
@@ -57,44 +57,45 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         return .lightContent
     }
     func registerNib() {
-        let nib = UINib(nibName: "HomeCollectionCell", bundle: nil)
-        tourCollectionView?.register(nib, forCellWithReuseIdentifier: "homeCellId")
+        self.tourTableView.register(UINib(nibName: "ExhibitionsCellXib", bundle: nil), forCellReuseIdentifier: "exhibitionCellId")
+        self.tourTableView.register(UINib(nibName: "MiaTourHeaderView", bundle: nil), forCellReuseIdentifier: "miaHeaderId")
     }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return museumsList.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell : HomeCollectionViewCell = tourCollectionView.dequeueReusableCell(withReuseIdentifier: "homeCellId", for: indexPath) as! HomeCollectionViewCell
-        
-        cell.tourGuideImage.image = UIImage(named: "location")
-        cell.setTourGuideCellData(museumsListData: museumsList[indexPath.row])
-        return cell
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return museumsList.count+1
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if (museumsList != nil) {
-            if(((museumsList[indexPath.row].id) == "63") || ((museumsList[indexPath.row].id) == "96") || ((museumsList[indexPath.row].id) == "61") || ((museumsList[indexPath.row].id) == "635")) {
-                loadMiaTour(currentRow: indexPath.row)
-            } else {
-                loadComingSoonPopup()
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if (indexPath.row == 0) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "miaHeaderId", for: indexPath) as! MiaCollectionReusableView
+            cell.selectionStyle = .none
+            cell.setTourHeader()
+            return cell
+        } else {
+            let cell = tourTableView.dequeueReusableCell(withIdentifier: "exhibitionCellId", for: indexPath) as! ExhibitionsCollectionCell
+            cell.tourGuideImage.image = UIImage(named: "location")
+            cell.setTourGuideCellData(museumsListData: museumsList[indexPath.row - 1])
+            return cell
+        }
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (indexPath.row != 0) {
+            if (museumsList != nil) {
+                if(((museumsList[indexPath.row].id) == "63") || ((museumsList[indexPath.row].id) == "96") || ((museumsList[indexPath.row].id) == "61") || ((museumsList[indexPath.row].id) == "635")) {
+                    loadMiaTour(currentRow: indexPath.row - 1)
+                } else {
+                    loadComingSoonPopup()
+                }
             }
         }
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let heightValue = UIScreen.main.bounds.height/100
-        return CGSize(width: tourCollectionView.frame.width, height: heightValue*27)
-    }
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let tourHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "tourHeader", for: indexPath) as! TourGuideCollectionReusableView
-        tourHeaderView.tourGuideTitle.text = NSLocalizedString("TOUR_GUIDES", comment: "TOUR_GUIDES  in the Tour Guide page")
-        tourHeaderView.tourGuideText.text = NSLocalizedString("TOUR_GUIDE_TEXT", comment: "TOUR_GUIDE_TEXT  in the Tour Guide page")
-        
-        
-        
-        return tourHeaderView
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if (indexPath.row == 0) {
+            return UITableViewAutomaticDimension
+        } else {
+            let heightValue = UIScreen.main.bounds.height/100
+            return heightValue*27
+        }
     }
     func loadMiaTour(currentRow: Int?) {
         let transition = CATransition()
@@ -164,7 +165,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                     if let arrayOffset = self.museumsList.index(where: {$0.id == searchstring}) {
                         self.museumsList.remove(at: arrayOffset)
                     }
-                    self.tourCollectionView.reloadData()
+                    self.tourTableView.reloadData()
                 }
                 if(self.museumsList.count > 0) {
                    
@@ -307,7 +308,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                             self.museumsList.remove(at: arrayOffset)
                         }
                     }
-                    tourCollectionView.reloadData()
+                    tourTableView.reloadData()
                 }
                 else{
                     if(self.networkReachability?.isReachable == false) {

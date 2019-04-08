@@ -172,8 +172,6 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     func registerNib() {
         self.exhibitionCollectionView.register(UINib(nibName: "ExhibitionsCellXib", bundle: nil), forCellReuseIdentifier: "exhibitionCellId")
-        self.exhibitionCollectionView.register(UINib(nibName: "HeritageCellXib", bundle: nil), forCellReuseIdentifier: "heritageCellXibId")
-        //self.exhibitionCollectionView.register(UINib(nibName: "NMoQListCell", bundle: nil), forCellReuseIdentifier: "nMoQListCellId")
         self.exhibitionCollectionView.register(UINib(nibName: "MiaTourHeaderView", bundle: nil), forCellReuseIdentifier: "miaHeaderId")
     }
     
@@ -309,6 +307,7 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         } else {
             if (indexPath.row == 0) {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "miaHeaderId", for: indexPath) as! MiaCollectionReusableView
+                cell.selectionStyle = .none
                 if (miaTourDataFullArray.count > 0) {
                     if((museumId == "66") || (museumId == "638")) {
                         cell.setNMoQHeaderData()

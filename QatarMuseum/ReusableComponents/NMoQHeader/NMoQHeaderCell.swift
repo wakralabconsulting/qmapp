@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NMoQHeaderCell: UICollectionViewCell {
+class NMoQHeaderCell: UITableViewCell {
     
     @IBOutlet weak var bannerImg: UIImageView!
     @IBOutlet weak var bannerTitle: UITextView!
