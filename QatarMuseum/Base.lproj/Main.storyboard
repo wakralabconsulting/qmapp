@@ -1008,63 +1008,6 @@
             </objects>
             <point key="canvasLocation" x="3483" y="85"/>
         </scene>
-        <!--Parks View Controller-->
-        <scene sceneID="x6s-N4-CBR">
-            <objects>
-                <viewController storyboardIdentifier="parkViewId" id="qKg-dh-e0j" customClass="ParksViewController" customModule="QatarMuseums" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Lul-Cq-3ir"/>
-                        <viewControllerLayoutGuide type="bottom" id="dS7-2c-Buu"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="hNX-Zb-hv2">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AZA-VN-JjC">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
-                                <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="Cih-3n-atv">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
-                                        <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <connections>
-                                            <outlet property="dataSource" destination="qKg-dh-e0j" id="gRs-5Z-3Mp"/>
-                                            <outlet property="delegate" destination="qKg-dh-e0j" id="cnK-QI-d84"/>
-                                        </connections>
-                                    </tableView>
-                                </subviews>
-                                <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstItem="Cih-3n-atv" firstAttribute="top" secondItem="AZA-VN-JjC" secondAttribute="top" id="2Zu-DK-RSx"/>
-                                    <constraint firstAttribute="bottom" secondItem="Cih-3n-atv" secondAttribute="bottom" id="4oZ-3D-fo4"/>
-                                    <constraint firstAttribute="trailing" secondItem="Cih-3n-atv" secondAttribute="trailing" id="GXx-g6-h0I"/>
-                                    <constraint firstItem="Cih-3n-atv" firstAttribute="leading" secondItem="AZA-VN-JjC" secondAttribute="leading" id="Vxt-DG-4hE"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pbO-Ar-k3h" customClass="LoadingView" customModule="QatarMuseums" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                        </subviews>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="AZA-VN-JjC" secondAttribute="bottom" id="EWa-VE-ksl"/>
-                            <constraint firstAttribute="trailing" secondItem="pbO-Ar-k3h" secondAttribute="trailing" id="KsE-vc-B0x"/>
-                            <constraint firstItem="AZA-VN-JjC" firstAttribute="leading" secondItem="hNX-Zb-hv2" secondAttribute="leading" id="M0D-4A-UNZ"/>
-                            <constraint firstItem="pbO-Ar-k3h" firstAttribute="leading" secondItem="hNX-Zb-hv2" secondAttribute="leading" id="SfB-IY-xWo"/>
-                            <constraint firstAttribute="bottom" secondItem="pbO-Ar-k3h" secondAttribute="bottom" id="SwM-xf-H1N"/>
-                            <constraint firstItem="pbO-Ar-k3h" firstAttribute="top" secondItem="Lul-Cq-3ir" secondAttribute="bottom" id="cwR-vw-KfC"/>
-                            <constraint firstItem="AZA-VN-JjC" firstAttribute="top" secondItem="Lul-Cq-3ir" secondAttribute="bottom" id="n2X-FW-NJd"/>
-                            <constraint firstAttribute="trailing" secondItem="AZA-VN-JjC" secondAttribute="trailing" id="tRs-7W-foE"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="loadingView" destination="pbO-Ar-k3h" id="umg-82-O0j"/>
-                        <outlet property="parksTableView" destination="Cih-3n-atv" id="TPo-rc-7OE"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fIG-fI-MI5" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5004" y="88"/>
-        </scene>
         <!--Museums View Controller-->
         <scene sceneID="clW-ye-bpT">
             <objects>
