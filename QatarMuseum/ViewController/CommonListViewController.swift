@@ -515,7 +515,8 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         self.present(heritageDtlView, animated: false, completion: nil)
     }
     func loadExhibitionDetailAnimation(exhibitionId: String) {
-        let exhibitionDtlView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionDtlId") as! ExhibitionDetailViewController
+        let exhibitionDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
+        exhibitionDtlView.pageNameString = PageName.exhibitionDetail
             exhibitionDtlView.fromHome = true
             exhibitionDtlView.exhibitionId = exhibitionId
         let transition = CATransition()

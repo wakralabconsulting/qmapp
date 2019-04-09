@@ -122,7 +122,6 @@
 		B84BA062217F1A6300FD2C0D /* LoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84BA061217F1A6300FD2C0D /* LoginData.swift */; };
 		B84C9D8B21B5497E00DCB95C /* NMoQTour.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84C9D8A21B5497E00DCB95C /* NMoQTour.swift */; };
 		B85AE812217744D600A658A2 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85AE811217744D600A658A2 /* MapViewController.swift */; };
-		B85BA4AA20D01B2600E7F4D1 /* ExhibitionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4A920D01B2600E7F4D1 /* ExhibitionDetailViewController.swift */; };
 		B85BA4AC20D01BC900E7F4D1 /* ExhibitionDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4AB20D01BC800E7F4D1 /* ExhibitionDetailTableViewCell.swift */; };
 		B85BA4B020D01D1C00E7F4D1 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4AF20D01D1C00E7F4D1 /* SplashViewController.swift */; };
 		B85BA4B720D03CE500E7F4D1 /* iOSDevCenters+GIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4B620D03CE500E7F4D1 /* iOSDevCenters+GIF.swift */; };
@@ -210,6 +209,8 @@
 		B8F00C8521787D0D00320DF1 /* LoginPopupPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F00C8421787D0D00320DF1 /* LoginPopupPage.swift */; };
 		B8F00C872178D74800320DF1 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F00C862178D74800320DF1 /* RegistrationViewController.swift */; };
 		B8F3A940212728EE005360AD /* CommonStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F3A93F212728EE005360AD /* CommonStrings.swift */; };
+		B8F6B03F225CAA7D000EF764 /* HeritageDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8F6B03E225CAA7D000EF764 /* HeritageDetailView.xib */; };
+		B8F6B041225CAE84000EF764 /* ExhibitionDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8F6B040225CAE84000EF764 /* ExhibitionDetailView.xib */; };
 		B8FC190120DE854400D00E6B /* MuseumBottomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FC190020DE854400D00E6B /* MuseumBottomCell.swift */; };
 		B8FEC77C2112E57100648F66 /* Dining.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FEC77B2112E57100648F66 /* Dining.swift */; };
 		DA51D58A8DA63CE54CFF0485 /* Pods_QatarMuseums.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F5559C89E84E914A76D7A7 /* Pods_QatarMuseums.framework */; };
@@ -380,7 +381,6 @@
 		B84BA061217F1A6300FD2C0D /* LoginData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginData.swift; sourceTree = "<group>"; };
 		B84C9D8A21B5497E00DCB95C /* NMoQTour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQTour.swift; sourceTree = "<group>"; };
 		B85AE811217744D600A658A2 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		B85BA4A920D01B2600E7F4D1 /* ExhibitionDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExhibitionDetailViewController.swift; sourceTree = "<group>"; };
 		B85BA4AB20D01BC800E7F4D1 /* ExhibitionDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExhibitionDetailTableViewCell.swift; sourceTree = "<group>"; };
 		B85BA4AF20D01D1C00E7F4D1 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		B85BA4B620D03CE500E7F4D1 /* iOSDevCenters+GIF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "iOSDevCenters+GIF.swift"; sourceTree = "<group>"; };
@@ -474,6 +474,8 @@
 		B8F00C862178D74800320DF1 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		B8F305F42256136500117478 /* QatarMuseums_V3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QatarMuseums_V3.xcdatamodel; sourceTree = "<group>"; };
 		B8F3A93F212728EE005360AD /* CommonStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonStrings.swift; sourceTree = "<group>"; };
+		B8F6B03E225CAA7D000EF764 /* HeritageDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeritageDetailView.xib; sourceTree = "<group>"; };
+		B8F6B040225CAE84000EF764 /* ExhibitionDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExhibitionDetailView.xib; sourceTree = "<group>"; };
 		B8FC190020DE854400D00E6B /* MuseumBottomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseumBottomCell.swift; sourceTree = "<group>"; };
 		B8FEC77B2112E57100648F66 /* Dining.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dining.swift; sourceTree = "<group>"; };
 		FF0C898808E8CD16BED3F913 /* Pods-QatarMuseums.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QatarMuseums.release.xcconfig"; path = "Pods/Target Support Files/Pods-QatarMuseums/Pods-QatarMuseums.release.xcconfig"; sourceTree = "<group>"; };
@@ -747,7 +749,6 @@
 			children = (
 				B8EAB7B320CA420100C001B2 /* FSCalendarVC */,
 				B80DC08B20C798BA00E28034 /* HomeViewController.swift */,
-				B85BA4A920D01B2600E7F4D1 /* ExhibitionDetailViewController.swift */,
 				B8D1228C20C8EE8600772507 /* WebViewController.swift */,
 				B8DC40A820C9A5760044134D /* EventViewController.swift */,
 				B8BA80B420CCDDA3007E880A /* ProfileViewController.swift */,
@@ -1068,6 +1069,7 @@
 			children = (
 				B8CAA93C20DC15FA009A936D /* HeritageDetailCell.swift */,
 				B8C31CE52162821300AE7788 /* MuseumAboutCell.swift */,
+				B8F6B03E225CAA7D000EF764 /* HeritageDetailView.xib */,
 			);
 			path = HeritageDetailCell;
 			sourceTree = "<group>";
@@ -1121,6 +1123,7 @@
 			isa = PBXGroup;
 			children = (
 				B85BA4AB20D01BC800E7F4D1 /* ExhibitionDetailTableViewCell.swift */,
+				B8F6B040225CAE84000EF764 /* ExhibitionDetailView.xib */,
 			);
 			path = Exhibitionsdetail;
 			sourceTree = "<group>";
@@ -1371,6 +1374,7 @@
 				B8C367F82254D325005E4305 /* MiaTourHeaderView.xib in Resources */,
 				B81FF06B21AFBA1B006A968B /* NMoHeaderView.xib in Resources */,
 				B80674302240CFCF00885544 /* ParkListView.xib in Resources */,
+				B8F6B041225CAE84000EF764 /* ExhibitionDetailView.xib in Resources */,
 				B8AFA2ED20E78BA9008838A6 /* DINNextLTArabic-Regular.ttf in Resources */,
 				B8D1229020C9092D00772507 /* LoadingXib.xib in Resources */,
 				B8DB500221B25D9000C5DD10 /* PanelDetailView.xib in Resources */,
@@ -1382,6 +1386,7 @@
 				B8CA08E42146D38400783642 /* ObjectPopupView.xib in Resources */,
 				1B3C505C212AB3460034E560 /* ArtifactNumberPadCell.xib in Resources */,
 				B890F0BD2238C8C9009A874A /* panelAndTalks.png in Resources */,
+				B8F6B03F225CAA7D000EF764 /* HeritageDetailView.xib in Resources */,
 				B807FCCF218EA8FD003CC51E /* CountryListArabic.json in Resources */,
 				B8AFA2F120E78E09008838A6 /* DINNextLTPro-Light.otf in Resources */,
 				B8BA80BA20CD8305007E880A /* CommonListCellXib.xib in Resources */,
@@ -1585,7 +1590,6 @@
 				B843D9E0223F8E14003C1DF6 /* Facilities.swift in Sources */,
 				1B3C505B212AB3460034E560 /* ArtifactNumberPadCell.swift in Sources */,
 				B8B760512100E88E00CEE280 /* NotificationsTableViewCell.swift in Sources */,
-				B85BA4AA20D01B2600E7F4D1 /* ExhibitionDetailViewController.swift in Sources */,
 				B8DDBC7D21AD78AA007B3A06 /* HomeBanner.swift in Sources */,
 				B8294CE820CBF265002AFF72 /* FSCalendarConstants.m in Sources */,
 				B82729B321778B2F0017EC71 /* VersaPlayerExtension.swift in Sources */,
