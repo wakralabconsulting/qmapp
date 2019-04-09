@@ -416,7 +416,8 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 self.present(musmCollectionnView, animated: false, completion: nil)
             } else if ((selectedItem == "Parks") || (selectedItem == "الحدائق")){
                 if((museumId == "66") || (museumId == "638")) {
-                    let parkView = self.storyboard?.instantiateViewController(withIdentifier: "parkListId") as! ParkListViewController
+                    let parkView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+                    parkView.exhibitionsPageNameString = ExhbitionPageName.parkList
                     let transition = CATransition()
                     transition.duration = 0.3
                     transition.type = kCATransitionFade
