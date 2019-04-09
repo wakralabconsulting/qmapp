@@ -130,7 +130,6 @@
 		B88F07E8217DD5F600B16875 /* CulturePassCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88F07E7217DD5F600B16875 /* CulturePassCardViewController.swift */; };
 		B890F0BD2238C8C9009A874A /* panelAndTalks.png in Resources */ = {isa = PBXBuildFile; fileRef = B890F0BC2238C8C9009A874A /* panelAndTalks.png */; };
 		B897351321B81C3200BB812C /* NMoQTourDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B897351221B81C3200BB812C /* NMoQTourDetail.swift */; };
-		B8A1479B20FCA2AB00833B7B /* TourGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A1479A20FCA2AB00833B7B /* TourGuideViewController.swift */; };
 		B8ADA8AB2164CC2E00127F9A /* PreviewContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8ADA8AA2164CC2E00127F9A /* PreviewContentViewController.swift */; };
 		B8ADA8AD2164CD4100127F9A /* PreviewContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8ADA8AC2164CD4100127F9A /* PreviewContainerViewController.swift */; };
 		B8AFA2EB20E78BA9008838A6 /* DINNextLTArabic-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8AFA2E820E78BA1008838A6 /* DINNextLTArabic-Bold.ttf */; };
@@ -391,7 +390,6 @@
 		B88F07E7217DD5F600B16875 /* CulturePassCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturePassCardViewController.swift; sourceTree = "<group>"; };
 		B890F0BC2238C8C9009A874A /* panelAndTalks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = panelAndTalks.png; sourceTree = "<group>"; };
 		B897351221B81C3200BB812C /* NMoQTourDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQTourDetail.swift; sourceTree = "<group>"; };
-		B8A1479A20FCA2AB00833B7B /* TourGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourGuideViewController.swift; sourceTree = "<group>"; };
 		B8ADA8AA2164CC2E00127F9A /* PreviewContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContentViewController.swift; sourceTree = "<group>"; };
 		B8ADA8AC2164CD4100127F9A /* PreviewContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContainerViewController.swift; sourceTree = "<group>"; };
 		B8AFA2E820E78BA1008838A6 /* DINNextLTArabic-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINNextLTArabic-Bold.ttf"; sourceTree = "<group>"; };
@@ -764,7 +762,6 @@
 				B82C87F120E69C9700777674 /* DiningDetailViewController.swift */,
 				B8C64C9B20FE380D00D7CD63 /* MiaTourDetailViewController.swift */,
 				B8B7604B2100E7FC00CEE280 /* NotificationsViewController.swift */,
-				B8A1479A20FCA2AB00833B7B /* TourGuideViewController.swift */,
 				B8D7BF442101A12E0085EF49 /* EducationViewController.swift */,
 				B8DC478A20DD05BA0007B426 /* ParksViewController.swift */,
 				B8D4C535210453FB0096912C /* FilterViewController.swift */,
@@ -1640,7 +1637,6 @@
 				B8CAA93F20DC186E009A936D /* HeritageDetailViewController.swift in Sources */,
 				1BE526D42107470700C8CD51 /* Config.swift in Sources */,
 				B82729C021778B2F0017EC71 /* VersaPlayerControlsCoordinator.swift in Sources */,
-				B8A1479B20FCA2AB00833B7B /* TourGuideViewController.swift in Sources */,
 				B85AE812217744D600A658A2 /* MapViewController.swift in Sources */,
 				B8F00C8521787D0D00320DF1 /* LoginPopupPage.swift in Sources */,
 				B8E024ED211042C200CB18E2 /* CollectionDetailViewController.swift in Sources */,

@@ -443,8 +443,9 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func tourGuideButtonPressed() {
-        let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "tourGuidId") as! TourGuideViewController
+        let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
         tourGuideView.fromSideMenu = true
+        tourGuideView.exhibitionsPageNameString = ExhbitionPageName.tourGuideList
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush

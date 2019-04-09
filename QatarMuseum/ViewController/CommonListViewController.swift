@@ -21,6 +21,7 @@ enum ExhbitionPageName {
     case nmoqTourSecondList
     case facilitiesSecondList
     case miaTourGuideList
+    case tourGuideList
 }
 class CommonListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegateFlowLayout,HeaderViewProtocol,comingSoonPopUpProtocol,LoadingViewProtocol {
     @IBOutlet weak var exhibitionHeaderView: CommonHeaderView!
@@ -35,6 +36,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     var nmoqTourDetail: [NMoQTourDetail]! = []
     var facilitiesDetail: [FacilitiesDetail]! = []
     var miaTourDataFullArray: [TourGuide] = []
+    var museumsList: [Home]! = []
     var popupView : ComingSoonPopUp = ComingSoonPopUp()
     var exhibitionsPageNameString : ExhbitionPageName?
     let networkReachability = NetworkReachabilityManager()
@@ -47,6 +49,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     var tourDetailId : String? = nil
     var headerTitle : String? = nil
     var dataInCoreData : Bool? = false
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -161,6 +164,14 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                 self.fetchTourGuideListFromCoredata()
             }
             exhibitionHeaderView.headerTitle.isHidden = true
+        } else if (exhibitionsPageNameString == ExhbitionPageName.tourGuideList) {
+            NotificationCenter.default.addObserver(self, selector: #selector(CommonListViewController.receiveHomePageNotificationEn(notification:)), name: NSNotification.Name(homepageNotificationEn), object: nil)
+            if  (networkReachability?.isReachable)! {
+                DispatchQueue.global(qos: .background).async {
+                    self.getTourGuideMuseumsList()
+                }
+            }
+            self.fetchMuseumsInfoFromCoredata()
         }
         popupView.comingSoonPopupDelegate = self
         
@@ -263,6 +274,11 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                 return miaTourDataFullArray.count+1
             }
             return 0
+        case .tourGuideList?:
+            if(museumsList.count > 0) {
+                return museumsList.count+1
+            }
+            return 0
         default:
             return 0
         }
@@ -304,7 +320,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
             let facilitiesSecondListCell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "commonListCellId", for: indexPath) as! CommonListCell
             facilitiesSecondListCell.setFacilitiesDetail(FacilitiesDetailData: facilitiesDetail[indexPath.row])
             return facilitiesSecondListCell
-        } else {
+        } else if (exhibitionsPageNameString == ExhbitionPageName.miaTourGuideList){
             if (indexPath.row == 0) {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "miaHeaderId", for: indexPath) as! MiaCollectionReusableView
                 cell.selectionStyle = .none
@@ -325,11 +341,23 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                 tourGuideCell.setScienceTourGuideCellData(homeCellData: miaTourDataFullArray[indexPath.row-1])
                 return tourGuideCell
             }
+        } else {
+            if (indexPath.row == 0) {
+                let cell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "miaHeaderId", for: indexPath) as! MiaCollectionReusableView
+                cell.selectionStyle = .none
+                cell.setTourHeader()
+                return cell
+            } else {
+                let cell = exhibitionCollectionView.dequeueReusableCell(withIdentifier: "commonListCellId", for: indexPath) as! CommonListCell
+                cell.tourGuideImage.image = UIImage(named: "location")
+                cell.setTourGuideCellData(museumsListData: museumsList[indexPath.row - 1])
+                return cell
+            }
         }
         
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if (exhibitionsPageNameString == ExhbitionPageName.miaTourGuideList) {
+        if ((exhibitionsPageNameString == ExhbitionPageName.miaTourGuideList) || (exhibitionsPageNameString == ExhbitionPageName.tourGuideList)) {
             if (indexPath.row == 0) {
                 return UITableViewAutomaticDimension
             } else {
@@ -372,6 +400,16 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         }
         else if (exhibitionsPageNameString == ExhbitionPageName.facilitiesSecondList) {
             loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: false, pageName: ExhbitionPageName.facilitiesSecondList)
+        } else if (exhibitionsPageNameString == ExhbitionPageName.tourGuideList) {
+            if (indexPath.row != 0) {
+                if (museumsList != nil) {
+                    if(((museumsList[indexPath.row].id) == "63") || ((museumsList[indexPath.row].id) == "96") || ((museumsList[indexPath.row].id) == "61") || ((museumsList[indexPath.row].id) == "635")) {
+                        loadMiaTour(currentRow: indexPath.row - 1)
+                    } else {
+                        addComingSoonPopup()
+                    }
+                }
+            }
         }
         
     }
@@ -812,6 +850,8 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                 self.getNMoQTourDetail()
             } else if (exhibitionsPageNameString == ExhbitionPageName.miaTourGuideList){
                 self.getTourGuideDataFromServer()
+            } else if (exhibitionsPageNameString == ExhbitionPageName.tourGuideList){
+                self.getTourGuideMuseumsList()
             }
         }
     }
@@ -855,6 +895,8 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
             Analytics.setScreenName(NMOQ_TOUR_SECOND_LIST, screenClass: screenClass)
         } else if (exhibitionsPageNameString == ExhbitionPageName.miaTourGuideList) {
             Analytics.setScreenName(MIA_TOUR_GUIDE, screenClass: screenClass)
+        } else if (exhibitionsPageNameString == ExhbitionPageName.tourGuideList) {
+            Analytics.setScreenName(TOUR_GUIDE_VC, screenClass: screenClass)
         }
         
         
@@ -2732,6 +2774,209 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
             miaView.tourGuideDetail = miaTourDataFullArray[currentRow!]
         }
         self.present(miaView, animated: false, completion: nil)
+    }
+    //MARK: TourGuide Service call
+    func getTourGuideMuseumsList() {
+        var searchstring = String()
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            searchstring = "12181"
+        } else {
+            searchstring = "12186"
+        }
+        _ = Alamofire.request(QatarMuseumRouter.HomeList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<HomeList>) -> Void in
+            switch response.result {
+            case .success(let data):
+                if(self.museumsList.count == 0) {
+                    if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+                        searchstring = "12181"
+                    } else {
+                        searchstring = "12186"
+                    }
+                    self.museumsList = data.homeList
+                    //Removed Exhibition from Tour List
+                    if let arrayOffset = self.museumsList.index(where: {$0.id == searchstring}) {
+                        self.museumsList.remove(at: arrayOffset)
+                    }
+                    self.exhibitionCollectionView.reloadData()
+                }
+                if(self.museumsList.count > 0) {
+                    
+                    //Removed Exhibition from Tour List
+                    if let arrayOffset = self.museumsList.index(where: {$0.id == searchstring}) {
+                        self.museumsList.remove(at: arrayOffset)
+                    }
+                    self.saveOrUpdateMuseumsCoredata(museumsList: data.homeList)
+                }
+            case .failure(let error):
+                print("error")
+            }
+        }
+    }
+    //MARK: Coredata Method
+    func saveOrUpdateMuseumsCoredata(museumsList:[Home]?) {
+        if ((museumsList?.count)! > 0) {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.tourGuideCoreDataInBackgroundThread(managedContext: managedContext, museumsList: museumsList)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.tourGuideCoreDataInBackgroundThread(managedContext : managedContext, museumsList: museumsList)
+                }
+            }
+        }
+    }
+    func tourGuideCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,museumsList:[Home]?) {
+        var fetchData = [HomeEntity]()
+        var langVar : String? = nil
+        if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+            langVar = "1"
+            
+        } else {
+            langVar = "0"
+        }
+        fetchData = checkAddedToCoredata(entityName: "HomeEntity", idKey: "lang", idValue: langVar, managedContext: managedContext) as! [HomeEntity]
+        if (fetchData.count > 0) {
+            for i in 0 ... (museumsList?.count)!-1 {
+                let museumListDict = museumsList![i]
+                let fetchResult = checkAddedToCoredata(entityName: "HomeEntity", idKey: "id", idValue: museumsList![i].id, managedContext: managedContext)
+                //update
+                if(fetchResult.count != 0) {
+                    let museumsdbDict = fetchResult[0] as! HomeEntity
+                    
+                    museumsdbDict.name = museumListDict.name
+                    museumsdbDict.image = museumListDict.image
+                    museumsdbDict.sortid =  (Int16(museumListDict.sortId!) ?? 0)
+                    museumsdbDict.tourguideavailable = museumListDict.isTourguideAvailable
+                    museumsdbDict.lang = langVar
+                    
+                    do{
+                        try managedContext.save()
+                    }
+                    catch{
+                        print(error)
+                    }
+                }
+                else {
+                    //save
+                    self.saveToTourGuideCoreData(museumsListDict: museumListDict, managedObjContext: managedContext)
+                    
+                }
+            }
+        }
+        else {
+            for i in 0 ... (museumsList?.count)!-1 {
+                let museumsListDict : Home?
+                museumsListDict = museumsList?[i]
+                self.saveToTourGuideCoreData(museumsListDict: museumsListDict!, managedObjContext: managedContext)
+                
+            }
+        }
+    }
+    func saveToTourGuideCoreData(museumsListDict: Home, managedObjContext: NSManagedObjectContext) {
+        var langVar : String? = nil
+        if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+            langVar = "1"
+            
+        } else {
+            langVar = "0"
+        }
+        let museumsInfo: HomeEntity = NSEntityDescription.insertNewObject(forEntityName: "HomeEntity", into: managedObjContext) as! HomeEntity
+        museumsInfo.id = museumsListDict.id
+        museumsInfo.name = museumsListDict.name
+        museumsInfo.image = museumsListDict.image
+        museumsInfo.tourguideavailable = museumsListDict.isTourguideAvailable
+        museumsInfo.image = museumsListDict.image
+        museumsInfo.sortid = (Int16(museumsListDict.sortId!) ?? 0)
+        museumsInfo.lang = langVar
+        do {
+            try managedObjContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    func fetchMuseumsInfoFromCoredata() {
+        self.exbtnLoadingView.stopLoading()
+        self.exbtnLoadingView.isHidden = true
+        let managedContext = getContext()
+        var searchstring = String()
+        var langVar : String? = nil
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            searchstring = "12181"
+            langVar = "1"
+        } else {
+            searchstring = "12186"
+            langVar = "0"
+        }
+        do {
+            var museumsArray = [HomeEntity]()
+            museumsArray = checkAddedToCoredata(entityName: "HomeEntity", idKey: "lang", idValue: langVar, managedContext: managedContext) as! [HomeEntity]
+            var j:Int? = 0
+            if (museumsArray.count > 0) {
+                for i in 0 ... museumsArray.count-1 {
+                    if let duplicateId = museumsList.first(where: {$0.id == museumsArray[i].id}) {
+                    } else {
+                        self.museumsList.insert(Home(id:museumsArray[i].id , name: museumsArray[i].name,image: museumsArray[i].image,
+                                                     tourguide_available: museumsArray[i].tourguideavailable, sort_id: String(museumsArray[i].sortid)),
+                                                at: j!)
+                        j = j!+1
+                    }
+                }
+                if(museumsList.count == 0){
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.exbtnLoadingView.showNoDataView()
+                    }
+                } else {
+                    //Removed Exhibition from Tour List
+                    if let arrayOffset = self.museumsList.index(where: {$0.id == searchstring}) {
+                        self.museumsList.remove(at: arrayOffset)
+                    }
+                }
+                exhibitionCollectionView.reloadData()
+            }
+            else{
+                if(self.networkReachability?.isReachable == false) {
+                    self.showNoNetwork()
+                } else {
+                    self.exbtnLoadingView.showNoDataView()
+                }
+            }
+            
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    func loadMiaTour(currentRow: Int?) {
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+        miaView.exhibitionsPageNameString = ExhbitionPageName.miaTourGuideList
+        if (museumsList != nil) {
+            miaView.museumId = museumsList[currentRow!].id!
+            self.present(miaView, animated: false, completion: nil)
+        }
+    }
+    @objc func receiveHomePageNotificationEn(notification: NSNotification) {
+        if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (museumsList.count == 0)){
+            DispatchQueue.main.async{
+                self.fetchMuseumsInfoFromCoredata()
+            }
+        }
+    }
+    @objc func receiveHomePageNotificationAr(notification: NSNotification) {
+        if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (museumsList.count == 0)){
+            DispatchQueue.main.async{
+                self.fetchMuseumsInfoFromCoredata()
+            }
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

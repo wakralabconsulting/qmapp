@@ -1876,7 +1876,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pML-Ib-x5b">
-                                                                    <rect key="frame" x="32.666666666666664" y="71" width="29.666666666666664" height="13"/>
+                                                                    <rect key="frame" x="33.666666666666664" y="73" width="28" height="11"/>
                                                                     <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="11"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -2250,63 +2250,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rSA-eJ-ig6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="10242.028985507248" y="89.673913043478265"/>
-        </scene>
-        <!--Tour Guide View Controller-->
-        <scene sceneID="430-d4-GoK">
-            <objects>
-                <viewController storyboardIdentifier="tourGuidId" id="gvg-jw-f93" customClass="TourGuideViewController" customModule="QatarMuseums" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="eNn-hZ-8UW"/>
-                        <viewControllerLayoutGuide type="bottom" id="07X-0X-1Yb"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="4Vg-7A-FCX">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GcL-iI-otd" customClass="CommonHeaderView" customModule="QatarMuseums" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="20" width="414" height="65"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="65" id="Ora-qL-KgJ"/>
-                                </constraints>
-                            </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Bmh-2A-6GH">
-                                <rect key="frame" x="0.0" y="85" width="414" height="651"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="gvg-jw-f93" id="pZU-PL-oKh"/>
-                                    <outlet property="delegate" destination="gvg-jw-f93" id="obE-pp-tF3"/>
-                                </connections>
-                            </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="675-kB-eg9" customClass="LoadingView" customModule="QatarMuseums" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="85" width="414" height="651"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="GcL-iI-otd" firstAttribute="top" secondItem="eNn-hZ-8UW" secondAttribute="bottom" id="2Jz-MF-DGz"/>
-                            <constraint firstItem="675-kB-eg9" firstAttribute="top" secondItem="GcL-iI-otd" secondAttribute="bottom" id="2uT-cQ-B9c"/>
-                            <constraint firstItem="GcL-iI-otd" firstAttribute="leading" secondItem="4Vg-7A-FCX" secondAttribute="leading" id="9I6-OQ-ZCJ"/>
-                            <constraint firstItem="Bmh-2A-6GH" firstAttribute="leading" secondItem="4Vg-7A-FCX" secondAttribute="leading" id="LTB-jh-pg3"/>
-                            <constraint firstItem="07X-0X-1Yb" firstAttribute="top" secondItem="Bmh-2A-6GH" secondAttribute="bottom" id="Lpy-pF-lIW"/>
-                            <constraint firstItem="675-kB-eg9" firstAttribute="leading" secondItem="4Vg-7A-FCX" secondAttribute="leading" id="PuS-de-yxL"/>
-                            <constraint firstAttribute="trailing" secondItem="675-kB-eg9" secondAttribute="trailing" id="Tdd-rK-xdu"/>
-                            <constraint firstAttribute="bottom" secondItem="675-kB-eg9" secondAttribute="bottom" id="bJf-VP-baJ"/>
-                            <constraint firstItem="Bmh-2A-6GH" firstAttribute="top" secondItem="GcL-iI-otd" secondAttribute="bottom" id="jX3-mV-DMd"/>
-                            <constraint firstAttribute="trailing" secondItem="GcL-iI-otd" secondAttribute="trailing" id="lrs-cG-fs8"/>
-                            <constraint firstAttribute="trailing" secondItem="Bmh-2A-6GH" secondAttribute="trailing" id="wPm-hd-fcy"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="loadingView" destination="675-kB-eg9" id="qFU-OK-Dkl"/>
-                        <outlet property="topbarView" destination="GcL-iI-otd" id="u3e-ou-s7t"/>
-                        <outlet property="tourTableView" destination="Bmh-2A-6GH" id="meF-Rm-GCm"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QYS-cA-U77" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="10936" y="89"/>
         </scene>
         <!--Mia Tour Detail View Controller-->
         <scene sceneID="oX5-rD-Oiq">
