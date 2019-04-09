@@ -487,7 +487,8 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         self.present(publicDtlView, animated: false, completion: nil)
     }
     func loadCollectionDetail(currentRow: Int?) {
-        let collectionDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "collectionDetailId") as! CollectionDetailViewController
+        let collectionDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
+        collectionDetailView.pageNameString = NMoQPanelPage.CollectionDetail
         collectionDetailView.collectionName = collection[currentRow!].name?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         let transition = CATransition()
         transition.duration = 0.25
@@ -3637,9 +3638,9 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         }
     }
     func loadParkPlayGroundDetail(parkList: NMoQPark) {
-        let collectionDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "collectionDetailId") as! CollectionDetailViewController
+        let collectionDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
         // collectionDetailView.collectionName = parkList.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-        collectionDetailView.collectionPageNameString = CollectionPageName.PlayGroundPark
+        collectionDetailView.pageNameString = NMoQPanelPage.PlayGroundPark
         collectionDetailView.nid = parkList.nid
         let transition = CATransition()
         transition.duration = 0.25
