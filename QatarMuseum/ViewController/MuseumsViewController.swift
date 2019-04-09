@@ -142,8 +142,8 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             
             KingfisherManager.shared.retrieveImage(with: imageUrl!, options: [], progressBlock: nil, completionHandler: {  (image, error, cacheType, imageUrl) in
                 if let image = image {
+                    self.sliderImgArray[self.sliderImgCount!] = image
                     self.sliderImgCount = self.sliderImgCount!+1
-                    self.sliderImgArray[self.sliderImgCount!-1] = image
                     self.setSlideShow(imgArray: self.sliderImgArray)
                     self.museumsSlideView.start()
                 } else {
