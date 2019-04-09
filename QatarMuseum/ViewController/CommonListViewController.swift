@@ -3652,8 +3652,8 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     
     func loadParkHeritageGardenDetail(parkList: NMoQPark) {
-        let parksView =  self.storyboard?.instantiateViewController(withIdentifier: "parkViewId") as! ParksViewController
-        parksView.parkPageNameString = ParkPageName.NMoQPark
+        let parksView =  self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
+        parksView.pageNameString = PageName.NMoQPark
         parksView.parkDetailId = parkList.nid
         let transition = CATransition()
         transition.duration = 0.25
