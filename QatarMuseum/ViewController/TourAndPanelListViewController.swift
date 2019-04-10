@@ -201,9 +201,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         self.present(panelView, animated: false, completion: nil)
     }
     func loadTravelDetailPage(selectedIndex: Int) {
-        let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
-        
-        let museumAboutView = detailStoryboard.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
+        let museumAboutView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
         museumAboutView.pageNameString = PageName2.museumTravel
         museumAboutView.travelImage = travelList[selectedIndex].bannerLink
         museumAboutView.travelTitle = travelList[selectedIndex].title

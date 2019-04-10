@@ -178,7 +178,6 @@
 		B8D4C536210453FB0096912C /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D4C535210453FB0096912C /* FilterViewController.swift */; };
 		B8D713002250B463000ED7AA /* QatarMuseums.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B8D712FE2250B463000ED7AA /* QatarMuseums.xcdatamodeld */; };
 		B8D7BF452101A12E0085EF49 /* EducationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D7BF442101A12E0085EF49 /* EducationViewController.swift */; };
-		B8D827ED216239DC0092262A /* DetailPageStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8D827EC216239DC0092262A /* DetailPageStoryboard.storyboard */; };
 		B8DB500021B25D5B00C5DD10 /* PanelDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DB4FFF21B25D5B00C5DD10 /* PanelDetailCell.swift */; };
 		B8DB500221B25D9000C5DD10 /* PanelDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8DB500121B25D9000C5DD10 /* PanelDetailView.xib */; };
 		B8DB500621B2A36E00C5DD10 /* PanelDiscussionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DB500521B2A36E00C5DD10 /* PanelDiscussionDetailViewController.swift */; };
@@ -439,7 +438,6 @@
 		B8D712FF2250B463000ED7AA /* QatarMuseums.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QatarMuseums.xcdatamodel; sourceTree = "<group>"; };
 		B8D713012250B4AB000ED7AA /* QatarMuseums_V2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QatarMuseums_V2.xcdatamodel; sourceTree = "<group>"; };
 		B8D7BF442101A12E0085EF49 /* EducationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationViewController.swift; sourceTree = "<group>"; };
-		B8D827EC216239DC0092262A /* DetailPageStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailPageStoryboard.storyboard; sourceTree = "<group>"; };
 		B8DB4FFF21B25D5B00C5DD10 /* PanelDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelDetailCell.swift; sourceTree = "<group>"; };
 		B8DB500121B25D9000C5DD10 /* PanelDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PanelDetailView.xib; sourceTree = "<group>"; };
 		B8DB500521B2A36E00C5DD10 /* PanelDiscussionDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelDiscussionDetailViewController.swift; sourceTree = "<group>"; };
@@ -718,7 +716,6 @@
 				B811FBC82103406100960246 /* Localizable.strings */,
 				B8B79AC02189B75900370AAB /* CountryList.json */,
 				B806B7CC21247FB400F9F338 /* MapStyle.json */,
-				B8D827EC216239DC0092262A /* DetailPageStoryboard.storyboard */,
 				B807FCCE218EA8FD003CC51E /* CountryListArabic.json */,
 			);
 			path = QatarMuseum;
@@ -1378,7 +1375,6 @@
 				B8F00C8321787CF800320DF1 /* LoginPopupView.xib in Resources */,
 				B8AFA2F220E78E09008838A6 /* DINNextLTPro-Regular.ttf in Resources */,
 				B8B54D6C20FF514E00B21348 /* CollectionDetailView.xib in Resources */,
-				B8D827ED216239DC0092262A /* DetailPageStoryboard.storyboard in Resources */,
 				B80B76AC218AD6AC00190967 /* AcceptDeclinePopup.xib in Resources */,
 				B8CA08E42146D38400783642 /* ObjectPopupView.xib in Resources */,
 				B87F62E9225DD01B00ADCB1F /* DiningDetailCellView.xib in Resources */,

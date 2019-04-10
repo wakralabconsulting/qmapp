@@ -324,9 +324,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             let travelBanner = NSLocalizedString("TRAVEL_ARRANGEMENTS", comment: "TRAVEL_ARRANGEMENTS  in the Museum page")
             let panelBanner = NSLocalizedString("PANEL_DISCUSSION", comment: "PANEL_DISCUSSION  in the Museum page")
             if (selectedItem == aboutBanner) {
-                let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
-                
-                let heritageDtlView = detailStoryboard.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
+                let heritageDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
                 heritageDtlView.pageNameString = PageName2.museumEvent
                 heritageDtlView.museumId = bannerId
                 
@@ -369,8 +367,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             }
         } else {
             if ((selectedItem == "About") || (selectedItem == "عن")) {
-                let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
-                let heritageDtlView = detailStoryboard.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
+                let heritageDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
                 heritageDtlView.pageNameString = PageName2.museumAbout
                 heritageDtlView.museumId = museumId
                 let transition = CATransition()

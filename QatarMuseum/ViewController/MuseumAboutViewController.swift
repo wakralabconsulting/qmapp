@@ -290,9 +290,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
 //
 //    }
     func loadLocationMap(currentRow: Int, destination: MKMapItem) {
-        let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
-
-        let mapDetailView = detailStoryboard.instantiateViewController(withIdentifier: "mapViewId") as! MapViewController
+        let mapDetailView = self.storyboard?.instantiateViewController(withIdentifier: "mapViewId") as! MapViewController
        // mapDetailView.aboutData = aboutDetailtArray[0]
         mapDetailView.latitudeString = aboutDetailtArray[0].mobileLatitude
         mapDetailView.longiudeString = aboutDetailtArray[0].mobileLongtitude

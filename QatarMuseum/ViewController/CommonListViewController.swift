@@ -3598,10 +3598,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                                                              longitude: longitude!)
             let destinationPlacemark = MKPlacemark(coordinate: destinationLocation, addressDictionary: nil)
             let destination = MKMapItem(placemark: destinationPlacemark)
-            
-            let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
-            
-            let mapDetailView = detailStoryboard.instantiateViewController(withIdentifier: "mapViewId") as! MapViewController
+            let mapDetailView = self.storyboard?.instantiateViewController(withIdentifier: "mapViewId") as! MapViewController
             mapDetailView.latitudeString = mobileLatitude
             mapDetailView.longiudeString = mobileLongitude
             mapDetailView.destination = destination
