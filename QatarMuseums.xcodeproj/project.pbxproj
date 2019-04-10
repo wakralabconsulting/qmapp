@@ -111,7 +111,6 @@
 		B8294CF520CBF265002AFF72 /* FSCalendarStickyHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = B8294CE420CBF265002AFF72 /* FSCalendarStickyHeader.m */; };
 		B8294CF620CBF265002AFF72 /* FSCalendarHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B8294CE520CBF265002AFF72 /* FSCalendarHeaderView.m */; };
 		B8294CF720CBF265002AFF72 /* FSCalendarDelegationProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = B8294CE620CBF265002AFF72 /* FSCalendarDelegationProxy.m */; };
-		B82C87F220E69C9700777674 /* DiningDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82C87F120E69C9700777674 /* DiningDetailViewController.swift */; };
 		B82C87F620E69D4100777674 /* DiningDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82C87F520E69D4100777674 /* DiningDetailTableViewCell.swift */; };
 		B82E1B3321808229006623A6 /* LogoutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82E1B3221808229006623A6 /* LogoutData.swift */; };
 		B841715F224256D400B58E27 /* NMoQActivitiesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B841715E224256D300B58E27 /* NMoQActivitiesList.swift */; };
@@ -125,6 +124,7 @@
 		B85BA4AC20D01BC900E7F4D1 /* ExhibitionDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4AB20D01BC800E7F4D1 /* ExhibitionDetailTableViewCell.swift */; };
 		B85BA4B020D01D1C00E7F4D1 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4AF20D01D1C00E7F4D1 /* SplashViewController.swift */; };
 		B85BA4B720D03CE500E7F4D1 /* iOSDevCenters+GIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4B620D03CE500E7F4D1 /* iOSDevCenters+GIF.swift */; };
+		B87F62E9225DD01B00ADCB1F /* DiningDetailCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B87F62E8225DD01B00ADCB1F /* DiningDetailCellView.xib */; };
 		B88F07E8217DD5F600B16875 /* CulturePassCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88F07E7217DD5F600B16875 /* CulturePassCardViewController.swift */; };
 		B890F0BD2238C8C9009A874A /* panelAndTalks.png in Resources */ = {isa = PBXBuildFile; fileRef = B890F0BC2238C8C9009A874A /* panelAndTalks.png */; };
 		B897351321B81C3200BB812C /* NMoQTourDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B897351221B81C3200BB812C /* NMoQTourDetail.swift */; };
@@ -369,7 +369,6 @@
 		B8294CE420CBF265002AFF72 /* FSCalendarStickyHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarStickyHeader.m; sourceTree = "<group>"; };
 		B8294CE520CBF265002AFF72 /* FSCalendarHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarHeaderView.m; sourceTree = "<group>"; };
 		B8294CE620CBF265002AFF72 /* FSCalendarDelegationProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarDelegationProxy.m; sourceTree = "<group>"; };
-		B82C87F120E69C9700777674 /* DiningDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDetailViewController.swift; sourceTree = "<group>"; };
 		B82C87F520E69D4100777674 /* DiningDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDetailTableViewCell.swift; sourceTree = "<group>"; };
 		B82E1B3221808229006623A6 /* LogoutData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutData.swift; sourceTree = "<group>"; };
 		B841715E224256D300B58E27 /* NMoQActivitiesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQActivitiesList.swift; sourceTree = "<group>"; };
@@ -383,6 +382,7 @@
 		B85BA4AB20D01BC800E7F4D1 /* ExhibitionDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExhibitionDetailTableViewCell.swift; sourceTree = "<group>"; };
 		B85BA4AF20D01D1C00E7F4D1 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		B85BA4B620D03CE500E7F4D1 /* iOSDevCenters+GIF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "iOSDevCenters+GIF.swift"; sourceTree = "<group>"; };
+		B87F62E8225DD01B00ADCB1F /* DiningDetailCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiningDetailCellView.xib; sourceTree = "<group>"; };
 		B88F07E7217DD5F600B16875 /* CulturePassCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturePassCardViewController.swift; sourceTree = "<group>"; };
 		B890F0BC2238C8C9009A874A /* panelAndTalks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = panelAndTalks.png; sourceTree = "<group>"; };
 		B897351221B81C3200BB812C /* NMoQTourDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQTourDetail.swift; sourceTree = "<group>"; };
@@ -754,7 +754,6 @@
 				B85BA4AF20D01D1C00E7F4D1 /* SplashViewController.swift */,
 				B8CAA93E20DC186E009A936D /* HeritageDetailViewController.swift */,
 				B8B81FE220DE2C8A004885D0 /* MuseumsViewController.swift */,
-				B82C87F120E69C9700777674 /* DiningDetailViewController.swift */,
 				B8C64C9B20FE380D00D7CD63 /* MiaTourDetailViewController.swift */,
 				B8B7604B2100E7FC00CEE280 /* NotificationsViewController.swift */,
 				B8D7BF442101A12E0085EF49 /* EducationViewController.swift */,
@@ -968,6 +967,7 @@
 			isa = PBXGroup;
 			children = (
 				B82C87F520E69D4100777674 /* DiningDetailTableViewCell.swift */,
+				B87F62E8225DD01B00ADCB1F /* DiningDetailCellView.xib */,
 			);
 			path = DiningDetailCell;
 			sourceTree = "<group>";
@@ -1381,6 +1381,7 @@
 				B8D827ED216239DC0092262A /* DetailPageStoryboard.storyboard in Resources */,
 				B80B76AC218AD6AC00190967 /* AcceptDeclinePopup.xib in Resources */,
 				B8CA08E42146D38400783642 /* ObjectPopupView.xib in Resources */,
+				B87F62E9225DD01B00ADCB1F /* DiningDetailCellView.xib in Resources */,
 				1B3C505C212AB3460034E560 /* ArtifactNumberPadCell.xib in Resources */,
 				B890F0BD2238C8C9009A874A /* panelAndTalks.png in Resources */,
 				B8F6B03F225CAA7D000EF764 /* HeritageDetailView.xib in Resources */,
@@ -1599,7 +1600,6 @@
 				B84BA062217F1A6300FD2C0D /* LoginData.swift in Sources */,
 				B80DFF332251F6D6004E8EA6 /* CoreDataMigrationStep.swift in Sources */,
 				B8D4B8D72114465100937180 /* Heritage.swift in Sources */,
-				B82C87F220E69C9700777674 /* DiningDetailViewController.swift in Sources */,
 				1BAA2FCD2125FD8200D785DD /* ObjectImageView.swift in Sources */,
 				B8B7604C2100E7FC00CEE280 /* NotificationsViewController.swift in Sources */,
 				B8FEC77C2112E57100648F66 /* Dining.swift in Sources */,

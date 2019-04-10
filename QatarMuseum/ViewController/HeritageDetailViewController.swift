@@ -18,6 +18,7 @@ enum PageName{
     case exhibitionDetail
     case SideMenuPark
     case NMoQPark
+    case DiningDetail
 }
 class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,LoadingViewProtocol, iCarouselDelegate,iCarouselDataSource,MFMailComposeViewControllerDelegate {
     @IBOutlet weak var heritageDetailTableView: UITableView!
@@ -32,6 +33,8 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     var exhibition: [Exhibition] = []
     var parksListArray: [ParksList]! = []
     var nmoqParkDetailArray: [NMoQParkDetail]! = []
+    var diningDetailtArray: [Dining] = []
+    var diningDetailId : String? = nil
     var heritageDetailId : String? = nil
     var publicArtsDetailId : String? = nil
     let networkReachability = NetworkReachabilityManager()
@@ -80,6 +83,12 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 self.showNoNetwork()
                 addCloseButton()
             }
+        } else if (pageNameString == PageName.DiningDetail) {
+            if  (networkReachability?.isReachable)! {
+                getDiningDetailsFromServer()
+            } else {
+                self.fetchDiningDetailsFromCoredata()
+            }
         }
         recordScreenView()
     }
@@ -95,6 +104,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         self.heritageDetailTableView.register(UINib(nibName: "ExhibitionDetailView", bundle: nil), forCellReuseIdentifier: "exhibitionDetailCellId")
         self.heritageDetailTableView.register(UINib(nibName: "ParkTableCellXib", bundle: nil), forCellReuseIdentifier: "parkCellId")
         self.heritageDetailTableView.register(UINib(nibName: "CollectionDetailView", bundle: nil), forCellReuseIdentifier: "collectionCellId")
+        self.heritageDetailTableView.register(UINib(nibName: "DiningDetailCellView", bundle: nil), forCellReuseIdentifier: "diningDetailCellId")
     }
     func setTopBarImage() {
         heritageDetailTableView.estimatedRowHeight = 50
@@ -193,6 +203,22 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             else {
                 imageView.image = nil
             }
+        } else if (pageNameString == PageName.DiningDetail){
+            if diningDetailtArray.count != 0 {
+                if let imageUrl = diningDetailtArray[0].image{
+                    imageView.kf.setImage(with: URL(string: imageUrl))
+                } else if ( (self.diningDetailtArray[0].images?.count)! > 0) {
+                    if let imageUrl = diningDetailtArray[0].images?[0]{
+                        imageView.kf.setImage(with: URL(string: imageUrl))
+                    }
+                    else {
+                        imageView.image = UIImage(named: "default_imageX2")
+                    }
+                }
+            }
+            else {
+                imageView.image = nil
+            }
         }
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -245,6 +271,8 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             return parksListArray.count
         } else if (pageNameString == PageName.NMoQPark) {
             return nmoqParkDetailArray.count
+        } else if (pageNameString == PageName.DiningDetail) {
+            return diningDetailtArray.count
         }
         return 1
     }
@@ -336,6 +364,28 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             parkCell.imageViewHeight.constant = 0
             parkCell.setNmoqParkDetailValues(parkDetails: nmoqParkDetailArray[indexPath.row])
             return parkCell
+        } else if(pageNameString == PageName.DiningDetail){
+            let diningCell = tableView.dequeueReusableCell(withIdentifier: "diningDetailCellId", for: indexPath) as! DiningDetailTableViewCell
+            diningCell.titleLineView.isHidden = true
+            diningCell.setDiningDetailValues(diningDetail: diningDetailtArray[indexPath.row])
+            if (isImgArrayAvailable()) {
+                diningCell.pageControl.isHidden = false
+            } else {
+                diningCell.pageControl.isHidden = true
+            }
+            diningCell.locationButtonAction = {
+                ()in
+                self.loadLocationInMap(currentRow: indexPath.row)
+            }
+            diningCell.favBtnTapAction = {
+                () in
+                self.setFavouritesAction(cellObj: diningCell)
+            }
+            diningCell.shareBtnTapAction = {
+                () in
+                self.setShareAction(cellObj: diningCell)
+            }
+            return diningCell
         }
         return heritageCell
     }
@@ -389,9 +439,12 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 longitudeString = exhibition[currentRow].longitude!
             } else if ( pageNameString == PageName.SideMenuPark) {
                // showLocationErrorPopup()
+            } else if (( pageNameString == PageName.DiningDetail) && (diningDetailtArray[currentRow].latitude != nil) && (diningDetailtArray[currentRow].longitude != nil)) {
+                latitudeString = diningDetailtArray[currentRow].latitude!
+                longitudeString = diningDetailtArray[currentRow].longitude!
         }
         if latitudeString != nil && longitudeString != nil && latitudeString != "" && longitudeString != ""{
-            if (pageNameString == PageName.publicArtsDetail)  {
+            if ((pageNameString == PageName.publicArtsDetail) || (pageNameString == PageName.DiningDetail))  {
                 if let lat : Double = Double(latitudeString) {
                     latitude = lat
                 }
@@ -472,6 +525,8 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             return (self.heritageDetailtArray[0].images?.count)!
         } else if (isPublicArtImgArrayAvailable()) {
             return (self.publicArtsDetailtArray[0].images?.count)!
+        } else if(isImgArrayAvailable()) {
+            return (self.diningDetailtArray[0].images?.count)!
         }
         return 0
     }
@@ -485,6 +540,8 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             carouselImg = self.heritageDetailtArray[0].images
         } else if (pageNameString == PageName.publicArtsDetail) {
             carouselImg = self.publicArtsDetailtArray[0].images
+        } else if (pageNameString == PageName.DiningDetail) {
+            carouselImg = self.diningDetailtArray[0].images
         }
         if (carouselImg != nil) {
             let imageUrl = carouselImg?[index]
@@ -532,7 +589,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     
     @objc func imgButtonPressed() {
         if((imageView.image != nil) && (imageView.image != UIImage(named: "default_imageX2"))) {
-            if (isHeritageImgArrayAvailable() || isPublicArtImgArrayAvailable()) {
+            if (isHeritageImgArrayAvailable() || isPublicArtImgArrayAvailable() || isImgArrayAvailable()) {
                 setiCarouselView()
             }
         }
@@ -1812,8 +1869,300 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             }
         }
     }
+    //MARK: Dining WebServiceCall
+    func getDiningDetailsFromServer() {
+        _ = Alamofire.request(QatarMuseumRouter.GetDiningDetail(["nid": diningDetailId!])).responseObject { (response: DataResponse<Dinings>) -> Void in
+            switch response.result {
+            case .success(let data):
+                self.diningDetailtArray = data.dinings!
+                self.setTopBarImage()
+                self.saveOrUpdateDiningDetailCoredata()
+                self.heritageDetailTableView.reloadData()
+                self.loadingView.stopLoading()
+                self.loadingView.isHidden = true
+                if (self.diningDetailtArray.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
+            case .failure( _):
+                var errorMessage: String
+                errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+                                                                comment: "Setting the content of the alert"))
+                self.loadingView.stopLoading()
+                self.loadingView.noDataView.isHidden = false
+                self.loadingView.isHidden = false
+                self.loadingView.showNoDataView()
+                self.loadingView.noDataLabel.text = errorMessage
+            }
+        }
+    }
+    //MARK: Dining Coredata Method
+    func saveOrUpdateDiningDetailCoredata() {
+        if (diningDetailtArray.count > 0) {
+            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
+            if #available(iOS 10.0, *) {
+                let container = appDelegate!.persistentContainer
+                container.performBackgroundTask() {(managedContext) in
+                    self.diningCoreDataInBackgroundThread(managedContext: managedContext)
+                }
+            } else {
+                let managedContext = appDelegate!.managedObjectContext
+                managedContext.perform {
+                    self.diningCoreDataInBackgroundThread(managedContext : managedContext)
+                }
+            }
+        }
+    }
+    func diningCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "DiningEntity", idKey: "id", idValue: diningDetailtArray[0].id, managedContext: managedContext) as! [DiningEntity]
+            if (fetchData.count > 0) {
+                let diningDetailDict = diningDetailtArray[0]
+                
+                //update
+                let diningdbDict = fetchData[0] as! DiningEntity
+                diningdbDict.name = diningDetailDict.name
+                diningdbDict.image = diningDetailDict.image
+                diningdbDict.diningdescription = diningDetailDict.description
+                diningdbDict.closetime = diningDetailDict.closetime
+                diningdbDict.openingtime =  diningDetailDict.openingtime
+                diningdbDict.sortid =  diningDetailDict.sortid
+                diningdbDict.location =  diningDetailDict.location
+                if((diningDetailDict.images?.count)! > 0) {
+                    for i in 0 ... (diningDetailDict.images?.count)!-1 {
+                        var diningImagesEntity: DiningImagesEntity!
+                        let diningImage: DiningImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "DiningImagesEntity", into: managedContext) as! DiningImagesEntity
+                        diningImage.images = diningDetailDict.images![i]
+                        
+                        diningImagesEntity = diningImage
+                        diningdbDict.addToImagesRelation(diningImagesEntity)
+                        do {
+                            try managedContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                        
+                    }
+                }
+                do{
+                    try managedContext.save()
+                }
+                catch{
+                    print(error)
+                }
+            } else {
+                let diningListDict : Dining?
+                diningListDict = diningDetailtArray[0]
+                self.saveDiningDetailToCoreData(diningDetailDict: diningListDict!, managedObjContext: managedContext)
+            }
+        } else {
+            let fetchData = checkAddedToCoredata(entityName: "DiningEntityArabic", idKey: "id", idValue: diningDetailtArray[0].id, managedContext: managedContext) as! [DiningEntityArabic]
+            if (fetchData.count > 0) {
+                let diningDetailDict = diningDetailtArray[0]
+                
+                //update
+                let diningdbDict = fetchData[0]
+                diningdbDict.namearabic = diningDetailDict.name
+                diningdbDict.imagearabic = diningDetailDict.image
+                diningdbDict.sortidarabic =  diningDetailDict.sortid
+                diningdbDict.descriptionarabic = diningDetailDict.description
+                diningdbDict.closetimearabic = diningDetailDict.closetime
+                diningdbDict.openingtimearabic =  diningDetailDict.openingtime
+                diningdbDict.locationarabic =  diningDetailDict.location
+                if((diningDetailDict.images?.count)! > 0) {
+                    for i in 0 ... (diningDetailDict.images?.count)!-1 {
+                        var diningImagesEntity: DiningImagesEntityAr!
+                        let diningImage: DiningImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "DiningImagesEntityAr", into: managedContext) as! DiningImagesEntityAr
+                        diningImage.images = diningDetailDict.images![i]
+                        
+                        diningImagesEntity = diningImage
+                        diningdbDict.addToImagesRelation(diningImagesEntity)
+                        do {
+                            try managedContext.save()
+                        } catch let error as NSError {
+                            print("Could not save. \(error), \(error.userInfo)")
+                        }
+                        
+                    }
+                }
+                do{
+                    try managedContext.save()
+                }
+                catch{
+                    print(error)
+                }
+            } else {
+                let diningListDict : Dining?
+                diningListDict = diningDetailtArray[0]
+                self.saveDiningDetailToCoreData(diningDetailDict: diningListDict!, managedObjContext: managedContext)
+            }
+        }
+    }
+    func saveDiningDetailToCoreData(diningDetailDict: Dining, managedObjContext: NSManagedObjectContext) {
+        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+            let diningInfo: DiningEntity = NSEntityDescription.insertNewObject(forEntityName: "DiningEntity", into: managedObjContext) as! DiningEntity
+            diningInfo.id = diningDetailDict.id
+            diningInfo.name = diningDetailDict.name
+            diningInfo.image = diningDetailDict.image
+            diningInfo.diningdescription = diningDetailDict.description
+            diningInfo.closetime = diningDetailDict.closetime
+            diningInfo.openingtime =  diningDetailDict.openingtime
+            diningInfo.location =  diningDetailDict.location
+            if((diningDetailDict.images?.count)! > 0) {
+                for i in 0 ... (diningDetailDict.images?.count)!-1 {
+                    var diningImagesEntity: DiningImagesEntity!
+                    let diningImage: DiningImagesEntity = NSEntityDescription.insertNewObject(forEntityName: "DiningImagesEntity", into: managedObjContext) as! DiningImagesEntity
+                    diningImage.images = diningDetailDict.images![i]
+                    
+                    diningImagesEntity = diningImage
+                    diningInfo.addToImagesRelation(diningImagesEntity)
+                    do {
+                        try managedObjContext.save()
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                    
+                }
+            }
+            if(diningDetailDict.sortid != nil) {
+                diningInfo.sortid = diningDetailDict.sortid
+            }
+        } else {
+            let diningInfo: DiningEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "DiningEntityArabic", into: managedObjContext) as! DiningEntityArabic
+            diningInfo.locationarabic = diningDetailDict.id
+            diningInfo.namearabic = diningDetailDict.name
+            
+            diningInfo.imagearabic = diningDetailDict.image
+            diningInfo.descriptionarabic = diningDetailDict.description
+            diningInfo.closetimearabic = diningDetailDict.closetime
+            diningInfo.openingtimearabic =  diningDetailDict.openingtime
+            diningInfo.locationarabic =  diningDetailDict.location
+            if((diningDetailDict.images?.count)! > 0) {
+                for i in 0 ... (diningDetailDict.images?.count)!-1 {
+                    var diningImagesEntity: DiningImagesEntityAr!
+                    let diningImage: DiningImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "DiningImagesEntityAr", into: managedObjContext) as! DiningImagesEntityAr
+                    diningImage.images = diningDetailDict.images![i]
+                    
+                    diningImagesEntity = diningImage
+                    diningInfo.addToImagesRelation(diningImagesEntity)
+                    do {
+                        try managedObjContext.save()
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                }
+            }
+            if(diningDetailDict.sortid != nil) {
+                diningInfo.sortidarabic = diningDetailDict.sortid
+            }
+        }
+        do {
+            try managedObjContext.save()
+            
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    func fetchDiningDetailsFromCoredata() {
+        let managedContext = getContext()
+        do {
+            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                var diningArray = [DiningEntity]()
+                let diningFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "DiningEntity")
+                if(diningDetailId != nil) {
+                    diningFetchRequest.predicate = NSPredicate.init(format: "id == \(diningDetailId!)")
+                }
+                diningArray = (try managedContext.fetch(diningFetchRequest) as? [DiningEntity])!
+                let diningDict = diningArray[0]
+                if ((diningArray.count > 0) && (diningDict.diningdescription != nil)) {
+                    var imagesArray : [String] = []
+                    let diningImagesArray = (diningDict.imagesRelation?.allObjects) as! [DiningImagesEntity]
+                    if(diningImagesArray.count > 0) {
+                        for i in 0 ... diningImagesArray.count-1 {
+                            imagesArray.append(diningImagesArray[i].images!)
+                        }
+                    }
+                    self.diningDetailtArray.insert(Dining(id: diningDict.id, name: diningDict.name, location: diningDict.location, description: diningDict.diningdescription, image: diningDict.image, openingtime: diningDict.openingtime, closetime: diningDict.closetime, sortid: diningDict.sortid, museumId: nil, images: imagesArray), at: 0)
+                    if(diningDetailtArray.count == 0){
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
+                    }
+                    self.setTopBarImage()
+                    heritageDetailTableView.reloadData()
+                } else {
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
+                }
+            }
+            else {
+                var diningArray = [DiningEntityArabic]()
+                let diningFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "DiningEntityArabic")
+                if(diningDetailId != nil) {
+                    diningFetchRequest.predicate = NSPredicate.init(format: "id == \(diningDetailId!)")
+                }
+                diningArray = (try managedContext.fetch(diningFetchRequest) as? [DiningEntityArabic])!
+                let diningDict = diningArray[0]
+                if ((diningArray.count > 0) && (diningDict.descriptionarabic != nil)) {var imagesArray : [String] = []
+                    let diningImagesArray = (diningDict.imagesRelation?.allObjects) as! [DiningImagesEntityAr]
+                    if(diningImagesArray.count > 0) {
+                        for i in 0 ... diningImagesArray.count-1 {
+                            imagesArray.append(diningImagesArray[i].images!)
+                        }
+                    }
+                    self.diningDetailtArray.insert(Dining(id: diningDict.id, name: diningDict.namearabic, location: diningDict.locationarabic, description: diningDict.descriptionarabic, image: diningDict.imagearabic, openingtime: diningDict.openingtimearabic, closetime: diningDict.closetimearabic, sortid: diningDict.sortidarabic, museumId:nil, images: imagesArray), at: 0)
+                    
+                    if(diningDetailtArray.count == 0){
+                        if(self.networkReachability?.isReachable == false) {
+                            self.showNoNetwork()
+                        } else {
+                            self.loadingView.showNoDataView()
+                        }
+                    }
+                    self.setTopBarImage()
+                    heritageDetailTableView.reloadData()
+                } else {
+                    if(self.networkReachability?.isReachable == false) {
+                        self.showNoNetwork()
+                    } else {
+                        self.loadingView.showNoDataView()
+                    }
+                }
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    func setFavouritesAction(cellObj :DiningDetailTableViewCell) {
+        if (cellObj.favoriteButton.tag == 0) {
+            cellObj.favoriteButton.tag = 1
+            cellObj.favoriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
+        } else {
+            cellObj.favoriteButton.tag = 0
+            cellObj.favoriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)
+        }
+    }
     
-
+    func setShareAction(cellObj :DiningDetailTableViewCell) {
+        
+    }
+    func isImgArrayAvailable() -> Bool {
+        if(self.diningDetailtArray.count != 0) {
+            if(self.diningDetailtArray[0].images != nil) {
+                if((self.diningDetailtArray[0].images?.count)! > 0) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
     func checkAddedToCoredata(entityName: String?,idKey:String?, idValue: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
         var fetchResults : [NSManagedObject] = []
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
@@ -1860,6 +2209,8 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 appDelegate?.getParksDataFromServer(lang: LocalizationLanguage.currentAppleLanguage())
             } else if (pageNameString == PageName.NMoQPark) {
                 getNMoQParkDetailFromServer()
+            } else if (pageNameString == PageName.DiningDetail) {
+                self.getDiningDetailsFromServer()
             }
         }
     }
@@ -1879,6 +2230,8 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             Analytics.setScreenName(PARKS_VC, screenClass: screenClass)
         } else if (pageNameString == PageName.NMoQPark) {
             Analytics.setScreenName(NMOQ_PARKS_DETAIL, screenClass: screenClass)
+        }else if (pageNameString == PageName.DiningDetail) {
+            Analytics.setScreenName(DINING_DETAIL, screenClass: screenClass)
         }else {
             Analytics.setScreenName(HERITAGE_DETAIL, screenClass: screenClass)
         }

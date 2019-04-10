@@ -527,8 +527,9 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         self.present(exhibitionDtlView, animated: false, completion: nil)
     }
     func loadDiningDetailAnimation(idValue: String) {
-        let diningDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "diningDetailId") as! DiningDetailViewController
+        let diningDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
         diningDetailView.diningDetailId = idValue
+        diningDetailView.pageNameString = PageName.DiningDetail
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionFade
