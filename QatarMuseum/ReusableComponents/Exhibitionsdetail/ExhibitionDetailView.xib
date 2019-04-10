@@ -168,7 +168,7 @@
                                             <constraint firstAttribute="height" constant="3" id="Wba-CG-Gj5"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="info@mia.org.qa" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qji-Zh-typ">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="info@mia.org.qa" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qji-Zh-typ" customClass="UnderlinedLabel" customModule="QatarMuseums" customModuleProvider="target">
                                         <rect key="frame" x="138.5" y="256.66666666666663" width="107" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="0WT-bR-BvL"/>
@@ -311,7 +311,7 @@
             <connections>
                 <outlet property="centerImageView" destination="ntv-ZJ-fOc" id="mMi-Cy-CCs"/>
                 <outlet property="centerImgHeight" destination="fEX-3t-oSF" id="jNt-qm-akp"/>
-                <outlet property="contactDescriptionLabel" destination="Qji-Zh-typ" id="2da-Or-JCU"/>
+                <outlet property="contactDescriptionLabel" destination="Qji-Zh-typ" id="E4P-hr-uHz"/>
                 <outlet property="contactTitle" destination="QYn-In-nTt" id="9c6-f4-DYB"/>
                 <outlet property="descriptionLabel" destination="yvd-3v-sdM" id="2r0-DD-9gv"/>
                 <outlet property="detailSecondLabel" destination="2M8-X3-qZN" id="HFB-Ek-BGI"/>

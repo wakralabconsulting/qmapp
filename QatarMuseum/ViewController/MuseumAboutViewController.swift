@@ -189,6 +189,16 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             } else {
                 heritageCell.pageControl.isHidden = true
             }
+            heritageCell.downloadBtnTapAction = {
+                () in
+                self.downloadButtonAction()
+            }
+            heritageCell.loadEmailComposer = {
+                self.openEmail(email:self.aboutDetailtArray[indexPath.row].contactEmail ?? "nmoq@qm.org.qa")
+            }
+            heritageCell.callPhone = {
+                self.dialNumber(number: self.aboutDetailtArray[indexPath.row].contactNumber ?? "+974 4402 8202")
+            }
         } else if(pageNameString == PageName2.museumEvent){
             heritageCell.videoOuterView.isHidden = true
             heritageCell.videoOuterViewHeight.constant = 0
