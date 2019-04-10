@@ -9,7 +9,9 @@
 import Alamofire
 import CoreData
 import Firebase
+import MessageUI
 import UIKit
+
 enum PageName{
     case heritageDetail
     case publicArtsDetail
@@ -17,7 +19,7 @@ enum PageName{
     case SideMenuPark
     case NMoQPark
 }
-class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,LoadingViewProtocol, iCarouselDelegate,iCarouselDataSource {
+class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,LoadingViewProtocol, iCarouselDelegate,iCarouselDataSource,MFMailComposeViewControllerDelegate {
     @IBOutlet weak var heritageDetailTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
     
@@ -299,6 +301,9 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
             cell.locationButtonAction = {
                 () in
                 self.loadLocationInMap(currentRow: indexPath.row)
+            }
+            cell.loadEmailComposer = {
+                self.openEmail(email:"nmoq@qm.org.qa")
             }
             return cell
         } else if(pageNameString == PageName.SideMenuPark){
@@ -1889,6 +1894,42 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (parksListArray.count == 0)){
             self.fetchParksFromCoredata()
         }
+    }
+    // MARK: MFMailComposeViewControllerDelegate Method
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    func openEmail(email : String) {
+        let mailComposeViewController = configuredMailComposeViewController(emailId:email)
+        if MFMailComposeViewController.canSendMail() {
+            self.present(mailComposeViewController, animated: true, completion: nil)
+        } else {
+            self.showSendMailErrorAlert()
+        }
+    }
+    func configuredMailComposeViewController(emailId:String) -> MFMailComposeViewController {
+        let mailComposerVC = MFMailComposeViewController()
+        mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
+        
+        mailComposerVC.setToRecipients([emailId])
+        mailComposerVC.setSubject("NMOQ Event:")
+        mailComposerVC.setMessageBody("Greetings, Thanks for contacting NMOQ event support team", isHTML: false)
+        
+        return mailComposerVC
+    }
+    
+    func showSendMailErrorAlert() {
+        
+        let sendMailErrorAlert = UIAlertController(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", preferredStyle: UIAlertControllerStyle.alert)
+        
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default)
+        {
+            (result : UIAlertAction) -> Void in
+            print("You pressed OK")
+        }
+        sendMailErrorAlert.addAction(okAction)
+        self.present(sendMailErrorAlert, animated: true, completion: nil)
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
