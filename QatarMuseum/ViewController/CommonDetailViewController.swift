@@ -1,5 +1,5 @@
 //
-//  HeritageDetailViewController.swift
+//  CommonDetailViewController.swift
 //  QatarMuseums
 //
 //  Created by Exalture on 21/06/18.
@@ -20,7 +20,7 @@ enum PageName{
     case NMoQPark
     case DiningDetail
 }
-class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,LoadingViewProtocol, iCarouselDelegate,iCarouselDataSource,MFMailComposeViewControllerDelegate {
+class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,LoadingViewProtocol, iCarouselDelegate,iCarouselDataSource,MFMailComposeViewControllerDelegate {
     @IBOutlet weak var heritageDetailTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
     
@@ -72,8 +72,8 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 }
             }
         } else if (pageNameString == PageName.SideMenuPark) {
-            NotificationCenter.default.addObserver(self, selector: #selector(HeritageDetailViewController.receiveParksNotificationEn(notification:)), name: NSNotification.Name(parksNotificationEn), object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(HeritageDetailViewController.receiveParksNotificationAr(notification:)), name: NSNotification.Name(parksNotificationAr), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(CommonDetailViewController.receiveParksNotificationEn(notification:)), name: NSNotification.Name(parksNotificationEn), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(CommonDetailViewController.receiveParksNotificationAr(notification:)), name: NSNotification.Name(parksNotificationAr), object: nil)
             self.fetchParksFromCoredata()
         } else if (pageNameString == PageName.NMoQPark) {
             if  (networkReachability?.isReachable)! {

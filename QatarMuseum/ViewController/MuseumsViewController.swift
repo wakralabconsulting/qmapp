@@ -425,7 +425,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                     view.window!.layer.add(transition, forKey: kCATransition)
                     self.present(parkView, animated: false, completion: nil)
                 } else {
-                    let parkView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
+                    let parkView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! CommonDetailViewController
                     parkView.pageNameString = PageName.SideMenuPark
                     let transition = CATransition()
                     transition.duration = 0.3

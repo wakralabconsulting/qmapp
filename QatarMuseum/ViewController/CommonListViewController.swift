@@ -476,7 +476,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     func loadExhibitionCellPages(cellObj: CommonListCell, selectedIndex: Int) {
     }
     func loadPublicArtsDetail(idValue: String) {
-        let publicDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
+        let publicDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! CommonDetailViewController
         publicDtlView.pageNameString = PageName.publicArtsDetail
         publicDtlView.publicArtsDetailId = idValue
         let transition = CATransition()
@@ -504,7 +504,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         self.view.addSubview(popupView)
     }
     func loadHeritageDetail(heritageListId: String) {
-        let heritageDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
+        let heritageDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! CommonDetailViewController
         heritageDtlView.pageNameString = PageName.heritageDetail
         heritageDtlView.heritageDetailId = heritageListId
         let transition = CATransition()
@@ -515,7 +515,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         self.present(heritageDtlView, animated: false, completion: nil)
     }
     func loadExhibitionDetailAnimation(exhibitionId: String) {
-        let exhibitionDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
+        let exhibitionDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! CommonDetailViewController
         exhibitionDtlView.pageNameString = PageName.exhibitionDetail
             exhibitionDtlView.fromHome = true
             exhibitionDtlView.exhibitionId = exhibitionId
@@ -527,7 +527,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         self.present(exhibitionDtlView, animated: false, completion: nil)
     }
     func loadDiningDetailAnimation(idValue: String) {
-        let diningDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
+        let diningDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! CommonDetailViewController
         diningDetailView.diningDetailId = idValue
         diningDetailView.pageNameString = PageName.DiningDetail
         let transition = CATransition()
@@ -3653,7 +3653,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     
     func loadParkHeritageGardenDetail(parkList: NMoQPark) {
-        let parksView =  self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
+        let parksView =  self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! CommonDetailViewController
         parksView.pageNameString = PageName.NMoQPark
         parksView.parkDetailId = parkList.nid
         let transition = CATransition()
