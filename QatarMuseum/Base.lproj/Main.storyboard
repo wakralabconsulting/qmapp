@@ -305,6 +305,8 @@
                         <outlet property="restaurantButton" destination="aO8-gX-hKy" id="CiC-xB-eKY"/>
                         <outlet property="topbarView" destination="NkB-Zv-8hj" id="AWd-pE-BvL"/>
                         <outlet property="visualEffectView" destination="uSs-hx-cNf" id="cCa-Jz-Kf8"/>
+                        <segue destination="QCk-26-GoW" kind="show" identifier="homeToCommonListSegue" id="LRh-Cg-Npm"/>
+                        <segue destination="3LW-jw-kpW" kind="custom" identifier="homeToMuseumLandingSegue" id="P3c-zU-rDY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

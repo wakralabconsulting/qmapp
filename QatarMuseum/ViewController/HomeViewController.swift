@@ -269,18 +269,20 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(museumsView, animated: false, completion: nil)
+       // self.performSegue(withIdentifier: "homeToMuseumLandingSegue", sender: self)
         
     }
     
     func loadExhibitionPage() {
-        let exhibitionView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
-        let transition = CATransition()
-        transition.duration = 0.25
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromRight
-        view.window!.layer.add(transition, forKey: kCATransition)
-        exhibitionView.exhibitionsPageNameString = ExhbitionPageName.homeExhibition
-        self.present(exhibitionView, animated: false, completion: nil)
+//        let exhibitionView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+//        let transition = CATransition()
+//        transition.duration = 0.25
+//        transition.type = kCATransitionPush
+//        transition.subtype = kCATransitionFromRight
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        exhibitionView.exhibitionsPageNameString = ExhbitionPageName.homeExhibition
+//        self.present(exhibitionView, animated: false, completion: nil)
+        self.performSegue(withIdentifier: "homeToCommonListSegue", sender: self)
     }
     
     func loadComingSoonPopup() {
@@ -1325,5 +1327,21 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let screenClass = String(describing: type(of: self))
         Analytics.setScreenName(HOME, screenClass: screenClass)
     }
-
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "homeToCommonListSegue") {
+            let commonList = segue.destination as! CommonListViewController
+            commonList.modalPresentationStyle = .popover
+            commonList.exhibitionsPageNameString = ExhbitionPageName.homeExhibition
+        } else if (segue.identifier == "homeToMuseumLandingSegue") {
+            //let museumsView = segue.destination as! MuseumsViewController
+//            museumsView.museumId = homeList[curretRow!].id
+//            museumsView.museumTitleString = homeList[curretRow!].name
+//            museumsView.fromHomeBanner = false
+        }
+        
+        
+    }
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
+    }
 }
