@@ -125,6 +125,7 @@
 		B85BA4B020D01D1C00E7F4D1 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4AF20D01D1C00E7F4D1 /* SplashViewController.swift */; };
 		B85BA4B720D03CE500E7F4D1 /* iOSDevCenters+GIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85BA4B620D03CE500E7F4D1 /* iOSDevCenters+GIF.swift */; };
 		B87F62E9225DD01B00ADCB1F /* DiningDetailCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B87F62E8225DD01B00ADCB1F /* DiningDetailCellView.xib */; };
+		B87F62EB225E2E6100ADCB1F /* Migration2to3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = B87F62EA225E2E6100ADCB1F /* Migration2to3.xcmappingmodel */; };
 		B88F07E8217DD5F600B16875 /* CulturePassCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88F07E7217DD5F600B16875 /* CulturePassCardViewController.swift */; };
 		B890F0BD2238C8C9009A874A /* panelAndTalks.png in Resources */ = {isa = PBXBuildFile; fileRef = B890F0BC2238C8C9009A874A /* panelAndTalks.png */; };
 		B897351321B81C3200BB812C /* NMoQTourDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B897351221B81C3200BB812C /* NMoQTourDetail.swift */; };
@@ -383,6 +384,7 @@
 		B85BA4AF20D01D1C00E7F4D1 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		B85BA4B620D03CE500E7F4D1 /* iOSDevCenters+GIF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "iOSDevCenters+GIF.swift"; sourceTree = "<group>"; };
 		B87F62E8225DD01B00ADCB1F /* DiningDetailCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiningDetailCellView.xib; sourceTree = "<group>"; };
+		B87F62EA225E2E6100ADCB1F /* Migration2to3.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Migration2to3.xcmappingmodel; sourceTree = "<group>"; };
 		B88F07E7217DD5F600B16875 /* CulturePassCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturePassCardViewController.swift; sourceTree = "<group>"; };
 		B890F0BC2238C8C9009A874A /* panelAndTalks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = panelAndTalks.png; sourceTree = "<group>"; };
 		B897351221B81C3200BB812C /* NMoQTourDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMoQTourDetail.swift; sourceTree = "<group>"; };
@@ -837,6 +839,7 @@
 				B80DFF342251F6ED004E8EA6 /* CoreDataVersion.swift */,
 				B80DFF362251F70C004E8EA6 /* CoreDataMigrator.swift */,
 				B80DFF382251F882004E8EA6 /* MIgration1.xcmappingmodel */,
+				B87F62EA225E2E6100ADCB1F /* Migration2to3.xcmappingmodel */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -1592,6 +1595,7 @@
 				B82729B321778B2F0017EC71 /* VersaPlayerExtension.swift in Sources */,
 				B8C64D4D20FDDBB700C2D51A /* MiaCollectionReusableView.swift in Sources */,
 				B8ADA8AB2164CC2E00127F9A /* PreviewContentViewController.swift in Sources */,
+				B87F62EB225E2E6100ADCB1F /* Migration2to3.xcmappingmodel in Sources */,
 				B8234F4921BA6D3800760DEC /* NMoQUserEventList.swift in Sources */,
 				B8EAB7BC20CA424300C001B2 /* CalendarConfigViewController.swift in Sources */,
 				B82729BA21778B2F0017EC71 /* VersaPlayerGestureRecieverViewDelegate.swift in Sources */,
@@ -1823,8 +1827,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = QatarMuseums.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: QATAR MUSEUMS (DNV2Z9FR68)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: QATAR MUSEUMS (DNV2Z9FR68)";
 				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = DNV2Z9FR68;
@@ -1839,7 +1843,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.qatarmuseums.qatarmuseumsapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "563779af-c6f7-43a8-acf8-a004ad0aadd4";
-				PROVISIONING_PROFILE_SPECIFIER = QMDevelopmentProfile;
+				PROVISIONING_PROFILE_SPECIFIER = QatarMuseumsDistributionProfile;
 				SWIFT_OBJC_BRIDGING_HEADER = "QatarMuseum/ReusableComponents/FSCalendar/QatarMuseum-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
@@ -1854,8 +1858,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = QatarMuseums.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: QATAR MUSEUMS (DNV2Z9FR68)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: QATAR MUSEUMS (DNV2Z9FR68)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DNV2Z9FR68;
 				ENABLE_BITCODE = NO;
@@ -1869,7 +1873,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.qatarmuseums.qatarmuseumsapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "563779af-c6f7-43a8-acf8-a004ad0aadd4";
-				PROVISIONING_PROFILE_SPECIFIER = QMDevelopmentProfile;
+				PROVISIONING_PROFILE_SPECIFIER = QatarMuseumsDistributionProfile;
 				SWIFT_OBJC_BRIDGING_HEADER = "QatarMuseum/ReusableComponents/FSCalendar/QatarMuseum-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
