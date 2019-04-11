@@ -51,10 +51,12 @@ class MapViewController: UIViewController, HeaderViewProtocol, MKMapViewDelegate
                          didUpdateLocations locations: [CLLocation]) {
         userLocation = locations[0]
         self.getDirections()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error.localizedDescription)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func getDirections() {
@@ -78,6 +80,7 @@ class MapViewController: UIViewController, HeaderViewProtocol, MKMapViewDelegate
                 }
             }
         })
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func showRoute(_ response: MKDirectionsResponse) {
@@ -97,6 +100,8 @@ class MapViewController: UIViewController, HeaderViewProtocol, MKMapViewDelegate
                                                    2000, 2000)
             mapView.setRegion(region, animated: true)
         }
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     //MapView delegate
@@ -107,6 +112,8 @@ class MapViewController: UIViewController, HeaderViewProtocol, MKMapViewDelegate
         renderer.strokeColor = UIColor.blue
         renderer.lineWidth = 5.0
         return renderer
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func loadMapData() {
@@ -140,6 +147,8 @@ class MapViewController: UIViewController, HeaderViewProtocol, MKMapViewDelegate
             annotation.subtitle = aboutData?.name
             mapView.addAnnotation(annotation)
         }
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @IBAction func setMapType(_ sender: UISwitch) {
@@ -148,6 +157,8 @@ class MapViewController: UIViewController, HeaderViewProtocol, MKMapViewDelegate
         } else {
             mapView.mapType = .standard
         }
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func headerCloseButtonPressed() {
@@ -156,6 +167,7 @@ class MapViewController: UIViewController, HeaderViewProtocol, MKMapViewDelegate
         transition.type = kCATransitionFade
         transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
         view.window!.layer.add(transition, forKey: kCATransition)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.dismiss(animated: false, completion: nil)
     }
     override func didReceiveMemoryWarning() {

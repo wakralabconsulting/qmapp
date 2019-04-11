@@ -170,6 +170,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         view.addSubview(closeButton)
     }
     func loadLocationInMap(currentRow: Int) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         var latitudeString = String()
         var longitudeString = String()
         var latitude : Double?
@@ -207,6 +208,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     func showLocationErrorPopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
         popupView.loadLocationErrorPopup()
@@ -239,6 +241,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     @objc func buttonAction(sender: UIButton!) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         let transition = CATransition()
         transition.duration = 0.25
@@ -254,6 +257,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     
     //MARK: Webservice call
     func getExhibitionDetail() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         _ = Alamofire.request(QatarMuseumRouter.ExhibitionDetail(["nid": exhibitionId!])).responseObject { (response: DataResponse<Exhibitions>) -> Void in
             switch response.result {
             case .success(let data):
@@ -284,6 +288,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     
     //MARK: Coredata Method
     func saveOrUpdateExhibitionsCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if (exhibition.count > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
@@ -301,6 +306,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "ExhibitionsEntity", idKey: "id" , idValue: exhibition[0].id, managedContext: managedContext) as! [ExhibitionsEntity]
             if (fetchData.count > 0) {
@@ -500,6 +506,7 @@ class ExhibitionDetailViewController: UIViewController,UITableViewDelegate,UITab
         }
     }
     func showNoNetwork() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.loadingView.stopLoading()
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false

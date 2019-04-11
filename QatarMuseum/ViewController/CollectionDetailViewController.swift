@@ -40,6 +40,7 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
         collectionTableView.estimatedRowHeight = 261
     }
     func setUI() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         loadingView.isHidden = false
         loadingView.showLoading()
         loadingView.loadingViewDelegate = self
@@ -114,6 +115,7 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
     
     //MARK: WebServiceCall
     func getCollectioDetailsFromServer() {
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         _ = Alamofire.request(QatarMuseumRouter.CollectionDetail(["category": collectionName!])).responseObject { (response: DataResponse<CollectionDetails>) -> Void in
             switch response.result {
             case .success(let data):
@@ -142,6 +144,7 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     func getNMoQParkDetailFromServer() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if (nid != nil) {
             _ = Alamofire.request(QatarMuseumRouter.GetNMoQPlaygroundDetail(LocalizationLanguage.currentAppleLanguage(), ["nid": nid!])).responseObject { (response: DataResponse<NMoQParksDetail>) -> Void in
                 switch response.result {
@@ -193,6 +196,7 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
                     self.coreDataInBackgroundThread(managedContext : managedContext)
                 }
             }
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         }
     }
     
@@ -268,6 +272,7 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
                 }
             }
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func saveToCoreData(collectionDetailDict: CollectionDetail, managedObjContext: NSManagedObjectContext) {
@@ -293,8 +298,9 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
             
             
         } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+            DDLogError("Could not save. \(error), \(error.userInfo)")
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func fetchCollectionDetailsFromCoredata() {
@@ -363,8 +369,10 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
                 }
             }
         } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
+            DDLogError("Could not fetch. \(error), \(error.userInfo)")
         }
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     //MARK: NMoq Playground Parks Detail Coredata Method
@@ -383,6 +391,8 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
                 }
             }
         }
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func nmoqParkDetailCoreDataInBackgroundThread(nmoqParkList: [NMoQParkDetail]?, managedContext: NSManagedObjectContext) {
@@ -490,6 +500,8 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
                 NotificationCenter.default.post(name: NSNotification.Name(nmoqParkDetailNotificationAr), object: self)
             }
         }
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func saveNMoQParkDetailToCoreData(nmoqParkListDict: NMoQParkDetail, managedObjContext: NSManagedObjectContext) {
@@ -545,8 +557,10 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
         do {
             try managedObjContext.save()
         } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+            DDLogError("Could not save. \(error), \(error.userInfo)")
         }
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func fetchNMoQParkDetailFromCoredata() {
@@ -626,8 +640,9 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
                 }
             }
         } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
+            DDLogError("Could not fetch. \(error), \(error.userInfo)")
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func checkAddedToCoredata(entityName: String?, idKey:String?, idValue: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
@@ -641,6 +656,7 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     func showNodata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         var errorMessage: String
         errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
                                                         comment: "Setting the content of the alert"))
@@ -652,11 +668,13 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
     }
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if  (networkReachability?.isReachable)! {
             self.getCollectioDetailsFromServer()
         }
     }
     func showNoNetwork() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.loadingView.stopLoading()
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
@@ -675,12 +693,14 @@ class CollectionDetailViewController: UIViewController,UITableViewDelegate,UITab
         if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (nmoqParkDetailArray.count == 0)){
             self.fetchNMoQParkDetailFromCoredata()
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @objc func receiveNmoqParkDetailNotificationAr(notification: NSNotification) {
         if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (nmoqParkDetailArray.count == 0)){
             self.fetchNMoQParkDetailFromCoredata()
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
 
 }

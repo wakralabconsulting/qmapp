@@ -49,6 +49,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     func setTopBarImage() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         diningTableView.estimatedRowHeight = 50
         diningTableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0)
         
@@ -163,6 +164,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     func loadLocationInMap(currentRow: Int) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         var latitudeString = String()
         var longitudeString = String()
         var latitude : Double?
@@ -198,6 +200,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     func showLocationErrorPopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
         popupView.loadLocationErrorPopup()
@@ -206,10 +209,12 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     
     //MARK: Poup Delegate
     func closeButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.popupView.removeFromSuperview()
     }
     
     @objc func buttonAction(sender: UIButton!) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionFade
@@ -301,6 +306,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     
     //MARK: WebServiceCall
     func getDiningDetailsFromServer() {
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         _ = Alamofire.request(QatarMuseumRouter.GetDiningDetail(["nid": diningDetailId!])).responseObject { (response: DataResponse<Dinings>) -> Void in
             switch response.result {
             case .success(let data):
@@ -331,6 +337,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     
     //MARK: Coredata Method
     func saveOrUpdateDiningDetailCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (diningDetailtArray.count > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
@@ -348,6 +355,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             let fetchData = checkAddedToCoredata(entityName: "DiningEntity", diningId: diningDetailtArray[0].id, managedContext: managedContext) as! [DiningEntity]
             if (fetchData.count > 0) {
@@ -434,6 +442,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     func saveToCoreData(diningDetailDict: Dining, managedObjContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             let diningInfo: DiningEntity = NSEntityDescription.insertNewObject(forEntityName: "DiningEntity", into: managedObjContext) as! DiningEntity
             diningInfo.id = diningDetailDict.id
@@ -500,6 +509,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     func fetchDiningDetailsFromCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
@@ -586,6 +596,7 @@ class DiningDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
 
     func showNodata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         var errorMessage: String
         errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
                                                         comment: "Setting the content of the alert"))

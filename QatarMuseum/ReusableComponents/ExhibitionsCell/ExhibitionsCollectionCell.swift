@@ -8,6 +8,7 @@
 
 import Kingfisher
 import UIKit
+import CocoaLumberjack
 
 class ExhibitionsCollectionCell: UITableViewCell {
     @IBOutlet weak var exhibitionImageView: UIImageView!
@@ -37,6 +38,7 @@ class ExhibitionsCollectionCell: UITableViewCell {
     }
     //MARK: HomeExhibitionList data
     func setExhibitionCellValues(exhibition: Exhibition) {
+
         setGradientLayer()
         openCloseView.layer.cornerRadius = 12
         titleLabel.text = exhibition.name?.uppercased()
@@ -76,6 +78,7 @@ class ExhibitionsCollectionCell: UITableViewCell {
     
     //MARK: MuseumExhibitionList data
     func setMuseumExhibitionCellValues(exhibition: Exhibition) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         setGradientLayer()
         openCloseView.layer.cornerRadius = 12
         titleLabel.text = exhibition.name?.uppercased()
@@ -123,11 +126,13 @@ class ExhibitionsCollectionCell: UITableViewCell {
     }
     
     @IBAction func didTapExhibitionCellButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         exhibitionCellItemBtnTapAction?()
         self.favouriteButton.transform = CGAffineTransform(scaleX:1, y: 1)
     }
     
     @IBAction func favoriteTouchDownPressed(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.favouriteButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
         if (isFavourite) {
             favouriteButton.setImage(UIImage(named: "heart_emptyX1"), for: .normal)

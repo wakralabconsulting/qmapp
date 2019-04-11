@@ -68,6 +68,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         super.didReceiveMemoryWarning()
     }
     func setUpUI() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         topbarView.topbarDelegate = self
         topbarView.backButton.isHidden = true
         effect = visualEffectView.effect
@@ -111,7 +112,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func setTopImageUI() {
-       
+       DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         homeCollectionView.contentInset = UIEdgeInsetsMake(120, 0, 0, 0)
         if(UIScreen.main.bounds.height == 812) {
             imageView.frame = CGRect(x: 0, y: 108, width: UIScreen.main.bounds.size.width, height: 120)
@@ -172,6 +173,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
    
     @objc func imgButtonPressed(sender: UIButton!) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let museumsView =  self.storyboard?.instantiateViewController(withIdentifier: "museumViewId") as! MuseumsViewController
         museumsView.fromHomeBanner = true
         museumsView.museumTitleString = homeBannerList[0].bannerTitle
@@ -210,6 +212,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         }
     }
     @objc func receivedNotification(notification: Notification) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let notificationsView =  self.storyboard?.instantiateViewController(withIdentifier: "notificationId") as! NotificationsViewController
         notificationsView.fromHome = true
         self.present(notificationsView, animated: false, completion: nil)
@@ -257,6 +260,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let panelAndTalks = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
         if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "") && (self.homeBannerList.count > 0)) {
+                DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), -- Home Screen banner true")
+
             if(indexPath.row == 0) {
                 let museumsView =  self.storyboard?.instantiateViewController(withIdentifier: "museumViewId") as! MuseumsViewController
                 museumsView.fromHomeBanner = true
@@ -271,6 +276,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 self.present(museumsView, animated: false, completion: nil)
             } else {
                 if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                    DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), lang: \(LocalizationLanguage.currentAppleLanguage())")
+
                     if (homeList[indexPath.row].id == "12181") {
                         loadExhibitionPage()
                     } else if (homeList[indexPath.row].id == "13976") {
@@ -280,6 +287,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     }
                 }
                 else {
+                    DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), lang: \(LocalizationLanguage.currentAppleLanguage())")
                     if (homeList[indexPath.row].id == "12186") {
                         loadExhibitionPage()
                     } else if (homeList[indexPath.row].id == "15631") {
@@ -292,6 +300,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             }
         } else {
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), lang: \(LocalizationLanguage.currentAppleLanguage())")
                 if (homeList[indexPath.row].id == "12181") {
                     loadExhibitionPage()
                 } else if (homeList[indexPath.row].id == "13976") {
@@ -302,6 +311,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 }
             }
             else {
+                DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), lang: \(LocalizationLanguage.currentAppleLanguage())")
                 if (homeList[indexPath.row].id == "12186") {
                     loadExhibitionPage()
                 }
@@ -331,6 +341,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func loadMuseumsPage(curretRow:Int? = 0) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let museumsView =  self.storyboard?.instantiateViewController(withIdentifier: "museumViewId") as! MuseumsViewController
         museumsView.museumId = homeList[curretRow!].id
         museumsView.museumTitleString = homeList[curretRow!].name
@@ -345,6 +356,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func loadExhibitionPage() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let exhibitionView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
         let transition = CATransition()
         transition.duration = 0.25
@@ -356,6 +368,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func loadComingSoonPopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
         popupView.loadPopup()
@@ -368,6 +381,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     //MARK: Service call
     func getHomeList() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         _ = Alamofire.request(QatarMuseumRouter.HomeList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<HomeList>) -> Void in
             switch response.result {
             case .success(let data):
@@ -422,6 +436,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         }
     }
     func getHomeBanner() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         _ = Alamofire.request(QatarMuseumRouter.GetHomeBanner()).responseObject { (response: DataResponse<HomeBannerList>) -> Void in
             switch response.result {
             case .success(let data):
@@ -446,14 +461,16 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     //MARK: Topbar Delegate
     func backButtonPressed() {
-    
+    DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
     }
     
     func eventButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         topBarEventButtonPressed()
     }
     
     func notificationbuttonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let notificationsView =  self.storyboard?.instantiateViewController(withIdentifier: "notificationId") as! NotificationsViewController
         notificationsView.fromHome = true
         let transition = CATransition()
@@ -465,20 +482,24 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func profileButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         culturePassButtonPressed()
     }
     
     func menuButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         topbarMenuPressed()
     }
     
     //MARK: Poup Delegate
     func closeButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.popupView.removeFromSuperview()
     }
     
     //MARK: SideMenu Delegates
     func exhibitionButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let exhibitionView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
         exhibitionView.fromSideMenu = true
         let transition = CATransition()
@@ -491,6 +512,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func eventbuttonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let eventView =  self.storyboard?.instantiateViewController(withIdentifier: "eventPageID") as! EventViewController
         eventView.fromHome = true
         eventView.isLoadEventPage = true
@@ -504,6 +526,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func educationButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let educationView =  self.storyboard?.instantiateViewController(withIdentifier: "educationPageID") as! EducationViewController
         educationView.fromSideMenu = true
         let transition = CATransition()
@@ -515,6 +538,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func tourGuideButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "tourGuidId") as! TourGuideViewController
         tourGuideView.fromSideMenu = true
         let transition = CATransition()
@@ -526,6 +550,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func heritageButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let heritageView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
         heritageView.fromSideMenu = true
         heritageView.exhibitionsPageNameString = ExhbitionPageName.heritageList
@@ -538,6 +563,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func publicArtsButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let publicArtsView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
         publicArtsView.fromSideMenu = true
         publicArtsView.exhibitionsPageNameString = ExhbitionPageName.publicArtsList
@@ -550,6 +576,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func parksButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let parksView =  self.storyboard?.instantiateViewController(withIdentifier: "parkViewId") as! ParksViewController
         let transition = CATransition()
         transition.duration = 0.25
@@ -560,6 +587,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func diningButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
         diningView.fromHome = true
         diningView.fromSideMenu = true
@@ -573,6 +601,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func culturePassButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionFade
@@ -590,6 +619,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func giftShopButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let aboutUrlString = "https://inq-online.com/"
         if let aboutUrl = URL(string: aboutUrlString) {
             // show alert to choose app
@@ -603,6 +633,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func settingsButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let settingsView =  self.storyboard?.instantiateViewController(withIdentifier: "settingsId") as! SettingsViewController
         let transition = CATransition()
         transition.duration = 0.3
@@ -613,10 +644,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func menuEventPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         topBarEventButtonPressed()
     }
     
     func menuNotificationPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let notificationsView =  self.storyboard?.instantiateViewController(withIdentifier: "notificationId") as! NotificationsViewController
         notificationsView.fromHome = true
         let transition = CATransition()
@@ -628,10 +661,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func menuProfilePressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         topBarProfileButtonPressed()
     }
     
     func menuClosePressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         UIView.animate(withDuration: 0.4, animations: {
             self.sideView.transform = CGAffineTransform.init(scaleX:1 , y: 1)
             self.sideView.alpha = 0
@@ -647,15 +682,18 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     //MARK: Bottombar Delegate
     @IBAction func didTapMoreButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.moreButton.transform = CGAffineTransform(scaleX: 1, y: 1)
          topbarMenuPressed()
     }
     
     @IBAction func moreButtonTouchDown(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.moreButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
     @IBAction func didTaprestaurantButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.culturePassButton.transform = CGAffineTransform(scaleX: 1, y: 1)
         let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
          diningView.fromHome = true
@@ -670,28 +708,34 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     @IBAction func restaurantButtonTouchDown(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.restaurantButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
     @IBAction func didTapCulturePass(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         culturePassButtonPressed()
         self.culturePassButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
     
     @IBAction func culturePassTouchDown(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.culturePassButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
     @IBAction func didTapGiftShopButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         giftShopButtonPressed()
         self.giftShopButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
     
     @IBAction func giftShopButtonTouchDown(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.giftShopButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
     func topbarMenuPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.topbarView.menuButton.contentEdgeInsets = UIEdgeInsets(top: 14, left: 20, bottom: 14, right: 18)
         var sideViewFrame = CGRect()
         if (UIScreen.main.bounds.height >= 812) {
@@ -716,6 +760,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func topBarEventButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let eventView =  self.storyboard?.instantiateViewController(withIdentifier: "eventPageID") as! EventViewController
         eventView.fromHome = true
         eventView.isLoadEventPage = true
@@ -728,6 +773,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func topBarProfileButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let profileView =  self.storyboard?.instantiateViewController(withIdentifier: "profileViewId") as! ProfileViewController
         profileView.fromHome = true
         let transition = CATransition()
@@ -1364,6 +1410,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         return true
     }
     func loadTourViewPage(nid: String?,subTitle:String?,isFromTour:Bool?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
         tourView.tourDetailId = nid
         tourView.headerTitle = subTitle
@@ -1377,6 +1424,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         self.present(tourView, animated: false, completion: nil)
     }
     @objc func receiveHomePageNotificationEn(notification: NSNotification) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (homeList.count == 0)){
             DispatchQueue.main.async{
                 self.fetchHomeInfoFromCoredata()
@@ -1385,6 +1433,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         
     }
     @objc func receiveHomePageNotificationAr(notification: NSNotification) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (homeList.count == 0)){
             DispatchQueue.main.async{
                 self.fetchHomeInfoFromCoredata()
@@ -1392,6 +1441,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         }
     }
     func recordScreenView() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let screenClass = String(describing: type(of: self))
         Analytics.setScreenName(HOME, screenClass: screenClass)
     }

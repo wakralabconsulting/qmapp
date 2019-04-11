@@ -249,3 +249,19 @@
 "PANEL_AND_TALKS" = "QATAR CREATES: EVENTS FOR THE OPENING OF NMoQ";
 "PARKS_HEADER_LABEL" = "Park";
 "NMOQ_TOUR_HEADER" = "NMoQ TOUR GUIDE";
+
+// Culture Pass App User Activity Logs
+
+"SEND_LOGS" = "Send Logs";
+"SEND_EMAIL_CONFIRMATION_TITLE" = "Send Email Confirmation";
+"SEND_EMAIL_CONFIRMATION_MESSAGE" = "Would you like send email";
+"CANCEL" = "Cancel";
+"OK" = "Ok";
+"EMAIL_CANCELLED" = "Email Cancelled";
+"EMAIL_SENT" = "Email Sent";
+"EMAIL_SAVED" = "Email Saved";
+"EMAIL_FAILED_TITLE" = "Email Sending Failed";
+"EMAIL_FAILED_MESSAGE" = "Unable to send email. Please check your email settings and try again.";
+"EMAIL_DEVICE_CONFIG_TITLE" = "Could Not Send Email";
+"EMAIL_DEVICE_CONFIG_MESSAGE" = "Your device could not send e-mail.Please check e-mail configuration and try again.";
+"PROBLEM_DESCRIPTION" = "";

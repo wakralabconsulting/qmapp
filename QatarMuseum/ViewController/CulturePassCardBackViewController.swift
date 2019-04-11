@@ -31,6 +31,7 @@ class CulturePassCardBackViewController: UIViewController {
     }
     
     func setUI() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         tapToFlipButton.setTitle(NSLocalizedString("TAP_TO_FLIP", comment: "TAP_TO_FLIP"), for: .normal)
         tapToFlipButton.titleLabel?.font = UIFont.tryAgainFont
         tapToFlipButton.layer.cornerRadius = 25

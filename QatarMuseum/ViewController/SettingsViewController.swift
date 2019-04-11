@@ -32,11 +32,12 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
     @IBOutlet weak var tourGuideSwitch: UISwitch!
     @IBOutlet weak var resetButton: UIButton!
     @IBOutlet weak var applyButton: UIButton!
+    @IBOutlet weak var sendLogsButton: UIButton!
     @IBOutlet weak var settingsInnerView: UIView!
     
     var eventPopup : EventPopupView = EventPopupView()
     override func viewDidLoad() {
-        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+        DDLogInfo(NSStringFromClass(type(of: self)) + " " + "Function: \(#function)")
 
         super.viewDidLoad()
 
@@ -58,6 +59,7 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
         culturePassLabel.text = NSLocalizedString("CULTUREPASS_UPDATE_LABEL", comment: "CULTUREPASS_UPDATE_LABEL in the Settings page")
         tourGuideLabel.text = NSLocalizedString("TOURGUIDE_UPDATE_LABEL", comment: "TOURGUIDE_UPDATE_LABEL in the Settings page")
         applyButton.setTitle(NSLocalizedString("APPLY", comment: "APPLY in the Settings page"), for: .normal)
+        sendLogsButton.setTitle(NSLocalizedString("SEND_LOGS", comment: "Send Logs in the Settings page"), for: .normal)
         resetButton.setTitle(NSLocalizedString("RESET_TO_DEFAULT", comment: "RESET_TO_DEFAULT in the Settings page"), for: .normal)
         
         //setting font for english and Arabic
@@ -73,6 +75,7 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
         tourGuideLabel.font = UIFont.settingsUpdateLabelFont
         resetButton.titleLabel?.font = UIFont.clearButtonFont
         applyButton.titleLabel?.font = UIFont.clearButtonFont
+        sendLogsButton.titleLabel?.font = UIFont.clearButtonFont
         
        self.languageSwitch.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
        
@@ -199,6 +202,12 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
         self.applyButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
     
+    @IBAction func didTapSendLogsButton(_ sender: UIButton) {
+        self.sendLogsButton.backgroundColor = UIColor.blackColor
+        self.sendLogsButton.setTitleColor(UIColor.white, for: .normal)
+        self.sendLogsButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+    }
+    
     @IBAction func resetButtonTouchDown(_ sender: UIButton) {
         self.resetButton.backgroundColor = UIColor.profileLightPink
         self.resetButton.setTitleColor(UIColor.viewMyFavDarkPink, for: .normal)
@@ -208,6 +217,12 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
         self.applyButton.backgroundColor = UIColor.viewMycultureLightBlue
         self.applyButton.setTitleColor(UIColor.viewMyculTitleBlue, for: .normal)
         self.applyButton.transform = CGAffineTransform(scaleX: 0.7, y:0.7)
+    }
+    
+    @IBAction func applySendLogsTouchDown(_ sender: UIButton) {
+        self.sendLogsButton.backgroundColor = UIColor.viewMycultureLightBlue
+        self.sendLogsButton.setTitleColor(UIColor.viewMyculTitleBlue, for: .normal)
+        self.sendLogsButton.transform = CGAffineTransform(scaleX: 0.7, y:0.7)
     }
     //MARK: header delegate
     func headerCloseButtonPressed() {
@@ -285,11 +300,69 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
     }
     
     @IBAction func sendLogs(_ sender: Any) {
-        openEmail(email: "mgkhan@qm.org.qa")
+        DDLogInfo(NSStringFromClass(type(of: self)) + " " + "Function: \(#function)")
+        
+//        let sendMailConfirmAlert = UIAlertController(title: SEND_EMAIL_CONFIRMATION_TITLE, message: SEND_EMAIL_CONFIRMATION_MESSAGE, preferredStyle: UIAlertControllerStyle.alert)
+        
+        let sendMailConfirmAlert = UIAlertController(title: NSLocalizedString("SEND_EMAIL_CONFIRMATION_TITLE", comment: ""), message: NSLocalizedString("SEND_EMAIL_CONFIRMATION_MESSAGE", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+        
+        let cancelAction = UIAlertAction(title: NSLocalizedString("CANCEL", comment: ""), style: UIAlertActionStyle.cancel)
+        {
+            (result : UIAlertAction) -> Void in
+            DDLogInfo("You pressed Cancel on send email confirmation")
+        }
+        
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: UIAlertActionStyle.default)
+        {
+            (result : UIAlertAction) -> Void in
+            DDLogInfo("You pressed OK on send email confirmation")
+            self.openEmail(email: "mgkhan@qm.org.qa")
+        }
+        
+        sendMailConfirmAlert.addAction(okAction)
+        sendMailConfirmAlert.addAction(cancelAction)
+        self.present(sendMailConfirmAlert, animated: true, completion: nil)
+        
     }
     
     // MARK: MFMailComposeViewControllerDelegate Method
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        
+        switch (result)
+        {
+        case .cancelled:
+            DDLogInfo("Mail cancelled: you cancelled the operation and no email message was queued.");
+            controller.dismiss(animated: true, completion: nil)
+            self.view.makeToast(NSLocalizedString("EMAIL_CANCELLED", comment: ""))
+//            self.view.hideAllToasts()
+            break;
+        case .saved:
+            DDLogInfo("Mail saved: you saved the email message in the drafts folder.");
+            controller.dismiss(animated: true, completion: nil)
+            self.view.makeToast(NSLocalizedString("EMAIL_SAVED", comment: ""))
+            break;
+        case .sent:
+            DDLogInfo("Mail send: the email message is queued in the outbox. It is ready to send.");
+            controller.dismiss(animated: true, completion: nil)
+            self.view.makeToast(NSLocalizedString("EMAIL_SENT", comment: ""))
+            break;
+        case .failed:
+            DDLogInfo("Mail failed: the email message was not saved or queued, possibly due to an error.");
+            controller.dismiss(animated: true, completion:{
+                let sendMailErrorAlert = UIAlertController.init(title: NSLocalizedString("EMAIL_FAILED_TITLE", comment: ""),
+                                                                message: NSLocalizedString("EMAIL_FAILED_MESSAGE", comment: ""), preferredStyle: .alert)
+                
+                sendMailErrorAlert.addAction(UIAlertAction.init(title: NSLocalizedString("OK", comment: ""),
+                                                                style: .default, handler: nil))
+                self.present(sendMailErrorAlert,
+                             animated: true, completion: nil)
+            })
+            break;
+        default:
+            DDLogInfo("Mail not sent.");
+            break;
+        }
+        
         controller.dismiss(animated: true, completion: nil)
     }
     
@@ -297,6 +370,7 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
         let mailComposeViewController = configuredMailComposeViewController(emailId:email)
         if MFMailComposeViewController.canSendMail() {
             self.present(mailComposeViewController, animated: true, completion: nil)
+            DDLogInfo("Opening email for problem report ..")
         } else {
             self.showSendMailErrorAlert()
         }
@@ -324,6 +398,8 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
             //Send piz to get through e-mail filters!
             if let data = data {
                 mailComposerVC.addAttachmentData(data, mimeType: "application/zip", fileName: "logs.piz")
+                DDLogInfo("Logs attached successfully")
+
             }
         } else {
             DDLogWarn("No logs attached")
@@ -333,16 +409,16 @@ class SettingsViewController: UIViewController,HeaderViewProtocol,EventPopUpProt
     }
     
     func showSendMailErrorAlert() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + " " + "Function: \(#function)")
+
+        let sendMailErrorAlert = UIAlertController(title: NSLocalizedString("EMAIL_DEVICE_CONFIG_TITLE", comment: ""), message: NSLocalizedString("EMAIL_DEVICE_CONFIG_MESSAGE", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
         
-        let sendMailErrorAlert = UIAlertController(title: "Could Not Send Email", message: "Your device could not send e-mail.Please check e-mail configuration and try again.", preferredStyle: UIAlertControllerStyle.alert)
-        
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default)
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: UIAlertActionStyle.default)
         {
             (result : UIAlertAction) -> Void in
-            DDLogVerbose("You pressed OK on send email alert")
+            DDLogInfo("You pressed OK on send email alert")
         }
         sendMailErrorAlert.addAction(okAction)
         self.present(sendMailErrorAlert, animated: true, completion: nil)
     }
-    
 }

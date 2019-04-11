@@ -55,6 +55,7 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     }
 
     func setUpProfileUI() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         headerView.headerViewDelegate = self
         headerView.headerTitle.text = NSLocalizedString("PROFILE_TITLE", comment: "PROFILE_TITLE Label in the PROFILE page")
         headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
@@ -166,6 +167,17 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
                 }
             }
         }
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) +
+            "Function: \(#function)" +
+            "Language: \(LocalizationLanguage.currentAppleLanguage())" +
+            "User: \(String(describing: userNameText.text))" +
+            "MembershipNumber: \(membershipNum)" +
+            "User Id: \(String(describing: userId))" +
+            "email: \(String(describing: emailText.text))" +
+            "DOB: \(String(describing: dateOfBirthText.text))" +
+            "Country: \(String(describing: countryText.text))" +
+            "Nationality: \(String(describing: nationalityText))")
     }
     //MARK: Service call
     func getCountryListsFromJson(){
@@ -175,6 +187,8 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
             countryListsArray = jsonObj!.value(forKey: "countryLists")
                 as? NSArray
         }
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func getCountryListsArabicFromJson(){
         let url = Bundle.main.url(forResource: "CountryListArabic", withExtension: "json")
@@ -182,6 +196,8 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         if let jsonObj = try? JSONSerialization.jsonObject(with: dataObject! as Data, options: .allowFragments) as? NSDictionary {
             countryDictArabic = jsonObj
         }
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -190,12 +206,15 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
         popupView.loadPopup()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.view.addSubview(popupView)
     }
     func closeButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.popupView.removeFromSuperview()
     }
     @IBAction func didTapViewMyFavoriteButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         loadComingSoonPopup()
         self.viewMyFavoriteButton.transform = CGAffineTransform(scaleX: 1, y: 1)
         
@@ -204,6 +223,7 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
          self.viewMyFavoriteButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     @IBAction func didTapViewMyCulturePassCard(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let cardView =  self.storyboard?.instantiateViewController(withIdentifier: "cardViewId") as! CulturePassCardViewController
             if((UserDefaults.standard.value(forKey: "uid") as? String != nil) && (UserDefaults.standard.value(forKey: "uid") as? String != "") ) {
                 cardView.membershipNumber = "00" + String(membershipNum)
@@ -221,17 +241,21 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     }
     @IBAction func viewMyCulturePassButtonTouchDown(_ sender: UIButton) {
         self.viewmyCulturePassButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     @IBAction func didTapProfileEditButton(_ sender: UIButton) {
         self.editButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         loadComingSoonPopup()
     }
     @IBAction func editButtonTouchDown(_ sender: UIButton) {
         self.editButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     //MARK: headerView Protocol
     func headerCloseButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush
@@ -245,6 +269,7 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     //MARK: WebServiceCall
     /* logout when click on the logout button */
     func filterButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function) + Action: Logout")
         if(UserDefaults.standard.value(forKey: "accessToken") as? String != nil) {
             _ = Alamofire.request(QatarMuseumRouter.Logout()).responseObject { (response: DataResponse<LogoutData>) -> Void in
                 switch response.result {
@@ -292,7 +317,7 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         }
     }
     func deleteExistingEvent(managedContext:NSManagedObjectContext,entityName : String?)  {
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName!)
         let deleteRequest = NSBatchDeleteRequest( fetchRequest: fetchRequest)
         do{

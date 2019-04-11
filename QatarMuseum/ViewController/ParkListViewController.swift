@@ -29,6 +29,7 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         setUI()
     }
     func setUI() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         loadingView.isHidden = false
         loadingView.showLoading()
         loadingView.loadingViewDelegate = self
@@ -122,6 +123,7 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func loadParkPlayGroundDetail(parkList: NMoQPark) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let collectionDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "collectionDetailId") as! CollectionDetailViewController
        // collectionDetailView.collectionName = parkList.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         collectionDetailView.collectionPageNameString = CollectionPageName.PlayGroundPark
@@ -135,6 +137,7 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func loadParkHeritageGardenDetail(parkList: NMoQPark) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let parksView =  self.storyboard?.instantiateViewController(withIdentifier: "parkViewId") as! ParksViewController
         parksView.parkPageNameString = ParkPageName.NMoQPark
         parksView.parkDetailId = parkList.nid
@@ -146,6 +149,7 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         self.present(parksView, animated: false, completion: nil)
     }
     func loadLocationMap( mobileLatitude: String?, mobileLongitude: String? ) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (mobileLatitude != nil && mobileLatitude != "" && mobileLongitude != nil && mobileLongitude != "") {
             let latitudeString = (mobileLatitude)!
             let longitudeString = (mobileLongitude)!
@@ -182,6 +186,7 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func getNmoqParkListFromServer() {
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         _ = Alamofire.request(QatarMuseumRouter.GetNmoqParkList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<NmoqParksLists>) -> Void in
             switch response.result {
             case .success(let data):
@@ -213,6 +218,7 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func getNmoqListOfParksFromServer() {
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         _ = Alamofire.request(QatarMuseumRouter.GetNmoqListParks(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<NMoQParks>) -> Void in
             switch response.result {
             case .success(let data):
@@ -243,6 +249,7 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     //MARK: NMoqPark List Coredata Method
     func saveOrUpdateNmoqParkListCoredata(nmoqParkList:[NMoQParksList]?) {
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((nmoqParkList?.count)! > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
@@ -342,6 +349,7 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
     }
     func saveNmoqParkListToCoreData(nmoqParkListDict: NMoQParksList, managedObjContext: NSManagedObjectContext) {
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
             let nmoqParkListdbDict: NMoQParkListEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoQParkListEntity", into: managedObjContext) as! NMoQParkListEntity
             nmoqParkListdbDict.title = nmoqParkListDict.title
@@ -377,6 +385,7 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     //MARK: NMoq List of Parks Coredata Method
     func saveOrUpdateNmoqParksCoredata(nmoqParkList:[NMoQPark]?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((nmoqParkList?.count)! > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
@@ -394,6 +403,7 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func nmoqParkCoreDataInBackgroundThread(nmoqParkList:[NMoQPark]?,managedContext: NSManagedObjectContext) {
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "NMoQParksEntity", idKey: "nid", idValue: nil, managedContext: managedContext) as! [NMoQParksEntity]
             if (fetchData.count > 0) {
@@ -498,6 +508,7 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func saveNmoqParkToCoreData(nmoqParkListDict: NMoQPark, managedObjContext: NSManagedObjectContext) {
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
             let nmoqParkListdbDict: NMoQParksEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoQParksEntity", into: managedObjContext) as! NMoQParksEntity
             nmoqParkListdbDict.title = nmoqParkListDict.title
@@ -553,6 +564,7 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func fetchNmoqParkListFromCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -626,6 +638,7 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func fetchNmoqParkFromCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -731,47 +744,56 @@ class ParkListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         return fetchResults
     }
     func showNoNetwork() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.loadingView.stopLoading()
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
     }
     func showLocationErrorPopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
         popupView.loadMapKitLocationErrorPopup()
         self.view.addSubview(popupView)
     }
     func headerCloseButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.dismiss(animated: false, completion: nil)
     }
     func closeButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.popupView.removeFromSuperview()
     }
     func tryAgainButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if  (networkReachability?.isReachable)! {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             appDelegate?.getNmoqParkListFromServer(lang: LocalizationLanguage.currentAppleLanguage())
         }
     }
     @objc func receiveNmoqParkListNotificationEn(notification: NSNotification) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (nmoqParkList.count == 0)){
             self.fetchNmoqParkListFromCoredata()
         }
     }
     @objc func receiveNmoqParkListNotificationAr(notification: NSNotification) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (nmoqParkList.count == 0)){
             self.fetchNmoqParkListFromCoredata()
         }
     }
     
     @objc func receiveNmoqParkNotificationEn(notification: NSNotification) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (nmoqParks.count == 0)){
             self.fetchNmoqParkFromCoredata()
         }
     }
     
     @objc func receiveNmoqParkNotificationAr(notification: NSNotification) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (nmoqParks.count == 0)){
             self.fetchNmoqParkFromCoredata()
         }

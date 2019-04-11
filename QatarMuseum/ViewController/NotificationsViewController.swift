@@ -30,6 +30,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
     }
     
     func updateNotificationTableView(){
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         UserDefaults.standard.removeObject(forKey: "notificationBadgeCount")
         let notificationData = UserDefaults.standard.object(forKey: "pushNotificationList") as? NSData
         if let notificationData = notificationData, let notifications = NSKeyedUnarchiver.unarchiveObject(with: notificationData as Data) as?
@@ -49,6 +50,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
     }
 
     func setUI() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         loadingView.isHidden = false
         loadingView.showLoading()
         
@@ -66,6 +68,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
     }
     
     func emptyNotificationData() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.loadingView.stopLoading()
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
@@ -115,6 +118,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
     
     //    //MARK: Coredata Method
     func saveOrUpdateNotificationsCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if (notificationArray.count > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
@@ -132,6 +136,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
     }
     
     func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             let fetchData = checkAddedToCoredata(entityName: "NotificationsEntity", idKey: "sortId", idValue: nil, managedContext: managedContext) as! [NotificationsEntity]
             if (fetchData.count > 0) {
@@ -180,6 +185,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
     }
     
     func saveToCoreData(notificationsDict: Notification, managedObjContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             let notificationInfo: NotificationsEntity = NSEntityDescription.insertNewObject(forEntityName: "NotificationsEntity", into: managedObjContext) as! NotificationsEntity
             notificationInfo.title = notificationsDict.title
@@ -214,6 +220,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
     }
     
     func fetchNotificationsFromCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
@@ -275,6 +282,7 @@ class NotificationsViewController: UIViewController,UITableViewDelegate,UITableV
     
     //MARK: header delegate
     func headerCloseButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush

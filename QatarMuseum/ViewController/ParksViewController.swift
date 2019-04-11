@@ -102,6 +102,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         loadCloseButton()
     }
     func loadCloseButton() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
         }
@@ -175,6 +176,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         return UITableViewAutomaticDimension
     }
     func setFavouritesAction(cellObj :ParkTableViewCell) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (cellObj.favouriteButton.tag == 0) {
             cellObj.favouriteButton.tag = 1
             cellObj.favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
@@ -218,6 +220,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         
     }
     func loadLocationInMap(currentRow: Int) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         /*
         var latitudeString :String?
         var longitudeString : String?
@@ -244,12 +247,14 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         showLocationErrorPopup()
     }
     func showLocationErrorPopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
         popupView.loadLocationErrorPopup()
         self.view.addSubview(popupView)
     }
     @objc func buttonAction(sender: UIButton!) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         let transition = CATransition()
         transition.duration = 0.3
@@ -265,6 +270,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     //MARK: WebServiceCall
     func getParksDataFromServer()
     {
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         _ = Alamofire.request(QatarMuseumRouter.ParksList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<ParksLists>) -> Void in
             switch response.result {
             case .success(let data):
@@ -325,6 +331,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     //MARK: Coredata Method
     func saveOrUpdateParksCoredata(parksListArray:[ParksList]? ) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (parksListArray!.count > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
@@ -342,6 +349,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     
     func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,parksListArray:[ParksList]?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "ParksEntity", idKey: nil, idValue: nil, managedContext: managedContext) as! [ParksEntity]
             if (fetchData.count > 0) {
@@ -389,6 +397,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     
     func saveToCoreData(parksDict: ParksList, managedObjContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let parksInfo: ParksEntity = NSEntityDescription.insertNewObject(forEntityName: "ParksEntity", into: managedObjContext) as! ParksEntity
             parksInfo.title = parksDict.title
@@ -417,6 +426,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     
     func fetchParksFromCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -508,6 +518,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     //MARK : NMoQPark
     func getNMoQParkDetailFromServer() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (parkDetailId != nil) {
             _ = Alamofire.request(QatarMuseumRouter.GetNMoQPlaygroundDetail(LocalizationLanguage.currentAppleLanguage(), ["nid": parkDetailId!])).responseObject { (response: DataResponse<NMoQParksDetail>) -> Void in
                 switch response.result {
@@ -552,6 +563,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     //MARK: NMoq Playground Parks Detail Coredata Method
     func saveOrUpdateNmoqParkDetailCoredata(nmoqParkList: [NMoQParkDetail]?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((nmoqParkList?.count)! > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
@@ -570,6 +582,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     
     func nmoqParkDetailCoreDataInBackgroundThread(nmoqParkList: [NMoQParkDetail]?, managedContext: NSManagedObjectContext) {
         if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
             let fetchData = checkAddedToCoredata(entityName: "NMoQParkDetailEntity", idKey: "nid", idValue: nil, managedContext: managedContext) as! [NMoQParkDetailEntity]
             if (fetchData.count > 0) {
                 for i in 0 ... (nmoqParkList?.count)!-1 {
@@ -676,6 +689,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     
     func saveNMoQParkDetailToCoreData(nmoqParkListDict: NMoQParkDetail, managedObjContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
             let nmoqParkListdbDict: NMoQParkDetailEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoQParkDetailEntity", into: managedObjContext) as! NMoQParkDetailEntity
             nmoqParkListdbDict.title = nmoqParkListDict.title
@@ -733,6 +747,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     
     func fetchNMoQParkDetailFromCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -844,6 +859,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         
     }
     func showNodata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         var errorMessage: String
         errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
                                                         comment: "Setting the content of the alert"))
@@ -855,26 +871,31 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
      //MARK: Poup Delegate
     func closeButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.popupView.removeFromSuperview()
     }
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if  (networkReachability?.isReachable)! {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             appDelegate?.getParksDataFromServer(lang: LocalizationLanguage.currentAppleLanguage())
         }
     }
     func showNoNetwork() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.loadingView.stopLoading()
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
     }
     func recordScreenView() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let screenClass = String(describing: type(of: self))
         Analytics.setScreenName(PARKS_VC, screenClass: screenClass)
     }
     @objc func receiveParksNotificationEn(notification: NSNotification) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (parksListArray.count == 0)){
             self.fetchParksFromCoredata()
         } else if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (parksListArray.count == 0)){
@@ -882,6 +903,7 @@ class ParksViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         }
     }
     @objc func receiveParksNotificationAr(notification: NSNotification) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (parksListArray.count == 0)){
             self.fetchParksFromCoredata()
         }

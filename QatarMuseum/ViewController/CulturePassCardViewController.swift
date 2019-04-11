@@ -50,6 +50,7 @@ class CulturePassCardViewController: UIViewController {
 //        tapToFlipButton.layer.cornerRadius = 25
     }
     func generateBarcode(from string: String) -> UIImage? {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let data = string.data(using: String.Encoding.ascii)
 
         if let filter = CIFilter(name: "CICode128BarcodeGenerator") {
@@ -72,6 +73,7 @@ class CulturePassCardViewController: UIViewController {
     }
     
     @IBAction func didTapTapToFlip(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let cardBackView =  self.storyboard?.instantiateViewController(withIdentifier: "cardBackId") as!CulturePassCardBackViewController
         if((UserDefaults.standard.value(forKey: "uid") as? String != nil) && (UserDefaults.standard.value(forKey: "uid") as? String != "") ) {
            let membershipNum = Int((UserDefaults.standard.value(forKey: "uid") as? String)!)! + 006000

@@ -54,6 +54,8 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
                 self.fetchPublicArtsDetailsFromCoredata()
             }
         }
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), pageNameString: \(String(describing: pageNameString)), networkReachabil: \(String(describing: networkReachability?.isReachable))")
         recordScreenView()
     }
     
@@ -65,6 +67,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     }
     
     func setTopBarImage() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         heritageDetailTableView.estimatedRowHeight = 50
         heritageDetailTableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0)
         
@@ -192,6 +195,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     }
     
     func loadLocationInMap(currentRow: Int) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         var latitudeString  = String()
         var longitudeString = String()
         var latitude : Double?
@@ -235,6 +239,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     }
     
     func showLocationErrorPopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
         popupView.loadLocationErrorPopup()
@@ -267,6 +272,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     }
     
     @objc func buttonAction(sender: UIButton!) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         let transition = CATransition()
         transition.duration = 0.25
@@ -345,6 +351,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     }
     
     @objc func imgButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if((imageView.image != nil) && (imageView.image != UIImage(named: "default_imageX2"))) {
             if (isHeritageImgArrayAvailable() || isPublicArtImgArrayAvailable()) {
                 setiCarouselView()
@@ -379,6 +386,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     }
     //MARK: WebServiceCall
     func getHeritageDetailsFromServer() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         _ = Alamofire.request(QatarMuseumRouter.HeritageDetail(["nid": heritageDetailId!])).responseObject { (response: DataResponse<Heritages>) -> Void in
             switch response.result {
             case .success(let data):
@@ -409,6 +417,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     
     //MARK: PublicArts webservice call
     func getPublicArtsDetailsFromServer() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         _ = Alamofire.request(QatarMuseumRouter.GetPublicArtsDetail(["nid": publicArtsDetailId!])).responseObject { (response: DataResponse<PublicArtsDetails>) -> Void in
             switch response.result {
             case .success(let data):
@@ -438,6 +447,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     }
     //MARK: Heritage Coredata Method
     func saveOrUpdateHeritageCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (heritageDetailtArray.count > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
@@ -455,6 +465,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     }
     
     func heritageCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
             let fetchData = checkAddedToCoredata(entityName: "HeritageEntity", idKey: "listid" , idValue: heritageDetailtArray[0].id, managedContext: managedContext) as! [HeritageEntity]
            if (fetchData.count > 0) {
                 let heritageDetailDict = heritageDetailtArray[0]
@@ -509,6 +520,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     }
     
     func saveToCoreData(heritageDetailDict: Heritage, managedObjContext: NSManagedObjectContext) {
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
             let heritageInfo: HeritageEntity = NSEntityDescription.insertNewObject(forEntityName: "HeritageEntity", into: managedObjContext) as! HeritageEntity
             heritageInfo.listid = heritageDetailDict.id
             heritageInfo.listname = heritageDetailDict.name
@@ -552,6 +564,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         }
     }
     func fetchHeritageDetailsFromCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let managedContext = getContext()
         do {
                 var heritageArray = [HeritageEntity]()
@@ -602,6 +615,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     }
     //MARK: PublicArts Coredata Method
     func saveOrUpdatePublicArtsCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (publicArtsDetailtArray.count > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
@@ -619,6 +633,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     }
     
     func publicArtCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "PublicArtsEntity", idKey: "id" , idValue: publicArtsDetailtArray[0].id, managedContext: managedContext) as! [PublicArtsEntity]
             if (fetchData.count > 0) {
@@ -709,6 +724,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     }
     
     func saveToCoreData(publicArtseDetailDict: PublicArtsDetail, managedObjContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let publicArtsInfo: PublicArtsEntity = NSEntityDescription.insertNewObject(forEntityName: "PublicArtsEntity", into: managedObjContext) as! PublicArtsEntity
             publicArtsInfo.id = publicArtseDetailDict.id
@@ -769,6 +785,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     }
     
     func fetchPublicArtsDetailsFromCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -881,6 +898,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     }
     
     func showNodata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         var errorMessage: String
         errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
                                                         comment: "Setting the content of the alert"))
@@ -893,6 +911,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
    
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if  (networkReachability?.isReachable)! {
             if ((pageNameString == PageName.heritageDetail) && (heritageDetailId != nil)) {
                 self.getHeritageDetailsFromServer()
@@ -902,6 +921,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         }
     }
     func showNoNetwork() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.loadingView.stopLoading()
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false

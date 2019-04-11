@@ -38,6 +38,7 @@ class SplashViewController: UIViewController {
     
     transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
     view.window!.layer.add(transition, forKey: kCATransition)
+    DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     self.present(homeView!, animated: false, completion: nil)
     
     }

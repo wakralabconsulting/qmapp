@@ -54,7 +54,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
             topbarView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
         
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -80,6 +80,10 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         if (museumsList != nil) {
             if(((museumsList[indexPath.row].id) == "63") || ((museumsList[indexPath.row].id) == "96") || ((museumsList[indexPath.row].id) == "61") || ((museumsList[indexPath.row].id) == "635")) {
                 loadMiaTour(currentRow: indexPath.row)
+                
+                DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
+                DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), Museum ID: \(String(describing: museumsList[indexPath.row].id))")
+                
             } else {
                 loadComingSoonPopup()
             }
@@ -112,10 +116,11 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
             self.present(miaView, animated: false, completion: nil)
         }
         
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func loadComingSoonPopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
         popupView.loadTourGuidePopup()
@@ -125,6 +130,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
     //MARK: Poup Delegate
     func closeButtonPressed() {
         self.popupView.removeFromSuperview()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     //MARK: Header delegate
@@ -156,6 +162,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         _ = Alamofire.request(QatarMuseumRouter.HomeList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<HomeList>) -> Void in
             switch response.result {
             case .success(let data):
+                DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), SearchString: \(searchstring)")
                 if(self.museumsList.count == 0) {
                     if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                         searchstring = "12181"
@@ -197,6 +204,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                     self.coreDataInBackgroundThread(managedContext : managedContext, museumsList: museumsList)
                 }
             }
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         }
     }
     
@@ -246,6 +254,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                     
                 }
             }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func saveToCoreData(museumsListDict: Home, managedObjContext: NSManagedObjectContext) {
@@ -267,7 +276,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         do {
             try managedObjContext.save()
         } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+            DDLogError("Could not save. \(error), \(error.userInfo)")
         }
     }
     
@@ -336,6 +345,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
     }
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if  (networkReachability?.isReachable)! {
             self.getTourGuideMuseumsList()
         }
@@ -345,6 +355,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     @objc func receiveHomePageNotificationEn(notification: NSNotification) {
         if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (museumsList.count == 0)){
@@ -352,6 +363,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                 self.fetchMuseumsInfoFromCoredata()
             }
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     @objc func receiveHomePageNotificationAr(notification: NSNotification) {
         if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (museumsList.count == 0)){
@@ -359,6 +371,7 @@ class TourGuideViewController: UIViewController,UICollectionViewDelegate,UIColle
                 self.fetchMuseumsInfoFromCoredata()
             }
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func recordScreenView() {
         let screenClass = String(describing: type(of: self))

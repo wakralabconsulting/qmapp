@@ -44,6 +44,7 @@ class PreviewContentViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func setPreviewData() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let tourGuideData = tourGuideDict
         var galleryNumber: String = " "
         var floorLevel: String = " "
@@ -135,11 +136,13 @@ class PreviewContentViewController: UIViewController, UITableViewDelegate, UITab
     
     //MARK: Poup Delegate
     func dismissImagePopUpView() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.objectImagePopupView.removeFromSuperview()
         self.dismiss(animated: false, completion: nil)
     }
     
     @objc func loadObjectImagePopup(imgName: String?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         objectImagePopupView = ObjectImageView(frame: self.view.frame)
         //objectImagePopupView.objectImageViewDelegate = self as! ObjectImageViewProtocol
         objectImagePopupView.loadPopup(image : imgName!)
@@ -147,6 +150,7 @@ class PreviewContentViewController: UIViewController, UITableViewDelegate, UITab
     }
 
     func setFavouritesAction(cellObj: ObjectDetailTableViewCell) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if (cellObj.favoriteButton.tag == 0) {
             cellObj.favoriteButton.tag = 1
             cellObj.favoriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
@@ -161,6 +165,7 @@ class PreviewContentViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func setPlayButtonAction(cellObj: ObjectDetailTableViewCell) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         selectedCell  = cellObj
         
         if(tourGuideDict != nil) {
@@ -180,6 +185,7 @@ class PreviewContentViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func stopAudio() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if (selectedCell != nil) {
             selectedCell?.playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
             selectedCell?.playerSlider.value = 0

@@ -214,7 +214,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     //MARK: MuseumExhibitions Service Call
     func getMuseumExhibitionDataFromServer() {
-       
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         _ = Alamofire.request(QatarMuseumRouter.MuseumExhibitionList(["museum_id": museumId ?? 0])).responseObject { (response: DataResponse<Exhibitions>) -> Void in
             switch response.result {
             case .success(let data):
@@ -348,6 +349,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if ((exhibitionsPageNameString == ExhbitionPageName.homeExhibition) || (exhibitionsPageNameString == ExhbitionPageName.museumExhibition)) {
             if let exhibitionId = exhibition[indexPath.row].id {
+                DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), ExhibitionId: \(String(describing: exhibition[indexPath.row].id))")
+
                 loadExhibitionDetailAnimation(exhibitionId: exhibitionId)
             }
             else {
@@ -404,6 +407,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         self.present(collectionDetailView, animated: false, completion: nil)
     }
     func addComingSoonPopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         let viewFrame : CGRect = self.view.frame
         popupView.frame = viewFrame
         popupView.loadPopup()
@@ -421,6 +426,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         self.present(heritageDtlView, animated: false, completion: nil)
     }
     func loadExhibitionDetailAnimation(exhibitionId: String) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         let exhibitionDtlView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionDtlId") as! ExhibitionDetailViewController
             exhibitionDtlView.fromHome = true
             exhibitionDtlView.exhibitionId = exhibitionId
@@ -432,6 +439,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         self.present(exhibitionDtlView, animated: false, completion: nil)
     }
     func loadDiningDetailAnimation(idValue: String) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         let diningDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "diningDetailId") as! DiningDetailViewController
         diningDetailView.diningDetailId = idValue
         let transition = CATransition()
@@ -443,6 +452,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
     }
     func loadTourSecondDetailPage(selectedRow: Int?,fromTour:Bool?,pageName: ExhbitionPageName?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
         
         panelView.selectedRow = selectedRow
@@ -471,6 +482,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     //MARK: Header delegate
     func headerCloseButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         let transition = CATransition()
         transition.duration = 0.25
         if (fromSideMenu == true) {
@@ -505,6 +518,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
 
     func closeButtonPressed() {
         self.popupView.removeFromSuperview()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
     }
     
     //MARK: Coredata Method
@@ -778,6 +793,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func showNodata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         var errorMessage: String
         errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
                                                         comment: "Setting the content of the alert"))
@@ -2713,6 +2730,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     //MARK: Mia Tour Guide Delegate
     func exploreButtonAction() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as! FloorMapViewController
         floorMapView.fromTourString = fromTour.exploreTour
         let transition = CATransition()
@@ -2724,6 +2743,8 @@ class ExhibitionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
     }
     func loadMiaTourDetail(currentRow: Int?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush

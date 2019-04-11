@@ -131,10 +131,12 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     @IBAction func didTapPlayButton(_ sender: UIButton) {
         self.playButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         loadComingSoonPopup()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @IBAction func playButtonTouchDown(_ sender: UIButton) {
         self.playButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @IBAction func didTapStartTour(_ sender: UIButton) {
@@ -155,10 +157,12 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
             shortDetailsView.fromScienceTour = false
             self.present(shortDetailsView, animated: false, completion: nil)
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), tourGuideDetailID: \(String(describing: tourGuideDetail?.nid))")
     }
     
     @IBAction func startTourButtonTouchDown(_ sender: UIButton) {
         self.startTourButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func loadComingSoonPopup() {
@@ -166,7 +170,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
         popupView.comingSoonPopupDelegate = self
         popupView.loadPopup()
         self.view.addSubview(popupView)
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @objc func pageChanged() {
@@ -207,6 +211,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
             self.scienceTourTitle.textContainer.lineBreakMode = .byTruncatingTail;
         }
         self.tourGuideDescription.textContainer.lineBreakMode = .byTruncatingTail;
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func setImageArray(tourGuideImgDict : TourGuide?) {
         self.sliderImgArray[0] = UIImage(named: "sliderPlaceholder")!
@@ -218,6 +223,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
                 downloadImage(imageUrlString: imageUrlString)
             }
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func downloadImage(imageUrlString : String?)  {
@@ -240,6 +246,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
                     self.setSlideShow(imgArray: self.sliderImgArray)
                     self.slideshowView.start()
                 }
+                DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
             }
         }
     }

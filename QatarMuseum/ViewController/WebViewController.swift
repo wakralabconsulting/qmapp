@@ -41,7 +41,7 @@ class WebViewController: UIViewController,UIWebViewDelegate,LoadingViewProtocol 
         webView.delegate = self
         webView.backgroundColor = UIColor.whiteColor
         webView.scrollView.bounces = false
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -53,10 +53,12 @@ class WebViewController: UIViewController,UIWebViewDelegate,LoadingViewProtocol 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         loadingView.stopLoading()
         loadingView.isHidden = true
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
     }
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
        loadingView.stopLoading()
         loadingView.isHidden = true
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
     }
     func webViewDidStartLoad(_ webView: UIWebView) {
     }
@@ -92,6 +94,7 @@ class WebViewController: UIViewController,UIWebViewDelegate,LoadingViewProtocol 
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
     }
 
 }
