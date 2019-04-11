@@ -10,7 +10,14 @@ import Alamofire
 import CoreData
 import UIKit
 import Firebase
-
+enum HomePageName {
+    case diningList
+    case parksList
+    case heritageList
+    case exhibitionList
+    case tourguideList
+    case publicArtsList
+}
 class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, TopBarProtocol,comingSoonPopUpProtocol,SideMenuProtocol,UIViewControllerTransitioningDelegate,LoadingViewProtocol,LoginPopUpProtocol,UITextFieldDelegate {
     
 
@@ -51,6 +58,8 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var userInfoArray : UserInfoData?
     var userEventList: [NMoQUserEventList]! = []
     var alreadyFetch : Bool? = false
+    var selectedRow : Int? = 0
+    var homePageNameString : HomePageName?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -186,6 +195,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedRow = indexPath.row
         let panelAndTalks = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
         if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "") && (self.homeBannerList.count > 0)) {
             if(indexPath.row == 0) {
@@ -259,17 +269,17 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
     }
     func loadMuseumsPage(curretRow:Int? = 0) {
-        let museumsView =  self.storyboard?.instantiateViewController(withIdentifier: "museumViewId") as! MuseumsViewController
-        museumsView.museumId = homeList[curretRow!].id
-        museumsView.museumTitleString = homeList[curretRow!].name
-        museumsView.fromHomeBanner = false
-        let transition = CATransition()
-        transition.duration = 0.25
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromRight
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(museumsView, animated: false, completion: nil)
-       // self.performSegue(withIdentifier: "homeToMuseumLandingSegue", sender: self)
+//        let museumsView =  self.storyboard?.instantiateViewController(withIdentifier: "museumViewId") as! MuseumsViewController
+//        museumsView.museumId = homeList[curretRow!].id
+//        museumsView.museumTitleString = homeList[curretRow!].name
+//        museumsView.fromHomeBanner = false
+//        let transition = CATransition()
+//        transition.duration = 0.25
+//        transition.type = kCATransitionPush
+//        transition.subtype = kCATransitionFromRight
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        self.present(museumsView, animated: false, completion: nil)
+       self.performSegue(withIdentifier: "homeToMuseumLandingSegue", sender: self)
         
     }
     
@@ -282,6 +292,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 //        view.window!.layer.add(transition, forKey: kCATransition)
 //        exhibitionView.exhibitionsPageNameString = ExhbitionPageName.homeExhibition
 //        self.present(exhibitionView, animated: false, completion: nil)
+        homePageNameString = HomePageName.exhibitionList
         self.performSegue(withIdentifier: "homeToCommonListSegue", sender: self)
     }
     
@@ -409,15 +420,17 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     //MARK: SideMenu Delegates
     func exhibitionButtonPressed() {
-        let exhibitionView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
-        exhibitionView.fromSideMenu = true
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-         exhibitionView.exhibitionsPageNameString = ExhbitionPageName.homeExhibition
-        self.present(exhibitionView, animated: false, completion: nil)
+//        let exhibitionView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+//        exhibitionView.fromSideMenu = true
+//        let transition = CATransition()
+//        transition.duration = 0.3
+//        transition.type = kCATransitionFade
+//        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//         exhibitionView.exhibitionsPageNameString = ExhbitionPageName.homeExhibition
+//        self.present(exhibitionView, animated: false, completion: nil)
+        homePageNameString = HomePageName.exhibitionList
+        self.performSegue(withIdentifier: "homeToListFadeSegue", sender: self)
     }
     
     func eventbuttonPressed() {
@@ -445,79 +458,90 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func tourGuideButtonPressed() {
-        let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
-        tourGuideView.fromSideMenu = true
-        tourGuideView.exhibitionsPageNameString = ExhbitionPageName.tourGuideList
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromRight
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(tourGuideView, animated: false, completion: nil)
+//        let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+//        tourGuideView.fromSideMenu = true
+//        tourGuideView.exhibitionsPageNameString = ExhbitionPageName.tourGuideList
+//        let transition = CATransition()
+//        transition.duration = 0.3
+//        transition.type = kCATransitionPush
+//        transition.subtype = kCATransitionFromRight
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        self.present(tourGuideView, animated: false, completion: nil)
+        homePageNameString = HomePageName.tourguideList
     }
     
     func heritageButtonPressed() {
-        let heritageView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
-        heritageView.fromSideMenu = true
-        heritageView.exhibitionsPageNameString = ExhbitionPageName.heritageList
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(heritageView, animated: false, completion: nil)
+//        let heritageView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+//        heritageView.fromSideMenu = true
+//        heritageView.exhibitionsPageNameString = ExhbitionPageName.heritageList
+//        let transition = CATransition()
+//        transition.duration = 0.3
+//        transition.type = kCATransitionFade
+//        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        self.present(heritageView, animated: false, completion: nil)
+        homePageNameString = HomePageName.heritageList
+        self.performSegue(withIdentifier: "homeToListFadeSegue", sender: self)
     }
     
     func publicArtsButtonPressed() {
-        let publicArtsView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
-        publicArtsView.fromSideMenu = true
-        publicArtsView.exhibitionsPageNameString = ExhbitionPageName.publicArtsList
-        let transition = CATransition()
-        transition.duration = 0.25
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(publicArtsView, animated: false, completion: nil)
+//        let publicArtsView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+//        publicArtsView.fromSideMenu = true
+//        publicArtsView.exhibitionsPageNameString = ExhbitionPageName.publicArtsList
+//        let transition = CATransition()
+//        transition.duration = 0.25
+//        transition.type = kCATransitionFade
+//        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        self.present(publicArtsView, animated: false, completion: nil)
+        homePageNameString = HomePageName.publicArtsList
+        self.performSegue(withIdentifier: "homeToListFadeSegue", sender: self)
     }
     
     func parksButtonPressed() {
-        let parksView =  self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! CommonDetailViewController
-        parksView.pageNameString = PageName.SideMenuPark
-        let transition = CATransition()
-        transition.duration = 0.25
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(parksView, animated: false, completion: nil)
+//        let parksView =  self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! CommonDetailViewController
+//        parksView.pageNameString = PageName.SideMenuPark
+//        let transition = CATransition()
+//        transition.duration = 0.25
+//        transition.type = kCATransitionFade
+//        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        self.present(parksView, animated: false, completion: nil)
+        homePageNameString = HomePageName.parksList
+        self.performSegue(withIdentifier: "homeToCommonDetail", sender: self)
     }
     
     func diningButtonPressed() {
-        let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
-        diningView.fromHome = true
-        diningView.fromSideMenu = true
-        diningView.exhibitionsPageNameString = ExhbitionPageName.diningList
-        let transition = CATransition()
-        transition.duration = 0.25
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(diningView, animated: false, completion: nil)
+//        let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+//        diningView.fromHome = true
+//        diningView.fromSideMenu = true
+//        diningView.exhibitionsPageNameString = ExhbitionPageName.diningList
+//        let transition = CATransition()
+//        transition.duration = 0.25
+//        transition.type = kCATransitionFade
+//        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        self.present(diningView, animated: false, completion: nil)
+        homePageNameString = HomePageName.diningList
+        self.performSegue(withIdentifier: "homeToListFadeSegue", sender: self)
     }
     
     func culturePassButtonPressed() {
-        let transition = CATransition()
-        transition.duration = 0.25
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
+        
         
         if (UserDefaults.standard.value(forKey: "accessToken") as? String != nil) {
+            let transition = CATransition()
+            transition.duration = 0.25
+            transition.type = kCATransitionFade
+            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+            view.window!.layer.add(transition, forKey: kCATransition)
             let profileView =  self.storyboard?.instantiateViewController(withIdentifier: "profileViewId") as! ProfileViewController
             self.present(profileView, animated: false, completion: nil)
         } else {
-            let culturePassView =  self.storyboard?.instantiateViewController(withIdentifier: "culturePassViewId") as! CulturePassViewController
-            culturePassView.fromHome = true
-            self.present(culturePassView, animated: false, completion: nil)
+//            let culturePassView =  self.storyboard?.instantiateViewController(withIdentifier: "culturePassViewId") as! CulturePassViewController
+//            culturePassView.fromHome = true
+//            self.present(culturePassView, animated: false, completion: nil)
+            self.performSegue(withIdentifier: "homeToCulturepass", sender: self)
         }
     }
     
@@ -589,16 +613,18 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     @IBAction func didTaprestaurantButton(_ sender: UIButton) {
         self.culturePassButton.transform = CGAffineTransform(scaleX: 1, y: 1)
-        let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
-         diningView.fromHome = true
-         diningView.fromSideMenu = false
-         diningView.exhibitionsPageNameString = ExhbitionPageName.diningList
-         let transition = CATransition()
-         transition.duration = 0.25
-         transition.type = kCATransitionPush
-         transition.subtype = kCATransitionFromRight
-         view.window!.layer.add(transition, forKey: kCATransition)
-         self.present(diningView, animated: false, completion: nil)
+//        let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+//         diningView.fromHome = true
+//         diningView.fromSideMenu = false
+//         diningView.exhibitionsPageNameString = ExhbitionPageName.diningList
+//         let transition = CATransition()
+//         transition.duration = 0.25
+//         transition.type = kCATransitionPush
+//         transition.subtype = kCATransitionFromRight
+//         view.window!.layer.add(transition, forKey: kCATransition)
+//         self.present(diningView, animated: false, completion: nil)
+         homePageNameString = HomePageName.diningList
+        self.performSegue(withIdentifier: "homeToCommonListSegue", sender: self)
     }
     
     @IBAction func restaurantButtonTouchDown(_ sender: UIButton) {
@@ -1296,17 +1322,18 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         return true
     }
     func loadTourViewPage(nid: String?,subTitle:String?,isFromTour:Bool?) {
-        let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
-        tourView.tourDetailId = nid
-        tourView.headerTitle = subTitle
-        tourView.isFromTour = isFromTour
-        tourView.exhibitionsPageNameString = ExhbitionPageName.nmoqTourSecondList
-        let transition = CATransition()
-        transition.duration = 0.25
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromRight
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(tourView, animated: false, completion: nil)
+//        let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+//        tourView.tourDetailId = nid
+//        tourView.headerTitle = subTitle
+//        tourView.isFromTour = isFromTour
+//        tourView.exhibitionsPageNameString = ExhbitionPageName.nmoqTourSecondList
+//        let transition = CATransition()
+//        transition.duration = 0.25
+//        transition.type = kCATransitionPush
+//        transition.subtype = kCATransitionFromRight
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        self.present(tourView, animated: false, completion: nil)
+        self.performSegue(withIdentifier: "homeToCommonListSegue", sender: self)
     }
     @objc func receiveHomePageNotificationEn(notification: NSNotification) {
         if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (homeList.count == 0)){
@@ -1330,13 +1357,50 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "homeToCommonListSegue") {
             let commonList = segue.destination as! CommonListViewController
-            commonList.modalPresentationStyle = .popover
-            commonList.exhibitionsPageNameString = ExhbitionPageName.homeExhibition
-        } else if (segue.identifier == "homeToMuseumLandingSegue") {
-            //let museumsView = segue.destination as! MuseumsViewController
-//            museumsView.museumId = homeList[curretRow!].id
-//            museumsView.museumTitleString = homeList[curretRow!].name
-//            museumsView.fromHomeBanner = false
+
+            if((homeList[selectedRow!].id == "12181") || (homeList[selectedRow!].id == "12186")) {
+                commonList.exhibitionsPageNameString = ExhbitionPageName.homeExhibition
+            } else if((homeList[selectedRow!].id == "13976") || (homeList[selectedRow!].id == "15631")) {
+                commonList.tourDetailId = homeList[selectedRow!].id
+                commonList.headerTitle = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
+                commonList.isFromTour = false
+                commonList.exhibitionsPageNameString = ExhbitionPageName.nmoqTourSecondList
+            }  else if(homePageNameString == HomePageName.tourguideList){
+                commonList.fromSideMenu = true
+                commonList.exhibitionsPageNameString = ExhbitionPageName.tourGuideList
+            } else if(homePageNameString == HomePageName.diningList){
+                commonList.fromHome = true
+                commonList.fromSideMenu = false
+                commonList.exhibitionsPageNameString = ExhbitionPageName.diningList
+            }
+            
+        } else if (segue.identifier == "homeToListFadeSegue") {
+             let commonList = segue.destination as! CommonListViewController
+             if(homePageNameString == HomePageName.exhibitionList){
+                commonList.fromSideMenu = true
+                commonList.exhibitionsPageNameString = ExhbitionPageName.homeExhibition
+             } else if(homePageNameString == HomePageName.diningList){
+                commonList.fromHome = true
+                commonList.fromSideMenu = true
+                commonList.exhibitionsPageNameString = ExhbitionPageName.diningList
+            } else if(homePageNameString == HomePageName.heritageList){
+                commonList.fromSideMenu = true
+                commonList.exhibitionsPageNameString = ExhbitionPageName.heritageList
+            } else if(homePageNameString == HomePageName.publicArtsList){
+                commonList.fromSideMenu = true
+                commonList.exhibitionsPageNameString = ExhbitionPageName.publicArtsList
+            }
+        }else if (segue.identifier == "homeToMuseumLandingSegue") {
+            let museumsView = segue.destination as! MuseumsViewController
+            museumsView.museumId = homeList[selectedRow!].id
+            museumsView.museumTitleString = homeList[selectedRow!].name
+            museumsView.fromHomeBanner = false
+        }else if (segue.identifier == "homeToCulturepass") {
+            let culturePass = segue.destination as! CulturePassViewController
+            culturePass.fromHome = true
+        } else if (segue.identifier == "homeToCommonDetail") {
+            let commonDetail = segue.destination as! CommonDetailViewController
+            commonDetail.pageNameString = PageName.SideMenuPark
         }
         
         

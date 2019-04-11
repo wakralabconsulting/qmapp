@@ -211,3 +211,63 @@ extension String {
         return htmlAttributedString?.string ?? ""
     }
 }
+class SegueFromLeft: UIStoryboardSegue {
+    override func perform() {
+        let src = self.source       //new enum
+        let dst = self.destination  //new enum
+        
+        src.view.superview?.insertSubview(dst.view, aboveSubview: src.view)
+        dst.view.transform = CGAffineTransform(translationX: -src.view.frame.size.width, y: 0) //Method call changed
+        UIView.animate(withDuration: 0.5, delay: 0.2, options: UIViewAnimationOptions.curveEaseInOut, animations: {
+            dst.view.transform = CGAffineTransform(translationX: 0, y: 0)
+        }) { (finished) in
+            src.present(dst, animated: false, completion: nil) //Method call changed
+        }
+    }
+}
+class SegueFromRight: UIStoryboardSegue {
+    override func perform() {
+        let src = self.source
+        let dst = self.destination
+        
+        src.view.superview?.insertSubview(dst.view, aboveSubview: src.view)
+        dst.view.transform = CGAffineTransform(translationX: src.view.frame.size.width*2, y: 0) //Double the X-Axis
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.curveEaseInOut, animations: {
+            dst.view.transform = CGAffineTransform(translationX: 0, y: 0)
+        }) { (finished) in
+            src.present(dst, animated: false, completion: nil)
+        }
+    }
+}
+class FadeSegue: UIStoryboardSegue {
+    
+    var placeholderView: UIViewController?
+    
+    override func perform() {
+        let screenWidth = UIScreen.main.bounds.size.width
+        let screenHeight = UIScreen.main.bounds.size.height
+        
+        if let placeholder = placeholderView {
+            placeholder.view.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight)
+            
+            placeholder.view.alpha = 0
+            source.view.addSubview(placeholder.view)
+            
+            UIView.animate(withDuration: 0.4, animations: {
+                placeholder.view.alpha = 1
+            }, completion: { (finished) in
+                self.source.present(self.destination, animated: false, completion: {
+                    placeholder.view.removeFromSuperview()
+                })
+            })
+        } else {
+            self.destination.view.alpha = 0.0
+            
+            self.source.present(self.destination, animated: false, completion: {
+                UIView.animate(withDuration: 0.4, animations: {
+                    self.destination.view.alpha = 1.0
+                })
+            })
+        }
+    }
+}

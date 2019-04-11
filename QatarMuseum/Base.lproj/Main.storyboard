@@ -305,8 +305,11 @@
                         <outlet property="restaurantButton" destination="aO8-gX-hKy" id="CiC-xB-eKY"/>
                         <outlet property="topbarView" destination="NkB-Zv-8hj" id="AWd-pE-BvL"/>
                         <outlet property="visualEffectView" destination="uSs-hx-cNf" id="cCa-Jz-Kf8"/>
-                        <segue destination="QCk-26-GoW" kind="show" identifier="homeToCommonListSegue" id="LRh-Cg-Npm"/>
-                        <segue destination="3LW-jw-kpW" kind="custom" identifier="homeToMuseumLandingSegue" id="P3c-zU-rDY"/>
+                        <segue destination="QCk-26-GoW" kind="custom" identifier="homeToCommonListSegue" customClass="SegueFromRight" customModule="QatarMuseums" customModuleProvider="target" id="LRh-Cg-Npm"/>
+                        <segue destination="3LW-jw-kpW" kind="custom" identifier="homeToMuseumLandingSegue" customClass="SegueFromRight" customModule="QatarMuseums" customModuleProvider="target" id="P3c-zU-rDY"/>
+                        <segue destination="csd-tH-WoS" kind="custom" identifier="homeToCulturepass" customClass="SegueFromRight" customModule="QatarMuseums" customModuleProvider="target" id="p15-uS-MP1"/>
+                        <segue destination="Z1K-CA-bjg" kind="custom" identifier="homeToCommonDetail" customClass="FadeSegue" customModule="QatarMuseums" customModuleProvider="target" id="rjQ-yI-tVc"/>
+                        <segue destination="QCk-26-GoW" kind="custom" identifier="homeToListFadeSegue" customClass="FadeSegue" customModule="QatarMuseums" customModuleProvider="target" id="sBl-n6-gHM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -1109,7 +1112,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pML-Ib-x5b">
-                                                                    <rect key="frame" x="32.666666666666664" y="71" width="29.666666666666664" height="13"/>
+                                                                    <rect key="frame" x="33.666666666666664" y="73" width="28" height="11"/>
                                                                     <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="11"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -4805,7 +4808,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z9q-1q-rbc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2793" y="90"/>
+            <point key="canvasLocation" x="2778" y="90"/>
         </scene>
         <!--Museum About View Controller-->
         <scene sceneID="PvE-BO-QUw">
@@ -5641,4 +5644,7 @@
         <image name="unselected" width="120" height="120"/>
         <image name="up_arrowX2" width="279" height="162"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="sBl-n6-gHM"/>
+    </inferredMetricsTieBreakers>
 </document>
