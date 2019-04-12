@@ -4812,6 +4812,9 @@
                         <outlet property="exbtnLoadingView" destination="54S-3I-13k" id="YWn-vi-tIJ"/>
                         <outlet property="exhibitionCollectionView" destination="Qqp-Pf-09X" id="hQ6-g6-bUb"/>
                         <outlet property="exhibitionHeaderView" destination="V5A-BC-DnQ" id="zLx-Sf-wu2"/>
+                        <segue destination="Z1K-CA-bjg" kind="custom" identifier="commonListToDetailSegue" customClass="FadeSegue" customModule="QatarMuseums" customModuleProvider="target" id="ffd-l4-w9g"/>
+                        <segue destination="3V7-zS-GQO" kind="custom" identifier="commonListToPanelDetailSegue" customClass="FadeSegue" customModule="QatarMuseums" customModuleProvider="target" id="3T9-v2-MaX"/>
+                        <segue destination="g9r-ut-SZZ" kind="custom" identifier="commonListToMiaTourSegue" customClass="SegueFromRight" customModule="QatarMuseums" customModuleProvider="target" id="58R-AN-Jis"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z9q-1q-rbc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -5654,6 +5657,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="sBl-n6-gHM"/>
+        <segue reference="ffd-l4-w9g"/>
         <segue reference="969-KO-s7i"/>
         <segue reference="Cwt-uy-fRF"/>
     </inferredMetricsTieBreakers>

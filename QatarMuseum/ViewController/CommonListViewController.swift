@@ -53,7 +53,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     var tourDetailId : String? = nil
     var headerTitle : String? = nil
     var dataInCoreData : Bool? = false
-    
+    var selectedRow : Int? = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -421,36 +421,45 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedRow = indexPath.row
         if ((exhibitionsPageNameString == ExhbitionPageName.homeExhibition) || (exhibitionsPageNameString == ExhbitionPageName.museumExhibition)) {
             if let exhibitionId = exhibition[indexPath.row].id {
-                loadExhibitionDetailAnimation(exhibitionId: exhibitionId)
+               // loadExhibitionDetailAnimation(exhibitionId: exhibitionId)
+                self.performSegue(withIdentifier: "commonListToDetailSegue", sender: self)
             }
             else {
                 addComingSoonPopup()
             }
         } else if (exhibitionsPageNameString == ExhbitionPageName.heritageList) {
-            let heritageId = heritageListArray[indexPath.row].id
-            loadHeritageDetail(heritageListId: heritageId!)
+           // let heritageId = heritageListArray[indexPath.row].id
+            //loadHeritageDetail(heritageListId: heritageId!)
+            self.performSegue(withIdentifier: "commonListToDetailSegue", sender: self)
         } else if (exhibitionsPageNameString == ExhbitionPageName.publicArtsList) {
-            loadPublicArtsDetail(idValue: publicArtsListArray[indexPath.row].id!)
+           // loadPublicArtsDetail(idValue: publicArtsListArray[indexPath.row].id!)
+            self.performSegue(withIdentifier: "commonListToDetailSegue", sender: self)
         } else if (exhibitionsPageNameString == ExhbitionPageName.museumCollectionsList) {
-            loadCollectionDetail(currentRow: indexPath.row)
+            //loadCollectionDetail(currentRow: indexPath.row)
+            self.performSegue(withIdentifier: "commonListToPanelDetailSegue", sender: self)
         } else if (exhibitionsPageNameString == ExhbitionPageName.diningList) {
-            let diningId = diningListArray[indexPath.row].id
-            loadDiningDetailAnimation(idValue: diningId!)
+           // let diningId = diningListArray[indexPath.row].id
+           // loadDiningDetailAnimation(idValue: diningId!)
+            self.performSegue(withIdentifier: "commonListToDetailSegue", sender: self)
         }  else if (exhibitionsPageNameString == ExhbitionPageName.nmoqTourSecondList) {
-            if (isFromTour)! {
-                loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: true, pageName: ExhbitionPageName.nmoqTourSecondList)
-            } else {
-                loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: false, pageName: ExhbitionPageName.nmoqTourSecondList)
-            }
+//            if (isFromTour)! {
+//                loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: true, pageName: ExhbitionPageName.nmoqTourSecondList)
+//            } else {
+//                loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: false, pageName: ExhbitionPageName.nmoqTourSecondList)
+//            }
+            self.performSegue(withIdentifier: "commonListToPanelDetailSegue", sender: self)
         } else if (exhibitionsPageNameString == ExhbitionPageName.miaTourGuideList) {
             if (indexPath.row != 0) {
-                loadMiaTourDetail(currentRow: indexPath.row - 1)
+                //loadMiaTourDetail(currentRow: indexPath.row - 1)
+                self.performSegue(withIdentifier: "commonListToMiaTourSegue", sender: self)
             }
         }
         else if (exhibitionsPageNameString == ExhbitionPageName.facilitiesSecondList) {
-            loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: false, pageName: ExhbitionPageName.facilitiesSecondList)
+            //loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: false, pageName: ExhbitionPageName.facilitiesSecondList)
+            self.performSegue(withIdentifier: "commonListToPanelDetailSegue", sender: self)
         } else if (exhibitionsPageNameString == ExhbitionPageName.tourGuideList) {
             if (indexPath.row != 0) {
                 if (museumsList != nil) {
@@ -464,9 +473,11 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         } else if (exhibitionsPageNameString == ExhbitionPageName.parkList) {
             if ((nmoqParks.count > 0) && (indexPath.row != 0) && (indexPath.row != 3)) {
                 if((nmoqParks[indexPath.row - 1].nid == "15616") || (nmoqParks[indexPath.row - 1].nid == "15851")) {
-                    loadParkPlayGroundDetail(parkList: nmoqParks[indexPath.row - 1])
+                   // loadParkPlayGroundDetail(parkList: nmoqParks[indexPath.row - 1])
+                    self.performSegue(withIdentifier: "commonListToPanelDetailSegue", sender: self)
                 } else {
-                    loadParkHeritageGardenDetail(parkList: nmoqParks[indexPath.row - 1])
+                    //loadParkHeritageGardenDetail(parkList: nmoqParks[indexPath.row - 1])
+                    self.performSegue(withIdentifier: "commonListToDetailSegue", sender: self)
                 }
             }
         }
@@ -476,15 +487,15 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     func loadExhibitionCellPages(cellObj: CommonListCell, selectedIndex: Int) {
     }
     func loadPublicArtsDetail(idValue: String) {
-        let publicDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! CommonDetailViewController
-        publicDtlView.pageNameString = PageName.publicArtsDetail
-        publicDtlView.publicArtsDetailId = idValue
-        let transition = CATransition()
-        transition.duration = 0.5
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(publicDtlView, animated: false, completion: nil)
+//        let publicDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! CommonDetailViewController
+//        publicDtlView.pageNameString = PageName.publicArtsDetail
+//        publicDtlView.publicArtsDetailId = idValue
+//        let transition = CATransition()
+//        transition.duration = 0.5
+//        transition.type = kCATransitionFade
+//        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        self.present(publicDtlView, animated: false, completion: nil)
     }
     func loadCollectionDetail(currentRow: Int?) {
         let collectionDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
@@ -504,38 +515,39 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         self.view.addSubview(popupView)
     }
     func loadHeritageDetail(heritageListId: String) {
-        let heritageDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! CommonDetailViewController
-        heritageDtlView.pageNameString = PageName.heritageDetail
-        heritageDtlView.heritageDetailId = heritageListId
-        let transition = CATransition()
-        transition.duration = 0.25
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(heritageDtlView, animated: false, completion: nil)
+//        let heritageDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! CommonDetailViewController
+//        heritageDtlView.pageNameString = PageName.heritageDetail
+//        heritageDtlView.heritageDetailId = heritageListId
+//        let transition = CATransition()
+//        transition.duration = 0.25
+//        transition.type = kCATransitionFade
+//        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        self.present(heritageDtlView, animated: false, completion: nil)
     }
     func loadExhibitionDetailAnimation(exhibitionId: String) {
-        let exhibitionDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! CommonDetailViewController
-        exhibitionDtlView.pageNameString = PageName.exhibitionDetail
-            exhibitionDtlView.fromHome = true
-            exhibitionDtlView.exhibitionId = exhibitionId
-        let transition = CATransition()
-        transition.duration = 0.5
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(exhibitionDtlView, animated: false, completion: nil)
+//        let exhibitionDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! CommonDetailViewController
+//        exhibitionDtlView.pageNameString = PageName.exhibitionDetail
+//            exhibitionDtlView.fromHome = true
+//            exhibitionDtlView.exhibitionId = exhibitionId
+//        let transition = CATransition()
+//        transition.duration = 0.5
+//        transition.type = kCATransitionFade
+//        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        self.present(exhibitionDtlView, animated: false, completion: nil)
+        //self.performSegue(withIdentifier: "commonListToDetailSegue", sender: self)
     }
     func loadDiningDetailAnimation(idValue: String) {
-        let diningDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! CommonDetailViewController
-        diningDetailView.diningDetailId = idValue
-        diningDetailView.pageNameString = PageName.DiningDetail
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(diningDetailView, animated: false, completion: nil)
+//        let diningDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! CommonDetailViewController
+//        diningDetailView.diningDetailId = idValue
+//        diningDetailView.pageNameString = PageName.DiningDetail
+//        let transition = CATransition()
+//        transition.duration = 0.3
+//        transition.type = kCATransitionFade
+//        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        self.present(diningDetailView, animated: false, completion: nil)
         
     }
     func loadTourSecondDetailPage(selectedRow: Int?,fromTour:Bool?,pageName: ExhbitionPageName?) {
@@ -2826,18 +2838,18 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         
     }
     func loadMiaTourDetail(currentRow: Int?) {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromRight
-        view.window!.layer.add(transition, forKey: kCATransition)
-        
-        let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "miaDetailId") as! MiaTourDetailViewController
-        miaView.museumId = museumId ?? "0"
-        if (miaTourDataFullArray != nil) {
-            miaView.tourGuideDetail = miaTourDataFullArray[currentRow!]
-        }
-        self.present(miaView, animated: false, completion: nil)
+//        let transition = CATransition()
+//        transition.duration = 0.3
+//        transition.type = kCATransitionPush
+//        transition.subtype = kCATransitionFromRight
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//
+//        let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "miaDetailId") as! MiaTourDetailViewController
+//        miaView.museumId = museumId ?? "0"
+//        if (miaTourDataFullArray != nil) {
+//            miaView.tourGuideDetail = miaTourDataFullArray[currentRow!]
+//        }
+//        self.present(miaView, animated: false, completion: nil)
     }
     //MARK: TourGuide Service call
     func getTourGuideMuseumsList() {
@@ -3637,34 +3649,86 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         }
     }
     func loadParkPlayGroundDetail(parkList: NMoQPark) {
-        let collectionDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
-        // collectionDetailView.collectionName = parkList.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-        collectionDetailView.pageNameString = NMoQPanelPage.PlayGroundPark
-        collectionDetailView.nid = parkList.nid
-        let transition = CATransition()
-        transition.duration = 0.25
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(collectionDetailView, animated: false, completion: nil)
+//        let collectionDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
+//        // collectionDetailView.collectionName = parkList.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+//        collectionDetailView.pageNameString = NMoQPanelPage.PlayGroundPark
+//        collectionDetailView.nid = parkList.nid
+//        let transition = CATransition()
+//        transition.duration = 0.25
+//        transition.type = kCATransitionFade
+//        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        self.present(collectionDetailView, animated: false, completion: nil)
     }
     
     func loadParkHeritageGardenDetail(parkList: NMoQPark) {
-        let parksView =  self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! CommonDetailViewController
-        parksView.pageNameString = PageName.NMoQPark
-        parksView.parkDetailId = parkList.nid
-        let transition = CATransition()
-        transition.duration = 0.25
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(parksView, animated: false, completion: nil)
+//        let parksView =  self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! CommonDetailViewController
+//        parksView.pageNameString = PageName.NMoQPark
+//        parksView.parkDetailId = parkList.nid
+//        let transition = CATransition()
+//        transition.duration = 0.25
+//        transition.type = kCATransitionFade
+//        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        self.present(parksView, animated: false, completion: nil)
     }
     func showLocationErrorPopup() {
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
         popupView.loadMapKitLocationErrorPopup()
         self.view.addSubview(popupView)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "commonListToDetailSegue") {
+            let commonDetail = segue.destination as! CommonDetailViewController
+            if ((exhibitionsPageNameString == ExhbitionPageName.homeExhibition) || (exhibitionsPageNameString == ExhbitionPageName.museumExhibition)) {
+                commonDetail.pageNameString = PageName.exhibitionDetail
+                commonDetail.fromHome = true
+                commonDetail.exhibitionId = exhibition[selectedRow!].id
+            } else if (exhibitionsPageNameString == ExhbitionPageName.heritageList) {
+                commonDetail.pageNameString = PageName.heritageDetail
+                commonDetail.heritageDetailId = heritageListArray[selectedRow!].id
+            }else if (exhibitionsPageNameString == ExhbitionPageName.publicArtsList) {
+                commonDetail.pageNameString = PageName.publicArtsDetail
+                commonDetail.publicArtsDetailId = publicArtsListArray[selectedRow!].id
+            } else if (exhibitionsPageNameString == ExhbitionPageName.diningList) {
+                commonDetail.diningDetailId = diningListArray[selectedRow!].id
+                commonDetail.pageNameString = PageName.DiningDetail
+            } else if (exhibitionsPageNameString == ExhbitionPageName.parkList) {
+                commonDetail.pageNameString = PageName.NMoQPark
+                commonDetail.parkDetailId = nmoqParks[selectedRow! - 1].nid
+            }
+        } else if (segue.identifier == "commonListToPanelDetailSegue") {
+            let panelDetail = segue.destination as! PanelDiscussionDetailViewController
+            if (exhibitionsPageNameString == ExhbitionPageName.museumCollectionsList) {
+                panelDetail.pageNameString = NMoQPanelPage.CollectionDetail
+                panelDetail.collectionName = collection[selectedRow!].name?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+            } else if (exhibitionsPageNameString == ExhbitionPageName.nmoqTourSecondList) {
+                panelDetail.selectedRow = selectedRow
+                panelDetail.nmoqTourDetail = nmoqTourDetail
+                panelDetail.panelDetailId = tourDetailId
+                if (isFromTour)! {
+                    panelDetail.pageNameString = NMoQPanelPage.TourDetailPage
+                } else {
+                    panelDetail.pageNameString = NMoQPanelPage.PanelDetailPage
+                }
+            } else if (exhibitionsPageNameString == ExhbitionPageName.facilitiesSecondList) {
+                panelDetail.selectedRow = selectedRow
+                panelDetail.pageNameString = NMoQPanelPage.FacilitiesDetailPage
+                panelDetail.panelDetailId = facilitiesDetail![selectedRow!].nid
+                panelDetail.facilitiesDetail = facilitiesDetail
+                panelDetail.fromCafeOrDining = true
+            } else if (exhibitionsPageNameString == ExhbitionPageName.parkList) {
+                panelDetail.pageNameString = NMoQPanelPage.PlayGroundPark
+                panelDetail.nid = nmoqParks[selectedRow! - 1].nid
+            }
+        } else if (segue.identifier == "commonListToMiaTourSegue") {
+            let miaTouguideView = segue.destination as! MiaTourDetailViewController
+            miaTouguideView.museumId = museumId ?? "0"
+            if (miaTourDataFullArray != nil) {
+                miaTouguideView.tourGuideDetail = miaTourDataFullArray[selectedRow! - 1]
+            }
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

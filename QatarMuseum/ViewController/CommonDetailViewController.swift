@@ -43,7 +43,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     var carousel = iCarousel()
     var transparentView = UIView()
     var fromHome : Bool = false
-    var exhibitionId : String!
+    var exhibitionId : String? = nil
     var parkDetailId: String? = nil
     
     override func viewDidLoad() {
