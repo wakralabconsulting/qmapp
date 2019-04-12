@@ -1380,24 +1380,86 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     //MARK: MuseumCollectionList Methods
     //MARK: CollectionListWebservice call
+//    func getCollectionList() {
+//        _ = Alamofire.request(QatarMuseumRouter.CollectionList(LocalizationLanguage.currentAppleLanguage(),["museum_id": museumId ?? 0])).responseObject { (response: DataResponse<Collections>) -> Void in
+//            switch response.result {
+//            case .success(let data):
+//                if((self.museumId != "63") && (self.museumId != "96")) {
+//                    self.collection = data.collections!
+//                    self.exbtnLoadingView.stopLoading()
+//                    self.exbtnLoadingView.isHidden = true
+////                    if (self.collection.count == 0) {
+////                        self.exbtnLoadingView.stopLoading()
+////                        self.exbtnLoadingView.noDataView.isHidden = false
+////                        self.exbtnLoadingView.isHidden = false
+////                        self.exbtnLoadingView.showNoDataView()
+////                    } else {
+////                        self.exhibitionCollectionView.reloadData()
+////                    }
+//                } else {
+//                    if(self.collection.count == 0) {
+//                        self.collection = data.collections!
+//                        self.exbtnLoadingView.stopLoading()
+//                        self.exbtnLoadingView.isHidden = true
+////                        if(self.collection.count == 0) {
+////                            self.exbtnLoadingView.stopLoading()
+////                            self.exbtnLoadingView.noDataView.isHidden = false
+////                            self.exbtnLoadingView.isHidden = false
+////                            self.exbtnLoadingView.showNoDataView()
+////                        }else {
+////                            self.exhibitionCollectionView.reloadData()
+////                        }
+//                    }
+//                }
+//                if(self.collection.count == 0) {
+//                    self.exbtnLoadingView.stopLoading()
+//                    self.exbtnLoadingView.noDataView.isHidden = false
+//                    self.exbtnLoadingView.isHidden = false
+//                    self.exbtnLoadingView.showNoDataView()
+//                }else {
+//                    self.exhibitionCollectionView.reloadData()
+//                }
+//                self.saveOrUpdateCollectionCoredata(collection: data.collections)
+//
+//            case .failure( _):
+//                print("error")
+//                if((self.museumId != "63") && (self.museumId != "96")) {
+//                    var errorMessage: String
+//                    errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
+//                                                                    comment: "Setting the content of the alert"))
+//                    self.exbtnLoadingView.stopLoading()
+//                    self.exbtnLoadingView.noDataView.isHidden = false
+//                    self.exbtnLoadingView.isHidden = false
+//                    self.exbtnLoadingView.showNoDataView()
+//                    self.exbtnLoadingView.noDataLabel.text = errorMessage
+//                }
+//            }
+//        }
+//    }
     func getCollectionList() {
         _ = Alamofire.request(QatarMuseumRouter.CollectionList(LocalizationLanguage.currentAppleLanguage(),["museum_id": museumId ?? 0])).responseObject { (response: DataResponse<Collections>) -> Void in
             switch response.result {
             case .success(let data):
-                if((self.museumId != "63") && (self.museumId != "96")) {
+                if((self.museumId == "63") && (self.museumId == "96")) {
+                    if(self.collection.count == 0) {
+                        self.collection = data.collections!
+                        self.exbtnLoadingView.stopLoading()
+                        self.exbtnLoadingView.isHidden = true
+                    }
+                } else {
                     self.collection = data.collections!
                     self.exbtnLoadingView.stopLoading()
                     self.exbtnLoadingView.isHidden = true
-                    if (self.collection.count == 0) {
-                        self.exbtnLoadingView.stopLoading()
-                        self.exbtnLoadingView.noDataView.isHidden = false
-                        self.exbtnLoadingView.isHidden = false
-                        self.exbtnLoadingView.showNoDataView()
-                    } else {
-                        self.exhibitionCollectionView.reloadData()
-                    }
                 }
-                self.saveOrUpdateCollectionCoredata(collection: data.collections)
+                if(self.collection.count == 0) {
+                    self.exbtnLoadingView.stopLoading()
+                    self.exbtnLoadingView.noDataView.isHidden = false
+                    self.exbtnLoadingView.isHidden = false
+                    self.exbtnLoadingView.showNoDataView()
+                }else {
+                    self.exhibitionCollectionView.reloadData()
+                    self.saveOrUpdateCollectionCoredata(collection: data.collections)
+                }
                 
             case .failure( _):
                 print("error")

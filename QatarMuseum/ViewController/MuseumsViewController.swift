@@ -36,6 +36,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     var bannerId: String? = nil
     var bannerImageArray : [String]? = []
     let networkReachability = NetworkReachabilityManager()
+    var selectedItemName : String? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -309,7 +310,9 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         }
         museumsCell.cellItemBtnTapAction = {
             () in
+            self.selectedItemName = itemName
             self.loadBottomCellPages(cellObj: museumsCell, selectedItem: itemName )
+            
         }
         return museumsCell
     }
@@ -324,134 +327,146 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             let travelBanner = NSLocalizedString("TRAVEL_ARRANGEMENTS", comment: "TRAVEL_ARRANGEMENTS  in the Museum page")
             let panelBanner = NSLocalizedString("PANEL_DISCUSSION", comment: "PANEL_DISCUSSION  in the Museum page")
             if (selectedItem == aboutBanner) {
-                let heritageDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
-                heritageDtlView.pageNameString = PageName2.museumEvent
-                heritageDtlView.museumId = bannerId
-                
-                let transition = CATransition()
-                transition.duration = 0.3
-                transition.type = kCATransitionFade
-                transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-                view.window!.layer.add(transition, forKey: kCATransition)
-                self.present(heritageDtlView, animated: false, completion: nil)
+//                let heritageDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
+//                heritageDtlView.pageNameString = PageName2.museumEvent
+//                heritageDtlView.museumId = bannerId
+//
+//                let transition = CATransition()
+//                transition.duration = 0.3
+//                transition.type = kCATransitionFade
+//                transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//                view.window!.layer.add(transition, forKey: kCATransition)
+//                self.present(heritageDtlView, animated: false, completion: nil)
+                self.performSegue(withIdentifier: "museumsToAboutSegue", sender: self)
             } else if (selectedItem == tourBanner) {
-                let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "tourAndPanelId") as! TourAndPanelListViewController
-                tourView.pageNameString = NMoQPageName.Tours
-                let transition = CATransition()
-                transition.duration = 0.25
-                transition.type = kCATransitionPush
-                transition.subtype = kCATransitionFromRight
-                view.window!.layer.add(transition, forKey: kCATransition)
-                self.present(tourView, animated: false, completion: nil)
+//                let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "tourAndPanelId") as! TourAndPanelListViewController
+//                tourView.pageNameString = NMoQPageName.Tours
+//                let transition = CATransition()
+//                transition.duration = 0.25
+//                transition.type = kCATransitionPush
+//                transition.subtype = kCATransitionFromRight
+//                view.window!.layer.add(transition, forKey: kCATransition)
+//                self.present(tourView, animated: false, completion: nil)
+                self.performSegue(withIdentifier: "museumsToTourAndPanelSegue", sender: self)
                 
             } else if (selectedItem == travelBanner) {
-                let travelView =  self.storyboard?.instantiateViewController(withIdentifier: "tourAndPanelId") as! TourAndPanelListViewController
-                travelView.bannerId = bannerId
-                travelView.pageNameString = NMoQPageName.TravelArrangementList
-                let transition = CATransition()
-                transition.duration = 0.25
-                transition.type = kCATransitionPush
-                transition.subtype = kCATransitionFromRight
-                view.window!.layer.add(transition, forKey: kCATransition)
-                self.present(travelView, animated: false, completion: nil)
+//                let travelView =  self.storyboard?.instantiateViewController(withIdentifier: "tourAndPanelId") as! TourAndPanelListViewController
+//                travelView.bannerId = bannerId
+//                travelView.pageNameString = NMoQPageName.TravelArrangementList
+//                let transition = CATransition()
+//                transition.duration = 0.25
+//                transition.type = kCATransitionPush
+//                transition.subtype = kCATransitionFromRight
+//                view.window!.layer.add(transition, forKey: kCATransition)
+//                self.present(travelView, animated: false, completion: nil)
+                self.performSegue(withIdentifier: "museumsToTourAndPanelSegue", sender: self)
             }
             else if (selectedItem == panelBanner) {
-                let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "tourAndPanelId") as! TourAndPanelListViewController
-                panelView.pageNameString = NMoQPageName.PanelDiscussion
-                let transition = CATransition()
-                transition.duration = 0.25
-                transition.type = kCATransitionPush
-                transition.subtype = kCATransitionFromRight
-                view.window!.layer.add(transition, forKey: kCATransition)
-                self.present(panelView, animated: false, completion: nil)
+//                let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "tourAndPanelId") as! TourAndPanelListViewController
+//                panelView.pageNameString = NMoQPageName.PanelDiscussion
+//                let transition = CATransition()
+//                transition.duration = 0.25
+//                transition.type = kCATransitionPush
+//                transition.subtype = kCATransitionFromRight
+//                view.window!.layer.add(transition, forKey: kCATransition)
+//                self.present(panelView, animated: false, completion: nil)
+                self.performSegue(withIdentifier: "museumsToTourAndPanelSegue", sender: self)
             }
         } else {
             if ((selectedItem == "About") || (selectedItem == "عن")) {
-                let heritageDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
-                heritageDtlView.pageNameString = PageName2.museumAbout
-                heritageDtlView.museumId = museumId
-                let transition = CATransition()
-                transition.duration = 0.3
-                transition.type = kCATransitionFade
-                transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-                view.window!.layer.add(transition, forKey: kCATransition)
-                self.present(heritageDtlView, animated: false, completion: nil)
+//                let heritageDtlView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
+//                heritageDtlView.pageNameString = PageName2.museumAbout
+//                heritageDtlView.museumId = museumId
+//                let transition = CATransition()
+//                transition.duration = 0.3
+//                transition.type = kCATransitionFade
+//                transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//                view.window!.layer.add(transition, forKey: kCATransition)
+//                self.present(heritageDtlView, animated: false, completion: nil)
+                self.performSegue(withIdentifier: "museumsToAboutSegue", sender: self)
             } else if ((selectedItem == "Tour Guide") || (selectedItem == "الدليل السياحي")){
                 if((museumId == "63") || (museumId == "96") || (museumId == "66") || (museumId == "638")) {
-                    let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
-                    tourGuideView.exhibitionsPageNameString = ExhbitionPageName.miaTourGuideList
-                    tourGuideView.museumId = museumId!
-                    let transition = CATransition()
-                    transition.duration = 0.3
-                    transition.type = kCATransitionPush
-                    transition.subtype = kCATransitionFromRight
-                    view.window!.layer.add(transition, forKey: kCATransition)
-                    self.present(tourGuideView, animated: false, completion: nil)
+//                    let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+//                    tourGuideView.exhibitionsPageNameString = ExhbitionPageName.miaTourGuideList
+//                    tourGuideView.museumId = museumId!
+//                    let transition = CATransition()
+//                    transition.duration = 0.3
+//                    transition.type = kCATransitionPush
+//                    transition.subtype = kCATransitionFromRight
+//                    view.window!.layer.add(transition, forKey: kCATransition)
+//                    self.present(tourGuideView, animated: false, completion: nil)
+                    self.performSegue(withIdentifier: "museumsToCommonListSegue", sender: self)
                 } else {
                     self.loadComingSoonPopup()
                 }
                 
             } else if ((selectedItem == "Exhibitions") || (selectedItem == "المعارض")){
-                let exhibitionView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
-                exhibitionView.museumId = museumId
-                let transition = CATransition()
-                transition.duration = 0.3
-                transition.type = kCATransitionPush
-                transition.subtype = kCATransitionFromRight
-                view.window!.layer.add(transition, forKey: kCATransition)
-                exhibitionView.exhibitionsPageNameString = ExhbitionPageName.museumExhibition
-                self.present(exhibitionView, animated: false, completion: nil)
+//                let exhibitionView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+//                exhibitionView.museumId = museumId
+//                let transition = CATransition()
+//                transition.duration = 0.3
+//                transition.type = kCATransitionPush
+//                transition.subtype = kCATransitionFromRight
+//                view.window!.layer.add(transition, forKey: kCATransition)
+//                exhibitionView.exhibitionsPageNameString = ExhbitionPageName.museumExhibition
+//                self.present(exhibitionView, animated: false, completion: nil)
+                self.performSegue(withIdentifier: "museumsToCommonListSegue", sender: self)
             } else if ((selectedItem == "Collections") || (selectedItem == "المجموعات")){
-                let musmCollectionnView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
-                musmCollectionnView.museumId = museumId
-                musmCollectionnView.exhibitionsPageNameString = ExhbitionPageName.museumCollectionsList
-                let transition = CATransition()
-                transition.duration = 0.3
-                transition.type = kCATransitionPush
-                transition.subtype = kCATransitionFromRight
-                view.window!.layer.add(transition, forKey: kCATransition)
-                self.present(musmCollectionnView, animated: false, completion: nil)
+//                let musmCollectionnView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+//                musmCollectionnView.museumId = museumId
+//                musmCollectionnView.exhibitionsPageNameString = ExhbitionPageName.museumCollectionsList
+//                let transition = CATransition()
+//                transition.duration = 0.3
+//                transition.type = kCATransitionPush
+//                transition.subtype = kCATransitionFromRight
+//                view.window!.layer.add(transition, forKey: kCATransition)
+//                self.present(musmCollectionnView, animated: false, completion: nil)
+                self.performSegue(withIdentifier: "museumsToCommonListSegue", sender: self)
             } else if ((selectedItem == "Parks") || (selectedItem == "الحدائق")){
                 if((museumId == "66") || (museumId == "638")) {
-                    let parkView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
-                    parkView.exhibitionsPageNameString = ExhbitionPageName.parkList
-                    let transition = CATransition()
-                    transition.duration = 0.3
-                    transition.type = kCATransitionFade
-                    transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-                    view.window!.layer.add(transition, forKey: kCATransition)
-                    self.present(parkView, animated: false, completion: nil)
+//                    let parkView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+//                    parkView.exhibitionsPageNameString = ExhbitionPageName.parkList
+//                    let transition = CATransition()
+//                    transition.duration = 0.3
+//                    transition.type = kCATransitionFade
+//                    transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//                    view.window!.layer.add(transition, forKey: kCATransition)
+//                    self.present(parkView, animated: false, completion: nil)
+                    self.performSegue(withIdentifier: "museumsToCommonListSegue", sender: self)
                 } else {
-                    let parkView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! CommonDetailViewController
-                    parkView.pageNameString = PageName.SideMenuPark
-                    let transition = CATransition()
-                    transition.duration = 0.3
-                    transition.type = kCATransitionFade
-                    transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-                    view.window!.layer.add(transition, forKey: kCATransition)
-                    self.present(parkView, animated: false, completion: nil)
+//                    let parkView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! CommonDetailViewController
+//                    parkView.pageNameString = PageName.SideMenuPark
+//                    let transition = CATransition()
+//                    transition.duration = 0.3
+//                    transition.type = kCATransitionFade
+//                    transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//                    view.window!.layer.add(transition, forKey: kCATransition)
+//                    self.present(parkView, animated: false, completion: nil)
+                    self.performSegue(withIdentifier: "museumToCommonDetailSegue", sender: self)
                 }
             } else if((selectedItem == "Dining") || (selectedItem == "الطعام")) {
-                let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
-                diningView.museumId = museumId
-                diningView.fromHome = false
-                diningView.fromSideMenu = false
-                diningView.exhibitionsPageNameString = ExhbitionPageName.diningList
-                let transition = CATransition()
-                transition.duration = 0.25
-                transition.type = kCATransitionPush
-                transition.subtype = kCATransitionFromRight
-                view.window!.layer.add(transition, forKey: kCATransition)
-                self.present(diningView, animated: false, completion: nil)
+//                let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+//                diningView.museumId = museumId
+//                diningView.fromHome = false
+//                diningView.fromSideMenu = false
+//                diningView.exhibitionsPageNameString = ExhbitionPageName.diningList
+//                let transition = CATransition()
+//                transition.duration = 0.25
+//                transition.type = kCATransitionPush
+//                transition.subtype = kCATransitionFromRight
+//                view.window!.layer.add(transition, forKey: kCATransition)
+//                self.present(diningView, animated: false, completion: nil)
+                self.performSegue(withIdentifier: "museumToCommonDetailSegue", sender: self)
             }  else if((selectedItem == "Facilities") || (selectedItem == "المرافق")) {
-                let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "tourAndPanelId") as! TourAndPanelListViewController
-                tourView.pageNameString = NMoQPageName.Facilities
-                let transition = CATransition()
-                transition.duration = 0.25
-                transition.type = kCATransitionPush
-                transition.subtype = kCATransitionFromRight
-                view.window!.layer.add(transition, forKey: kCATransition)
-                self.present(tourView, animated: false, completion: nil)
+//                let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "tourAndPanelId") as! TourAndPanelListViewController
+//                tourView.pageNameString = NMoQPageName.Facilities
+//                let transition = CATransition()
+//                transition.duration = 0.25
+//                transition.type = kCATransitionPush
+//                transition.subtype = kCATransitionFromRight
+//                view.window!.layer.add(transition, forKey: kCATransition)
+//                self.present(tourView, animated: false, completion: nil)
+                self.performSegue(withIdentifier: "museumsToTourAndPanelSegue", sender: self)
             }else {
                 loadComingSoonPopup()
             }
@@ -839,6 +854,56 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     func recordScreenView() {
         let screenClass = String(describing: type(of: self))
         Analytics.setScreenName(MUSEUM_VC, screenClass: screenClass)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let tourBanner = NSLocalizedString("TOURS", comment: "TOURS  in the Museum page")
+        let travelBanner = NSLocalizedString("TRAVEL_ARRANGEMENTS", comment: "TRAVEL_ARRANGEMENTS  in the Museum page")
+        let panelBanner = NSLocalizedString("PANEL_DISCUSSION", comment: "PANEL_DISCUSSION  in the Museum page")
+        if (segue.identifier == "museumsToAboutSegue") {
+            let museumAboutView = segue.destination as! MuseumAboutViewController
+            if(fromHomeBanner)! {
+                museumAboutView.pageNameString = PageName2.museumEvent
+                museumAboutView.museumId = bannerId
+            } else {
+                museumAboutView.pageNameString = PageName2.museumAbout
+                museumAboutView.museumId = museumId
+            }
+        } else if (segue.identifier == "museumsToTourAndPanelSegue") {
+            let tourAndPanelView = segue.destination as! TourAndPanelListViewController
+            if (selectedItemName == tourBanner) {
+                tourAndPanelView.pageNameString = NMoQPageName.Tours
+            } else if (selectedItemName == travelBanner) {
+                tourAndPanelView.bannerId = bannerId
+                tourAndPanelView.pageNameString = NMoQPageName.TravelArrangementList
+            } else if (selectedItemName == panelBanner) {
+                tourAndPanelView.pageNameString = NMoQPageName.PanelDiscussion
+            } else if((selectedItemName == "Facilities") || (selectedItemName == "المرافق")) {
+                tourAndPanelView.pageNameString = NMoQPageName.Facilities
+            }
+        } else if (segue.identifier == "museumsToCommonListSegue") {
+            let commonList = segue.destination as! CommonListViewController
+            if ((selectedItemName == "Tour Guide") || (selectedItemName == "الدليل السياحي")){
+                    commonList.exhibitionsPageNameString = ExhbitionPageName.miaTourGuideList
+                    commonList.museumId = museumId!
+            } else if ((selectedItemName == "Exhibitions") || (selectedItemName == "المعارض")){
+                commonList.museumId = museumId
+                commonList.exhibitionsPageNameString = ExhbitionPageName.museumExhibition
+            } else if ((selectedItemName == "Collections") || (selectedItemName == "المجموعات")){
+                commonList.museumId = museumId
+                commonList.exhibitionsPageNameString = ExhbitionPageName.museumCollectionsList
+            } else if ((selectedItemName == "Parks") || (selectedItemName == "الحدائق")){
+                commonList.exhibitionsPageNameString = ExhbitionPageName.parkList
+            }else if((selectedItemName == "Dining") || (selectedItemName == "الطعام")) {
+                commonList.museumId = museumId
+                commonList.fromHome = false
+                commonList.fromSideMenu = false
+                commonList.exhibitionsPageNameString = ExhbitionPageName.diningList
+            }
+        } else if (segue.identifier == "museumToCommonDetailSegue") {
+            let commonDetail = segue.destination as! CommonDetailViewController
+            commonDetail.pageNameString = PageName.SideMenuPark
+        }
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

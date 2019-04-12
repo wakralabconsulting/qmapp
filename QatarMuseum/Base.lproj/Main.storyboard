@@ -1225,6 +1225,10 @@
                         <outlet property="nextButton" destination="Xc7-hZ-Tae" id="XiM-Xm-Nwj"/>
                         <outlet property="pageControl" destination="iID-7E-GnV" id="gFG-Cp-I3c"/>
                         <outlet property="previousButton" destination="Zpi-lO-51F" id="BDi-Dj-VJL"/>
+                        <segue destination="Qso-7S-Uav" kind="custom" identifier="museumsToAboutSegue" customClass="FadeSegue" customModule="QatarMuseums" customModuleProvider="target" id="9tE-aO-KJv"/>
+                        <segue destination="Ege-cg-Fjk" kind="custom" identifier="museumsToTourAndPanelSegue" customClass="SegueFromRight" customModule="QatarMuseums" customModuleProvider="target" id="jxE-j2-MVX"/>
+                        <segue destination="QCk-26-GoW" kind="custom" identifier="museumsToCommonListSegue" customClass="SegueFromRight" customModule="QatarMuseums" customModuleProvider="target" id="q5d-pS-Wk4"/>
+                        <segue destination="Z1K-CA-bjg" kind="custom" identifier="museumToCommonDetailSegue" customClass="FadeSegue" customModule="QatarMuseums" customModuleProvider="target" id="wxa-KK-0h2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u4a-l5-knv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -5657,8 +5661,8 @@
         <image name="up_arrowX2" width="279" height="162"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="sBl-n6-gHM"/>
-        <segue reference="ffd-l4-w9g"/>
+        <segue reference="q5d-pS-Wk4"/>
+        <segue reference="wxa-KK-0h2"/>
         <segue reference="969-KO-s7i"/>
         <segue reference="Cwt-uy-fRF"/>
     </inferredMetricsTieBreakers>
