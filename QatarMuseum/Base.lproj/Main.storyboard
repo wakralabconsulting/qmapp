@@ -310,6 +310,14 @@
                         <segue destination="csd-tH-WoS" kind="custom" identifier="homeToCulturepass" customClass="SegueFromRight" customModule="QatarMuseums" customModuleProvider="target" id="p15-uS-MP1"/>
                         <segue destination="Z1K-CA-bjg" kind="custom" identifier="homeToCommonDetail" customClass="FadeSegue" customModule="QatarMuseums" customModuleProvider="target" id="rjQ-yI-tVc"/>
                         <segue destination="QCk-26-GoW" kind="custom" identifier="homeToListFadeSegue" customClass="FadeSegue" customModule="QatarMuseums" customModuleProvider="target" id="sBl-n6-gHM"/>
+                        <segue destination="izA-Uf-h7O" kind="custom" identifier="homeToNotificationSegue" customClass="SegueFromRight" customModule="QatarMuseums" customModuleProvider="target" id="8T3-8k-LWY"/>
+                        <segue destination="Y6A-us-MuQ" kind="custom" identifier="homeToEventSegue" customClass="SegueFromRight" customModule="QatarMuseums" customModuleProvider="target" id="YLB-FU-qXW"/>
+                        <segue destination="Y6A-us-MuQ" kind="custom" identifier="homeToEventFadeSegue" customClass="FadeSegue" customModule="QatarMuseums" customModuleProvider="target" id="Cwt-uy-fRF"/>
+                        <segue destination="tBI-Sz-bX0" kind="custom" identifier="homeToEducationFadeSegue" customClass="FadeSegue" customModule="QatarMuseums" customModuleProvider="target" id="uKp-nC-V4X"/>
+                        <segue destination="HIE-Vt-zzr" kind="custom" identifier="homeToProfileFadeSegue" customClass="FadeSegue" customModule="QatarMuseums" customModuleProvider="target" id="tXC-tz-XiI"/>
+                        <segue destination="bZN-2R-WHo" kind="custom" identifier="homeToWebViewSegue" customClass="FadeSegue" customModule="QatarMuseums" customModuleProvider="target" id="NXb-F7-de6"/>
+                        <segue destination="GHA-qU-agt" kind="custom" identifier="homeToSettingsSegue" customClass="SegueFromRight" customModule="QatarMuseums" customModuleProvider="target" id="Sav-O5-Xty"/>
+                        <segue destination="HIE-Vt-zzr" kind="custom" identifier="homeToProfileSegue" customClass="SegueFromRight" customModule="QatarMuseums" customModuleProvider="target" id="969-KO-s7i"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -964,7 +972,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RNE-UK-ObU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2074" y="89"/>
+            <point key="canvasLocation" x="2054" y="95"/>
         </scene>
         <!--Common Detail View Controller-->
         <scene sceneID="jqu-L7-ci3">
@@ -5646,5 +5654,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="sBl-n6-gHM"/>
+        <segue reference="969-KO-s7i"/>
+        <segue reference="Cwt-uy-fRF"/>
     </inferredMetricsTieBreakers>
 </document>

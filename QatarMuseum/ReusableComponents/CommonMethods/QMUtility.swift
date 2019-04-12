@@ -261,10 +261,10 @@ class FadeSegue: UIStoryboardSegue {
                 })
             })
         } else {
-            self.destination.view.alpha = 0.0
+            self.destination.view.alpha = 1.0
             
             self.source.present(self.destination, animated: false, completion: {
-                UIView.animate(withDuration: 0.4, animations: {
+                UIView.animate(withDuration: 0.8, animations: {
                     self.destination.view.alpha = 1.0
                 })
             })
