@@ -871,6 +871,7 @@
                                                 <connections>
                                                     <action selector="didTapViewMyCulturePassCard:" destination="HIE-Vt-zzr" eventType="touchUpInside" id="XzA-MZ-1cx"/>
                                                     <action selector="viewMyCulturePassButtonTouchDown:" destination="HIE-Vt-zzr" eventType="touchDown" id="V9H-C4-dPI"/>
+                                                    <segue destination="CTn-E3-lTz" kind="custom" identifier="profileToCultureCardSegue" customClass="FadeSegue" customModule="QatarMuseums" customModuleProvider="target" id="XzX-l9-xuZ"/>
                                                 </connections>
                                             </button>
                                             <button hidden="YES" opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mfX-9x-xSX">

@@ -201,20 +201,21 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
          self.viewMyFavoriteButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     @IBAction func didTapViewMyCulturePassCard(_ sender: UIButton) {
-        let cardView =  self.storyboard?.instantiateViewController(withIdentifier: "cardViewId") as! CulturePassCardViewController
-            if((UserDefaults.standard.value(forKey: "uid") as? String != nil) && (UserDefaults.standard.value(forKey: "uid") as? String != "") ) {
-                cardView.membershipNumber = "00" + String(membershipNum)
-            }
-        if((UserDefaults.standard.value(forKey: "displayName") as? String != nil) && (UserDefaults.standard.value(forKey: "displayName") as? String != "")) {
-            cardView.nameString = (UserDefaults.standard.value(forKey: "displayName") as? String)
-        }
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(cardView, animated: false, completion: nil)
+//        let cardView =  self.storyboard?.instantiateViewController(withIdentifier: "cardViewId") as! CulturePassCardViewController
+//            if((UserDefaults.standard.value(forKey: "uid") as? String != nil) && (UserDefaults.standard.value(forKey: "uid") as? String != "") ) {
+//                cardView.membershipNumber = "00" + String(membershipNum)
+//            }
+//        if((UserDefaults.standard.value(forKey: "displayName") as? String != nil) && (UserDefaults.standard.value(forKey: "displayName") as? String != "")) {
+//            cardView.nameString = (UserDefaults.standard.value(forKey: "displayName") as? String)
+//        }
+//        let transition = CATransition()
+//        transition.duration = 0.3
+//        transition.type = kCATransitionFade
+//        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        self.present(cardView, animated: false, completion: nil)
         self.viewmyCulturePassButton.transform = CGAffineTransform(scaleX: 1, y: 1)
+        self.performSegue(withIdentifier: "profileToCultureCardSegue", sender: self)
     }
     @IBAction func viewMyCulturePassButtonTouchDown(_ sender: UIButton) {
         self.viewmyCulturePassButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -301,6 +302,17 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     func recordScreenView() {
         let screenClass = String(describing: type(of: self))
         Analytics.setScreenName(PROFILE_VC, screenClass: screenClass)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "profileToCultureCardSegue") {
+            let culturepassCard = segue.destination as! CulturePassCardViewController
+            if((UserDefaults.standard.value(forKey: "uid") as? String != nil) && (UserDefaults.standard.value(forKey: "uid") as? String != "") ) {
+                culturepassCard.membershipNumber = "00" + String(membershipNum)
+            }
+            if((UserDefaults.standard.value(forKey: "displayName") as? String != nil) && (UserDefaults.standard.value(forKey: "displayName") as? String != "")) {
+                culturepassCard.nameString = (UserDefaults.standard.value(forKey: "displayName") as? String)
+            }
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
