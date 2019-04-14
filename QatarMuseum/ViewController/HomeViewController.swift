@@ -11,13 +11,15 @@ import CoreData
 import UIKit
 import Firebase
 
-class HomeViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,TopBarProtocol,comingSoonPopUpProtocol,SideMenuProtocol,UIViewControllerTransitioningDelegate,LoadingViewProtocol,LoginPopUpProtocol,UITextFieldDelegate {
+class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, TopBarProtocol,comingSoonPopUpProtocol,SideMenuProtocol,UIViewControllerTransitioningDelegate,LoadingViewProtocol,LoginPopUpProtocol,UITextFieldDelegate {
+    
 
     @IBOutlet weak var restaurantButton: UIButton!
     @IBOutlet weak var giftShopButton: UIButton!
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var culturePassButton: UIButton!
-    @IBOutlet weak var homeCollectionView: UICollectionView!
+    
+    @IBOutlet weak var homeTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var topbarView: TopBarView!
     @IBOutlet weak var visualEffectView: UIVisualEffectView!
@@ -35,10 +37,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     var isSideMenuLoaded : Bool = false
     var homeList: [Home]! = []
     var homeEntity: HomeEntity?
-    var homeEntityArabic: HomeEntityArabic?
     let networkReachability = NetworkReachabilityManager()
     var homeDBArray:[HomeEntity]?
-    var homeDBArrayArabic:[HomeEntityArabic]?
     var apnDelegate : APNProtocol?
     let imageView = UIImageView()
     var blurView = UIVisualEffectView()
@@ -107,97 +107,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         */
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationEn(notification:)), name: NSNotification.Name(homepageNotificationEn), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationAr(notification:)), name: NSNotification.Name(homepageNotificationAr), object: nil)
-       // self.fetchHomeInfoFromCoredata()
-        
-        //Temporary solution for Migration Problem
-        
-        let managedContext = getContext()
-        do{
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            var homeArray = [HomeEntity]()
-            let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntity")
-            homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntity])!
-            if (homeArray.count > 0) {
-                self.fetchHomeInfoFromCoredata()
-            } else {
-                getHomeList()
-            }
-        } else {
-            var homeArray = [HomeEntityArabic]()
-            let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntityArabic")
-            homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntityArabic])!
-            if (homeArray.count > 0) {
-                self.fetchHomeInfoFromCoredata()
-            } else {
-                getHomeList()
-            }
-            }
-        }catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
+        self.fetchHomeInfoFromCoredata()
     }
-    
-    func setTopImageUI() {
-       
-        homeCollectionView.contentInset = UIEdgeInsetsMake(120, 0, 0, 0)
-        if(UIScreen.main.bounds.height == 812) {
-            imageView.frame = CGRect(x: 0, y: 108, width: UIScreen.main.bounds.size.width, height: 120)
-        } else {
-            imageView.frame = CGRect(x: 0, y: 85, width: UIScreen.main.bounds.size.width, height: 120)
-        }
-        
-        imageView.backgroundColor = UIColor.white
-            if homeBannerList.count > 0 {
-
-                if let imageUrl = homeBannerList[0].bannerLink {
-                    if(imageUrl != "") {
-                        imageView.kf.setImage(with: URL(string: imageUrl))
-                    }else {
-                        imageView.image = UIImage(named: "default_imageX2")
-                    }
-                }
-                else {
-                    imageView.image = UIImage(named: "default_imageX2")
-                }
-            }
-            else {
-                imageView.image = nil
-            }
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        view.addSubview(imageView)
-        if(homeBannerList[0].bannerTitle != nil) {
-            imgLabel.text = homeBannerList[0].bannerTitle
-        }
-        imgLabel.textAlignment = .center
-        imgLabel.scrollsToTop = false
-        imgLabel.isEditable = false
-        imgLabel.isScrollEnabled = false
-        imgLabel.isSelectable = false
-        imgLabel.backgroundColor = UIColor.clear
-        imgLabel.font = UIFont.eventPopupTitleFont
-        if(UIScreen.main.bounds.height == 812) {
-            imgLabel.frame = CGRect(x: 0, y: 130, width: UIScreen.main.bounds.size.width, height: 90)
-        } else {
-            imgLabel.frame = CGRect(x: 0, y: 95, width: UIScreen.main.bounds.size.width, height: 90)
-        }
-        self.view.addSubview(imgLabel)
-        imgButton.setTitle("", for: .normal)
-        imgButton.setTitleColor(UIColor.blue, for: .normal)
-        imgButton.frame = imageView.frame
-        imgButton.addTarget(self, action: #selector(self.imgButtonPressed(sender:)), for: .touchUpInside)
-        self.view.addSubview(imgButton)
-        let darkBlur = UIBlurEffect(style: UIBlurEffectStyle.light)
-        blurView = UIVisualEffectView(effect: darkBlur)
-        blurView.frame = imageView.bounds
-        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        blurView.alpha = 0
-        imageView.addSubview(blurView)
-        self.view.layoutIfNeeded()
-        
-        
-    }
-   
     @objc func imgButtonPressed(sender: UIButton!) {
         let museumsView =  self.storyboard?.instantiateViewController(withIdentifier: "museumViewId") as! MuseumsViewController
         museumsView.fromHomeBanner = true
@@ -241,39 +152,27 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         notificationsView.fromHome = true
         self.present(notificationsView, animated: false, completion: nil)
     }
-
-    
     func registerNib() {
-        let nib = UINib(nibName: "HomeCollectionCell", bundle: nil)
-        homeCollectionView?.register(nib, forCellWithReuseIdentifier: "homeCellId")
-        let nib2 = UINib(nibName: "NMoHeaderView", bundle: nil)
-        homeCollectionView?.register(nib2, forCellWithReuseIdentifier: "bannerCellId")
+        self.homeTableView.register(UINib(nibName: "CommonListCellXib", bundle: nil), forCellReuseIdentifier: "commonListCellId")
+        self.homeTableView.register(UINib(nibName: "NMoHeaderView", bundle: nil), forCellReuseIdentifier: "bannerCellId")
     }
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-       
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return homeList.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         loadingView.stopLoading()
         loadingView.isHidden = true
         if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")  && (self.homeBannerList.count > 0)) {
             if(indexPath.row == 0) {
-                let cell1 : NMoQHeaderCell = homeCollectionView.dequeueReusableCell(withReuseIdentifier: "bannerCellId", for: indexPath) as! NMoQHeaderCell
-                cell1.setBannerData(bannerData: homeBannerList[0])
-                return cell1
+                let cell = homeTableView.dequeueReusableCell(withIdentifier: "bannerCellId", for: indexPath) as! NMoQHeaderCell
+                cell.setBannerData(bannerData: homeBannerList[0])
+                return cell
             } else {
-                let cell : HomeCollectionViewCell = homeCollectionView.dequeueReusableCell(withReuseIdentifier: "homeCellId", for: indexPath) as! HomeCollectionViewCell
-                
+                let cell = homeTableView.dequeueReusableCell(withIdentifier: "commonListCellId", for: indexPath) as! CommonListCell
                 cell.setHomeCellData(home: homeList[indexPath.row])
                 
                 loadingView.stopLoading()
@@ -281,14 +180,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 return cell
             }
         }else {
-            let cell : HomeCollectionViewCell = homeCollectionView.dequeueReusableCell(withReuseIdentifier: "homeCellId", for: indexPath) as! HomeCollectionViewCell
+            let cell = homeTableView.dequeueReusableCell(withIdentifier: "commonListCellId", for: indexPath) as! CommonListCell
             cell.setHomeCellData(home: homeList[indexPath.row])
             return cell
         }
-        
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let panelAndTalks = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
         if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "") && (self.homeBannerList.count > 0)) {
             if(indexPath.row == 0) {
@@ -348,22 +245,19 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             }
         }
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let heightValue = UIScreen.main.bounds.height/100
         if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")  && (self.homeBannerList.count > 0)) {
             if(indexPath.row == 0) {
-                return CGSize(width: homeCollectionView.frame.width, height: 120)
-
+                return 120
             } else {
-                return CGSize(width: homeCollectionView.frame.width, height: heightValue*27)
+                return heightValue*27
             }
         }
         else {
-            return CGSize(width: homeCollectionView.frame.width, height: heightValue*27)
+            return heightValue*27
         }
     }
-    
     func loadMuseumsPage(curretRow:Int? = 0) {
         let museumsView =  self.storyboard?.instantiateViewController(withIdentifier: "museumViewId") as! MuseumsViewController
         museumsView.museumId = homeList[curretRow!].id
@@ -379,7 +273,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func loadExhibitionPage() {
-        let exhibitionView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        let exhibitionView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionPush
@@ -433,15 +327,25 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                                              at: 0)
                     }
 
+                    if((self.homeList.count == 0) || (self.homeList.count == 1)) {
+                        self.loadingView.stopLoading()
+                        self.loadingView.noDataView.isHidden = false
+                        self.loadingView.isHidden = false
+                        self.loadingView.showNoDataView()
+                    }
                     
-                    
-                    self.homeCollectionView.reloadData()
+                    self.homeTableView.reloadData()
                 }
                 if(self.homeList.count > 0) {
-                    self.saveOrUpdateHomeCoredata(homeList: data.homeList)
+                   // self.saveOrUpdateHomeCoredata(homeList: data.homeList)
                 }
             case .failure( _):
-                print("error")
+                if((self.homeList.count == 0) || (self.homeList.count == 1)) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
             }
         }
     }
@@ -462,7 +366,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                 if(self.homeBannerList.count > 0) {
                     self.saveOrUpdateHomeBannerCoredata()
                 }
-                self.homeCollectionView.reloadData()
+                self.homeTableView.reloadData()
             case .failure( _):
             print("error")
             }
@@ -503,7 +407,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     //MARK: SideMenu Delegates
     func exhibitionButtonPressed() {
-        let exhibitionView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        let exhibitionView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
         exhibitionView.fromSideMenu = true
         let transition = CATransition()
         transition.duration = 0.3
@@ -539,8 +443,9 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func tourGuideButtonPressed() {
-        let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "tourGuidId") as! TourGuideViewController
+        let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
         tourGuideView.fromSideMenu = true
+        tourGuideView.exhibitionsPageNameString = ExhbitionPageName.tourGuideList
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush
@@ -550,7 +455,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func heritageButtonPressed() {
-        let heritageView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        let heritageView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
         heritageView.fromSideMenu = true
         heritageView.exhibitionsPageNameString = ExhbitionPageName.heritageList
         let transition = CATransition()
@@ -562,7 +467,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func publicArtsButtonPressed() {
-        let publicArtsView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        let publicArtsView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
         publicArtsView.fromSideMenu = true
         publicArtsView.exhibitionsPageNameString = ExhbitionPageName.publicArtsList
         let transition = CATransition()
@@ -574,7 +479,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func parksButtonPressed() {
-        let parksView =  self.storyboard?.instantiateViewController(withIdentifier: "parkViewId") as! ParksViewController
+        let parksView =  self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
+        parksView.pageNameString = PageName.SideMenuPark
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionFade
@@ -584,7 +490,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func diningButtonPressed() {
-        let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
         diningView.fromHome = true
         diningView.fromSideMenu = true
         diningView.exhibitionsPageNameString = ExhbitionPageName.diningList
@@ -681,7 +587,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     @IBAction func didTaprestaurantButton(_ sender: UIButton) {
         self.culturePassButton.transform = CGAffineTransform(scaleX: 1, y: 1)
-        let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
          diningView.fromHome = true
          diningView.fromSideMenu = false
          diningView.exhibitionsPageNameString = ExhbitionPageName.diningList
@@ -782,8 +688,15 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,homeList: [Home]?) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            let fetchData = checkAddedToCoredata(entityName: "HomeEntity", idKey: "id", idValue: nil, managedContext: managedContext) as! [HomeEntity]
+        var fetchData = [HomeEntity]()
+        var langVar : String? = nil
+        if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+            langVar = "1"
+            
+        } else {
+            langVar = "0"
+        }
+        fetchData = checkAddedToCoredata(entityName: "HomeEntity", idKey: "lang", idValue: langVar, managedContext: managedContext) as! [HomeEntity]
             if (fetchData.count > 0) {
                 for i in 0 ... (homeList?.count)!-1 {
                     let homeListDict = homeList![i]
@@ -795,7 +708,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                         homedbDict.image = homeListDict.image
                         homedbDict.sortid =  (Int16(homeListDict.sortId!) ?? 0)
                         homedbDict.tourguideavailable = homeListDict.isTourguideAvailable
-                        
+                        homedbDict.lang = langVar
                         do{
                             try managedContext.save()
                         }
@@ -814,60 +727,24 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                     self.saveToCoreData(homeListDict: homeListDict!, managedObjContext: managedContext)
                 }
             }
-        } else {
-            let fetchData = checkAddedToCoredata(entityName: "HomeEntityArabic", idKey: "id", idValue: nil, managedContext: managedContext) as! [HomeEntityArabic]
-            if (fetchData.count > 0) {
-                for i in 0 ... (homeList?.count)!-1 {
-                    let homeListDict = homeList![i]
-                    
-                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntityArabic", idKey: "id", idValue: homeList![i].id, managedContext: managedContext)
-                    //update
-                    if(fetchResult.count != 0) {
-                        let homedbDict = fetchResult[0] as! HomeEntityArabic
-                        homedbDict.arabicname = homeListDict.name
-                        homedbDict.arabicimage = homeListDict.image
-                        homedbDict.arabicsortid =  (Int16(homeListDict.sortId!) ?? 0)
-                        homedbDict.arabictourguideavailable = homeListDict.isTourguideAvailable
-                        do{
-                            try managedContext.save()
-                        }
-                        catch{
-                            print(error)
-                        }
-                    } else {
-                        //save
-                        self.saveToCoreData(homeListDict: homeListDict, managedObjContext: managedContext)
-                        
-                    }
-                }
-            } else {
-                for i in 0 ... (homeList?.count)!-1 {
-                    let homeListDict : Home?
-                    homeListDict = homeList?[i]
-                    self.saveToCoreData(homeListDict: homeListDict!, managedObjContext: managedContext)
-                    
-                }
-            }
-        }
     }
     
     func saveToCoreData(homeListDict: Home, managedObjContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
-             let homeInfo: HomeEntity = NSEntityDescription.insertNewObject(forEntityName: "HomeEntity", into: managedObjContext) as! HomeEntity
-            homeInfo.id = homeListDict.id
-            homeInfo.name = homeListDict.name
-            homeInfo.image = homeListDict.image
-            homeInfo.tourguideavailable = homeListDict.isTourguideAvailable
-            homeInfo.image = homeListDict.image
-            homeInfo.sortid = (Int16(homeListDict.sortId!) ?? 0)
-        } else{
-            let homeInfo: HomeEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "HomeEntityArabic", into: managedObjContext) as! HomeEntityArabic
-            homeInfo.id = homeListDict.id
-            homeInfo.arabicname = homeListDict.name
-            homeInfo.arabicimage = homeListDict.image
-            homeInfo.arabictourguideavailable = homeListDict.isTourguideAvailable
-            homeInfo.arabicsortid = (Int16(homeListDict.sortId!) ?? 0)
+        var langVar : String? = nil
+        if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+            langVar = "1"
+            
+        } else {
+            langVar = "0"
         }
+        let homeInfo: HomeEntity = NSEntityDescription.insertNewObject(forEntityName: "HomeEntity", into: managedObjContext) as! HomeEntity
+        homeInfo.id = homeListDict.id
+        homeInfo.name = homeListDict.name
+        homeInfo.image = homeListDict.image
+        homeInfo.tourguideavailable = homeListDict.isTourguideAvailable
+        homeInfo.image = homeListDict.image
+        homeInfo.sortid = (Int16(homeListDict.sortId!) ?? 0)
+        homeInfo.lang = langVar
         do {
             try managedObjContext.save()
         } catch let error as NSError {
@@ -881,15 +758,22 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         let managedContext = getContext()
        // let panelAndTalksName = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var homeArray = [HomeEntity]()
-                let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntity")
-                homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntity])!
+                var langVar : String? = nil
+                if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+                    langVar = "1"
+                    
+                } else {
+                    langVar = "0"
+                }
+                homeArray = checkAddedToCoredata(entityName: "HomeEntity", idKey: "lang", idValue: langVar, managedContext: managedContext) as! [HomeEntity]
                 var j:Int? = 0
             if (homeArray.count > 0) {
-                let alert = UIAlertController(title: "Alert", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                if((self.networkReachability?.isReachable)!) {
+                    DispatchQueue.global(qos: .background).async {
+                        self.getHomeList()
+                    }
+                }
                 //homeArray.sort(by: {$0.sortid < $1.sortid})
                 for i in 0 ... homeArray.count-1 {
                     if homeList.first(where: {$0.id == homeArray[i].id}) != nil {
@@ -925,73 +809,20 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                         self.loadingView.showNoDataView()
                     }
                 }
-                self.homeCollectionView.reloadData()
+                self.homeTableView.reloadData()
                 self.alreadyFetch = true
             } else{
                 if(self.networkReachability?.isReachable == false) {
                     self.showNoNetwork()
                 } else {
-                    self.loadingView.showNoDataView()
-                }
-            }
-        } else {
-                var homeArray = [HomeEntityArabic]()
-                let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "HomeEntityArabic")
-                homeArray = (try managedContext.fetch(homeFetchRequest) as? [HomeEntityArabic])!
-                var j:Int? = 0
-                if (homeArray.count > 0) {
-                    //homeArray.sort(by: {$0.arabicsortid < $1.arabicsortid})
-                    for i in 0 ... homeArray.count-1 {
-                        if homeList.first(where: {$0.id == homeArray[i].id}) != nil {
-                        } else {
-                        self.homeList.insert(Home(id:homeArray[i].id , name: homeArray[i].arabicname,image: homeArray[i].arabicimage,
-                                                  tourguide_available: homeArray[i].arabictourguideavailable, sort_id: String(homeArray[i].arabicsortid)),
-                                             at: j!)
-                            j = j!+1
-                        }
-                    }
-                    /* Just Commented for New Release
-                    let panelAndTalks = "قطر تبدع: فعاليات افتتاح متحف قطر الوطني"
-                    if homeList.index(where: {$0.name != panelAndTalks}) != nil {
-                        self.homeList.insert(Home(id: "15631", name: panelAndTalksName, image: "panelAndTalks", tourguide_available: "false", sort_id: nil), at: self.homeList.endIndex)
-                    }
- */
-                    if let nilItem = self.homeList.first(where: {$0.sortId == "" || $0.sortId == nil}) {
-                        print("nil found")
-                    } else {
-                        self.homeList = self.homeList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
-                    }
-                    if(self.homeBannerList.count > 0) {
-                        self.homeList.insert(Home(id:self.homeBannerList[0].fullContentID , name: self.homeBannerList[0].bannerTitle,image: self.homeBannerList[0].bannerLink,
-                                                  tourguide_available: "false", sort_id: nil),
-                                             at: 0)
-                    }
-                    if(self.homeList.count == 0){
-                        if(self.networkReachability?.isReachable == false) {
-                            self.showNoNetwork()
-                        } else {
-                            self.loadingView.showNoDataView()
-                        }
-                    }
-                    self.alreadyFetch = true
-                    self.homeCollectionView.reloadData()
-                } else{
-                    if(self.networkReachability?.isReachable == false) {
-                        self.showNoNetwork()
-                    } else {
-                        self.loadingView.showNoDataView()
-                    }
+                    //self.loadingView.showNoDataView()
+                    self.getHomeList()
                 }
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
             if (networkReachability?.isReachable == false) {
                 self.showNoNetwork()
-            }
-        }
-        if (networkReachability?.isReachable)! {
-            DispatchQueue.global(qos: .background).async {
-                self.getHomeList()
             }
         }
     }
@@ -1163,12 +994,12 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                         self.homeBannerList.insert(HomeBanner(title: homeArray[i].title, fullContentID: homeArray[i].fullContentID, bannerTitle: homeArray[i].bannerTitle, bannerLink: homeArray[i].bannerLink,image: imagesArray, introductionText: nil, email: nil, contactNumber: nil, promotionalCode: nil, claimOffer: nil), at: i)
                         
                     }
-                    if(self.homeList.count == 0){
-                        self.showNoNetwork()
-                    }
-                    self.homeCollectionView.reloadData()
+//                    if(self.homeList.count == 0){
+//                        self.showNoNetwork()
+//                    }
+                    self.homeTableView.reloadData()
                 } else{
-                    self.showNoNetwork()
+                    //self.showNoNetwork()
                 }
             } else {
                 var homeArray = [HomeBannerEntityAr]()
@@ -1188,11 +1019,11 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
                         
                     }
                     if(self.homeList.count == 0){
-                        self.showNoNetwork()
+                       // self.showNoNetwork()
                     }
-                    self.homeCollectionView.reloadData()
+                    self.homeTableView.reloadData()
                 } else{
-                    self.showNoNetwork()
+                    //self.showNoNetwork()
                 }
             }
         } catch let error as NSError {
@@ -1463,7 +1294,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         return true
     }
     func loadTourViewPage(nid: String?,subTitle:String?,isFromTour:Bool?) {
-        let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
         tourView.tourDetailId = nid
         tourView.headerTitle = subTitle
         tourView.isFromTour = isFromTour

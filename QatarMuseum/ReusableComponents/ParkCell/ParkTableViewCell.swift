@@ -45,7 +45,11 @@ class ParkTableViewCell: UITableViewCell {
     //MARK: Public Arts List Data
     func setParksCellValues(parksList: ParksList,currentRow:Int?) {
         
-        
+        favouriteViewHeight.constant = 0
+        favouriteView.isHidden = true
+        shareView.isHidden = true
+        favouriteButton.isHidden = true
+        shareButton.isHidden = true
         titleLabel.text = parksList.title?.uppercased()
         let parkDesc = parksList.description?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         titleDescriptionLabel.text = parkDesc?.replacingOccurrences(of: "&amp;", with: "&", options: .regularExpression, range: nil)
@@ -126,6 +130,12 @@ class ParkTableViewCell: UITableViewCell {
         shareButton.isHidden = true
     }
     func setNmoqParkDetailValues(parkDetails: NMoQParkDetail?) {
+        favouriteViewHeight.constant = 0
+        favouriteView.isHidden = true
+        shareView.isHidden = true
+        favouriteButton.isHidden = true
+        shareButton.isHidden = true
+        
         subTitleTopConstraint.constant = 0
         subTitleLabel.frame = CGRect(x: self.subTitleLabel.frame.origin.x, y: self.subTitleLabel.frame.origin.x, width: 0, height: 0)
         locationsTitleLabel.isHidden = true

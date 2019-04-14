@@ -103,7 +103,8 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     func registerCell() {
-        self.collectionTableView.register(UINib(nibName: "NMoQListCell", bundle: nil), forCellReuseIdentifier: "nMoQListCellId")
+       // self.collectionTableView.register(UINib(nibName: "NMoQListCell", bundle: nil), forCellReuseIdentifier: "nMoQListCellId")
+         self.collectionTableView.register(UINib(nibName: "CommonListCellXib", bundle: nil), forCellReuseIdentifier: "commonListCellId")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -121,7 +122,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "nMoQListCellId", for: indexPath) as! NMoQListCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "commonListCellId", for: indexPath) as! CommonListCell
         if (pageNameString == NMoQPageName.Tours) {
             cell.setTourListDate(tourList: nmoqTourList[indexPath.row], isTour: true)
         } else if (pageNameString == NMoQPageName.PanelDiscussion){
@@ -161,7 +162,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     }
     
     func loadTourViewPage(selectedRow: Int?,isFromTour:Bool?, pageName: NMoQPageName?) {
-        let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
+        let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
         
         if pageName == NMoQPageName.Tours {
             tourView.isFromTour = true
@@ -264,13 +265,24 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 if(self.nmoqTourList.count == 0) {
                     self.nmoqTourList = data.nmoqTourList
                     self.collectionTableView.reloadData()
+                    if(self.nmoqTourList.count == 0) {
+                        self.loadingView.stopLoading()
+                        self.loadingView.noDataView.isHidden = false
+                        self.loadingView.isHidden = false
+                        self.loadingView.showNoDataView()
+                    }
                 }
                 if(self.nmoqTourList.count > 0) {
                     self.saveOrUpdateTourListCoredata(nmoqTourList: data.nmoqTourList, isTourGuide: true)
                 }
                 
             case .failure(let error):
-                print("error")
+                if(self.nmoqTourList.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
             }
         }
     }
@@ -599,12 +611,23 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                         self.nmoqActivityList = self.nmoqActivityList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
                     }
                     self.collectionTableView.reloadData()
+                    if(self.nmoqActivityList.count == 0) {
+                        self.loadingView.stopLoading()
+                        self.loadingView.noDataView.isHidden = false
+                        self.loadingView.isHidden = false
+                        self.loadingView.showNoDataView()
+                    }
                 }
                 if(self.nmoqActivityList.count > 0) {
                     self.saveOrUpdateActivityListCoredata(nmoqActivityList: data.nmoqActivitiesList)
                 }
             case .failure( _):
-                print("error")
+                if(self.nmoqActivityList.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
             }
         }
     }
@@ -938,12 +961,23 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                         self.facilitiesList = self.facilitiesList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
                     }
                     self.collectionTableView.reloadData()
+                    if(self.facilitiesList.count == 0) {
+                        self.loadingView.stopLoading()
+                        self.loadingView.noDataView.isHidden = false
+                        self.loadingView.isHidden = false
+                        self.loadingView.showNoDataView()
+                    }
                 }
                 if(self.facilitiesList.count > 0) {
                     self.saveOrUpdateFacilitiesListCoredata(facilitiesList: data.facilitiesList)
                 }
             case .failure( _):
-                print("error")
+                if(self.facilitiesList.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
             }
         }
     }
@@ -1244,12 +1278,23 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 if(self.travelList.count == 0) {
                     self.travelList = data.homeBannerList
                     self.collectionTableView.reloadData()
+                    if(self.travelList.count == 0) {
+                        self.loadingView.stopLoading()
+                        self.loadingView.noDataView.isHidden = false
+                        self.loadingView.isHidden = false
+                        self.loadingView.showNoDataView()
+                    }
                 }
                 if(self.nmoqActivityList.count > 0) {
                     self.saveOrUpdateTravelListCoredata(travelList: data.homeBannerList)
                 }
             case .failure(let error):
-                print("error")
+                if(self.travelList.count == 0) {
+                    self.loadingView.stopLoading()
+                    self.loadingView.noDataView.isHidden = false
+                    self.loadingView.isHidden = false
+                    self.loadingView.showNoDataView()
+                }
             }
         }
     }

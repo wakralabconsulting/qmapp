@@ -23,17 +23,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var shouldRotate = false
     let networkReachability = NetworkReachabilityManager()
     var tourGuideId : String? = ""
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-       // GMSServices.provideAPIKey("AIzaSyBXEzUfmsi5BidKqR1eY999pj0APP2N0k0")
+        // GMSServices.provideAPIKey("AIzaSyBXEzUfmsi5BidKqR1eY999pj0APP2N0k0")
         GMSServices.provideAPIKey("AIzaSyAbuv0Gx0vwyZdr90LFKeUFmMesorNZHKQ") // QM key
-         GMSPlacesClient.provideAPIKey("AIzaSyAbuv0Gx0vwyZdr90LFKeUFmMesorNZHKQ")
-       // self.apiCalls()
+        GMSPlacesClient.provideAPIKey("AIzaSyAbuv0Gx0vwyZdr90LFKeUFmMesorNZHKQ")
+        CoreDataManager.shared.setup {
+            self.apiCalls()
+        }
         
-           
         
         AppLocalizer.DoTheMagic()
         FirebaseApp.configure()
-
+        
         registerForPushNotifications()
         
         // Register with APNs
@@ -50,8 +52,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         //Launched from push notification
         let remoteNotif = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? [String: Any]
         if remoteNotif != nil {
-//            let aps = remoteNotif!["aps"] as? [String:AnyObject]
-//            NSLog("\n Custom: \(String(describing: aps))")
+            //            let aps = remoteNotif!["aps"] as? [String:AnyObject]
+            //            NSLog("\n Custom: \(String(describing: aps))")
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let notificationsView = storyboard.instantiateViewController(withIdentifier: "notificationId") as! NotificationsViewController
             notificationsView.fromHome = true
@@ -95,7 +97,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             self.getNmoqParkListFromServer(lang: AR_LANGUAGE)
             self.getNmoqListOfParksFromServer(lang: ENG_LANGUAGE)
             self.getNmoqListOfParksFromServer(lang: AR_LANGUAGE)
-
+            
         }
     }
     
@@ -121,41 +123,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
     
-//    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-//        // 1. Convert device token to string
-//        let tokenParts = deviceToken.map { data -> String in
-//            return String(format: "%02.2hhx", data)
-//        }
-//        let token = tokenParts.joined()
-//        // 2. Print device token to use for PNs payloads
-//        print("Device Token: \(token)")
-//    }
+    //    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    //        // 1. Convert device token to string
+    //        let tokenParts = deviceToken.map { data -> String in
+    //            return String(format: "%02.2hhx", data)
+    //        }
+    //        let token = tokenParts.joined()
+    //        // 2. Print device token to use for PNs payloads
+    //        print("Device Token: \(token)")
+    //    }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         // 1. Print out error if PNs registration not successful
         print("Failed to register for remote notifications with error: \(error)")
     }
-
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
     }
-
+    
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
-
+    
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     }
-
+    
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
-
+    
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        CoreDataManager.shared.saveContext()
     }
     
     func application(_ application: UIApplication,
@@ -164,27 +167,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     //MARK: Push notification receive delegates
-//    func application(_ application: UIApplication,
-//                     didReceiveRemoteNotification userInfo: [AnyHashable : Any],
-//                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-//        application.applicationIconBadgeNumber = 0
-//        print("Recived: \(userInfo)")
-//        if (application.applicationState == .active) {
-//            if let topController = UIApplication.topViewController() {
-//                print(topController)
-//            }
-//            // Do something you want when the app is active
-//
-//        } else {
-//
-//            // Do something else when your app is in the background
-//
-//
-//        }
-//        completionHandler(.newData)
-//
-//    }
-
+    //    func application(_ application: UIApplication,
+    //                     didReceiveRemoteNotification userInfo: [AnyHashable : Any],
+    //                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    //        application.applicationIconBadgeNumber = 0
+    //        print("Recived: \(userInfo)")
+    //        if (application.applicationState == .active) {
+    //            if let topController = UIApplication.topViewController() {
+    //                print(topController)
+    //            }
+    //            // Do something you want when the app is active
+    //
+    //        } else {
+    //
+    //            // Do something else when your app is in the background
+    //
+    //
+    //        }
+    //        completionHandler(.newData)
+    //
+    //    }
+    
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenParts = deviceToken.map { data -> String in
             return String(format: "%02.2hhx", data)
@@ -196,10 +199,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         self.sendDeviceTokenToServer(deviceToken: token)
     }
     
-//    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError
-//        error: Error) {
-//        // Try again later.
-//    }
+    //    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError
+    //        error: Error) {
+    //        // Try again later.
+    //    }
     
     // This method will be called when we click push notifications in background
     @available(iOS 10.0, *)
@@ -209,7 +212,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         print(userInfo)
         let info = self.extractUserInfo(userInfo: userInfo)
         print(info.title)
-
+        
         let notificationData = UserDefaults.standard.object(forKey: "pushNotificationList") as? NSData
         if let notificationData = notificationData, let notifications = NSKeyedUnarchiver.unarchiveObject(with: notificationData as Data) as?
             [Notification] {
@@ -227,7 +230,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         notificationsView.fromHome = true
         self.window?.rootViewController = notificationsView
         self.window?.makeKeyAndVisible()
-//            NotificationCenter.default.post(name: NSNotification.Name("NotificationIdentifier"), object: nil)
+        //            NotificationCenter.default.post(name: NSNotification.Name("NotificationIdentifier"), object: nil)
     }
     
     // This method will be called when app received push notifications in foreground
@@ -250,7 +253,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let notificationData = UserDefaults.standard.object(forKey: "pushNotificationList") as? NSData
         if let notificationData = notificationData, let notifications = NSKeyedUnarchiver.unarchiveObject(with: notificationData as Data) as?
             [Notification] {
-           var notificationArray = notifications
+            var notificationArray = notifications
             notificationArray.insert(Notification(title: info.title, sortId: info.title), at: 0)
             let notificationData = NSKeyedArchiver.archivedData(withRootObject: notificationArray)
             UserDefaults.standard.set(notificationData, forKey: "pushNotificationList")
@@ -268,7 +271,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 (topController as! NotificationsViewController).updateNotificationTableView()
             }
         }
-//        completionHandler([.alert, .badge, .sound])
+        //        completionHandler([.alert, .badge, .sound])
     }
     
     //MARK: WebServiceCall
@@ -293,134 +296,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func extractUserInfo(userInfo: [AnyHashable : Any]) -> (title: String, body: String) {
         var info = (title: "", body: "")
         guard let aps = userInfo["aps"] as? [String: Any] else { return info }
-//        guard let alert = aps["alert"] as? [String: Any] else { return info }
+        //        guard let alert = aps["alert"] as? [String: Any] else { return info }
         let title = aps["alert"] as? String ?? ""
         let body = "" //alert["body"] as? String ?? ""
         info = (title: title, body: body)
         return info
     }
     
-    // MARK: - Core Data stack
+   
     
     @available(iOS 10.0, *)
     lazy var persistentContainer: NSPersistentContainer = {
-        /*
-         The persistent container for the application. This implementation
-         creates and returns a container, having loaded the store for the
-         application to it. This property is optional since there are legitimate
-         error conditions that could cause the creation of the store to fail.
-         */
-        
-        let container = NSPersistentContainer(name: "QatarMuseums")
-        print(container.persistentStoreDescriptions.first?.url)
-        if(UserDefaults.standard.value(forKey: "firstLaunchAfterMigration") as? String == nil) {
-            UserDefaults.standard.set("false", forKey: "firstLaunchAfterMigration")
-        let description = NSPersistentStoreDescription()
-        description.shouldMigrateStoreAutomatically = true
-        description.shouldInferMappingModelAutomatically = true
-        container.persistentStoreDescriptions = [description]
-        } else {
-            let description = NSPersistentStoreDescription()
-            description.shouldMigrateStoreAutomatically = false
-            description.shouldInferMappingModelAutomatically = false
-            container.persistentStoreDescriptions = [description]
-        }
-        
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                
-                /*
-                 Typical reasons for an error here include:
-                 * The parent directory does not exist, cannot be created, or disallows writing.
-                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-                 * The device is out of space.
-                 * The store could not be migrated to the current model version.
-                 Check the error message to determine what the actual problem was.
-                 */
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
+        let container = CoreDataManager.shared.persistentContainer
         return container
     }()
-    // iOS 9 and below
-    lazy var applicationDocumentsDirectory: URL = {
-        
-        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return urls[urls.count-1]
-    }()
     
-    lazy var managedObjectModel: NSManagedObjectModel = {
-        // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
-        let modelURL = Bundle.main.url(forResource: "coreDataTestForPreOS", withExtension: "momd")!
-        return NSManagedObjectModel(contentsOf: modelURL)!
-    }()
-    
-    lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
-        // The persistent store coordinator for the application. This implementation creates and returns a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
-        // Create the coordinator and store
-        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.appendingPathComponent("SingleViewCoreData.sqlite")
-        var failureReason = "There was an error creating or loading the application's saved data."
-//        let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true]
-        do {
-            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
-        } catch {
-            // Report any error we got.
-            var dict = [String: AnyObject]()
-            dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data" as AnyObject?
-            dict[NSLocalizedFailureReasonErrorKey] = failureReason as AnyObject?
-            
-            dict[NSUnderlyingErrorKey] = error as NSError
-            let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
-            // Replace this with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog("Unresolved error \(wrappedError), \(wrappedError.userInfo)")
-            abort()
-        }
-        
-        return coordinator
-    }()
     lazy var managedObjectContext: NSManagedObjectContext = {
-        // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
-        let coordinator = self.persistentStoreCoordinator
-        var managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = coordinator
+        var managedObjectContext = CoreDataManager.shared.managedObjectContext
         return managedObjectContext
     }()
-    // MARK: - Core Data Saving support
     
     
-    func saveContext () {
-        if #available(iOS 10.0, *) {
-            let context = persistentContainer.viewContext
-            if context.hasChanges {
-                do {
-                    try context.save()
-                } catch {
-                    // Replace this implementation with code to handle the error appropriately.
-                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                    let nserror = error as NSError
-                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-                }
-            }
-        }else{
-            // iOS 9.0 and below - however you were previously handling it
-            if managedObjectContext.hasChanges {
-                do {
-                    try managedObjectContext.save()
-                } catch {
-                    // Replace this implementation with code to handle the error appropriately.
-                    // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                    let nserror = error as NSError
-                    NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
-                    abort()
-                }
-            }
-            
-        }
-    }
     //MARK: HeritageList WebServiceCall
     func getHeritageDataFromServer(lang: String?) {
         let queue = DispatchQueue(label: "HeritageThread", qos: .background, attributes: .concurrent)
@@ -429,13 +325,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             case .success(let data):
                 if(data.heritage != nil) {
                     if((data.heritage?.count)! > 0) {
-                    DispatchQueue.main.async{
-                        self.saveOrUpdateHeritageCoredata(heritageListArray: data.heritage, lang: lang)
+                        DispatchQueue.main.async{
+                            self.saveOrUpdateHeritageCoredata(heritageListArray: data.heritage, lang: lang)
+                        }
                     }
                 }
-                }
             case .failure(let error):
-               print(error)
+                print(error)
             }
         }
     }
@@ -443,7 +339,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func saveOrUpdateHeritageCoredata(heritageListArray: [Heritage]?,lang: String?) {
         if ((heritageListArray?.count)! > 0) {
             if #available(iOS 10.0, *) {
-                let container = self.persistentContainer
+                let container = CoreDataManager.shared.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
                     self.coreDataInBackgroundThread(managedContext: managedContext, heritageListArray: heritageListArray, lang: lang)
                 }
@@ -457,8 +353,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,heritageListArray: [Heritage]?,lang: String?) {
-        if (lang == ENG_LANGUAGE) {
-            let fetchData = checkAddedToCoredata(entityName: "HeritageEntity", idKey: "listid", idValue: nil, managedContext: managedContext) as! [HeritageEntity]
+        var fetchData = [HeritageEntity]()
+        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            fetchData = checkAddedToCoredata(entityName: "HeritageEntity", idKey: "lang", idValue: "1", managedContext: managedContext) as! [HeritageEntity]
+        } else {
+            fetchData = checkAddedToCoredata(entityName: "HeritageEntity", idKey: "lang", idValue: "0", managedContext: managedContext) as! [HeritageEntity]
+        }
             if (fetchData.count > 0) {
                 for i in 0 ... (heritageListArray?.count)!-1 {
                     let heritageListDict = heritageListArray![i]
@@ -469,6 +369,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         heritagedbDict.listname = heritageListDict.name
                         heritagedbDict.listimage = heritageListDict.image
                         heritagedbDict.listsortid =  heritageListDict.sortid
+                        if (lang == ENG_LANGUAGE) {
+                            heritagedbDict.lang =  "1"
+                        } else {
+                            heritagedbDict.lang =  "0"
+                        }
+                        
                         
                         do{
                             try managedContext.save()
@@ -482,7 +388,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         
                     }
                 }
-                NotificationCenter.default.post(name: NSNotification.Name(heritageListNotificationEn), object: self)
+                if(lang == ENG_LANGUAGE) {
+                    NotificationCenter.default.post(name: NSNotification.Name(heritageListNotificationEn), object: self)
+                } else {
+                    NotificationCenter.default.post(name: NSNotification.Name(heritageListNotificationAr), object: self)
+                }
                 
             } else {
                 for i in 0 ... (heritageListArray?.count)!-1 {
@@ -490,75 +400,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     heritageListDict = heritageListArray?[i]
                     self.saveHeritageListToCoreData(heritageListDict: heritageListDict!, managedObjContext: managedContext, lang: lang)
                 }
-                NotificationCenter.default.post(name: NSNotification.Name(heritageListNotificationEn), object: self)
-            }
-        } else {
-            let fetchData = checkAddedToCoredata(entityName: "HeritageEntityArabic", idKey: "listid", idValue: nil, managedContext: managedContext) as! [HeritageEntityArabic]
-            if (fetchData.count > 0) {
-                for i in 0 ... (heritageListArray?.count)!-1 {
-                    let heritageListDict = heritageListArray![i]
-                    let fetchResult = checkAddedToCoredata(entityName: "HeritageEntityArabic", idKey: "listid", idValue: heritageListArray![i].id, managedContext: managedContext)
-                    //update
-                    if(fetchResult.count != 0) {
-                        let heritagedbDict = fetchResult[0] as! HeritageEntityArabic
-                        heritagedbDict.listnamearabic = heritageListDict.name
-                        heritagedbDict.listimagearabic = heritageListDict.image
-                        heritagedbDict.listsortidarabic =  heritageListDict.sortid
-                        
-                        do{
-                            try managedContext.save()
-                        }
-                        catch{
-                            print(error)
-                        }
-                    }
-                    else {
-                        //save
-                        self.saveHeritageListToCoreData(heritageListDict: heritageListDict, managedObjContext: managedContext, lang: lang)
-                        
-                    }
+                if(lang == ENG_LANGUAGE) {
+                    NotificationCenter.default.post(name: NSNotification.Name(heritageListNotificationEn), object: self)
+                } else {
+                    NotificationCenter.default.post(name: NSNotification.Name(heritageListNotificationAr), object: self)
                 }
-                NotificationCenter.default.post(name: NSNotification.Name(heritageListNotificationAr), object: self)
-            }
-            else {
-                for i in 0 ... (heritageListArray?.count)!-1 {
-                    let heritageListDict : Heritage?
-                    heritageListDict = heritageListArray?[i]
-                    self.saveHeritageListToCoreData(heritageListDict: heritageListDict!, managedObjContext: managedContext, lang: lang)
-                    
-                }
-                NotificationCenter.default.post(name: NSNotification.Name(heritageListNotificationAr), object: self)
-            }
         }
     }
     
     func saveHeritageListToCoreData(heritageListDict: Heritage, managedObjContext: NSManagedObjectContext,lang: String?) {
-        if (lang == ENG_LANGUAGE) {
             let heritageInfo: HeritageEntity = NSEntityDescription.insertNewObject(forEntityName: "HeritageEntity", into: managedObjContext) as! HeritageEntity
             heritageInfo.listid = heritageListDict.id
             heritageInfo.listname = heritageListDict.name
             
             heritageInfo.listimage = heritageListDict.image
+        if (lang == ENG_LANGUAGE) {
+            heritageInfo.lang =  "1"
+        } else {
+            heritageInfo.lang =  "0"
+        }
             if(heritageListDict.sortid != nil) {
                 heritageInfo.listsortid = heritageListDict.sortid
             }
-        } else {
-            let heritageInfo: HeritageEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "HeritageEntityArabic", into: managedObjContext) as! HeritageEntityArabic
-            heritageInfo.listid = heritageListDict.id
-            heritageInfo.listnamearabic = heritageListDict.name
-            
-            heritageInfo.listimagearabic = heritageListDict.image
-            if(heritageListDict.sortid != nil) {
-                heritageInfo.listsortidarabic = heritageListDict.sortid
-            }
-        }
         do {
             try managedObjContext.save()
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
-
     //MARK: Exhibitions Service call
     func getExhibitionDataFromServer(lang: String?) {
         let queue = DispatchQueue(label: "ExhibitionThread", qos: .background, attributes: .concurrent)
@@ -567,7 +436,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             case .success(let data):
                 if(data.exhibitions != nil) {
                     if((data.exhibitions?.count)! > 0) {
-                self.saveOrUpdateExhibitionsCoredata(exhibition: data.exhibitions, lang: lang)
+                        self.saveOrUpdateExhibitionsCoredata(exhibition: data.exhibitions, lang: lang)
                     }
                 }
             case .failure( _):
@@ -579,7 +448,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func saveOrUpdateExhibitionsCoredata(exhibition: [Exhibition]?,lang: String?) {
         if ((exhibition?.count)! > 0) {
             if #available(iOS 10.0, *) {
-                let container = self.persistentContainer
+                let container = CoreDataManager.shared.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
                     self.exhibitionCoreDataInBackgroundThread(managedContext: managedContext, exhibition: exhibition, lang: lang)
                 }
@@ -710,10 +579,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             case .success(let data):
                 if(data.homeList != nil) {
                     if((data.homeList?.count)! > 0) {
-                    DispatchQueue.main.async{
-                        self.saveOrUpdateHomeCoredata(homeList: data.homeList, lang: lang)
+                        DispatchQueue.main.async{
+                            self.saveOrUpdateHomeCoredata(homeList: data.homeList, lang: lang)
+                        }
                     }
-                }
                 }
             case .failure( _):
                 print("error")
@@ -724,7 +593,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func saveOrUpdateHomeCoredata(homeList: [Home]?,lang: String?) {
         if ((homeList?.count)! > 0) {
             if #available(iOS 10.0, *) {
-                let container = self.persistentContainer
+                let container = CoreDataManager.shared.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
                     self.homeCoreDataInBackgroundThread(managedContext: managedContext, homeList: homeList, lang: lang)
                 }
@@ -738,8 +607,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func homeCoreDataInBackgroundThread(managedContext: NSManagedObjectContext, homeList: [Home]?,lang: String?) {
+        var fetchData = [HomeEntity]()
+        var langVar : String? = nil
         if (lang == ENG_LANGUAGE) {
-            let fetchData = checkAddedToCoredata(entityName: "HomeEntity", idKey: "id", idValue: nil, managedContext: managedContext) as! [HomeEntity]
+            langVar = "1"
+            
+        } else {
+            langVar = "0"
+        }
+        fetchData = checkAddedToCoredata(entityName: "HomeEntity", idKey: "lang", idValue: langVar, managedContext: managedContext) as! [HomeEntity]
             if (fetchData.count > 0) {
                 for i in 0 ... (homeList?.count)!-1 {
                     let homeListDict = homeList![i]
@@ -751,7 +627,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         homedbDict.image = homeListDict.image
                         homedbDict.sortid =  (Int16(homeListDict.sortId!) ?? 0)
                         homedbDict.tourguideavailable = homeListDict.isTourguideAvailable
-                        
+                        homedbDict.lang = langVar
                         do{
                             try managedContext.save()
                         }
@@ -772,48 +648,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
                 NotificationCenter.default.post(name: NSNotification.Name(homepageNotificationEn), object: self)
             }
-        } else {
-            let fetchData = checkAddedToCoredata(entityName: "HomeEntityArabic", idKey: "id", idValue: nil, managedContext: managedContext) as! [HomeEntityArabic]
-            if (fetchData.count > 0) {
-                for i in 0 ... (homeList?.count)!-1 {
-                    let homeListDict = homeList![i]
-                    
-                    let fetchResult = checkAddedToCoredata(entityName: "HomeEntityArabic", idKey: "id", idValue: homeList![i].id, managedContext: managedContext)
-                    //update
-                    if(fetchResult.count != 0) {
-                        let homedbDict = fetchResult[0] as! HomeEntityArabic
-                        homedbDict.arabicname = homeListDict.name
-                        homedbDict.arabicimage = homeListDict.image
-                        homedbDict.arabicsortid =  (Int16(homeListDict.sortId!) ?? 0)
-                        homedbDict.arabictourguideavailable = homeListDict.isTourguideAvailable
-                        do{
-                            try managedContext.save()
-                        }
-                        catch{
-                            print(error)
-                        }
-                    } else {
-                        //save
-                        self.saveHomeDataToCoreData(homeListDict: homeListDict, managedObjContext: managedContext, lang: lang)
-                        
-                    }
-                }
-                NotificationCenter.default.post(name: NSNotification.Name(homepageNotificationAr), object: self)
-            } else {
-                for i in 0 ... (homeList?.count)!-1 {
-                    let homeListDict : Home?
-                    homeListDict = homeList?[i]
-                    self.saveHomeDataToCoreData(homeListDict: homeListDict!, managedObjContext: managedContext, lang: lang)
-                    
-                }
-                NotificationCenter.default.post(name: NSNotification.Name(homepageNotificationAr), object: self)
-            }
-        }
-
     }
     
     func saveHomeDataToCoreData(homeListDict: Home, managedObjContext: NSManagedObjectContext,lang: String?) {
+        var langVar : String? = nil
         if (lang == ENG_LANGUAGE) {
+            langVar = "1"
+            
+        } else {
+            langVar = "0"
+        }
             let homeInfo: HomeEntity = NSEntityDescription.insertNewObject(forEntityName: "HomeEntity", into: managedObjContext) as! HomeEntity
             homeInfo.id = homeListDict.id
             homeInfo.name = homeListDict.name
@@ -821,14 +665,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             homeInfo.tourguideavailable = homeListDict.isTourguideAvailable
             homeInfo.image = homeListDict.image
             homeInfo.sortid = (Int16(homeListDict.sortId!) ?? 0)
-        } else{
-            let homeInfo: HomeEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "HomeEntityArabic", into: managedObjContext) as! HomeEntityArabic
-            homeInfo.id = homeListDict.id
-            homeInfo.arabicname = homeListDict.name
-            homeInfo.arabicimage = homeListDict.image
-            homeInfo.arabictourguideavailable = homeListDict.isTourguideAvailable
-            homeInfo.arabicsortid = (Int16(homeListDict.sortId!) ?? 0)
-        }
+            homeInfo.lang = langVar
         do {
             try managedObjContext.save()
         } catch let error as NSError {
@@ -843,10 +680,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             case .success(let data):
                 if(data.tourGuide != nil) {
                     if((data.tourGuide?.count)! > 0) {
-                    DispatchQueue.main.async{
-                        self.saveOrUpdateTourGuideCoredata(miaTourDataFullArray: data.tourGuide, museumId: museumId, lang: lang)
+                        DispatchQueue.main.async{
+                            self.saveOrUpdateTourGuideCoredata(miaTourDataFullArray: data.tourGuide, museumId: museumId, lang: lang)
+                        }
                     }
-                }
                 }
             case .failure( _):
                 print("error")
@@ -857,7 +694,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func saveOrUpdateTourGuideCoredata(miaTourDataFullArray:[TourGuide]?,museumId: String?,lang:String?) {
         if ((miaTourDataFullArray?.count)! > 0) {
             if #available(iOS 10.0, *) {
-                let container = self.persistentContainer
+                let container = CoreDataManager.shared.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
                     self.miaTourGuideCoreDataInBackgroundThread(managedContext: managedContext, miaTourDataFullArray: miaTourDataFullArray, museumId: museumId, lang: lang)
                 }
@@ -905,12 +742,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                             }
                         }
                         
-                            do{
-                                try managedContext.save()
-                            }
-                            catch{
-                                print(error)
-                            }
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
                     }
                     else {
                         //save
@@ -962,12 +799,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                                 }
                             }
                         }
-                            do{
-                                try managedContext.save()
-                            }
-                            catch{
-                                print(error)
-                            }
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
                     }
                     else {
                         //save
@@ -1041,11 +878,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
             }
         }
-            do {
-                try managedObjContext.save()
-            } catch let error as NSError {
-                print("Could not save. \(error), \(error.userInfo)")
-            }
+        do {
+            try managedObjContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
         
     }
     //MARK: NMoQ ABoutEvent Webservice
@@ -1059,7 +896,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     if(data.museum != nil) {
                         if((data.museum?.count)! > 0) {
                             DispatchQueue.main.async{
-                            self.saveOrUpdateAboutCoredata(aboutDetailtArray: data.museum, lang: lang)
+                                self.saveOrUpdateAboutCoredata(aboutDetailtArray: data.museum, lang: lang)
                             }
                         }
                     }
@@ -1074,7 +911,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func saveOrUpdateAboutCoredata(aboutDetailtArray:[Museum]?,lang: String?) {
         if ((aboutDetailtArray?.count)! > 0) {
             if #available(iOS 10.0, *) {
-                let container = self.persistentContainer
+                let container = CoreDataManager.shared.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
                     self.aboutCoreDataInBackgroundThread(managedContext: managedContext, aboutDetailtArray: aboutDetailtArray, lang: lang)
                 }
@@ -1279,7 +1116,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func saveOrUpdateTourListCoredata(nmoqTourList:[NMoQTour]?,isTourGuide:Bool,lang: String?) {
         if ((nmoqTourList?.count)! > 0) {
             if #available(iOS 10.0, *) {
-                let container = self.persistentContainer
+                let container = CoreDataManager.shared.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
                     self.tourListCoreDataInBackgroundThread(nmoqTourList: nmoqTourList, managedContext: managedContext, isTourGuide: isTourGuide, lang: lang)
                 }
@@ -1356,73 +1193,73 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     tourListDict = nmoqTourList?[i]
                     self.saveTourListToCoreData(tourListDict: tourListDict!, managedObjContext: managedContext, isTourGuide: isTourGuide, lang: lang)
                 }
-                 NotificationCenter.default.post(name: NSNotification.Name(nmoqTourlistNotificationEn), object: self, userInfo: tourOrSpecialEventDict)
+                NotificationCenter.default.post(name: NSNotification.Name(nmoqTourlistNotificationEn), object: self, userInfo: tourOrSpecialEventDict)
             }
         } else {
-                let fetchData = checkAddedToCoredata(entityName: "NMoQTourListEntityAr", idKey: "nid", idValue: nil, managedContext: managedContext) as! [NMoQTourListEntityAr]
-                if (fetchData.count > 0) {
-                    for i in 0 ... (nmoqTourList?.count)!-1 {
-                        let tourListDict = nmoqTourList![i]
-                        let fetchResult = checkAddedToCoredata(entityName: "NMoQTourListEntityAr", idKey: "nid", idValue: tourListDict.nid, managedContext: managedContext)
-                        //update
-                        if(fetchResult.count != 0) {
-                            let tourListdbDict = fetchResult[0] as! NMoQTourListEntityAr
-                            tourListdbDict.title = tourListDict.title
-                            tourListdbDict.dayDescription = tourListDict.dayDescription
-                            tourListdbDict.subtitle =  tourListDict.subtitle
-                            tourListdbDict.sortId = Int16(tourListDict.sortId!)!
-                            tourListdbDict.nid =  tourListDict.nid
-                            tourListdbDict.eventDate = tourListDict.eventDate
-                            
-                            //eventlist
-                            tourListdbDict.dateString = tourListDict.date
-                            tourListdbDict.descriptioForModerator = tourListDict.descriptioForModerator
-                            tourListdbDict.mobileLatitude = tourListDict.mobileLatitude
-                            tourListdbDict.moderatorName = tourListDict.moderatorName
-                            tourListdbDict.longitude = tourListDict.longitude
-                            tourListdbDict.contactEmail = tourListDict.contactEmail
-                            tourListdbDict.contactPhone = tourListDict.contactPhone
-                            tourListdbDict.isTourGuide = isTourGuide
-                            
-                            if(tourListDict.images != nil){
-                                if((tourListDict.images?.count)! > 0) {
-                                    for i in 0 ... (tourListDict.images?.count)!-1 {
-                                        var tourImage: NMoqTourImagesEntityAr!
-                                        let tourImgaeArray: NMoqTourImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "NMoqTourImagesEntityAr", into: managedContext) as! NMoqTourImagesEntityAr
-                                        tourImgaeArray.image = tourListDict.images?[i]
-                                        
-                                        tourImage = tourImgaeArray
-                                        tourListdbDict.addToTourImagesRelationAr(tourImage)
-                                        do {
-                                            try managedContext.save()
-                                        } catch let error as NSError {
-                                            print("Could not save. \(error), \(error.userInfo)")
-                                        }
+            let fetchData = checkAddedToCoredata(entityName: "NMoQTourListEntityAr", idKey: "nid", idValue: nil, managedContext: managedContext) as! [NMoQTourListEntityAr]
+            if (fetchData.count > 0) {
+                for i in 0 ... (nmoqTourList?.count)!-1 {
+                    let tourListDict = nmoqTourList![i]
+                    let fetchResult = checkAddedToCoredata(entityName: "NMoQTourListEntityAr", idKey: "nid", idValue: tourListDict.nid, managedContext: managedContext)
+                    //update
+                    if(fetchResult.count != 0) {
+                        let tourListdbDict = fetchResult[0] as! NMoQTourListEntityAr
+                        tourListdbDict.title = tourListDict.title
+                        tourListdbDict.dayDescription = tourListDict.dayDescription
+                        tourListdbDict.subtitle =  tourListDict.subtitle
+                        tourListdbDict.sortId = Int16(tourListDict.sortId!)!
+                        tourListdbDict.nid =  tourListDict.nid
+                        tourListdbDict.eventDate = tourListDict.eventDate
+                        
+                        //eventlist
+                        tourListdbDict.dateString = tourListDict.date
+                        tourListdbDict.descriptioForModerator = tourListDict.descriptioForModerator
+                        tourListdbDict.mobileLatitude = tourListDict.mobileLatitude
+                        tourListdbDict.moderatorName = tourListDict.moderatorName
+                        tourListdbDict.longitude = tourListDict.longitude
+                        tourListdbDict.contactEmail = tourListDict.contactEmail
+                        tourListdbDict.contactPhone = tourListDict.contactPhone
+                        tourListdbDict.isTourGuide = isTourGuide
+                        
+                        if(tourListDict.images != nil){
+                            if((tourListDict.images?.count)! > 0) {
+                                for i in 0 ... (tourListDict.images?.count)!-1 {
+                                    var tourImage: NMoqTourImagesEntityAr!
+                                    let tourImgaeArray: NMoqTourImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "NMoqTourImagesEntityAr", into: managedContext) as! NMoqTourImagesEntityAr
+                                    tourImgaeArray.image = tourListDict.images?[i]
+                                    
+                                    tourImage = tourImgaeArray
+                                    tourListdbDict.addToTourImagesRelationAr(tourImage)
+                                    do {
+                                        try managedContext.save()
+                                    } catch let error as NSError {
+                                        print("Could not save. \(error), \(error.userInfo)")
                                     }
                                 }
                             }
-                            
-                            do{
-                                try managedContext.save()
-                            }
-                            catch{
-                                print(error)
-                            }
-                        } else {
-                            //save
-                            self.saveTourListToCoreData(tourListDict: tourListDict, managedObjContext: managedContext, isTourGuide: isTourGuide, lang: lang)
                         }
+                        
+                        do{
+                            try managedContext.save()
+                        }
+                        catch{
+                            print(error)
+                        }
+                    } else {
+                        //save
+                        self.saveTourListToCoreData(tourListDict: tourListDict, managedObjContext: managedContext, isTourGuide: isTourGuide, lang: lang)
                     }
-                    NotificationCenter.default.post(name: NSNotification.Name(nmoqTourlistNotificationAr), object: self, userInfo: tourOrSpecialEventDict)
-                } else {
-                    for i in 0 ... (nmoqTourList?.count)!-1 {
-                        let tourListDict : NMoQTour?
-                        tourListDict = nmoqTourList?[i]
-                        self.saveTourListToCoreData(tourListDict: tourListDict!, managedObjContext: managedContext, isTourGuide: isTourGuide, lang: lang)
-                    }
-                    NotificationCenter.default.post(name: NSNotification.Name(nmoqTourlistNotificationAr), object: self, userInfo: tourOrSpecialEventDict)
                 }
+                NotificationCenter.default.post(name: NSNotification.Name(nmoqTourlistNotificationAr), object: self, userInfo: tourOrSpecialEventDict)
+            } else {
+                for i in 0 ... (nmoqTourList?.count)!-1 {
+                    let tourListDict : NMoQTour?
+                    tourListDict = nmoqTourList?[i]
+                    self.saveTourListToCoreData(tourListDict: tourListDict!, managedObjContext: managedContext, isTourGuide: isTourGuide, lang: lang)
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(nmoqTourlistNotificationAr), object: self, userInfo: tourOrSpecialEventDict)
             }
+        }
     }
     func saveTourListToCoreData(tourListDict: NMoQTour, managedObjContext: NSManagedObjectContext,isTourGuide:Bool,lang:String?) {
         if (lang == ENG_LANGUAGE) {
@@ -1496,11 +1333,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
             }
         }
-            do {
-                try managedObjContext.save()
-            } catch let error as NSError {
-                print("Could not save. \(error), \(error.userInfo)")
-            }
+        do {
+            try managedObjContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
         
     }
     //MARK: NMoQ TravelList Service Call
@@ -1524,7 +1361,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func saveOrUpdateTravelListCoredata(travelList:[HomeBanner]?,lang:String?) {
         if ((travelList?.count)! > 0) {
             if #available(iOS 10.0, *) {
-                let container = self.persistentContainer
+                let container = CoreDataManager.shared.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
                     self.travelListCoreDataInBackgroundThread(travelList: travelList, managedContext: managedContext, lang: lang)
                 }
@@ -1652,7 +1489,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     //MARK: NMoQSpecialEvent Lst APi
     func getNMoQSpecialEventList(lang:String?) {
-         let queue = DispatchQueue(label: "NMoQSpecialEventListThread", qos: .background, attributes: .concurrent)
+        let queue = DispatchQueue(label: "NMoQSpecialEventListThread", qos: .background, attributes: .concurrent)
         _ = Alamofire.request(QatarMuseumRouter.GetNMoQSpecialEventList(lang!)).responseObject(queue:queue) { (response: DataResponse<NMoQActivitiesListData>) -> Void in
             switch response.result {
             case .success(let data):
@@ -1661,7 +1498,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         self.saveOrUpdateActivityListCoredata(nmoqActivityList: data.nmoqActivitiesList, lang:lang )
                     }
                 }
-               
+                
             case .failure( _):
                 print("error")
             }
@@ -1671,7 +1508,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func saveOrUpdateActivityListCoredata(nmoqActivityList:[NMoQActivitiesList]?,lang: String?) {
         if ((nmoqActivityList?.count)! > 0) {
             if #available(iOS 10.0, *) {
-                let container = self.persistentContainer
+                let container = CoreDataManager.shared.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
                     self.activityListCoreDataInBackgroundThread(nmoqActivityList: nmoqActivityList, managedContext: managedContext, lang: lang)
                 }
@@ -1905,7 +1742,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
                 
             case .failure( _):
-               print("error")
+                print("error")
             }
         }
     }
@@ -1913,7 +1750,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func saveOrUpdateDiningCoredata(diningListArray : [Dining]?,lang: String?) {
         if ((diningListArray?.count)! > 0) {
             if #available(iOS 10.0, *) {
-                let container = self.persistentContainer
+                let container = CoreDataManager.shared.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
                     self.diningCoreDataInBackgroundThread(managedContext: managedContext, diningListArray: diningListArray!, lang: lang)
                 }
@@ -2054,7 +1891,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func saveOrUpdatePublicArtsCoredata(publicArtsListArray:[PublicArtsList]?,lang: String?) {
         if ((publicArtsListArray?.count)! > 0) {
             if #available(iOS 10.0, *) {
-                let container = self.persistentContainer
+                let container = CoreDataManager.shared.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
                     self.publicArtsCoreDataInBackgroundThread(managedContext: managedContext, publicArtsListArray: publicArtsListArray, lang: lang)
                 }
@@ -2188,7 +2025,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     }
                 }
                 
-               
+                
             case .failure( _):
                 print("error")
             }
@@ -2198,7 +2035,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func saveOrUpdateCollectionCoredata(collection: [Collection]?,museumId:String?,lang: String?) {
         if ((collection?.count)! > 0) {
             if #available(iOS 10.0, *) {
-                let container = self.persistentContainer
+                let container = CoreDataManager.shared.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
                     self.collectionsListCoreDataInBackgroundThread(managedContext: managedContext, collection: collection!, museumId: museumId, lang: lang)
                 }
@@ -2217,12 +2054,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             if (fetchData.count > 0) {
                 let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "CollectionsEntity")
                 if(isDeleted == true) {
-                for i in 0 ... (collection?.count)!-1 {
-                    let collectionListDict : Collection?
-                    collectionListDict = collection?[i]
+                    for i in 0 ... (collection?.count)!-1 {
+                        let collectionListDict : Collection?
+                        collectionListDict = collection?[i]
                         self.saveCollectionListToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext, lang: lang)
+                    }
                 }
-            }
                 NotificationCenter.default.post(name: NSNotification.Name(collectionsListNotificationEn), object: self)
             }
             else {
@@ -2238,12 +2075,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             if (fetchData.count > 0) {
                 let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "CollectionsEntityArabic")
                 if(isDeleted == true) {
-                for i in 0 ... (collection?.count)!-1 {
-                    let collectionListDict : Collection?
-                    collectionListDict = collection?[i]
+                    for i in 0 ... (collection?.count)!-1 {
+                        let collectionListDict : Collection?
+                        collectionListDict = collection?[i]
                         self.saveCollectionListToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext, lang: lang)
+                    }
                 }
-            }
                 NotificationCenter.default.post(name: NSNotification.Name(collectionsListNotificationAr), object: self)
             }
             else {
@@ -2298,9 +2135,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     //MARK: Coredata Method
     func saveOrUpdateParksCoredata(parksListArray:[ParksList]?,lang:String?) {
         if (parksListArray!.count > 0) {
-            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
-                let container = appDelegate!.persistentContainer
+                let container = CoreDataManager.shared.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
                     self.parksCoreDataInBackgroundThread(managedContext: managedContext, parksListArray: parksListArray, lang: lang)
                 }
@@ -2318,15 +2154,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let fetchData = checkAddedToCoredata(entityName: "ParksEntity", idKey: nil, idValue: nil, managedContext: managedContext) as! [ParksEntity]
             if (fetchData.count > 0) {
                 let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "ParksEntity")
-                    if(isDeleted == true) {
-                        for i in 0 ... parksListArray!.count-1 {
-                            let parksDict : ParksList?
-                            parksDict = parksListArray![i]
-                            self.saveParksToCoreData(parksDict: parksDict!, managedObjContext: managedContext, lang: lang)
-                            
-                        }
-                        NotificationCenter.default.post(name: NSNotification.Name(parksNotificationEn), object: self)
+                if(isDeleted == true) {
+                    for i in 0 ... parksListArray!.count-1 {
+                        let parksDict : ParksList?
+                        parksDict = parksListArray![i]
+                        self.saveParksToCoreData(parksDict: parksDict!, managedObjContext: managedContext, lang: lang)
+                        
                     }
+                    NotificationCenter.default.post(name: NSNotification.Name(parksNotificationEn), object: self)
+                }
             }
             else {
                 for i in 0 ... parksListArray!.count-1 {
@@ -2407,9 +2243,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     //MARK: Facilities List Coredata Method
     func saveOrUpdateFacilitiesListCoredata(facilitiesList:[Facilities]?,lang:String?) {
         if ((facilitiesList?.count)! > 0) {
-            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
-                let container = appDelegate!.persistentContainer
+                let container = CoreDataManager.shared.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
                     self.facilitiesListCoreDataInBackgroundThread(facilitiesList: facilitiesList, managedContext: managedContext, lang: lang)
                 }
@@ -2598,9 +2433,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     //MARK: NmoqPark List Coredata Method
     func saveOrUpdateNmoqParkListCoredata(nmoqParkList:[NMoQParksList]?,lang:String?) {
         if ((nmoqParkList?.count)! > 0) {
-            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
-                let container = appDelegate!.persistentContainer
+                let container = CoreDataManager.shared.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
                     self.nmoqParkListCoreDataInBackgroundThread(nmoqParkList: nmoqParkList, managedContext: managedContext, lang: lang)
                 }
@@ -2633,23 +2467,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         nmoqParkListdbDict.latitude = nmoqParkListDict.latitude
                         nmoqParkListdbDict.locationTitle =  nmoqParkListDict.locationTitle
                         
-//                        if(facilitiesListDict.images != nil){
-//                            if((facilitiesListDict.images?.count)! > 0) {
-//                                for i in 0 ... (facilitiesListDict.images?.count)!-1 {
-//                                    var facilitiesImage: FacilitiesImgEntity!
-//                                    let facilitiesImgaeArray: FacilitiesImgEntity = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesImgEntity", into: managedContext) as! FacilitiesImgEntity
-//                                    facilitiesImgaeArray.images = facilitiesListDict.images![i]
-//
-//                                    facilitiesImage = facilitiesImgaeArray
-//                                    facilitiesListdbDict.addToFacilitiesImgRelation(facilitiesImage)
-//                                    do {
-//                                        try managedContext.save()
-//                                    } catch let error as NSError {
-//                                        print("Could not save. \(error), \(error.userInfo)")
-//                                    }
-//                                }
-//                            }
-//                        }
+                        //                        if(facilitiesListDict.images != nil){
+                        //                            if((facilitiesListDict.images?.count)! > 0) {
+                        //                                for i in 0 ... (facilitiesListDict.images?.count)!-1 {
+                        //                                    var facilitiesImage: FacilitiesImgEntity!
+                        //                                    let facilitiesImgaeArray: FacilitiesImgEntity = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesImgEntity", into: managedContext) as! FacilitiesImgEntity
+                        //                                    facilitiesImgaeArray.images = facilitiesListDict.images![i]
+                        //
+                        //                                    facilitiesImage = facilitiesImgaeArray
+                        //                                    facilitiesListdbDict.addToFacilitiesImgRelation(facilitiesImage)
+                        //                                    do {
+                        //                                        try managedContext.save()
+                        //                                    } catch let error as NSError {
+                        //                                        print("Could not save. \(error), \(error.userInfo)")
+                        //                                    }
+                        //                                }
+                        //                            }
+                        //                        }
                         
                         do{
                             try managedContext.save()
@@ -2691,23 +2525,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         nmoqParkListdbDict.latitude = nmoqParkListDict.latitude
                         nmoqParkListdbDict.locationTitle =  nmoqParkListDict.locationTitle
                         
-//                        if(facilitiesListDict.images != nil){
-//                            if((facilitiesListDict.images?.count)! > 0) {
-//                                for i in 0 ... (facilitiesListDict.images?.count)!-1 {
-//                                    var facilitiesImage: FacilitiesImgEntityAr!
-//                                    let facilitiesImgaeArray: FacilitiesImgEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesImgEntityAr", into: managedContext) as! FacilitiesImgEntityAr
-//                                    facilitiesImgaeArray.images = facilitiesListDict.images?[i]
-//
-//                                    facilitiesImage = facilitiesImgaeArray
-//                                    facilitiesListdbDict.addToFacilitiesImgRelationAr(facilitiesImage)
-//                                    do {
-//                                        try managedContext.save()
-//                                    } catch let error as NSError {
-//                                        print("Could not save. \(error), \(error.userInfo)")
-//                                    }
-//                                }
-//                            }
-//                        }
+                        //                        if(facilitiesListDict.images != nil){
+                        //                            if((facilitiesListDict.images?.count)! > 0) {
+                        //                                for i in 0 ... (facilitiesListDict.images?.count)!-1 {
+                        //                                    var facilitiesImage: FacilitiesImgEntityAr!
+                        //                                    let facilitiesImgaeArray: FacilitiesImgEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesImgEntityAr", into: managedContext) as! FacilitiesImgEntityAr
+                        //                                    facilitiesImgaeArray.images = facilitiesListDict.images?[i]
+                        //
+                        //                                    facilitiesImage = facilitiesImgaeArray
+                        //                                    facilitiesListdbDict.addToFacilitiesImgRelationAr(facilitiesImage)
+                        //                                    do {
+                        //                                        try managedContext.save()
+                        //                                    } catch let error as NSError {
+                        //                                        print("Could not save. \(error), \(error.userInfo)")
+                        //                                    }
+                        //                                }
+                        //                            }
+                        //                        }
                         
                         do{
                             try managedContext.save()
@@ -2746,23 +2580,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             nmoqParkListdbDict.locationTitle =  nmoqParkListDict.locationTitle
             
             
-//            if(facilitiesListDict.images != nil){
-//                if((facilitiesListDict.images?.count)! > 0) {
-//                    for i in 0 ... (facilitiesListDict.images?.count)!-1 {
-//                        var facilitiesImage: FacilitiesImgEntity!
-//                        let facilitiesImgaeArray: FacilitiesImgEntity = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesImgEntity", into: managedObjContext) as! FacilitiesImgEntity
-//                        facilitiesImgaeArray.images = facilitiesListDict.images![i]
-//
-//                        facilitiesImage = facilitiesImgaeArray
-//                        facilitiesListInfo.addToFacilitiesImgRelation(facilitiesImage)
-//                        do {
-//                            try managedObjContext.save()
-//                        } catch let error as NSError {
-//                            print("Could not save. \(error), \(error.userInfo)")
-//                        }
-//                    }
-//                }
-//            }
+            //            if(facilitiesListDict.images != nil){
+            //                if((facilitiesListDict.images?.count)! > 0) {
+            //                    for i in 0 ... (facilitiesListDict.images?.count)!-1 {
+            //                        var facilitiesImage: FacilitiesImgEntity!
+            //                        let facilitiesImgaeArray: FacilitiesImgEntity = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesImgEntity", into: managedObjContext) as! FacilitiesImgEntity
+            //                        facilitiesImgaeArray.images = facilitiesListDict.images![i]
+            //
+            //                        facilitiesImage = facilitiesImgaeArray
+            //                        facilitiesListInfo.addToFacilitiesImgRelation(facilitiesImage)
+            //                        do {
+            //                            try managedObjContext.save()
+            //                        } catch let error as NSError {
+            //                            print("Could not save. \(error), \(error.userInfo)")
+            //                        }
+            //                    }
+            //                }
+            //            }
         } else {
             let nmoqParkListdbDict: NMoQParkListEntityAr = NSEntityDescription.insertNewObject(forEntityName: "NMoQParkListEntityAr", into: managedObjContext) as! NMoQParkListEntityAr
             nmoqParkListdbDict.title = nmoqParkListDict.title
@@ -2777,23 +2611,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             nmoqParkListdbDict.locationTitle =  nmoqParkListDict.locationTitle
             
             
-//            if(facilitiesListDict.images != nil){
-//                if((facilitiesListDict.images?.count)! > 0) {
-//                    for i in 0 ... (facilitiesListDict.images?.count)!-1 {
-//                        var facilitiesImage: FacilitiesImgEntityAr!
-//                        let facilitiesImgaeArray: FacilitiesImgEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesImgEntityAr", into: managedObjContext) as! FacilitiesImgEntityAr
-//                        facilitiesImgaeArray.images = facilitiesListDict.images?[i]
-//
-//                        facilitiesImage = facilitiesImgaeArray
-//                        facilitiesListInfo.addToFacilitiesImgRelationAr(facilitiesImage)
-//                        do {
-//                            try managedObjContext.save()
-//                        } catch let error as NSError {
-//                            print("Could not save. \(error), \(error.userInfo)")
-//                        }
-//                    }
-//                }
-//            }
+            //            if(facilitiesListDict.images != nil){
+            //                if((facilitiesListDict.images?.count)! > 0) {
+            //                    for i in 0 ... (facilitiesListDict.images?.count)!-1 {
+            //                        var facilitiesImage: FacilitiesImgEntityAr!
+            //                        let facilitiesImgaeArray: FacilitiesImgEntityAr = NSEntityDescription.insertNewObject(forEntityName: "FacilitiesImgEntityAr", into: managedObjContext) as! FacilitiesImgEntityAr
+            //                        facilitiesImgaeArray.images = facilitiesListDict.images?[i]
+            //
+            //                        facilitiesImage = facilitiesImgaeArray
+            //                        facilitiesListInfo.addToFacilitiesImgRelationAr(facilitiesImage)
+            //                        do {
+            //                            try managedObjContext.save()
+            //                        } catch let error as NSError {
+            //                            print("Could not save. \(error), \(error.userInfo)")
+            //                        }
+            //                    }
+            //                }
+            //            }
         }
         do {
             try managedObjContext.save()
@@ -2821,9 +2655,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     //MARK: NMoq List of Parks Coredata Method
     func saveOrUpdateNmoqParksCoredata(nmoqParkList:[NMoQPark]?, lang:String?) {
         if ((nmoqParkList?.count)! > 0) {
-            let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
-                let container = appDelegate!.persistentContainer
+                let container = CoreDataManager.shared.persistentContainer
                 container.performBackgroundTask() {(managedContext) in
                     self.nmoqParkCoreDataInBackgroundThread(nmoqParkList: nmoqParkList, managedContext: managedContext, lang: lang)
                 }
