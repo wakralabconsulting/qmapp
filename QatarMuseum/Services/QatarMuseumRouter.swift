@@ -8,6 +8,7 @@
 
 import Alamofire
 import Foundation
+import CocoaLumberjack
 
 enum QatarMuseumRouter: URLRequestConvertible {
     case ExhibitionList(String)
@@ -443,6 +444,7 @@ enum QatarMuseumRouter: URLRequestConvertible {
     }
     
     func stopAllRequests(){
+        DDLogInfo(NSStringFromClass(type(of: self) as! AnyClass) + "Function: \(#function)")
         if #available(iOS 9.0, *) {
             Alamofire.SessionManager.default.session.getAllTasks { (tasks) in
                 tasks.forEach{ $0.cancel() }

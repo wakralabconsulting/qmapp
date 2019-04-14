@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 @objc protocol LoadingViewProtocol {
     func tryAgainButtonPressed()
 }
@@ -27,16 +28,17 @@ class LoadingView: UIView {
     {
         loadView()
         backgroundColor = UIColor.black.withAlphaComponent(0.2)
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     override init(frame: CGRect) {
         super.init(frame: frame)
         loadView()
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         loadView()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     private func commonInit()
     {
@@ -47,7 +49,7 @@ class LoadingView: UIView {
        // loadingView.autoresizingMask = [.flexibleHeight,.flexibleWidth]
         loadingView.translatesAutoresizingMaskIntoConstraints = false
         noDataLabel.font = UIFont.closeButtonFont
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     fileprivate func loadView() {
@@ -80,6 +82,7 @@ class LoadingView: UIView {
         oopsLabel.isHidden = true
         noNetworkText.isHidden = true
         tryAgainButton.isHidden = true
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func stopLoading() {
@@ -91,6 +94,7 @@ class LoadingView: UIView {
         oopsLabel.isHidden = true
         noNetworkText.isHidden = true
         tryAgainButton.isHidden = true
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func showNoDataView() {
@@ -107,6 +111,7 @@ class LoadingView: UIView {
         self.activityIndicator.stopAnimating()
         self.activityIndicator.isHidden = true
         self.noDataLabel.isHidden = false
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func showYetNoNotificationDataView() {
@@ -122,6 +127,7 @@ class LoadingView: UIView {
         self.activityIndicator.stopAnimating()
         self.activityIndicator.isHidden = true
         self.noDataLabel.isHidden = false
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func hideNoDataView() {
@@ -133,6 +139,7 @@ class LoadingView: UIView {
         self.noNetworkText.isHidden = true
         self.oopsLabel.isHidden = true
         self.tryAgainButton.isHidden = true
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func showNoNetworkView()  {
         let nonetworkMsg = NSLocalizedString("NO_INTERNET", comment: "NO_INTERNET message") + "\n" + NSLocalizedString("CHECK_INTERNET", comment: "CHECK_INTERNET message")
@@ -151,8 +158,10 @@ class LoadingView: UIView {
         self.oopsLabel.font = UIFont.oopsTitleFont
         self.tryAgainButton.titleLabel?.font = UIFont.tryAgainFont
         self.tryAgainButton.layer.cornerRadius = 24
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     @IBAction func didTapTryAgain(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         UIButton.animate(withDuration: 0.2,
                          animations: {
                             self.tryAgainButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)

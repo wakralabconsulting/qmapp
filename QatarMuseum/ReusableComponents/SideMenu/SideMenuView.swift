@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 protocol SideMenuProtocol
 {
     func exhibitionButtonPressed()
@@ -69,10 +70,12 @@ class SideMenuView: UIView,TopBarProtocol {
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     private func commonInit() {
         Bundle.main.loadNibNamed("SideMenu", owner: self, options: nil)
@@ -110,6 +113,7 @@ class SideMenuView: UIView,TopBarProtocol {
         giftShopLabel.font = UIFont.sideMenuLabelFont
         parksLabel.font = UIFont.sideMenuLabelFont
         settingsLabel.font = UIFont.sideMenuLabelFont
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     var preferredStatusBarStyle: UIStatusBarStyle {
@@ -117,6 +121,7 @@ class SideMenuView: UIView,TopBarProtocol {
     }
     
     @IBAction func didTapExhibition(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         UIButton.animate(withDuration: 0.3,
                          animations: {
                             self.exhibitionView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -130,6 +135,7 @@ class SideMenuView: UIView,TopBarProtocol {
         
     }
     @IBAction func didTapEvent(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         UIButton.animate(withDuration: 0.3,
                          animations: {
                             self.eventView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -143,6 +149,7 @@ class SideMenuView: UIView,TopBarProtocol {
         
     }
     @IBAction func didTapEducation(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         UIButton.animate(withDuration: 0.3,
                          animations: {
                             self.educationView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -156,6 +163,7 @@ class SideMenuView: UIView,TopBarProtocol {
         
     }
     @IBAction func didTapTourGuide(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         UIButton.animate(withDuration: 0.3,
                          animations: {
                             self.tourGuideView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -169,6 +177,7 @@ class SideMenuView: UIView,TopBarProtocol {
         
     }
     @IBAction func didTapHeritageSites(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         UIButton.animate(withDuration: 0.3,
                          animations: {
                             self.heritageView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -182,6 +191,7 @@ class SideMenuView: UIView,TopBarProtocol {
         
     }
     @IBAction func didTapPublicArts(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         UIButton.animate(withDuration: 0.3,
                          animations: {
                             self.publicArtsView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -194,6 +204,7 @@ class SideMenuView: UIView,TopBarProtocol {
         })
     }
     @IBAction func didTapParks(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         UIButton.animate(withDuration: 0.3,
                          animations: {
                             self.parksView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -207,6 +218,7 @@ class SideMenuView: UIView,TopBarProtocol {
         
     }
     @IBAction func didTapDining(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         UIButton.animate(withDuration: 0.3,
                          animations: {
                             self.diningView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -220,6 +232,7 @@ class SideMenuView: UIView,TopBarProtocol {
         
     }
     @IBAction func didTapGiftShop(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         UIButton.animate(withDuration: 0.3,
                          animations: {
                             self.giftShopView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -232,6 +245,7 @@ class SideMenuView: UIView,TopBarProtocol {
         })
     }
     @IBAction func didTapSettings(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         UIButton.animate(withDuration: 0.3,
                          animations: {
                             self.settingsView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -246,18 +260,22 @@ class SideMenuView: UIView,TopBarProtocol {
     }
     func eventButtonPressed() {
         sideMenuDelegate?.menuEventPressed()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func notificationbuttonPressed() {
         sideMenuDelegate?.menuNotificationPressed()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func profileButtonPressed() {
         sideMenuDelegate?.menuProfilePressed()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func menuButtonPressed() {
         sideMenuDelegate?.menuClosePressed()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func backButtonPressed() {

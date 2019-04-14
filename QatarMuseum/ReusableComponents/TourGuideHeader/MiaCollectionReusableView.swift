@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 //protocol MiaTourProtocol {
 //    func exploreButtonTapAction( miaHeader: MiaCollectionReusableView)
 //}
@@ -25,6 +26,7 @@ class MiaCollectionReusableView: UITableViewCell {
     @IBOutlet weak var exploreButtonBottom: NSLayoutConstraint!
     var exploreButtonTapAction : (()->())?
     override func awakeFromNib() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         super.awakeFromNib()
         miaTourGuideText.font = UIFont.settingsUpdateLabelFont
         miaTitle.font = UIFont.tourGuidesFont
@@ -36,6 +38,7 @@ class MiaCollectionReusableView: UITableViewCell {
         
     }
     func setHeader() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         exploreButton.isHidden = false
         miaTitle.text = NSLocalizedString("MIA_TOUR_GUIDE_TITLE", comment: "MIA_TOUR_GUIDE_TITLE in TourGuide page")
         miaTourGuideText.text = NSLocalizedString("TOUR_GUIDE_TEXT", comment: "TOUR_GUIDE_TEXT in TourGuide page")
@@ -44,6 +47,7 @@ class MiaCollectionReusableView: UITableViewCell {
         selfGuidedText.text = NSLocalizedString("SELF_GUIDED_TEXT1", comment: "SELF_GUIDED_TEXT1 in TourGuide page") + "\n" + NSLocalizedString("SELF_GUIDED_TEXT2", comment: "SELF_GUIDED_TEXT2 in TourGuide page")
     }
     func setNMoQHeaderData() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         exploreButton.isHidden = true
         miaTourGuideText.isHidden = true
         exploreButtonHeight.constant = 0
@@ -56,6 +60,7 @@ class MiaCollectionReusableView: UITableViewCell {
     }
     
     @IBAction func didTapExplore(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         UIButton.animate(withDuration: 0.2,
                          animations: {
                             self.exploreButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)

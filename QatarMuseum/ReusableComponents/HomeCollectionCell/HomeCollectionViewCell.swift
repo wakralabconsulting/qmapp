@@ -9,6 +9,7 @@
 import Alamofire
 import Kingfisher
 import UIKit
+import CocoaLumberjack
 
 class HomeCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var homeImageView: UIImageView!
@@ -27,6 +28,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
         }
     }
     func setHomeCellData(home: Home) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let titleString = home.name
         homeTitleLabel.text = titleString
         homeTitleLabel.font = UIFont.homeTitleFont
@@ -57,6 +59,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     }
     
     func setScienceTourGuideCellData(homeCellData: TourGuide) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         homeTitleLabel.font = UIFont.homeTitleFont
         homeTitleLabel.text = homeCellData.title
         tourGuideImage.isHidden = false
@@ -79,6 +82,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
         
     }
     func setTourGuideCellData(museumsListData: Home) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         homeTitleLabel.font = UIFont.homeTitleFont
         
         homeTitleLabel.text = museumsListData.name

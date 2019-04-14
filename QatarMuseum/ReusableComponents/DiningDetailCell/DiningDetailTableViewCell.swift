@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 
 class DiningDetailTableViewCell: UITableViewCell,UITextViewDelegate {
     @IBOutlet weak var titleLabel: UILabel!
@@ -33,6 +34,7 @@ class DiningDetailTableViewCell: UITableViewCell,UITextViewDelegate {
     }
     
     func setDiningDetailValues(diningDetail: Dining) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         titleLabel.text = diningDetail.name?.uppercased()
         titleDescriptionLabel.text = diningDetail.description?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         timeTitleLabel.isHidden = false
@@ -95,6 +97,7 @@ class DiningDetailTableViewCell: UITableViewCell,UITextViewDelegate {
 
     }
     @IBAction func didTapFavouriteButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         
         UIButton.animate(withDuration: 0.3,
                          animations: {
@@ -110,6 +113,7 @@ class DiningDetailTableViewCell: UITableViewCell,UITextViewDelegate {
         
     }
     @IBAction func didTapShareButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         
         UIButton.animate(withDuration: 0.3,
                          animations: {
@@ -126,13 +130,14 @@ class DiningDetailTableViewCell: UITableViewCell,UITextViewDelegate {
     }
    
     @IBAction func didTapLocation(_ sender: UIButton) {
-
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
          self.locationButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         self.locationButtonAction?()
         
     }
     
     @IBAction func locationButtonTouchDown(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.locationButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     override func setSelected(_ selected: Bool, animated: Bool) {

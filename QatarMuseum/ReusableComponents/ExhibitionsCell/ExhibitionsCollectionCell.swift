@@ -38,7 +38,7 @@ class ExhibitionsCollectionCell: UITableViewCell {
     }
     //MARK: HomeExhibitionList data
     func setExhibitionCellValues(exhibition: Exhibition) {
-
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         setGradientLayer()
         openCloseView.layer.cornerRadius = 12
         titleLabel.text = exhibition.name?.uppercased()
@@ -129,6 +129,7 @@ class ExhibitionsCollectionCell: UITableViewCell {
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         exhibitionCellItemBtnTapAction?()
         self.favouriteButton.transform = CGAffineTransform(scaleX:1, y: 1)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @IBAction func favoriteTouchDownPressed(_ sender: UIButton) {
@@ -141,6 +142,7 @@ class ExhibitionsCollectionCell: UITableViewCell {
             favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
             isFavourite = true
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     

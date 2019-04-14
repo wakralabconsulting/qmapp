@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 
 class NMoQTourDescriptionCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
@@ -19,6 +20,7 @@ class NMoQTourDescriptionCell: UITableViewCell {
     }
 
     func setupUI() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         titleLabel.font = UIFont.tourGuidesFont
         descriptionLabel.font = UIFont.englishTitleFont
     }

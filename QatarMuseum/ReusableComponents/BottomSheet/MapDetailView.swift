@@ -9,6 +9,7 @@ import AVFoundation
 import AVKit
 import Crashlytics
 import UIKit
+import CocoaLumberjack
 
 protocol MapDetailProtocol
 {
@@ -41,7 +42,7 @@ class MapDetailView: UIViewController,ObjectImageViewProtocol {
     var selectedCell : ObjectDetailTableViewCell?
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "MapDetailCell", bundle: nil), forCellReuseIdentifier: "objectDetailID")
@@ -55,7 +56,7 @@ class MapDetailView: UIViewController,ObjectImageViewProtocol {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         UIView.animate(withDuration: 0.6, animations: { [weak self] in
             let frame = self?.view.frame
             let yComponent = self?.partialView
@@ -65,7 +66,7 @@ class MapDetailView: UIViewController,ObjectImageViewProtocol {
     func addCloseButton(cell : UITableViewCell) {
         // loadingView.isHidden = false
         // loadingView.showLoading()
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             closeButton.frame = CGRect(x: 10, y: 10, width: 50, height: 50)
         } else {

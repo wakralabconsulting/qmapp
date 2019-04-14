@@ -103,33 +103,40 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
 
     @IBAction func didTapFavouriteButton(_ sender: UIButton) {
         self.favoriteButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         favBtnTapAction?()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @IBAction func didTapShareButton(_ sender: UIButton) {
         self.shareButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         shareBtnTapAction?()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @IBAction func favouriteTouchDown(_ sender: UIButton) {
         self.favoriteButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @IBAction func shareTouchDown(_ sender: UIButton) {
         self.shareButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @IBAction func locationTouchDown(_ sender: UIButton) {
         self.locationButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @IBAction func didTapLocation(_ sender: UIButton) {
         self.locationButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         locationButtonAction?()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
 }

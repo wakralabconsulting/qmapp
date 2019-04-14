@@ -9,6 +9,7 @@
 import Foundation
 import CocoaLumberjack
 import SSZipArchive
+import CocoaLumberjack
 
 public var fileLogger: DDFileLogger = DDFileLogger()
 
@@ -20,6 +21,7 @@ func applicationStorageDirectory() -> String? {
 }
 
 func applicationDocumentDirectory() -> String? {
+    DDLogInfo("File: \(#file)" + "Function: \(#function)")
     var documentDirectory: String? = nil
     let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
     if paths.count != 0 {
@@ -29,6 +31,7 @@ func applicationDocumentDirectory() -> String? {
 }
 
 func applicationCachesDirectory() -> String? {
+    DDLogInfo("File: \(#file)" + "Function: \(#function)")
     var cacheDirectory: String? = nil
     let paths = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)
     if paths.count != 0 {
@@ -40,7 +43,7 @@ func applicationCachesDirectory() -> String? {
 //MARK: Logger implementation Initializing logs
 
 func setupQMLogger(){
-    
+    DDLogInfo("File: \(#file)" + "Function: \(#function)")
     // Configure CocoaLumberjack
 //    DDLog.add(DDASLLogger.sharedInstance)
     DDLog.add(DDTTYLogger.sharedInstance)
@@ -70,7 +73,7 @@ func setupQMLogger(){
 }
 
 func snapshotAndZipLogs(_ includeCrashes: Bool) -> Data? {
-
+    DDLogInfo("File: \(#file)" + "Function: \(#function)")
     let logsPath = URL(fileURLWithPath: applicationDocumentDirectory()!).appendingPathComponent("QMIOSLogs.zip").path
     let file = URL(fileURLWithPath: logsPath).path
     if snapshotLogsAndZipLogs(onDisk: file, includeCrashes: false) {
@@ -81,6 +84,7 @@ func snapshotAndZipLogs(_ includeCrashes: Bool) -> Data? {
 
 
 func snapshotLogsAndZipLogs(onDisk destination: String?, includeCrashes crashes: Bool) -> Bool {
+    DDLogInfo("File: \(#file)" + "Function: \(#function)")
     let removeError: Error? = nil
     var success = false
     let fileManager = FileManager.default

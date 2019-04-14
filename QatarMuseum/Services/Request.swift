@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import CocoaLumberjack
 
 public class QatarMuseumError : NSObject {
     var code: Int
@@ -54,6 +55,7 @@ extension ResponseCollectionSerializable where Self: ResponseObjectSerializable 
 
 extension DataRequest {
     func responseObject<T: ResponseObjectSerializable>(
+        
         queue: DispatchQueue? = nil,
         completionHandler: @escaping (DataResponse<T>) -> Void) -> Self {
         let responseSerializer = DataResponseSerializer<T> { request, response, data, error in
@@ -74,6 +76,7 @@ extension DataRequest {
             }
             return .success(responseObject)
         }
+        
         return response(queue: queue, responseSerializer: responseSerializer, completionHandler: completionHandler)
     }
     

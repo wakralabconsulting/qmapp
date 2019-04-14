@@ -9,6 +9,7 @@
 import Alamofire
 import Kingfisher
 import UIKit
+import CocoaLumberjack
 
 class HeritageTableViewCell: UITableViewCell {
 
@@ -29,6 +30,7 @@ class HeritageTableViewCell: UITableViewCell {
         setGradientLayer()
     }
     override func awakeFromNib() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             titleLabel.textAlignment = .left
             subTitle.textAlignment = .left
@@ -39,6 +41,7 @@ class HeritageTableViewCell: UITableViewCell {
     }
     //MARK: HeritageList data
     func setHeritageListCellValues(heritageList: Heritage) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         titleLabel.text = heritageList.name?.uppercased()
         lineLabel.isHidden = true
         //lineLabelHeight.constant = 2
@@ -63,6 +66,7 @@ class HeritageTableViewCell: UITableViewCell {
     
     //MARK: Public Arts List Data
     func setPublicArtsListCellValues(publicArtsList: PublicArtsList) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         titleLabel.text = publicArtsList.name?.uppercased()
         lineLabelHeight.constant = 0
         lineLabel.isHidden = true
@@ -92,6 +96,7 @@ class HeritageTableViewCell: UITableViewCell {
     
     //MARK: Collections List Data
     func setCollectionsCellValues(collectionList: Collection) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         titleLabel.text = collectionList.name?.uppercased().replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         lineLabelHeight.constant = 0
         lineLabel.isHidden = true
@@ -110,6 +115,7 @@ class HeritageTableViewCell: UITableViewCell {
     
     //MARK: Dining List Data
     func setDiningListValues(diningList: Dining) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         titleLabel.text = diningList.name?.uppercased()
         lineLabelHeight.constant = 0
         lineLabel.isHidden = true
@@ -124,6 +130,7 @@ class HeritageTableViewCell: UITableViewCell {
         titleLabel.font = UIFont.heritageTitleFont
     }
     func setScienceTourGuideCellData(homeCellData: TourGuide) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         subTitle.font = UIFont.homeTitleFont
         subTitle.text = homeCellData.title
         tourGuideImage.isHidden = false

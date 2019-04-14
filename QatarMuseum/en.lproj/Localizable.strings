@@ -254,7 +254,7 @@
 
 "SEND_LOGS" = "Send Logs";
 "SEND_EMAIL_CONFIRMATION_TITLE" = "Send Email Confirmation";
-"SEND_EMAIL_CONFIRMATION_MESSAGE" = "Would you like send email";
+"SEND_EMAIL_CONFIRMATION_MESSAGE" = "Would you like to send email";
 "CANCEL" = "Cancel";
 "OK" = "Ok";
 "EMAIL_CANCELLED" = "Email Cancelled";

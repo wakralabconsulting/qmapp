@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 
 class NMoQListCell: UITableViewCell {
     @IBOutlet weak var cellImageView: UIImageView!
@@ -36,6 +37,7 @@ class NMoQListCell: UITableViewCell {
         }
     }
     func setTourListDate(tourList: NMoQTour?,isTour: Bool?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         titleLabel.text = tourList?.subtitle
         dayLabel.text = tourList?.title
         if (isTour)! {
@@ -66,6 +68,7 @@ class NMoQListCell: UITableViewCell {
         }
     }
     func setActivityListDate(activityList: NMoQActivitiesList?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         titleLabel.text = activityList?.subtitle
         dayLabel.text = activityList?.title
         dateLabel.isHidden = true
@@ -110,6 +113,7 @@ class NMoQListCell: UITableViewCell {
         }
     }
     func setTravelListData(travelListData: HomeBanner) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         dayLabel.font = UIFont.homeTitleFont
         dayLabel.text = travelListData.title
         titleLabel.isHidden = true
@@ -125,6 +129,7 @@ class NMoQListCell: UITableViewCell {
         }
     }
     func setFacilitiesListData(facilitiesListData: Facilities?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         dayLabel.font = UIFont.homeTitleFont
         dayLabel.text = facilitiesListData!.title!.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil).replacingOccurrences(of: "&amp;", with: "&", options: .regularExpression, range: nil)
         titleLabel.isHidden = true
@@ -142,6 +147,7 @@ class NMoQListCell: UITableViewCell {
         }
     }
     func setFacilitiesDetail(FacilitiesDetailData: FacilitiesDetail?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         dayLabel.font  = UIFont.homeTitleFont
         dayLabel.text = FacilitiesDetailData?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         titleLabel.isHidden = true
@@ -161,6 +167,7 @@ class NMoQListCell: UITableViewCell {
         }
     }
     func setParkListData() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         dayLabel.font = UIFont.homeTitleFont
         dayLabel.text = "Playround"
         titleLabel.isHidden = true
@@ -180,6 +187,7 @@ class NMoQListCell: UITableViewCell {
     }
     
     func setParkListData(parkList: NMoQPark) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         titleLabel.text = parkList.title?.htmlString
             //?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         dateLabel.isHidden = true

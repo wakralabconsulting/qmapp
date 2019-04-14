@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 
 class HeritageDetailCell: UITableViewCell {
     @IBOutlet weak var favoriteButton: UIButton!
@@ -52,6 +53,7 @@ class HeritageDetailCell: UITableViewCell {
     }
     
     func setUi() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         titleLabel.font = UIFont.settingsUpdateLabelFont
         titleDescriptionLabel.font = UIFont.englishTitleFont
         subTitleLabel.font = UIFont.englishTitleFont
@@ -69,6 +71,7 @@ class HeritageDetailCell: UITableViewCell {
     }
     
     func setHeritageDetailData(heritageDetail: Heritage) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         titleBottomOnlyConstraint.isActive = false
         middleTitleLabel.isHidden = false
         midTitleDescriptionLabel.isHidden = false
@@ -113,6 +116,7 @@ class HeritageDetailCell: UITableViewCell {
     }
     
     func setPublicArtsDetailValues(publicArsDetail: PublicArtsDetail) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         titleLabel.text = publicArsDetail.name?.uppercased()
         //subTitleLabel.text =
         middleTitleLabel.isHidden = true
@@ -147,6 +151,7 @@ class HeritageDetailCell: UITableViewCell {
     }
     
     func setMuseumAboutCellData(aboutData: Museum) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         titleBottomOnlyConstraint.isActive = false
         locationTotalTopConstraint.isActive = false
         locationTotalBottomConstraint.isActive = false
@@ -198,6 +203,7 @@ class HeritageDetailCell: UITableViewCell {
     }
     
     @IBAction func didTapFavouriteButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         UIButton.animate(withDuration: 0.3,
                          animations: {
                             self.favoriteButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -212,6 +218,7 @@ class HeritageDetailCell: UITableViewCell {
     }
     
     @IBAction func didTapShareButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         UIButton.animate(withDuration: 0.3,
                          animations: {
                             self.shareButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -226,20 +233,23 @@ class HeritageDetailCell: UITableViewCell {
     }
    
     @IBAction func didTapLocationButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.locationButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         locationButtonTapAction?()
     }
     
     @IBAction func locationButtonTouchDown(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.locationButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         // Configure the view for the selected state
     }
     func replaceString(originalString : String, expression: String)->String? {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
        let result = originalString.replacingOccurrences(of: expression, with: "", options: .regularExpression, range: nil)
         return result
     }
