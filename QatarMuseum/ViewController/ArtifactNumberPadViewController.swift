@@ -194,7 +194,7 @@ class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UIC
     func getnumberSearchDataFromServer(searchString : String?)
     {
         if((searchString != "") && (searchString != nil)) {
-        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(LocalizationLanguage.currentAppleLanguage(),["artifact_number": searchString!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.CollectionByTourGuide(LocalizationLanguage.currentAppleLanguage(),["artifact_number": searchString!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
             switch response.result {
             case .success(let data):
                 self.objectDetailArray = data.tourGuideFloorMap

@@ -101,7 +101,7 @@ class GoogleMapViewController: UIViewController,CLLocationManagerDelegate,GMSMap
         
         let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=\(apiKey)"
         
-        Alamofire.request(url).responseObject { (response: DataResponse<GoogleDirections>) -> Void in
+        CPSessionManager.sharedInstance.apiManager()?.request(url).responseObject { (response: DataResponse<GoogleDirections>) -> Void in
             switch response.result {
             case .success(let data):
                 print(data)

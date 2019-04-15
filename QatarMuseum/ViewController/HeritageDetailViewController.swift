@@ -622,7 +622,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     }
     //MARK: WebServiceCall
     func getHeritageDetailsFromServer() {
-        _ = Alamofire.request(QatarMuseumRouter.HeritageDetail(["nid": heritageDetailId!])).responseObject { (response: DataResponse<Heritages>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.HeritageDetail(["nid": heritageDetailId!])).responseObject { (response: DataResponse<Heritages>) -> Void in
             switch response.result {
             case .success(let data):
                 self.heritageDetailtArray = data.heritage!
@@ -652,7 +652,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     
     //MARK: PublicArts webservice call
     func getPublicArtsDetailsFromServer() {
-        _ = Alamofire.request(QatarMuseumRouter.GetPublicArtsDetail(["nid": publicArtsDetailId!])).responseObject { (response: DataResponse<PublicArtsDetails>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetPublicArtsDetail(["nid": publicArtsDetailId!])).responseObject { (response: DataResponse<PublicArtsDetails>) -> Void in
             switch response.result {
             case .success(let data):
                 self.publicArtsDetailtArray = data.publicArtsDetail!
@@ -1114,7 +1114,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     }
     //MARK: ExhibitionDetail Webservice call
     func getExhibitionDetail() {
-        _ = Alamofire.request(QatarMuseumRouter.ExhibitionDetail(["nid": exhibitionId!])).responseObject { (response: DataResponse<Exhibitions>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.ExhibitionDetail(["nid": exhibitionId!])).responseObject { (response: DataResponse<Exhibitions>) -> Void in
             switch response.result {
             case .success(let data):
                 self.exhibition = data.exhibitions!
@@ -1331,7 +1331,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     //MARK: Parks WebServiceCall
     func getParksDataFromServer()
     {
-        _ = Alamofire.request(QatarMuseumRouter.ParksList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<ParksLists>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.ParksList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<ParksLists>) -> Void in
             switch response.result {
             case .success(let data):
                 if (self.parksListArray.count == 0) {
@@ -1560,7 +1560,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     //MARK : NMoQPark
     func getNMoQParkDetailFromServer() {
         if (parkDetailId != nil) {
-            _ = Alamofire.request(QatarMuseumRouter.GetNMoQPlaygroundDetail(LocalizationLanguage.currentAppleLanguage(), ["nid": parkDetailId!])).responseObject { (response: DataResponse<NMoQParksDetail>) -> Void in
+            _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetNMoQPlaygroundDetail(LocalizationLanguage.currentAppleLanguage(), ["nid": parkDetailId!])).responseObject { (response: DataResponse<NMoQParksDetail>) -> Void in
                 switch response.result {
                 case .success(let data):
                     self.nmoqParkDetailArray = data.nmoqParksDetail
@@ -1871,7 +1871,7 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
     }
     //MARK: Dining WebServiceCall
     func getDiningDetailsFromServer() {
-        _ = Alamofire.request(QatarMuseumRouter.GetDiningDetail(["nid": diningDetailId!])).responseObject { (response: DataResponse<Dinings>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetDiningDetail(["nid": diningDetailId!])).responseObject { (response: DataResponse<Dinings>) -> Void in
             switch response.result {
             case .success(let data):
                 self.diningDetailtArray = data.dinings!

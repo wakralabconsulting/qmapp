@@ -559,7 +559,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     
     //MARK: WebServiceCall
     func getMuseumDataFromServer() {
-        _ = Alamofire.request(QatarMuseumRouter.LandingPageMuseums(["nid": museumId ?? 0])).responseObject { (response: DataResponse<Museums>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.LandingPageMuseums(["nid": museumId ?? 0])).responseObject { (response: DataResponse<Museums>) -> Void in
             switch response.result {
             case .success(let data):
                 if(self.museumArray.count == 0) {

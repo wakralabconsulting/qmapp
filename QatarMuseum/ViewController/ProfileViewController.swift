@@ -243,7 +243,7 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     /* logout when click on the logout button */
     func filterButtonPressed() {
         if(UserDefaults.standard.value(forKey: "accessToken") as? String != nil) {
-            _ = Alamofire.request(QatarMuseumRouter.Logout()).responseObject { (response: DataResponse<LogoutData>) -> Void in
+            _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.Logout()).responseObject { (response: DataResponse<LogoutData>) -> Void in
                 switch response.result {
                 case .success( _):
                     if(response.response?.statusCode == 200) {
