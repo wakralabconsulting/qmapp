@@ -1024,23 +1024,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
     }
     
     @IBAction func didTapNumberSearch(_ sender: UIButton) {
-//        if(fromScienceTour) {
-//            let transition = CATransition()
-//            transition.duration = 0.3
-//            transition.type = kCATransitionPush
-//            transition.subtype = kCATransitionFromLeft
-//            self.view.window!.layer.add(transition, forKey: kCATransition)
-//            self.dismiss(animated: false, completion: nil)
-//        } else {
-            let numberPadView = self.storyboard?.instantiateViewController(withIdentifier: "artifactNumberPadViewId") as! ArtifactNumberPadViewController
-            let transition = CATransition()
-            transition.duration = 0.3
-            transition.type = kCATransitionFade
-            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-            view.window!.layer.add(transition, forKey: kCATransition)
-            self.present(numberPadView, animated: false, completion: nil)
-//        }
-        
+        self.performSegue(withIdentifier: "floormapToNumSearchSegue", sender: self)
     }
     
     //MARK:Header Protocol
@@ -1323,21 +1307,6 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
     }
     
     //MARK: WebServiceCall
-//    func getFloorMapDataFromServer() {
-//        // let queue = DispatchQueue(label: "", qos: .background, attributes: .concurrent)
-//        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(LocalizationLanguage.currentAppleLanguage(),["tour_guide_id": tourGuideId!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
-//            switch response.result {
-//            case .success(let data):
-//                if (self.floorMapArray.count > 0) {
-//                    self.saveOrUpdateFloormapCoredata(floorMapArray: data.tourGuideFloorMap)
-//                }
-//
-//            case .failure(let error):
-//                print("error")
-//
-//            }
-//        }
-//    }
     func getFloorMapDataFromServer()
     {
         _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(LocalizationLanguage.currentAppleLanguage(),["tour_guide_id": tourGuideId!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in

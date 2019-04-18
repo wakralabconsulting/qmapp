@@ -72,21 +72,6 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         loadingView.isHidden = false
         loadingView.showLoading()
         loadingView.loadingViewDelegate = self
-//        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-//            if (fromScienceTour) {
-//                tourGuideId = "12216"
-//            } else {
-//                //tourGuideId = "12476"
-//                //tourGuideId = "12216"
-//                tourGuideId = "12471"
-//            }
-//        } else {
-//            if (fromScienceTour) {
-//                tourGuideId = "12226"
-//            } else {
-//                tourGuideId = "12916"
-//            }
-//        }
         fetchTourGuideFromCoredata()
         if (networkReachability?.isReachable)! {
             getTourGuideDataFromServerInBackgound()
@@ -113,15 +98,10 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         
         
         self.pageViewController.view.frame = CGRect(x: 0, y: 0, width: contentView.frame.width, height: contentView.frame.height)
-        //self.addChildViewController(pageViewController)
         self.contentView.addSubview((pageViewController.view)!)
-        //self.pageViewController.didMove(toParentViewController: self)
         
         pageImageViewOne.image = UIImage(named: "selectedControl")
         showOrHidePageControlView(countValue: tourGuideArray.count, scrolling: false)
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(self.loadDetailPage))
-//        tap.delegate = self // This is not required
-//        self.view.addGestureRecognizer(tap)
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -758,14 +738,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         }
     }
     @objc func loadDetailPage(sender: UITapGestureRecognizer? = nil) {
-        let objectDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "objectDetailId") as! ObjectDetailViewController
-        objectDetailView.detailArray.append(tourGuideArray[currentPreviewItem])
-                let transition = CATransition()
-                transition.duration = 0.3
-                transition.type = kCATransitionFade
-                transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-                view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(objectDetailView, animated: false, completion: nil)
+        self.performSegue(withIdentifier: "previewToObjectDetailSegue", sender: self)
     }
     
     //MARK: TourGuide DataBase
@@ -1224,5 +1197,11 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     func recordScreenView() {
         let screenClass = String(describing: type(of: self))
         Analytics.setScreenName(PREVIEW_CONTAINER_VC, screenClass: screenClass)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "previewToObjectDetailSegue") {
+            let objectDetailView = segue.destination as! ObjectDetailViewController
+            objectDetailView.detailArray.append(tourGuideArray[currentPreviewItem])
+        }
     }
 }
