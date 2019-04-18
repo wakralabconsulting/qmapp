@@ -400,7 +400,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A4l-ar-UdA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="639" y="90"/>
+            <point key="canvasLocation" x="784" y="-353"/>
         </scene>
         <!--Data Source-->
         <scene sceneID="Vbh-xD-vpz">
@@ -574,7 +574,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zec-1V-0XM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1341" y="89"/>
+            <point key="canvasLocation" x="767" y="367"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="mvM-0o-npt">
@@ -973,7 +973,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RNE-UK-ObU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2054" y="95"/>
+            <point key="canvasLocation" x="1609" y="-1609"/>
         </scene>
         <!--Common Detail View Controller-->
         <scene sceneID="jqu-L7-ci3">
@@ -1020,7 +1020,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rme-9t-CKu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3483" y="85"/>
+            <point key="canvasLocation" x="1759" y="785"/>
         </scene>
         <!--Museums View Controller-->
         <scene sceneID="clW-ye-bpT">
@@ -1233,7 +1233,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u4a-l5-knv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4194" y="90"/>
+            <point key="canvasLocation" x="12" y="1537"/>
         </scene>
         <!--Mia Tour Detail View Controller-->
         <scene sceneID="oX5-rD-Oiq">
@@ -1378,7 +1378,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Y7-7U-DOm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4906" y="85"/>
+            <point key="canvasLocation" x="1758" y="1429"/>
         </scene>
         <!--Notifications View Controller-->
         <scene sceneID="cOj-qU-XgT">
@@ -1512,7 +1512,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xl4-Ro-77x" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5580" y="85"/>
+            <point key="canvasLocation" x="783" y="-988"/>
         </scene>
         <!--Education View Controller-->
         <scene sceneID="8SX-Oe-ZBT">
@@ -1699,7 +1699,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TWi-16-hnD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6288" y="85"/>
+            <point key="canvasLocation" x="783" y="-1656"/>
         </scene>
         <!--Filter View Controller-->
         <scene sceneID="I3K-GX-dOS">
@@ -2093,7 +2093,7 @@
                     </constraints>
                 </view>
             </objects>
-            <point key="canvasLocation" x="6974" y="85"/>
+            <point key="canvasLocation" x="5532" y="-42"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="L86-BL-38A">
@@ -2409,7 +2409,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FQ7-rF-mpR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7681" y="85"/>
+            <point key="canvasLocation" x="783" y="-2337"/>
         </scene>
         <!--Object Detail View Controller-->
         <scene sceneID="SFw-ra-2bw">
@@ -2656,7 +2656,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pbc-DV-M0k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8386" y="63"/>
+            <point key="canvasLocation" x="3484" y="1427"/>
         </scene>
         <!--Preview Container View Controller-->
         <scene sceneID="tK5-nv-CIS">
@@ -2959,7 +2959,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fn1-uI-aS6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9097" y="95"/>
+            <point key="canvasLocation" x="2636" y="1428"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="jtS-EM-T13">
@@ -3522,7 +3522,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kIg-rU-b4U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11191" y="94"/>
+            <point key="canvasLocation" x="3500" y="-335"/>
         </scene>
         <!--Artifact Number Pad View Controller-->
         <scene sceneID="tk9-Su-Ofh">
@@ -3718,7 +3718,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3p5-qW-Z2b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11875" y="116"/>
+            <point key="canvasLocation" x="3501" y="497"/>
         </scene>
         <!--Culture Pass View Controller-->
         <scene sceneID="lRj-Ah-ZMa">
@@ -3932,7 +3932,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eri-8A-op2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12567" y="95"/>
+            <point key="canvasLocation" x="1609" y="-2327"/>
         </scene>
         <!--Registration View Controller-->
         <scene sceneID="eE7-fn-rgj">
@@ -4570,7 +4570,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uwn-97-nR1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="13949" y="85"/>
+            <point key="canvasLocation" x="2477" y="-1609"/>
         </scene>
         <!--Culture Pass Card Back View Controller-->
         <scene sceneID="RLE-ad-SMg">
@@ -4653,7 +4653,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IyA-X5-FWw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="14649" y="77"/>
+            <point key="canvasLocation" x="3175" y="-1609"/>
         </scene>
         <!--Tour And Panel List View Controller-->
         <scene sceneID="n61-WR-l12">
@@ -4771,7 +4771,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R3B-cW-D7X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="16058" y="73"/>
+            <point key="canvasLocation" x="1758" y="2119"/>
         </scene>
         <!--Common List View Controller-->
         <scene sceneID="7rW-gk-kcf">
@@ -4826,11 +4826,12 @@
                         <segue destination="Z1K-CA-bjg" kind="custom" identifier="commonListToDetailSegue" customClass="FadeSegue" customModule="QatarMuseums" customModuleProvider="target" id="ffd-l4-w9g"/>
                         <segue destination="3V7-zS-GQO" kind="custom" identifier="commonListToPanelDetailSegue" customClass="FadeSegue" customModule="QatarMuseums" customModuleProvider="target" id="3T9-v2-MaX"/>
                         <segue destination="g9r-ut-SZZ" kind="custom" identifier="commonListToMiaTourSegue" customClass="SegueFromRight" customModule="QatarMuseums" customModuleProvider="target" id="58R-AN-Jis"/>
+                        <segue destination="avg-al-ab5" kind="custom" identifier="commonListToFloormapSegue" customClass="SegueFromRight" customModule="QatarMuseums" customModuleProvider="target" id="jXe-TS-c88"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z9q-1q-rbc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2778" y="90"/>
+            <point key="canvasLocation" x="767" y="1061"/>
         </scene>
         <!--Museum About View Controller-->
         <scene sceneID="PvE-BO-QUw">
@@ -5667,10 +5668,10 @@
         <image name="up_arrowX2" width="279" height="162"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="LRh-Cg-Npm"/>
+        <segue reference="q5d-pS-Wk4"/>
         <segue reference="flV-LF-tzN"/>
         <segue reference="wxa-KK-0h2"/>
         <segue reference="neY-UC-ndh"/>
-        <segue reference="Nmg-Zy-CKp"/>
+        <segue reference="YLB-FU-qXW"/>
     </inferredMetricsTieBreakers>
 </document>

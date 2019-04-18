@@ -2774,30 +2774,10 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     //MARK: Mia Tour Guide Delegate
     func exploreButtonAction() {
-        let floorMapView =  self.storyboard?.instantiateViewController(withIdentifier: "floorMapId") as! FloorMapViewController
-        floorMapView.fromTourString = fromTour.exploreTour
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromRight
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(floorMapView, animated: false, completion: nil)
+        self.performSegue(withIdentifier: "commonListToFloormapSegue", sender: self)
         
     }
-    func loadMiaTourDetail(currentRow: Int?) {
-//        let transition = CATransition()
-//        transition.duration = 0.3
-//        transition.type = kCATransitionPush
-//        transition.subtype = kCATransitionFromRight
-//        view.window!.layer.add(transition, forKey: kCATransition)
-//
-//        let miaView =  self.storyboard?.instantiateViewController(withIdentifier: "miaDetailId") as! MiaTourDetailViewController
-//        miaView.museumId = museumId ?? "0"
-//        if (miaTourDataFullArray != nil) {
-//            miaView.tourGuideDetail = miaTourDataFullArray[currentRow!]
-//        }
-//        self.present(miaView, animated: false, completion: nil)
-    }
+
     //MARK: TourGuide Service call
     func getTourGuideMuseumsList() {
         var searchstring = String()
@@ -3652,6 +3632,9 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
             if (miaTourDataFullArray != nil) {
                 miaTouguideView.tourGuideDetail = miaTourDataFullArray[selectedRow! - 1]
             }
+        } else if (segue.identifier == "commonListToFloormapSegue") {
+            let floorMapView = segue.destination as! FloorMapViewController
+            floorMapView.fromTourString = fromTour.exploreTour
         }
     }
     override func didReceiveMemoryWarning() {
