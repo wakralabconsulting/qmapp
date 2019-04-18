@@ -47,6 +47,7 @@
                     </view>
                     <connections>
                         <outlet property="splashImageView" destination="CTU-tn-2Sd" id="Az7-o3-uvi"/>
+                        <segue destination="BYZ-38-t0r" kind="custom" identifier="splashToHomeSegue" customClass="FadeSegue" customModule="QatarMuseums" customModuleProvider="target" id="nPO-Je-z4T"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7P0-4j-06C" userLabel="First Responder" sceneMemberID="firstResponder"/>

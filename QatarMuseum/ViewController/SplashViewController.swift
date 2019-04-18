@@ -28,15 +28,15 @@ class SplashViewController: UIViewController {
     }
    @objc func loadHome() {
     splashImageView.stopAnimating()
-    let homeView = self.storyboard?.instantiateViewController(withIdentifier: "homeId")
-    let transition = CATransition()
-    transition.duration = 0.25
-    transition.type = kCATransitionFade
-    
-    transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-    view.window!.layer.add(transition, forKey: kCATransition)
-    self.present(homeView!, animated: false, completion: nil)
-    
+//    let homeView = self.storyboard?.instantiateViewController(withIdentifier: "homeId")
+//    let transition = CATransition()
+//    transition.duration = 0.25
+//    transition.type = kCATransitionFade
+//    
+//    transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//    view.window!.layer.add(transition, forKey: kCATransition)
+//    self.present(homeView!, animated: false, completion: nil)
+    self.performSegue(withIdentifier: "splashToHomeSegue", sender: self)
     }
     
     override func didReceiveMemoryWarning() {
