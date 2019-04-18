@@ -1694,6 +1694,7 @@
                         <outlet property="secondDescriptionLabel" destination="SHx-NL-C4b" id="6nZ-KB-e35"/>
                         <outlet property="videoImage" destination="GPI-hU-IQZ" id="ZeF-RC-ikv"/>
                         <outlet property="videoView" destination="e9Y-nf-DMJ" id="5Oq-S6-kAQ"/>
+                        <segue destination="Y6A-us-MuQ" kind="custom" identifier="educationToEventSegue" customClass="FadeSegue" customModule="QatarMuseums" customModuleProvider="target" id="Nmg-Zy-CKp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TWi-16-hnD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -5670,6 +5671,6 @@
         <segue reference="flV-LF-tzN"/>
         <segue reference="wxa-KK-0h2"/>
         <segue reference="neY-UC-ndh"/>
-        <segue reference="Cwt-uy-fRF"/>
+        <segue reference="Nmg-Zy-CKp"/>
     </inferredMetricsTieBreakers>
 </document>
