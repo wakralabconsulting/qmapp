@@ -170,14 +170,7 @@ class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UIC
     }
     func loadObjectDetail() {
         if(objectDetailArray[0] != nil) {
-            let objectDetailView =  self.storyboard?.instantiateViewController(withIdentifier: "objectDetailId") as! ObjectDetailViewController
-            objectDetailView.detailArray.append(objectDetailArray[0])
-//            let transition = CATransition()
-//            transition.duration = 0.3
-//            transition.type = kCATransitionFade
-//            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-//            view.window!.layer.add(transition, forKey: kCATransition)
-            self.present(objectDetailView, animated: false, completion: nil)
+            self.performSegue(withIdentifier: "numSearchToObjDetailSegue", sender: self)
         }
         
     }
@@ -222,6 +215,12 @@ class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UIC
     func recordScreenView() {
         let screenClass = String(describing: type(of: self))
         Analytics.setScreenName(ARTIFACT_NUMBER_VC, screenClass: screenClass)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "numSearchToObjDetailSegue") {
+            let objectDetailView = segue.destination as! ObjectDetailViewController
+            objectDetailView.detailArray.append(objectDetailArray[0])
+        }
     }
 }
 

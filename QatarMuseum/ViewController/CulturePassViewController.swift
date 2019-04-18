@@ -265,15 +265,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         }
         self.loginPopUpView.removeFromSuperview()
         getEventListUserRegistrationFromServer()
-        let profileView =  self.storyboard?.instantiateViewController(withIdentifier: "profileViewId") as! ProfileViewController
-        profileView.loginInfo = loginArray
-        profileView.fromCulturePass = true
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(profileView, animated: false, completion: nil)
+        self.performSegue(withIdentifier: "culturePassToProfileSegue", sender: self)
     }
     func forgotButtonPressed() {
         self.loginPopUpView.loadingView.isHidden = false
@@ -487,5 +479,12 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     func recordScreenView() {
         let screenClass = String(describing: type(of: self))
         Analytics.setScreenName(CULTUREPASS_VC, screenClass: screenClass)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "culturePassToProfileSegue") {
+            let profileView = segue.destination as! ProfileViewController
+            profileView.loginInfo = loginArray
+            profileView.fromCulturePass = true
+        }
     }
 }
