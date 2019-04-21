@@ -11,6 +11,7 @@ import CoreData
 import Crashlytics
 import Firebase
 import UIKit
+import KeychainSwift
 
 class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoonPopUpProtocol,LoginPopUpProtocol,UITextFieldDelegate {
     @IBOutlet weak var headerView: CommonHeaderView!
@@ -39,6 +40,9 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     var userInfoArray : UserInfoData?
     let networkReachability = NetworkReachabilityManager()
     var userEventList: [NMoQUserEventList]! = []
+    
+    let keychain = KeychainSwift()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -214,34 +218,37 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     func loadProfilepage(loginInfo : LoginData?) {
         if (loginInfo != nil) {
             let userData = loginInfo?.user
-            UserDefaults.standard.setValue(userData?.uid, forKey: "uid")
-            UserDefaults.standard.setValue(userData?.mail, forKey: "mail")
-            UserDefaults.standard.setValue(userData?.name, forKey: "displayName")
-            UserDefaults.standard.setValue(userData?.picture, forKey: "profilePic")
+            
+            self.keychain.set(userData?.uid ?? "", forKey: UserProfileInfo.user_id)
+            self.keychain.set(userData?.mail ?? "", forKey: UserProfileInfo.user_email)
+            self.keychain.set(userData?.name ?? "", forKey: UserProfileInfo.user_dispaly_name)
+            self.keychain.set(userData?.picture ?? "", forKey: UserProfileInfo.user_photo)
+            
+            
             if(userData?.fieldDateOfBirth != nil) {
                 if((userData?.fieldDateOfBirth?.count)! > 0) {
-                    UserDefaults.standard.setValue(userData?.fieldDateOfBirth![0], forKey: "fieldDateOfBirth")
+                    self.keychain.set(userData?.fieldDateOfBirth![0] ?? "", forKey: UserProfileInfo.user_dob)
                 }
             }
             let firstNameData = userData?.fieldFirstName["und"] as! NSArray
             if(firstNameData != nil && firstNameData.count > 0) {
                 let name = firstNameData[0] as! NSDictionary
                 if(name["value"] != nil) {
-                    UserDefaults.standard.setValue(name["value"] as! String, forKey: "fieldFirstName")
+                    self.keychain.set(name["value"] as! String , forKey: UserProfileInfo.user_firstname)
                 }
             }
             let lastNameData = userData?.fieldLastName["und"] as! NSArray
             if(lastNameData != nil && lastNameData.count > 0) {
                 let name = lastNameData[0] as! NSDictionary
                 if(name["value"] != nil) {
-                    UserDefaults.standard.setValue(name["value"] as! String, forKey: "fieldLastName")
+                    self.keychain.set(name["value"] as! String , forKey: UserProfileInfo.user_lastname)
                 }
             }
             let locationData = userData?.fieldLocation["und"] as! NSArray
             if(locationData.count > 0) {
                 let iso = locationData[0] as! NSDictionary
                 if(iso["iso2"] != nil) {
-                    UserDefaults.standard.setValue(iso["iso2"] as! String, forKey: "country")
+                    self.keychain.set(iso["iso2"] as! String , forKey: UserProfileInfo.user_country)
                 }
                 
             }
@@ -250,7 +257,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
             if(nationalityData.count > 0) {
                 let nation = nationalityData[0] as! NSDictionary
                 if(nation["iso2"] != nil) {
-                    UserDefaults.standard.setValue(nation["iso2"] as! String , forKey: "nationality")
+                    self.keychain.set(nation["iso2"] as! String, forKey: UserProfileInfo.user_nationality)
                 }
                 
             }
@@ -258,7 +265,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
             if(translationsData != nil) {
                 let arValues = translationsData["ar"] as! NSDictionary
                 if(arValues["entity_id"] != nil) {
-                    UserDefaults.standard.setValue(arValues["entity_id"] as! String , forKey: "loginEntityID")
+                    self.keychain.set(arValues["entity_id"] as! String, forKey: UserProfileInfo.user_loginentity_id)
                 }
             }
             
@@ -430,8 +437,8 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     //MARK : NMoQ EntityRegistratiion
     func getEventListUserRegistrationFromServer() {
-        if((accessToken != nil) && (UserDefaults.standard.value(forKey: "uid") != nil)){
-            let userId = UserDefaults.standard.value(forKey: "uid") as! String
+        if((accessToken != nil) && (keychain.get(UserProfileInfo.user_id) != nil)){
+            let userId = keychain.get(UserProfileInfo.user_id)!
             _ = Alamofire.request(QatarMuseumRouter.NMoQEventListUserRegistration(["user_id" : userId])).responseObject { (response: DataResponse<NMoQUserEventListValues>) -> Void in
                 switch response.result {
                 case .success(let data):

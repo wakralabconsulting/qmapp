@@ -54,3 +54,31 @@ var NMOQ_ACTIVITY_DETAIL = "NMoqPanelDiscussionDetailPage"
 var NMOQ_TOUR_DETAIL = "NMoqTourDetailPage"
 var NMOQ_FACILITIES_DETAIL = "NMoqFacilitiesDetailPage"
 var NMOQ_PARKS_DETAIL = "ParksPage"
+
+
+//MARK:- User Profile Information Common Strings
+struct UserProfileInfo{
+    
+    static let user_id = "uid"
+    static let userid_nmoq_event = "user_id"
+    static let user_email = "mail"
+    static let user_dispaly_name = "displayName"
+    static let user_photo = "profilePic"
+    static let user_dob = "fieldDateOfBirth"
+    static let user_firstname = "fieldFirstName"
+    static let user_lastname = "fieldLastName"
+    static let user_country = "country"
+    static let user_nationality = "nationality"
+    static let user_loginentity_id = "loginEntityID"
+    static let user_password = "userPassword"
+    
+    static let user_undefined = "und"
+    static let user_value = "value"
+    static let user_iso = "iso2"
+    static let user_data = "data"
+    static let user_entity_id = "entityid"
+    static let user_arabic = "ar"
+    static let user_accesstoken = "accessToken"
+    static let user_server_data = "userdata"
+    
+}
