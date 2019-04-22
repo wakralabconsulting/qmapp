@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import CoreData
+import Firebase
 var heritageListNotificationEn = "heritageListNotificationEn"
 var heritageListNotificationAr = "heritageListNotificationAr"
 var floormapNotification = "FloormapNotification"
@@ -155,6 +156,22 @@ func changeDateFormat(dateString: String?) -> String? {
     }
     return nil
 }
+
+//func firebaseAnalyticsEvents(eventName:String?) -> String? {
+//    if (eventName != nil) {
+//        
+//    Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+//            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museum_item,
+//            AnalyticsParameterItemName: eventName,
+//            AnalyticsParameterContentType: "cont"
+//            ])
+//        
+//        return event
+//    }
+//    
+//    return nil
+//}
+
 let appDelegate =  UIApplication.shared.delegate as? AppDelegate
 func getContext() -> NSManagedObjectContext {
         if #available(iOS 10.0, *) {

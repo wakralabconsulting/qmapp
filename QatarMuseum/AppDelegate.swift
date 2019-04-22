@@ -225,6 +225,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             UserDefaults.standard.set(notificationData, forKey: "pushNotificationList")
         }
         
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: "id-\("test")",
+            AnalyticsParameterItemName: "Musheer",
+            AnalyticsParameterContentType: "cont"
+            ])
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let notificationsView = storyboard.instantiateViewController(withIdentifier: "notificationId") as! NotificationsViewController
         notificationsView.fromHome = true

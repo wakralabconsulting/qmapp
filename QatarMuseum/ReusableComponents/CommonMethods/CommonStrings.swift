@@ -54,3 +54,12 @@ var NMOQ_ACTIVITY_DETAIL = "NMoqPanelDiscussionDetailPage"
 var NMOQ_TOUR_DETAIL = "NMoqTourDetailPage"
 var NMOQ_FACILITIES_DETAIL = "NMoqFacilitiesDetailPage"
 var NMOQ_PARKS_DETAIL = "ParksPage"
+
+
+//MARK:- Firebase Analytics Events
+struct FirebaseAnalyticsEvents {
+    static let tapped_museum_item = "home_museum_item_tapped"
+    static let tapped_exhibition_item = "home_exhibition_item_tapped"
+    static let tapped_button_item = "home_button_item_tapped"
+    static let id = "id"
+}
