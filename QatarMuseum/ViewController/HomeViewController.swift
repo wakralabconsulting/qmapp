@@ -1191,7 +1191,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "homeToCommonListSegue") {
             let commonList = segue.destination as! CommonListViewController
-            if((homePageNameString == HomePageName.exhibitionList) && (homeList[selectedRow!].id == "12181") || (homeList[selectedRow!].id == "12186")){
+            if((homePageNameString == HomePageName.exhibitionList) && ((homeList[selectedRow!].id == "12181") || (homeList[selectedRow!].id == "12186"))){
                 commonList.exhibitionsPageNameString = ExhbitionPageName.homeExhibition
             } else if((homePageNameString == HomePageName.panelAndTalksList) && (homeList[selectedRow!].id == "13976") || (homeList[selectedRow!].id == "15631")) {
                 commonList.tourDetailId = homeList[selectedRow!].id
