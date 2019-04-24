@@ -302,7 +302,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     }
 */
                     if let nilItem = self.homeList.first(where: {$0.sortId == "" || $0.sortId == nil}) {
-                        print("nil found")
+                        print(nilItem)
                     } else {
                         self.homeList = self.homeList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
                     }
@@ -665,7 +665,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 }
  */
                 if let nilItem = self.homeList.first(where: {$0.sortId == "" || $0.sortId == nil}) {
-                    print("nil found")
+                    print(nilItem)
                 } else {
                     self.homeList = self.homeList.sorted(by: { Int16($0.sortId!)! < Int16($1.sortId!)! })
                 }
@@ -691,12 +691,13 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     self.getHomeList()
                 }
             }
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-            if (networkReachability?.isReachable == false) {
-                self.showNoNetwork()
-            }
         }
+//        catch let error as NSError {
+//            print("Could not fetch. \(error), \(error.userInfo)")
+//            if (networkReachability?.isReachable == false) {
+//                self.showNoNetwork()
+//            }
+//        }
     }
     }
     //MARK: EventRegistrationCoreData
