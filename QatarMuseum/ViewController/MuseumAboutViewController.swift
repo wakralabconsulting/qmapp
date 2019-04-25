@@ -87,7 +87,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                 if(aboutDetailtArray[0].multimediaFile != nil) {
                     if ((aboutDetailtArray[0].multimediaFile?.count)! > 0) {
                         let url = aboutDetailtArray[0].multimediaFile
-                        if( url![0] != nil) {
+                        if( (url?.count)! > 0) {
                             imageView.kf.setImage(with: URL(string: url![0]))
                             
                         }
@@ -750,7 +750,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                         let aboutInfoArray = (aboutDict.mobileDescRelation?.allObjects) as! [AboutDescriptionEntity]
                         
                          if(aboutInfoArray.count > 0) {
-                            for i in 0 ... aboutInfoArray.count-1 {
+                            for _ in 0 ... aboutInfoArray.count-1 {
                                 descriptionArray.append("")
                             }
                             for i in 0 ... aboutInfoArray.count-1 {
@@ -820,7 +820,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                         var descriptionArray : [String] = []
                         let aboutInfoArray = (aboutDict.mobileDescRelation?.allObjects) as! [AboutDescriptionEntityAr]
                         if(aboutInfoArray.count > 0){
-                            for i in 0 ... aboutInfoArray.count-1 {
+                            for _ in 0 ... aboutInfoArray.count-1 {
                                 descriptionArray.append("")
                             }
                             for i in 0 ... aboutInfoArray.count-1 {
