@@ -3402,9 +3402,9 @@
                                 <rect key="frame" x="21" y="664" width="35" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="63v-74-IBh"/>
-                                    <constraint firstAttribute="width" constant="35" id="kSq-dB-xlq"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="35" id="kSq-dB-xlq"/>
                                 </constraints>
-                                <state key="normal" title="Button" image="play_blackX1"/>
+                                <state key="normal" image="play_blackX1"/>
                                 <connections>
                                     <action selector="playButtonClicked:" destination="avg-al-ab5" eventType="touchUpInside" id="nGI-hG-9lQ"/>
                                 </connections>
@@ -3427,10 +3427,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w9A-t9-cCC">
-                                <rect key="frame" x="15" y="100" width="46" height="37"/>
+                                <rect key="frame" x="15" y="100" width="40" height="37"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="37" id="hth-s7-ERY"/>
-                                    <constraint firstAttribute="width" constant="46" id="yac-KF-2f7"/>
                                 </constraints>
                                 <state key="normal" title="QR"/>
                                 <connections>
@@ -3438,13 +3437,13 @@
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eW7-6Q-nVu">
-                                <rect key="frame" x="359" y="100" width="40" height="45"/>
+                                <rect key="frame" x="359" y="96" width="40" height="45"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="3dM-zf-flM"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="40" id="3dM-zf-flM"/>
                                     <constraint firstAttribute="height" constant="45" id="8IA-xw-H93"/>
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="4" minY="2" maxX="4" maxY="2"/>
-                                <state key="normal" title="Number" image="number_padX1"/>
+                                <state key="normal" image="number_padX1"/>
                                 <connections>
                                     <action selector="didTapNumberSearch:" destination="avg-al-ab5" eventType="touchUpInside" id="aEp-Rz-HmT"/>
                                     <segue destination="mOw-nu-xq9" kind="custom" identifier="floormapToNumSearchSegue" customClass="FadeSegue" customModule="QatarMuseums" customModuleProvider="target" id="vyu-2s-cpU"/>
@@ -3463,13 +3462,16 @@
                             <constraint firstItem="GTM-k5-sAd" firstAttribute="top" secondItem="Wq6-bK-3gi" secondAttribute="bottom" id="2Go-Pr-530"/>
                             <constraint firstItem="jf5-dA-4V6" firstAttribute="top" secondItem="Lid-XY-FzS" secondAttribute="bottom" id="5Gp-Ng-m9R"/>
                             <constraint firstAttribute="trailing" secondItem="jf5-dA-4V6" secondAttribute="trailing" id="6Ly-nH-4qE"/>
+                            <constraint firstItem="eW7-6Q-nVu" firstAttribute="width" secondItem="w9A-t9-cCC" secondAttribute="width" id="6kc-HW-ukU"/>
                             <constraint firstItem="2o4-nG-czx" firstAttribute="top" secondItem="IAj-ZQ-CZE" secondAttribute="bottom" id="7b3-Su-hRQ"/>
                             <constraint firstItem="GTM-k5-sAd" firstAttribute="centerX" secondItem="6iC-kF-Ins" secondAttribute="centerX" id="8iJ-Kg-fAu"/>
+                            <constraint firstItem="eW7-6Q-nVu" firstAttribute="centerY" secondItem="w9A-t9-cCC" secondAttribute="centerY" id="9z0-68-eYp"/>
                             <constraint firstItem="IAj-ZQ-CZE" firstAttribute="leading" secondItem="6iC-kF-Ins" secondAttribute="leading" id="CF9-C9-HQF"/>
                             <constraint firstItem="9pI-Wu-eS8" firstAttribute="leading" secondItem="6iC-kF-Ins" secondAttribute="leading" id="Etg-Xx-aAZ"/>
                             <constraint firstItem="Wq6-bK-3gi" firstAttribute="centerY" secondItem="84D-I2-0Ka" secondAttribute="centerY" id="Fl8-Fm-wTP"/>
                             <constraint firstItem="xQg-HM-YTp" firstAttribute="leading" secondItem="6iC-kF-Ins" secondAttribute="leading" id="G9J-Gb-kUH"/>
                             <constraint firstAttribute="trailing" secondItem="xQg-HM-YTp" secondAttribute="trailing" id="IF8-cI-Qlz"/>
+                            <constraint firstItem="eW7-6Q-nVu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="w9A-t9-cCC" secondAttribute="trailing" constant="20" id="IQf-TY-COl"/>
                             <constraint firstItem="2o4-nG-czx" firstAttribute="top" secondItem="84D-I2-0Ka" secondAttribute="bottom" constant="37" id="MXn-Fg-8Nd"/>
                             <constraint firstItem="jf5-dA-4V6" firstAttribute="leading" secondItem="6iC-kF-Ins" secondAttribute="leading" id="PaE-4h-M6s"/>
                             <constraint firstItem="w9A-t9-cCC" firstAttribute="top" secondItem="jf5-dA-4V6" secondAttribute="bottom" constant="15" id="TUI-pX-Kfk"/>
@@ -3478,7 +3480,6 @@
                             <constraint firstAttribute="bottom" secondItem="9pI-Wu-eS8" secondAttribute="bottom" id="XhT-14-1GI"/>
                             <constraint firstAttribute="right" secondItem="Wq6-bK-3gi" secondAttribute="right" constant="25" id="aG0-cV-xRh"/>
                             <constraint firstItem="xQg-HM-YTp" firstAttribute="top" secondItem="jf5-dA-4V6" secondAttribute="bottom" id="d8G-6E-2dq"/>
-                            <constraint firstItem="eW7-6Q-nVu" firstAttribute="top" secondItem="jf5-dA-4V6" secondAttribute="bottom" constant="15" id="eHk-mM-pta"/>
                             <constraint firstAttribute="trailing" secondItem="IAj-ZQ-CZE" secondAttribute="trailing" id="eiU-z0-dgv"/>
                             <constraint firstItem="9pI-Wu-eS8" firstAttribute="top" secondItem="jf5-dA-4V6" secondAttribute="bottom" id="lIC-tK-dQ4"/>
                             <constraint firstItem="84D-I2-0Ka" firstAttribute="left" secondItem="6iC-kF-Ins" secondAttribute="left" constant="21" id="o0Y-FM-Cdk"/>
