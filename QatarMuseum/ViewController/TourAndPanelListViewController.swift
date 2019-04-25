@@ -274,7 +274,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                     self.saveOrUpdateTourListCoredata(nmoqTourList: data.nmoqTourList, isTourGuide: true)
                 }
                 
-            case .failure(let error):
+            case .failure( _):
                 if(self.nmoqTourList.count == 0) {
                     self.loadingView.stopLoading()
                     self.loadingView.noDataView.isHidden = false
@@ -1286,7 +1286,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 if(self.nmoqActivityList.count > 0) {
                     self.saveOrUpdateTravelListCoredata(travelList: data.homeBannerList)
                 }
-            case .failure(let error):
+            case .failure( _):
                 if(self.travelList.count == 0) {
                     self.loadingView.stopLoading()
                     self.loadingView.noDataView.isHidden = false
