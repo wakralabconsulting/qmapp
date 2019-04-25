@@ -2526,10 +2526,10 @@
                                                             <rect key="frame" x="25" y="30" width="40" height="40"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="40" id="Suq-gh-gFl"/>
-                                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="40" id="T47-pz-KfQ"/>
+                                                                <constraint firstAttribute="width" constant="40" id="T47-pz-KfQ"/>
                                                             </constraints>
                                                             <inset key="contentEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
-                                                            <state key="normal" title="Button" image="play_blackX1"/>
+                                                            <state key="normal" image="play_blackX1"/>
                                                             <connections>
                                                                 <action selector="playButtonClicked:" destination="6WP-0w-5LJ" eventType="touchUpInside" id="e01-LX-aur"/>
                                                             </connections>
