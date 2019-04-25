@@ -19,7 +19,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
     @IBOutlet weak var middleTitleLabel: UILabel!
     @IBOutlet weak var titleDescriptionLabel: UITextView!
     @IBOutlet weak var midTitleDescriptionLabel: UITextView!
-    @IBOutlet weak var sundayTimeLabel: UITextView!
+    @IBOutlet weak var sundayTimeLabel: UILabel!
     @IBOutlet weak var fridayTimeLabel: UILabel!
     @IBOutlet weak var locationTitleLabel: UILabel!
     @IBOutlet weak var middleLabelLine: UIView!
