@@ -346,7 +346,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                         self.loadingView.showNoDataView()
                         self.loadingView.noDataLabel.text = noResultMsg
                     }
-                case .failure(let error):
+                case .failure( _):
                     var errorMessage: String
                     errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
                                                                     comment: "Setting the content of the alert"))
@@ -376,7 +376,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                         self.loadingView.showNoDataView()
                         self.loadingView.noDataLabel.text = noResultMsg
                     }
-                case .failure(let error):
+                case .failure( _):
                     var errorMessage: String
                     errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
                                                                     comment: "Setting the content of the alert"))
@@ -437,8 +437,8 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         let fieldQmaEduRegDate =
             [
                 "und":[[
-                    "value": time.startTime,
-                    "value2": time.endTime,
+                    "value": time.startTime!,
+                    "value2": time.endTime!,
                     "timezone": "Asia/Qatar",
                     "offset": "10800",
                     "offset2": "10800",
@@ -513,8 +513,8 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             let fieldQmaEduRegDate =
                 [
                     "und":[[
-                        "value": time.startTime,
-                        "value2": time.endTime,
+                        "value": time.startTime!,
+                        "value2": time.endTime!,
                         "timezone": "Asia/Qatar",
                         "offset": "10800",
                         "offset2": "10800",
@@ -644,7 +644,6 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             
             let intersection = intersect(intervals: intervals)
             
-            print(intersection) // Also here we can block actions based on intersection found
             if (intersection == nil) {
                 return false
             } else {
@@ -793,7 +792,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         do{
             try managedContext.execute(deleteRequest)
             
-        }catch let error as NSError {
+        }catch _ as NSError {
             //handle error here
             
         }
@@ -1073,7 +1072,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                 if (granted) && (error == nil) {
                     DispatchQueue.main.async {
                         let event = EKEvent.init(eventStore: self.store)
-                        var eventTitle = title.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
+                        let eventTitle = title.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
                         event.title = eventTitle.replacingOccurrences(of: "&#039;", with: "'", options: .regularExpression, range: nil)
                         event.calendar = self.store.defaultCalendarForNewEvents
                         event.startDate = startDate
@@ -1104,7 +1103,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             event.notes = notes?.replacingOccurrences(of: "&#039;", with: "'", options: .regularExpression, range: nil)
             do {
                 try self.store.save(event, span: .thisEvent)
-            } catch let e as NSError {
+            } catch _ as NSError {
                 return
             }
         case EKAuthorizationStatus.denied, EKAuthorizationStatus.restricted:
@@ -1448,7 +1447,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                     self.loadingView.isHidden = false
                     self.loadingView.showNoDataView()
                 }
-            case .failure(let error):
+            case .failure( _):
                 var errorMessage: String
                 errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
                                                                 comment: "Setting the content of the alert"))
@@ -1679,8 +1678,6 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                     }
                 }
             }
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
     //MARK: NMoq Playground Parks Detail Coredata Method
@@ -1941,9 +1938,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                     }
                 }
             }
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
+        } 
     }
     func checkAddedToCoredata(entityName: String?, idKey:String?, idValue: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
         var fetchResults : [NSManagedObject] = []
