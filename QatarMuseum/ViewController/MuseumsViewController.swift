@@ -611,10 +611,12 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 let aboutDetailDict = aboutDetailtArray![0]
                 let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutEntity")
                 if(isDeleted == true) {
-                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDescriptionEntity")
-                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutMultimediaFileEntity")
-                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDownloadLinkEntity")
+                    var desDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDescriptionEntity")
+                    desDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutMultimediaFileEntity")
+                    desDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDownloadLinkEntity")
+                    print(desDeleted ?? true)
                     self.saveToCoreData(aboutDetailDict: aboutDetailDict, managedObjContext: managedContext)
+                    
                 }
             } else {
                 let aboutDetailDict : Museum?
@@ -627,8 +629,9 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 let aboutDetailDict = aboutDetailtArray![0]
                 let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutEntityArabic")
                 if(isDeleted == true) {
-                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDescriptionEntityAr")
-                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutMultimediaFileEntityAr")
+                    var aboutDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDescriptionEntityAr")
+                    aboutDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutMultimediaFileEntityAr")
+                    print(aboutDeleted ?? true)
                     self.saveToCoreData(aboutDetailDict: aboutDetailDict, managedObjContext: managedContext)
                 }
             } else {

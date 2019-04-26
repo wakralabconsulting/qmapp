@@ -87,13 +87,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                 if(aboutDetailtArray[0].multimediaFile != nil) {
                     if ((aboutDetailtArray[0].multimediaFile?.count)! > 0) {
                         let url = aboutDetailtArray[0].multimediaFile
-                        if( (url?.count)! > 0) {
                             imageView.kf.setImage(with: URL(string: url![0]))
-                            
-                        }
-                        else {
-                            imageView.image = UIImage(named: "default_imageX2")
-                        }
                     }
                 }
                 if(imageView.image == nil) {
@@ -308,7 +302,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         if (aboutData.multimediaVideo != nil) {
             if((aboutData.multimediaVideo?.count)! > 0) {
                 let urlString = aboutData.multimediaVideo![0]
-                if (urlString != nil && urlString != "") {
+                if (urlString != "") {
                     let player = AVPlayer(url: URL(string: urlString)!)
                     //let player = AVPlayer(url: filePathURL)
                     let playerController = AVPlayerViewController()
@@ -337,7 +331,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         //            longitudeString = publicArtsDetailtArray[currentRow].longitude
         //        }
         
-        if latitudeString != nil && longitudeString != nil && latitudeString != "" && longitudeString != ""{
+        if  latitudeString != "" && longitudeString != ""{
             if (pageNameString == PageName2.museumAbout) {
                 if let lat : Double = Double(latitudeString) {
                     latitude = lat
@@ -544,9 +538,10 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                 let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutEntity")
                 if(isDeleted == true) {
                    // self.saveToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
-                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDescriptionEntity")
-                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutMultimediaFileEntity")
-                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDownloadLinkEntity")
+                    var aboutDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDescriptionEntity")
+                    aboutDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutMultimediaFileEntity")
+                    aboutDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDownloadLinkEntity")
+                    print(aboutDeleted ?? true)
                     self.saveToCoreData(aboutDetailDict: aboutDetailDict, managedObjContext: managedContext)
                 }
                
@@ -561,8 +556,9 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                 let aboutDetailDict = aboutDetailtArray![0]
                 let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutEntityArabic")
                 if(isDeleted == true) {
-                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDescriptionEntityAr")
-                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutMultimediaFileEntityAr")
+                    var aboutDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDescriptionEntityAr")
+                    aboutDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutMultimediaFileEntityAr")
+                    print(aboutDeleted ?? true)
                     self.saveToCoreData(aboutDetailDict: aboutDetailDict, managedObjContext: managedContext)
                 }
                 
@@ -839,6 +835,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                         var aboutTime : String? = nil
                         if(pageNameString == PageName2.museumAbout) {
                             aboutTime = aboutDict.openingTimeAr!
+                            print(aboutTime ?? "nil")
                         } else if (pageNameString == PageName2.museumEvent){
                             nmoqTime = aboutDict.openingTimeAr!
                         }
@@ -909,7 +906,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         itemView.contentMode = .scaleAspectFit
         let carouselImg = self.aboutDetailtArray[0].multimediaFile
         let imageUrl = carouselImg![index]
-        if(imageUrl != nil){
+        if(imageUrl != ""){
             itemView.kf.setImage(with: URL(string: imageUrl))
         }
         return itemView

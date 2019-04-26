@@ -2038,7 +2038,7 @@
                                 <constraint firstAttribute="width" constant="42" id="Oe7-C2-Bfk"/>
                             </constraints>
                             <inset key="contentEdgeInsets" minX="12" minY="19" maxX="12" maxY="19"/>
-                            <state key="normal" title="Button" image="down_arrowX2"/>
+                            <state key="normal" image="down_arrowX2"/>
                             <connections>
                                 <action selector="didTapNext:" destination="cN3-T0-NzE" eventType="touchUpInside" id="Hq7-RC-ysH"/>
                             </connections>
@@ -2049,7 +2049,7 @@
                                 <constraint firstAttribute="width" constant="42" id="ZY1-36-rGI"/>
                             </constraints>
                             <inset key="contentEdgeInsets" minX="12" minY="19" maxX="12" maxY="19"/>
-                            <state key="normal" title="Button" image="up_arrowX2"/>
+                            <state key="normal" image="up_arrowX2"/>
                             <connections>
                                 <action selector="didTapPrevious:" destination="cN3-T0-NzE" eventType="touchUpInside" id="Q6V-Id-9B8"/>
                             </connections>
@@ -4421,7 +4421,7 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z1P-ia-DTY">
                             <rect key="frame" x="0.0" y="0.0" width="80" height="50"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="80" id="XPG-cS-wcd"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="XPG-cS-wcd"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="17"/>
                             <state key="normal" title="Cancel">
@@ -4434,7 +4434,7 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QqH-yo-Daz">
                             <rect key="frame" x="334" y="0.0" width="80" height="50"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="80" id="gcw-sH-7CM"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="gcw-sH-7CM"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="DINNextLTPro-Bold" family="DIN Next LT Pro" pointSize="17"/>
                             <state key="normal" title="Done">
@@ -4447,6 +4447,7 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstItem="QqH-yo-Daz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Z1P-ia-DTY" secondAttribute="trailing" constant="20" id="7wQ-28-eMn"/>
                         <constraint firstAttribute="bottom" secondItem="Z1P-ia-DTY" secondAttribute="bottom" id="MWt-3i-OlV"/>
                         <constraint firstAttribute="bottom" secondItem="QqH-yo-Daz" secondAttribute="bottom" id="MYe-up-gcN"/>
                         <constraint firstItem="QqH-yo-Daz" firstAttribute="top" secondItem="9Px-U1-MuK" secondAttribute="top" id="RGT-dP-n3K"/>
@@ -5656,9 +5657,9 @@
         <image name="up_arrowX2" width="279" height="162"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="sBl-n6-gHM"/>
+        <segue reference="q5d-pS-Wk4"/>
         <segue reference="flV-LF-tzN"/>
-        <segue reference="rjQ-yI-tVc"/>
+        <segue reference="wxa-KK-0h2"/>
         <segue reference="tXC-tz-XiI"/>
         <segue reference="YLB-FU-qXW"/>
     </inferredMetricsTieBreakers>
