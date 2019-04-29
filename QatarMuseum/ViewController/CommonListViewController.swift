@@ -424,6 +424,11 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         if ((exhibitionsPageNameString == ExhbitionPageName.homeExhibition) || (exhibitionsPageNameString == ExhbitionPageName.museumExhibition)) {
             if let exhibitionId = exhibition[indexPath.row].id {
                 loadExhibitionDetailAnimation(exhibitionId: exhibitionId)
+                Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                    AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_exhibition_detail,
+                    AnalyticsParameterItemName: exhibitionsPageNameString ?? "",
+                    AnalyticsParameterContentType: "cont"
+                    ])
             }
             else {
                 addComingSoonPopup()
@@ -431,13 +436,33 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         } else if (exhibitionsPageNameString == ExhbitionPageName.heritageList) {
             let heritageId = heritageListArray[indexPath.row].id
             loadHeritageDetail(heritageListId: heritageId!)
+            Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_heritage_detail,
+                AnalyticsParameterItemName: exhibitionsPageNameString ?? "",
+                AnalyticsParameterContentType: "cont"
+                ])
         } else if (exhibitionsPageNameString == ExhbitionPageName.publicArtsList) {
             loadPublicArtsDetail(idValue: publicArtsListArray[indexPath.row].id!)
+            Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_publicart_detail,
+                AnalyticsParameterItemName: exhibitionsPageNameString ?? "",
+                AnalyticsParameterContentType: "cont"
+                ])
         } else if (exhibitionsPageNameString == ExhbitionPageName.museumCollectionsList) {
             loadCollectionDetail(currentRow: indexPath.row)
+            Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_collections_detail,
+                AnalyticsParameterItemName: exhibitionsPageNameString ?? "",
+                AnalyticsParameterContentType: "cont"
+                ])
         } else if (exhibitionsPageNameString == ExhbitionPageName.diningList) {
             let diningId = diningListArray[indexPath.row].id
             loadDiningDetailAnimation(idValue: diningId!)
+            Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_dining_detail,
+                AnalyticsParameterItemName: exhibitionsPageNameString ?? "",
+                AnalyticsParameterContentType: "cont"
+                ])
         }  else if (exhibitionsPageNameString == ExhbitionPageName.nmoqTourSecondList) {
             if (isFromTour)! {
                 loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: true, pageName: ExhbitionPageName.nmoqTourSecondList)
@@ -447,10 +472,20 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         } else if (exhibitionsPageNameString == ExhbitionPageName.miaTourGuideList) {
             if (indexPath.row != 0) {
                 loadMiaTourDetail(currentRow: indexPath.row - 1)
+                Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                    AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_miatour_detail,
+                    AnalyticsParameterItemName: exhibitionsPageNameString ?? "",
+                    AnalyticsParameterContentType: "cont"
+                    ])
             }
         }
         else if (exhibitionsPageNameString == ExhbitionPageName.facilitiesSecondList) {
             loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: false, pageName: ExhbitionPageName.facilitiesSecondList)
+            Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_facilities_second_detail,
+                AnalyticsParameterItemName: exhibitionsPageNameString ?? "",
+                AnalyticsParameterContentType: "cont"
+                ])
         } else if (exhibitionsPageNameString == ExhbitionPageName.tourGuideList) {
             if (indexPath.row != 0) {
                 if (museumsList != nil) {
@@ -459,6 +494,12 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                     } else {
                         addComingSoonPopup()
                     }
+                    
+                    Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                        AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_miatourlist_detail,
+                        AnalyticsParameterItemName: exhibitionsPageNameString ?? "",
+                        AnalyticsParameterContentType: "cont"
+                        ])
                 }
             }
         } else if (exhibitionsPageNameString == ExhbitionPageName.parkList) {
@@ -468,6 +509,12 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                 } else {
                     loadParkHeritageGardenDetail(parkList: nmoqParks[indexPath.row - 1])
                 }
+                
+                Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                    AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_parklist_detail,
+                    AnalyticsParameterItemName: exhibitionsPageNameString ?? "",
+                    AnalyticsParameterContentType: "cont"
+                    ])
             }
         }
         
@@ -597,6 +644,12 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                 break
             }
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_add_to_calender_item,
+            AnalyticsParameterItemName: exhibitionsPageNameString ?? "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
 
     func closeButtonPressed() {

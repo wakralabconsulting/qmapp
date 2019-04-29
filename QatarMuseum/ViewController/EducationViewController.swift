@@ -97,6 +97,12 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
             let appDelegate = UIApplication.shared.delegate
             appDelegate?.window??.rootViewController = homeViewController
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_header_close,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     @IBAction func didTapPlayPauseButton(_ sender: UIButton) {
@@ -109,6 +115,12 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
             playButton.tag = 0
             videoView.pause()
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_education_play,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     @IBAction func didTapDiscoverButton(_ sender: UIButton) {
@@ -122,6 +134,11 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
         transition.type = kCATransitionFade
         transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
         view.window!.layer.add(transition, forKey: kCATransition)
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_discover_play,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
         self.present(eventView, animated: false, completion: nil)
     }
     //For Button Animations

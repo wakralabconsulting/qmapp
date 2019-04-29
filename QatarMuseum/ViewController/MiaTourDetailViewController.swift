@@ -127,6 +127,13 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     
     @IBAction func didTapPlayButton(_ sender: UIButton) {
         self.playButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_tourguide_play,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
+        
         loadComingSoonPopup()
     }
     
@@ -152,6 +159,12 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
             shortDetailsView.fromScienceTour = false
             self.present(shortDetailsView, animated: false, completion: nil)
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_tourguide_start,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     @IBAction func startTourButtonTouchDown(_ sender: UIButton) {
@@ -173,6 +186,12 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     //MARK: Poup Delegate
     func closeButtonPressed() {
         self.popupView.removeFromSuperview()
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_header_close,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     //MARK: Header delegate

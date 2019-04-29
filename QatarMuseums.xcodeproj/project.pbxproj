@@ -1334,6 +1334,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ar,
 			);
 			mainGroup = B80DC04C20C792E400E28034;
 			productRefGroup = B80DC05620C792E400E28034 /* Products */;

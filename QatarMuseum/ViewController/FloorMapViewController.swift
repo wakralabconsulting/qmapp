@@ -471,7 +471,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
            // viewForMap.animate(toZoom: 19.3)
         }
         
-        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_floormap_loadmap,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     //Function for show level 2 marker
     func showLevelTwoMarker() {
@@ -794,6 +798,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
            // }
          
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_floormap_loadthird,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     @IBAction func didtapSecondbutton(_ sender: UIButton) {
@@ -835,6 +845,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                 }
             //}
         }
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_floormap_loadsecond,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     @IBAction func didTapFirstButton(_ sender: UIButton) {
@@ -850,6 +865,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             overlay.icon = UIImage(named: "qm_level_1")
             removeMarkers()
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_floormap_loadfirst,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     override func didReceiveMemoryWarning() {
@@ -1015,6 +1036,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                 }
             }
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_floormap_objectclose,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     //Present detail popup using Bottomsheet
     func viewDetailButtonTapAction() {
@@ -1041,6 +1068,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             self.present(numberPadView, animated: false, completion: nil)
 //        }
         
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_floormap_numbersearch,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     //MARK:Header Protocol
@@ -1065,7 +1097,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             self.dismiss(animated: true, completion: nil)
         }
         
-        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_header_close,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     func filterButtonPressed() {
         self.avPlayer = nil
