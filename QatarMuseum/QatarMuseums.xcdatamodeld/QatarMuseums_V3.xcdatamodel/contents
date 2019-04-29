@@ -74,11 +74,6 @@
         <attribute name="listName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="museumId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="CollectionsEntityArabic" representedClassName="CollectionsEntityArabic" syncable="YES" codeGenerationType="class">
-        <attribute name="listImageAr" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="listName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="museumId" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
     <entity name="DiningEntity" representedClassName="DiningEntity" syncable="YES" codeGenerationType="class">
         <attribute name="closetime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="diningdescription" optional="YES" attributeType="String" syncable="YES"/>
@@ -735,7 +730,6 @@
         <element name="CollectionDetailsEntity" positionX="-36" positionY="135" width="128" height="120"/>
         <element name="CollectionDetailsEntityAr" positionX="-27" positionY="144" width="128" height="120"/>
         <element name="CollectionsEntity" positionX="-36" positionY="126" width="128" height="105"/>
-        <element name="CollectionsEntityArabic" positionX="-18" positionY="162" width="128" height="90"/>
         <element name="DiningEntity" positionX="-54" positionY="90" width="128" height="210"/>
         <element name="DiningImagesEntity" positionX="-9" positionY="135" width="128" height="75"/>
         <element name="EdAgeGroupEntity" positionX="-9" positionY="153" width="128" height="75"/>
