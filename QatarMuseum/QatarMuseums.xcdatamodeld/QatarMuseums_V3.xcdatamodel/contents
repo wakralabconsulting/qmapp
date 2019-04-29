@@ -254,6 +254,7 @@
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isHomeExhibition" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lang" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="museumId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -781,7 +782,7 @@
         <element name="EventStartDateEntityAr" positionX="9" positionY="153" width="128" height="75"/>
         <element name="EventTopicsEntity" positionX="9" positionY="171" width="128" height="75"/>
         <element name="EventTopicsEntityAr" positionX="18" positionY="180" width="128" height="75"/>
-        <element name="ExhibitionsEntity" positionX="-54" positionY="108" width="128" height="330"/>
+        <element name="ExhibitionsEntity" positionX="-54" positionY="108" width="128" height="345"/>
         <element name="ExhibitionsEntityArabic" positionX="-45" positionY="126" width="128" height="330"/>
         <element name="FacilitiesDetailEntity" positionX="27" positionY="171" width="128" height="210"/>
         <element name="FacilitiesDetailEntityAr" positionX="0" positionY="144" width="128" height="210"/>
