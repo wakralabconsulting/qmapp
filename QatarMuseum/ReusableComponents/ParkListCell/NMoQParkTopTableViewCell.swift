@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 
 class NMoQParkTopTableViewCell: UITableViewCell {
     @IBOutlet weak var topCellLabel: UILabel!
@@ -16,6 +17,7 @@ class NMoQParkTopTableViewCell: UITableViewCell {
         // Initialization code
     }
     func setTopCellDescription (topDescription: String?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         topCellLabel?.numberOfLines = 0
         selectionStyle = .none
         textLabel?.textAlignment = .center

@@ -8,11 +8,14 @@
 
 import Crashlytics
 import UIKit
+import CocoaLumberjack
 
 class SplashViewController: UIViewController {
 
     @IBOutlet weak var splashImageView: UIImageView!
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         self.splashImageView.image = UIImage.gifImageWithName("QMLogo")
         _ = Timer.scheduledTimer(timeInterval: 1.5,
@@ -28,14 +31,7 @@ class SplashViewController: UIViewController {
     }
    @objc func loadHome() {
     splashImageView.stopAnimating()
-//    let homeView = self.storyboard?.instantiateViewController(withIdentifier: "homeId")
-//    let transition = CATransition()
-//    transition.duration = 0.25
-//    transition.type = kCATransitionFade
-//    
-//    transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-//    view.window!.layer.add(transition, forKey: kCATransition)
-//    self.present(homeView!, animated: false, completion: nil)
+    DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     self.performSegue(withIdentifier: "splashToHomeSegue", sender: self)
     }
     

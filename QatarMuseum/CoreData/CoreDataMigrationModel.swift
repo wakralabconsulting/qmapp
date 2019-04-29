@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import CocoaLumberjack
 
 class CoreDataMigrationModel {
     
@@ -71,7 +72,7 @@ class CoreDataMigrationModel {
         guard let model = NSManagedObjectModel(contentsOf: url) else {
             fatalError("unable to load model in bundle")
         }
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), urls: \(url), , model: \(model)")
         return model
     }
     
@@ -92,6 +93,7 @@ class CoreDataMigrationModel {
         default:
             return inferredMappingModel(to: nextVersion)
         }
+        
     }
     
     func inferredMappingModel(to nextVersion: CoreDataMigrationModel) -> NSMappingModel {
@@ -102,6 +104,8 @@ class CoreDataMigrationModel {
         } catch {
             fatalError("unable to generate inferred mapping model")
         }
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func customMappingModel(to nextVersion: CoreDataMigrationModel) -> NSMappingModel? {
@@ -110,7 +114,7 @@ class CoreDataMigrationModel {
         guard let mapping = NSMappingModel(from: [modelBundle], forSourceModel: sourceModel, destinationModel: destinationModel) else {
             return nil
         }
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         return mapping
     }
     
@@ -130,7 +134,7 @@ class CoreDataMigrationModel {
         
         let step = CoreDataMigrationStep(source: sourceModel, destination: destinationModel, mapping: mapping)
         let nextStep = nextVersion.migrationSteps(to: version)
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         return [step] + nextStep
     }
     
@@ -140,7 +144,7 @@ class CoreDataMigrationModel {
         let compatibleMigrationModel = CoreDataMigrationModel.all.first {
             $0.managedObjectModel().isConfiguration(withName: nil, compatibleWithStoreMetadata: metadata)
         }
-        
+        DDLogInfo(NSStringFromClass(type(of: self) as! AnyClass) + "Function: \(#function)")
         return compatibleMigrationModel
     }
 }
@@ -150,6 +154,7 @@ class CoreDataMigrationSourceModel: CoreDataMigrationModel {
     // MARK: - Init
     
     init?(storeURL: URL) {
+        DDLogInfo("File: \(#file)" + "Function: \(#function)")
         guard let metadata = NSPersistentStoreCoordinator.metadata(at: storeURL) else {
             return nil
         }

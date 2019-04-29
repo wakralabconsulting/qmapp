@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 @objc protocol HeaderViewProtocol
 {
     func headerCloseButtonPressed()
@@ -39,21 +40,25 @@ class CommonHeaderView: UIView {
         headerView.frame = self.bounds
         headerView.autoresizingMask = [.flexibleHeight,.flexibleWidth]
         headerTitle.font = UIFont.headerFont
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     @IBAction func didTapHeaderClose(_ sender: UIButton) {
         self.headerBackButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         headerViewDelegate?.headerCloseButtonPressed()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     @IBAction func headerCloseTouchDown(_ sender: UIButton) {
        self.headerBackButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     @IBAction func didTapSettings(_ sender: UIButton) {
         self.settingsButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         self.headerViewDelegate?.filterButtonPressed!()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     @IBAction func settingsButtonTouchDown(_ sender: UIButton) {
         self.settingsButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     

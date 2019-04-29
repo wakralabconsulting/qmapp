@@ -11,6 +11,8 @@ import AVKit
 import UIKit
 import MapKit
 import YouTubePlayer
+import CocoaLumberjack
+
 class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UITextViewDelegate {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
@@ -89,7 +91,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
     
     func loadVideo(urlString:String?) {
        // self.loadAboutVideo?()
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         player.use(controls: controls)
         if let url = URL.init(string: urlString!) {
             let item = VPlayerItem(url: url)
@@ -131,6 +133,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
     }
     
     func setUi() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         titleLabel.font = UIFont.settingsUpdateLabelFont
         titleDescriptionLabel.font = UIFont.englishTitleFont
         subTitleLabel.font = UIFont.englishTitleFont
@@ -170,6 +173,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
     }
     
     func setHeritageDetailData(heritageDetail: Heritage) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
        // titleBottomOnlyConstraint.isActive = false
         //titleBottomOnlyConstraint.constant = 45
 //        locationTotalTopConstraint.isActive = false
@@ -207,6 +211,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
     }
     
     func setPublicArtsDetailValues(publicArsDetail: PublicArtsDetail) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         titleLabel.text = publicArsDetail.name?.uppercased()
         //subTitleLabel.text =
         middleTitleLabel.isHidden = true
@@ -235,6 +240,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
     }
     
     func setMuseumAboutCellData(aboutData: Museum) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
        // titleBottomOnlyConstraint.isActive = false
 //        locationTotalTopConstraint.isActive = false
 //        locationTotalBottomConstraint.isActive = false
@@ -327,6 +333,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
     }
     
     func setNMoQAboutCellData(aboutData: Museum) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         middleTitleLabel.isHidden = false
         midTitleDescriptionLabel.isHidden = false
         middleLabelLine.isHidden = false
@@ -454,6 +461,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
     }
     
     func setNMoQTravelCellData(travelDetailData: HomeBanner) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             titleDescriptionLabel.textAlignment = .left
         } else {
@@ -514,6 +522,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
         
     }
     func setHyperLinkText(originalString: String?) -> NSMutableAttributedString? {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let originalStringCopy = originalString?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|\n|\r", with: "", options: .regularExpression, range: nil)
         let splitArray = originalStringCopy?.components(separatedBy: " ")
         if((splitArray?.count)! > 1) {
@@ -547,6 +556,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
         
     }
     @IBAction func didTapFavouriteButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         UIButton.animate(withDuration: 0.3,
                          animations: {
                             self.favoriteButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -561,6 +571,7 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
     }
     
     @IBAction func didTapShareButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         UIButton.animate(withDuration: 0.3,
                          animations: {
                             self.shareButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -575,20 +586,23 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
     }
     
     @IBAction func didTapLocationButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.locationButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         locationButtonTapAction?()
     }
     
     @IBAction func locationButtonTouchDown(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.locationButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         // Configure the view for the selected state
     }
     func replaceString(originalString : String, expression: String)->String? {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let result = originalString.replacingOccurrences(of: expression, with: "", options: .regularExpression, range: nil)
         return result
     }
@@ -608,21 +622,21 @@ class MuseumAboutCell: UITableViewCell,iCarouselDelegate,iCarouselDataSource,UIT
     }
     
     @IBAction func didTapDownload(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.downloadBtnTapAction?()
     }
     
     @IBAction func didTapClaimOffer(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.claimOfferBtnTapAction?()
     }
     @objc func emailTapFunction(sender:UITapGestureRecognizer) {
-        
-        print("email label tapped ...")
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.loadEmailComposer?()
     }
     
     @objc func phoneTapFunction(sender:UITapGestureRecognizer) {
-        
-        print("phone label tapped ...")
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.callPhone?()
     }
 }

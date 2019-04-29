@@ -11,6 +11,7 @@ import CoreData
 import Crashlytics
 import Firebase
 import UIKit
+import CocoaLumberjack
 
 enum NMoQPageName {
     case Tours
@@ -35,6 +36,8 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     var sortIdTest = String()
     var bannerId: String? = ""
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         registerCell()
         setupUI()
@@ -94,6 +97,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
 //                    self.getFacilitiesListFromServer()
 //                }
 //            }
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), pageNameString: \(String(describing: pageNameString))")
         }
         
     }
@@ -159,6 +163,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
             }
             
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), pageNameString: \(String(describing: pageNameString))")
     }
     
     func loadTourViewPage(selectedRow: Int?,isFromTour:Bool?, pageName: NMoQPageName?) {
@@ -186,7 +191,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(tourView, animated: false, completion: nil)
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), pageNameString: \(String(describing: pageName))")
     }
     func loadPanelDiscussionDetailPage(selectedRow: Int?) {
         let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
@@ -199,6 +204,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(panelView, animated: false, completion: nil)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), pageNameString: \(String(describing: panelView.pageNameString))")
     }
     func loadTravelDetailPage(selectedIndex: Int) {
         let museumAboutView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
@@ -212,6 +218,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
         view.window!.layer.add(transition, forKey: kCATransition)
         self.present(museumAboutView, animated: false, completion: nil)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), pageNameString: \(String(describing: museumAboutView.pageNameString))")
     }
     func headerCloseButtonPressed() {
         let transition = CATransition()
@@ -219,6 +226,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromLeft
         self.view.window!.layer.add(transition, forKey: kCATransition)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.dismiss(animated: false, completion: nil)
     }
     
@@ -231,6 +239,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         self.loadingView.isHidden = false
         self.loadingView.showNoDataView()
         self.loadingView.noDataLabel.text = errorMessage
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     //MARK: LoadingView Delegate
@@ -246,6 +255,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
             } else if(pageNameString == NMoQPageName.Facilities) {
                 appDelegate?.getFacilitiesListFromServer(lang: LocalizationLanguage.currentAppleLanguage())
             }
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         }
     }
     
@@ -254,9 +264,12 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     //MARK: Service call
     func getNMoQTourList() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
+
         _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetNMoQTourList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<NMoQTourList>) -> Void in
             switch response.result {
             case .success(let data):
@@ -275,6 +288,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 }
                 
             case .failure( _):
+
                 if(self.nmoqTourList.count == 0) {
                     self.loadingView.stopLoading()
                     self.loadingView.noDataView.isHidden = false
@@ -301,6 +315,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 }
             }
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func tourListCoreDataInBackgroundThread(nmoqTourList:[NMoQTour]?,managedContext: NSManagedObjectContext,isTourGuide:Bool) {
@@ -429,6 +444,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 }
             }
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func saveTourListToCoreData(tourListDict: NMoQTour, managedObjContext: NSManagedObjectContext,isTourGuide:Bool) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -505,7 +521,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         do {
             try managedObjContext.save()
         } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+            DDLogError("Could not save. \(error), \(error.userInfo)")
         }
     }
     func fetchTourInfoFromCoredata(isTourGuide:Bool) {
@@ -977,6 +993,8 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                     self.loadingView.showNoDataView()
                 }
             }
+            
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         }
     }
     //MARK: Facilities List Coredata Method
@@ -994,6 +1012,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                     self.facilitiesListCoreDataInBackgroundThread(facilitiesList: facilitiesList, managedContext : managedContext)
                 }
             }
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         }
     }
     func facilitiesListCoreDataInBackgroundThread(facilitiesList:[Facilities]?,managedContext: NSManagedObjectContext) {
@@ -1096,6 +1115,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 }
             }
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func saveFacilitiesListToCoreData(facilitiesListDict: Facilities, managedObjContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -1148,9 +1168,12 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         do {
             try managedObjContext.save()
         } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+            DDLogError("Could not save. \(error), \(error.userInfo)")
         }
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
+    
     func fetchFacilitiesListFromCoredata() {
         let managedContext = getContext()
         do {
@@ -1243,9 +1266,11 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 }
             }
         } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
+            DDLogError("Could not fetch. \(error), \(error.userInfo)")
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
+    
     func checkAddedToCoredata(entityName: String?, idKey:String?, idValue: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
         var fetchResults : [NSManagedObject] = []
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
@@ -1525,21 +1550,25 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (travelList.count == 0)) {
             self.fetchTravelInfoFromCoredata()
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     @objc func receiveNmoqTravelListNotificationAr(notification: NSNotification) {
         if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (travelList.count == 0)) {
             self.fetchTravelInfoFromCoredata()
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     @objc func receiveFacilitiesListNotificationEn(notification: NSNotification) {
         if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (facilitiesList.count == 0)) {
             self.fetchFacilitiesListFromCoredata()
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     @objc func receiveFacilitiesListNotificationAr(notification: NSNotification) {
         if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (facilitiesList.count == 0)) {
             self.fetchFacilitiesListFromCoredata()
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -1549,11 +1578,13 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (nmoqActivityList.count == 0)){
             self.fetchActivityListFromCoredata()
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     @objc func receiveActivityListNotificationAr(notification: NSNotification) {
         if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (nmoqActivityList.count == 0)){
             self.fetchActivityListFromCoredata()
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
 }

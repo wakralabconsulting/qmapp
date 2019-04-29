@@ -13,6 +13,7 @@ import GooglePlaces
 import Kingfisher
 import UIKit
 import UserNotifications
+import CocoaLumberjack
 var tokenValue : String? = nil
 
 var languageKey = 1
@@ -26,7 +27,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // GMSServices.provideAPIKey("AIzaSyBXEzUfmsi5BidKqR1eY999pj0APP2N0k0")
+        
+        setupQMLogger()
+//        DDLogVerbose("Did select settings action")
+        DDLogInfo("AppDelegate initiated ..")
+//        DDLogError("Hope no Failed to create AppDelegate ..")
+//        DDLogWarn("Failed to load post details with error: \(error.localizedDescription)")
+        
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+        
+       // GMSServices.provideAPIKey("AIzaSyBXEzUfmsi5BidKqR1eY999pj0APP2N0k0")
         GMSServices.provideAPIKey("AIzaSyAbuv0Gx0vwyZdr90LFKeUFmMesorNZHKQ") // QM key
         GMSPlacesClient.provideAPIKey("AIzaSyAbuv0Gx0vwyZdr90LFKeUFmMesorNZHKQ")
         CoreDataManager.shared.setup {
@@ -66,6 +77,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return true
     }
     
+    
+    
     func apiCalls() {
         if  (networkReachability?.isReachable)! {
             self.getHomeList(lang: ENG_LANGUAGE)
@@ -99,6 +112,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             self.getNmoqListOfParksFromServer(lang: ENG_LANGUAGE)
             self.getNmoqListOfParksFromServer(lang: AR_LANGUAGE)
             
+             DDLogInfo("API calls initiated .." + NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         }
     }
     
@@ -283,13 +297,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.SendDeviceToken(data.accessToken!, ["token": deviceToken, "type":"ios"])).responseObject { (response: DataResponse<DeviceToken>) -> Void in
                     switch response.result {
                     case .success( _):
-                        print("This token is successfully sent to server")
+                        DDLogInfo("This token is successfully sent to server")
                     case .failure( _):
-                        print("Fail to update device token")
+                        DDLogInfo("Fail to update device token")
                     }
                 }
             case .failure( _):
-                print("Failed to generate token ")
+                DDLogInfo("Failed to generate token ")
             }
         }
     }

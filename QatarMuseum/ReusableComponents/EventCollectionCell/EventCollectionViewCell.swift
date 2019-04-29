@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 
 class EventCollectionViewCell: UICollectionViewCell {
     
@@ -23,6 +24,7 @@ class EventCollectionViewCell: UICollectionViewCell {
     var viewDetailsBtnAction : (()->())?
     
     func setEventCellValues(event:EducationEvent) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         firstTitle.font = UIFont.eventCellTitleFont
         secondTitleLabel.font = UIFont.eventCellTitleFont
         timingLabel.font = UIFont.exhibitionDateLabelFont
@@ -57,6 +59,7 @@ class EventCollectionViewCell: UICollectionViewCell {
         viewDetails.setTitle(NSLocalizedString("VIEW_DETAIL_BUTTON_TITLE", comment: "VIEW_DETAIL_BUTTON_TITLE  in the event view"), for: .normal)
     }
     func setEducationCalendarValues(educationEvent: EducationEvent) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         firstTitle.font = UIFont.eventCellTitleFont
         secondTitleLabel.font = UIFont.eventCellTitleFont
         timingLabel.font = UIFont.exhibitionDateLabelFont
@@ -93,13 +96,16 @@ class EventCollectionViewCell: UICollectionViewCell {
     }
     
     @IBAction func didTapViewDetails(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.viewDetails.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         self.viewDetailsBtnAction?()
     }
     @IBAction func viewDetailsButtonTouchDown(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.viewDetails.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     func setTimeFormat(timeString : String) -> String? {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let inFormatter = DateFormatter()
         inFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale?
         inFormatter.dateFormat = "HH:mm"

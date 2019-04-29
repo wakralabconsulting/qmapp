@@ -11,7 +11,7 @@ import AVFoundation
 import AVKit
 import GoogleMaps
 import GooglePlaces
-
+import CocoaLumberjack
 import UIKit
 
 class GoogleMapViewController: UIViewController,CLLocationManagerDelegate,GMSMapViewDelegate {
@@ -25,6 +25,8 @@ class GoogleMapViewController: UIViewController,CLLocationManagerDelegate,GMSMap
     var directionArray : GoogleDirections?
     let apiKey = "AIzaSyAbuv0Gx0vwyZdr90LFKeUFmMesorNZHKQ"
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
 
         loadMap()
@@ -48,10 +50,13 @@ class GoogleMapViewController: UIViewController,CLLocationManagerDelegate,GMSMap
         locationManager.requestWhenInUseAuthorization()
         mapView.addObserver(self, forKeyPath: "myLocation", options: NSKeyValueObservingOptions.new, context: nil)
         createMarker(titleMarker: "Kaloor", iconMarker: nil, latitude: 9.997090, longitude: 76.302818)
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
     }
     //MARK: - Location Manager delegates
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Error to get location : \(error)")
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations.last
@@ -65,12 +70,13 @@ class GoogleMapViewController: UIViewController,CLLocationManagerDelegate,GMSMap
         createMarker(titleMarker: "Lokasi Aku", iconMarker: nil , latitude: (location?.coordinate.latitude)!, longitude: (location?.coordinate.longitude)!)
         
         drawPath(startLocation: location!, endLocation: locationTujuan)
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.locationManager.stopUpdatingLocation()
     }
     // MARK: - GMSMapViewDelegate
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
         self.mapView.isMyLocationEnabled = true
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
     }
     func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
         self.mapView.isMyLocationEnabled = true
@@ -78,15 +84,19 @@ class GoogleMapViewController: UIViewController,CLLocationManagerDelegate,GMSMap
         if (gesture) {
             mapView.selectedMarker = nil
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         self.mapView.isMyLocationEnabled = true
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         return false
     }
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
         print("COORDINATE \(coordinate)")
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), COORDINATE: \(coordinate)")
     }
     func didTapMyLocationButton(for mapView: GMSMapView) -> Bool {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.mapView.isMyLocationEnabled = true
         self.mapView.selectedMarker = nil
         return false
@@ -131,6 +141,7 @@ class GoogleMapViewController: UIViewController,CLLocationManagerDelegate,GMSMap
 //            }
             
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     // MARK: function for create a marker pin on map
@@ -140,6 +151,7 @@ class GoogleMapViewController: UIViewController,CLLocationManagerDelegate,GMSMap
         marker.appearAnimation = .pop
         marker.title = titleMarker
         //marker.icon = iconMarker
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         marker.map = mapView
     }
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -157,6 +169,7 @@ class GoogleMapViewController: UIViewController,CLLocationManagerDelegate,GMSMap
         if status == CLAuthorizationStatus.authorizedWhenInUse {
             mapView.isMyLocationEnabled = true
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     @IBAction func setMapType(_ sender: UISwitch) {
         if sender.isOn == true {
@@ -164,6 +177,7 @@ class GoogleMapViewController: UIViewController,CLLocationManagerDelegate,GMSMap
         } else {
             mapView.mapType = .normal
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), MapType: \(mapView.mapType)")
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import CocoaLumberjack
 
 class CoreDataManager {
     
@@ -72,6 +73,7 @@ class CoreDataManager {
     }()
     
     func saveContext () {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if #available(iOS 10.0, *) {
             let context = CoreDataManager.shared.backgroundContext
             if context.hasChanges {
@@ -103,12 +105,15 @@ class CoreDataManager {
     // MARK: - SetUp
     
     func setup(completion: @escaping () -> Void) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if #available(iOS 10.0, *) {
             loadPersistentStore {
                 completion()
+                DDLogInfo("setup CoreDataManager ..")
             }
         } else {
             // Fallback on earlier versions
+            DDLogWarn("Fallback on earlier versions of coredata model")
         }
     }
     
@@ -116,12 +121,12 @@ class CoreDataManager {
     
     @available(iOS 10.0, *)
     private func loadPersistentStore(completion: @escaping () -> Void) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         migrateStoreIfNeeded {
             self.persistentContainer.loadPersistentStores { description, error in
                 guard error == nil else {
                     fatalError("was unable to load store \(error!)")
                 }
-                
                 completion()
             }
         }
@@ -129,6 +134,7 @@ class CoreDataManager {
     
     @available(iOS 10.0, *)
     private func migrateStoreIfNeeded(completion: @escaping () -> Void) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         guard let storeURL = persistentContainer.persistentStoreDescriptions.first?.url else {
             fatalError("persistentContainer was not set up properly")
         }
@@ -148,17 +154,21 @@ class CoreDataManager {
     
     // code for ios 9 and below
     lazy var applicationDocumentsDirectory: URL = {
+        
         let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), urls: \(urls)")
         return urls[urls.count-1]
     }()
     
     lazy var managedObjectModel: NSManagedObjectModel = {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
         let modelURL = Bundle.main.url(forResource: "QatarMuseums", withExtension: "momd")! //coreDataTestForPreOS
         return NSManagedObjectModel(contentsOf: modelURL)!
     }()
     
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         // The persistent store coordinator for the application. This implementation creates and returns a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)

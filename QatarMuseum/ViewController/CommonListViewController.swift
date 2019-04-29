@@ -11,6 +11,7 @@ import Crashlytics
 import Firebase
 import MapKit
 import UIKit
+import CocoaLumberjack
 
 enum ExhbitionPageName {
     case homeExhibition
@@ -56,6 +57,8 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     var selectedRow : Int? = 0
 
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         setUpExhibitionPageUi()
         registerNib()
@@ -233,7 +236,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     //MARK: MuseumExhibitions Service Call
     func getMuseumExhibitionDataFromServer() {
-       
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.MuseumExhibitionList(["museum_id": museumId ?? 0])).responseObject { (response: DataResponse<Exhibitions>) -> Void in
             switch response.result {
             case .success(let data):
@@ -424,6 +427,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         selectedRow = indexPath.row
         if ((exhibitionsPageNameString == ExhbitionPageName.homeExhibition) || (exhibitionsPageNameString == ExhbitionPageName.museumExhibition)) {
             if let exhibitionId = exhibition[indexPath.row].id {
+                DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), ExhibitionId: \(String(describing: exhibition[indexPath.row].id))")
                 self.performSegue(withIdentifier: "commonListToDetailSegue", sender: self)
             }
             else {
@@ -436,7 +440,9 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         } else if (exhibitionsPageNameString == ExhbitionPageName.museumCollectionsList) {
             self.performSegue(withIdentifier: "commonListToPanelDetailSegue", sender: self)
         } else if (exhibitionsPageNameString == ExhbitionPageName.diningList) {
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
             self.performSegue(withIdentifier: "commonListToDetailSegue", sender: self)
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         }  else if (exhibitionsPageNameString == ExhbitionPageName.nmoqTourSecondList) {
             self.performSegue(withIdentifier: "commonListToPanelDetailSegue", sender: self)
         } else if (exhibitionsPageNameString == ExhbitionPageName.miaTourGuideList) {
@@ -484,6 +490,8 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         self.present(collectionDetailView, animated: false, completion: nil)
     }
     func addComingSoonPopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         let viewFrame : CGRect = self.view.frame
         popupView.frame = viewFrame
         popupView.loadPopup()
@@ -493,38 +501,39 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     func loadExhibitionDetailAnimation(exhibitionId: String) {
     }
-    func loadDiningDetailAnimation(idValue: String) {
-        
-    }
-    func loadTourSecondDetailPage(selectedRow: Int?,fromTour:Bool?,pageName: ExhbitionPageName?) {
-        let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
-        
-        panelView.selectedRow = selectedRow
-        
-        if(pageName == ExhbitionPageName.nmoqTourSecondList) {
-            panelView.nmoqTourDetail = nmoqTourDetail
-            panelView.panelDetailId = tourDetailId
-
-            if (fromTour)! {
-                panelView.pageNameString = NMoQPanelPage.TourDetailPage
-            } else {
-                panelView.pageNameString = NMoQPanelPage.PanelDetailPage
-            }
-        } else if(pageName == ExhbitionPageName.facilitiesSecondList) {
-            panelView.pageNameString = NMoQPanelPage.FacilitiesDetailPage
-            panelView.panelDetailId = facilitiesDetail![selectedRow!].nid
-            panelView.facilitiesDetail = facilitiesDetail
-            panelView.fromCafeOrDining = true
-        }
-        let transition = CATransition()
-        transition.duration = 0.25
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromRight
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(panelView, animated: false, completion: nil)
-    }
+//    func loadTourSecondDetailPage(selectedRow: Int?,fromTour:Bool?,pageName: ExhbitionPageName?) {
+//        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+//
+//        let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
+//
+//        panelView.selectedRow = selectedRow
+//
+//        if(pageName == ExhbitionPageName.nmoqTourSecondList) {
+//            panelView.nmoqTourDetail = nmoqTourDetail
+//            panelView.panelDetailId = tourDetailId
+//
+//            if (fromTour)! {
+//                panelView.pageNameString = NMoQPanelPage.TourDetailPage
+//            } else {
+//                panelView.pageNameString = NMoQPanelPage.PanelDetailPage
+//            }
+//        } else if(pageName == ExhbitionPageName.facilitiesSecondList) {
+//            panelView.pageNameString = NMoQPanelPage.FacilitiesDetailPage
+//            panelView.panelDetailId = facilitiesDetail![selectedRow!].nid
+//            panelView.facilitiesDetail = facilitiesDetail
+//            panelView.fromCafeOrDining = true
+//        }
+//        let transition = CATransition()
+//        transition.duration = 0.25
+//        transition.type = kCATransitionPush
+//        transition.subtype = kCATransitionFromRight
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        self.present(panelView, animated: false, completion: nil)
+//    }
     //MARK: Header delegate
     func headerCloseButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         let transition = CATransition()
         transition.duration = 0.25
         if (fromSideMenu == true) {
@@ -559,6 +568,8 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
 
     func closeButtonPressed() {
         self.popupView.removeFromSuperview()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
     }
     
     //MARK: Coredata Method
@@ -756,6 +767,8 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     
     func showNodata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         var errorMessage: String
         errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
                                                         comment: "Setting the content of the alert"))
@@ -2742,6 +2755,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         }
     }
     func loadMiaTour(currentRow: Int?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush

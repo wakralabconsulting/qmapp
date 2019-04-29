@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 
 class ParkTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
@@ -44,12 +45,12 @@ class ParkTableViewCell: UITableViewCell {
     }
     //MARK: Public Arts List Data
     func setParksCellValues(parksList: ParksList,currentRow:Int?) {
-        
         favouriteViewHeight.constant = 0
         favouriteView.isHidden = true
         shareView.isHidden = true
         favouriteButton.isHidden = true
         shareButton.isHidden = true
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         titleLabel.text = parksList.title?.uppercased()
         let parkDesc = parksList.description?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         titleDescriptionLabel.text = parkDesc?.replacingOccurrences(of: "&amp;", with: "&", options: .regularExpression, range: nil)
@@ -135,7 +136,7 @@ class ParkTableViewCell: UITableViewCell {
         shareView.isHidden = true
         favouriteButton.isHidden = true
         shareButton.isHidden = true
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         subTitleTopConstraint.constant = 0
         subTitleLabel.frame = CGRect(x: self.subTitleLabel.frame.origin.x, y: self.subTitleLabel.frame.origin.x, width: 0, height: 0)
         locationsTitleLabel.isHidden = true
@@ -168,6 +169,7 @@ class ParkTableViewCell: UITableViewCell {
         //                                                comment: "OPENING_TIME_TITLE in the Heritage detail")
     }
     @IBAction func didTapFavourite(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         UIButton.animate(withDuration: 0.3,
                          animations: {
                             self.favouriteButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -182,6 +184,7 @@ class ParkTableViewCell: UITableViewCell {
         
     }
     @IBAction func didTapShare(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         UIButton.animate(withDuration: 0.3,
                          animations: {
                             self.shareButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -197,15 +200,17 @@ class ParkTableViewCell: UITableViewCell {
     }
     
     @IBAction func didTapLocation(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.locationButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         locationButtonTapAction?()
     }
     @IBAction func locationButtonTouchDown(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.locationButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         // Configure the view for the selected state
     }
 

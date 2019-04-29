@@ -16,6 +16,7 @@ import Firebase
 import  MapKit
 import MessageUI
 import UIKit
+import CocoaLumberjack
 
 enum PageName2{
     case museumAbout
@@ -46,6 +47,8 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     var travelDetail: HomeBanner?
 
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         
         setupUIContents()
@@ -76,6 +79,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func setTopBarImage() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         heritageDetailTableView.estimatedRowHeight = 50
         heritageDetailTableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0)
         
@@ -284,6 +288,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
 //
 //    }
     func loadLocationMap(currentRow: Int, destination: MKMapItem) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let mapDetailView = self.storyboard?.instantiateViewController(withIdentifier: "mapViewId") as! MapViewController
        // mapDetailView.aboutData = aboutDetailtArray[0]
         mapDetailView.latitudeString = aboutDetailtArray[0].mobileLatitude
@@ -298,6 +303,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
 
     }
     func showVideoInAboutPage(currentRow: Int) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let aboutData = aboutDetailtArray[currentRow]
         if (aboutData.multimediaVideo != nil) {
             if((aboutData.multimediaVideo?.count)! > 0) {
@@ -317,6 +323,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func loadLocationInMap(currentRow: Int) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         var latitudeString  = String()
         var longitudeString = String()
         var latitude : Double?
@@ -359,6 +366,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         }
     }
     func downloadButtonAction() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
        let downloadLink = aboutDetailtArray[0].downloadable
         if ((downloadLink?.count)! > 0) {
             if(downloadLink![0] != "") {
@@ -377,7 +385,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
        
     }
     func claimOfferButtonAction(offerLink: String?) {
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if(offerLink != "") {
             if let offerUrl = URL(string: offerLink!) {
                 // show alert to choose app
@@ -429,6 +437,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     @objc func buttonAction(sender: UIButton!) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         selectedCell?.player.pause()
         sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         let transition = CATransition()
@@ -444,6 +453,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     //MARK: ABout Webservice
     func getAboutDetailsFromServer() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.LandingPageMuseums(["nid": museumId ?? 0])).responseObject { (response: DataResponse<Museums>) -> Void in
             switch response.result {
             case .success(let data):
@@ -480,6 +490,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     //MARK: NMoQ ABoutEvent Webservice
     func getNmoQAboutDetailsFromServer() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if(museumId != nil) {
             
             _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetNMoQAboutEvent(LocalizationLanguage.currentAppleLanguage(),["nid": museumId!])).responseObject { (response: DataResponse<Museums>) -> Void in
@@ -530,6 +541,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     
 
     func aboutCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,aboutDetailtArray:[Museum]?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "AboutEntity", idKey: "id" , idValue: aboutDetailtArray![0].id, managedContext: managedContext) as! [AboutEntity]
             
@@ -571,6 +583,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func saveToCoreData(aboutDetailDict: Museum, managedObjContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let aboutdbDict: AboutEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutEntity", into: managedObjContext) as! AboutEntity
             
@@ -724,6 +737,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         
     }
     func fetchAboutDetailsFromCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -877,6 +891,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func showNodata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         var errorMessage: String
         errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
                                                         comment: "Setting the content of the alert"))
@@ -890,6 +905,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     
     //MARK: iCarousel Delegate
     func numberOfItems(in carousel: iCarousel) -> Int {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)" + "Carousel Item Count: \(aboutDetailtArray.count)")
         if(self.aboutDetailtArray.count != 0) {
             if(self.aboutDetailtArray[0].multimediaFile != nil) {
                 if((self.aboutDetailtArray[0].multimediaFile?.count)! > 0) {
@@ -923,6 +939,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func setiCarouselView() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if (carousel.tag == 0) {
             transparentView.frame = self.view.frame
             transparentView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.75)
@@ -941,6 +958,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     @objc func closeCarouselView() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         transparentView.removeFromSuperview()
         carousel.tag = 0
         carousel.removeFromSuperview()
@@ -965,11 +983,13 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if  (networkReachability?.isReachable)! {
             self.getAboutDetailsFromServer()
         }
     }
     func showNoNetwork() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.loadingView.stopLoading()
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
@@ -1008,13 +1028,13 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func showSendMailErrorAlert() {
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let sendMailErrorAlert = UIAlertController(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", preferredStyle: UIAlertControllerStyle.alert)
         
         let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default)
         {
             (result : UIAlertAction) -> Void in
-            print("You pressed OK")
+            DDLogInfo("You pressed OK")
         }
         sendMailErrorAlert.addAction(okAction)
         self.present(sendMailErrorAlert, animated: true, completion: nil)
@@ -1022,7 +1042,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     }
 
     func dialNumber(number : String) {
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let phoneNumber = number.replacingOccurrences(of: " ", with: "")
         
         if let url = URL(string: "tel://\(String(phoneNumber))"),
@@ -1035,7 +1055,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         } else {
             // add error message here
             
-            print("Error in calling phone ...")
+            DDLogError("Error in calling phone ...")
         }
     }
     func recordScreenView() {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 
 class CulturePassCardBackViewController: UIViewController {
     @IBOutlet weak var tapToFlipButton: UIButton!
@@ -20,6 +21,8 @@ class CulturePassCardBackViewController: UIViewController {
     var displayName : String? = nil
     
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
 
         setUI()
@@ -28,6 +31,7 @@ class CulturePassCardBackViewController: UIViewController {
     }
     
     func setUI() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         tapToFlipButton.setTitle(NSLocalizedString("TAP_TO_FLIP", comment: "TAP_TO_FLIP"), for: .normal)
         tapToFlipButton.titleLabel?.font = UIFont.tryAgainFont
         tapToFlipButton.layer.cornerRadius = 25
