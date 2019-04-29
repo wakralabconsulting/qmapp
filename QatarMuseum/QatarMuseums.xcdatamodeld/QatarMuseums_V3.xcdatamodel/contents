@@ -91,25 +91,9 @@
         <attribute name="sortid" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="imagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DiningImagesEntity" syncable="YES"/>
     </entity>
-    <entity name="DiningEntityArabic" representedClassName="DiningEntityArabic" syncable="YES" codeGenerationType="class">
-        <attribute name="closetimearabic" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="descriptionarabic" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="imagearabic" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="locationarabic" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="museumId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="namearabic" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="openingtimearabic" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="sortidarabic" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="imagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DiningImagesEntityAr" syncable="YES"/>
-    </entity>
     <entity name="DiningImagesEntity" representedClassName="DiningImagesEntity" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="imagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DiningEntity" syncable="YES"/>
-    </entity>
-    <entity name="DiningImagesEntityAr" representedClassName="DiningImagesEntityAr" syncable="YES" codeGenerationType="class">
-        <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="imagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DiningEntityArabic" syncable="YES"/>
     </entity>
     <entity name="EdAgeGroupEntity" representedClassName="EdAgeGroupEntity" syncable="YES" codeGenerationType="class">
         <attribute name="ageGroup" optional="YES" attributeType="String" syncable="YES"/>
@@ -772,9 +756,7 @@
         <element name="CollectionsEntity" positionX="-36" positionY="126" width="128" height="90"/>
         <element name="CollectionsEntityArabic" positionX="-18" positionY="162" width="128" height="90"/>
         <element name="DiningEntity" positionX="-54" positionY="90" width="128" height="210"/>
-        <element name="DiningEntityArabic" positionX="-45" positionY="108" width="128" height="195"/>
         <element name="DiningImagesEntity" positionX="-9" positionY="135" width="128" height="75"/>
-        <element name="DiningImagesEntityAr" positionX="0" positionY="144" width="128" height="75"/>
         <element name="EdAgeGroupEntity" positionX="-9" positionY="153" width="128" height="75"/>
         <element name="EdAgeGroupEntityAr" positionX="0" positionY="162" width="128" height="75"/>
         <element name="EdEndDateEntity" positionX="-9" positionY="135" width="128" height="75"/>
