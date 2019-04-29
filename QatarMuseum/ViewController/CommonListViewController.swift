@@ -580,7 +580,6 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     
     func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,exhibition:[Exhibition]?,isHomeExhibition : String?) {
-        //if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
         var fetchData = [ExhibitionsEntity]()
         var langVar : String? = nil
         if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
@@ -624,42 +623,6 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                     self.saveToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext, exhibition: exhibition,isHomeExhibition :isHomeExhibition)
                 }
             }
-//        } else {
-//            let fetchData = self.checkAddedToCoredata(entityName: "ExhibitionsEntityArabic", idKey: "id", idValue: nil, managedContext: managedContext) as! [ExhibitionsEntityArabic]
-//            if (fetchData.count > 0) {
-//                for i in 0 ... self.exhibition.count-1 {
-//                    let exhibitionListDict = self.exhibition[i]
-//                    let fetchResult = self.checkAddedToCoredata(entityName: "ExhibitionsEntityArabic", idKey: "id", idValue: self.exhibition[i].id, managedContext: managedContext)
-//                    //update
-//                    if(fetchResult.count != 0) {
-//                        let exhibitiondbDict = fetchResult[0] as! ExhibitionsEntityArabic
-//                        exhibitiondbDict.nameArabic = exhibitionListDict.name
-//                        exhibitiondbDict.imageArabic = exhibitionListDict.image
-//                        exhibitiondbDict.startDateArabic =  exhibitionListDict.startDate
-//                        exhibitiondbDict.endDateArabic = exhibitionListDict.endDate
-//                        exhibitiondbDict.locationArabic =  exhibitionListDict.location
-//                        exhibitiondbDict.museumId =  exhibitionListDict.museumId
-//                        exhibitiondbDict.status =  exhibitionListDict.status
-//                        exhibitiondbDict.isHomeExhibition =  isHomeExhibition
-//                        do {
-//                            try managedContext.save()
-//                        }
-//                        catch {
-//                            print(error)
-//                        }
-//                    } else {
-//                        //save
-//                        self.saveToCoreData(exhibitionDict: exhibitionListDict, managedObjContext: managedContext, exhibition: exhibition,isHomeExhibition :isHomeExhibition)
-//                    }
-//                }
-//            } else {
-//                for i in 0 ... self.exhibition.count-1 {
-//                    let exhibitionListDict : Exhibition?
-//                    exhibitionListDict = self.exhibition[i]
-//                    self.saveToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext, exhibition: exhibition,isHomeExhibition :isHomeExhibition)
-//                }
-//            }
-//        }
     }
     
     func saveToCoreData(exhibitionDict: Exhibition, managedObjContext: NSManagedObjectContext,exhibition:[Exhibition]?,isHomeExhibition : String?) {
@@ -683,18 +646,6 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
             exhibitionInfo.status =  exhibitionDict.status
             exhibitionInfo.isHomeExhibition =  isHomeExhibition
             exhibitionInfo.lang = langVar
-//        } else {
-//            let exhibitionInfo: ExhibitionsEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "ExhibitionsEntityArabic", into: managedObjContext) as! ExhibitionsEntityArabic
-//            exhibitionInfo.id = exhibitionDict.id
-//            exhibitionInfo.nameArabic = exhibitionDict.name
-//            exhibitionInfo.imageArabic = exhibitionDict.image
-//            exhibitionInfo.startDateArabic =  exhibitionDict.startDate
-//            exhibitionInfo.endDateArabic = exhibitionDict.endDate
-//            exhibitionInfo.locationArabic =  exhibitionDict.location
-//            exhibitionInfo.museumId =  exhibitionDict.museumId
-//            exhibitionInfo.status =  exhibitionDict.status
-//            exhibitionInfo.isHomeExhibition =  isHomeExhibition
-//        }
         do {
             try managedObjContext.save()
             
@@ -714,9 +665,6 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
             } else {
                 langVar = "0"
             }
-           // if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-               // var exhibitionArray = [ExhibitionsEntity]()
-               // exhibitionArray = checkAddedToCoredata(entityName: "ExhibitionsEntity", idKey: "isHomeExhibition", idValue: "1", managedContext: managedContext) as! [ExhibitionsEntity]
             exhibitionArray = checkMultiplePredicate(entityName: "ExhibitionsEntity", idKey: "isHomeExhibition", idValue: "1", langKey: "lang", langValue: langVar, managedContext: managedContext) as! [ExhibitionsEntity]
                 if (exhibitionArray.count > 0) {
                     if((self.networkReachability?.isReachable)!) {
@@ -746,39 +694,6 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                         self.getExhibitionDataFromServer() //coreDataMigratio  solution
                     }
                 }
-//            } else {
-//                var exhibitionArray = [ExhibitionsEntityArabic]()
-//                exhibitionArray = checkAddedToCoredata(entityName: "ExhibitionsEntityArabic", idKey: "isHomeExhibition", idValue: "1", managedContext: managedContext) as! [ExhibitionsEntityArabic]
-//                if (exhibitionArray.count > 0) {
-//                    if((self.networkReachability?.isReachable)!) {
-//                        DispatchQueue.global(qos: .background).async {
-//                            self.getExhibitionDataFromServer()
-//                        }
-//                    }
-//                    for i in 0 ... exhibitionArray.count-1 {
-//
-//                        self.exhibition.insert(Exhibition(id: exhibitionArray[i].id, name: exhibitionArray[i].nameArabic, image: exhibitionArray[i].imageArabic,detailImage:nil, startDate: exhibitionArray[i].startDateArabic, endDate: exhibitionArray[i].endDateArabic, location: exhibitionArray[i].locationArabic, latitude: nil, longitude: nil, shortDescription: nil, longDescription: nil,museumId :exhibitionArray[i].museumId,status :exhibitionArray[i].status,displayDate :exhibitionArray[i].displayDateAr), at: i)
-//
-//                    }
-//                    if(exhibition.count == 0){
-//                        if(self.networkReachability?.isReachable == false) {
-//                            self.showNoNetwork()
-//                        } else {
-//                            self.exbtnLoadingView.showNoDataView()
-//                        }
-//                    }
-//                    DispatchQueue.main.async{
-//                        self.exhibitionCollectionView.reloadData()
-//                    }
-//                } else {
-//                    if(self.networkReachability?.isReachable == false) {
-//                        self.showNoNetwork()
-//                    } else {
-//                       // self.exbtnLoadingView.showNoDataView()
-//                        self.getExhibitionDataFromServer() //coreDataMigratio  solution
-//                    }
-//                }
-//            }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
             if (networkReachability?.isReachable == false) {
@@ -790,9 +705,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     func fetchMuseumExhibitionsListFromCoredata() {
         let managedContext = getContext()
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var exhibitionArray = [ExhibitionsEntity]()
-                
                 exhibitionArray = checkAddedToCoredata(entityName: "ExhibitionsEntity", idKey: "museumId", idValue: museumId, managedContext: managedContext) as! [ExhibitionsEntity]
                 if (exhibitionArray.count > 0) {
                     for i in 0 ... exhibitionArray.count-1 {
@@ -816,34 +729,6 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                         self.exbtnLoadingView.showNoDataView()
                     }
                 }
-            } else {
-                var exhibitionArray = [ExhibitionsEntityArabic]()
-                exhibitionArray = checkAddedToCoredata(entityName: "ExhibitionsEntityArabic", idKey: "museumId", idValue: museumId, managedContext: managedContext) as! [ExhibitionsEntityArabic]
-                if (exhibitionArray.count > 0) {
-                    for i in 0 ... exhibitionArray.count-1 {
-                        
-                        self.exhibition.insert(Exhibition(id: exhibitionArray[i].id, name: exhibitionArray[i].nameArabic, image: exhibitionArray[i].imageArabic,detailImage:nil, startDate: exhibitionArray[i].startDateArabic, endDate: exhibitionArray[i].endDateArabic, location: exhibitionArray[i].locationArabic, latitude: nil, longitude: nil, shortDescription: nil, longDescription: nil,museumId :exhibitionArray[i].museumId,status :exhibitionArray[i].status,displayDate :exhibitionArray[i].displayDateAr), at: i)
-                        
-                    }
-                    if(exhibition.count == 0){
-                        if(self.networkReachability?.isReachable == false) {
-                            self.showNoNetwork()
-                        } else {
-                            self.exbtnLoadingView.showNoDataView()
-                        }
-                    }
-                    DispatchQueue.main.async{
-                        self.exhibitionCollectionView.reloadData()
-                    }
-                }
-                else{
-                    if(self.networkReachability?.isReachable == false) {
-                        self.showNoNetwork()
-                    } else {
-                        self.exbtnLoadingView.showNoDataView()
-                    }
-                }
-            }
         }
     }
     

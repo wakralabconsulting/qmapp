@@ -462,7 +462,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func exhibitionCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,exhibition: [Exhibition]?,lang: String?) {
-       // if (lang == ENG_LANGUAGE) {
         var fetchData = [ExhibitionsEntity]()
         var langVar : String? = nil
         if (lang == ENG_LANGUAGE) {
@@ -508,48 +507,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
                 NotificationCenter.default.post(name: NSNotification.Name(exhibitionsListNotificationEn), object: self)
             }
-//        } else {
-//            let fetchData = self.checkAddedToCoredata(entityName: "ExhibitionsEntityArabic", idKey: "id", idValue: nil, managedContext: managedContext) as! [ExhibitionsEntityArabic]
-//            if (fetchData.count > 0) {
-//                for i in 0 ... (exhibition?.count)!-1 {
-//                    let exhibitionListDict = exhibition![i]
-//                    let fetchResult = self.checkAddedToCoredata(entityName: "ExhibitionsEntityArabic", idKey: "id", idValue: exhibition![i].id, managedContext: managedContext)
-//                    //update
-//                    if(fetchResult.count != 0) {
-//                        let exhibitiondbDict = fetchResult[0] as! ExhibitionsEntityArabic
-//                        exhibitiondbDict.nameArabic = exhibitionListDict.name
-//                        exhibitiondbDict.imageArabic = exhibitionListDict.image
-//                        exhibitiondbDict.startDateArabic =  exhibitionListDict.startDate
-//                        exhibitiondbDict.endDateArabic = exhibitionListDict.endDate
-//                        exhibitiondbDict.locationArabic =  exhibitionListDict.location
-//                        exhibitiondbDict.museumId =  exhibitionListDict.museumId
-//                        exhibitiondbDict.status =  exhibitionListDict.status
-//                        exhibitiondbDict.isHomeExhibition = "1"
-//                        do {
-//                            try managedContext.save()
-//                        }
-//                        catch {
-//                            print(error)
-//                        }
-//                    } else {
-//                        //save
-//                        self.saveExhibitionListToCoreData(exhibitionDict: exhibitionListDict, managedObjContext: managedContext, lang: lang)
-//                    }
-//                }
-//                NotificationCenter.default.post(name: NSNotification.Name(exhibitionsListNotificationAr), object: self)
-//            } else {
-//                for i in 0 ... (exhibition?.count)!-1 {
-//                    let exhibitionListDict : Exhibition?
-//                    exhibitionListDict = exhibition?[i]
-//                    self.saveExhibitionListToCoreData(exhibitionDict: exhibitionListDict!, managedObjContext: managedContext, lang: lang)
-//                }
-//                NotificationCenter.default.post(name: NSNotification.Name(exhibitionsListNotificationAr), object: self)
-//            }
-//        }
     }
     
     func saveExhibitionListToCoreData(exhibitionDict: Exhibition, managedObjContext: NSManagedObjectContext,lang: String?) {
-       // if (lang == ENG_LANGUAGE) {
         var langVar : String? = nil
         if (lang == ENG_LANGUAGE) {
             langVar = "1"
@@ -569,18 +529,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             exhibitionInfo.status =  exhibitionDict.status
             exhibitionInfo.isHomeExhibition = "1"
             exhibitionInfo.lang = langVar
-//        } else {
-//            let exhibitionInfo: ExhibitionsEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "ExhibitionsEntityArabic", into: managedObjContext) as! ExhibitionsEntityArabic
-//            exhibitionInfo.id = exhibitionDict.id
-//            exhibitionInfo.nameArabic = exhibitionDict.name
-//            exhibitionInfo.imageArabic = exhibitionDict.image
-//            exhibitionInfo.startDateArabic =  exhibitionDict.startDate
-//            exhibitionInfo.endDateArabic = exhibitionDict.endDate
-//            exhibitionInfo.locationArabic =  exhibitionDict.location
-//            exhibitionInfo.museumId =  exhibitionDict.museumId
-//            exhibitionInfo.status =  exhibitionDict.status
-//            exhibitionInfo.isHomeExhibition = "1"
-//        }
         do {
             try managedObjContext.save()
             

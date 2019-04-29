@@ -1193,38 +1193,6 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                 exhibitionListDict = exhibition[0]
                 self.saveExhibitionToCoreData(exhibitionDetailDict: exhibitionListDict!, managedObjContext: managedContext)
             }
-      //  }
-//        else {
-//            let fetchData = checkAddedToCoredata(entityName: "ExhibitionsEntityArabic", idKey:"id" , idValue: exhibition[0].id, managedContext: managedContext) as! [ExhibitionsEntityArabic]
-//            if (fetchData.count > 0) {
-//                let exhibitionDetailDict = exhibition[0]
-//
-//                //update
-//
-//                let exhibitiondbDict = fetchData[0]
-//                exhibitiondbDict.detailNameAr = exhibitionDetailDict.name
-//                exhibitiondbDict.detailImgeAr = exhibitionDetailDict.detailImage
-//                exhibitiondbDict.detailStartDateAr =  exhibitionDetailDict.startDate
-//                exhibitiondbDict.detailendDateAr = exhibitionDetailDict.endDate
-//                exhibitiondbDict.detailShortDescAr = exhibitionDetailDict.shortDescription
-//                exhibitiondbDict.detailLongDescAr =  exhibitionDetailDict.longDescription
-//                exhibitiondbDict.detailLocationAr =  exhibitionDetailDict.location
-//                exhibitiondbDict.detailLatituedeAr = exhibitionDetailDict.latitude
-//                exhibitiondbDict.detailLongitudeAr = exhibitionDetailDict.longitude
-//                exhibitiondbDict.status = exhibitionDetailDict.status
-//
-//                do{
-//                    try managedContext.save()
-//                }
-//                catch{
-//                    print(error)
-//                }
-//            } else {
-//                let exhibitionListDict : Exhibition?
-//                exhibitionListDict = exhibition[0]
-//                self.saveExhibitionToCoreData(exhibitionDetailDict: exhibitionListDict!, managedObjContext: managedContext)
-//            }
-//        }
     }
     func saveExhibitionToCoreData(exhibitionDetailDict: Exhibition, managedObjContext: NSManagedObjectContext) {
        // if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -1245,21 +1213,6 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
             } else {
                 exhibitionInfo.lang =  "0"
             }
-       // }
-//        else {
-//            let exhibitionInfo: ExhibitionsEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "ExhibitionsEntityArabic", into: managedObjContext) as! ExhibitionsEntityArabic
-//            exhibitionInfo.id = exhibitionDetailDict.id
-//            exhibitionInfo.detailNameAr = exhibitionDetailDict.name
-//            exhibitionInfo.detailImgeAr = exhibitionDetailDict.detailImage
-//            exhibitionInfo.detailStartDateAr = exhibitionDetailDict.startDate
-//            exhibitionInfo.detailendDateAr = exhibitionDetailDict.endDate
-//            exhibitionInfo.detailShortDescAr =  exhibitionDetailDict.shortDescription
-//            exhibitionInfo.detailLongDescAr =  exhibitionDetailDict.longDescription
-//            exhibitionInfo.detailLocationAr = exhibitionDetailDict.location
-//            exhibitionInfo.detailLatituedeAr =  exhibitionDetailDict.latitude
-//            exhibitionInfo.detailLongitudeAr = exhibitionDetailDict.longitude
-//            exhibitionInfo.status = exhibitionDetailDict.status
-//        }
         do {
             try managedObjContext.save()
             
@@ -1300,38 +1253,6 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                         self.loadingView.showNoDataView()
                     }
                 }
-            //}
-//            else {
-//                var exhibitionArray = [ExhibitionsEntityArabic]()
-//                let exhibitionFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "ExhibitionsEntityArabic")
-//                if(self.exhibitionId != nil) {
-//                    exhibitionFetchRequest.predicate = NSPredicate.init(format: "id == \(self.exhibitionId!)")
-//                }
-//                exhibitionArray = (try managedContext.fetch(exhibitionFetchRequest) as? [ExhibitionsEntityArabic])!
-//                let exhibitionDict = exhibitionArray[0]
-//                if ((exhibitionArray.count > 0) && (exhibitionDict.detailLongDescAr != nil) && (exhibitionDict.detailShortDescAr != nil)) {
-//
-//                    self.exhibition.insert(Exhibition(id: exhibitionDict.id, name: exhibitionDict.detailNameAr, image: nil,detailImage:exhibitionDict.detailImgeAr, startDate: exhibitionDict.detailStartDateAr, endDate: exhibitionDict.detailendDateAr, location: exhibitionDict.detailLocationAr, latitude: exhibitionDict.detailLatituedeAr, longitude: exhibitionDict.detailLongitudeAr, shortDescription: exhibitionDict.detailShortDescAr, longDescription: exhibitionDict.detailLongDescAr,museumId:nil,status: exhibitionDict.status, displayDate: exhibitionDict.displayDateAr), at: 0)
-//
-//
-//                    if(self.exhibition.count == 0){
-//                        if(self.networkReachability?.isReachable == false) {
-//                            self.showNoNetwork()
-//                        } else {
-//                            self.loadingView.showNoDataView()
-//                        }
-//                    }
-//                    self.setTopBarImage()
-//                    self.heritageDetailTableView.reloadData()
-//                }
-//                else{
-//                    if(self.networkReachability?.isReachable == false) {
-//                        self.showNoNetwork()
-//                    } else {
-//                        self.loadingView.showNoDataView()
-//                    }
-//                }
-//            }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
@@ -1359,14 +1280,8 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                 }
                 if (self.parksListArray.count > 0)  {
                     self.saveOrUpdateParksCoredata(parksListArray: data.parkList)
-                    //if let imageUrl = self.parksListArray[0].image{
                         self.setTopBarImage()
-//                    } else {
-//                        self.imageView.image = UIImage(named: "default_imageX2")
-//                    }
-                    
                 }
-                // }
                 
             case .failure( _):
                 print("error")

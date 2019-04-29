@@ -261,27 +261,6 @@
         <attribute name="startDate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="ExhibitionsEntityArabic" representedClassName="ExhibitionsEntityArabic" syncable="YES" codeGenerationType="class">
-        <attribute name="detailendDateAr" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="detailImgeAr" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="detailLatituedeAr" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="detailLocationAr" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="detailLongDescAr" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="detailLongitudeAr" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="detailNameAr" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="detailShortDescAr" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="detailStartDateAr" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="displayDateAr" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="endDateArabic" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="imageArabic" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isHomeExhibition" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="locationArabic" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="museumId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="nameArabic" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="startDateArabic" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
     <entity name="FacilitiesDetailEntity" representedClassName="FacilitiesDetailEntity" syncable="YES" codeGenerationType="class">
         <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="facilitiesDes" optional="YES" attributeType="String" syncable="YES"/>
@@ -783,7 +762,6 @@
         <element name="EventTopicsEntity" positionX="9" positionY="171" width="128" height="75"/>
         <element name="EventTopicsEntityAr" positionX="18" positionY="180" width="128" height="75"/>
         <element name="ExhibitionsEntity" positionX="-54" positionY="108" width="128" height="345"/>
-        <element name="ExhibitionsEntityArabic" positionX="-45" positionY="126" width="128" height="330"/>
         <element name="FacilitiesDetailEntity" positionX="27" positionY="171" width="128" height="210"/>
         <element name="FacilitiesDetailEntityAr" positionX="0" positionY="144" width="128" height="210"/>
         <element name="FacilitiesDetailImgEntity" positionX="-9" positionY="135" width="128" height="75"/>
