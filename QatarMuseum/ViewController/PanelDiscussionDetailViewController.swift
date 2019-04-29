@@ -13,6 +13,7 @@ import MapKit
 import MessageUI
 import Firebase
 import UIKit
+import KeychainSwift
 
 enum NMoQPanelPage {
     case PanelDetailPage
@@ -54,6 +55,8 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     var collectionName: String? = nil
     var nid: String? = nil
     let networkReachability = NetworkReachabilityManager()
+    
+    let keychain = KeychainSwift()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -396,11 +399,11 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         let time = getTimeStamp(currentRow: currentRow)
         if (time.startTime != nil && time.endTime != nil) {
             
-         if((nmoqTourDetail[currentRow].nid != nil) && (UserDefaults.standard.value(forKey: "uid") != nil) && (UserDefaults.standard.value(forKey: "fieldFirstName") != nil) && (UserDefaults.standard.value(forKey: "fieldLastName") != nil)) {
+         if((nmoqTourDetail[currentRow].nid != nil) && (keychain.get(UserProfileInfo.user_id)) != nil) && ((keychain.get(UserProfileInfo.user_firstname) != nil) && (keychain.get(UserProfileInfo.user_lastname) != nil)) {
         let entityId = nmoqTourDetail[currentRow].nid
-        let userId = UserDefaults.standard.value(forKey: "uid") as! String
-        let firstName = UserDefaults.standard.value(forKey: "fieldFirstName") as! String
-        let lastName = UserDefaults.standard.value(forKey: "fieldLastName") as! String
+        let userId = keychain.get(UserProfileInfo.user_id)!
+        let firstName = (keychain.get(UserProfileInfo.user_firstname))!
+        let lastName = (keychain.get(UserProfileInfo.user_lastname))!
         let fieldConfirmAttendance =
             [
                 "und":[[
@@ -469,14 +472,14 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         
     }
     func setEntityRegistrationAsComplete(currentRow: Int, timestamp: String,selectedCell: PanelDetailCell?) {
-        if((newRegistrationId != nil) && (nmoqTourDetail[currentRow].nid != nil) && (UserDefaults.standard.value(forKey: "uid") != nil) && (UserDefaults.standard.value(forKey: "fieldFirstName") != nil) && (UserDefaults.standard.value(forKey: "fieldLastName") != nil)) {
+        if((newRegistrationId != nil) && (nmoqTourDetail[currentRow].nid != nil) && (keychain.get(UserProfileInfo.user_id) != nil) && (keychain.get(UserProfileInfo.user_firstname) != nil) && (keychain.get(UserProfileInfo.user_lastname) != nil)) {
             let time = getTimeStamp(currentRow: currentRow)
             if (time.startTime != nil && time.endTime != nil) {
             let regId = newRegistrationId
             let entityId = nmoqTourDetail[currentRow].nid
-            let userId = UserDefaults.standard.value(forKey: "uid") as! String
-            let firstName = UserDefaults.standard.value(forKey: "fieldFirstName") as! String
-            let lastName = UserDefaults.standard.value(forKey: "fieldLastName") as! String
+            let userId = keychain.get(UserProfileInfo.user_id)!
+            let firstName = (keychain.get(UserProfileInfo.user_firstname) != nil)
+            let lastName = (keychain.get(UserProfileInfo.user_lastname) != nil)
             let fieldConfirmAttendance =
                 [
                     "und":[[
@@ -557,10 +560,10 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                 
             }
         }
-        if((regId != nil) && (UserDefaults.standard.value(forKey: "userPassword") != nil)  && (UserDefaults.standard.value(forKey: "displayName") != nil)) {
+        if((regId != nil) && ((keychain.get(UserProfileInfo.user_password) != nil))  && (keychain.get(UserProfileInfo.user_dispaly_name) != nil)) {
            // let regId = nmoqTourDetail[currentRow].nid
-            let userName = UserDefaults.standard.value(forKey: "displayName") as! String
-            let pwd = UserDefaults.standard.value(forKey: "userPassword") as! String
+            let userName = (keychain.get(UserProfileInfo.user_dispaly_name))!
+            let pwd = (keychain.get(UserProfileInfo.user_password))! 
             
             _ = Alamofire.request(QatarMuseumRouter.SetUserUnRegistration(regId!,["name":userName,"pass":pwd])).responseData { (response) -> Void in
                 switch response.result {

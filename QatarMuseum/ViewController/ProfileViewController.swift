@@ -12,6 +12,7 @@ import Crashlytics
 import Firebase
 import Kingfisher
 import UIKit
+import KeychainSwift
 
 class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUpProtocol {
     @IBOutlet weak var headerView: CommonHeaderView!
@@ -40,6 +41,8 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     var fromCulturePass : Bool = false
     var userId: String? = nil
     var countryDictArabic : NSDictionary!
+    let keychain = KeychainSwift()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -102,11 +105,11 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
         
     }
     func setProfileInfo() {
-        if((UserDefaults.standard.value(forKey: "displayName") as? String != nil) && (UserDefaults.standard.value(forKey: "displayName") as? String != "")) {
-            userNameText.text = (UserDefaults.standard.value(forKey: "displayName") as? String)?.uppercased()
+        if((keychain.get(UserProfileInfo.user_dispaly_name) != nil) && (keychain.get(UserProfileInfo.user_dispaly_name) != "")) {
+            userNameText.text = (keychain.get(UserProfileInfo.user_dispaly_name))?.uppercased()
         }
-        if((UserDefaults.standard.value(forKey: "profilePic") as? String != nil) && (UserDefaults.standard.value(forKey: "profilePic") as? String != "")) {
-            if let imageUrl = (UserDefaults.standard.value(forKey: "profilePic") as? String) {
+        if((keychain.get(UserProfileInfo.user_photo) != nil) && (keychain.get(UserProfileInfo.user_photo) != "")) {
+            if let imageUrl = (keychain.get(UserProfileInfo.user_photo)) {
                 profileImageView.kf.setImage(with: URL(string: imageUrl))
             }
             if (profileImageView.image == nil){
@@ -114,19 +117,20 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
             }
         }
         
-        if((UserDefaults.standard.value(forKey: "uid") as? String != nil) && (UserDefaults.standard.value(forKey: "uid") as? String != "")) {
-            membershipNum = Int((UserDefaults.standard.value(forKey: "uid") as? String)!)! + 006000
+        if((keychain.get(UserProfileInfo.user_id) != nil) && (keychain.get(UserProfileInfo.user_id) != "") && (keychain.get(UserProfileInfo.user_id) != nil) && (keychain.get(UserProfileInfo.user_id) != "")) {
+            membershipNum = Int(keychain.get(UserProfileInfo.user_id)!)! + 006000
+            
             membershipNumText.text = "00" + String(membershipNum)
-            userId = UserDefaults.standard.value(forKey: "uid") as? String
+            userId = keychain.get(UserProfileInfo.user_id)
         }
-        if((UserDefaults.standard.value(forKey: "mail") as? String != nil) && (UserDefaults.standard.value(forKey: "mail") as? String != "")) {
-            emailText.text = UserDefaults.standard.value(forKey: "mail") as? String
+        if((keychain.get(UserProfileInfo.user_email) != nil) && (keychain.get(UserProfileInfo.user_email) != "") && (keychain.get(UserProfileInfo.user_email) != nil) && (keychain.get(UserProfileInfo.user_email) != "")) {
+            emailText.text = keychain.get(UserProfileInfo.user_email)
         }
-        if((UserDefaults.standard.value(forKey: "fieldDateOfBirth") as? String != nil) && (UserDefaults.standard.value(forKey: "fieldDateOfBirth") as? String != "")) {
-            dateOfBirthText.text = UserDefaults.standard.value(forKey: "fieldDateOfBirth") as? String
+        if((keychain.get(UserProfileInfo.user_dob) != nil) && (keychain.get(UserProfileInfo.user_dob) != "") && (keychain.get(UserProfileInfo.user_dob) != nil) && (keychain.get(UserProfileInfo.user_dob) != "")) {
+            dateOfBirthText.text = (keychain.get(UserProfileInfo.user_dob))
         }
-        if((UserDefaults.standard.value(forKey: "country") as? String != nil) && (UserDefaults.standard.value(forKey: "country") as? String != "")) {
-            let countryKey = UserDefaults.standard.value(forKey: "country") as? String
+        if((keychain.get(UserProfileInfo.user_country) != nil) && (keychain.get(UserProfileInfo.user_country) != "") && (keychain.get(UserProfileInfo.user_country) != nil) && (keychain.get(UserProfileInfo.user_country) != "")) {
+            let countryKey = (keychain.get(UserProfileInfo.user_country))
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 if(countryListsArray != nil) {
                     for country in countryListsArray {
@@ -144,8 +148,8 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
                 }
             }
         }
-        if((UserDefaults.standard.value(forKey: "nationality") as? String != nil) && (UserDefaults.standard.value(forKey: "nationality") as? String != "")) {
-            let nationalityKey = UserDefaults.standard.value(forKey: "nationality") as? String
+        if(keychain.get(UserProfileInfo.user_nationality) != nil) && (keychain.get(UserProfileInfo.user_nationality) != "") {
+            let nationalityKey = (keychain.get(UserProfileInfo.user_nationality))
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             if(countryListsArray != nil) {
                 for country in countryListsArray {
@@ -202,11 +206,11 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     }
     @IBAction func didTapViewMyCulturePassCard(_ sender: UIButton) {
 //        let cardView =  self.storyboard?.instantiateViewController(withIdentifier: "cardViewId") as! CulturePassCardViewController
-//            if((UserDefaults.standard.value(forKey: "uid") as? String != nil) && (UserDefaults.standard.value(forKey: "uid") as? String != "") ) {
+//        if((keychain.get(UserProfileInfo.user_id) != nil) && (keychain.get(UserProfileInfo.user_id) != "")) {
 //                cardView.membershipNumber = "00" + String(membershipNum)
 //            }
-//        if((UserDefaults.standard.value(forKey: "displayName") as? String != nil) && (UserDefaults.standard.value(forKey: "displayName") as? String != "")) {
-//            cardView.nameString = (UserDefaults.standard.value(forKey: "displayName") as? String)
+//        if((keychain.get(UserProfileInfo.user_dispaly_name) != nil) && (keychain.get(UserProfileInfo.user_dispaly_name) != "")) {
+//            cardView.nameString = (keychain.get(UserProfileInfo.user_dispaly_name))
 //        }
 //        let transition = CATransition()
 //        transition.duration = 0.3
@@ -248,17 +252,21 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
                 switch response.result {
                 case .success( _):
                     if(response.response?.statusCode == 200) {
-                        UserDefaults.standard.setValue("", forKey: "uid")
-                        UserDefaults.standard.setValue("", forKey: "mail")
-                        UserDefaults.standard.setValue("", forKey: "displayName")
-                        UserDefaults.standard.setValue("", forKey: "fieldDateOfBirth")
-                        UserDefaults.standard.setValue("", forKey: "country")
-                        UserDefaults.standard.setValue("" , forKey: "nationality")
-                        UserDefaults.standard.setValue("" , forKey: "profilePic")
                         UserDefaults.standard.removeObject(forKey: "accessToken")
                         UserDefaults.standard.removeObject(forKey: "acceptOrDecline")
-                        UserDefaults.standard.removeObject(forKey: "fieldFirstName")
-                        UserDefaults.standard.removeObject(forKey: "fieldLastName")
+
+                        
+                        self.keychain.set("", forKey: UserProfileInfo.user_id)
+                        self.keychain.set("", forKey: UserProfileInfo.user_email)
+                        self.keychain.set("", forKey: UserProfileInfo.user_dispaly_name)
+                        self.keychain.set("", forKey: UserProfileInfo.user_dob)
+                        self.keychain.set("", forKey: UserProfileInfo.user_country)
+                        self.keychain.set("", forKey: UserProfileInfo.user_nationality)
+                        self.keychain.set("", forKey: UserProfileInfo.user_photo)
+                        
+                        self.keychain.delete(UserProfileInfo.user_firstname)
+                        self.keychain.delete(UserProfileInfo.user_lastname)// Remove single key
+
                         if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "")) {
                             let managedContext = getContext()
                             self.deleteExistingEvent(managedContext: managedContext, entityName: "RegisteredEventListEntity")
@@ -306,11 +314,17 @@ class ProfileViewController: UIViewController,HeaderViewProtocol,comingSoonPopUp
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "profileToCultureCardSegue") {
             let culturepassCard = segue.destination as! CulturePassCardViewController
-            if((UserDefaults.standard.value(forKey: "uid") as? String != nil) && (UserDefaults.standard.value(forKey: "uid") as? String != "") ) {
+//            if((UserDefaults.standard.value(forKey: "uid") as? String != nil) && (UserDefaults.standard.value(forKey: "uid") as? String != "") ) {
+//                culturepassCard.membershipNumber = "00" + String(membershipNum)
+//            }
+//            if((UserDefaults.standard.value(forKey: "displayName") as? String != nil) && (UserDefaults.standard.value(forKey: "displayName") as? String != "")) {
+//                culturepassCard.nameString = (UserDefaults.standard.value(forKey: "displayName") as? String)
+//            }
+            if((keychain.get(UserProfileInfo.user_id) != nil) && (keychain.get(UserProfileInfo.user_id) != "")) {
                 culturepassCard.membershipNumber = "00" + String(membershipNum)
             }
-            if((UserDefaults.standard.value(forKey: "displayName") as? String != nil) && (UserDefaults.standard.value(forKey: "displayName") as? String != "")) {
-                culturepassCard.nameString = (UserDefaults.standard.value(forKey: "displayName") as? String)
+            if((keychain.get(UserProfileInfo.user_dispaly_name) != nil) && (keychain.get(UserProfileInfo.user_dispaly_name) != "")) {
+                culturepassCard.nameString = (keychain.get(UserProfileInfo.user_dispaly_name))
             }
         }
     }

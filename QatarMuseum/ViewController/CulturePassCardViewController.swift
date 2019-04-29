@@ -8,6 +8,7 @@
 
 import Firebase
 import UIKit
+import KeychainSwift
 
 class CulturePassCardViewController: UIViewController {
     
@@ -21,6 +22,9 @@ class CulturePassCardViewController: UIViewController {
     @IBOutlet weak var tapToFlipButton: UIButton!
     var membershipNumber : String? = nil
      var nameString : String? = nil
+    
+    let keychain = KeychainSwift()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI ()
@@ -70,16 +74,16 @@ class CulturePassCardViewController: UIViewController {
     
     @IBAction func didTapTapToFlip(_ sender: UIButton) {
         let cardBackView =  self.storyboard?.instantiateViewController(withIdentifier: "cardBackId") as!CulturePassCardBackViewController
-        if((UserDefaults.standard.value(forKey: "uid") as? String != nil) && (UserDefaults.standard.value(forKey: "uid") as? String != "") ) {
-           let membershipNum = Int((UserDefaults.standard.value(forKey: "uid") as? String)!)! + 006000
+        if(keychain.get(UserProfileInfo.user_id) != nil) && (keychain.get(UserProfileInfo.user_id) != "") {
+            let membershipNum = Int((keychain.get(UserProfileInfo.user_id))!)! + 006000
             cardBackView.cardNumber = "00" + String(membershipNum)
         }
-        if((UserDefaults.standard.value(forKey: "displayName") as? String != nil) && (UserDefaults.standard.value(forKey: "displayName") as? String != "")) {
-            cardBackView.usernameString = (UserDefaults.standard.value(forKey: "displayName") as? String)
+        if((self.keychain.get(UserProfileInfo.user_dispaly_name) != nil) && (self.keychain.get(UserProfileInfo.user_dispaly_name) != "")) {
+            cardBackView.usernameString = (self.keychain.get(UserProfileInfo.user_dispaly_name))
         }
-        if (UserDefaults.standard.value(forKey: "fieldFirstName") as? String != nil) && (UserDefaults.standard.value(forKey: "fieldLastName") as? String != nil) {
-            let firstName = UserDefaults.standard.value(forKey: "fieldFirstName") as! String
-            let lastName = UserDefaults.standard.value(forKey: "fieldLastName") as! String
+        if ((self.keychain.get(UserProfileInfo.user_firstname) != nil) && (self.keychain.get(UserProfileInfo.user_lastname)) != nil) {
+            let firstName = (self.keychain.get(UserProfileInfo.user_firstname))!
+            let lastName = (self.keychain.get(UserProfileInfo.user_lastname))!
             cardBackView.displayName = firstName + " "  + lastName
         }
         let transition = CATransition()

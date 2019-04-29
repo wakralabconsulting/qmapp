@@ -10,6 +10,8 @@ import Alamofire
 import CoreData
 import UIKit
 import Firebase
+import KeychainSwift
+
 enum HomePageName {
     case diningList
     case parksList
@@ -25,6 +27,7 @@ enum HomePageName {
     case museumLandingPage
     case bannerMuseumLandingPage
 }
+
 class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, TopBarProtocol,comingSoonPopUpProtocol,SideMenuProtocol,UIViewControllerTransitioningDelegate,LoadingViewProtocol,LoginPopUpProtocol,UITextFieldDelegate {
     
 
@@ -67,6 +70,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var alreadyFetch : Bool? = false
     var selectedRow : Int? = 0
     var homePageNameString : HomePageName?
+    let keychain = KeychainSwift()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -1021,7 +1025,8 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 case .success(let data):
                     self.loginPopUpView.loadingView.stopLoading()
                     self.loginPopUpView.loadingView.isHidden = true
-                    UserDefaults.standard.setValue(self.loginPopUpView.passwordText.text, forKey: "userPassword")
+                    self.keychain.set(self.loginPopUpView.passwordText.text ?? "", forKey: UserProfileInfo.user_password)
+
                     if(response.response?.statusCode == 200) {
                         self.loginArray = data
                         UserDefaults.standard.setValue(self.loginArray?.token, forKey: "accessToken")
@@ -1083,8 +1088,8 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     //MARK : NMoQ EntityRegistratiion
     func getEventListUserRegistrationFromServer() {
-        if((accessToken != nil) && (UserDefaults.standard.value(forKey: "uid") != nil)){
-            let userId = UserDefaults.standard.value(forKey: "uid") as! String
+        if((accessToken != nil) && ((keychain.get(UserProfileInfo.user_id) != nil) && (keychain.get(UserProfileInfo.user_id) != nil))){
+            let userId = keychain.get(UserProfileInfo.user_id) ?? ""
             _ = Alamofire.request(QatarMuseumRouter.NMoQEventListUserRegistration(["uid" : userId])).responseObject { (response: DataResponse<NMoQUserEventListValues>) -> Void in
                 switch response.result {
                 case .success(let data):
@@ -1094,7 +1099,6 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     self.loginPopUpView.removeFromSuperview()
                     self.loginPopUpView.loadingView.stopLoading()
                     self.loginPopUpView.loadingView.isHidden = true
-                    
                 }
             }
         }
@@ -1103,34 +1107,39 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func setProfileDetails(loginInfo : LoginData?) {
         if (loginInfo != nil) {
             let userData = loginInfo?.user
-            UserDefaults.standard.setValue(userData?.uid, forKey: "uid")
-            UserDefaults.standard.setValue(userData?.mail, forKey: "mail")
-            UserDefaults.standard.setValue(userData?.name, forKey: "displayName")
-            UserDefaults.standard.setValue(userData?.picture, forKey: "profilePic")
+            self.keychain.set(userData?.uid ?? "", forKey: UserProfileInfo.user_id)
+            self.keychain.set(userData?.mail ?? "", forKey: UserProfileInfo.user_email)
+            self.keychain.set(userData?.name ?? "", forKey: UserProfileInfo.user_dispaly_name)
+            self.keychain.set(userData?.picture ?? "", forKey: UserProfileInfo.user_photo)
+            
             if(userData?.fieldDateOfBirth != nil) {
                 if((userData?.fieldDateOfBirth?.count)! > 0) {
-                    UserDefaults.standard.setValue(userData?.fieldDateOfBirth![0], forKey: "fieldDateOfBirth")
+                    self.keychain.set(userData?.fieldDateOfBirth![0] ?? "", forKey: UserProfileInfo.user_dob)
+
                 }
             }
             let firstNameData = userData?.fieldFirstName["und"] as? NSArray
             if(firstNameData != nil && (firstNameData?.count)! > 0) {
                 let name = firstNameData![0] as! NSDictionary
                 if(name["value"] != nil) {
-                    UserDefaults.standard.setValue(name["value"] as! String, forKey: "fieldFirstName")
+                    self.keychain.set(name["value"] as! String , forKey: UserProfileInfo.user_firstname)
+
                 }
             }
             let lastNameData = userData?.fieldLastName["und"] as? NSArray
             if(lastNameData != nil && (lastNameData?.count)! > 0) {
                 let name = lastNameData?[0] as! NSDictionary
                 if(name["value"] != nil) {
-                    UserDefaults.standard.setValue(name["value"] as! String, forKey: "fieldLastName")
+                    self.keychain.set(name["value"] as! String , forKey: UserProfileInfo.user_lastname)
+
                 }
             }
             let locationData = userData?.fieldLocation["und"] as! NSArray
             if(locationData.count > 0) {
                 let iso = locationData[0] as! NSDictionary
                 if(iso["iso2"] != nil) {
-                    UserDefaults.standard.setValue(iso["iso2"] as! String, forKey: "country")
+                    self.keychain.set(iso["iso2"] as! String , forKey: UserProfileInfo.user_country)
+
                 }
                 
             }
@@ -1139,14 +1148,16 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             if(nationalityData.count > 0) {
                 let nation = nationalityData[0] as! NSDictionary
                 if(nation["iso2"] != nil) {
-                    UserDefaults.standard.setValue(nation["iso2"] as! String , forKey: "nationality")
+                    self.keychain.set(nation["iso2"] as! String, forKey: UserProfileInfo.user_nationality)
+
                 }
             }
             let translationsData = userData?.translations["data"] as? NSDictionary
             if(translationsData != nil) {
                 let arValues = translationsData?["ar"] as! NSDictionary
                 if(arValues["entity_id"] != nil) {
-                    UserDefaults.standard.setValue(arValues["entity_id"] as! String , forKey: "loginEntityID")
+                    self.keychain.set(arValues["entity_id"] as! String, forKey: UserProfileInfo.user_loginentity_id)
+
                 }
             }
             
