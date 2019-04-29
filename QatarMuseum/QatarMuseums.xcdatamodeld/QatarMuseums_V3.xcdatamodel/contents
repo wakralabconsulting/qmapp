@@ -3,16 +3,16 @@
     <entity name="AboutDescriptionEntity" representedClassName="AboutDescriptionEntity" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="mobileDesc" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="mobileDescRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AboutEntity" syncable="YES"/>
+        <relationship name="mobileDescRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AboutEntity" inverseName="mobileDescRelation" inverseEntity="AboutEntity" syncable="YES"/>
     </entity>
     <entity name="AboutDescriptionEntityAr" representedClassName="AboutDescriptionEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="mobileDesc" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="mobileDescRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AboutEntityArabic" syncable="YES"/>
+        <relationship name="mobileDescRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AboutEntityArabic" inverseName="mobileDescRelation" inverseEntity="AboutEntityArabic" syncable="YES"/>
     </entity>
     <entity name="AboutDownloadLinkEntity" representedClassName="AboutDownloadLinkEntity" syncable="YES" codeGenerationType="class">
         <attribute name="downloadLink" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="downloadLinkRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AboutEntity" syncable="YES"/>
+        <relationship name="downloadLinkRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AboutEntity" inverseName="downloadLinkRelation" inverseEntity="AboutEntity" syncable="YES"/>
     </entity>
     <entity name="AboutEntity" representedClassName="AboutEntity" syncable="YES" codeGenerationType="class">
         <attribute name="contactEmail" optional="YES" attributeType="String" syncable="YES"/>
@@ -25,9 +25,9 @@
         <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tourGuideAvailability" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tourguideAvailable" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="downloadLinkRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AboutDownloadLinkEntity" syncable="YES"/>
-        <relationship name="mobileDescRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AboutDescriptionEntity" syncable="YES"/>
-        <relationship name="multimediaRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AboutMultimediaFileEntity" syncable="YES"/>
+        <relationship name="downloadLinkRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AboutDownloadLinkEntity" inverseName="downloadLinkRelation" inverseEntity="AboutDownloadLinkEntity" syncable="YES"/>
+        <relationship name="mobileDescRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AboutDescriptionEntity" inverseName="mobileDescRelation" inverseEntity="AboutDescriptionEntity" syncable="YES"/>
+        <relationship name="multimediaRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AboutMultimediaFileEntity" inverseName="multimediaRelation" inverseEntity="AboutMultimediaFileEntity" syncable="YES"/>
     </entity>
     <entity name="AboutEntityArabic" representedClassName="AboutEntityArabic" syncable="YES" codeGenerationType="class">
         <attribute name="contactEmailAr" optional="YES" attributeType="String" syncable="YES"/>
@@ -43,16 +43,16 @@
         <attribute name="titleDescAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tourguideAvailableAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tourGuideAvlblyAr" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="mobileDescRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AboutDescriptionEntityAr" syncable="YES"/>
-        <relationship name="multimediaRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AboutMultimediaFileEntityAr" syncable="YES"/>
+        <relationship name="mobileDescRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AboutDescriptionEntityAr" inverseName="mobileDescRelation" inverseEntity="AboutDescriptionEntityAr" syncable="YES"/>
+        <relationship name="multimediaRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AboutMultimediaFileEntityAr" inverseName="multimediaRelation" inverseEntity="AboutMultimediaFileEntityAr" syncable="YES"/>
     </entity>
     <entity name="AboutMultimediaFileEntity" representedClassName="AboutMultimediaFileEntity" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="multimediaRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AboutEntity" syncable="YES"/>
+        <relationship name="multimediaRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AboutEntity" inverseName="multimediaRelation" inverseEntity="AboutEntity" syncable="YES"/>
     </entity>
     <entity name="AboutMultimediaFileEntityAr" representedClassName="AboutMultimediaFileEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="multimediaRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AboutEntityArabic" syncable="YES"/>
+        <relationship name="multimediaRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AboutEntityArabic" inverseName="multimediaRelation" inverseEntity="AboutEntityArabic" syncable="YES"/>
     </entity>
     <entity name="CollectionDetailsEntity" representedClassName="CollectionDetailsEntity" syncable="YES" codeGenerationType="class">
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
@@ -89,51 +89,51 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="openingtime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortid" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="imagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DiningImagesEntity" syncable="YES"/>
+        <relationship name="imagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DiningImagesEntity" inverseName="imagesRelation" inverseEntity="DiningImagesEntity" syncable="YES"/>
     </entity>
     <entity name="DiningImagesEntity" representedClassName="DiningImagesEntity" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="imagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DiningEntity" syncable="YES"/>
+        <relationship name="imagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DiningEntity" inverseName="imagesRelation" inverseEntity="DiningEntity" syncable="YES"/>
     </entity>
     <entity name="EdAgeGroupEntity" representedClassName="EdAgeGroupEntity" syncable="YES" codeGenerationType="class">
         <attribute name="ageGroup" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="ageGroupRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntity" syncable="YES"/>
+        <relationship name="ageGroupRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntity" inverseName="ageGroupRelation" inverseEntity="EducationEventEntity" syncable="YES"/>
     </entity>
     <entity name="EdAgeGroupEntityAr" representedClassName="EdAgeGroupEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="ageGroup" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="ageGroupRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntityAr" syncable="YES"/>
+        <relationship name="ageGroupRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntityAr" inverseName="ageGroupRelation" inverseEntity="EducationEventEntityAr" syncable="YES"/>
     </entity>
     <entity name="EdEndDateEntity" representedClassName="EdEndDateEntity" syncable="YES" codeGenerationType="class">
         <attribute name="endDate" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="endDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntity" syncable="YES"/>
+        <relationship name="endDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntity" inverseName="endDateRelation" inverseEntity="EducationEventEntity" syncable="YES"/>
     </entity>
     <entity name="EdEndDateEntityAr" representedClassName="EdEndDateEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="endDate" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="endDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntityAr" syncable="YES"/>
+        <relationship name="endDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntityAr" inverseName="endDateRelation" inverseEntity="EducationEventEntityAr" syncable="YES"/>
     </entity>
     <entity name="EdEventDateEntity" representedClassName="EdEventDateEntity" syncable="YES" codeGenerationType="class">
         <attribute name="fieldRepeatDate" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="fieldRepeatDates" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntity" syncable="YES"/>
+        <relationship name="fieldRepeatDates" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntity" inverseName="fieldRepeatDates" inverseEntity="EducationEventEntity" syncable="YES"/>
     </entity>
     <entity name="EdEventDateEntityAr" representedClassName="EdEventDateEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="fieldRepeatDate" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="fieldRepeatDates" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntityAr" syncable="YES"/>
+        <relationship name="fieldRepeatDates" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntityAr" inverseName="fieldRepeatDates" inverseEntity="EducationEventEntityAr" syncable="YES"/>
     </entity>
     <entity name="EdEventTopicsEntity" representedClassName="EdEventTopicsEntity" syncable="YES" codeGenerationType="class">
         <attribute name="associatedTopic" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="assTopicRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntity" syncable="YES"/>
+        <relationship name="assTopicRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntity" inverseName="assTopicRelation" inverseEntity="EducationEventEntity" syncable="YES"/>
     </entity>
     <entity name="EdEventTopicsEntityAr" representedClassName="EdEventTopicsEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="associatedTopic" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="assTopicRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntityAr" syncable="YES"/>
+        <relationship name="assTopicRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntityAr" inverseName="assTopicRelation" inverseEntity="EducationEventEntityAr" syncable="YES"/>
     </entity>
     <entity name="EdStartDateEntity" representedClassName="EdStartDateEntity" syncable="YES" codeGenerationType="class">
         <attribute name="startDate" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="startDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntity" syncable="YES"/>
+        <relationship name="startDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntity" inverseName="startDateRelation" inverseEntity="EducationEventEntity" syncable="YES"/>
     </entity>
     <entity name="EdStartDateEntityAr" representedClassName="EdStartDateEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="startDate" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="startDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntityAr" syncable="YES"/>
+        <relationship name="startDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationEventEntityAr" inverseName="startDateRelation" inverseEntity="EducationEventEntityAr" syncable="YES"/>
     </entity>
     <entity name="EducationEventEntity" representedClassName="EducationEventEntity" syncable="YES" codeGenerationType="class">
         <attribute name="dateId" optional="YES" attributeType="String" syncable="YES"/>
@@ -145,11 +145,11 @@
         <attribute name="pgmType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="register" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="ageGroupRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdAgeGroupEntity" syncable="YES"/>
-        <relationship name="assTopicRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdEventTopicsEntity" syncable="YES"/>
-        <relationship name="endDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdEndDateEntity" syncable="YES"/>
-        <relationship name="fieldRepeatDates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdEventDateEntity" syncable="YES"/>
-        <relationship name="startDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdStartDateEntity" syncable="YES"/>
+        <relationship name="ageGroupRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdAgeGroupEntity" inverseName="ageGroupRelation" inverseEntity="EdAgeGroupEntity" syncable="YES"/>
+        <relationship name="assTopicRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdEventTopicsEntity" inverseName="assTopicRelation" inverseEntity="EdEventTopicsEntity" syncable="YES"/>
+        <relationship name="endDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdEndDateEntity" inverseName="endDateRelation" inverseEntity="EdEndDateEntity" syncable="YES"/>
+        <relationship name="fieldRepeatDates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdEventDateEntity" inverseName="fieldRepeatDates" inverseEntity="EdEventDateEntity" syncable="YES"/>
+        <relationship name="startDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdStartDateEntity" inverseName="startDateRelation" inverseEntity="EdStartDateEntity" syncable="YES"/>
     </entity>
     <entity name="EducationEventEntityAr" representedClassName="EducationEventEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="dateId" optional="YES" attributeType="String" syncable="YES"/>
@@ -161,35 +161,35 @@
         <attribute name="pgmTypeAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="registerAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="titleAr" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="ageGroupRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdAgeGroupEntityAr" syncable="YES"/>
-        <relationship name="assTopicRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdEventTopicsEntityAr" syncable="YES"/>
-        <relationship name="endDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdEndDateEntityAr" syncable="YES"/>
-        <relationship name="fieldRepeatDates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdEventDateEntityAr" syncable="YES"/>
-        <relationship name="startDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdStartDateEntityAr" syncable="YES"/>
+        <relationship name="ageGroupRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdAgeGroupEntityAr" inverseName="ageGroupRelation" inverseEntity="EdAgeGroupEntityAr" syncable="YES"/>
+        <relationship name="assTopicRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdEventTopicsEntityAr" inverseName="assTopicRelation" inverseEntity="EdEventTopicsEntityAr" syncable="YES"/>
+        <relationship name="endDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdEndDateEntityAr" inverseName="endDateRelation" inverseEntity="EdEndDateEntityAr" syncable="YES"/>
+        <relationship name="fieldRepeatDates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdEventDateEntityAr" inverseName="fieldRepeatDates" inverseEntity="EdEventDateEntityAr" syncable="YES"/>
+        <relationship name="startDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EdStartDateEntityAr" inverseName="startDateRelation" inverseEntity="EdStartDateEntityAr" syncable="YES"/>
     </entity>
     <entity name="EventAgeGroupEntity" representedClassName="EventAgeGroupEntity" syncable="YES" codeGenerationType="class">
         <attribute name="ageGroup" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="ageGroupRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntity" syncable="YES"/>
+        <relationship name="ageGroupRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntity" inverseName="ageGroupRelation" inverseEntity="EventEntity" syncable="YES"/>
     </entity>
     <entity name="EventAgeGroupEntityAr" representedClassName="EventAgeGroupEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="ageGroup" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="ageGroupRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntityArabic" syncable="YES"/>
+        <relationship name="ageGroupRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntityArabic" inverseName="ageGroupRelation" inverseEntity="EventEntityArabic" syncable="YES"/>
     </entity>
     <entity name="EventDateEntity" representedClassName="EventDateEntity" syncable="YES" codeGenerationType="class">
         <attribute name="fieldRepeatDate" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="fieldRepeatDates" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntity" syncable="YES"/>
+        <relationship name="fieldRepeatDates" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntity" inverseName="fieldRepeatDates" inverseEntity="EventEntity" syncable="YES"/>
     </entity>
     <entity name="EventDateEntityAr" representedClassName="EventDateEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="fieldRepeatDate" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="fieldRepeatDates" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntityArabic" syncable="YES"/>
+        <relationship name="fieldRepeatDates" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntityArabic" inverseName="fieldRepeatDates" inverseEntity="EventEntityArabic" syncable="YES"/>
     </entity>
     <entity name="EventEndDateEntity" representedClassName="EventEndDateEntity" syncable="YES" codeGenerationType="class">
         <attribute name="endDate" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="endDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntity" syncable="YES"/>
+        <relationship name="endDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntity" inverseName="endDateRelation" inverseEntity="EventEntity" syncable="YES"/>
     </entity>
     <entity name="EventEndDateEntityAr" representedClassName="EventEndDateEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="endDate" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="endDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntityArabic" syncable="YES"/>
+        <relationship name="endDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntityArabic" inverseName="endDateRelation" inverseEntity="EventEntityArabic" syncable="YES"/>
     </entity>
     <entity name="EventEntity" representedClassName="EventEntity" syncable="YES" codeGenerationType="class">
         <attribute name="dateId" optional="YES" attributeType="String" syncable="YES"/>
@@ -201,11 +201,11 @@
         <attribute name="pgmType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="register" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="ageGroupRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventAgeGroupEntity" syncable="YES"/>
-        <relationship name="assTopicRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventTopicsEntity" syncable="YES"/>
-        <relationship name="endDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventEndDateEntity" syncable="YES"/>
-        <relationship name="fieldRepeatDates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventDateEntity" syncable="YES"/>
-        <relationship name="startDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventStartDateEntity" syncable="YES"/>
+        <relationship name="ageGroupRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventAgeGroupEntity" inverseName="ageGroupRelation" inverseEntity="EventAgeGroupEntity" syncable="YES"/>
+        <relationship name="assTopicRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventTopicsEntity" inverseName="assTopicRelation" inverseEntity="EventTopicsEntity" syncable="YES"/>
+        <relationship name="endDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventEndDateEntity" inverseName="endDateRelation" inverseEntity="EventEndDateEntity" syncable="YES"/>
+        <relationship name="fieldRepeatDates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventDateEntity" inverseName="fieldRepeatDates" inverseEntity="EventDateEntity" syncable="YES"/>
+        <relationship name="startDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventStartDateEntity" inverseName="startDateRelation" inverseEntity="EventStartDateEntity" syncable="YES"/>
     </entity>
     <entity name="EventEntityArabic" representedClassName="EventEntityArabic" syncable="YES" codeGenerationType="class">
         <attribute name="dateId" optional="YES" attributeType="String" syncable="YES"/>
@@ -217,27 +217,27 @@
         <attribute name="pgmTypeAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="registerAr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="titleAr" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="ageGroupRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventAgeGroupEntityAr" syncable="YES"/>
-        <relationship name="assTopicRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventTopicsEntityAr" syncable="YES"/>
-        <relationship name="endDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventEndDateEntityAr" syncable="YES"/>
-        <relationship name="fieldRepeatDates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventDateEntityAr" syncable="YES"/>
-        <relationship name="startDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventStartDateEntityAr" syncable="YES"/>
+        <relationship name="ageGroupRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventAgeGroupEntityAr" inverseName="ageGroupRelation" inverseEntity="EventAgeGroupEntityAr" syncable="YES"/>
+        <relationship name="assTopicRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventTopicsEntityAr" inverseName="assTopicRelation" inverseEntity="EventTopicsEntityAr" syncable="YES"/>
+        <relationship name="endDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventEndDateEntityAr" inverseName="endDateRelation" inverseEntity="EventEndDateEntityAr" syncable="YES"/>
+        <relationship name="fieldRepeatDates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventDateEntityAr" inverseName="fieldRepeatDates" inverseEntity="EventDateEntityAr" syncable="YES"/>
+        <relationship name="startDateRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventStartDateEntityAr" inverseName="startDateRelation" inverseEntity="EventStartDateEntityAr" syncable="YES"/>
     </entity>
     <entity name="EventStartDateEntity" representedClassName="EventStartDateEntity" syncable="YES" codeGenerationType="class">
         <attribute name="startDate" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="startDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntity" syncable="YES"/>
+        <relationship name="startDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntity" inverseName="startDateRelation" inverseEntity="EventEntity" syncable="YES"/>
     </entity>
     <entity name="EventStartDateEntityAr" representedClassName="EventStartDateEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="startDate" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="startDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntityArabic" syncable="YES"/>
+        <relationship name="startDateRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntityArabic" inverseName="startDateRelation" inverseEntity="EventEntityArabic" syncable="YES"/>
     </entity>
     <entity name="EventTopicsEntity" representedClassName="EventTopicsEntity" syncable="YES" codeGenerationType="class">
         <attribute name="associatedTopic" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="assTopicRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntity" syncable="YES"/>
+        <relationship name="assTopicRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntity" inverseName="assTopicRelation" inverseEntity="EventEntity" syncable="YES"/>
     </entity>
     <entity name="EventTopicsEntityAr" representedClassName="EventTopicsEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="associatedTopic" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="assTopicRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntityArabic" syncable="YES"/>
+        <relationship name="assTopicRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventEntityArabic" inverseName="assTopicRelation" inverseEntity="EventEntityArabic" syncable="YES"/>
     </entity>
     <entity name="ExhibitionsEntity" representedClassName="ExhibitionsEntity" syncable="YES" codeGenerationType="class">
         <attribute name="detailEndDate" optional="YES" attributeType="String" syncable="YES"/>
@@ -292,7 +292,7 @@
         <attribute name="timing" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="titleTiming" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="facilitiesDetailRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FacilitiesDetailImgEntity" syncable="YES"/>
+        <relationship name="facilitiesDetailRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FacilitiesDetailImgEntity" inverseName="facilitiesDetailRelation" inverseEntity="FacilitiesDetailImgEntity" syncable="YES"/>
     </entity>
     <entity name="FacilitiesDetailEntityAr" representedClassName="FacilitiesDetailEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
@@ -305,43 +305,43 @@
         <attribute name="timing" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="titleTiming" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="facilitiesDetailRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FacilitiesDetailImgEntityAr" syncable="YES"/>
+        <relationship name="facilitiesDetailRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FacilitiesDetailImgEntityAr" inverseName="facilitiesDetailRelationAr" inverseEntity="FacilitiesDetailImgEntityAr" syncable="YES"/>
     </entity>
     <entity name="FacilitiesDetailImgEntity" representedClassName="FacilitiesDetailImgEntity" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="facilitiesDetailRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FacilitiesDetailEntity" syncable="YES"/>
+        <relationship name="facilitiesDetailRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FacilitiesDetailEntity" inverseName="facilitiesDetailRelation" inverseEntity="FacilitiesDetailEntity" syncable="YES"/>
     </entity>
     <entity name="FacilitiesDetailImgEntityAr" representedClassName="FacilitiesDetailImgEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="facilitiesDetailRelationAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FacilitiesDetailEntityAr" syncable="YES"/>
+        <relationship name="facilitiesDetailRelationAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FacilitiesDetailEntityAr" inverseName="facilitiesDetailRelationAr" inverseEntity="FacilitiesDetailEntityAr" syncable="YES"/>
     </entity>
     <entity name="FacilitiesEntity" representedClassName="FacilitiesEntity" syncable="YES" codeGenerationType="class">
         <attribute name="nid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="facilitiesImgRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FacilitiesImgEntity" syncable="YES"/>
+        <relationship name="facilitiesImgRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FacilitiesImgEntity" inverseName="facilitiesImgRelation" inverseEntity="FacilitiesImgEntity" syncable="YES"/>
     </entity>
     <entity name="FacilitiesEntityAr" representedClassName="FacilitiesEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="nid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="facilitiesImgRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FacilitiesImgEntityAr" syncable="YES"/>
+        <relationship name="facilitiesImgRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FacilitiesImgEntityAr" inverseName="facilitiesImgRelation" inverseEntity="FacilitiesImgEntityAr" syncable="YES"/>
     </entity>
     <entity name="FacilitiesImgEntity" representedClassName="FacilitiesImgEntity" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="facilitiesImgRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FacilitiesEntity" syncable="YES"/>
+        <relationship name="facilitiesImgRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FacilitiesEntity" inverseName="facilitiesImgRelation" inverseEntity="FacilitiesEntity" syncable="YES"/>
     </entity>
     <entity name="FacilitiesImgEntityAr" representedClassName="FacilitiesImgEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="facilitiesImgRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FacilitiesEntityAr" syncable="YES"/>
+        <relationship name="facilitiesImgRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FacilitiesEntityAr" inverseName="facilitiesImgRelationAr" inverseEntity="FacilitiesEntityAr" syncable="YES"/>
     </entity>
     <entity name="FloorMapImagesEntity" representedClassName="FloorMapImagesEntity" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="imagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FloorMapTourGuideEntity" syncable="YES"/>
+        <relationship name="imagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FloorMapTourGuideEntity" inverseName="imagesRelation" inverseEntity="FloorMapTourGuideEntity" syncable="YES"/>
     </entity>
     <entity name="FloorMapImagesEntityAr" representedClassName="FloorMapImagesEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="imagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FloorMapTourGuideEntityAr" syncable="YES"/>
+        <relationship name="imagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FloorMapTourGuideEntityAr" inverseName="imagesRelation" inverseEntity="FloorMapTourGuideEntityAr" syncable="YES"/>
     </entity>
     <entity name="FloorMapTourGuideEntity" representedClassName="FloorMapTourGuideEntity" syncable="YES" codeGenerationType="class">
         <attribute name="accessionNumber" optional="YES" attributeType="String" syncable="YES"/>
@@ -368,7 +368,7 @@
         <attribute name="thumbImage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tourGuideId" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="imagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FloorMapImagesEntity" syncable="YES"/>
+        <relationship name="imagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FloorMapImagesEntity" inverseName="imagesRelation" inverseEntity="FloorMapImagesEntity" syncable="YES"/>
     </entity>
     <entity name="FloorMapTourGuideEntityAr" representedClassName="FloorMapTourGuideEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="accessionNumber" optional="YES" attributeType="String" syncable="YES"/>
@@ -395,7 +395,7 @@
         <attribute name="thumbImage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tourGuideId" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="imagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FloorMapImagesEntityAr" syncable="YES"/>
+        <relationship name="imagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FloorMapImagesEntityAr" inverseName="imagesRelation" inverseEntity="FloorMapImagesEntityAr" syncable="YES"/>
     </entity>
     <entity name="HeritageEntity" representedClassName="HeritageEntity" syncable="YES" codeGenerationType="class">
         <attribute name="detaillatitude" optional="YES" attributeType="String" syncable="YES"/>
@@ -408,11 +408,11 @@
         <attribute name="listimage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="listname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="listsortid" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="imagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HeritageImagesEntity" syncable="YES"/>
+        <relationship name="imagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HeritageImagesEntity" inverseName="imagesRelation" inverseEntity="HeritageImagesEntity" syncable="YES"/>
     </entity>
     <entity name="HeritageImagesEntity" representedClassName="HeritageImagesEntity" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="imagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HeritageEntity" syncable="YES"/>
+        <relationship name="imagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HeritageEntity" inverseName="imagesRelation" inverseEntity="HeritageEntity" syncable="YES"/>
     </entity>
     <entity name="HomeBannerEntity" representedClassName="HomeBannerEntity" syncable="YES" codeGenerationType="class">
         <attribute name="bannerLink" optional="YES" attributeType="String" syncable="YES"/>
@@ -424,7 +424,7 @@
         <attribute name="introductionText" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="promotionalCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="bannerImageRelations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HomeBannerImageEntity" syncable="YES"/>
+        <relationship name="bannerImageRelations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HomeBannerImageEntity" inverseName="bannerImageRelations" inverseEntity="HomeBannerImageEntity" syncable="YES"/>
     </entity>
     <entity name="HomeBannerEntityAr" representedClassName="HomeBannerEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="bannerLink" optional="YES" attributeType="String" syncable="YES"/>
@@ -436,15 +436,15 @@
         <attribute name="introductionText" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="promotionalCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="bannerImageRelationsAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HomeBannerImageEntityAr" syncable="YES"/>
+        <relationship name="bannerImageRelationsAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HomeBannerImageEntityAr" inverseName="bannerImageRelationsAr" inverseEntity="HomeBannerImageEntityAr" syncable="YES"/>
     </entity>
     <entity name="HomeBannerImageEntity" representedClassName="HomeBannerImageEntity" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="bannerImageRelations" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HomeBannerEntity" syncable="YES"/>
+        <relationship name="bannerImageRelations" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HomeBannerEntity" inverseName="bannerImageRelations" inverseEntity="HomeBannerEntity" syncable="YES"/>
     </entity>
     <entity name="HomeBannerImageEntityAr" representedClassName="HomeBannerImageEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="bannerImageRelationsAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HomeBannerEntityAr" syncable="YES"/>
+        <relationship name="bannerImageRelationsAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HomeBannerEntityAr" inverseName="bannerImageRelationsAr" inverseEntity="HomeBannerEntityAr" syncable="YES"/>
     </entity>
     <entity name="HomeEntity" representedClassName="HomeEntity" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
@@ -468,7 +468,7 @@
         <attribute name="sortId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="activityImgRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoqActivityImgEntity" syncable="YES"/>
+        <relationship name="activityImgRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoqActivityImgEntity" inverseName="activityImgRelation" inverseEntity="NMoqActivityImgEntity" syncable="YES"/>
     </entity>
     <entity name="NMoQActivitiesEntityAr" representedClassName="NMoQActivitiesEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="contactEmail" optional="YES" attributeType="String" syncable="YES"/>
@@ -484,45 +484,45 @@
         <attribute name="sortId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="activityImgRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoqActivityImgEntityAr" syncable="YES"/>
+        <relationship name="activityImgRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoqActivityImgEntityAr" inverseName="activityImgRelationAr" inverseEntity="NMoqActivityImgEntityAr" syncable="YES"/>
     </entity>
     <entity name="NMoqActivityImgEntity" representedClassName="NMoqActivityImgEntity" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="activityImgRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQActivitiesEntity" syncable="YES"/>
+        <relationship name="activityImgRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQActivitiesEntity" inverseName="activityImgRelation" inverseEntity="NMoQActivitiesEntity" syncable="YES"/>
     </entity>
     <entity name="NMoqActivityImgEntityAr" representedClassName="NMoqActivityImgEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="activityImgRelationAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQActivitiesEntityAr" syncable="YES"/>
+        <relationship name="activityImgRelationAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQActivitiesEntityAr" inverseName="activityImgRelationAr" inverseEntity="NMoQActivitiesEntityAr" syncable="YES"/>
     </entity>
     <entity name="NMoQParkDetailEntity" representedClassName="NMoQParkDetailEntity" syncable="YES" codeGenerationType="class">
         <attribute name="nid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="parkDesc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="parkDetailImgRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoQParkDetailImgEntity" syncable="YES"/>
+        <relationship name="parkDetailImgRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoQParkDetailImgEntity" inverseName="parkDetailImgRelation" inverseEntity="NMoQParkDetailImgEntity" syncable="YES"/>
     </entity>
     <entity name="NMoQParkDetailEntityAr" representedClassName="NMoQParkDetailEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="nid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="parkDesc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="parkDetailImgRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoQParkDetailImgEntityAr" syncable="YES"/>
+        <relationship name="parkDetailImgRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoQParkDetailImgEntityAr" inverseName="parkDetailImgRelationAr" inverseEntity="NMoQParkDetailImgEntityAr" syncable="YES"/>
     </entity>
     <entity name="NMoQParkDetailImgEntity" representedClassName="NMoQParkDetailImgEntity" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="parkDetailImgRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQParkDetailEntity" syncable="YES"/>
+        <relationship name="parkDetailImgRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQParkDetailEntity" inverseName="parkDetailImgRelation" inverseEntity="NMoQParkDetailEntity" syncable="YES"/>
     </entity>
     <entity name="NMoQParkDetailImgEntityAr" representedClassName="NMoQParkDetailImgEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="parkDetailImgRelationAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQParkDetailEntityAr" syncable="YES"/>
+        <relationship name="parkDetailImgRelationAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQParkDetailEntityAr" inverseName="parkDetailImgRelationAr" inverseEntity="NMoQParkDetailEntityAr" syncable="YES"/>
     </entity>
     <entity name="NMoQParkImgEntity" representedClassName="NMoQParkImgEntity" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="parkImgRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQParksEntity" syncable="YES"/>
+        <relationship name="parkImgRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQParksEntity" inverseName="parkImgRelation" inverseEntity="NMoQParksEntity" syncable="YES"/>
     </entity>
     <entity name="NMoQParkImgEntityAr" representedClassName="NMoQParkImgEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="parkImgRelationAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQParksEntityAr" syncable="YES"/>
+        <relationship name="parkImgRelationAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQParksEntityAr" inverseName="parkImgRelationAr" inverseEntity="NMoQParksEntityAr" syncable="YES"/>
     </entity>
     <entity name="NMoQParkListEntity" representedClassName="NMoQParkListEntity" syncable="YES" codeGenerationType="class">
         <attribute name="hoursDesc" optional="YES" attributeType="String" syncable="YES"/>
@@ -552,13 +552,13 @@
         <attribute name="nid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="parkImgRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoQParkImgEntity" syncable="YES"/>
+        <relationship name="parkImgRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoQParkImgEntity" inverseName="parkImgRelation" inverseEntity="NMoQParkImgEntity" syncable="YES"/>
     </entity>
     <entity name="NMoQParksEntityAr" representedClassName="NMoQParksEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="nid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="parkImgRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoQParkImgEntityAr" syncable="YES"/>
+        <relationship name="parkImgRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoQParkImgEntityAr" inverseName="parkImgRelationAr" inverseEntity="NMoQParkImgEntityAr" syncable="YES"/>
     </entity>
     <entity name="NmoqTourDetailEntity" representedClassName="NmoqTourDetailEntity" syncable="YES" codeGenerationType="class">
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
@@ -574,7 +574,7 @@
         <attribute name="seatsRemaining" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sort_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="nmoqTourDetailImgBannerRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoqTourDetailImagesEntity" syncable="YES"/>
+        <relationship name="nmoqTourDetailImgBannerRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoqTourDetailImagesEntity" inverseName="nmoqTourDetailImgBannerRelation" inverseEntity="NMoqTourDetailImagesEntity" syncable="YES"/>
     </entity>
     <entity name="NmoqTourDetailEntityAr" representedClassName="NmoqTourDetailEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
@@ -590,23 +590,23 @@
         <attribute name="seatsRemaining" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sort_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="nmoqTourDetailImgBannerRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoqTourDetailImagesEntityAr" syncable="YES"/>
+        <relationship name="nmoqTourDetailImgBannerRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoqTourDetailImagesEntityAr" inverseName="nmoqTourDetailImgBannerRelationAr" inverseEntity="NMoqTourDetailImagesEntityAr" syncable="YES"/>
     </entity>
     <entity name="NMoqTourDetailImagesEntity" representedClassName="NMoqTourDetailImagesEntity" syncable="YES" codeGenerationType="class">
         <attribute name="imgBanner" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="nmoqTourDetailImgBannerRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NmoqTourDetailEntity" syncable="YES"/>
+        <relationship name="nmoqTourDetailImgBannerRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NmoqTourDetailEntity" inverseName="nmoqTourDetailImgBannerRelation" inverseEntity="NmoqTourDetailEntity" syncable="YES"/>
     </entity>
     <entity name="NMoqTourDetailImagesEntityAr" representedClassName="NMoqTourDetailImagesEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="imgBanner" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="nmoqTourDetailImgBannerRelationAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NmoqTourDetailEntityAr" syncable="YES"/>
+        <relationship name="nmoqTourDetailImgBannerRelationAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NmoqTourDetailEntityAr" inverseName="nmoqTourDetailImgBannerRelationAr" inverseEntity="NmoqTourDetailEntityAr" syncable="YES"/>
     </entity>
     <entity name="NMoqTourImagesEntity" representedClassName="NMoqTourImagesEntity" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="tourImagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQTourListEntity" syncable="YES"/>
+        <relationship name="tourImagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQTourListEntity" inverseName="tourImagesRelation" inverseEntity="NMoQTourListEntity" syncable="YES"/>
     </entity>
     <entity name="NMoqTourImagesEntityAr" representedClassName="NMoqTourImagesEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="tourImagesRelationAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQTourListEntityAr" syncable="YES"/>
+        <relationship name="tourImagesRelationAr" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NMoQTourListEntityAr" inverseName="tourImagesRelationAr" inverseEntity="NMoQTourListEntityAr" syncable="YES"/>
     </entity>
     <entity name="NMoQTourListEntity" representedClassName="NMoQTourListEntity" syncable="YES" codeGenerationType="class">
         <attribute name="contactEmail" optional="YES" attributeType="String" syncable="YES"/>
@@ -623,7 +623,7 @@
         <attribute name="sortId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="tourImagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoqTourImagesEntity" syncable="YES"/>
+        <relationship name="tourImagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoqTourImagesEntity" inverseName="tourImagesRelation" inverseEntity="NMoqTourImagesEntity" syncable="YES"/>
     </entity>
     <entity name="NMoQTourListEntityAr" representedClassName="NMoQTourListEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="contactEmail" optional="YES" attributeType="String" syncable="YES"/>
@@ -640,7 +640,7 @@
         <attribute name="sortId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="tourImagesRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoqTourImagesEntityAr" syncable="YES"/>
+        <relationship name="tourImagesRelationAr" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NMoqTourImagesEntityAr" inverseName="tourImagesRelationAr" inverseEntity="NMoqTourImagesEntityAr" syncable="YES"/>
     </entity>
     <entity name="NMoQTravelListEntity" representedClassName="NMoQTravelListEntity" syncable="YES" codeGenerationType="class">
         <attribute name="bannerLink" optional="YES" attributeType="String" syncable="YES"/>
@@ -693,7 +693,7 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shortdescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortcoefficient" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="publicImagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PublicArtsImagesEntity" syncable="YES"/>
+        <relationship name="publicImagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PublicArtsImagesEntity" inverseName="publicImagesRelation" inverseEntity="PublicArtsImagesEntity" syncable="YES"/>
     </entity>
     <entity name="PublicArtsEntityArabic" representedClassName="PublicArtsEntityArabic" syncable="YES" codeGenerationType="class">
         <attribute name="descriptionarabic" optional="YES" attributeType="String" syncable="YES"/>
@@ -704,15 +704,15 @@
         <attribute name="namearabic" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shortdescriptionarabic" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortcoefficientarabic" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="publicImagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PublicArtsImagesEntityAr" syncable="YES"/>
+        <relationship name="publicImagesRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PublicArtsImagesEntityAr" inverseName="publicImagesRelation" inverseEntity="PublicArtsImagesEntityAr" syncable="YES"/>
     </entity>
     <entity name="PublicArtsImagesEntity" representedClassName="PublicArtsImagesEntity" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="publicImagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PublicArtsEntity" syncable="YES"/>
+        <relationship name="publicImagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PublicArtsEntity" inverseName="publicImagesRelation" inverseEntity="PublicArtsEntity" syncable="YES"/>
     </entity>
     <entity name="PublicArtsImagesEntityAr" representedClassName="PublicArtsImagesEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="images" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="publicImagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PublicArtsEntityArabic" syncable="YES"/>
+        <relationship name="publicImagesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PublicArtsEntityArabic" inverseName="publicImagesRelation" inverseEntity="PublicArtsEntityArabic" syncable="YES"/>
     </entity>
     <entity name="RegisteredEventListEntity" representedClassName="RegisteredEventListEntity" syncable="YES" codeGenerationType="class">
         <attribute name="eventId" optional="YES" attributeType="String" syncable="YES"/>
@@ -726,22 +726,22 @@
         <attribute name="nid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tourGuideDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="tourGuideMultimediaRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TourGuideMultimediaEntity" syncable="YES"/>
+        <relationship name="tourGuideMultimediaRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TourGuideMultimediaEntity" inverseName="tourGuideMultimediaRelation" inverseEntity="TourGuideMultimediaEntity" syncable="YES"/>
     </entity>
     <entity name="TourGuideEntityAr" representedClassName="TourGuideEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="museumsEntity" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tourGuideDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="tourGuideMultimediaRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TourGuideMultimediaEntityAr" syncable="YES"/>
+        <relationship name="tourGuideMultimediaRelation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TourGuideMultimediaEntityAr" inverseName="tourGuideMultimediaRelation" inverseEntity="TourGuideMultimediaEntityAr" syncable="YES"/>
     </entity>
     <entity name="TourGuideMultimediaEntity" representedClassName="TourGuideMultimediaEntity" syncable="YES" codeGenerationType="class">
         <attribute name="multimediaFile" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="tourGuideMultimediaRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TourGuideEntity" syncable="YES"/>
+        <relationship name="tourGuideMultimediaRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TourGuideEntity" inverseName="tourGuideMultimediaRelation" inverseEntity="TourGuideEntity" syncable="YES"/>
     </entity>
     <entity name="TourGuideMultimediaEntityAr" representedClassName="TourGuideMultimediaEntityAr" syncable="YES" codeGenerationType="class">
         <attribute name="multimediaFile" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="tourGuideMultimediaRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TourGuideEntityAr" syncable="YES"/>
+        <relationship name="tourGuideMultimediaRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TourGuideEntityAr" inverseName="tourGuideMultimediaRelation" inverseEntity="TourGuideEntityAr" syncable="YES"/>
     </entity>
     <elements>
         <element name="AboutDescriptionEntity" positionX="-27" positionY="135" width="128" height="90"/>
@@ -787,7 +787,7 @@
         <element name="FacilitiesDetailEntityAr" positionX="0" positionY="144" width="128" height="210"/>
         <element name="FacilitiesDetailImgEntity" positionX="-9" positionY="135" width="128" height="75"/>
         <element name="FacilitiesDetailImgEntityAr" positionX="9" positionY="153" width="128" height="75"/>
-        <element name="FacilitiesEntity" positionX="-9" positionY="252" width="128" height="103"/>
+        <element name="FacilitiesEntity" positionX="-9" positionY="252" width="128" height="105"/>
         <element name="FacilitiesEntityAr" positionX="0" positionY="261" width="128" height="105"/>
         <element name="FacilitiesImgEntity" positionX="9" positionY="270" width="128" height="75"/>
         <element name="FacilitiesImgEntityAr" positionX="18" positionY="279" width="128" height="75"/>
