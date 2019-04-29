@@ -507,7 +507,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
        // let dateString = toMillis()
         let getDate = toDayMonthYear()
         if ((getDate.day != nil) && (getDate.month != nil) && (getDate.year != nil)) {
-            _ = Alamofire.request(QatarMuseumRouter.EducationEvent(["field_eduprog_repeat_field_date_value[value][month]" : getDate.month!, "field_eduprog_repeat_field_date_value[value][day]" : getDate.day!,"field_eduprog_repeat_field_date_value[value][year]" : getDate.year!,"cck_multiple_field_remove_fields" : "All","institution" : institutionType ?? "All","age" : ageGroupType ?? "All", "programe" : programmeType ?? "All"] )).responseObject { (response: DataResponse<EducationEventList>) -> Void in
+            _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.EducationEvent(["field_eduprog_repeat_field_date_value[value][month]" : getDate.month!, "field_eduprog_repeat_field_date_value[value][day]" : getDate.day!,"field_eduprog_repeat_field_date_value[value][year]" : getDate.year!,"cck_multiple_field_remove_fields" : "All","institution" : institutionType ?? "All","age" : ageGroupType ?? "All", "programe" : programmeType ?? "All"] )).responseObject { (response: DataResponse<EducationEventList>) -> Void in
                 switch response.result {
                 case .success(let data):
                     self.educationEventArray = data.educationEvent!

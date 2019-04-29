@@ -315,7 +315,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     //MARK: WebServiceCall
     func getCulturePassTokenFromServer(login: Bool? = false) {
-        _ = Alamofire.request(QatarMuseumRouter.GetToken(["name": loginPopUpView.userNameText.text!,"pass":loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<TokenData>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetToken(["name": loginPopUpView.userNameText.text!,"pass":loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<TokenData>) -> Void in
             switch response.result {
             case .success(let data):
                 self.accessToken = data.accessToken
@@ -338,7 +338,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     func getCulturePassLoginFromServer() {
         let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
         if(accessToken != nil) {
-            _ = Alamofire.request(QatarMuseumRouter.Login(["name" : loginPopUpView.userNameText.text!,"pass": loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<LoginData>) -> Void in
+            _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.Login(["name" : loginPopUpView.userNameText.text!,"pass": loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<LoginData>) -> Void in
                 switch response.result {
                 case .success(let data):
                     self.loginPopUpView.loadingView.stopLoading()
@@ -373,7 +373,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     func setNewPassword() {
         let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
         if(accessToken != nil) {
-            _ = Alamofire.request(QatarMuseumRouter.NewPasswordRequest(["name" : loginPopUpView.userNameText.text!])).responseData { (response) -> Void in
+            _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.NewPasswordRequest(["name" : loginPopUpView.userNameText.text!])).responseData { (response) -> Void in
                 switch response.result {
                 case .success( _):
                     self.loginPopUpView.loadingView.stopLoading()
@@ -395,7 +395,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     //RSVP Service call
     func checkRSVPUserFromServer(userId: String?) {
-        _ = Alamofire.request(QatarMuseumRouter.GetUser(userId!)).responseObject { (response: DataResponse<UserInfoData>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetUser(userId!)).responseObject { (response: DataResponse<UserInfoData>) -> Void in
             switch response.result {
             case .success(let data):
                 self.loginPopUpView.loadingView.stopLoading()
@@ -431,7 +431,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     func getEventListUserRegistrationFromServer() {
         if((accessToken != nil) && (keychain.get(UserProfileInfo.user_id) != nil)){
             let userId = keychain.get(UserProfileInfo.user_id)!
-            _ = Alamofire.request(QatarMuseumRouter.NMoQEventListUserRegistration(["user_id" : userId])).responseObject { (response: DataResponse<NMoQUserEventListValues>) -> Void in
+            _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.NMoQEventListUserRegistration(["user_id" : userId])).responseObject { (response: DataResponse<NMoQUserEventListValues>) -> Void in
                 switch response.result {
                 case .success(let data):
                     self.userEventList = data.eventList
@@ -446,6 +446,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
             
         }
     }
+
     //MARK: EventRegistrationCoreData
     func saveOrUpdateEventReistratedCoredata() {
         if (userEventList.count > 0) {

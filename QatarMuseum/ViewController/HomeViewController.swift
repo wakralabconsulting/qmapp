@@ -285,7 +285,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     //MARK: Service call
     func getHomeList() {
-        _ = Alamofire.request(QatarMuseumRouter.HomeList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<HomeList>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.HomeList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<HomeList>) -> Void in
             switch response.result {
             case .success(let data):
                 if((self.homeList.count == 0) || (self.homeList.count == 1)) {
@@ -339,7 +339,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
     }
     func getHomeBanner() {
-        _ = Alamofire.request(QatarMuseumRouter.GetHomeBanner()).responseObject { (response: DataResponse<HomeBannerList>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetHomeBanner()).responseObject { (response: DataResponse<HomeBannerList>) -> Void in
             switch response.result {
             case .success(let data):
                 
@@ -1003,7 +1003,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     //MARK: WebServiceCall
     func getCulturePassTokenFromServer(login: Bool? = false) {
-        _ = Alamofire.request(QatarMuseumRouter.GetToken(["name": loginPopUpView.userNameText.text!,"pass":loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<TokenData>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetToken(["name": loginPopUpView.userNameText.text!,"pass":loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<TokenData>) -> Void in
             switch response.result {
             case .success(let data):
                 self.accessToken = data.accessToken
@@ -1020,7 +1020,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func getCulturePassLoginFromServer() {
         let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
         if(accessToken != nil) {
-            _ = Alamofire.request(QatarMuseumRouter.Login(["name" : loginPopUpView.userNameText.text!,"pass": loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<LoginData>) -> Void in
+            _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.Login(["name" : loginPopUpView.userNameText.text!,"pass": loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<LoginData>) -> Void in
                 switch response.result {
                 case .success(let data):
                     self.loginPopUpView.loadingView.stopLoading()
@@ -1054,7 +1054,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     //RSVP Service call
     func checkRSVPUserFromServer(userId: String?) {
-        _ = Alamofire.request(QatarMuseumRouter.GetUser(userId!)).responseObject { (response: DataResponse<UserInfoData>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetUser(userId!)).responseObject { (response: DataResponse<UserInfoData>) -> Void in
             switch response.result {
             case .success(let data):
                 self.loginPopUpView.loadingView.stopLoading()
@@ -1088,9 +1088,15 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     //MARK : NMoQ EntityRegistratiion
     func getEventListUserRegistrationFromServer() {
+//<<<<<<< HEAD
         if((accessToken != nil) && ((keychain.get(UserProfileInfo.user_id) != nil) && (keychain.get(UserProfileInfo.user_id) != nil))){
             let userId = keychain.get(UserProfileInfo.user_id) ?? ""
-            _ = Alamofire.request(QatarMuseumRouter.NMoQEventListUserRegistration(["uid" : userId])).responseObject { (response: DataResponse<NMoQUserEventListValues>) -> Void in
+            //_ = Alamofire.request(QatarMuseumRouter.NMoQEventListUserRegistration(["uid" : userId])).responseObject { (response: DataResponse<NMoQUserEventListValues>) -> Void in
+//=======
+       // if((accessToken != nil) && (UserDefaults.standard.value(forKey: "uid") != nil)){
+         //   let userId = UserDefaults.standard.value(forKey: "uid") as! String
+            _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.NMoQEventListUserRegistration(["uid" : userId])).responseObject { (response: DataResponse<NMoQUserEventListValues>) -> Void in
+//>>>>>>> QMDev/SSL_Pinning
                 switch response.result {
                 case .success(let data):
                     self.userEventList = data.eventList

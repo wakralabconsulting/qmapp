@@ -205,7 +205,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     
     //MARK: Service call
     func getExhibitionDataFromServer() {
-        _ = Alamofire.request(QatarMuseumRouter.ExhibitionList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<Exhibitions>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.ExhibitionList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<Exhibitions>) -> Void in
             switch response.result {
             case .success(let data):
                 if(self.exhibition.count == 0) {
@@ -234,7 +234,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     //MARK: MuseumExhibitions Service Call
     func getMuseumExhibitionDataFromServer() {
        
-        _ = Alamofire.request(QatarMuseumRouter.MuseumExhibitionList(["museum_id": museumId ?? 0])).responseObject { (response: DataResponse<Exhibitions>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.MuseumExhibitionList(["museum_id": museumId ?? 0])).responseObject { (response: DataResponse<Exhibitions>) -> Void in
             switch response.result {
             case .success(let data):
                 self.exhibition = data.exhibitions
@@ -849,7 +849,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     //MARK: Heritage Page WebServiceCall
     func getHeritageDataFromServer() {
-        _ = Alamofire.request(QatarMuseumRouter.HeritageList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<Heritages>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.HeritageList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<Heritages>) -> Void in
             switch response.result {
             case .success(let data):
                 if(self.heritageListArray.count == 0) {
@@ -1017,7 +1017,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     //MARK: PublicArts Functions
     //MARK: WebServiceCall
     func getPublicArtsListDataFromServer() {
-        _ = Alamofire.request(QatarMuseumRouter.PublicArtsList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<PublicArtsLists>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.PublicArtsList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<PublicArtsLists>) -> Void in
             switch response.result {
             case .success(let data):
                 if(self.publicArtsListArray.count == 0) {
@@ -1249,7 +1249,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         }
     }
     func getCollectionList() {
-        _ = Alamofire.request(QatarMuseumRouter.CollectionList(LocalizationLanguage.currentAppleLanguage(),["museum_id": museumId ?? 0])).responseObject { (response: DataResponse<Collections>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.CollectionList(LocalizationLanguage.currentAppleLanguage(),["museum_id": museumId ?? 0])).responseObject { (response: DataResponse<Collections>) -> Void in
             switch response.result {
             case .success(let data):
                 if((self.museumId == "63") && (self.museumId == "96")) {
@@ -1412,7 +1412,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     //MARK: DiningList WebServiceCall
     func getDiningListFromServer()
     {
-        _ = Alamofire.request(QatarMuseumRouter.DiningList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<Dinings>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.DiningList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<Dinings>) -> Void in
             switch response.result {
             case .success(let data):
                 if(self.diningListArray.count == 0) {
@@ -1441,7 +1441,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     //MARK: Museum DiningWebServiceCall
     func getMuseumDiningListFromServer()
     {
-        _ = Alamofire.request(QatarMuseumRouter.MuseumDiningList(["museum_id": museumId ?? 0])).responseObject { (response: DataResponse<Dinings>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.MuseumDiningList(["museum_id": museumId ?? 0])).responseObject { (response: DataResponse<Dinings>) -> Void in
             switch response.result {
             case .success(let data):
                 self.saveOrUpdateDiningCoredata(diningListArray: data.dinings, lang: LocalizationLanguage.currentAppleLanguage())
@@ -1621,7 +1621,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     //MARK: ServiceCall
     func getNMoQTourDetail() {
         if(tourDetailId != nil) {
-            _ = Alamofire.request(QatarMuseumRouter.GetNMoQTourDetail(["event_id" : tourDetailId!])).responseObject { (response: DataResponse<NMoQTourDetailList>) -> Void in
+            _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetNMoQTourDetail(["event_id" : tourDetailId!])).responseObject { (response: DataResponse<NMoQTourDetailList>) -> Void in
                 switch response.result {
                 case .success(let data):
                     self.nmoqTourDetail = data.nmoqTourDetailList
@@ -1942,7 +1942,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     //MARK: Facilities SecondaryList ServiceCall
     func getFacilitiesDetail() {
         if(tourDetailId != nil) {
-            _ = Alamofire.request(QatarMuseumRouter.GetFacilitiesDetail(["category_id" : tourDetailId!])).responseObject { (response: DataResponse<FacilitiesDetailData>) -> Void in
+            _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetFacilitiesDetail(["category_id" : tourDetailId!])).responseObject { (response: DataResponse<FacilitiesDetailData>) -> Void in
                 switch response.result {
                 case .success(let data):
                     self.facilitiesDetail = data.facilitiesDetail
@@ -2245,7 +2245,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     //MARK: WebServiceCall
     func getTourGuideDataFromServer() {
-        _ = Alamofire.request(QatarMuseumRouter.MuseumTourGuide(LocalizationLanguage.currentAppleLanguage(),["museum_id": museumId ?? 0])).responseObject { (response: DataResponse<TourGuides>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.MuseumTourGuide(LocalizationLanguage.currentAppleLanguage(),["museum_id": museumId ?? 0])).responseObject { (response: DataResponse<TourGuides>) -> Void in
             switch response.result {
             case .success(let data):
                 if(self.miaTourDataFullArray.count == 0) {
@@ -2573,7 +2573,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         } else {
             searchstring = "12186"
         }
-        _ = Alamofire.request(QatarMuseumRouter.HomeList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<HomeList>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.HomeList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<HomeList>) -> Void in
             switch response.result {
             case .success(let data):
                 if(self.museumsList.count == 0) {
@@ -2769,7 +2769,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         }
     }
     func getNmoqParkListFromServer() {
-        _ = Alamofire.request(QatarMuseumRouter.GetNmoqParkList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<NmoqParksLists>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetNmoqParkList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<NmoqParksLists>) -> Void in
             switch response.result {
             case .success(let data):
                 if(self.nmoqParkList.count == 0) {
@@ -2800,7 +2800,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     
     func getNmoqListOfParksFromServer() {
-        _ = Alamofire.request(QatarMuseumRouter.GetNmoqListParks(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<NMoQParks>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetNmoqListParks(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<NMoQParks>) -> Void in
             switch response.result {
             case .success(let data):
                 if(self.nmoqParks.count == 0) {

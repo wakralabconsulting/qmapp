@@ -27,6 +27,8 @@
 		1BE526D22107460F00C8CD51 /* QatarMuseumRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526D12107460F00C8CD51 /* QatarMuseumRouter.swift */; };
 		1BE526D42107470700C8CD51 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526D32107470700C8CD51 /* Config.swift */; };
 		1BE526D72107896600C8CD51 /* Exhibition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE526D62107896600C8CD51 /* Exhibition.swift */; };
+		49504224226311EC00F320EF /* CPSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49504223226311EC00F320EF /* CPSessionManager.swift */; };
+		495FA4A722639DE4006B228F /* qmcert.cer in Resources */ = {isa = PBXBuildFile; fileRef = 49504222226311B000F320EF /* qmcert.cer */; };
 		B80674302240CFCF00885544 /* ParkListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B806742F2240CFCF00885544 /* ParkListView.xib */; };
 		B80674322240CFF000885544 /* ParkListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80674312240CFF000885544 /* ParkListTableViewCell.swift */; };
 		B806B7A5212451B200F9F338 /* FloorMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B806B7A4212451B200F9F338 /* FloorMapViewController.swift */; };
@@ -254,6 +256,8 @@
 		1BE526D32107470700C8CD51 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		1BE526D62107896600C8CD51 /* Exhibition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exhibition.swift; sourceTree = "<group>"; };
 		49273F602185A74800D3057A /* QatarMuseums.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QatarMuseums.entitlements; sourceTree = "<group>"; };
+		49504222226311B000F320EF /* qmcert.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = qmcert.cer; sourceTree = "<group>"; };
+		49504223226311EC00F320EF /* CPSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPSessionManager.swift; sourceTree = "<group>"; };
 		80387D6C7EDA0B5C9B3AB21C /* Pods-QatarMuseums.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QatarMuseums.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QatarMuseums/Pods-QatarMuseums.debug.xcconfig"; sourceTree = "<group>"; };
 		94F5559C89E84E914A76D7A7 /* Pods_QatarMuseums.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QatarMuseums.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B806742F2240CFCF00885544 /* ParkListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParkListView.xib; sourceTree = "<group>"; };
@@ -574,6 +578,7 @@
 				1BE526CF210739BE00C8CD51 /* Request.swift */,
 				1BE526D12107460F00C8CD51 /* QatarMuseumRouter.swift */,
 				1BE526D32107470700C8CD51 /* Config.swift */,
+				49504223226311EC00F320EF /* CPSessionManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -672,6 +677,7 @@
 		B80DC04C20C792E400E28034 = {
 			isa = PBXGroup;
 			children = (
+				49504222226311B000F320EF /* qmcert.cer */,
 				49273F602185A74800D3057A /* QatarMuseums.entitlements */,
 				B8EAA3582158D4520060D168 /* GoogleService-Info.plist */,
 				B80DC05720C792E400E28034 /* QatarMuseum */,
@@ -1363,6 +1369,7 @@
 				B806B7CD21247FB400F9F338 /* MapStyle.json in Resources */,
 				B8E2C00E20C7E9CA00F3CE41 /* ComingSoonpopup.xib in Resources */,
 				B8AFA2EC20E78BA9008838A6 /* DINNextLTArabic-Light.ttf in Resources */,
+				495FA4A722639DE4006B228F /* qmcert.cer in Resources */,
 				B8CA08E72146D38400783642 /* MapDetailView.xib in Resources */,
 				B8B79AC12189B75900370AAB /* CountryList.json in Resources */,
 				B8CF5AFF2244C6A4008E663E /* NMoQPArkTopCell.xib in Resources */,
@@ -1636,6 +1643,7 @@
 				B8F00C8521787D0D00320DF1 /* LoginPopupPage.swift in Sources */,
 				B812BA04210AF3540083E0E2 /* QMFont.swift in Sources */,
 				B806B7D72152BE6A00F9534F /* CollectionDetail.swift in Sources */,
+				49504224226311EC00F320EF /* CPSessionManager.swift in Sources */,
 				B8CA08DF2146D38400783642 /* ObjectPopupTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -444,7 +444,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     //MARK: ABout Webservice
     func getAboutDetailsFromServer() {
-        _ = Alamofire.request(QatarMuseumRouter.LandingPageMuseums(["nid": museumId ?? 0])).responseObject { (response: DataResponse<Museums>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.LandingPageMuseums(["nid": museumId ?? 0])).responseObject { (response: DataResponse<Museums>) -> Void in
             switch response.result {
             case .success(let data):
                 self.aboutDetailtArray = data.museum!
@@ -482,7 +482,7 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     func getNmoQAboutDetailsFromServer() {
         if(museumId != nil) {
             
-            _ = Alamofire.request(QatarMuseumRouter.GetNMoQAboutEvent(LocalizationLanguage.currentAppleLanguage(),["nid": museumId!])).responseObject { (response: DataResponse<Museums>) -> Void in
+            _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetNMoQAboutEvent(LocalizationLanguage.currentAppleLanguage(),["nid": museumId!])).responseObject { (response: DataResponse<Museums>) -> Void in
             switch response.result {
             case .success(let data):
                 if(self.aboutDetailtArray.count == 0) {

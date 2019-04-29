@@ -1307,9 +1307,24 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
     }
     
     //MARK: WebServiceCall
+//    func getFloorMapDataFromServer() {
+//        // let queue = DispatchQueue(label: "", qos: .background, attributes: .concurrent)
+//        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.CollectionByTourGuide(LocalizationLanguage.currentAppleLanguage(),["tour_guide_id": tourGuideId!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
+//            switch response.result {
+//            case .success(let data):
+//                if (self.floorMapArray.count > 0) {
+//                    self.saveOrUpdateFloormapCoredata(floorMapArray: data.tourGuideFloorMap)
+//                }
+//
+//            case .failure(let error):
+//                print("error")
+//
+//            }
+//        }
+//    }
     func getFloorMapDataFromServer()
     {
-        _ = Alamofire.request(QatarMuseumRouter.CollectionByTourGuide(LocalizationLanguage.currentAppleLanguage(),["tour_guide_id": tourGuideId!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.CollectionByTourGuide(LocalizationLanguage.currentAppleLanguage(),["tour_guide_id": tourGuideId!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
             switch response.result {
             case .success(let data):
                 self.floorMapArray = data.tourGuideFloorMap

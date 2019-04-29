@@ -257,7 +257,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     }
     //MARK: Service call
     func getNMoQTourList() {
-        _ = Alamofire.request(QatarMuseumRouter.GetNMoQTourList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<NMoQTourList>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetNMoQTourList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<NMoQTourList>) -> Void in
             switch response.result {
             case .success(let data):
                 if(self.nmoqTourList.count == 0) {
@@ -600,7 +600,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     }
     //Activities API
     func getNMoQSpecialEventList() {
-        _ = Alamofire.request(QatarMuseumRouter.GetNMoQSpecialEventList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<NMoQActivitiesListData>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetNMoQSpecialEventList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<NMoQActivitiesListData>) -> Void in
             switch response.result {
             case .success(let data):
                 if(self.nmoqActivityList.count == 0) {
@@ -950,7 +950,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     //MARK: Facilities API
     func getFacilitiesListFromServer()
     {
-        _ = Alamofire.request(QatarMuseumRouter.FacilitiesList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<FacilitiesData>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.FacilitiesList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<FacilitiesData>) -> Void in
             switch response.result {
             case .success(let data):
                 if(self.facilitiesList.count == 0) {
@@ -1270,7 +1270,7 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
     //MARK: TravelList Methods
     //MARK: Service Call
     func getTravelList() {
-        _ = Alamofire.request(QatarMuseumRouter.GetNMoQTravelList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<HomeBannerList>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetNMoQTravelList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<HomeBannerList>) -> Void in
             switch response.result {
             case .success(let data):
                 if(self.travelList.count == 0) {

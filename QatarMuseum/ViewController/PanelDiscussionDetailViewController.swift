@@ -335,7 +335,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     //MARK: WebService Call
     func getNMoQSpecialEventDetail() {
         if(panelDetailId != nil) {
-            _ = Alamofire.request(QatarMuseumRouter.GetNMoQSpecialEventDetail(["event_id" : panelDetailId!])).responseObject { (response: DataResponse<NMoQTourList>) -> Void in
+            _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetNMoQSpecialEventDetail(["event_id" : panelDetailId!])).responseObject { (response: DataResponse<NMoQTourList>) -> Void in
                 switch response.result {
                 case .success(let data):
                     self.nmoqSpecialEventDetail = data.nmoqTourList
@@ -364,7 +364,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     func getNMoQTourDetail() {
         if(panelDetailId != nil) {
-            _ = Alamofire.request(QatarMuseumRouter.GetNMoQTourDetail(["event_id" : panelDetailId!])).responseObject { (response: DataResponse<NMoQTourDetailList>) -> Void in
+            _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetNMoQTourDetail(["event_id" : panelDetailId!])).responseObject { (response: DataResponse<NMoQTourDetailList>) -> Void in
                 switch response.result {
                 case .success(let data):
                     self.nmoqTourDetail = data.nmoqTourDetailList
@@ -452,7 +452,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         ]
         let timestamp = Int(NSDate().timeIntervalSince1970)
         let timestampInString = String(timestamp)
-            _ = Alamofire.request(QatarMuseumRouter.NMoQEntityRegistration(["type" : "nmoq_event_registration","entity_id": entityId!,"entity_type" :"node","user_uid": userId,"count": selectedCount!,"author_uid": userId,"state": "pending","created": timestampInString,"updated": timestampInString,"field_confirm_attendance" :fieldConfirmAttendance,"field_number_of_attendees" : fieldNumberOfAttendees, "field_first_name_": fieldFirstName,"field_nmoq_last_name" : fieldNmoqLastName,"field_membership_number": fieldMembershipNumber,"field_qma_edu_reg_date":fieldQmaEduRegDate])).responseObject { (response: DataResponse<NMoQEntityRegistration>) -> Void in
+            _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.NMoQEntityRegistration(["type" : "nmoq_event_registration","entity_id": entityId!,"entity_type" :"node","user_uid": userId,"count": selectedCount!,"author_uid": userId,"state": "pending","created": timestampInString,"updated": timestampInString,"field_confirm_attendance" :fieldConfirmAttendance,"field_number_of_attendees" : fieldNumberOfAttendees, "field_first_name_": fieldFirstName,"field_nmoq_last_name" : fieldNmoqLastName,"field_membership_number": fieldMembershipNumber,"field_qma_edu_reg_date":fieldQmaEduRegDate])).responseObject { (response: DataResponse<NMoQEntityRegistration>) -> Void in
                 switch response.result {
                 case .success(let data):
                     self.entityRegistration = data
@@ -526,7 +526,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
 
                         ]]
             ]
-                _ = Alamofire.request(QatarMuseumRouter.SetUserRegistrationComplete(regId!,["registration_id": regId!,"type" : "nmoq_event_registration","entity_id": entityId!,"entity_type" :"node","user_uid": userId,"count": selectedCount!,"author_uid": userId,"state": "complete","created": timestamp,"updated": timestamp,"field_confirm_attendance" :fieldConfirmAttendance,"field_number_of_attendees" : fieldNumberOfAttendees, "field_first_name_": fieldFirstName,"field_nmoq_last_name" : fieldNmoqLastName,"field_membership_number": fieldMembershipNumber,"field_qma_edu_reg_date":fieldQmaEduRegDate])).responseObject { (response: DataResponse<NMoQEntityRegistration>) -> Void in
+                _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.SetUserRegistrationComplete(regId!,["registration_id": regId!,"type" : "nmoq_event_registration","entity_id": entityId!,"entity_type" :"node","user_uid": userId,"count": selectedCount!,"author_uid": userId,"state": "complete","created": timestamp,"updated": timestamp,"field_confirm_attendance" :fieldConfirmAttendance,"field_number_of_attendees" : fieldNumberOfAttendees, "field_first_name_": fieldFirstName,"field_nmoq_last_name" : fieldNmoqLastName,"field_membership_number": fieldMembershipNumber,"field_qma_edu_reg_date":fieldQmaEduRegDate])).responseObject { (response: DataResponse<NMoQEntityRegistration>) -> Void in
                 switch response.result {
                 case .success(let data):
                     self.loadingView.stopLoading()
@@ -565,7 +565,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
             let userName = (keychain.get(UserProfileInfo.user_dispaly_name))!
             let pwd = (keychain.get(UserProfileInfo.user_password))! 
             
-            _ = Alamofire.request(QatarMuseumRouter.SetUserUnRegistration(regId!,["name":userName,"pass":pwd])).responseData { (response) -> Void in
+            _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.SetUserUnRegistration(regId!,["name":userName,"pass":pwd])).responseData { (response) -> Void in
                 switch response.result {
                 case .success( _):
                     self.loadingView.stopLoading()
@@ -1130,7 +1130,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     //MARK: Facilities SecondaryList ServiceCall
     func getFacilitiesDetail() {
         if(panelDetailId != nil) {
-            _ = Alamofire.request(QatarMuseumRouter.GetFacilitiesDetail(["category_id" : panelDetailId!])).responseObject { (response: DataResponse<FacilitiesDetailData>) -> Void in
+            _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetFacilitiesDetail(["category_id" : panelDetailId!])).responseObject { (response: DataResponse<FacilitiesDetailData>) -> Void in
                 switch response.result {
                 case .success(let data):
                     self.facilitiesDetail = data.facilitiesDetail
@@ -1436,7 +1436,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     //MARK: WebServiceCall
     func getCollectioDetailsFromServer() {
-        _ = Alamofire.request(QatarMuseumRouter.CollectionDetail(["category": collectionName!])).responseObject { (response: DataResponse<CollectionDetails>) -> Void in
+        _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.CollectionDetail(["category": collectionName!])).responseObject { (response: DataResponse<CollectionDetails>) -> Void in
             switch response.result {
             case .success(let data):
                 self.collectionDetailArray = data.collectionDetails
@@ -1465,7 +1465,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     
     func getNMoQParkDetailFromServer() {
         if (nid != nil) {
-            _ = Alamofire.request(QatarMuseumRouter.GetNMoQPlaygroundDetail(LocalizationLanguage.currentAppleLanguage(), ["nid": nid!])).responseObject { (response: DataResponse<NMoQParksDetail>) -> Void in
+            _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetNMoQPlaygroundDetail(LocalizationLanguage.currentAppleLanguage(), ["nid": nid!])).responseObject { (response: DataResponse<NMoQParksDetail>) -> Void in
                 switch response.result {
                 case .success(let data):
                     self.nmoqParkDetailArray = data.nmoqParksDetail
