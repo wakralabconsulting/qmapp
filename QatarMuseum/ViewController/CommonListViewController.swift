@@ -1593,8 +1593,15 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     
     func diningCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,diningListArray : [Dining]?,lang: String?) {
-        if (lang == ENG_LANGUAGE) {
-            let fetchData = checkAddedToCoredata(entityName: "DiningEntity", idKey: "id", idValue: nil, managedContext: managedContext) as! [DiningEntity]
+        var fetchData = [DiningEntity]()
+        var langVar : String? = nil
+        if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+            langVar = "1"
+            
+        } else {
+            langVar = "0"
+        }
+            fetchData = checkAddedToCoredata(entityName: "DiningEntity", idKey: "lang", idValue: langVar, managedContext: managedContext) as! [DiningEntity]
             if (fetchData.count > 0) {
                 for i in 0 ... (diningListArray?.count)!-1 {
                     let diningListDict = diningListArray![i]
@@ -1606,7 +1613,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                         diningdbDict.image = diningListDict.image
                         diningdbDict.sortid =  diningListDict.sortid
                         diningdbDict.museumId =  diningListDict.museumId
-                        
+                        diningdbDict.lang = langVar
                         do{
                             try managedContext.save()
                         }
@@ -1628,47 +1635,16 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                     self.saveToDiningCoreData(diningListDict: diningListDict!, managedObjContext: managedContext, lang: lang)
                 }
             }
-        } else {
-            let fetchData = checkAddedToCoredata(entityName: "DiningEntityArabic", idKey: "id", idValue: nil, managedContext: managedContext) as! [DiningEntityArabic]
-            if (fetchData.count > 0) {
-                for i in 0 ... (diningListArray?.count)!-1 {
-                    let diningListDict = diningListArray![i]
-                    let fetchResult = checkAddedToCoredata(entityName: "DiningEntityArabic", idKey: "id" , idValue: diningListArray![i].id, managedContext: managedContext)
-                    //update
-                    if(fetchResult.count != 0) {
-                        let diningdbDict = fetchResult[0] as! DiningEntityArabic
-                        diningdbDict.namearabic = diningListDict.name
-                        diningdbDict.imagearabic = diningListDict.image
-                        diningdbDict.sortidarabic =  diningListDict.sortid
-                        diningdbDict.museumId =  diningListDict.museumId
-                        
-                        do{
-                            try managedContext.save()
-                        }
-                        catch{
-                            print(error)
-                        }
-                    }
-                    else {
-                        //save
-                        self.saveToDiningCoreData(diningListDict: diningListDict, managedObjContext: managedContext, lang: lang)
-                        
-                    }
-                }
-            }
-            else {
-                for i in 0 ... (diningListArray?.count)!-1 {
-                    let diningListDict : Dining?
-                    diningListDict = diningListArray?[i]
-                    self.saveToDiningCoreData(diningListDict: diningListDict!, managedObjContext: managedContext, lang: lang)
-                    
-                }
-            }
-        }
     }
     
     func saveToDiningCoreData(diningListDict: Dining, managedObjContext: NSManagedObjectContext,lang: String?) {
-        if (lang == ENG_LANGUAGE) {
+        var langVar : String? = nil
+        if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+            langVar = "1"
+            
+        } else {
+            langVar = "0"
+        }
             let diningInfoInfo: DiningEntity = NSEntityDescription.insertNewObject(forEntityName: "DiningEntity", into: managedObjContext) as! DiningEntity
             diningInfoInfo.id = diningListDict.id
             diningInfoInfo.name = diningListDict.name
@@ -1678,18 +1654,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                 diningInfoInfo.sortid = diningListDict.sortid
             }
             diningInfoInfo.museumId = diningListDict.museumId
-        }
-        else {
-            let diningInfoInfo: DiningEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "DiningEntityArabic", into: managedObjContext) as! DiningEntityArabic
-            diningInfoInfo.id = diningListDict.id
-            diningInfoInfo.namearabic = diningListDict.name
-            
-            diningInfoInfo.imagearabic = diningListDict.image
-            if(diningListDict.sortid != nil) {
-                diningInfoInfo.sortidarabic = diningListDict.sortid
-            }
-            diningInfoInfo.museumId = diningListDict.museumId
-        }
+            diningInfoInfo.lang = langVar
         do {
             try managedObjContext.save()
             
@@ -1701,7 +1666,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     func fetchMuseumDiningListFromCoredata() {
         let managedContext = getContext()
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+            
                 var diningArray = [DiningEntity]()
                 diningArray = checkAddedToCoredata(entityName: "DiningEntity", idKey: "museumId", idValue: museumId, managedContext: managedContext) as! [DiningEntity]
                 
@@ -1726,43 +1691,21 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                          self.exbtnLoadingView.showNoDataView()
                     }
                 }
-            } else {
-                var diningArray = [DiningEntityArabic]()
-                diningArray = checkAddedToCoredata(entityName: "DiningEntityArabic", idKey: "museumId", idValue: museumId, managedContext: managedContext) as! [DiningEntityArabic]
-                if (diningArray.count > 0) {
-                    for i in 0 ... diningArray.count-1 {
-                        
-                        self.diningListArray.insert(Dining(id: diningArray[i].id, name: diningArray[i].namearabic, location: diningArray[i].locationarabic, description: diningArray[i].descriptionarabic, image: diningArray[i].imagearabic, openingtime: diningArray[i].openingtimearabic, closetime: diningArray[i].closetimearabic, sortid: diningArray[i].sortidarabic,museumId: diningArray[i].museumId, images: nil), at: i)
-                    }
-                    if(diningListArray.count == 0){
-                        if(self.networkReachability?.isReachable == false) {
-                            self.showNoNetwork()
-                        } else {
-                            self.exbtnLoadingView.showNoDataView()
-                        }
-                    }
-                    DispatchQueue.main.async{
-                        self.exhibitionCollectionView.reloadData()
-                    }
-                }
-                else{
-                    if(self.networkReachability?.isReachable == false) {
-                        self.showNoNetwork()
-                    } else {
-                        self.exbtnLoadingView.showNoDataView()
-                    }
-                }
-            }
         }
     }
     
     func fetchDiningListFromCoredata() {
         let managedContext = getContext()
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-                var diningArray = [DiningEntity]()
-                let homeFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "DiningEntity")
-                diningArray = (try managedContext.fetch(homeFetchRequest) as? [DiningEntity])!
+            var diningArray = [DiningEntity]()
+            var langVar : String? = nil
+            if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+                langVar = "1"
+                
+            } else {
+                langVar = "0"
+            }
+            diningArray = checkAddedToCoredata(entityName: "DiningEntity", idKey: "lang", idValue: langVar, managedContext: managedContext) as! [DiningEntity]
                 if (diningArray.count > 0) {
                     if  (networkReachability?.isReachable)! {
                         DispatchQueue.global(qos: .background).async {
@@ -1791,38 +1734,6 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                         self.getDiningListFromServer()//coreDataMigratio  solution
                     }
                 }
-            } else {
-                var diningArray = [DiningEntityArabic]()
-                let diningFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "DiningEntityArabic")
-                diningArray = (try managedContext.fetch(diningFetchRequest) as? [DiningEntityArabic])!
-                if (diningArray.count > 0) {
-                    if  (networkReachability?.isReachable)! {
-                        DispatchQueue.global(qos: .background).async {
-                            self.getDiningListFromServer()
-                        }
-                    }
-                    for i in 0 ... diningArray.count-1 {
-                        self.diningListArray.insert(Dining(id: diningArray[i].id, name: diningArray[i].namearabic, location: diningArray[i].locationarabic, description: diningArray[i].descriptionarabic, image: diningArray[i].imagearabic, openingtime: diningArray[i].openingtimearabic, closetime: diningArray[i].closetimearabic, sortid: diningArray[i].sortidarabic,museumId: diningArray[i].museumId, images: nil), at: i)
-                    }
-                    if(diningListArray.count == 0){
-                        if(self.networkReachability?.isReachable == false) {
-                            self.showNoNetwork()
-                        } else {
-                            self.exbtnLoadingView.showNoDataView()
-                        }
-                    }
-                    DispatchQueue.main.async{
-                        self.exhibitionCollectionView.reloadData()
-                    }
-                }
-                else{
-                    if(self.networkReachability?.isReachable == false) {
-                        self.showNoNetwork()
-                    } else {
-                        self.getDiningListFromServer()//coreDataMigratio  solution
-                    }
-                }
-            }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
             if (networkReachability?.isReachable == false) {

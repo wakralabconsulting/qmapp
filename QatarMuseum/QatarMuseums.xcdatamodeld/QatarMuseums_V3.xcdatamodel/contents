@@ -83,6 +83,7 @@
         <attribute name="diningdescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lang" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="museumId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -770,7 +771,7 @@
         <element name="CollectionDetailsEntityAr" positionX="-27" positionY="144" width="128" height="120"/>
         <element name="CollectionsEntity" positionX="-36" positionY="126" width="128" height="90"/>
         <element name="CollectionsEntityArabic" positionX="-18" positionY="162" width="128" height="90"/>
-        <element name="DiningEntity" positionX="-54" positionY="90" width="128" height="195"/>
+        <element name="DiningEntity" positionX="-54" positionY="90" width="128" height="210"/>
         <element name="DiningEntityArabic" positionX="-45" positionY="108" width="128" height="195"/>
         <element name="DiningImagesEntity" positionX="-9" positionY="135" width="128" height="75"/>
         <element name="DiningImagesEntityAr" positionX="0" positionY="144" width="128" height="75"/>

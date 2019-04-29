@@ -1916,13 +1916,12 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         }
     }
     func diningCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "DiningEntity", idKey: "id", idValue: diningDetailtArray[0].id, managedContext: managedContext) as! [DiningEntity]
             if (fetchData.count > 0) {
                 let diningDetailDict = diningDetailtArray[0]
                 
                 //update
-                let diningdbDict = fetchData[0] as! DiningEntity
+                let diningdbDict = fetchData[0]
                 diningdbDict.name = diningDetailDict.name
                 diningdbDict.image = diningDetailDict.image
                 diningdbDict.diningdescription = diningDetailDict.description
@@ -1930,6 +1929,11 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                 diningdbDict.openingtime =  diningDetailDict.openingtime
                 diningdbDict.sortid =  diningDetailDict.sortid
                 diningdbDict.location =  diningDetailDict.location
+                if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+                    diningdbDict.lang =  "1"
+                } else {
+                    diningdbDict.lang =  "0"
+                }
                 if((diningDetailDict.images?.count)! > 0) {
                     for i in 0 ... (diningDetailDict.images?.count)!-1 {
                         var diningImagesEntity: DiningImagesEntity!
@@ -1957,51 +1961,8 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                 diningListDict = diningDetailtArray[0]
                 self.saveDiningDetailToCoreData(diningDetailDict: diningListDict!, managedObjContext: managedContext)
             }
-        } else {
-            let fetchData = checkAddedToCoredata(entityName: "DiningEntityArabic", idKey: "id", idValue: diningDetailtArray[0].id, managedContext: managedContext) as! [DiningEntityArabic]
-            if (fetchData.count > 0) {
-                let diningDetailDict = diningDetailtArray[0]
-                
-                //update
-                let diningdbDict = fetchData[0]
-                diningdbDict.namearabic = diningDetailDict.name
-                diningdbDict.imagearabic = diningDetailDict.image
-                diningdbDict.sortidarabic =  diningDetailDict.sortid
-                diningdbDict.descriptionarabic = diningDetailDict.description
-                diningdbDict.closetimearabic = diningDetailDict.closetime
-                diningdbDict.openingtimearabic =  diningDetailDict.openingtime
-                diningdbDict.locationarabic =  diningDetailDict.location
-                if((diningDetailDict.images?.count)! > 0) {
-                    for i in 0 ... (diningDetailDict.images?.count)!-1 {
-                        var diningImagesEntity: DiningImagesEntityAr!
-                        let diningImage: DiningImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "DiningImagesEntityAr", into: managedContext) as! DiningImagesEntityAr
-                        diningImage.images = diningDetailDict.images![i]
-                        
-                        diningImagesEntity = diningImage
-                        diningdbDict.addToImagesRelation(diningImagesEntity)
-                        do {
-                            try managedContext.save()
-                        } catch let error as NSError {
-                            print("Could not save. \(error), \(error.userInfo)")
-                        }
-                        
-                    }
-                }
-                do{
-                    try managedContext.save()
-                }
-                catch{
-                    print(error)
-                }
-            } else {
-                let diningListDict : Dining?
-                diningListDict = diningDetailtArray[0]
-                self.saveDiningDetailToCoreData(diningDetailDict: diningListDict!, managedObjContext: managedContext)
-            }
-        }
     }
     func saveDiningDetailToCoreData(diningDetailDict: Dining, managedObjContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             let diningInfo: DiningEntity = NSEntityDescription.insertNewObject(forEntityName: "DiningEntity", into: managedObjContext) as! DiningEntity
             diningInfo.id = diningDetailDict.id
             diningInfo.name = diningDetailDict.name
@@ -2010,6 +1971,11 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
             diningInfo.closetime = diningDetailDict.closetime
             diningInfo.openingtime =  diningDetailDict.openingtime
             diningInfo.location =  diningDetailDict.location
+            if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+                diningInfo.lang =  "1"
+            } else {
+                diningInfo.lang =  "0"
+            }
             if((diningDetailDict.images?.count)! > 0) {
                 for i in 0 ... (diningDetailDict.images?.count)!-1 {
                     var diningImagesEntity: DiningImagesEntity!
@@ -2029,35 +1995,6 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
             if(diningDetailDict.sortid != nil) {
                 diningInfo.sortid = diningDetailDict.sortid
             }
-        } else {
-            let diningInfo: DiningEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "DiningEntityArabic", into: managedObjContext) as! DiningEntityArabic
-            diningInfo.locationarabic = diningDetailDict.id
-            diningInfo.namearabic = diningDetailDict.name
-            
-            diningInfo.imagearabic = diningDetailDict.image
-            diningInfo.descriptionarabic = diningDetailDict.description
-            diningInfo.closetimearabic = diningDetailDict.closetime
-            diningInfo.openingtimearabic =  diningDetailDict.openingtime
-            diningInfo.locationarabic =  diningDetailDict.location
-            if((diningDetailDict.images?.count)! > 0) {
-                for i in 0 ... (diningDetailDict.images?.count)!-1 {
-                    var diningImagesEntity: DiningImagesEntityAr!
-                    let diningImage: DiningImagesEntityAr = NSEntityDescription.insertNewObject(forEntityName: "DiningImagesEntityAr", into: managedObjContext) as! DiningImagesEntityAr
-                    diningImage.images = diningDetailDict.images![i]
-                    
-                    diningImagesEntity = diningImage
-                    diningInfo.addToImagesRelation(diningImagesEntity)
-                    do {
-                        try managedObjContext.save()
-                    } catch let error as NSError {
-                        print("Could not save. \(error), \(error.userInfo)")
-                    }
-                }
-            }
-            if(diningDetailDict.sortid != nil) {
-                diningInfo.sortidarabic = diningDetailDict.sortid
-            }
-        }
         do {
             try managedObjContext.save()
             
@@ -2068,7 +2005,6 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     func fetchDiningDetailsFromCoredata() {
         let managedContext = getContext()
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
                 var diningArray = [DiningEntity]()
                 let diningFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "DiningEntity")
                 if(diningDetailId != nil) {
@@ -2101,41 +2037,6 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                         self.loadingView.showNoDataView()
                     }
                 }
-            }
-            else {
-                var diningArray = [DiningEntityArabic]()
-                let diningFetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "DiningEntityArabic")
-                if(diningDetailId != nil) {
-                    diningFetchRequest.predicate = NSPredicate.init(format: "id == \(diningDetailId!)")
-                }
-                diningArray = (try managedContext.fetch(diningFetchRequest) as? [DiningEntityArabic])!
-                let diningDict = diningArray[0]
-                if ((diningArray.count > 0) && (diningDict.descriptionarabic != nil)) {var imagesArray : [String] = []
-                    let diningImagesArray = (diningDict.imagesRelation?.allObjects) as! [DiningImagesEntityAr]
-                    if(diningImagesArray.count > 0) {
-                        for i in 0 ... diningImagesArray.count-1 {
-                            imagesArray.append(diningImagesArray[i].images!)
-                        }
-                    }
-                    self.diningDetailtArray.insert(Dining(id: diningDict.id, name: diningDict.namearabic, location: diningDict.locationarabic, description: diningDict.descriptionarabic, image: diningDict.imagearabic, openingtime: diningDict.openingtimearabic, closetime: diningDict.closetimearabic, sortid: diningDict.sortidarabic, museumId:nil, images: imagesArray), at: 0)
-                    
-                    if(diningDetailtArray.count == 0){
-                        if(self.networkReachability?.isReachable == false) {
-                            self.showNoNetwork()
-                        } else {
-                            self.loadingView.showNoDataView()
-                        }
-                    }
-                    self.setTopBarImage()
-                    heritageDetailTableView.reloadData()
-                } else {
-                    if(self.networkReachability?.isReachable == false) {
-                        self.showNoNetwork()
-                    } else {
-                        self.loadingView.showNoDataView()
-                    }
-                }
-            }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
