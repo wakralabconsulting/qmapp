@@ -1980,8 +1980,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func collectionsListCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,collection: [Collection]?,museumId:String?,lang: String?) {
-        if (lang == ENG_LANGUAGE) {
-            let fetchData = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: nil, managedContext: managedContext) as! [CollectionsEntity]
+        let fetchData = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: nil, managedContext: managedContext) as! [CollectionsEntity]
             if (fetchData.count > 0) {
                 let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "CollectionsEntity")
                 if(isDeleted == true) {
@@ -2001,44 +2000,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
                 NotificationCenter.default.post(name: NSNotification.Name(collectionsListNotificationEn), object: self)
             }
-        } else { // For Arabic Database
-            let fetchData = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "museumId", idValue: nil, managedContext: managedContext) as! [CollectionsEntityArabic]
-            if (fetchData.count > 0) {
-                let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "CollectionsEntityArabic")
-                if(isDeleted == true) {
-                    for i in 0 ... (collection?.count)!-1 {
-                        let collectionListDict : Collection?
-                        collectionListDict = collection?[i]
-                        self.saveCollectionListToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext, lang: lang)
-                    }
-                }
-                NotificationCenter.default.post(name: NSNotification.Name(collectionsListNotificationAr), object: self)
-            }
-            else {
-                for i in 0 ... (collection?.count)!-1 {
-                    let collectionListDict : Collection?
-                    collectionListDict = collection?[i]
-                    self.saveCollectionListToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext, lang: lang)
-                }
-                NotificationCenter.default.post(name: NSNotification.Name(collectionsListNotificationAr), object: self)
-            }
-        }
     }
     
     func saveCollectionListToCoreData(collectionListDict: Collection, managedObjContext: NSManagedObjectContext,lang: String?) {
+        var langVar : String? = nil
         if (lang == ENG_LANGUAGE) {
+            langVar = "1"
+            
+        } else {
+            langVar = "0"
+        }
             let collectionInfo: CollectionsEntity = NSEntityDescription.insertNewObject(forEntityName: "CollectionsEntity", into: managedObjContext) as! CollectionsEntity
             collectionInfo.listName = collectionListDict.name?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
             collectionInfo.listImage = collectionListDict.image
             collectionInfo.museumId = collectionListDict.museumId
-            
-        }
-        else {
-            let collectionInfo: CollectionsEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "CollectionsEntityArabic", into: managedObjContext) as! CollectionsEntityArabic
-            collectionInfo.listName = collectionListDict.name?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-            collectionInfo.listImageAr = collectionListDict.image
-            collectionInfo.museumId = collectionListDict.museumId
-        }
+            collectionInfo.lang = langVar
+       
         do {
             try managedObjContext.save()
             

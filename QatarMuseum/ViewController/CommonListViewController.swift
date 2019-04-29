@@ -1306,8 +1306,15 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         }
     }
     func coreDataInBackgroundThread(managedContext: NSManagedObjectContext,collection: [Collection]?) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            let fetchData = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: nil, managedContext: managedContext) as! [CollectionsEntity]
+        var fetchData = [CollectionsEntity]()
+        var langVar : String? = nil
+        if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+            langVar = "1"
+            
+        } else {
+            langVar = "0"
+        }
+            fetchData = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "lang", idValue: langVar, managedContext: managedContext) as! [CollectionsEntity]
             if (fetchData.count > 0) {
                 let isDeleted = self.deleteExistingEntityData(managedContext: managedContext, entityName: "CollectionsEntity")
                 if(isDeleted == true) {
@@ -1325,41 +1332,20 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                     self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
                 }
             }
-        } else { // For Arabic Database
-            let fetchData = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "museumId", idValue: nil, managedContext: managedContext) as! [CollectionsEntityArabic]
-            if (fetchData.count > 0) {
-                let isDeleted = self.deleteExistingEntityData(managedContext: managedContext, entityName: "CollectionsEntityArabic")
-                if(isDeleted == true) {
-                    for i in 0 ... (collection?.count)!-1 {
-                        let collectionListDict : Collection?
-                        collectionListDict = collection?[i]
-                        self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
-                    }
-                }
-            }
-            else {
-                for i in 0 ... (collection?.count)!-1 {
-                    let collectionListDict : Collection?
-                    collectionListDict = collection?[i]
-                    self.saveToCoreData(collectionListDict: collectionListDict!, managedObjContext: managedContext)
-                }
-            }
-        }
     }
     func saveToCoreData(collectionListDict: Collection, managedObjContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+        var langVar : String? = nil
+        if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+            langVar = "1"
+            
+        } else {
+            langVar = "0"
+        }
             let collectionInfo: CollectionsEntity = NSEntityDescription.insertNewObject(forEntityName: "CollectionsEntity", into: managedObjContext) as! CollectionsEntity
             collectionInfo.listName = collectionListDict.name?.replacingOccurrences(of: "<[^>]+>|&nbsp;", with: "", options: .regularExpression, range: nil)
             collectionInfo.listImage = collectionListDict.image
             collectionInfo.museumId = collectionListDict.museumId
-            
-        }
-        else {
-            let collectionInfo: CollectionsEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "CollectionsEntityArabic", into: managedObjContext) as! CollectionsEntityArabic
-            collectionInfo.listName = collectionListDict.name?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-            collectionInfo.listImageAr = collectionListDict.image
-            collectionInfo.museumId = collectionListDict.museumId
-        }
+            collectionInfo.lang = langVar
         do {
             try managedObjContext.save()
         } catch let error as NSError {
@@ -1369,7 +1355,6 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     func fetchCollectionListFromCoredata() {
         let managedContext = getContext()
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var collectionArray = [CollectionsEntity]()
                 collectionArray = checkAddedToCoredata(entityName: "CollectionsEntity", idKey: "museumId", idValue: museumId, managedContext: managedContext) as! [CollectionsEntity]
                 if (collectionArray.count > 0) {
@@ -1399,39 +1384,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                         self.getCollectionList()//coreDataMigratio  solution
                     }
                 }
-            }
-            else {
-                var collectionArray = [CollectionsEntityArabic]()
-                collectionArray = checkAddedToCoredata(entityName: "CollectionsEntityArabic", idKey: "museumId", idValue: museumId, managedContext: managedContext) as! [CollectionsEntityArabic]
-                if (collectionArray.count > 0) {
-                    if((museumId == "63") || (museumId == "96")) {
-                        if (networkReachability?.isReachable)! {
-                            DispatchQueue.global(qos: .background).async {
-                                self.getCollectionList()
-                            }
-                        }
-                    }
-                    for i in 0 ... collectionArray.count-1 {
-                        
-                        self.collection.insert(Collection(name: collectionArray[i].listName?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil), image: collectionArray[i].listImageAr, museumId: collectionArray[i].museumId), at: i)
-                    }
-                    if(collection.count == 0){
-                        if(self.networkReachability?.isReachable == false) {
-                            self.showNoNetwork()
-                        } else {
-                            self.exbtnLoadingView.showNoDataView()
-                        }
-                    }
-                    exhibitionCollectionView.reloadData()
-                }
-                else{
-                    if(self.networkReachability?.isReachable == false) {
-                        self.showNoNetwork()
-                    } else {
-                        self.getCollectionList()//coreDataMigratio  solution
-                    }
-                }
-            }
+   
         }
     }
     func deleteExistingEntityData(managedContext:NSManagedObjectContext,entityName : String?) ->Bool? {
@@ -1456,7 +1409,6 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
             self.fetchCollectionListFromCoredata()
         }
     }
-    //MARK: DiningList Methods
     //MARK: DiningList WebServiceCall
     func getDiningListFromServer()
     {
