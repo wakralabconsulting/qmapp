@@ -1474,6 +1474,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     //MARK: WebServiceCall
     func getCollectioDetailsFromServer() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.CollectionDetail(["category": collectionName!])).responseObject { (response: DataResponse<CollectionDetails>) -> Void in
             switch response.result {
             case .success(let data):
@@ -1502,6 +1503,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     
     func getNMoQParkDetailFromServer() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if (nid != nil) {
             _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetNMoQPlaygroundDetail(LocalizationLanguage.currentAppleLanguage(), ["nid": nid!])).responseObject { (response: DataResponse<NMoQParksDetail>) -> Void in
                 switch response.result {
@@ -1552,6 +1554,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                     self.collectionDetailCoreDataInBackgroundThread(managedContext : managedContext)
                 }
             }
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         }
     }
     func collectionDetailCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
@@ -1626,6 +1629,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                 }
             }
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func collectionDetailSaveToCoreData(collectionDetailDict: CollectionDetail, managedObjContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -1652,6 +1656,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func fetchCollectionDetailsFromCoredata() {
@@ -1720,6 +1725,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                 }
             }
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     //MARK: NMoq Playground Parks Detail Coredata Method
     func saveOrUpdateNmoqParkDetailCoredata(nmoqParkList: [NMoQParkDetail]?) {
@@ -1737,6 +1743,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                 }
             }
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func nmoqParkDetailCoreDataInBackgroundThread(nmoqParkList: [NMoQParkDetail]?, managedContext: NSManagedObjectContext) {
@@ -1844,6 +1851,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                 NotificationCenter.default.post(name: NSNotification.Name(nmoqParkDetailNotificationAr), object: self)
             }
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func saveNMoQParkDetailToCoreData(nmoqParkListDict: NMoQParkDetail, managedObjContext: NSManagedObjectContext) {
@@ -1899,8 +1907,9 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         do {
             try managedObjContext.save()
         } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+            DDLogError("Could not save. \(error), \(error.userInfo)")
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func fetchNMoQParkDetailFromCoredata() {
@@ -1979,7 +1988,8 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                     }
                 }
             }
-        } 
+        }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func checkAddedToCoredata(entityName: String?, idKey:String?, idValue: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
         var fetchResults : [NSManagedObject] = []
@@ -2007,12 +2017,14 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (nmoqParkDetailArray.count == 0)){
             self.fetchNMoQParkDetailFromCoredata()
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @objc func receiveNmoqParkDetailNotificationAr(notification: NSNotification) {
         if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (nmoqParkDetailArray.count == 0)){
             self.fetchNMoQParkDetailFromCoredata()
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
 }

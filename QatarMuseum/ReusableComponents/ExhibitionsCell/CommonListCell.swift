@@ -6,6 +6,7 @@
 //  Copyright © 2018 Exalture. All rights reserved.
 //
 
+import CocoaLumberjack
 import Kingfisher
 import UIKit
 
@@ -29,6 +30,7 @@ class CommonListCell: UITableViewCell {
     }
     override func awakeFromNib() {
         super.awakeFromNib()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             titleLabel.textAlignment = .left
             dateLabel.textAlignment = .left
@@ -43,6 +45,7 @@ class CommonListCell: UITableViewCell {
     }
     //MARK: HomeExhibitionList data
     func setExhibitionCellValues(exhibition: Exhibition) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         openCloseView.layer.cornerRadius = 12
         titleLabel.text = exhibition.name?.uppercased()
         //Hide Date and Location from Exhibition List page.
@@ -81,6 +84,7 @@ class CommonListCell: UITableViewCell {
     
     //MARK: MuseumExhibitionList data
     func setMuseumExhibitionCellValues(exhibition: Exhibition) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         openCloseView.layer.cornerRadius = 12
         titleLabel.text = exhibition.name?.uppercased()
         dateLabel.text = ((exhibition.startDate?.uppercased())!).replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil) + " - " + ((exhibition.endDate?.uppercased())!).replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
@@ -115,6 +119,7 @@ class CommonListCell: UITableViewCell {
     
     //NMoQ Tour
     func setTourMiddleDate(tourList: NMoQTourDetail?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         dateLabel.font  = UIFont.homeTitleFont
         dateLabel.text = tourList?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         titleLabel.isHidden = true
@@ -136,6 +141,7 @@ class CommonListCell: UITableViewCell {
     }
     //MARK: Facilities
     func setFacilitiesDetail(FacilitiesDetailData: FacilitiesDetail?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         dateLabel.font  = UIFont.homeTitleFont
         dateLabel.text = FacilitiesDetailData?.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         titleLabel.isHidden = true
@@ -156,6 +162,7 @@ class CommonListCell: UITableViewCell {
     }
     //MARK: TourList
     func setTourListDate(tourList: NMoQTour?,isTour: Bool?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         titleLabel.font = UIFont.homeTitleFont
         dateLabel.font  = UIFont.homeTitleFont
         fullDateLabel.font = UIFont.sideMenuLabelFont
@@ -190,6 +197,7 @@ class CommonListCell: UITableViewCell {
     }
     //MARK: ActivityList
     func setActivityListDate(activityList: NMoQActivitiesList?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         titleLabel.font = UIFont.homeTitleFont
         dateLabel.font  = UIFont.settingsUpdateLabelFont
         titleLabel.text = activityList?.subtitle
@@ -217,6 +225,7 @@ class CommonListCell: UITableViewCell {
     }
     //MARK: TravelList
     func setTravelListData(travelListData: HomeBanner) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         dateLabel.font = UIFont.homeTitleFont
         dateLabel.text = travelListData.title
         titleLabel.isHidden = true
@@ -233,6 +242,7 @@ class CommonListCell: UITableViewCell {
     }
     //MARK: Facilities List
     func setFacilitiesListData(facilitiesListData: Facilities?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         dateLabel.font = UIFont.homeTitleFont
         dateLabel.text = facilitiesListData!.title!.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil).replacingOccurrences(of: "&amp;", with: "&", options: .regularExpression, range: nil)
         titleLabel.isHidden = true
@@ -251,6 +261,7 @@ class CommonListCell: UITableViewCell {
     }
     //MARK: ParkList
     func setParkListData(parkList: NMoQPark) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         titleLabel.font = UIFont.homeTitleFont
         titleLabel.text = parkList.title?.htmlString
         //?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
@@ -277,6 +288,7 @@ class CommonListCell: UITableViewCell {
     }
     //MARK: HeritageList data
     func setHeritageListCellValues(heritageList: Heritage) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         dateLabel.text = heritageList.name?.uppercased()
         if (heritageList.isFavourite == true)  {
             favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
@@ -296,6 +308,7 @@ class CommonListCell: UITableViewCell {
     }
     //MARK: Public Arts List Data
     func setPublicArtsListCellValues(publicArtsList: PublicArtsList) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         dateLabel.text = publicArtsList.name?.uppercased()
         if (publicArtsList.isFavourite == true) {
             favouriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
@@ -314,6 +327,7 @@ class CommonListCell: UITableViewCell {
     }
     //MARK: Collections List Data
     func setCollectionsCellValues(collectionList: Collection) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         dateLabel.text = collectionList.name?.uppercased().replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         favouriteButton.isHidden = true
         if let imageUrl = collectionList.image {
@@ -327,6 +341,7 @@ class CommonListCell: UITableViewCell {
     }
     //MARK: Dining List Data
     func setDiningListValues(diningList: Dining) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         dateLabel.text = diningList.name?.uppercased()
         if let imageUrl = diningList.image{
             exhibitionImageView.kf.setImage(with: URL(string: imageUrl))
@@ -338,6 +353,7 @@ class CommonListCell: UITableViewCell {
     }
     //MARK: ScienceTour Data
     func setScienceTourGuideCellData(homeCellData: TourGuide) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         dateLabel.font = UIFont.homeTitleFont
         dateLabel.text = homeCellData.title
         if (homeCellData.nid == "12216") || (homeCellData.nid == "12226") {
@@ -360,6 +376,7 @@ class CommonListCell: UITableViewCell {
     }
     //MARK: Home
     func setHomeCellData(home: Home) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let titleString = home.name
         dateLabel.text = titleString
         dateLabel.font = UIFont.homeTitleFont
@@ -390,6 +407,7 @@ class CommonListCell: UITableViewCell {
     }
     //MARK:TourGuide List
     func setTourGuideCellData(museumsListData: Home) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         dateLabel.font = UIFont.homeTitleFont
         
         dateLabel.text = museumsListData.name

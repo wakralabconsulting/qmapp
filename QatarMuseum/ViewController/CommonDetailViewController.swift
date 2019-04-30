@@ -7,6 +7,7 @@
 //
 
 import Alamofire
+import CocoaLumberjack
 import CoreData
 import Firebase
 import MessageUI
@@ -48,7 +49,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         setupUIContents()
         registerCells()
         if ((pageNameString == PageName.heritageDetail) && (heritageDetailId != nil)) {
@@ -90,6 +91,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                 self.fetchDiningDetailsFromCoredata()
             }
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), pageNameString: \(String(describing: pageNameString)), networkReachabil: \(String(describing: networkReachability?.isReachable))")
         recordScreenView()
     }
     
@@ -107,6 +109,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         self.heritageDetailTableView.register(UINib(nibName: "DiningDetailCellView", bundle: nil), forCellReuseIdentifier: "diningDetailCellId")
     }
     func setTopBarImage() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         heritageDetailTableView.estimatedRowHeight = 50
         heritageDetailTableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0)
         
@@ -237,6 +240,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         addCloseButton()
     }
     func addCloseButton() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             closeButton.frame = CGRect(x: 10, y: 30, width: 40, height: 40)
         } else {
@@ -391,6 +395,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     func setFavouritesAction(cellObj :HeritageDetailCell) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (cellObj.favoriteButton.tag == 0) {
             cellObj.favoriteButton.tag = 1
             cellObj.favoriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
@@ -421,6 +426,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         }
     }
     func loadLocationInMap(currentRow: Int) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         var latitudeString  = String()
         var longitudeString = String()
         var latitude : Double?
@@ -474,6 +480,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     func showLocationErrorPopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
         popupView.loadLocationErrorPopup()
@@ -482,6 +489,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     
     //MARK: Poup Delegate
     func closeButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.popupView.removeFromSuperview()
     }
     
@@ -506,6 +514,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     @objc func buttonAction(sender: UIButton!) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         let transition = CATransition()
         transition.duration = 0.25
@@ -588,6 +597,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     @objc func imgButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if((imageView.image != nil) && (imageView.image != UIImage(named: "default_imageX2"))) {
             if (isHeritageImgArrayAvailable() || isPublicArtImgArrayAvailable() || isImgArrayAvailable()) {
                 setiCarouselView()
@@ -622,6 +632,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     //MARK: WebServiceCall
     func getHeritageDetailsFromServer() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.HeritageDetail(["nid": heritageDetailId!])).responseObject { (response: DataResponse<Heritages>) -> Void in
             switch response.result {
             case .success(let data):
@@ -652,6 +663,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     
     //MARK: PublicArts webservice call
     func getPublicArtsDetailsFromServer() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetPublicArtsDetail(["nid": publicArtsDetailId!])).responseObject { (response: DataResponse<PublicArtsDetails>) -> Void in
             switch response.result {
             case .success(let data):
@@ -681,6 +693,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     //MARK: Heritage Coredata Method
     func saveOrUpdateHeritageCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (heritageDetailtArray.count > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
@@ -698,6 +711,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     func heritageCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
             let fetchData = checkAddedToCoredata(entityName: "HeritageEntity", idKey: "listid" , idValue: heritageDetailtArray[0].id, managedContext: managedContext) as! [HeritageEntity]
            if (fetchData.count > 0) {
                 let heritageDetailDict = heritageDetailtArray[0]
@@ -752,6 +766,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     func saveToCoreData(heritageDetailDict: Heritage, managedObjContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
             let heritageInfo: HeritageEntity = NSEntityDescription.insertNewObject(forEntityName: "HeritageEntity", into: managedObjContext) as! HeritageEntity
             heritageInfo.listid = heritageDetailDict.id
             heritageInfo.listname = heritageDetailDict.name
@@ -795,6 +810,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         }
     }
     func fetchHeritageDetailsFromCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let managedContext = getContext()
         do {
                 var heritageArray = [HeritageEntity]()
@@ -845,6 +861,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     //MARK: PublicArts Coredata Method
     func saveOrUpdatePublicArtsCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (publicArtsDetailtArray.count > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
@@ -862,6 +879,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     func publicArtCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "PublicArtsEntity", idKey: "id" , idValue: publicArtsDetailtArray[0].id, managedContext: managedContext) as! [PublicArtsEntity]
             if (fetchData.count > 0) {
@@ -952,6 +970,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     func saveToCoreData(publicArtseDetailDict: PublicArtsDetail, managedObjContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let publicArtsInfo: PublicArtsEntity = NSEntityDescription.insertNewObject(forEntityName: "PublicArtsEntity", into: managedObjContext) as! PublicArtsEntity
             publicArtsInfo.id = publicArtseDetailDict.id
@@ -1012,6 +1031,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     func fetchPublicArtsDetailsFromCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -1114,6 +1134,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     //MARK: ExhibitionDetail Webservice call
     func getExhibitionDetail() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.ExhibitionDetail(["nid": exhibitionId!])).responseObject { (response: DataResponse<Exhibitions>) -> Void in
             switch response.result {
             case .success(let data):
@@ -1143,6 +1164,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     //MARK: Coredata Method
     func saveOrUpdateExhibitionsCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if (exhibition.count > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
@@ -1159,7 +1181,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         }
     }
     func exhibitionCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
-       // if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
             let fetchData = checkAddedToCoredata(entityName: "ExhibitionsEntity", idKey: "id" , idValue: exhibition[0].id, managedContext: managedContext) as! [ExhibitionsEntity]
             if (fetchData.count > 0) {
                 let exhibitionDetailDict = exhibition[0]
@@ -1260,6 +1282,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     //MARK: Parks WebServiceCall
     func getParksDataFromServer()
     {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.ParksList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<ParksLists>) -> Void in
             switch response.result {
             case .success(let data):
@@ -1302,6 +1325,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     //MARK: Coredata Method
     func saveOrUpdateParksCoredata(parksListArray:[ParksList]? ) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (parksListArray!.count > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
@@ -1318,6 +1342,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         }
     }
     func parksCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,parksListArray:[ParksList]?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "ParksEntity", idKey: nil, idValue: nil, managedContext: managedContext) as! [ParksEntity]
             if (fetchData.count > 0) {
@@ -1391,6 +1416,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         }
     }
     func fetchParksFromCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -1482,6 +1508,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     //MARK : NMoQPark
     func getNMoQParkDetailFromServer() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (parkDetailId != nil) {
             _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetNMoQPlaygroundDetail(LocalizationLanguage.currentAppleLanguage(), ["nid": parkDetailId!])).responseObject { (response: DataResponse<NMoQParksDetail>) -> Void in
                 switch response.result {
@@ -1526,6 +1553,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     //MARK: NMoq Playground Parks Detail Coredata Method
     func saveOrUpdateNmoqParkDetailCoredata(nmoqParkList: [NMoQParkDetail]?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((nmoqParkList?.count)! > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
@@ -1543,6 +1571,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     func nmoqParkDetailCoreDataInBackgroundThread(nmoqParkList: [NMoQParkDetail]?, managedContext: NSManagedObjectContext) {
         if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
             let fetchData = checkAddedToCoredata(entityName: "NMoQParkDetailEntity", idKey: "nid", idValue: nil, managedContext: managedContext) as! [NMoQParkDetailEntity]
             if (fetchData.count > 0) {
                 for i in 0 ... (nmoqParkList?.count)!-1 {
@@ -1648,6 +1677,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         }
     }
     func saveNMoQParkDetailToCoreData(nmoqParkListDict: NMoQParkDetail, managedObjContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
             let nmoqParkListdbDict: NMoQParkDetailEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoQParkDetailEntity", into: managedObjContext) as! NMoQParkDetailEntity
             nmoqParkListdbDict.title = nmoqParkListDict.title
@@ -1705,6 +1735,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     func fetchNMoQParkDetailFromCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -1794,6 +1825,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     //MARK: Dining WebServiceCall
     func getDiningDetailsFromServer() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetDiningDetail(["nid": diningDetailId!])).responseObject { (response: DataResponse<Dinings>) -> Void in
             switch response.result {
             case .success(let data):
@@ -1823,6 +1855,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     //MARK: Dining Coredata Method
     func saveOrUpdateDiningDetailCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (diningDetailtArray.count > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
@@ -1839,6 +1872,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         }
     }
     func diningCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
             let fetchData = checkAddedToCoredata(entityName: "DiningEntity", idKey: "id", idValue: diningDetailtArray[0].id, managedContext: managedContext) as! [DiningEntity]
             if (fetchData.count > 0) {
                 let diningDetailDict = diningDetailtArray[0]
@@ -1886,6 +1920,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
             }
     }
     func saveDiningDetailToCoreData(diningDetailDict: Dining, managedObjContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
             let diningInfo: DiningEntity = NSEntityDescription.insertNewObject(forEntityName: "DiningEntity", into: managedObjContext) as! DiningEntity
             diningInfo.id = diningDetailDict.id
             diningInfo.name = diningDetailDict.name
@@ -1926,6 +1961,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         }
     }
     func fetchDiningDetailsFromCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let managedContext = getContext()
         do {
                 var diningArray = [DiningEntity]()
@@ -1965,6 +2001,8 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         }
     }
     func setFavouritesAction(cellObj :DiningDetailTableViewCell) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         if (cellObj.favoriteButton.tag == 0) {
             cellObj.favoriteButton.tag = 1
             cellObj.favoriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
@@ -2009,6 +2047,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         
     }
     func showNodata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         var errorMessage: String
         errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
                                                         comment: "Setting the content of the alert"))
@@ -2021,6 +2060,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
    
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if  (networkReachability?.isReachable)! {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if ((pageNameString == PageName.heritageDetail) && (heritageDetailId != nil)) {
@@ -2039,12 +2079,14 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         }
     }
     func showNoNetwork() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.loadingView.stopLoading()
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
     }
     func recordScreenView() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let screenClass = String(describing: type(of: self))
         if (pageNameString == PageName.publicArtsDetail) {
             Analytics.setScreenName(PUBLICARTS_DETAIL, screenClass: screenClass)
@@ -2061,6 +2103,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         }
     }
     @objc func receiveParksNotificationEn(notification: NSNotification) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (parksListArray.count == 0)){
             self.fetchParksFromCoredata()
         } else if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (parksListArray.count == 0)){
@@ -2068,6 +2111,7 @@ class CommonDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         }
     }
     @objc func receiveParksNotificationAr(notification: NSNotification) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (parksListArray.count == 0)){
             self.fetchParksFromCoredata()
         }

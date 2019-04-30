@@ -351,16 +351,6 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         homePageNameString = HomePageName.museumLandingPage
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
        self.performSegue(withIdentifier: "homeToMuseumLandingSegue", sender: self)
-//        let museumsView =  self.storyboard?.instantiateViewController(withIdentifier: "museumViewId") as! MuseumsViewController
-//        museumsView.museumId = homeList[curretRow!].id
-//        museumsView.museumTitleString = homeList[curretRow!].name
-//        museumsView.fromHomeBanner = false
-//        let transition = CATransition()
-//        transition.duration = 0.25
-//        transition.type = kCATransitionPush
-//        transition.subtype = kCATransitionFromRight
-//        view.window!.layer.add(transition, forKey: kCATransition)
-//        self.present(museumsView, animated: false, completion: nil)
         
     }
     
@@ -368,14 +358,6 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         homePageNameString = HomePageName.exhibitionList
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.performSegue(withIdentifier: "homeToCommonListSegue", sender: self)
-//        let exhibitionView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! ExhibitionsViewController
-//        let transition = CATransition()
-//        transition.duration = 0.25
-//        transition.type = kCATransitionPush
-//        transition.subtype = kCATransitionFromRight
-//        view.window!.layer.add(transition, forKey: kCATransition)
-//        exhibitionView.exhibitionsPageNameString = ExhbitionPageName.homeExhibition
-//        self.present(exhibitionView, animated: false, completion: nil)
     }
     
     func loadComingSoonPopup() {
@@ -512,6 +494,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     //MARK: SideMenu Delegates
     func exhibitionButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         homePageNameString = HomePageName.exhibitionList
         self.performSegue(withIdentifier: "homeToListFadeSegue", sender: self)
     }
@@ -569,6 +552,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func giftShopButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.performSegue(withIdentifier: "homeToWebViewSegue", sender: self)
     }
     
@@ -680,6 +664,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func topBarEventButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         homePageNameString = HomePageName.eventList
         self.performSegue(withIdentifier: "homeToEventSegue", sender: self)
     }
