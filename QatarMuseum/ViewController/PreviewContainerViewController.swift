@@ -343,6 +343,13 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
             }
             viewFiveLineTwo.isHidden = true
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_previewcontainer_pgctrlfirsttime,
+            AnalyticsParameterItemName: tourGuideArray.count,
+            AnalyticsParameterContentType: "cont"
+            ])
+        
         viewOneLineOne.isHidden = true
     }
     
@@ -652,12 +659,22 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromLeft
         self.view.window!.layer.add(transition, forKey: kCATransition)
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_header_close,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
         self.dismiss(animated: false, completion: nil)
     }
     
     func closeAudio() {
         if (currentContentViewController != nil) {
             currentContentViewController.stopAudio()
+            Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_previewcontainer_stopaudio,
+                AnalyticsParameterItemName: "",
+                AnalyticsParameterContentType: "cont"
+                ])
         }
     }
     
@@ -753,6 +770,13 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
                 let locationMissingMessage =  NSLocalizedString("LOCATION_MISSING_MESSAGE", comment: "LOCATION_MISSING_MESSAGE")
                 self.view.makeToast(locationMissingMessage)
             }
+            
+            Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_previewcontainer_filter,
+                AnalyticsParameterItemName: "",
+                AnalyticsParameterContentType: "cont"
+                ])
+            
         } else {
             
         }

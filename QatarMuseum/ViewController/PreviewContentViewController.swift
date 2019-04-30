@@ -126,7 +126,13 @@ class PreviewContentViewController: UIViewController, UITableViewDelegate, UITab
         if((indexPath.row == 0) && (tourGuideDict.image != "")) {
             if let imageUrl = tourGuideDict.image {
                 self.loadObjectImagePopup(imgName: imageUrl )
+                Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                    AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_floormap_loadmap,
+                    AnalyticsParameterItemName: imageUrl,
+                    AnalyticsParameterContentType: "cont"
+                    ])
             }
+            
         }
     }
     

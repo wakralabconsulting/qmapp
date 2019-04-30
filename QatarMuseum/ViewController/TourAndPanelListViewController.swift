@@ -221,6 +221,11 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromLeft
         self.view.window!.layer.add(transition, forKey: kCATransition)
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_header_close,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
         self.dismiss(animated: false, completion: nil)
     }
     
@@ -249,6 +254,12 @@ class TourAndPanelListViewController: UIViewController,UITableViewDelegate,UITab
                 appDelegate?.getFacilitiesListFromServer(lang: LocalizationLanguage.currentAppleLanguage())
             }
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museum_tryagain,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     func showNoNetwork() {

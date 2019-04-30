@@ -82,6 +82,7 @@ struct FirebaseAnalyticsEvents {
     static let tapped_location_map = "tapped_location_map"
     static let tapped_museum_previous = "tapped_location_map"
     static let tapped_museum_next = "tapped_museum_next"
+    static let tapped_museum_tryagain = "tapped_museum_tryagain"
     
     
     //Museum
@@ -97,6 +98,11 @@ struct FirebaseAnalyticsEvents {
     static let tapped_museum_event = "tapped_museum_event"
     static let tapped_museum_notifications = "tapped_museum_notifications"
     static let tapped_museum_profile = "tapped_museum_profile"
+    static let tapped_museumabout_gallerypressed = "tapped_museumabout_gallerypressed"
+    static let tapped_museumabout_openemail = "tapped_museumabout_openemail"
+    static let tapped_museumabout_dialphone = "tapped_museumabout_dialphone"
+    static let tapped_museumabout_closecarousel = "tapped_museumabout_closecarousel"
+    
     
     //Tourguide
     
@@ -114,7 +120,24 @@ struct FirebaseAnalyticsEvents {
     static let tapped_floormap_loadfirst = "tapped_floormap_loadfirst"
     static let tapped_floormap_objectclose = "tapped_floormap_objectclose"
     static let tapped_floormap_numbersearch = "tapped_floormap_numbersearch"
+    static let tapped_floormap_playpause = "tapped_floormap_playpause"
+    static let tapped_floormap_sliderchange = "tapped_floormap_sliderchange"
+    static let tapped_floormap_loadobjectmap = "tapped_floormap_loadobjectmap"
 
+    
+    //Object Detail
+    static let tapped_objectdetail_buttonaction = "tapped_objectdetail_buttonaction"
+    
+    
+    //Preview container
+    static let tapped_previewcontainer_pgctrlfirsttime = "tapped_previewcontainer_pgctrlfirsttime"
+    static let tapped_previewcontainer_stopaudio = "tapped_previewcontainer_stopaudio"
+    static let tapped_previewcontainer_filter = "tapped_previewcontainer_filter"
+    
+    //MapView
+    
+    static let tapped_mapview_maptype = "tapped_mapview_maptype"
+    
     
     static let id = "id"
 }

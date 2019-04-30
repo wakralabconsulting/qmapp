@@ -1279,6 +1279,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                 isPaused = false
             }
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_floormap_playpause,
+            AnalyticsParameterItemName: isPaused,
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     @IBAction func sliderValueChange(_ sender: UISlider) {
@@ -1291,6 +1297,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
         if(isPaused == false){
             seekLoadingLabel.alpha = 1
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_floormap_sliderchange,
+            AnalyticsParameterItemName: isPaused,
+            AnalyticsParameterContentType: "cont"
+            ])
     }
 
     func setupTimer(){
@@ -1356,6 +1368,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             self.avPlayer = nil
             self.timer?.invalidate()
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_header_back,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     //MARK: WebServiceCall

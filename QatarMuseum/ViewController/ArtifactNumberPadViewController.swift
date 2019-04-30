@@ -188,6 +188,11 @@ class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UIC
         transition.type = kCATransitionFade
         transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
         self.view.window!.layer.add(transition, forKey: kCATransition)
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_header_close,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
         dismiss(animated: false, completion: nil)
     }
     //MARK: WebServiceCall
