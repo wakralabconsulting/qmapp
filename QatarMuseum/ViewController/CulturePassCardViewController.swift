@@ -9,6 +9,7 @@
 import Firebase
 import UIKit
 import KeychainSwift
+import CocoaLumberjack
 
 class CulturePassCardViewController: UIViewController {
     
@@ -26,6 +27,8 @@ class CulturePassCardViewController: UIViewController {
     let keychain = KeychainSwift()
     
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         setUI ()
         barcodeView.isHidden = true
@@ -51,6 +54,7 @@ class CulturePassCardViewController: UIViewController {
 //        tapToFlipButton.layer.cornerRadius = 25
     }
     func generateBarcode(from string: String) -> UIImage? {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let data = string.data(using: String.Encoding.ascii)
 
         if let filter = CIFilter(name: "CICode128BarcodeGenerator") {
@@ -73,6 +77,7 @@ class CulturePassCardViewController: UIViewController {
     }
     
     @IBAction func didTapTapToFlip(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let cardBackView =  self.storyboard?.instantiateViewController(withIdentifier: "cardBackId") as!CulturePassCardBackViewController
         if(keychain.get(UserProfileInfo.user_id) != nil) && (keychain.get(UserProfileInfo.user_id) != "") {
             let membershipNum = Int((keychain.get(UserProfileInfo.user_id))!)! + 006000

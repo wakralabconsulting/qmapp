@@ -14,6 +14,7 @@ import MessageUI
 import Firebase
 import UIKit
 import KeychainSwift
+import CocoaLumberjack
 
 enum NMoQPanelPage {
     case PanelDetailPage
@@ -59,6 +60,8 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     let keychain = KeychainSwift()
     
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
+
         super.viewDidLoad()
         registerCell()
         setupUI()
@@ -69,6 +72,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         return .lightContent
     }
     func setupUI() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         loadingView.isHidden = false
         loadingView.showLoading()
         loadingView.loadingViewDelegate = self
@@ -234,6 +238,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
 
     func loadLocationMap( mobileLatitude: String?, mobileLongitude: String? ) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), Latitude:\(String(describing: mobileLatitude)), Longitude:\(String(describing: mobileLongitude))")
         if (mobileLatitude != nil && mobileLatitude != "" && mobileLongitude != nil && mobileLongitude != "") {
             let latitudeString = (mobileLatitude)!
             let longitudeString = (mobileLongitude)!
@@ -266,7 +271,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         }
     }
     func reisterOrUnregisterTapAction(currentRow: Int,selectedCell : PanelDetailCell?) {
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if (networkReachability?.isReachable)! {
             if (selectedCell?.registerButton.tag == 0) {
                 let time = nmoqTourDetail[currentRow].date?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
@@ -296,6 +301,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         
     }
     func headerCloseButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionPush
@@ -305,6 +311,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     
     func showNodata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         var errorMessage: String
         errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
                                                         comment: "Setting the content of the alert"))
@@ -317,6 +324,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if  (networkReachability?.isReachable)! {
             if((pageNameString == NMoQPanelPage.FacilitiesDetailPage) && (fromCafeOrDining == false)){
                 self.getFacilitiesDetail()
@@ -327,6 +335,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     
     func showNoNetwork() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.loadingView.stopLoading()
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
@@ -334,6 +343,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     //MARK: WebService Call
     func getNMoQSpecialEventDetail() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if(panelDetailId != nil) {
             _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetNMoQSpecialEventDetail(["event_id" : panelDetailId!])).responseObject { (response: DataResponse<NMoQTourList>) -> Void in
                 switch response.result {
@@ -363,6 +373,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         }
     }
     func getNMoQTourDetail() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if(panelDetailId != nil) {
             _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetNMoQTourDetail(["event_id" : panelDetailId!])).responseObject { (response: DataResponse<NMoQTourDetailList>) -> Void in
                 switch response.result {
@@ -396,6 +407,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     
     //MARK: EntityRegistration API
     func getEntityRegistrationFromServer(currentRow: Int,selectedCell: PanelDetailCell?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let time = getTimeStamp(currentRow: currentRow)
         if (time.startTime != nil && time.endTime != nil) {
             
@@ -472,6 +484,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         
     }
     func setEntityRegistrationAsComplete(currentRow: Int, timestamp: String,selectedCell: PanelDetailCell?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if((newRegistrationId != nil) && (nmoqTourDetail[currentRow].nid != nil) && (keychain.get(UserProfileInfo.user_id) != nil) && (keychain.get(UserProfileInfo.user_firstname) != nil) && (keychain.get(UserProfileInfo.user_lastname) != nil)) {
             let time = getTimeStamp(currentRow: currentRow)
             if (time.startTime != nil && time.endTime != nil) {
@@ -751,6 +764,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
 
     func fetchUserEventListFromCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if (userEventList.count > 0) {
             userEventList.removeAll()
         }
@@ -773,7 +787,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         }
     }
     func deleteRegisteredEvent(registrationId: String?) {
-
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let appDelegate =  UIApplication.shared.delegate as? AppDelegate
         if #available(iOS 10.0, *) {
             let container = appDelegate!.persistentContainer
@@ -802,6 +816,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         
     }
     func getTimeStamp(currentRow:Int?) ->(startTime:Int?,endTime:Int?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let time = nmoqTourDetail[currentRow!].date?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
         let timeArray = time?.components(separatedBy: "-")
         if((timeArray?.count)! == 3) {
@@ -819,6 +834,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         return (nil,nil)
     }
     func loadAddToCalendarPopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         addToCalendarPopup.tag = 0
         addToCalendarPopup  = EventPopupView(frame: self.view.frame)
         addToCalendarPopup.eventPopupDelegate = self
@@ -827,6 +843,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         self.view.addSubview(addToCalendarPopup)
     }
     func loadAlreadyRegisteredPopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
         popupView.tag = 1
@@ -834,6 +851,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         self.view.addSubview(popupView)
     }
     func loadNoEndTimePopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
         popupView.tag = 2
@@ -842,6 +860,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     //ComingSoonPopup Delagate
     func closeButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if ((popupView.tag == 1) || (popupView.tag == 2))  {
             self.popupView.removeFromSuperview()
         }
@@ -849,12 +868,14 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
 
     }
     func loadConfirmationPopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         unRegisterPopupView  = AcceptDeclinePopup(frame: self.view.frame)
         unRegisterPopupView.showUnregisterYesOrNoMessage()
         unRegisterPopupView.declinePopupDelegate = self
         self.view.addSubview(unRegisterPopupView)
     }
     func loadNoSeatAvailablePopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
         popupView.tag = 0
@@ -866,15 +887,18 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     
     func yesButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         setEntityUnRegistration(currentRow: selectedRow!, selectedCell: selectedPanelCell)
         setRegisteredButton()
         self.unRegisterPopupView.removeFromSuperview()
     }
     
     func noButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.unRegisterPopupView.removeFromSuperview()
     }
     func showLocationErrorPopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
         popupView.loadMapKitLocationErrorPopup()
@@ -885,6 +909,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     
     func openEmail(email : String) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let mailComposeViewController = configuredMailComposeViewController(emailId:email)
         if MFMailComposeViewController.canSendMail() {
             self.present(mailComposeViewController, animated: true, completion: nil)
@@ -894,6 +919,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
    
     func configuredMailComposeViewController(emailId:String) -> MFMailComposeViewController {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let mailComposerVC = MFMailComposeViewController()
         mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
         
@@ -905,7 +931,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     
     func showSendMailErrorAlert() {
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let sendMailErrorAlert = UIAlertController(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", preferredStyle: UIAlertControllerStyle.alert)
         
         let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default)
@@ -925,7 +951,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
 
     
     func dialNumber(number : String) {
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let phoneNumber = number.replacingOccurrences(of: " ", with: "")
 
         if let url = URL(string: "tel://\(String(phoneNumber))"),
@@ -942,12 +968,14 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         }
     }
     @objc func dismissOverlay(sender: UITapGestureRecognizer? = nil) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         overlayView.isHidden = true
         picker.removeFromSuperview()
         toolBar.removeFromSuperview()
     }
     //MARK: PickerView
     func addPickerView() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         picker.frame = CGRect(x: 0, y: UIScreen.main.bounds.height-200, width: self.view.frame.width , height: 200)
         picker.backgroundColor = UIColor(red: 225/255, green: 225/255, blue: 225/255, alpha: 1)
         picker.showsSelectionIndicator = true
@@ -987,7 +1015,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         selectedCount = countArray[row]
     }
     @objc func donePicker() {
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let countValue : Int? = Int(selectedCount!)
         let remainingSeat : Int? = Int(nmoqTourDetail[currentPanelRow!].seatsRemaining ?? "0")
         if (countValue! > remainingSeat!) {
@@ -1003,6 +1031,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         
     }
     func setUnRegisteredButton() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         selectedPanelCell?.numbOfRservationsLabel.isHidden = false
         if(selectedCount == "1") {
             let reservationCount = NSLocalizedString("NUMB_OF_RESERVATIONS", comment: "NUMB_OF_RESERVATIONS in panel detail") + selectedCount! +  NSLocalizedString("SPACE", comment: "SPACE in panel detail")
@@ -1018,6 +1047,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         selectedPanelCell?.registerButton.setTitle(cancelBookingString, for: .normal)
     }
     func setRegisteredButton() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let remainingSeat : Int? = Int(nmoqTourDetail[currentPanelRow!].seatsRemaining ?? "0")
         if ((nmoqTourDetail[currentPanelRow!].seatsRemaining == "0") || (nmoqTourDetail[currentPanelRow!].seatsRemaining == nil) || (remainingSeat! < 0)) {
             selectedPanelCell?.numbOfRservationsLabel.text = NSLocalizedString("NO_SEAT_AVAILABLE", comment: "NO_SEAT_AVAILABLE in panel detail")
@@ -1039,6 +1069,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     //MARK: AddToCalendar Delegate
     func eventCloseButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if (addToCalendarPopup.addToCalendarButton.tag == 0) {
             setUnRegisteredButton()
         }
@@ -1046,6 +1077,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     
     func addToCalendarButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.addToCalendarPopup.removeFromSuperview()
         if (addToCalendarPopup.tag == 0) {
             setUnRegisteredButton()
@@ -1067,6 +1099,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     
     func addEventToCalendar(title: String, description: String?, startDate: Date?, endDate: Date?, completion: ((_ success: Bool, _ error: NSError?) -> Void)? = nil) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let eventStore = EKEventStore()
         let status = EKEventStore.authorizationStatus(for: .event)
         switch (status) {
@@ -1118,6 +1151,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         
     }
     func loadCalendarPermissionPopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         addToCalendarPopup  = EventPopupView(frame: self.view.frame)
         addToCalendarPopup.eventPopupDelegate = self
 
@@ -1129,6 +1163,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     //MARK: Facilities SecondaryList ServiceCall
     func getFacilitiesDetail() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if(panelDetailId != nil) {
             _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetFacilitiesDetail(["category_id" : panelDetailId!])).responseObject { (response: DataResponse<FacilitiesDetailData>) -> Void in
                 switch response.result {
@@ -1165,6 +1200,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     //MARK: Coredata Method
     func saveOrUpdateFacilitiesDetailCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if (facilitiesDetail.count > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
@@ -1181,6 +1217,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         }
     }
     func facilitiesDetailCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "FacilitiesDetailEntity", idKey: "category", idValue: panelDetailId, managedContext: managedContext) as! [FacilitiesDetailEntity]
             if (fetchData.count > 0) {
@@ -1363,6 +1400,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         }
     }
     func fetchFacilitiesDetailsFromCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -1436,6 +1474,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     //MARK: WebServiceCall
     func getCollectioDetailsFromServer() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.CollectionDetail(["category": collectionName!])).responseObject { (response: DataResponse<CollectionDetails>) -> Void in
             switch response.result {
             case .success(let data):
@@ -1464,6 +1503,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     }
     
     func getNMoQParkDetailFromServer() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if (nid != nil) {
             _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetNMoQPlaygroundDetail(LocalizationLanguage.currentAppleLanguage(), ["nid": nid!])).responseObject { (response: DataResponse<NMoQParksDetail>) -> Void in
                 switch response.result {
@@ -1514,6 +1554,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                     self.collectionDetailCoreDataInBackgroundThread(managedContext : managedContext)
                 }
             }
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         }
     }
     func collectionDetailCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
@@ -1588,6 +1629,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                 }
             }
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func collectionDetailSaveToCoreData(collectionDetailDict: CollectionDetail, managedObjContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -1614,6 +1656,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func fetchCollectionDetailsFromCoredata() {
@@ -1682,6 +1725,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                 }
             }
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     //MARK: NMoq Playground Parks Detail Coredata Method
     func saveOrUpdateNmoqParkDetailCoredata(nmoqParkList: [NMoQParkDetail]?) {
@@ -1699,6 +1743,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                 }
             }
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func nmoqParkDetailCoreDataInBackgroundThread(nmoqParkList: [NMoQParkDetail]?, managedContext: NSManagedObjectContext) {
@@ -1806,6 +1851,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                 NotificationCenter.default.post(name: NSNotification.Name(nmoqParkDetailNotificationAr), object: self)
             }
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func saveNMoQParkDetailToCoreData(nmoqParkListDict: NMoQParkDetail, managedObjContext: NSManagedObjectContext) {
@@ -1861,8 +1907,9 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         do {
             try managedObjContext.save()
         } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+            DDLogError("Could not save. \(error), \(error.userInfo)")
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func fetchNMoQParkDetailFromCoredata() {
@@ -1941,7 +1988,8 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                     }
                 }
             }
-        } 
+        }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func checkAddedToCoredata(entityName: String?, idKey:String?, idValue: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
         var fetchResults : [NSManagedObject] = []
@@ -1969,12 +2017,14 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (nmoqParkDetailArray.count == 0)){
             self.fetchNMoQParkDetailFromCoredata()
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @objc func receiveNmoqParkDetailNotificationAr(notification: NSNotification) {
         if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (nmoqParkDetailArray.count == 0)){
             self.fetchNMoQParkDetailFromCoredata()
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
 }

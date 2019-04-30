@@ -9,6 +9,7 @@
 import Crashlytics
 import Firebase
 import UIKit
+import CocoaLumberjack
 
 class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate {
     @IBOutlet weak var institutionTitleLabel: UILabel!
@@ -47,6 +48,8 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     var selectedProgrammeRow = 0
 
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
        
         setupUI()
@@ -144,16 +147,19 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     }
     
     @IBAction func didTapInstitutionButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         institutionText.becomeFirstResponder()
         self.institutionButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
     
     @IBAction func didTapageGroupButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         ageGroupText.becomeFirstResponder()
         self.ageGroupButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
     
     @IBAction func didTapProgrammeTypeButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         programmeTypeText.becomeFirstResponder()
         self.programmeButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
@@ -166,6 +172,7 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     }
     
     @IBAction func didTapFilter(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.filterButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         let transition = CATransition()
         transition.duration = 0.25
@@ -181,28 +188,33 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     }
     
     @IBAction func institutionButtonTouchDown(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.institutionButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
     @IBAction func ageGroupButtonTouchDown(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.ageGroupButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
     @IBAction func programmeTypeButtonTouchDown(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.programmeButton.transform = CGAffineTransform(scaleX: 0.7, y:0.7)
     }
     
     @IBAction func clearButtonTouchDown(_ sender: UIButton) {
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         
         self.clearButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
     @IBAction func filterButtonTouchDown(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.filterButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
     func addPickerView() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         picker.translatesAutoresizingMaskIntoConstraints = false
         picker.frame = CGRect(x: 20, y: UIScreen.main.bounds.height-200, width: self.view.frame.width - 40, height: 200)
         picker.backgroundColor = UIColor.whiteColor
@@ -219,6 +231,7 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     
     //MARK: header delegate
     func headerCloseButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush
@@ -228,6 +241,7 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         
     }
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         var viewForTextField : UIView!
         if (textField == institutionText) {
             picker.tag = 0
@@ -268,6 +282,7 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         UIView.beginAnimations( "animateView", context: nil)
         var frame : CGRect = self.view.frame
         frame.origin.y = 0
@@ -276,10 +291,12 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         return true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         institutionText.resignFirstResponder()
         ageGroupText.resignFirstResponder()
         programmeTypeText.resignFirstResponder()
@@ -293,6 +310,7 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if(picker.tag == 0) {
             return institutionArray.count
         } else if(picker.tag == 1) {
@@ -303,6 +321,7 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     }
 
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let pickerLabel = UITextView()
         var pickerTitle : String?
         if (picker.tag == 0) {
@@ -322,6 +341,7 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (picker.tag == 0) {
             selectedInstitutionRow = row
             selectedInstitution = (institutionArray[row] as? String)!
@@ -342,6 +362,7 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     
     //MARK: Picker ToolBar Actions
     @IBAction func didTapPrevious(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (picker.tag == 0 && selectedInstitutionRow != 0) {
             selectedInstitutionRow = selectedInstitutionRow-1
             picker.selectRow(selectedInstitutionRow, inComponent: 0, animated: true)
@@ -364,6 +385,7 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     }
     
     @IBAction func didTapNext(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (picker.tag == 0 && selectedInstitutionRow != institutionArray.count-1) {
             selectedInstitutionRow = selectedInstitutionRow+1
             picker.selectRow(selectedInstitutionRow, inComponent: 0, animated: true)
@@ -386,6 +408,7 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
     }
     
     @IBAction func didTapPickerClose(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (picker.tag == 0) {
             institutionText.text = selectedInstitution
         } else if(picker.tag == 1) {
@@ -398,6 +421,7 @@ class FilterViewController: UIViewController,HeaderViewProtocol,UIPickerViewDele
         programmeTypeText.resignFirstResponder()
     }
     func recordScreenView() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let screenClass = String(describing: type(of: self))
         Analytics.setScreenName(FILTER_VC, screenClass: screenClass)
     }

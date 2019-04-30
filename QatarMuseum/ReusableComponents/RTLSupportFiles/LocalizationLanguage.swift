@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import CocoaLumberjack
 let APPLE_LANGUAGE_KEY = "AppleLanguages"
 class LocalizationLanguage {
     /// get current Apple language
     class func currentAppleLanguage() -> String{
+        
         let userdef = UserDefaults.standard
         let langArray = userdef.object(forKey: APPLE_LANGUAGE_KEY) as! NSArray
         let current = langArray.firstObject as! String
@@ -19,6 +21,7 @@ class LocalizationLanguage {
         if ((currentWithoutLocale != "en") && (currentWithoutLocale != "ar")){
             currentWithoutLocale = "en"
         }
+        
         return currentWithoutLocale
     }
     
@@ -26,6 +29,7 @@ class LocalizationLanguage {
         let userdef = UserDefaults.standard
         let langArray = userdef.object(forKey: APPLE_LANGUAGE_KEY) as! NSArray
         let current = langArray.firstObject as! String
+//        DDLogInfo("File: \(#file)" + "Function: \(#function)" + "Language: \(current)")
         return current
     }
     

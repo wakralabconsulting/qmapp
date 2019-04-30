@@ -10,6 +10,7 @@ import Crashlytics
 import Firebase
 import Kingfisher
 import UIKit
+import CocoaLumberjack
 
 class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingSoonPopUpProtocol, KASlideShowDelegate {
     @IBOutlet weak var tourGuideDescription: UITextView!
@@ -34,6 +35,8 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     var titleString : String? = ""
     let networkReachability = NetworkReachabilityManager()
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         loadingView.isHidden = false
         loadingView.showLoading()
@@ -128,19 +131,23 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     @IBAction func didTapPlayButton(_ sender: UIButton) {
         self.playButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         loadComingSoonPopup()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @IBAction func playButtonTouchDown(_ sender: UIButton) {
         self.playButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @IBAction func didTapStartTour(_ sender: UIButton) {
         self.startTourButton.transform = CGAffineTransform(scaleX: 1, y: 1)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), tourGuideDetailID: \(String(describing: tourGuideDetail?.nid))")
         self.performSegue(withIdentifier: "miaTourToPreviewSegue", sender: self)
     }
     
     @IBAction func startTourButtonTouchDown(_ sender: UIButton) {
         self.startTourButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func loadComingSoonPopup() {
@@ -148,7 +155,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
         popupView.comingSoonPopupDelegate = self
         popupView.loadPopup()
         self.view.addSubview(popupView)
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @objc func pageChanged() {
@@ -189,6 +196,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
             self.scienceTourTitle.textContainer.lineBreakMode = .byTruncatingTail;
         }
         self.tourGuideDescription.textContainer.lineBreakMode = .byTruncatingTail;
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func setImageArray(tourGuideImgDict : TourGuide?) {
         self.sliderImgArray[0] = UIImage(named: "sliderPlaceholder")!
@@ -200,6 +208,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
                 downloadImage(imageUrlString: imageUrlString)
             }
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func downloadImage(imageUrlString : String?)  {
@@ -222,6 +231,7 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
                     self.setSlideShow(imgArray: self.sliderImgArray)
                     self.slideshowView.start()
                 }
+                DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
             }
         }
     }

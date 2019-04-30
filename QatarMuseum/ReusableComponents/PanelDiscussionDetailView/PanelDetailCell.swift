@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import CocoaLumberjack
 
 class PanelDetailCell: UITableViewCell,UITextViewDelegate {
     @IBOutlet weak var topImg: UIImageView!
@@ -45,6 +46,7 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
         setUI()
     }
     func setUI() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         topTitle.font = UIFont.selfGuidedFont
         topDescription.font = UIFont.collectionFirstDescriptionFont
         secondTitle.font = UIFont.selfGuidedFont
@@ -89,6 +91,7 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
         }
     }
     func setPanelDetailCellContent(panelDetailData: NMoQTour?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         topTitle.text = panelDetailData?.subtitle
         topDescription.text = panelDetailData?.dayDescription
         secondTitle.text = panelDetailData?.moderatorName
@@ -157,6 +160,7 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
     }
     
     func setTourSecondDetailCellContent(tourDetailData: NMoQTourDetail?,userEventList : [NMoQUserEventList],fromTour:Bool?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         numbOfRservationsLabel.numberOfLines = 2
         if(fromTour)! {
             
@@ -268,6 +272,7 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
         
     }
     func setFacilitiesDetailData(facilitiesDetailData: FacilitiesDetail?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         numbOfRservationsLabel.isHidden = true
         registerButton.isHidden = true
         switchBottomConstraint.constant = 0
@@ -332,20 +337,24 @@ class PanelDetailCell: UITableViewCell,UITextViewDelegate {
         
     }
     @IBAction func didTapRegisterButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         
         self.registerOrUnRegisterAction?()
     }
     @objc func handleTap(sender: UITapGestureRecognizer? = nil) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.loadMapView?()
     }
     
     @objc func emailTapFunction(sender:UITapGestureRecognizer) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         
         print("email label tapped ...")
         self.loadEmailComposer?()
     }
     
     @objc func phoneTapFunction(sender:UITapGestureRecognizer) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         
         print("phone label tapped ...")
         self.callPhone?()

@@ -12,7 +12,7 @@ import Crashlytics
 import Firebase
 import UIKit
 import YouTubePlayer
-
+import CocoaLumberjack
 
 class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,HeaderViewProtocol {
     @IBOutlet weak var headerView: CommonHeaderView!
@@ -29,6 +29,8 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
     var fromSideMenu : Bool = false
 
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         setupUI()
         loadVideo()
@@ -82,6 +84,7 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
     }
     //MARK: header delegate
     func headerCloseButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let transition = CATransition()
         transition.duration = 0.3
         if (fromSideMenu == true) {
@@ -100,6 +103,7 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
     }
     
     @IBAction func didTapPlayPauseButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
          self.playButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         if (playButton.tag == 0) {
             playButton.tag = 1
@@ -112,18 +116,23 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
     }
     
     @IBAction func didTapDiscoverButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
        self.discoverButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         self.performSegue(withIdentifier: "educationToEventSegue", sender: self)
+       
     }
     //For Button Animations
     @IBAction func discovereButtonTouchDown(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.discoverButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
         //self.discoverButton.backgroundColor = UIColor.startTourLightBlue
     }
     @IBAction func playPauseButtonTouchDown(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.playButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     func recordScreenView() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let screenClass = String(describing: type(of: self))
         Analytics.setScreenName(EDUCATION_VC, screenClass: screenClass)
     }

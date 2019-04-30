@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 
 class MuseumBottomCell: UICollectionViewCell {
     
@@ -20,6 +21,7 @@ class MuseumBottomCell: UICollectionViewCell {
         itemName.font = UIFont.eventDescriptionFont
     }
     @IBAction func didTapCellButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         UIButton.animate(withDuration: 0.2,
                          animations: {
                             self.cellView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)

@@ -12,6 +12,7 @@ import Crashlytics
 import Firebase
 import Kingfisher
 import UIKit
+import CocoaLumberjack
 class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,comingSoonPopUpProtocol {
     
     @IBOutlet weak var museumsTopbar: TopBarView!
@@ -39,6 +40,8 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     var selectedItemName : String? = nil
     
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         setupUI()
         self.recordScreenView()
@@ -94,6 +97,9 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             museumsTopbar.notificationButton.isHidden = true
             museumsTopbar.profileButton.isHidden = true
         } else {
+            
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), Museum ID: \(String(describing: museumId))")
+            
             if ((museumId != nil) && ((museumId == "63") || (museumId == "96"))) {
                 collectionViewImages = ["MIA_AboutX1","Audio CircleX1","exhibition_blackX1","collectionsX1","park_blackX1","diningX1",]
                 collectionViewNames = [aboutName,tourGuideName,exhibitionsName,collectionsName,parkName,diningName]
@@ -214,6 +220,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     //MARK: Topbar delegate
     func backButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         museumsSlideView.stop()
         let transition = CATransition()
         transition.duration = 0.3
@@ -338,6 +345,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 self.performSegue(withIdentifier: "museumsToTourAndPanelSegue", sender: self)
             }
         } else {
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), Selected Item: \(String(describing: selectedItem))")
             if ((selectedItem == "About") || (selectedItem == "عن")) {
                 self.performSegue(withIdentifier: "museumsToAboutSegue", sender: self)
             } else if ((selectedItem == "Tour Guide") || (selectedItem == "الدليل السياحي")){
@@ -368,7 +376,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     
     @IBAction func didTapPrevious(_ sender: UIButton) {
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             let collectionBounds = self.museumsBottomCollectionView.bounds
             let contentOffset = CGFloat(floor(self.museumsBottomCollectionView.contentOffset.x - collectionBounds.size.width))
@@ -386,7 +394,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         }
     }
     @IBAction func didTapNext(_ sender: UIButton) {
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
             self.museumsBottomCollectionView.isScrollEnabled = true
             let collectionBounds = self.museumsBottomCollectionView.bounds
@@ -411,6 +419,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         
     }
     func loadComingSoonPopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         popUpView  = ComingSoonPopUp(frame: self.view.frame)
         popUpView.comingSoonPopupDelegate = self
         popUpView.loadPopup()
@@ -418,10 +427,12 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     //MARk: ComingSoonPopUp Delegates
     func closeButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.popUpView.removeFromSuperview()
     }
     //MARK: Header Deleagate
     func eventButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let eventView =  self.storyboard?.instantiateViewController(withIdentifier: "eventPageID") as! EventViewController
         eventView.fromHome = false
         eventView.isLoadEventPage = true
@@ -434,6 +445,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     
     func notificationbuttonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let notificationsView =  self.storyboard?.instantiateViewController(withIdentifier: "notificationId") as! NotificationsViewController
         notificationsView.fromHome = false
         let transition = CATransition()
@@ -445,6 +457,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     
     func profileButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let transition = CATransition()
         transition.duration = 0.25
         transition.type = kCATransitionFade
@@ -460,11 +473,12 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         }
     }
     func menuButtonPressed() {
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     //MARK: WebServiceCall
     func getMuseumDataFromServer() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.LandingPageMuseums(["nid": museumId ?? 0])).responseObject { (response: DataResponse<Museums>) -> Void in
             switch response.result {
             case .success(let data):
@@ -482,6 +496,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     //MARK: About CoreData
     func saveOrUpdateAboutCoredata(aboutDetailtArray:[Museum]?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if ((aboutDetailtArray?.count)! > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
@@ -498,6 +513,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         }
     }
     func aboutCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,aboutDetailtArray:[Museum]?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "AboutEntity", idKey: "id" , idValue: aboutDetailtArray![0].id, managedContext: managedContext) as! [AboutEntity]
             
@@ -537,6 +553,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     
     func saveToCoreData(aboutDetailDict: Museum, managedObjContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let aboutdbDict: AboutEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutEntity", into: managedObjContext) as! AboutEntity
             
@@ -664,7 +681,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         }
     }
     func deleteExistingEvent(managedContext:NSManagedObjectContext,entityName : String?) ->Bool? {
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName!)
         let deleteRequest = NSBatchDeleteRequest( fetchRequest: fetchRequest)
         do{
@@ -675,6 +692,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         }
     }
     func fetchMuseumLandingImagesFromCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {

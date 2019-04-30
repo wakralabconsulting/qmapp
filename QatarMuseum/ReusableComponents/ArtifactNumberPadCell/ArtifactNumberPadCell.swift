@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 
 class ArtifactNumberPadCell: UICollectionViewCell {
     @IBOutlet weak var innerView: UIView!
@@ -20,6 +21,7 @@ class ArtifactNumberPadCell: UICollectionViewCell {
     }
 
     func setUpUI() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         innerView.layer.borderWidth = 2.0
         innerView.layer.borderColor = UIColor.numberPadColor.cgColor
         numLabel.font = UIFont.artifactNumberFont

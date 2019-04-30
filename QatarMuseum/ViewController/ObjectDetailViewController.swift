@@ -10,6 +10,7 @@ import AVKit
 import Crashlytics
 import Firebase
 import UIKit
+import CocoaLumberjack
 
 class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
     @IBOutlet weak var objectTableView: UITableView!
@@ -29,6 +30,8 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     var firstLoad: Bool = true
     var selectedCell : ObjectDetailTableViewCell?
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         objectTableView.register(UITableViewCell.self, forCellReuseIdentifier: "imageCell")
         setupUIContents()
@@ -45,7 +48,7 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     func setupUIContents() {
        // loadingView.isHidden = false
        // loadingView.showLoading()
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             closeButton.frame = CGRect(x: 10, y: 40, width: 50, height: 50)
         } else {
@@ -66,6 +69,7 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func setTopBarImage() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         objectTableView.estimatedRowHeight = 50
         objectTableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0)
         
@@ -188,6 +192,7 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
         objectImagePopupView = ObjectImageView(frame: self.view.frame)
         //objectImagePopupView.objectImageViewDelegate = self as! ObjectImageViewProtocol
         objectImagePopupView.loadPopup(image : imgName!)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.view.addSubview(objectImagePopupView)
     }
     
@@ -196,6 +201,7 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     @objc func backButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let transition = CATransition()
         transition.duration = 0.35
         transition.type = kCATransitionPush
@@ -205,6 +211,7 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func setFavouritesAction(cellObj: ObjectDetailTableViewCell) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if (cellObj.favoriteButton.tag == 0) {
             cellObj.favoriteButton.tag = 1
             cellObj.favoriteButton.setImage(UIImage(named: "heart_fillX1"), for: .normal)
@@ -219,6 +226,7 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func setPlayButtonAction(cellObj: ObjectDetailTableViewCell) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         selectedCell  = cellObj
         
         if(detailArray.count > 0) {
@@ -239,6 +247,7 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
     }
    
     @objc func buttonAction(sender: UIButton!) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
        // sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
 //        let transition = CATransition()
 //        transition.duration = 0.25

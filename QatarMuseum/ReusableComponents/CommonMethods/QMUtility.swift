@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import CoreData
+import CocoaLumberjack
 var heritageListNotificationEn = "heritageListNotificationEn"
 var heritageListNotificationAr = "heritageListNotificationAr"
 var floormapNotification = "FloormapNotification"
@@ -41,6 +42,7 @@ var nmoqParkDetailNotificationAr = "NmoqParkDetailNotificationAr"
 
 // Utility method for presenting alert without any completion handler
 func presentAlert(_ viewController: UIViewController, title: String, message: String) {
+    DDLogInfo("File: \(#file)" + "Function: \(#function)")
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
     let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
     alertController.addAction(defaultAction)
@@ -51,6 +53,7 @@ func presentAlert(_ viewController: UIViewController, title: String, message: St
 
 // Handles common backend errors and returns unhandled internal app errors if any
 func handleError(viewController: UIViewController, errorType: BackendError) -> QatarMuseumError? {
+    DDLogInfo("File: \(#file)" + "Function: \(#function)")
     var errorMessage: String? = nil
     var errorTitle: String? = nil
     var unhandledError: QatarMuseumError? = nil
@@ -98,6 +101,7 @@ func handleError(viewController: UIViewController, errorType: BackendError) -> Q
 }
 
 func handleAFError(viewController: UIViewController, error: AFError) {
+    DDLogInfo("File: \(#file)" + "Function: \(#function)")
     switch error.responseCode! {
     case 400:
         print("Bad request")
@@ -115,6 +119,7 @@ func handleAFError(viewController: UIViewController, error: AFError) {
 }
 
 func convertDMSToDDCoordinate(latLongString : String) -> Double {
+    DDLogInfo("File: \(#file)" + "Function: \(#function)")
     var latLong = latLongString
     var delimiter = "°"
     var latLongArray = latLong.components(separatedBy: delimiter)
@@ -139,11 +144,13 @@ func convertDMSToDDCoordinate(latLongString : String) -> Double {
 }
 
 func showAlertView(title: String ,message: String, viewController : UIViewController) {
+    DDLogInfo("File: \(#file)" + "Function: \(#function)")
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
     viewController.present(alert, animated: true, completion: nil)
 }
 func changeDateFormat(dateString: String?) -> String? {
+    DDLogInfo("File: \(#file)" + "Function: \(#function)")
     if (dateString != nil) {
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "dd/MM/yyyy"
@@ -157,6 +164,7 @@ func changeDateFormat(dateString: String?) -> String? {
 }
 let appDelegate =  UIApplication.shared.delegate as? AppDelegate
 func getContext() -> NSManagedObjectContext {
+    DDLogInfo("File: \(#file)" + "Function: \(#function)")
         if #available(iOS 10.0, *) {
             return (appDelegate?.persistentContainer.viewContext)!
            

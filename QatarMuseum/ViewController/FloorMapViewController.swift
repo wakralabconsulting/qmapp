@@ -15,6 +15,7 @@ import Firebase
 import GoogleMaps
 import Kingfisher
 import UIKit
+import CocoaLumberjack
 
 enum levelNumber{
     case one
@@ -216,6 +217,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                     "http://www.qm.org.qa/sites/default/files/floor3.mp3"]
     
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         
         viewForMap.delegate = self
@@ -229,7 +232,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
         bottomSheetVC.removeFromParentViewController()
         bottomSheetVC.dismiss(animated: false, completion: nil)
         isPaused = true
-     
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         
 
     }
@@ -391,6 +394,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             fetchTourGuideFromCoredata()
         }
         NotificationCenter.default.addObserver(self, selector: #selector(FloorMapViewController.receiveFloormapNotification(notification:)), name: NSNotification.Name(floormapNotification), object: nil)
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func loadMap() {
@@ -470,7 +475,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             viewForMap.animate(to: camera)
            // viewForMap.animate(toZoom: 19.3)
         }
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), TourType: \(String(describing: fromTourString))")
         
     }
     //Function for show level 2 marker
@@ -540,6 +545,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             l2_g3_sc13.snippet = ""
             l2_g3_sc13.appearAnimation = .pop
         
+        
+         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     //Function for show level 3 marker
     func showLevelThreeMarker() {
@@ -572,6 +579,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             l3_g17_3.title = "l3_g17_3"
             l3_g17_3.snippet = ""
             l3_g17_3.appearAnimation = .pop
+        
+         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     //MARK: Highlight Marker
     func showLevelTwoHighlightMarker() {
@@ -656,6 +665,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
         l2_g1_sc3.title = "l2_g1_sc3"
         l2_g1_sc3.appearAnimation = .pop
        
+         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func showLevelThreeHighlightMarker() {
         
@@ -739,6 +749,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
         l3_g18_11.position = L3_G18_11
         l3_g18_11.title = "l3_g18_11"
         l3_g18_11.appearAnimation = .pop
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func imageWithImage(image:UIImage, scaledToSize newSize:CGSize) -> UIImage{
@@ -746,6 +758,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
         image.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
         let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         return newImage
     }
     
@@ -792,7 +805,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                     
                 }
            // }
-         
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), TourType: \(String(describing: fromTourString))")
         }
     }
     
@@ -834,6 +847,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                     
                 }
             //}
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), TourType: \(String(describing: fromTourString))")
         }
     }
     
@@ -849,6 +863,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             thirdLevelView.backgroundColor = UIColor.mapLevelColor
             overlay.icon = UIImage(named: "qm_level_1")
             removeMarkers()
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         }
     }
     
@@ -861,7 +876,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayInSeconds!) {
             self.loadingView.stopLoading()
             self.loadingView.isHidden = true
-            
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         }
     }
     
@@ -886,7 +901,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             addBottomSheetView(index: arrayOffset)
         }
 
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         return true
     }
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
@@ -905,7 +920,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             viewForMap.animate(to: camera)
         }
         
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func removeMarkers() {
@@ -968,7 +983,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
         
         l3_g18_2.map = nil
         l3_g18_11.map = nil
-    
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     //MARK: Poup Delegate
@@ -1015,6 +1031,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                 }
             }
         }
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), TourType: \(String(describing: fromTourString))")
     }
     //Present detail popup using Bottomsheet
     func viewDetailButtonTapAction() {
@@ -1024,11 +1042,13 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
     }
     
     @IBAction func didTapNumberSearch(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.performSegue(withIdentifier: "floormapToNumSearchSegue", sender: self)
     }
     
     //MARK:Header Protocol
     func headerCloseButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.loadedLevelThreeMarkerArray = NSMutableArray()
         self.loadedLevelTwoMarkerArray = NSMutableArray()
         self.avPlayer = nil
@@ -1052,12 +1072,14 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
         
     }
     func filterButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.avPlayer = nil
         self.timer?.invalidate()
         self.dismiss(animated: true, completion: nil)
     }
     //Added BottomSheet for showing popup when we clicked in marker
     func addBottomSheetView(scrollable: Bool? = true,index: Int?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         overlayView.isHidden = false
         self.avPlayer = nil
         self.timer?.invalidate()
@@ -1130,9 +1152,10 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                 //self.showOrHideLevelThreeScienceTour()
             }
         }
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func dismissOvelay() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         overlayView.isHidden = true
         //selectedMarker.icon = self.imageWithImage(image: selectedMarkerImage, scaledToSize: CGSize(width:38, height: 44))
         if(selectedMarkerImage != nil) {
@@ -1182,6 +1205,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                 }
             }
         }
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), TourType: \(String(describing: fromTourString)), Level: \(String(describing: level))")
+        
     }
     //MARK: Audio SetUp
     func play(url:URL) {
@@ -1191,9 +1217,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
         }
         avPlayer!.volume = 1.0
         avPlayer.play()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @IBAction func playButtonClicked(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if (firstLoad == true) {
             playButton.setImage(UIImage(named:"pause_blackX1"), for: .normal)
             self.play(url: URL(string:self.playList)!)
@@ -1206,6 +1234,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
     }
     
     func togglePlayPause() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if #available(iOS 10.0, *) {
             if avPlayer.timeControlStatus == .playing  {
                 playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
@@ -1239,9 +1268,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
         if(isPaused == false){
             seekLoadingLabel.alpha = 1
         }
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), IsFirstLoad: \(firstLoad)")
     }
 
     func setupTimer(){
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         NotificationCenter.default.addObserver(self, selector: #selector(self.didPlayToEnd), name: .AVPlayerItemDidPlayToEndTime, object: nil)
         timer = Timer(timeInterval: 0.001, target: self, selector: #selector(FloorMapViewController.tick), userInfo: nil, repeats: true)
         RunLoop.current.add(timer!, forMode: RunLoopMode.commonModes)
@@ -1251,6 +1283,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
     }
     
     @objc func tick(){
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if((avPlayer.currentTime().seconds == 0.0) && (isPaused == false)){
             seekLoadingLabel.alpha = 1
 
@@ -1285,6 +1318,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
         }
     }
     func formatTimeFromSeconds(totalSeconds: Int32) -> String {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let seconds: Int32 = totalSeconds%60
         let minutes: Int32 = (totalSeconds/60)%60
         let hours: Int32 = totalSeconds/3600
@@ -1292,6 +1326,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
     }
     
     func closeAudio() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         playButton.setImage(UIImage(named:"play_blackX1"), for: .normal)
         playerSlider.value = 0
         self.avPlayer = nil
@@ -1300,6 +1335,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
     }
     
     @IBAction func backButtonClicked(_ sender: Any) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.dismiss(animated: true) {
             self.avPlayer = nil
             self.timer?.invalidate()
@@ -1365,6 +1401,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                 
             }
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func showOrHideLevelTwoHighlightTour() {
         self.loadingView.isHidden = false
@@ -1412,6 +1449,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
         }
         self.loadingView.stopLoading()
         self.loadingView.isHidden = true
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func showOrHideLevelThreeHighlightTour() {
         self.loadingView.isHidden = false
@@ -1461,6 +1499,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
 
         self.loadingView.stopLoading()
         self.loadingView.isHidden = true
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
 
     func showOrHideLevelTwoScienceTour() {
@@ -1515,6 +1554,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
         }
         self.loadingView.stopLoading()
         self.loadingView.isHidden = true
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func showOrHideLevelThreeScienceTour() {
@@ -1565,6 +1606,8 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
         //self.stopLoadingView()
         self.loadingView.stopLoading()
         self.loadingView.isHidden = true
+        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     //MARK: TourGuide DataBase
@@ -1583,6 +1626,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                 }
             }
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func floormapCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,floorMapArray: [TourGuideFloorMap]?) {
         if ((floorMapArray?.count)! > 0) {
@@ -1768,6 +1812,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
 //                }
 //            }
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func saveToCoreData(tourGuideDetailDict: TourGuideFloorMap, managedObjContext: NSManagedObjectContext) {
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -1890,9 +1935,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             
             
         } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+            DDLogError("Could not save. \(error), \(error.userInfo)")
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
+    
     func fetchTourGuideFromCoredata() {
         let managedContext = getContext()
         do {
@@ -2016,8 +2063,9 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                 }
             }
         } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
+            DDLogError("Could not fetch. \(error), \(error.userInfo)")
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
 //    func getContext() -> NSManagedObjectContext{
 //        
@@ -2051,12 +2099,14 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
         if  (networkReachability?.isReachable)! {
             self.getFloorMapDataFromServer()
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), NetworkReachability: \(String(describing: networkReachability?.isReachable))")
     }
     func showNoNetwork() {
         self.loadingView.stopLoading()
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
         self.loadingView.showNoNetworkView()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     @objc func receiveFloormapNotification(notification: NSNotification) {
         let data = notification.userInfo as? [String:String]
@@ -2065,7 +2115,7 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                 self.fetchTourGuideFromCoredata()
             }
         }
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func recordScreenView() {
         let screenClass = String(describing: type(of: self))

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 
 class ExhibitionDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var favoriteButton: UIButton!
@@ -37,6 +38,8 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
     }
 
     func setupCellUI() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
+
 //        titleLabel.textAlignment = .center
 //        descriptionLabel.textAlignment = .center
 //        detailSecondLabel.textAlignment = .center
@@ -68,6 +71,8 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
     }
     
     func setHomeExhibitionDetail(exhibition: Exhibition) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
+
         titleLabel.text = exhibition.name?.uppercased()
         descriptionLabel?.text = exhibition.shortDescription?.replacingOccurrences(of: "&nbsp;", with: " ", options: .regularExpression, range: nil)
         detailSecondLabel.text = exhibition.longDescription?.replacingOccurrences(of: "&nbsp;", with: " ", options: .regularExpression, range: nil)
@@ -89,6 +94,8 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
     }
     
     func setMuseumExhibitionDetail() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
+
         titleLabel.text = "Powder And Damask"
         descriptionLabel?.text = "This exhibition showcases Islamic arms and armour from the private collection of Fadel Al Mansoori. Including both edged weapons and firearms, the objects on display range from the 17th to the 19th century, and were produced primarily in greater Turkey, Iran and India. \n Powder and Damask explores the art of craftsmanship which reached unrewcedented levels in these regions under the ottoman, Safavid and Mughal empires, and consideres these objects not only as weapons but as works of art."
         detailSecondLabel.text = "without degrading their functionality, arms and armour in Islamic lands became an art that found its place in the hands of sultans, high-ranking commanders and elite members of society."
@@ -103,33 +110,40 @@ class ExhibitionDetailTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
 
     @IBAction func didTapFavouriteButton(_ sender: UIButton) {
         self.favoriteButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         favBtnTapAction?()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @IBAction func didTapShareButton(_ sender: UIButton) {
         self.shareButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         shareBtnTapAction?()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @IBAction func favouriteTouchDown(_ sender: UIButton) {
         self.favoriteButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @IBAction func shareTouchDown(_ sender: UIButton) {
         self.shareButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @IBAction func locationTouchDown(_ sender: UIButton) {
         self.locationButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @IBAction func didTapLocation(_ sender: UIButton) {
         self.locationButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         locationButtonAction?()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     @objc func emailTapFunction(sender:UITapGestureRecognizer) {
         

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 
 protocol ObjectImageViewProtocol {
     func dismissImagePopUpView()
@@ -40,7 +41,7 @@ class ObjectImageView: UIView, UIScrollViewDelegate  {
     }
     
     func setUpUI() {
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         closeButton.layer.shadowColor = UIColor.black.cgColor
         closeButton.layer.shadowOffset = CGSize(width: 5, height: 5)
         closeButton.layer.shadowRadius = 5
@@ -70,6 +71,7 @@ class ObjectImageView: UIView, UIScrollViewDelegate  {
     }
     
     func loadPopup(image : String) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         //objectImageView.image = UIImage(named: image)
         if  image != nil {
             objectImageView.kf.setImage(with: URL(string: image))
@@ -77,6 +79,7 @@ class ObjectImageView: UIView, UIScrollViewDelegate  {
     }
     
     @objc func zoomOnDoubleTap() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if (self.scrollView.zoomScale == self.scrollView.maximumZoomScale) {
             self.scrollView.setZoomScale(self.scrollView.minimumZoomScale, animated: true)
         } else if(self.scrollView.zoomScale >= 3) {
@@ -91,6 +94,7 @@ class ObjectImageView: UIView, UIScrollViewDelegate  {
         
     }
     @IBAction func didTapCloseButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         objectImageViewDelegate?.dismissImagePopUpView()
         self.removeFromSuperview()
     }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 extension UIApplication {
     class func isRTL() -> Bool{
         return UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
@@ -15,7 +16,7 @@ extension UIApplication {
 
 class AppLocalizer: NSObject {
     class func DoTheMagic() {
-        
+        DDLogInfo("File: \(#file)" + "Function: \(#function)")
         MethodSwizzleGivenClassName(cls: Bundle.self, originalSelector: #selector(Bundle.localizedString(forKey:value:table:)), overrideSelector: #selector(Bundle.specialLocalizedStringForKey(_:value:table:)))
         MethodSwizzleGivenClassName(cls: UIApplication.self, originalSelector: #selector(getter: UIApplication.userInterfaceLayoutDirection), overrideSelector: #selector(getter: UIApplication.cstm_userInterfaceLayoutDirection))
         MethodSwizzleGivenClassName(cls: UITextField.self, originalSelector: #selector(UITextField.layoutSubviews), overrideSelector: #selector(UITextField.cstmlayoutSubviews))
@@ -27,6 +28,7 @@ class AppLocalizer: NSObject {
 }
 extension UILabel {
     @objc public func cstmlayoutSubviews() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.cstmlayoutSubviews()
         if self.isKind(of: NSClassFromString("UITextFieldLabel")!) {
             return // handle special case with uitextfields
@@ -53,6 +55,7 @@ extension UILabel {
 }
 extension UITextField {
     @objc public func cstmlayoutSubviews() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.cstmlayoutSubviews()
         if self.tag <= 0 {
             if UIApplication.isRTL()  {
@@ -79,6 +82,7 @@ extension UIApplication {
 }
 extension Bundle {
     @objc func specialLocalizedStringForKey(_ key: String, value: String?, table tableName: String?) -> String {
+//        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if self == Bundle.main {
             let currentLanguage = LocalizationLanguage.currentAppleLanguage()
             var bundle = Bundle();
@@ -104,6 +108,7 @@ func disableMethodSwizzling() {
 
 /// Exchange the implementation of two methods of the same Class
 func MethodSwizzleGivenClassName(cls: AnyClass, originalSelector: Selector, overrideSelector: Selector) {
+    DDLogInfo("File: \(#file)" + "Function: \(#function)")
     let origMethod: Method = class_getInstanceMethod(cls, originalSelector)!;
     let overrideMethod: Method = class_getInstanceMethod(cls, overrideSelector)!;
     if (class_addMethod(cls, originalSelector, method_getImplementation(overrideMethod), method_getTypeEncoding(overrideMethod))) {

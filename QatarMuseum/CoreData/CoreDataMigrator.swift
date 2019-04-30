@@ -8,12 +8,14 @@
 
 import Foundation
 import CoreData
+import CocoaLumberjack
 
 class CoreDataMigrator {
     
     // MARK: - Check
     
     func requiresMigration(at storeURL: URL, currentMigrationModel: CoreDataMigrationModel = CoreDataMigrationModel.current) -> Bool {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         guard let metadata = NSPersistentStoreCoordinator.metadata(at: storeURL) else {
             return false
         }
@@ -24,10 +26,12 @@ class CoreDataMigrator {
     // MARK: - Migration
     
     func migrateStore(at storeURL: URL) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         migrateStore(from: storeURL, to: storeURL, targetVersion: CoreDataMigrationModel.current)
     }
     
     func migrateStore(from sourceURL: URL, to targetURL: URL, targetVersion: CoreDataMigrationModel) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         guard let sourceMigrationModel = CoreDataMigrationSourceModel(storeURL: sourceURL as URL) else {
             fatalError("unknown store version at URL \(sourceURL)")
         }
@@ -37,6 +41,7 @@ class CoreDataMigrator {
         let migrationSteps = sourceMigrationModel.migrationSteps(to: targetVersion)
         
         for step in migrationSteps {
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
             let manager = NSMigrationManager(sourceModel: step.source, destinationModel: step.destination)
             let destinationURL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent(UUID().uuidString)
             
@@ -64,6 +69,7 @@ class CoreDataMigrator {
     // MARK: - WAL
     
     func forceWALCheckpointingForStore(at storeURL: URL) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         guard let metadata = NSPersistentStoreCoordinator.metadata(at: storeURL), let migrationModel = CoreDataMigrationModel.migrationModelCompatibleWithStoreMetadata(metadata)  else {
             return
         }
@@ -86,6 +92,7 @@ extension NSPersistentStoreCoordinator {
     // MARK: - Destroy
     
     static func destroyStore(at storeURL: URL) {
+        DDLogInfo("File: \(#file)" + "Function: \(#function)")
         do {
             let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: NSManagedObjectModel())
             try persistentStoreCoordinator.destroyPersistentStore(at: storeURL, ofType: NSSQLiteStoreType, options: nil)
@@ -97,6 +104,7 @@ extension NSPersistentStoreCoordinator {
     // MARK: - Replace
     
     static func replaceStore(at targetURL: URL, withStoreAt sourceURL: URL) {
+        DDLogInfo("File: \(#file)" + "Function: \(#function)")
         do {
             let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: NSManagedObjectModel())
             try persistentStoreCoordinator.replacePersistentStore(at: targetURL, destinationOptions: nil, withPersistentStoreFrom: sourceURL, sourceOptions: nil, ofType: NSSQLiteStoreType)
@@ -108,6 +116,7 @@ extension NSPersistentStoreCoordinator {
     // MARK: - Meta
     
     static func metadata(at storeURL: URL) -> [String : Any]?  {
+        DDLogInfo("File: \(#file)" + "Function: \(#function)")
         return try? NSPersistentStoreCoordinator.metadataForPersistentStore(ofType: NSSQLiteStoreType, at: storeURL, options: nil)
     }
     

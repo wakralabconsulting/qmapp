@@ -11,6 +11,7 @@ import CoreData
 import UIKit
 import Firebase
 import KeychainSwift
+import CocoaLumberjack
 
 enum HomePageName {
     case diningList
@@ -74,6 +75,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         registerNib()
         setUpUI()
         NotificationCenter.default.addObserver(self, selector: #selector(self.receivedNotification(notification:)), name: NSNotification.Name("NotificationIdentifier"), object: nil)
@@ -88,6 +90,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         super.didReceiveMemoryWarning()
     }
     func setUpUI() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         topbarView.topbarDelegate = self
         topbarView.backButton.isHidden = true
         effect = visualEffectView.effect
@@ -129,8 +132,80 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.receiveHomePageNotificationAr(notification:)), name: NSNotification.Name(homepageNotificationAr), object: nil)
         self.fetchHomeInfoFromCoredata()
     }
+    
+    func setTopImageUI() {
+       DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+        homeTableView.contentInset = UIEdgeInsetsMake(120, 0, 0, 0)
+        if(UIScreen.main.bounds.height == 812) {
+            imageView.frame = CGRect(x: 0, y: 108, width: UIScreen.main.bounds.size.width, height: 120)
+        } else {
+            imageView.frame = CGRect(x: 0, y: 85, width: UIScreen.main.bounds.size.width, height: 120)
+        }
+        
+        imageView.backgroundColor = UIColor.white
+            if homeBannerList.count > 0 {
+
+                if let imageUrl = homeBannerList[0].bannerLink {
+                    if(imageUrl != "") {
+                        imageView.kf.setImage(with: URL(string: imageUrl))
+                    }else {
+                        imageView.image = UIImage(named: "default_imageX2")
+                    }
+                }
+                else {
+                    imageView.image = UIImage(named: "default_imageX2")
+                }
+            }
+            else {
+                imageView.image = nil
+            }
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        view.addSubview(imageView)
+        if(homeBannerList[0].bannerTitle != nil) {
+            imgLabel.text = homeBannerList[0].bannerTitle
+        }
+        imgLabel.textAlignment = .center
+        imgLabel.scrollsToTop = false
+        imgLabel.isEditable = false
+        imgLabel.isScrollEnabled = false
+        imgLabel.isSelectable = false
+        imgLabel.backgroundColor = UIColor.clear
+        imgLabel.font = UIFont.eventPopupTitleFont
+        if(UIScreen.main.bounds.height == 812) {
+            imgLabel.frame = CGRect(x: 0, y: 130, width: UIScreen.main.bounds.size.width, height: 90)
+        } else {
+            imgLabel.frame = CGRect(x: 0, y: 95, width: UIScreen.main.bounds.size.width, height: 90)
+        }
+        self.view.addSubview(imgLabel)
+        imgButton.setTitle("", for: .normal)
+        imgButton.setTitleColor(UIColor.blue, for: .normal)
+        imgButton.frame = imageView.frame
+        imgButton.addTarget(self, action: #selector(self.imgButtonPressed(sender:)), for: .touchUpInside)
+        self.view.addSubview(imgButton)
+        let darkBlur = UIBlurEffect(style: UIBlurEffectStyle.light)
+        blurView = UIVisualEffectView(effect: darkBlur)
+        blurView.frame = imageView.bounds
+        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurView.alpha = 0
+        imageView.addSubview(blurView)
+        self.view.layoutIfNeeded()
+        
+        
+    }
+    
     @objc func imgButtonPressed(sender: UIButton!) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.performSegue(withIdentifier: "homeToMuseumLandingSegue", sender: self)
+//        let museumsView =  self.storyboard?.instantiateViewController(withIdentifier: "museumViewId") as! MuseumsViewController
+//        museumsView.fromHomeBanner = true
+//        museumsView.museumTitleString = homeBannerList[0].bannerTitle
+//        let transition = CATransition()
+//        transition.duration = 0.25
+//        transition.type = kCATransitionPush
+//        transition.subtype = kCATransitionFromRight
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        self.present(museumsView, animated: false, completion: nil)
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = 120 - (scrollView.contentOffset.y + 120)
@@ -161,7 +236,11 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     @objc func receivedNotification(notification: Notification) {
         homePageNameString = HomePageName.notificationsList
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.performSegue(withIdentifier: "homeToNotificationSegue", sender: self)
+//        let notificationsView =  self.storyboard?.instantiateViewController(withIdentifier: "notificationId") as! NotificationsViewController
+//        notificationsView.fromHome = true
+//        self.present(notificationsView, animated: false, completion: nil)
     }
     func registerNib() {
         self.homeTableView.register(UINib(nibName: "CommonListCellXib", bundle: nil), forCellReuseIdentifier: "commonListCellId")
@@ -200,11 +279,15 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         selectedRow = indexPath.row
         let panelAndTalks = NSLocalizedString("PANEL_AND_TALKS",comment: "PANEL_AND_TALKS in Home Page")
         if((UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != nil) && (UserDefaults.standard.value(forKey: "acceptOrDecline") as? String != "") && (self.homeBannerList.count > 0)) {
+                DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), -- Home Screen banner true")
+
             if(indexPath.row == 0) {
                 homePageNameString = HomePageName.bannerMuseumLandingPage
                 self.performSegue(withIdentifier: "homeToMuseumLandingSegue", sender: self)
             } else {
                 if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                    DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), lang: \(LocalizationLanguage.currentAppleLanguage())")
+
                     if (homeList[indexPath.row].id == "12181") {
                         loadExhibitionPage()
                     } else if (homeList[indexPath.row].id == "13976") {
@@ -214,6 +297,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     }
                 }
                 else {
+                    DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), lang: \(LocalizationLanguage.currentAppleLanguage())")
                     if (homeList[indexPath.row].id == "12186") {
                         loadExhibitionPage()
                     } else if (homeList[indexPath.row].id == "15631") {
@@ -226,6 +310,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
         } else {
             if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
+                DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), lang: \(LocalizationLanguage.currentAppleLanguage())")
                 if (homeList[indexPath.row].id == "12181") {
                     loadExhibitionPage()
                 } else if (homeList[indexPath.row].id == "13976") {
@@ -236,6 +321,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 }
             }
             else {
+                DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), lang: \(LocalizationLanguage.currentAppleLanguage())")
                 if (homeList[indexPath.row].id == "12186") {
                     loadExhibitionPage()
                 }
@@ -263,16 +349,19 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     func loadMuseumsPage(curretRow:Int? = 0) {
         homePageNameString = HomePageName.museumLandingPage
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
        self.performSegue(withIdentifier: "homeToMuseumLandingSegue", sender: self)
         
     }
     
     func loadExhibitionPage() {
         homePageNameString = HomePageName.exhibitionList
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.performSegue(withIdentifier: "homeToCommonListSegue", sender: self)
     }
     
     func loadComingSoonPopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
         popupView.loadPopup()
@@ -285,6 +374,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     //MARK: Service call
     func getHomeList() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.HomeList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<HomeList>) -> Void in
             switch response.result {
             case .success(let data):
@@ -339,6 +429,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
     }
     func getHomeBanner() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetHomeBanner()).responseObject { (response: DataResponse<HomeBannerList>) -> Void in
             switch response.result {
             case .success(let data):
@@ -363,74 +454,96 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     //MARK: Topbar Delegate
     func backButtonPressed() {
-    
+    DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
     }
     
     func eventButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         topBarEventButtonPressed()
     }
     
     func notificationbuttonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
+
         self.performSegue(withIdentifier: "homeToNotificationSegue", sender: self)
+//        let notificationsView =  self.storyboard?.instantiateViewController(withIdentifier: "notificationId") as! NotificationsViewController
+//        notificationsView.fromHome = true
+//        let transition = CATransition()
+//        transition.duration = 0.3
+//        transition.type = kCATransitionPush
+//        transition.subtype = kCATransitionFromRight
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        self.present(notificationsView, animated: false, completion: nil)
     }
     
     func profileButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         culturePassButtonPressed()
     }
     
     func menuButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         topbarMenuPressed()
     }
     
     //MARK: Poup Delegate
     func closeButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.popupView.removeFromSuperview()
     }
     
     //MARK: SideMenu Delegates
     func exhibitionButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         homePageNameString = HomePageName.exhibitionList
         self.performSegue(withIdentifier: "homeToListFadeSegue", sender: self)
     }
     
     func eventbuttonPressed() {
         homePageNameString = HomePageName.eventList
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.performSegue(withIdentifier: "homeToEventFadeSegue", sender: self)
     }
     
     func educationButtonPressed() {
         homePageNameString = HomePageName.educationList
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.performSegue(withIdentifier: "homeToEducationFadeSegue", sender: self)
     }
     
     func tourGuideButtonPressed() {
         homePageNameString = HomePageName.tourguideList
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.performSegue(withIdentifier: "homeToCommonListSegue", sender: self)
     }
     
     func heritageButtonPressed() {
         homePageNameString = HomePageName.heritageList
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.performSegue(withIdentifier: "homeToListFadeSegue", sender: self)
     }
     
     func publicArtsButtonPressed() {
         homePageNameString = HomePageName.publicArtsList
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.performSegue(withIdentifier: "homeToListFadeSegue", sender: self)
     }
     
     func parksButtonPressed() {
         homePageNameString = HomePageName.parksList
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.performSegue(withIdentifier: "homeToCommonDetail", sender: self)
     }
     
     func diningButtonPressed() {
         homePageNameString = HomePageName.diningList
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.performSegue(withIdentifier: "homeToListFadeSegue", sender: self)
     }
     
+    
     func culturePassButtonPressed() {
-        
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (UserDefaults.standard.value(forKey: "accessToken") as? String != nil) {
             self.performSegue(withIdentifier: "homeToProfileFadeSegue", sender: self)
         } else {
@@ -439,26 +552,33 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func giftShopButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.performSegue(withIdentifier: "homeToWebViewSegue", sender: self)
     }
     
     func settingsButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.performSegue(withIdentifier: "homeToSettingsSegue", sender: self)
     }
     
     func menuEventPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         topBarEventButtonPressed()
     }
     
     func menuNotificationPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.performSegue(withIdentifier: "homeToNotificationSegue", sender: self)
+
     }
     
     func menuProfilePressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         topBarProfileButtonPressed()
     }
     
     func menuClosePressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         UIView.animate(withDuration: 0.4, animations: {
             self.sideView.transform = CGAffineTransform.init(scaleX:1 , y: 1)
             self.sideView.alpha = 0
@@ -474,43 +594,52 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     //MARK: Bottombar Delegate
     @IBAction func didTapMoreButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.moreButton.transform = CGAffineTransform(scaleX: 1, y: 1)
          topbarMenuPressed()
     }
     
     @IBAction func moreButtonTouchDown(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.moreButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
     @IBAction func didTaprestaurantButton(_ sender: UIButton) {
         self.restaurantButton.transform = CGAffineTransform(scaleX: 1, y: 1)
          homePageNameString = HomePageName.diningList
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.performSegue(withIdentifier: "homeToCommonListSegue", sender: self)
     }
     
     @IBAction func restaurantButtonTouchDown(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.restaurantButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
     @IBAction func didTapCulturePass(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         culturePassButtonPressed()
         self.culturePassButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
     
     @IBAction func culturePassTouchDown(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.culturePassButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
     @IBAction func didTapGiftShopButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         giftShopButtonPressed()
         self.giftShopButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
     
     @IBAction func giftShopButtonTouchDown(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.giftShopButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
     
     func topbarMenuPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.topbarView.menuButton.contentEdgeInsets = UIEdgeInsets(top: 14, left: 20, bottom: 14, right: 18)
         var sideViewFrame = CGRect()
         if (UIScreen.main.bounds.height >= 812) {
@@ -535,14 +664,15 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func topBarEventButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         homePageNameString = HomePageName.eventList
         self.performSegue(withIdentifier: "homeToEventSegue", sender: self)
     }
     
     func topBarProfileButtonPressed() {
         homePageNameString = HomePageName.profilePage
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.performSegue(withIdentifier: "homeToProfileSegue", sender: self)
-        
     }
     
     //MARK: Coredata Method
@@ -1088,15 +1218,9 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     //MARK : NMoQ EntityRegistratiion
     func getEventListUserRegistrationFromServer() {
-//<<<<<<< HEAD
         if((accessToken != nil) && ((keychain.get(UserProfileInfo.user_id) != nil) && (keychain.get(UserProfileInfo.user_id) != nil))){
             let userId = keychain.get(UserProfileInfo.user_id) ?? ""
-            //_ = Alamofire.request(QatarMuseumRouter.NMoQEventListUserRegistration(["uid" : userId])).responseObject { (response: DataResponse<NMoQUserEventListValues>) -> Void in
-//=======
-       // if((accessToken != nil) && (UserDefaults.standard.value(forKey: "uid") != nil)){
-         //   let userId = UserDefaults.standard.value(forKey: "uid") as! String
             _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.NMoQEventListUserRegistration(["uid" : userId])).responseObject { (response: DataResponse<NMoQUserEventListValues>) -> Void in
-//>>>>>>> QMDev/SSL_Pinning
                 switch response.result {
                 case .success(let data):
                     self.userEventList = data.eventList
@@ -1185,9 +1309,11 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     func loadTourViewPage(nid: String?,subTitle:String?,isFromTour:Bool?) {
         homePageNameString = HomePageName.panelAndTalksList
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.performSegue(withIdentifier: "homeToCommonListSegue", sender: self)
     }
     @objc func receiveHomePageNotificationEn(notification: NSNotification) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (homeList.count == 0)){
             DispatchQueue.main.async{
                 self.fetchHomeInfoFromCoredata()
@@ -1196,6 +1322,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
     }
     @objc func receiveHomePageNotificationAr(notification: NSNotification) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (homeList.count == 0)){
             DispatchQueue.main.async{
                 self.fetchHomeInfoFromCoredata()
@@ -1203,6 +1330,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
     }
     func recordScreenView() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let screenClass = String(describing: type(of: self))
         Analytics.setScreenName(HOME, screenClass: screenClass)
     }

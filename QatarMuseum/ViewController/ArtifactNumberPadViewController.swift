@@ -9,6 +9,7 @@ import Alamofire
 import Crashlytics
 import Firebase
 import UIKit
+import CocoaLumberjack
 
 class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     @IBOutlet weak var artifactHeader: CommonHeaderView!
@@ -26,6 +27,8 @@ class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UIC
     var tourGuideId : String? = nil
     var objectDetailArray: [TourGuideFloorMap]! = []
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()        
         setupUI()
         registerNib()
@@ -47,6 +50,7 @@ class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UIC
     artifactValue = ""
     }
     func setupUI() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         artifactHeader.headerViewDelegate = self
         artifactHeader.headerTitle.text = NSLocalizedString("ARTIFACT_NUMBERPAD_TITLE", comment: "ARTIFACT_NUMBERPAD_TITLE  in the Artifact Number Pad page")
         artifactHeader.headerTitle.font = UIFont.headerFont
@@ -157,7 +161,7 @@ class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UIC
     }
     
     func getObjectDetail() {
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if ((artifactTextField.text != nil) && (artifactTextField.text != "") ) {
             loadingView.isHidden = false
             loadingView.showLoading()
@@ -169,6 +173,7 @@ class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UIC
         }
     }
     func loadObjectDetail() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if(objectDetailArray[0] != nil) {
             self.performSegue(withIdentifier: "numSearchToObjDetailSegue", sender: self)
         }
@@ -176,6 +181,7 @@ class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UIC
     }
     //MARK: Header delegate
     func headerCloseButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionFade
@@ -186,6 +192,7 @@ class ArtifactNumberPadViewController: UIViewController, HeaderViewProtocol, UIC
     //MARK: WebServiceCall
     func getnumberSearchDataFromServer(searchString : String?)
     {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)" + "SearchString: \(searchString)")
         if((searchString != "") && (searchString != nil)) {
         _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.CollectionByTourGuide(LocalizationLanguage.currentAppleLanguage(),["artifact_number": searchString!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
             switch response.result {

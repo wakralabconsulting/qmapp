@@ -8,6 +8,7 @@
 
 import MapKit
 import UIKit
+import CocoaLumberjack
 
 class ParkListTableViewCell: UITableViewCell {
 
@@ -36,11 +37,13 @@ class ParkListTableViewCell: UITableViewCell {
         
     }
     func setUI() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
         tap.delegate = self 
         mapOverlayView.addGestureRecognizer(tap)
     }
     func setParkListValues(parkListData: NMoQParksList?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         titleLabel.font = UIFont.homeTitleFont
         timimgTitle.font = UIFont.homeTitleFont
         locationTitle.font = UIFont.homeTitleFont

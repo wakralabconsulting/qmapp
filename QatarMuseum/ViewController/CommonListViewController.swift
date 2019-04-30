@@ -11,6 +11,7 @@ import Crashlytics
 import Firebase
 import MapKit
 import UIKit
+import CocoaLumberjack
 
 enum ExhbitionPageName {
     case homeExhibition
@@ -56,6 +57,8 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     var selectedRow : Int? = 0
 
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         setUpExhibitionPageUi()
         registerNib()
@@ -191,6 +194,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         } else {
             exhibitionHeaderView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func registerNib() {
         self.exhibitionCollectionView.register(UINib(nibName: "CommonListCellXib", bundle: nil), forCellReuseIdentifier: "commonListCellId")
@@ -233,7 +237,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     //MARK: MuseumExhibitions Service Call
     func getMuseumExhibitionDataFromServer() {
-       
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.MuseumExhibitionList(["museum_id": museumId ?? 0])).responseObject { (response: DataResponse<Exhibitions>) -> Void in
             switch response.result {
             case .success(let data):
@@ -424,33 +428,43 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         selectedRow = indexPath.row
         if ((exhibitionsPageNameString == ExhbitionPageName.homeExhibition) || (exhibitionsPageNameString == ExhbitionPageName.museumExhibition)) {
             if let exhibitionId = exhibition[indexPath.row].id {
+                DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), ExhibitionId: \(String(describing: exhibition[indexPath.row].id))")
                 self.performSegue(withIdentifier: "commonListToDetailSegue", sender: self)
             }
             else {
                 addComingSoonPopup()
             }
         } else if (exhibitionsPageNameString == ExhbitionPageName.heritageList) {
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
             self.performSegue(withIdentifier: "commonListToDetailSegue", sender: self)
         } else if (exhibitionsPageNameString == ExhbitionPageName.publicArtsList) {
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
             self.performSegue(withIdentifier: "commonListToDetailSegue", sender: self)
         } else if (exhibitionsPageNameString == ExhbitionPageName.museumCollectionsList) {
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
             self.performSegue(withIdentifier: "commonListToPanelDetailSegue", sender: self)
         } else if (exhibitionsPageNameString == ExhbitionPageName.diningList) {
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
             self.performSegue(withIdentifier: "commonListToDetailSegue", sender: self)
         }  else if (exhibitionsPageNameString == ExhbitionPageName.nmoqTourSecondList) {
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
             self.performSegue(withIdentifier: "commonListToPanelDetailSegue", sender: self)
         } else if (exhibitionsPageNameString == ExhbitionPageName.miaTourGuideList) {
             if (indexPath.row != 0) {
+                DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
                 self.performSegue(withIdentifier: "commonListToMiaTourSegue", sender: self)
             }
         }
         else if (exhibitionsPageNameString == ExhbitionPageName.facilitiesSecondList) {
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
             self.performSegue(withIdentifier: "commonListToPanelDetailSegue", sender: self)
         } else if (exhibitionsPageNameString == ExhbitionPageName.tourGuideList) {
             if (indexPath.row != 0) {
                 if (museumsList != nil) {
                     if(((museumsList[indexPath.row - 1].id) == "63") || ((museumsList[indexPath.row - 1].id) == "96") || ((museumsList[indexPath.row - 1].id) == "61") || ((museumsList[indexPath.row - 1].id) == "635") || ((museumsList[indexPath.row - 1].id) == "66") || ((museumsList[indexPath.row - 1].id) == "638")) {
                         loadMiaTour(currentRow: indexPath.row - 1)
+                        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
+                        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), Museum ID: \(String(describing: museumsList[indexPath.row].id))")
                     } else {
                         addComingSoonPopup()
                     }
@@ -459,8 +473,10 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         } else if (exhibitionsPageNameString == ExhbitionPageName.parkList) {
             if ((nmoqParks.count > 0) && (indexPath.row != 0) && (indexPath.row != 3)) {
                 if((nmoqParks[indexPath.row - 1].nid == "15616") || (nmoqParks[indexPath.row - 1].nid == "15851")) {
+                    DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
                     self.performSegue(withIdentifier: "commonListToPanelDetailSegue", sender: self)
                 } else {
+                    DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
                     self.performSegue(withIdentifier: "commonListToDetailSegue", sender: self)
                 }
             }
@@ -484,6 +500,8 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         self.present(collectionDetailView, animated: false, completion: nil)
     }
     func addComingSoonPopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         let viewFrame : CGRect = self.view.frame
         popupView.frame = viewFrame
         popupView.loadPopup()
@@ -493,38 +511,39 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     func loadExhibitionDetailAnimation(exhibitionId: String) {
     }
-    func loadDiningDetailAnimation(idValue: String) {
-        
-    }
-    func loadTourSecondDetailPage(selectedRow: Int?,fromTour:Bool?,pageName: ExhbitionPageName?) {
-        let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
-        
-        panelView.selectedRow = selectedRow
-        
-        if(pageName == ExhbitionPageName.nmoqTourSecondList) {
-            panelView.nmoqTourDetail = nmoqTourDetail
-            panelView.panelDetailId = tourDetailId
-
-            if (fromTour)! {
-                panelView.pageNameString = NMoQPanelPage.TourDetailPage
-            } else {
-                panelView.pageNameString = NMoQPanelPage.PanelDetailPage
-            }
-        } else if(pageName == ExhbitionPageName.facilitiesSecondList) {
-            panelView.pageNameString = NMoQPanelPage.FacilitiesDetailPage
-            panelView.panelDetailId = facilitiesDetail![selectedRow!].nid
-            panelView.facilitiesDetail = facilitiesDetail
-            panelView.fromCafeOrDining = true
-        }
-        let transition = CATransition()
-        transition.duration = 0.25
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromRight
-        view.window!.layer.add(transition, forKey: kCATransition)
-        self.present(panelView, animated: false, completion: nil)
-    }
+//    func loadTourSecondDetailPage(selectedRow: Int?,fromTour:Bool?,pageName: ExhbitionPageName?) {
+//        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+//
+//        let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
+//
+//        panelView.selectedRow = selectedRow
+//
+//        if(pageName == ExhbitionPageName.nmoqTourSecondList) {
+//            panelView.nmoqTourDetail = nmoqTourDetail
+//            panelView.panelDetailId = tourDetailId
+//
+//            if (fromTour)! {
+//                panelView.pageNameString = NMoQPanelPage.TourDetailPage
+//            } else {
+//                panelView.pageNameString = NMoQPanelPage.PanelDetailPage
+//            }
+//        } else if(pageName == ExhbitionPageName.facilitiesSecondList) {
+//            panelView.pageNameString = NMoQPanelPage.FacilitiesDetailPage
+//            panelView.panelDetailId = facilitiesDetail![selectedRow!].nid
+//            panelView.facilitiesDetail = facilitiesDetail
+//            panelView.fromCafeOrDining = true
+//        }
+//        let transition = CATransition()
+//        transition.duration = 0.25
+//        transition.type = kCATransitionPush
+//        transition.subtype = kCATransitionFromRight
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        self.present(panelView, animated: false, completion: nil)
+//    }
     //MARK: Header delegate
     func headerCloseButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         let transition = CATransition()
         transition.duration = 0.25
         if (fromSideMenu == true) {
@@ -559,6 +578,8 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
 
     func closeButtonPressed() {
         self.popupView.removeFromSuperview()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
     }
     
     //MARK: Coredata Method
@@ -756,6 +777,8 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     
     func showNodata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         var errorMessage: String
         errorMessage = String(format: NSLocalizedString("NO_RESULT_MESSAGE",
                                                         comment: "Setting the content of the alert"))
@@ -767,6 +790,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if  (networkReachability?.isReachable)! {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if (exhibitionsPageNameString == ExhbitionPageName.homeExhibition) {
@@ -806,6 +830,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         self.exbtnLoadingView.noDataView.isHidden = false
         self.exbtnLoadingView.isHidden = false
         self.exbtnLoadingView.showNoNetworkView()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     @objc func receiveExhibitionListNotificationEn(notification: NSNotification) {
         if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (exhibition.count == 0)){
@@ -2561,6 +2586,8 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     //MARK: Mia Tour Guide Delegate
     func exploreButtonAction() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         self.performSegue(withIdentifier: "commonListToFloormapSegue", sender: self)
         
     }
@@ -2576,6 +2603,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.HomeList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<HomeList>) -> Void in
             switch response.result {
             case .success(let data):
+                DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), SearchString: \(searchstring)")
                 if(self.museumsList.count == 0) {
                     if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                         searchstring = "12181"
@@ -2617,6 +2645,8 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                     self.tourGuideCoreDataInBackgroundThread(managedContext : managedContext, museumsList: museumsList)
                 }
             }
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
+
         }
     }
     func tourGuideCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,museumsList:[Home]?) {
@@ -2665,6 +2695,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                 
             }
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func saveToTourGuideCoreData(museumsListDict: Home, managedObjContext: NSManagedObjectContext) {
         var langVar : String? = nil
@@ -2685,7 +2716,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         do {
             try managedObjContext.save()
         } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+            DDLogError("Could not save. \(error), \(error.userInfo)")
         }
     }
     func fetchMuseumsInfoFromCoredata() {
@@ -2753,6 +2784,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
             miaView.museumId = museumsList[currentRow!].id!
             self.present(miaView, animated: false, completion: nil)
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     @objc func receiveHomePageNotificationEn(notification: NSNotification) {
         if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (museumsList.count == 0)){
@@ -2760,6 +2792,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                 self.fetchMuseumsInfoFromCoredata()
             }
         }
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     @objc func receiveHomePageNotificationAr(notification: NSNotification) {
         if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (museumsList.count == 0)){
@@ -2769,6 +2802,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         }
     }
     func getNmoqParkListFromServer() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetNmoqParkList(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<NmoqParksLists>) -> Void in
             switch response.result {
             case .success(let data):
@@ -2800,6 +2834,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     
     func getNmoqListOfParksFromServer() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetNmoqListParks(LocalizationLanguage.currentAppleLanguage())).responseObject { (response: DataResponse<NMoQParks>) -> Void in
             switch response.result {
             case .success(let data):
@@ -2830,6 +2865,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     
     //MARK: NMoqPark List Coredata Method
     func saveOrUpdateNmoqParkListCoredata(nmoqParkList:[NMoQParksList]?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((nmoqParkList?.count)! > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
@@ -2929,6 +2965,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         }
     }
     func saveNmoqParkListToCoreData(nmoqParkListDict: NMoQParksList, managedObjContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
             let nmoqParkListdbDict: NMoQParkListEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoQParkListEntity", into: managedObjContext) as! NMoQParkListEntity
             nmoqParkListdbDict.title = nmoqParkListDict.title
@@ -2964,6 +3001,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     
     //MARK: NMoq List of Parks Coredata Method
     func saveOrUpdateNmoqParksCoredata(nmoqParkList:[NMoQPark]?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((nmoqParkList?.count)! > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
@@ -2981,6 +3019,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     
     func nmoqParkCoreDataInBackgroundThread(nmoqParkList:[NMoQPark]?,managedContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "NMoQParksEntity", idKey: "nid", idValue: nil, managedContext: managedContext) as! [NMoQParksEntity]
             if (fetchData.count > 0) {
@@ -3085,6 +3124,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     
     func saveNmoqParkToCoreData(nmoqParkListDict: NMoQPark, managedObjContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE) {
             let nmoqParkListdbDict: NMoQParksEntity = NSEntityDescription.insertNewObject(forEntityName: "NMoQParksEntity", into: managedObjContext) as! NMoQParksEntity
             nmoqParkListdbDict.title = nmoqParkListDict.title
@@ -3140,6 +3180,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     
     func fetchNmoqParkListFromCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -3213,6 +3254,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     
     func fetchNmoqParkFromCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -3308,6 +3350,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         }
     }
     func loadLocationMap( mobileLatitude: String?, mobileLongitude: String? ) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (mobileLatitude != nil && mobileLatitude != "" && mobileLongitude != nil && mobileLongitude != "") {
             let latitudeString = (mobileLatitude)!
             let longitudeString = (mobileLongitude)!
@@ -3341,29 +3384,34 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     
     @objc func receiveNmoqParkListNotificationEn(notification: NSNotification) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (nmoqParkList.count == 0)){
             self.fetchNmoqParkListFromCoredata()
         }
     }
     @objc func receiveNmoqParkListNotificationAr(notification: NSNotification) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (nmoqParkList.count == 0)){
             self.fetchNmoqParkListFromCoredata()
         }
     }
     
     @objc func receiveNmoqParkNotificationEn(notification: NSNotification) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE ) && (nmoqParks.count == 0)){
             self.fetchNmoqParkFromCoredata()
         }
     }
     
     @objc func receiveNmoqParkNotificationAr(notification: NSNotification) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage() == AR_LANGUAGE ) && (nmoqParks.count == 0)){
             self.fetchNmoqParkFromCoredata()
         }
     }
     
     func showLocationErrorPopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
         popupView.loadMapKitLocationErrorPopup()

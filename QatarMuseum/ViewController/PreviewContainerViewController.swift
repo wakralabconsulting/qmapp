@@ -11,6 +11,7 @@ import CoreData
 import Crashlytics
 import Firebase
 import UIKit
+import CocoaLumberjack
 
 class PreviewContainerViewController: UIViewController,UIPageViewControllerDelegate,UIPageViewControllerDataSource,HeaderViewProtocol,UIGestureRecognizerDelegate,LoadingViewProtocol {
     @IBOutlet weak var loadingView: LoadingView!
@@ -62,6 +63,8 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     var museumId :String? = nil
 
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         
         loadUI()
@@ -69,6 +72,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     }
     
     func loadUI() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         loadingView.isHidden = false
         loadingView.showLoading()
         loadingView.loadingViewDelegate = self
@@ -86,7 +90,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     }
     
     func setUpPageControl() {
-       
+       DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         pageViewController = storyboard?.instantiateViewController(withIdentifier: "PageViewControllerId") as! UIPageViewController
         self.pageViewController.delegate = self;
          self.pageViewController.dataSource = self;
@@ -107,6 +111,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         return .lightContent
     }
     func showOrHidePageControlView(countValue: Int?,scrolling:Bool?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if countValue == 0 {
             pageViewOne.isHidden = true
             pageViewTwo.isHidden = true
@@ -585,6 +590,8 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     }
     
     func setPageViewVisible() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
+        
         pageViewOne.isHidden = false
         pageViewTwo.isHidden = false
         pageViewThree.isHidden = false
@@ -643,6 +650,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     
     //MARK: WebServiceCall
     func getTourGuideDataFromServer() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.CollectionByTourGuide(LocalizationLanguage.currentAppleLanguage(),["tour_guide_id": tourGuideId!])).responseObject { (response: DataResponse<TourGuideFloorMaps>) -> Void in
             switch response.result {
             case .success(let data):
@@ -684,6 +692,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     }
     
     func getTourGuideDataFromServerInBackgound() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let queue = DispatchQueue(label: "", qos: .background, attributes: .concurrent)
         _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.CollectionByTourGuide(LocalizationLanguage.currentAppleLanguage(),["tour_guide_id": tourGuideId!])).responseObject(queue: queue) { (response: DataResponse<TourGuideFloorMaps>) -> Void in
             switch response.result {
@@ -698,6 +707,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     }
     
     func filterButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.closeAudio()
         if (tourGuideArray.count != 0) {
             let selectedItem = tourGuideArray[currentPreviewItem]
@@ -738,11 +748,13 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
         }
     }
     @objc func loadDetailPage(sender: UITapGestureRecognizer? = nil) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.performSegue(withIdentifier: "previewToObjectDetailSegue", sender: self)
     }
     
     //MARK: TourGuide DataBase
     func saveOrUpdateTourGuideCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if (tourGuideArray.count > 0) {
             if #available(iOS 10.0, *) {
                 let container = appDelegate!.persistentContainer
@@ -759,6 +771,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     }
     
     func coreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "FloorMapTourGuideEntity", idKey: "tourGuideId" , idValue: tourGuideId, managedContext: managedContext) as! [FloorMapTourGuideEntity]
             if (fetchData.count > 0) {
@@ -931,6 +944,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     }
     
     func saveToCoreData(tourGuideDetailDict: TourGuideFloorMap, managedObjContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let tourguidedbDict: FloorMapTourGuideEntity = NSEntityDescription.insertNewObject(forEntityName: "FloorMapTourGuideEntity", into: managedObjContext) as! FloorMapTourGuideEntity
             tourguidedbDict.title = tourGuideDetailDict.title
@@ -1050,6 +1064,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     }
     
     func fetchTourGuideFromCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -1171,12 +1186,14 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     }
     //MARK: LoadingView Delegate
     func tryAgainButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if  (networkReachability?.isReachable)! {
             self.getTourGuideDataFromServer()
         }
     }
     
     func showNoNetwork() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.loadingView.stopLoading()
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false
@@ -1184,6 +1201,7 @@ class PreviewContainerViewController: UIViewController,UIPageViewControllerDeleg
     }
     
     func showNoData() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.loadingView.stopLoading()
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false

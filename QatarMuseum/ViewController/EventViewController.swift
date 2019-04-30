@@ -12,7 +12,7 @@ import Crashlytics
 import EventKit
 import Firebase
 import UIKit
-
+import CocoaLumberjack
 
 class EventViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource, HeaderViewProtocol,FSCalendarDelegate,FSCalendarDataSource,UICollectionViewDelegateFlowLayout,EventPopUpProtocol,UIViewControllerTransitioningDelegate,UIGestureRecognizerDelegate,comingSoonPopUpProtocol,LoadingViewProtocol {
     
@@ -57,6 +57,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         return panGesture
         }()
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         registerNib()
         institutionType = anyString
@@ -75,6 +77,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         eventCollectionView?.register(nib, forCellWithReuseIdentifier: "eventCellId")
     }
     func setUpUiContent() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         loadingView.isHidden = false
         loadingView.showLoading()
         loadingView.loadingViewDelegate = self
@@ -283,6 +286,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         self.eventPopup.removeFromSuperview()
     }
     func addToCalendarButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (eventPopup.tag == 0) {
             if(needToRegister == "true") {
                 self.eventPopup.removeFromSuperview()
@@ -344,9 +348,11 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     }
    
     func closeButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.popupView.removeFromSuperview()
     }
     func addEventToCalendar(title: String, description: String?, startDate: Date?, endDate: Date?, completion: ((_ success: Bool, _ error: NSError?) -> Void)? = nil) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let eventStore = EKEventStore()
         let status = EKEventStore.authorizationStatus(for: .event)
         switch (status) {
@@ -420,10 +426,12 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     }
     //MARK: FSCalendar delegate
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         calendarHeight.constant = bounds.height
         self.view.layoutIfNeeded()
     }
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         loadingView.isHidden = false
         loadingView.showLoading()
         if monthPosition == .previous || monthPosition == .next {
@@ -469,6 +477,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     }
     
     @IBAction func previoudDateSelected(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let _calendar = Calendar.current
             var dateComponents = DateComponents()
@@ -486,6 +495,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     }
     
     @IBAction func nextDateSelected(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let _calendar = Calendar.current
             var dateComponents = DateComponents()
@@ -504,6 +514,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     }
     //MARK: WebServiceCall
     func getEducationEventFromServer() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
        // let dateString = toMillis()
         let getDate = toDayMonthYear()
         if ((getDate.day != nil) && (getDate.month != nil) && (getDate.year != nil)) {
@@ -544,6 +555,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
 
     }
     func toDayMonthYear() ->(day:String?, month:String?, year:String?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let date = selectedDateForEvent
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
@@ -558,6 +570,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         return(selectedDay,selectedMonth,selectedYear)
     }
     func toMillis() ->String?  {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let timestamp = selectedDateForEvent.timeIntervalSince1970
         let dateString = String(timestamp)
         let delimiter = "."
@@ -568,7 +581,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         return nil
     }
     func sundayOrWednesday() -> Bool {
-        
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let calendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)
         let components = calendar!.components([.weekday], from: selectedDateForEvent)
         if ((components.weekday == 1) || (components.weekday == 4)) {
@@ -578,6 +591,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         }
     }
     func getUniqueDate() -> String? {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let calendar = Calendar.current
         let startDt = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: selectedDateForEvent)!
         let timestamp = startDt.timeIntervalSince1970
@@ -593,6 +607,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     
     //MARK: Coredata Method
     func saveOrUpdateEducationEventCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (educationEventArray.count > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
@@ -610,6 +625,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     }
     
     func saveOrUpdateEventCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (educationEventArray.count > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
@@ -627,6 +643,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     }
     
     func educationEventCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let dateID = getUniqueDate()
             let fetchData = checkAddedToCoredata(entityName: "EducationEventEntity", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EducationEventEntity]
@@ -678,6 +695,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     }
         
     func saveToCoreData(educationEventDict: EducationEvent,dateId: String?, managedObjContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 let edducationInfo: EducationEventEntity = NSEntityDescription.insertNewObject(forEntityName: "EducationEventEntity", into: managedObjContext) as! EducationEventEntity
                 edducationInfo.dateId = dateId
@@ -901,6 +919,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     }
     
     func fetchEducationEventFromCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let managedContext = getContext()
         do {
             if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -1015,6 +1034,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     
     //MARK: EVENT DB
     func eventCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let dateID = getUniqueDate()
             let fetchData = checkAddedToCoredata(entityName: "EventEntity", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EventEntity]
@@ -1080,6 +1100,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
      
     }
     func saveEventToCoreData(educationEventDict: EducationEvent,dateId: String?, managedObjContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 let edducationInfo: EventEntity = NSEntityDescription.insertNewObject(forEntityName: "EventEntity", into: managedObjContext) as! EventEntity
                 edducationInfo.dateId = dateId
@@ -1439,6 +1460,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     }
     //MARK: Event Popup Delegate
     func loadPermissionPopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         eventPopup  = EventPopupView(frame: self.view.frame)
         eventPopup.eventPopupDelegate = self
         eventPopup.eventTitle.text = NSLocalizedString("PERMISSION_TITLE", comment: "PERMISSION_TITLE  in the popup view")
@@ -1455,6 +1477,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         }
     }
     func showNoNetwork() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.loadingView.stopLoading()
         self.loadingView.noDataView.isHidden = false
         self.loadingView.isHidden = false

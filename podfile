@@ -9,5 +9,7 @@ target 'QatarMuseums' do
  pod 'Crashlytics'
  pod 'GooglePlaces'
  pod 'KeychainSwift', '~> 11.0'
- 
+ pod 'CocoaLumberjack/Swift'
+ pod 'SSZipArchive'
+ pod 'MLeaksFinder'
 end

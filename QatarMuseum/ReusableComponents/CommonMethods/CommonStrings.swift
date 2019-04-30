@@ -82,3 +82,18 @@ struct UserProfileInfo{
     static let user_server_data = "userdata"
     
 }
+
+//// Culture Pass App User Activity Logs
+//
+//var SEND_LOGS = NSLocalizedString("SEND_LOGS", comment: "")
+//var SEND_EMAIL_CONFIRMATION_TITLE = NSLocalizedString("SEND_EMAIL_CONFIRMATION_TITLE", comment: "")
+//var SEND_EMAIL_CONFIRMATION_MESSAGE = NSLocalizedString("SEND_EMAIL_CONFIRMATION_MESSAGE", comment: "")
+//var CANCEL = NSLocalizedString("CANCEL", comment: "")
+//var OK = NSLocalizedString("OK", comment: "")
+//var EMAIL_CANCELLED = NSLocalizedString("EMAIL_CANCELLED", comment: "")
+//var EMAIL_SENT = NSLocalizedString("EMAIL_SENT", comment: "")
+//var EMAIL_SAVED = NSLocalizedString("EMAIL_SAVED", comment: "")
+//var EMAIL_FAILED_TITLE = NSLocalizedString("EMAIL_FAILED_TITLE", comment: "")
+//var EMAIL_FAILED_MESSAGE = NSLocalizedString("EMAIL_FAILED_MESSAGE", comment: "")
+//var EMAIL_DEVICE_CONFIG_TITLE = NSLocalizedString("EMAIL_DEVICE_CONFIG_TITLE", comment: "")
+//var EMAIL_DEVICE_CONFIG_MESSAGE = NSLocalizedString("EMAIL_DEVICE_CONFIG_MESSAGE", comment: "")

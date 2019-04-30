@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 
 class ObjectPopupTableViewCell: UITableViewCell {
 
@@ -26,6 +27,7 @@ class ObjectPopupTableViewCell: UITableViewCell {
         // Initialization code
     }
     func setPopupDetails(mapDetails: TourGuideFloorMap) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         title.text = mapDetails.title?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&#039;", with: "", options: .regularExpression, range: nil)
         productionTitle.text = NSLocalizedString("PRODUCTION_LABEL", comment: "PRODUCTION_LABEL  in the Popup")
         productionDateTitle.text = NSLocalizedString("PRODUCTION_DATES_LABEL", comment: "PRODUCTION_DATES_LABEL  in the Popup")

@@ -12,6 +12,7 @@ import Crashlytics
 import Firebase
 import UIKit
 import KeychainSwift
+import CocoaLumberjack
 
 class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoonPopUpProtocol,LoginPopUpProtocol,UITextFieldDelegate {
     @IBOutlet weak var headerView: CommonHeaderView!
@@ -44,11 +45,14 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     let keychain = KeychainSwift()
     
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         setupUI()
         self.recordScreenView()
     }
     override func viewWillAppear(_ animated: Bool) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         super.viewWillAppear(false)
         if(fromProfile) {
              fromProfile = false
@@ -67,6 +71,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     
     func setupUI() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         headerView.headerViewDelegate = self
         headerView.headerTitle.text = NSLocalizedString("CULTUREPASS_TITLE", comment: "CULTUREPASS_TITLE in the Culture Pass page").uppercased()
         if ((LocalizationLanguage.currentAppleLanguage()) == "en") {
@@ -105,6 +110,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     
     func loadComingSoonPopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
         popupView.loadPopup()
@@ -112,10 +118,12 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     
     func closeButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.popupView.removeFromSuperview()
     }
     
     func loadSuccessMessage() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
         popupView.loadLogoutMessage(message : NSLocalizedString("FORGOT_PASSWORD_SENT_SUCCESSFULLY", comment: "FORGOT_PASSWORD_SENT_SUCCESSFULLY Label in the Popup"))
@@ -123,6 +131,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     
     @IBAction func didTapRegisterButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         var registrationUrlString = String()
         
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
@@ -134,6 +143,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         
         
         if let registrationUrl = URL(string: registrationUrlString) {
+            DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
             // show alert to choose app
             if UIApplication.shared.canOpenURL(registrationUrl as URL) {
                 let webViewVc:WebViewController = self.storyboard?.instantiateViewController(withIdentifier: "webViewId") as! WebViewController
@@ -156,19 +166,23 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     
     @IBAction func registerButtonTouchDown(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.registerButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
     }
     
     @IBAction func didTapLogInButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         //loadComingSoonPopup()
         loadLoginPopup()
         self.logInButton.transform = CGAffineTransform(scaleX: 1, y: 1)
     }
     
     @IBAction func logInButtonTouchDown(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.logInButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
     }
     func loadLoginPopup() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         loginPopUpView  = LoginPopupPage(frame: self.view.frame)
         loginPopUpView.loginPopupDelegate = self
         loginPopUpView.userNameText.delegate = self
@@ -177,10 +191,12 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     //MARK: Login Popup Delegate
     func popupCloseButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.loginPopUpView.removeFromSuperview()
     }
     
     func loginButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         Analytics.logEvent("Login", parameters: [
             "user_name":loginPopUpView.userNameText.text ?? "",
             "login_id":"1"
@@ -216,6 +232,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     
     func loadProfilepage(loginInfo : LoginData?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if (loginInfo != nil) {
             let userData = loginInfo?.user
             
@@ -275,6 +292,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         self.performSegue(withIdentifier: "culturePassToProfileSegue", sender: self)
     }
     func forgotButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.loginPopUpView.loadingView.isHidden = false
         self.loginPopUpView.loadingView.showLoading()
         let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
@@ -288,6 +306,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     //MARK:TextField Delegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if (textField == loginPopUpView.userNameText) {
             loginPopUpView.passwordText.becomeFirstResponder()
         } else {
@@ -298,6 +317,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     //MARK: Header delegates
     func headerCloseButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush
@@ -315,6 +335,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     //MARK: WebServiceCall
     func getCulturePassTokenFromServer(login: Bool? = false) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetToken(["name": loginPopUpView.userNameText.text!,"pass":loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<TokenData>) -> Void in
             switch response.result {
             case .success(let data):
@@ -336,6 +357,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     
     func getCulturePassLoginFromServer() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
         if(accessToken != nil) {
             _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.Login(["name" : loginPopUpView.userNameText.text!,"pass": loginPopUpView.passwordText.text!])).responseObject { (response: DataResponse<LoginData>) -> Void in
@@ -371,6 +393,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     
     func setNewPassword() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let titleString = NSLocalizedString("WEBVIEW_TITLE",comment: "Set the title for Alert")
         if(accessToken != nil) {
             _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.NewPasswordRequest(["name" : loginPopUpView.userNameText.text!])).responseData { (response) -> Void in
@@ -395,6 +418,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     //RSVP Service call
     func checkRSVPUserFromServer(userId: String?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.GetUser(userId!)).responseObject { (response: DataResponse<UserInfoData>) -> Void in
             switch response.result {
             case .success(let data):
@@ -429,6 +453,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
     }
     //MARK : NMoQ EntityRegistratiion
     func getEventListUserRegistrationFromServer() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if((accessToken != nil) && (keychain.get(UserProfileInfo.user_id) != nil)){
             let userId = keychain.get(UserProfileInfo.user_id)!
             _ = CPSessionManager.sharedInstance.apiManager()?.request(QatarMuseumRouter.NMoQEventListUserRegistration(["user_id" : userId])).responseObject { (response: DataResponse<NMoQUserEventListValues>) -> Void in
@@ -449,6 +474,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
 
     //MARK: EventRegistrationCoreData
     func saveOrUpdateEventReistratedCoredata() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if (userEventList.count > 0) {
             let appDelegate =  UIApplication.shared.delegate as? AppDelegate
             if #available(iOS 10.0, *) {
@@ -465,6 +491,7 @@ class CulturePassViewController: UIViewController, HeaderViewProtocol, comingSoo
         }
     }
     func userEventCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             if (userEventList.count > 0) {
                 for i in 0 ... userEventList.count-1 {

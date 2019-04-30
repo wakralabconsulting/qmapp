@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 
 class RegistrationViewController: UIViewController, HeaderViewProtocol, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     @IBOutlet weak var headerView: CommonHeaderView!
@@ -60,11 +61,14 @@ class RegistrationViewController: UIViewController, HeaderViewProtocol, UIPicker
     var selectedNationality = String()
     
     override func viewDidLoad() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
         super.viewDidLoad()
         setUpUi()
     }
     
     func setUpUi() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         headerView.headerViewDelegate = self
         headerView.headerBackButton.setImage(UIImage(named: "closeX1"), for: .normal)
         self.headerView.headerBackButton.contentEdgeInsets = UIEdgeInsets(top: 13, left: 18, bottom: 13, right: 18)
@@ -158,6 +162,7 @@ class RegistrationViewController: UIViewController, HeaderViewProtocol, UIPicker
     }
     
     @IBAction func didTapCreateAccount(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let profileView =  self.storyboard?.instantiateViewController(withIdentifier: "profileViewId") as! ProfileViewController
         let transition = CATransition()
         transition.duration = 0.3
@@ -172,14 +177,17 @@ class RegistrationViewController: UIViewController, HeaderViewProtocol, UIPicker
     }
     
     @IBAction func didTapTitleButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.titleText.becomeFirstResponder()
     }
     
     @IBAction func didTapCountryButton(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.countryText.becomeFirstResponder()
     }
     
     @IBAction func didTapNationality(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
          self.nationalityText.becomeFirstResponder()
     }
     
@@ -258,6 +266,7 @@ class RegistrationViewController: UIViewController, HeaderViewProtocol, UIPicker
     
     //MARK: PickerView
     func addPickerView() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         picker.translatesAutoresizingMaskIntoConstraints = false
         picker.frame = CGRect(x: 20, y: UIScreen.main.bounds.height-200, width: self.view.frame.width - 40, height: 200)
         picker.backgroundColor = UIColor.whiteColor
@@ -278,6 +287,7 @@ class RegistrationViewController: UIViewController, HeaderViewProtocol, UIPicker
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if(picker.tag == 0) {
             return titleArray.count
         } else if(picker.tag == 1) {
@@ -288,6 +298,7 @@ class RegistrationViewController: UIViewController, HeaderViewProtocol, UIPicker
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let pickerLabel = UITextView()
         var pickerTitle : String?
         if (picker.tag == 0) {
@@ -307,6 +318,7 @@ class RegistrationViewController: UIViewController, HeaderViewProtocol, UIPicker
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (picker.tag == 0) {
             selectedTitleRow = row
             selectedTitle = (titleArray[row] as? String)!
@@ -324,12 +336,14 @@ class RegistrationViewController: UIViewController, HeaderViewProtocol, UIPicker
     }
     
     @IBAction func didTapPickerCancel(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         titleText.resignFirstResponder()
         countryText.resignFirstResponder()
         nationalityText.resignFirstResponder()
     }
     
     @IBAction func didTapPickerDone(_ sender: UIButton) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         if (picker.tag == 0) {
             titleText.text = selectedTitle
         } else if(picker.tag == 1) {
@@ -344,6 +358,7 @@ class RegistrationViewController: UIViewController, HeaderViewProtocol, UIPicker
     
     //MARK: Header delegate
     func headerCloseButtonPressed() {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         self.dismiss(animated: false, completion: nil)
     }
     

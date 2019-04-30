@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 protocol comingSoonPopUpProtocol {
     func closeButtonPressed()
 }
@@ -38,6 +39,7 @@ class ComingSoonPopUp: UIView {
         comingSoonPopup.frame = self.bounds
         comingSoonPopup.autoresizingMask = [.flexibleHeight,.flexibleWidth]
         setUpUI()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func setUpUI() {
@@ -48,6 +50,7 @@ class ComingSoonPopUp: UIView {
         messageLabel.font = UIFont.sideMenuLabelFont
         stayTunedLabel.font = UIFont.sideMenuLabelFont
         closeButton.titleLabel?.font = UIFont.closeButtonFont
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func loadPopup() {
@@ -56,6 +59,7 @@ class ComingSoonPopUp: UIView {
         stayTunedLabel.text = NSLocalizedString("COMINGSOON_STAY_TUNED", comment: "COMINGSOON_STAY_TUNED Label in the Popup")
         let buttonTitle = NSLocalizedString("CLOSEBUTTON_TITLE", comment: "CLOSEBUTTON_TITLE Label in the Popup")
         closeButton.setTitle(buttonTitle, for: .normal)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func loadLogoutMessage(message: String) {
@@ -67,6 +71,7 @@ class ComingSoonPopUp: UIView {
        // popUpInnerViewHeight = popUpInnerViewHeight.setMultiplier(multiplier: newMultiplier)
         let buttonTitle = NSLocalizedString("OK", comment: "OK Label in the Popup")
         closeButton.setTitle(buttonTitle, for: .normal)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     func loadLocationErrorPopup() {
@@ -76,6 +81,7 @@ class ComingSoonPopUp: UIView {
         let buttonTitle = NSLocalizedString("CLOSEBUTTON_TITLE", comment: "CLOSEBUTTON_TITLE Label in the Popup")
         
         closeButton.setTitle(buttonTitle, for: .normal)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func loadMapKitLocationErrorPopup() {
         titleLabel.text = NSLocalizedString("SOMETHING_WENT_WRONG_TITLE", comment: "SOMETHING_WENT_WRONG_TITLE Label in the Popup")
@@ -84,6 +90,7 @@ class ComingSoonPopUp: UIView {
         let buttonTitle = NSLocalizedString("CLOSEBUTTON_TITLE", comment: "CLOSEBUTTON_TITLE Label in the Popup")
         
         closeButton.setTitle(buttonTitle, for: .normal)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func loadTourGuidePopup() {
         titleLabel.text = NSLocalizedString("COMINGSOON_TITLE", comment: "COMINGSOON_TITLE Label in the Popup")
@@ -91,6 +98,7 @@ class ComingSoonPopUp: UIView {
         stayTunedLabel.text = NSLocalizedString("COMINGSOON_STAY_TUNED", comment: "COMINGSOON_STAY_TUNED Label in the Popup")
         let buttonTitle = NSLocalizedString("CLOSEBUTTON_TITLE", comment: "CLOSEBUTTON_TITLE Label in the Popup")
         closeButton.setTitle(buttonTitle, for: .normal)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func loadRegistrationPopup() {
         titleLabel.isHidden = true
@@ -101,6 +109,7 @@ class ComingSoonPopUp: UIView {
         stayTunedLabel.isHidden = true
         let buttonTitle = NSLocalizedString("CLOSEBUTTON_TITLE", comment: "CLOSEBUTTON_TITLE Label in the Popup")
         closeButton.setTitle(buttonTitle, for: .normal)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func loadAlreadyRegisteredPopupMessage() {
         titleLabel.isHidden = true
@@ -109,6 +118,7 @@ class ComingSoonPopUp: UIView {
         stayTunedLabel.isHidden = true
         let buttonTitle = NSLocalizedString("CLOSEBUTTON_TITLE", comment: "CLOSEBUTTON_TITLE Label in the Popup")
         closeButton.setTitle(buttonTitle, for: .normal)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func loadNoEndTimePopupMessage() {
         titleLabel.isHidden = true
@@ -117,6 +127,7 @@ class ComingSoonPopUp: UIView {
         stayTunedLabel.isHidden = true
         let buttonTitle = OK_MSG
         closeButton.setTitle(buttonTitle, for: .normal)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func loadNoSeatAvailableMessage() {
         titleLabel.isHidden = true
@@ -125,11 +136,13 @@ class ComingSoonPopUp: UIView {
         stayTunedLabel.isHidden = true
         let buttonTitle = NSLocalizedString("CLOSEBUTTON_TITLE", comment: "CLOSEBUTTON_TITLE Label in the Popup")
         closeButton.setTitle(buttonTitle, for: .normal)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @IBAction func closeButtonTouchDown(_ sender: UIButton) {
         
         self.closeButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
     @IBAction func didTapClose(_ sender: UIButton) {
@@ -137,6 +150,7 @@ class ComingSoonPopUp: UIView {
         
         self.closeButton.transform = CGAffineTransform(scaleX: 1, y: 1)
         comingSoonPopupDelegate?.closeButtonPressed()
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     
 }
