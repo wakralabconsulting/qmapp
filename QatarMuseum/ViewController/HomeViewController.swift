@@ -62,6 +62,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
+//        Crashlytics.sharedInstance().crash()
     }
     
     override func didReceiveMemoryWarning() {
