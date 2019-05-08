@@ -1525,10 +1525,10 @@
                                 <rect key="frame" x="0.0" y="85" width="414" height="651"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TU4-wX-Kh5">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="472"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="860"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="KNOWLEDGE IN ACTION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OjR-xm-nbv">
-                                                <rect key="frame" x="105.00000000000001" y="25" width="204.33333333333337" height="20"/>
+                                                <rect key="frame" x="105" y="25" width="204" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="yWz-3T-9qB"/>
                                                 </constraints>
@@ -1578,14 +1578,26 @@
                                                     <action selector="playPauseButtonTouchDown:" destination="tBI-Sz-bX0" eventType="touchDown" id="SyC-F6-GMu"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All of our education parameters privide interactive " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SHx-NL-C4b">
-                                                <rect key="frame" x="21" y="355" width="372.33333333333331" height="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SHx-NL-C4b">
+                                                <rect key="frame" x="15" y="355" width="384" height="221"/>
+                                                <mutableString key="text">All of our education parameters privide interactive opportunities. We hope that they create lasting memories and lead to the development of creative, compassionate and engaged individuals.\n\n For school teachers and educators, we bring custom-made worshops, conferences and trainings to suit their needs. We also focus on working with children to encourage them to explore the world around them, engage with it, and express themselves through creative activities.\n\n All of our activities with Qatar Supreme Educational Council Professional Standards for Teachers and National Curriculum Standars.</mutableString>
                                                 <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="YXE-62-gtJ">
+                                                <rect key="frame" x="15" y="581" width="384" height="189"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <string key="text">
+Educational and public programs for Summer 2019 (June-August) are published in the “Knowledge in Action” (KinA) brochure. 
+
+You can use this brochure to find talks, lectures, conferences, workshops, tours, master classes and courses offered by museums and programs departments across QM.</string>
+                                                <fontDescription key="fontDescription" name="DINNextLTPro-Regular" family="DIN Next LT Pro" pointSize="16"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                                            </textView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5DT-BC-Fnr">
-                                                <rect key="frame" x="25" y="402" width="364" height="50"/>
+                                                <rect key="frame" x="25" y="790" width="364" height="50"/>
                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="IQe-k4-Y99"/>
@@ -1615,20 +1627,23 @@
                                             <constraint firstAttribute="trailing" secondItem="5DT-BC-Fnr" secondAttribute="trailing" constant="25" id="Cwa-uH-7ts"/>
                                             <constraint firstItem="NF2-vO-0c4" firstAttribute="centerX" secondItem="TU4-wX-Kh5" secondAttribute="centerX" id="Dqi-QG-i6X"/>
                                             <constraint firstItem="OjR-xm-nbv" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TU4-wX-Kh5" secondAttribute="leading" constant="15" id="FfZ-IC-nBS"/>
-                                            <constraint firstItem="5DT-BC-Fnr" firstAttribute="top" secondItem="SHx-NL-C4b" secondAttribute="bottom" constant="30" id="Kfj-ja-37y"/>
+                                            <constraint firstItem="5DT-BC-Fnr" firstAttribute="top" secondItem="YXE-62-gtJ" secondAttribute="bottom" constant="20" id="HV8-BO-MYT"/>
                                             <constraint firstItem="6tA-jH-6If" firstAttribute="centerX" secondItem="e9Y-nf-DMJ" secondAttribute="centerX" id="OUz-7d-79q"/>
-                                            <constraint firstItem="SHx-NL-C4b" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TU4-wX-Kh5" secondAttribute="leading" constant="15" id="Pal-Is-Q6d"/>
+                                            <constraint firstItem="SHx-NL-C4b" firstAttribute="leading" secondItem="TU4-wX-Kh5" secondAttribute="leading" constant="15" id="Pal-Is-Q6d"/>
                                             <constraint firstItem="e9Y-nf-DMJ" firstAttribute="top" secondItem="NF2-vO-0c4" secondAttribute="bottom" constant="19" id="Q97-0F-woz"/>
                                             <constraint firstItem="NF2-vO-0c4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TU4-wX-Kh5" secondAttribute="leading" constant="15" id="QyB-m3-V5W"/>
                                             <constraint firstItem="NF2-vO-0c4" firstAttribute="top" secondItem="GaG-hm-Kv7" secondAttribute="bottom" constant="22" id="RRG-3G-d1I"/>
                                             <constraint firstItem="6tA-jH-6If" firstAttribute="centerY" secondItem="e9Y-nf-DMJ" secondAttribute="centerY" id="VEC-iv-ACD"/>
+                                            <constraint firstItem="YXE-62-gtJ" firstAttribute="leading" secondItem="TU4-wX-Kh5" secondAttribute="leading" constant="15" id="XYm-SK-9Y2"/>
                                             <constraint firstItem="OjR-xm-nbv" firstAttribute="centerX" secondItem="TU4-wX-Kh5" secondAttribute="centerX" id="Y1U-cn-vJF"/>
                                             <constraint firstAttribute="trailing" secondItem="e9Y-nf-DMJ" secondAttribute="trailing" constant="15" id="aEo-YF-X0Z"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="SHx-NL-C4b" secondAttribute="trailing" constant="15" id="cqw-uQ-td0"/>
-                                            <constraint firstAttribute="bottom" secondItem="5DT-BC-Fnr" secondAttribute="bottom" constant="20" id="dvi-1S-FsD"/>
+                                            <constraint firstAttribute="trailing" secondItem="SHx-NL-C4b" secondAttribute="trailing" constant="15" id="cqw-uQ-td0"/>
                                             <constraint firstItem="OjR-xm-nbv" firstAttribute="centerX" secondItem="GaG-hm-Kv7" secondAttribute="centerX" id="hZR-hg-Uig"/>
                                             <constraint firstItem="OjR-xm-nbv" firstAttribute="top" secondItem="TU4-wX-Kh5" secondAttribute="top" constant="25" id="hzq-5n-xfQ"/>
+                                            <constraint firstAttribute="trailing" secondItem="YXE-62-gtJ" secondAttribute="trailing" constant="15" id="jpa-MP-7tx"/>
                                             <constraint firstItem="SHx-NL-C4b" firstAttribute="centerX" secondItem="TU4-wX-Kh5" secondAttribute="centerX" id="nTy-hO-3rd"/>
+                                            <constraint firstItem="YXE-62-gtJ" firstAttribute="top" secondItem="SHx-NL-C4b" secondAttribute="bottom" constant="5" id="sFR-76-Ozn"/>
+                                            <constraint firstAttribute="bottom" secondItem="5DT-BC-Fnr" secondAttribute="bottom" constant="20" id="ugd-FP-flF"/>
                                             <constraint firstItem="SHx-NL-C4b" firstAttribute="top" secondItem="e9Y-nf-DMJ" secondAttribute="bottom" constant="21" id="zUL-ew-lYC"/>
                                         </constraints>
                                     </view>
@@ -1636,8 +1651,9 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="TU4-wX-Kh5" secondAttribute="trailing" id="1IR-Ja-qEe"/>
                                     <constraint firstItem="TU4-wX-Kh5" firstAttribute="width" secondItem="0a6-KU-xgM" secondAttribute="width" id="AcA-sQ-J62"/>
+                                    <constraint firstAttribute="bottom" secondItem="TU4-wX-Kh5" secondAttribute="bottom" id="CoY-16-Nci"/>
                                     <constraint firstItem="TU4-wX-Kh5" firstAttribute="top" secondItem="0a6-KU-xgM" secondAttribute="top" id="cKz-MB-WGU"/>
-                                    <constraint firstAttribute="bottom" secondItem="TU4-wX-Kh5" secondAttribute="bottom" id="hez-6z-hGw"/>
+                                    <constraint firstItem="TU4-wX-Kh5" firstAttribute="height" secondItem="0a6-KU-xgM" secondAttribute="height" priority="250" id="nL3-Va-AtJ"/>
                                     <constraint firstItem="TU4-wX-Kh5" firstAttribute="leading" secondItem="0a6-KU-xgM" secondAttribute="leading" id="vK8-AJ-YWH"/>
                                 </constraints>
                             </scrollView>
@@ -1673,13 +1689,14 @@
                         <outlet property="loadingView" destination="3Xu-sB-NtO" id="Igc-pW-qeQ"/>
                         <outlet property="playButton" destination="6tA-jH-6If" id="6Wm-WG-aa4"/>
                         <outlet property="secondDescriptionLabel" destination="SHx-NL-C4b" id="6nZ-KB-e35"/>
+                        <outlet property="urlTextView" destination="YXE-62-gtJ" id="poz-nX-Ou9"/>
                         <outlet property="videoImage" destination="GPI-hU-IQZ" id="ZeF-RC-ikv"/>
                         <outlet property="videoView" destination="e9Y-nf-DMJ" id="5Oq-S6-kAQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TWi-16-hnD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8516" y="86"/>
+            <point key="canvasLocation" x="8515.9420289855079" y="85.59782608695653"/>
         </scene>
         <!--Filter View Controller-->
         <scene sceneID="I3K-GX-dOS">

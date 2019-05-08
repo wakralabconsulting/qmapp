@@ -13,6 +13,17 @@ import Firebase
 import UIKit
 import YouTubePlayer
 
+extension NSMutableAttributedString {
+    
+    public func setAsLink(textToFind: String, linkURL: String) -> Bool {
+        let foundRange = self.mutableString.range(of: textToFind)
+        if foundRange.location != NSNotFound {
+            self.addAttribute(NSAttributedStringKey.link, value: linkURL, range: foundRange)
+            return true
+        }
+        return false
+    }
+}
 
 class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,HeaderViewProtocol {
     @IBOutlet weak var headerView: CommonHeaderView!
@@ -24,7 +35,8 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var videoImage: UIImageView!
     @IBOutlet weak var discoverButton: UIButton!
-    
+    @IBOutlet weak var urlTextView: UITextView!
+
     var player = AVPlayer()
     var fromSideMenu : Bool = false
 
@@ -42,17 +54,26 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
         firstDescriptionLabel.text = NSLocalizedString("EDUCATION_DESCRIPTION", comment: "EDUCATION_DESCRIPTION in the education page")
         secondDescriptionLabel.text = NSLocalizedString("EDUCATION_TEXT", comment: "EDUCATION_TEXT in the education page")
         //secondDescriptionLabel.text = "All of our education parameters privide interactive opportunities. We hope that they create lasting memories and lead to the development of creative, compassionate and engaged individuals.\n\n For school teachers and educators, we bring custom-made worshops, conferences and trainings to suit their needs. We also focus on working with children to encourage them to explore the world around them, engage with it, and express themselves through creative activities.\n\n All of our activities with Qatar Supreme Educational Council Professional Standards for Teachers and National Curriculum Standars."
+        let attributedString = NSMutableAttributedString(string: NSLocalizedString("EDUCATION_TEXT_WITH_LINK", comment: "EDUCATION_TEXT_WITH_LINK in the education page"), attributes: [NSAttributedString.Key.font: UIFont.englishTitleFont])
+        let linkWasSet = attributedString.setAsLink(textToFind: NSLocalizedString("EDUCATION_LINK_KEY", comment: "EDUCATION_LINK_KEY in the education page"), linkURL: NSLocalizedString("EDUCATION_LINK_URL", comment: "EDUCATION_LINK_URL in the education page"))
+        
+        if linkWasSet {
+            // adjust more attributedString properties
+            urlTextView.attributedText = attributedString
+            urlTextView.textAlignment = .center
+        }
         headerView.headerViewDelegate = self
         headerView.headerTitle.text = NSLocalizedString("EDUCATION_TITLE", comment: "EDUCATION_TITLE in the education page")
         let buttonLabel = NSLocalizedString("DISCOVER", comment: "DISCOVER in the education page")
         discoverButton.setTitle(buttonLabel, for: .normal)
         
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            
             headerView.headerBackButton.setImage(UIImage(named: "back_buttonX1"), for: .normal)
+//            urlTextView.text = "https://www.qm.org.qa/sites/default/files/education/uploads/kina_2019_summer.pdf"
         }
         else {
             headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+//            urlTextView.text = "https://www.qm.org.qa/sites/default/files/education/uploads/kina_2019_summer_ar.pdf"
         }
         educationTitle.font = UIFont.heritageTitleFont
         firstDescriptionLabel.font = UIFont.englishTitleFont
