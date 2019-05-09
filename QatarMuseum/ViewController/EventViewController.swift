@@ -70,10 +70,12 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         super.viewWillAppear(false)
         setUpUiContent()
     }
+    
     func registerNib() {
         let nib = UINib(nibName: "EventCellView", bundle: nil)
         eventCollectionView?.register(nib, forCellWithReuseIdentifier: "eventCellId")
     }
+    
     func setUpUiContent() {
         loadingView.isHidden = false
         loadingView.showLoading()
@@ -97,13 +99,10 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             programmeType = anyString
             if  (networkReachability?.isReachable)! {
                 self.getEducationEventFromServer()
-            }
-            else {
+            } else {
                 self.fetchEventFromCoredata()
-
             }
-        }
-        else {
+        } else {
             listTitleLabel.text = NSLocalizedString("EDUCATION_EVENT_TITLE", comment: "EDUCATION_EVENT_TITLE Label in the Event page")
             headerView.headerTitle.text = NSLocalizedString("EDUCATIONCALENDAR_TITILE", comment: "EDUCATIONCALENDAR_TITILE Label in the Event page")
             listTitleLabel.textColor = UIColor.blackColor
@@ -128,19 +127,21 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             previousConstraint.constant = 30
             nextConstraint.constant = 30
             
-        }
-        else {
-           
-            headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
+        } else {
             //For RTL
-            calendarView?.locale = Locale(identifier: "ar")
-            self.calendarView.transform = CGAffineTransform(scaleX: -1, y: 1)
-            calendarView.setCurrentPage(Date(), animated: false)
             UserDefaults.standard.set(true, forKey: "Arabic")
-            calendarView.appearance.titleFont = UIFont.init(name: "DINNextLTArabic-Bold", size: 18)
-            calendarView.appearance.weekdayFont =  UIFont.init(name: "DINNextLTArabic-Regular", size: 13)
+            headerView.headerBackButton.setImage(UIImage(named: "back_mirrorX1"), for: .normal)
             previousButton.setImage(UIImage(named: "nextImg"), for: .normal)
             nextButton.setImage(UIImage(named: "previousImg"), for: .normal)
+            calendarView.locale = Locale(identifier: "ar")
+            calendarView.calendarHeaderView.calendar.locale = Locale(identifier: "ar")
+            calendarView.calendarHeaderView.collectionViewLayout.collectionView?.semanticContentAttribute = .forceLeftToRight
+            calendarView.identifier = NSCalendar.Identifier.gregorian.rawValue
+            self.calendarView.transform = CGAffineTransform(scaleX: -1, y: 1)
+            calendarView.setCurrentPage(Date(), animated: false)
+            calendarView.appearance.titleFont = UIFont.init(name: "DINNextLTArabic-Bold", size: 18)
+            calendarView.appearance.weekdayFont =  UIFont.init(name: "DINNextLTArabic-Regular", size: 13)
+            
             calendarView.appearance.titleWeekendColor = UIColor.profilePink
             previousConstraint.constant = 30
             nextConstraint.constant = 30
@@ -150,6 +151,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     func minimumDate(for calendar: FSCalendar) -> Date {
         return self.formatter.date(from: "2016-07-08")!
     }
+    
     fileprivate let formatter: DateFormatter = {
         let formatter = DateFormatter()
         if ((LocalizationLanguage.currentAppleLanguage()) == AR_LANGUAGE) {
@@ -158,6 +160,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter
     }()
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
