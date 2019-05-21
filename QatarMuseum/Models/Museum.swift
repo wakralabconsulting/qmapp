@@ -31,6 +31,7 @@ struct Museum: ResponseObjectSerializable, ResponseCollectionSerializable {
     var multimediaVideo: [String]? = []
     var eventDate: String? = nil
     var downloadable: [String]? = []
+    var language = "1"
     
     public init?(response: HTTPURLResponse, representation: AnyObject) {
         if let representation = representation as? [String: Any] {
@@ -54,7 +55,19 @@ struct Museum: ResponseObjectSerializable, ResponseCollectionSerializable {
         }
     }
   
-    init(name:String?, id: String?,tourguideAvailable:String?,contactNumber:String?,contactEmail:String?,mobileLongtitude:String?,subtitle:String?,openingTime:String?,mobileDescription:[String]?,multimediaFile:[String]?,mobileLatitude:String?,tourGuideAvailability:String?,multimediaVideo:[String]?,downloadable:[String]?,eventDate:String?) {
+    init(name:String?, id: String?,
+         tourguideAvailable:String?,
+         contactNumber:String?,
+         contactEmail:String?,
+         mobileLongtitude:String?,
+         subtitle:String?,
+         openingTime:String?,
+         mobileDescription:[String]?,
+         multimediaFile:[String]?,
+         mobileLatitude:String?,
+         tourGuideAvailability:String?,
+         multimediaVideo:[String]?,
+         downloadable:[String]?,eventDate:String?) {
             self.name = name
             self.id = id
             self.tourguideAvailable = tourguideAvailable

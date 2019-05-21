@@ -726,8 +726,10 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     
     func saveToCoreData(aboutDetailDict: Museum, managedObjContext: NSManagedObjectContext) {
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            let aboutdbDict: AboutEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutEntity", into: managedObjContext) as! AboutEntity
+//        if LocalizationLanguage.currentAppleLanguage() == ENG_LANGUAGE {
+        
+            let aboutdbDict: AboutEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutEntity",
+                                                                               into: managedObjContext) as! AboutEntity
             
             aboutdbDict.name = aboutDetailDict.name
             aboutdbDict.id = aboutDetailDict.id
@@ -736,6 +738,9 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             aboutdbDict.contactEmail = aboutDetailDict.contactEmail
             aboutdbDict.mobileLongtitude = aboutDetailDict.mobileLongtitude
             aboutdbDict.subtitle = aboutDetailDict.subtitle
+            aboutdbDict.language = Utils.getLanguage()
+        
+        
             if(fromHomeBanner == false) {
                 aboutdbDict.openingTime = aboutDetailDict.openingTime
             } else {
@@ -751,6 +756,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                     aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     aboutDesc.id = Int16(i)
                     aboutDescEntity = aboutDesc
+                    aboutDescEntity.language = Utils.getLanguage()
                     aboutdbDict.addToMobileDescRelation(aboutDescEntity)
                     do {
                         try managedObjContext.save()
@@ -766,7 +772,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                         var aboutImage: AboutMultimediaFileEntity!
                         let aboutImgaeArray: AboutMultimediaFileEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutMultimediaFileEntity", into: managedObjContext) as! AboutMultimediaFileEntity
                         aboutImgaeArray.image = aboutDetailDict.multimediaFile![i]
-                        
+                        aboutImgaeArray.language = Utils.getLanguage()
                         aboutImage = aboutImgaeArray
                         aboutdbDict.addToMultimediaRelation(aboutImage)
                         do {
@@ -795,63 +801,66 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                     }
                 }
             }
-        } else {
-            let aboutdbDict: AboutEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "AboutEntityArabic", into: managedObjContext) as! AboutEntityArabic
-            aboutdbDict.nameAr = aboutDetailDict.name
-            aboutdbDict.id = aboutDetailDict.id
-            aboutdbDict.tourguideAvailableAr = aboutDetailDict.tourguideAvailable
-            aboutdbDict.contactNumberAr = aboutDetailDict.contactNumber
-            aboutdbDict.contactEmailAr = aboutDetailDict.contactEmail
-            aboutdbDict.mobileLongtitudeAr = aboutDetailDict.mobileLongtitude
-            aboutdbDict.subtitleAr = aboutDetailDict.subtitle
-            aboutdbDict.openingTimeAr = aboutDetailDict.openingTime
-            
-            aboutdbDict.mobileLatitudear = aboutDetailDict.mobileLatitude
-            aboutdbDict.tourGuideAvlblyAr = aboutDetailDict.tourGuideAvailability
-            
-            if((aboutDetailDict.mobileDescription?.count)! > 0) {
-                for i in 0 ... (aboutDetailDict.mobileDescription?.count)!-1 {
-                    var aboutDescEntity: AboutDescriptionEntityAr!
-                    let aboutDesc: AboutDescriptionEntityAr = NSEntityDescription.insertNewObject(forEntityName: "AboutDescriptionEntityAr", into: managedObjContext) as! AboutDescriptionEntityAr
-                    aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-                    aboutDesc.id = Int16(i)
-                    aboutDescEntity = aboutDesc
-                    aboutdbDict.addToMobileDescRelation(aboutDescEntity)
-                    
-                    do {
-                        try managedObjContext.save()
-                    } catch let error as NSError {
-                        print("Could not save. \(error), \(error.userInfo)")
-                    }
-                    
-                }
-            }
-            
-            //MultimediaFile
-            if(aboutDetailDict.multimediaFile != nil){
-                if((aboutDetailDict.multimediaFile?.count)! > 0) {
-                    for i in 0 ... (aboutDetailDict.multimediaFile?.count)!-1 {
-                        var aboutImage: AboutMultimediaFileEntityAr!
-                        let aboutImgaeArray: AboutMultimediaFileEntityAr = NSEntityDescription.insertNewObject(forEntityName: "AboutMultimediaFileEntityAr", into: managedObjContext) as! AboutMultimediaFileEntityAr
-                        aboutImgaeArray.image = aboutDetailDict.multimediaFile![i]
-                        
-                        aboutImage = aboutImgaeArray
-                        aboutdbDict.addToMultimediaRelation(aboutImage)
-                        do {
-                            try managedObjContext.save()
-                        } catch let error as NSError {
-                            print("Could not save. \(error), \(error.userInfo)")
-                        }
-                    }
-                }
-            }
-        }
+//        }
+//        else {
+//            let aboutdbDict: AboutEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "AboutEntityArabic", into: managedObjContext) as! AboutEntityArabic
+//            aboutdbDict.nameAr = aboutDetailDict.name
+//            aboutdbDict.id = aboutDetailDict.id
+//            aboutdbDict.tourguideAvailableAr = aboutDetailDict.tourguideAvailable
+//            aboutdbDict.contactNumberAr = aboutDetailDict.contactNumber
+//            aboutdbDict.contactEmailAr = aboutDetailDict.contactEmail
+//            aboutdbDict.mobileLongtitudeAr = aboutDetailDict.mobileLongtitude
+//            aboutdbDict.subtitleAr = aboutDetailDict.subtitle
+//            aboutdbDict.openingTimeAr = aboutDetailDict.openingTime
+//
+//            aboutdbDict.mobileLatitudear = aboutDetailDict.mobileLatitude
+//            aboutdbDict.tourGuideAvlblyAr = aboutDetailDict.tourGuideAvailability
+//
+//            if((aboutDetailDict.mobileDescription?.count)! > 0) {
+//                for i in 0 ... (aboutDetailDict.mobileDescription?.count)!-1 {
+//                    var aboutDescEntity: AboutDescriptionEntityAr!
+//                    let aboutDesc: AboutDescriptionEntityAr = NSEntityDescription.insertNewObject(forEntityName: "AboutDescriptionEntityAr", into: managedObjContext) as! AboutDescriptionEntityAr
+//                    aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+//                    aboutDesc.id = Int16(i)
+//                    aboutDescEntity = aboutDesc
+//                    aboutdbDict.addToMobileDescRelation(aboutDescEntity)
+//
+//                    do {
+//                        try managedObjContext.save()
+//                    } catch let error as NSError {
+//                        print("Could not save. \(error), \(error.userInfo)")
+//                    }
+//
+//                }
+//            }
+//
+//            //MultimediaFile
+//            if(aboutDetailDict.multimediaFile != nil){
+//                if((aboutDetailDict.multimediaFile?.count)! > 0) {
+//                    for i in 0 ... (aboutDetailDict.multimediaFile?.count)!-1 {
+//                        var aboutImage: AboutMultimediaFileEntityAr!
+//                        let aboutImgaeArray: AboutMultimediaFileEntityAr = NSEntityDescription.insertNewObject(forEntityName: "AboutMultimediaFileEntityAr", into: managedObjContext) as! AboutMultimediaFileEntityAr
+//                        aboutImgaeArray.image = aboutDetailDict.multimediaFile![i]
+//
+//                        aboutImage = aboutImgaeArray
+//                        aboutdbDict.addToMultimediaRelation(aboutImage)
+//                        do {
+//                            try managedObjContext.save()
+//                        } catch let error as NSError {
+//                            print("Could not save. \(error), \(error.userInfo)")
+//                        }
+//                    }
+//                }
+//            }
+//        }
+        
         do {
             try managedObjContext.save()
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
+    
     func deleteExistingEvent(managedContext:NSManagedObjectContext,entityName : String?) ->Bool? {
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName!)
@@ -863,11 +872,12 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             return false
         }
     }
+    
     func fetchMuseumLandingImagesFromCoredata() {
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         let managedContext = getContext()
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+//            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var aboutArray = [AboutEntity]()
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "AboutEntity")
                 if(museumId != nil) {
@@ -882,7 +892,23 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                                 multimediaArray.append(mutimediaInfoArray[i].image!)
                             }
                         }
-                        self.museumArray.insert(Museum(name: aboutDict.name, id: aboutDict.id, tourguideAvailable: nil, contactNumber: nil, contactEmail: nil, mobileLongtitude: nil, subtitle: nil, openingTime: nil, mobileDescription: nil, multimediaFile: multimediaArray, mobileLatitude: nil, tourGuideAvailability: nil,multimediaVideo: nil, downloadable:nil,eventDate:nil),at: 0)
+                        self.museumArray.insert(Museum(name: aboutDict.name,
+                                                       id: aboutDict.id,
+                                                       tourguideAvailable: nil,
+                                                       contactNumber: nil,
+                                                       contactEmail: nil,
+                                                       mobileLongtitude: nil,
+                                                       subtitle: nil,
+                                                       openingTime: nil,
+                                                       mobileDescription: nil,
+                                                       multimediaFile: multimediaArray,
+                                                       mobileLatitude: nil,
+                                                       tourGuideAvailability: nil,
+                                                       multimediaVideo: nil,
+                                                       downloadable:nil,
+                                                       eventDate:nil),
+                                                at: 0)
+                        
                         if(museumArray.count != 0){
                             self.setImageArray(imageArray: self.museumArray[0].multimediaFile)
                         }
@@ -894,42 +920,45 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                         }
                     }
                 }
-            } else {
-                var aboutArray = [AboutEntityArabic]()
-                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "AboutEntityArabic")
-                if(museumId != nil) {
-                    fetchRequest.predicate = NSPredicate.init(format: "id == \(museumId!)")
-                    aboutArray = (try managedContext.fetch(fetchRequest) as? [AboutEntityArabic])!
-                    
-                    if (aboutArray.count > 0) {
-                        let aboutDict = aboutArray[0]
-                        var multimediaArray : [String] = []
-                        let mutimediaInfoArray = (aboutDict.multimediaRelation?.allObjects) as! [AboutMultimediaFileEntityAr]
-                        if(mutimediaInfoArray.count > 0){
-                            for i in 0 ... mutimediaInfoArray.count-1 {
-                                multimediaArray.append(mutimediaInfoArray[i].image!)
-                            }
-                        }
-                        self.museumArray.insert(Museum(name: aboutDict.nameAr, id: aboutDict.id, tourguideAvailable: nil, contactNumber: nil, contactEmail: nil, mobileLongtitude: nil, subtitle: nil, openingTime: nil, mobileDescription: nil, multimediaFile: multimediaArray, mobileLatitude: nil, tourGuideAvailability: nil,multimediaVideo: nil,downloadable:nil,eventDate:nil),at: 0)
-                        if(museumArray.count != 0){
-                            self.setImageArray(imageArray: self.museumArray[0].multimediaFile)
-                        }
-                    }
-                    else{
-                        if (networkReachability?.isReachable)! {
-                            DispatchQueue.global(qos: .background).async {
-                                self.getMuseumDataFromServer()
-                            }
-                        }
-                    }
-                }
-            }
+//            } else {
+//                var aboutArray = [AboutEntityArabic]()
+//                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "AboutEntityArabic")
+//                if(museumId != nil) {
+//                    fetchRequest.predicate = NSPredicate.init(format: "id == \(museumId!)")
+//                    aboutArray = (try managedContext.fetch(fetchRequest) as? [AboutEntityArabic])!
+//
+//                    if (aboutArray.count > 0) {
+//                        let aboutDict = aboutArray[0]
+//                        var multimediaArray : [String] = []
+//                        let mutimediaInfoArray = (aboutDict.multimediaRelation?.allObjects) as! [AboutMultimediaFileEntityAr]
+//                        if(mutimediaInfoArray.count > 0){
+//                            for i in 0 ... mutimediaInfoArray.count-1 {
+//                                multimediaArray.append(mutimediaInfoArray[i].image!)
+//                            }
+//                        }
+//                        self.museumArray.insert(Museum(name: aboutDict.nameAr, id: aboutDict.id, tourguideAvailable: nil, contactNumber: nil, contactEmail: nil, mobileLongtitude: nil, subtitle: nil, openingTime: nil, mobileDescription: nil, multimediaFile: multimediaArray, mobileLatitude: nil, tourGuideAvailability: nil,multimediaVideo: nil,downloadable:nil,eventDate:nil),at: 0)
+//                        if(museumArray.count != 0){
+//                            self.setImageArray(imageArray: self.museumArray[0].multimediaFile)
+//                        }
+//                    }
+//                    else{
+//                        if (networkReachability?.isReachable)! {
+//                            DispatchQueue.global(qos: .background).async {
+//                                self.getMuseumDataFromServer()
+//                            }
+//                        }
+//                    }
+//                }
+//            }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
     
-    func checkAddedToCoredata(entityName: String?,idKey:String?, idValue: String?, managedContext: NSManagedObjectContext) -> [NSManagedObject] {
+    func checkAddedToCoredata(entityName: String?,
+                              idKey:String?,
+                              idValue: String?,
+                              managedContext: NSManagedObjectContext) -> [NSManagedObject] {
         var fetchResults : [NSManagedObject] = []
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName!)
         if (idValue != nil) {
@@ -938,10 +967,12 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         fetchResults = try! managedContext.fetch(fetchRequest)
         return fetchResults
     }
+    
     func recordScreenView() {
         let screenClass = String(describing: type(of: self))
         Analytics.setScreenName(MUSEUM_VC, screenClass: screenClass)
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let tourBanner = NSLocalizedString("TOURS", comment: "TOURS  in the Museum page")
         let travelBanner = NSLocalizedString("TRAVEL_ARRANGEMENTS", comment: "TRAVEL_ARRANGEMENTS  in the Museum page")

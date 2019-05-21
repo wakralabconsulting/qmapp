@@ -30,6 +30,7 @@
 		49504224226311EC00F320EF /* CPSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49504223226311EC00F320EF /* CPSessionManager.swift */; };
 		495FA4A722639DE4006B228F /* qmcert.cer in Resources */ = {isa = PBXBuildFile; fileRef = 49504222226311B000F320EF /* qmcert.cer */; };
 		496DF32A225B08EF00BD8BD1 /* CPLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4929CA0B22377CDA001C42C8 /* CPLogger.swift */; };
+		B317C5362294710E0054CDDA /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B317C5352294710E0054CDDA /* Utils.swift */; };
 		B80674302240CFCF00885544 /* ParkListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B806742F2240CFCF00885544 /* ParkListView.xib */; };
 		B80674322240CFF000885544 /* ParkListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80674312240CFF000885544 /* ParkListTableViewCell.swift */; };
 		B806B7A5212451B200F9F338 /* FloorMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B806B7A4212451B200F9F338 /* FloorMapViewController.swift */; };
@@ -264,6 +265,7 @@
 		49C0458A223302A600FB96EF /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		80387D6C7EDA0B5C9B3AB21C /* Pods-QatarMuseums.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QatarMuseums.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QatarMuseums/Pods-QatarMuseums.debug.xcconfig"; sourceTree = "<group>"; };
 		94F5559C89E84E914A76D7A7 /* Pods_QatarMuseums.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QatarMuseums.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B317C5352294710E0054CDDA /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		B806742F2240CFCF00885544 /* ParkListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParkListView.xib; sourceTree = "<group>"; };
 		B80674312240CFF000885544 /* ParkListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkListTableViewCell.swift; sourceTree = "<group>"; };
 		B806B7A4212451B200F9F338 /* FloorMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorMapViewController.swift; sourceTree = "<group>"; };
@@ -661,6 +663,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		B317C534229470EE0054CDDA /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B317C5352294710E0054CDDA /* Utils.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		B806742E2240CFBA00885544 /* ParkListCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -709,6 +719,7 @@
 		B80DC05720C792E400E28034 /* QatarMuseum */ = {
 			isa = PBXGroup;
 			children = (
+				B317C534229470EE0054CDDA /* Utils */,
 				B80DFF2D2251F68C004E8EA6 /* CoreData */,
 				B8D712FE2250B463000ED7AA /* QatarMuseums.xcdatamodeld */,
 				B890F0B92238C714009A874A /* Images */,
@@ -1613,6 +1624,7 @@
 				1B3C505B212AB3460034E560 /* ArtifactNumberPadCell.swift in Sources */,
 				B8B760512100E88E00CEE280 /* NotificationsTableViewCell.swift in Sources */,
 				B8DDBC7D21AD78AA007B3A06 /* HomeBanner.swift in Sources */,
+				B317C5362294710E0054CDDA /* Utils.swift in Sources */,
 				B8294CE820CBF265002AFF72 /* FSCalendarConstants.m in Sources */,
 				B82729B321778B2F0017EC71 /* VersaPlayerExtension.swift in Sources */,
 				B8C64D4D20FDDBB700C2D51A /* MiaCollectionReusableView.swift in Sources */,

@@ -914,8 +914,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     
     func aboutCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,aboutDetailtArray:[Museum]?,lang: String?) {
-        if (lang == ENG_LANGUAGE) {
-            let fetchData = checkAddedToCoredata(entityName: "AboutEntity", idKey: "id" , idValue: aboutDetailtArray![0].id, managedContext: managedContext) as! [AboutEntity]
+//        if (lang == ENG_LANGUAGE) {
+            let fetchData = checkAddedToCoredata(entityName: "AboutEntity",
+                                                 idKey: "id" ,
+                                                 idValue: aboutDetailtArray![0].id,
+                                                 managedContext: managedContext) as! [AboutEntity]
             
             if (fetchData.count > 0) {
                 let aboutDetailDict = aboutDetailtArray![0]
@@ -932,27 +935,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 aboutDetailDict = aboutDetailtArray?[0]
                 self.saveToCoreData(aboutDetailDict: aboutDetailDict!, managedObjContext: managedContext, lang: lang)
             }
-        } else {
-            let fetchData = checkAddedToCoredata(entityName: "AboutEntityArabic", idKey:"id" , idValue: aboutDetailtArray![0].id, managedContext: managedContext) as! [AboutEntityArabic]
-            if (fetchData.count > 0) {
-                let aboutDetailDict = aboutDetailtArray![0]
-                let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutEntityArabic")
-                if(isDeleted == true) {
-                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDescriptionEntityAr")
-                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutMultimediaFileEntityAr")
-                    self.saveToCoreData(aboutDetailDict: aboutDetailDict, managedObjContext: managedContext, lang: lang)
-                }
-                
-            } else {
-                let aboutDetailDict : Museum?
-                aboutDetailDict = aboutDetailtArray?[0]
-                self.saveToCoreData(aboutDetailDict: aboutDetailDict!, managedObjContext: managedContext, lang: lang)
-            }
-        }
+//        } else {
+//            let fetchData = checkAddedToCoredata(entityName: "AboutEntityArabic", idKey:"id" , idValue: aboutDetailtArray![0].id, managedContext: managedContext) as! [AboutEntityArabic]
+//            if (fetchData.count > 0) {
+//                let aboutDetailDict = aboutDetailtArray![0]
+//                let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutEntityArabic")
+//                if(isDeleted == true) {
+//                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDescriptionEntityAr")
+//                    self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutMultimediaFileEntityAr")
+//                    self.saveToCoreData(aboutDetailDict: aboutDetailDict, managedObjContext: managedContext, lang: lang)
+//                }
+//
+//            } else {
+//                let aboutDetailDict : Museum?
+//                aboutDetailDict = aboutDetailtArray?[0]
+//                self.saveToCoreData(aboutDetailDict: aboutDetailDict!, managedObjContext: managedContext, lang: lang)
+//            }
+//        }
     }
     
     func saveToCoreData(aboutDetailDict: Museum, managedObjContext: NSManagedObjectContext,lang: String?) {
-        if (lang == ENG_LANGUAGE) {
+//        if (lang == ENG_LANGUAGE) {
             let aboutdbDict: AboutEntity = NSEntityDescription.insertNewObject(forEntityName: "AboutEntity", into: managedObjContext) as! AboutEntity
             
             aboutdbDict.name = aboutDetailDict.name
@@ -966,6 +969,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             
             aboutdbDict.mobileLatitude = aboutDetailDict.mobileLatitude
             aboutdbDict.tourGuideAvailability = aboutDetailDict.tourGuideAvailability
+        aboutdbDict.language = Utils.getLanguage()
             
             if((aboutDetailDict.mobileDescription?.count)! > 0) {
                 for i in 0 ... (aboutDetailDict.mobileDescription?.count)!-1 {
@@ -974,6 +978,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     aboutDesc.id = Int16(i)
                     aboutDescEntity = aboutDesc
+                    aboutDescEntity.language = Utils.getLanguage()
                     aboutdbDict.addToMobileDescRelation(aboutDescEntity)
                     
                     do {
@@ -981,7 +986,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     } catch let error as NSError {
                         print("Could not save. \(error), \(error.userInfo)")
                     }
-                    
                 }
             }
             
@@ -994,6 +998,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         aboutImgaeArray.image = aboutDetailDict.multimediaFile![i]
                         
                         aboutImage = aboutImgaeArray
+                        aboutImage.language = Utils.getLanguage()
                         aboutdbDict.addToMultimediaRelation(aboutImage)
                         do {
                             try managedObjContext.save()
@@ -1022,58 +1027,58 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
             }
             
-        } else {
-            let aboutdbDict: AboutEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "AboutEntityArabic", into: managedObjContext) as! AboutEntityArabic
-            aboutdbDict.nameAr = aboutDetailDict.name
-            aboutdbDict.id = aboutDetailDict.id
-            aboutdbDict.tourguideAvailableAr = aboutDetailDict.tourguideAvailable
-            aboutdbDict.contactNumberAr = aboutDetailDict.contactNumber
-            aboutdbDict.contactEmailAr = aboutDetailDict.contactEmail
-            aboutdbDict.mobileLongtitudeAr = aboutDetailDict.mobileLongtitude
-            aboutdbDict.subtitleAr = aboutDetailDict.subtitle
-            aboutdbDict.openingTimeAr = aboutDetailDict.eventDate
-            aboutdbDict.mobileLatitudear = aboutDetailDict.mobileLatitude
-            aboutdbDict.tourGuideAvlblyAr = aboutDetailDict.tourGuideAvailability
-            
-            if((aboutDetailDict.mobileDescription?.count)! > 0) {
-                for i in 0 ... (aboutDetailDict.mobileDescription?.count)!-1 {
-                    var aboutDescEntity: AboutDescriptionEntityAr!
-                    let aboutDesc: AboutDescriptionEntityAr = NSEntityDescription.insertNewObject(forEntityName: "AboutDescriptionEntityAr", into: managedObjContext) as! AboutDescriptionEntityAr
-                    aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-                    aboutDesc.id = Int16(i)
-                    aboutDescEntity = aboutDesc
-                    aboutdbDict.addToMobileDescRelation(aboutDescEntity)
-                    
-                    do {
-                        try managedObjContext.save()
-                        
-                        
-                    } catch let error as NSError {
-                        print("Could not save. \(error), \(error.userInfo)")
-                    }
-                    
-                }
-            }
-            
-            //MultimediaFile
-            if(aboutDetailDict.multimediaFile != nil){
-                if((aboutDetailDict.multimediaFile?.count)! > 0) {
-                    for i in 0 ... (aboutDetailDict.multimediaFile?.count)!-1 {
-                        var aboutImage: AboutMultimediaFileEntityAr!
-                        let aboutImgaeArray: AboutMultimediaFileEntityAr = NSEntityDescription.insertNewObject(forEntityName: "AboutMultimediaFileEntityAr", into: managedObjContext) as! AboutMultimediaFileEntityAr
-                        aboutImgaeArray.image = aboutDetailDict.multimediaFile![i]
-                        
-                        aboutImage = aboutImgaeArray
-                        aboutdbDict.addToMultimediaRelation(aboutImage)
-                        do {
-                            try managedObjContext.save()
-                        } catch let error as NSError {
-                            print("Could not save. \(error), \(error.userInfo)")
-                        }
-                    }
-                }
-            }
-        }
+//        } else {
+//            let aboutdbDict: AboutEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "AboutEntityArabic", into: managedObjContext) as! AboutEntityArabic
+//            aboutdbDict.nameAr = aboutDetailDict.name
+//            aboutdbDict.id = aboutDetailDict.id
+//            aboutdbDict.tourguideAvailableAr = aboutDetailDict.tourguideAvailable
+//            aboutdbDict.contactNumberAr = aboutDetailDict.contactNumber
+//            aboutdbDict.contactEmailAr = aboutDetailDict.contactEmail
+//            aboutdbDict.mobileLongtitudeAr = aboutDetailDict.mobileLongtitude
+//            aboutdbDict.subtitleAr = aboutDetailDict.subtitle
+//            aboutdbDict.openingTimeAr = aboutDetailDict.eventDate
+//            aboutdbDict.mobileLatitudear = aboutDetailDict.mobileLatitude
+//            aboutdbDict.tourGuideAvlblyAr = aboutDetailDict.tourGuideAvailability
+//
+//            if((aboutDetailDict.mobileDescription?.count)! > 0) {
+//                for i in 0 ... (aboutDetailDict.mobileDescription?.count)!-1 {
+//                    var aboutDescEntity: AboutDescriptionEntityAr!
+//                    let aboutDesc: AboutDescriptionEntityAr = NSEntityDescription.insertNewObject(forEntityName: "AboutDescriptionEntityAr", into: managedObjContext) as! AboutDescriptionEntityAr
+//                    aboutDesc.mobileDesc = aboutDetailDict.mobileDescription![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+//                    aboutDesc.id = Int16(i)
+//                    aboutDescEntity = aboutDesc
+//                    aboutdbDict.addToMobileDescRelation(aboutDescEntity)
+//
+//                    do {
+//                        try managedObjContext.save()
+//
+//
+//                    } catch let error as NSError {
+//                        print("Could not save. \(error), \(error.userInfo)")
+//                    }
+//
+//                }
+//            }
+//
+//            //MultimediaFile
+//            if(aboutDetailDict.multimediaFile != nil){
+//                if((aboutDetailDict.multimediaFile?.count)! > 0) {
+//                    for i in 0 ... (aboutDetailDict.multimediaFile?.count)!-1 {
+//                        var aboutImage: AboutMultimediaFileEntityAr!
+//                        let aboutImgaeArray: AboutMultimediaFileEntityAr = NSEntityDescription.insertNewObject(forEntityName: "AboutMultimediaFileEntityAr", into: managedObjContext) as! AboutMultimediaFileEntityAr
+//                        aboutImgaeArray.image = aboutDetailDict.multimediaFile![i]
+//
+//                        aboutImage = aboutImgaeArray
+//                        aboutdbDict.addToMultimediaRelation(aboutImage)
+//                        do {
+//                            try managedObjContext.save()
+//                        } catch let error as NSError {
+//                            print("Could not save. \(error), \(error.userInfo)")
+//                        }
+//                    }
+//                }
+//            }
+//        }
         do {
             try managedObjContext.save()
             NotificationCenter.default.post(name: NSNotification.Name(nmoqAboutNotification), object: self)

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18D42" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.98" systemVersion="18E226" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="AboutDescriptionEntity" representedClassName="AboutDescriptionEntity" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mobileDesc" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="mobileDescRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AboutEntity" inverseName="mobileDescRelation" inverseEntity="AboutEntity" syncable="YES"/>
     </entity>
@@ -18,6 +19,7 @@
         <attribute name="contactEmail" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="contactNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mobileLatitude" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mobileLongtitude" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -48,6 +50,7 @@
     </entity>
     <entity name="AboutMultimediaFileEntity" representedClassName="AboutMultimediaFileEntity" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="multimediaRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AboutEntity" inverseName="multimediaRelation" inverseEntity="AboutEntity" syncable="YES"/>
     </entity>
     <entity name="AboutMultimediaFileEntityAr" representedClassName="AboutMultimediaFileEntityAr" syncable="YES" codeGenerationType="class">
@@ -720,12 +723,12 @@
         <relationship name="tourGuideMultimediaRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TourGuideEntityAr" inverseName="tourGuideMultimediaRelation" inverseEntity="TourGuideEntityAr" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AboutDescriptionEntity" positionX="-27" positionY="135" width="128" height="90"/>
+        <element name="AboutDescriptionEntity" positionX="-27" positionY="135" width="128" height="103"/>
         <element name="AboutDescriptionEntityAr" positionX="-18" positionY="144" width="128" height="90"/>
         <element name="AboutDownloadLinkEntity" positionX="-9" positionY="135" width="128" height="75"/>
-        <element name="AboutEntity" positionX="-36" positionY="135" width="128" height="240"/>
+        <element name="AboutEntity" positionX="7.64453125" positionY="131.921875" width="128" height="253"/>
         <element name="AboutEntityArabic" positionX="-27" positionY="144" width="128" height="270"/>
-        <element name="AboutMultimediaFileEntity" positionX="-9" positionY="135" width="128" height="75"/>
+        <element name="AboutMultimediaFileEntity" positionX="-9" positionY="135" width="128" height="88"/>
         <element name="AboutMultimediaFileEntityAr" positionX="0" positionY="144" width="128" height="75"/>
         <element name="CollectionDetailsEntity" positionX="-36" positionY="135" width="128" height="120"/>
         <element name="CollectionDetailsEntityAr" positionX="-27" positionY="144" width="128" height="120"/>
