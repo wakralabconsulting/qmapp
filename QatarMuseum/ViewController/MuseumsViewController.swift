@@ -227,6 +227,13 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromLeft
         self.dismiss(animated: false, completion: nil)
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_header_back,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
+        
         self.view.window!.layer.add(transition, forKey: kCATransition)
     }
     //MARK: CollectionView Delegates
@@ -351,6 +358,41 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             } else if ((selectedItem == "Tour Guide") || (selectedItem == "الدليل السياحي")){
                 if((museumId == "63") || (museumId == "96") || (museumId == "66") || (museumId == "638")) {
                     self.performSegue(withIdentifier: "museumsToCommonListSegue", sender: self)
+                let detailStoryboard: UIStoryboard = UIStoryboard(name: "DetailPageStoryboard", bundle: nil)
+                let heritageDtlView = detailStoryboard.instantiateViewController(withIdentifier: "heritageDetailViewId2") as! MuseumAboutViewController
+                heritageDtlView.pageNameString = PageName2.museumAbout
+                heritageDtlView.museumId = museumId
+                let transition = CATransition()
+                transition.duration = 0.3
+                transition.type = kCATransitionFade
+                transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+                view.window!.layer.add(transition, forKey: kCATransition)
+                
+                Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                    AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museum_about,
+                    AnalyticsParameterItemName: heritageDtlView.pageNameString ?? "",
+                    AnalyticsParameterContentType: "cont"
+                    ])
+                
+                self.present(heritageDtlView, animated: false, completion: nil)
+            } else if ((selectedItem == "Tour Guide") || (selectedItem == "الدليل السياحي")){
+                if((museumId == "63") || (museumId == "96") || (museumId == "66") || (museumId == "638")) {
+                    let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+                    tourGuideView.exhibitionsPageNameString = ExhbitionPageName.miaTourGuideList
+                    tourGuideView.museumId = museumId!
+                    let transition = CATransition()
+                    transition.duration = 0.3
+                    transition.type = kCATransitionPush
+                    transition.subtype = kCATransitionFromRight
+                    view.window!.layer.add(transition, forKey: kCATransition)
+                    
+                    Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                        AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museum_tourguide,
+                        AnalyticsParameterItemName: tourGuideView.exhibitionsPageNameString ?? "",
+                        AnalyticsParameterContentType: "cont"
+                        ])
+                    
+                    self.present(tourGuideView, animated: false, completion: nil)
                 } else {
                     self.loadComingSoonPopup()
                 }
@@ -369,6 +411,100 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 self.performSegue(withIdentifier: "museumsToCommonListSegue", sender: self)
             }  else if((selectedItem == "Facilities") || (selectedItem == "المرافق")) {
                 self.performSegue(withIdentifier: "museumsToTourAndPanelSegue", sender: self)
+                let exhibitionView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+                exhibitionView.museumId = museumId
+                let transition = CATransition()
+                transition.duration = 0.3
+                transition.type = kCATransitionPush
+                transition.subtype = kCATransitionFromRight
+                view.window!.layer.add(transition, forKey: kCATransition)
+                exhibitionView.exhibitionsPageNameString = ExhbitionPageName.museumExhibition
+                
+                Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                    AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museum_exhibition,
+                    AnalyticsParameterItemName: exhibitionView.exhibitionsPageNameString ?? "",
+                    AnalyticsParameterContentType: "cont"
+                    ])
+                
+                self.present(exhibitionView, animated: false, completion: nil)
+            } else if ((selectedItem == "Collections") || (selectedItem == "المجموعات")){
+                let musmCollectionnView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+                musmCollectionnView.museumId = museumId
+                musmCollectionnView.exhibitionsPageNameString = ExhbitionPageName.museumCollectionsList
+                let transition = CATransition()
+                transition.duration = 0.3
+                transition.type = kCATransitionPush
+                transition.subtype = kCATransitionFromRight
+                view.window!.layer.add(transition, forKey: kCATransition)
+                
+                Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                    AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museum_collections,
+                    AnalyticsParameterItemName: musmCollectionnView.exhibitionsPageNameString ?? "",
+                    AnalyticsParameterContentType: "cont"
+                    ])
+                
+                self.present(musmCollectionnView, animated: false, completion: nil)
+            } else if ((selectedItem == "Parks") || (selectedItem == "الحدائق")){
+                if((museumId == "66") || (museumId == "638")) {
+                    let parkView = self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+                    parkView.exhibitionsPageNameString = ExhbitionPageName.parkList
+                    let transition = CATransition()
+                    transition.duration = 0.3
+                    transition.type = kCATransitionFade
+                    transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+                    view.window!.layer.add(transition, forKey: kCATransition)
+                    Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                        AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museum_parks,
+                        AnalyticsParameterItemName: parkView.exhibitionsPageNameString ?? "",
+                        AnalyticsParameterContentType: "cont"
+                        ])
+                    self.present(parkView, animated: false, completion: nil)
+                } else {
+                    let parkView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
+                    parkView.pageNameString = PageName.SideMenuPark
+                    let transition = CATransition()
+                    transition.duration = 0.3
+                    transition.type = kCATransitionFade
+                    transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+                    view.window!.layer.add(transition, forKey: kCATransition)
+                    Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                        AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museum_parksside,
+                        AnalyticsParameterItemName: parkView.pageNameString ?? "",
+                        AnalyticsParameterContentType: "cont"
+                        ])
+                    self.present(parkView, animated: false, completion: nil)
+                }
+            } else if((selectedItem == "Dining") || (selectedItem == "الطعام")) {
+                let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+                diningView.museumId = museumId
+                diningView.fromHome = false
+                diningView.fromSideMenu = false
+                diningView.exhibitionsPageNameString = ExhbitionPageName.diningList
+                let transition = CATransition()
+                transition.duration = 0.25
+                transition.type = kCATransitionPush
+                transition.subtype = kCATransitionFromRight
+                view.window!.layer.add(transition, forKey: kCATransition)
+                Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                    AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museum_dining,
+                    AnalyticsParameterItemName: diningView.exhibitionsPageNameString ?? "",
+                    AnalyticsParameterContentType: "cont"
+                    ])
+                self.present(diningView, animated: false, completion: nil)
+            }  else if((selectedItem == "Facilities") || (selectedItem == "المرافق")) {
+                let tourView =  self.storyboard?.instantiateViewController(withIdentifier: "tourAndPanelId") as! TourAndPanelListViewController
+                tourView.pageNameString = NMoQPageName.Facilities
+                let transition = CATransition()
+                transition.duration = 0.25
+                transition.type = kCATransitionPush
+                transition.subtype = kCATransitionFromRight
+                view.window!.layer.add(transition, forKey: kCATransition)
+                Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                    AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museum_facilities,
+                    AnalyticsParameterItemName: tourView.pageNameString ?? "",
+                    AnalyticsParameterContentType: "cont"
+                    ])
+                self.present(tourView, animated: false, completion: nil)
             }else {
                 loadComingSoonPopup()
             }
@@ -392,6 +528,12 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             nextButton.isHidden = false
             previousButton.isHidden = true
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museum_previous,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     @IBAction func didTapNext(_ sender: UIButton) {
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
@@ -411,6 +553,12 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             previousButton.isHidden = false
             previousButton.setImage(UIImage(named: "nextImg"), for: .normal)
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museum_next,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     func moveCollectionToFrame(contentOffset : CGFloat) {
         
@@ -441,6 +589,11 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museum_event,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
         self.present(eventView, animated: false, completion: nil)
     }
     
@@ -453,6 +606,11 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
         view.window!.layer.add(transition, forKey: kCATransition)
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museum_notifications,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
         self.present(notificationsView, animated: false, completion: nil)
     }
     
@@ -471,6 +629,12 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             culturePassView.fromHome = false
             self.present(culturePassView, animated: false, completion: nil)
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museum_profile,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     func menuButtonPressed() {
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")

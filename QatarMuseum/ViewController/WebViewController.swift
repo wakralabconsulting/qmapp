@@ -11,6 +11,7 @@ import UIKit
 import WebKit
 import Crashlytics
 import CocoaLumberjack
+import Firebase
 class WebViewController: UIViewController,UIWebViewDelegate,LoadingViewProtocol {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var webView: UIWebView!
@@ -38,6 +39,12 @@ class WebViewController: UIViewController,UIWebViewDelegate,LoadingViewProtocol 
         } else {
             self.showNoNetwork()
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.view_did_load,
+            AnalyticsParameterItemName: titleString ?? "",
+            AnalyticsParameterContentType: "cont"
+            ])
         webView.delegate = self
         webView.backgroundColor = UIColor.whiteColor
         webView.scrollView.bounces = false

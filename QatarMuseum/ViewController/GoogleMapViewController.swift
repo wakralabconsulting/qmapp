@@ -12,6 +12,8 @@ import AVKit
 import GoogleMaps
 import GooglePlaces
 import CocoaLumberjack
+import Firebase
+
 import UIKit
 
 class GoogleMapViewController: UIViewController,CLLocationManagerDelegate,GMSMapViewDelegate {
@@ -178,6 +180,12 @@ class GoogleMapViewController: UIViewController,CLLocationManagerDelegate,GMSMap
             mapView.mapType = .normal
         }
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), MapType: \(mapView.mapType)")
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_mapview_maptype,
+            AnalyticsParameterItemName: mapView.mapType,
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

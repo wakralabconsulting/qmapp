@@ -9,6 +9,7 @@
 import Crashlytics
 import UIKit
 import CocoaLumberjack
+import Firebase
 
 class SplashViewController: UIViewController {
 
@@ -23,6 +24,12 @@ class SplashViewController: UIViewController {
                                                          selector: #selector(SplashViewController.loadHome),
                                                          userInfo: nil,
                                                          repeats: false)
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.view_did_load,
+            AnalyticsParameterItemName: "Splash Screen",
+            AnalyticsParameterContentType: "cont"
+            ])
         
        
     }

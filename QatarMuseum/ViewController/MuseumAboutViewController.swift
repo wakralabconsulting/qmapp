@@ -382,7 +382,6 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
                 }
             }
         }
-       
     }
     func claimOfferButtonAction(offerLink: String?) {
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
@@ -413,6 +412,11 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
     
     //MARK: Poup Delegate
     func closeButtonPressed() {
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_header_close,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
         self.popupView.removeFromSuperview()
     }
     
@@ -961,6 +965,12 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         transparentView.removeFromSuperview()
         carousel.tag = 0
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museumabout_closecarousel,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
         carousel.removeFromSuperview()
     }
     
@@ -968,6 +978,12 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         if((imageView.image != nil) && (imageView.image != UIImage(named: "default_imageX2"))) {
             setiCarouselView()
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museumabout_gallerypressed,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     func isImgArrayAvailable() -> Bool {
@@ -1015,6 +1031,12 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
         } else {
             self.showSendMailErrorAlert()
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museumabout_openemail,
+            AnalyticsParameterItemName: email,
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     func configuredMailComposeViewController(emailId:String) -> MFMailComposeViewController {
         let mailComposerVC = MFMailComposeViewController()
@@ -1057,6 +1079,12 @@ class MuseumAboutViewController: UIViewController,UITableViewDelegate,UITableVie
             
             DDLogError("Error in calling phone ...")
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museumabout_dialphone,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     func recordScreenView() {
         let screenClass = String(describing: type(of: self))

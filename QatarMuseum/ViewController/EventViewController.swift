@@ -232,6 +232,12 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     @objc func filterButtonPressed() {
         let filterView =  self.storyboard?.instantiateViewController(withIdentifier: "filterVcId") as! FilterViewController
         
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_filter_event_item,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
+        
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionPush
@@ -251,6 +257,12 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             eventPopup.addToCalendarButton.backgroundColor = UIColor.lightGrayColor
             eventPopup.addToCalendarButton.setTitleColor(UIColor.whiteColor, for: .normal)
             eventPopup.addToCalendarButton.isEnabled = false
+            
+            Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_event_popup,
+                AnalyticsParameterItemName: buttonTitle ,
+                AnalyticsParameterContentType: "cont"
+                ])
         }
         else {
             let buttonTitle = NSLocalizedString("POPUP_ADD_BUTTON_TITLE", comment: "POPUP_ADD_BUTTON_TITLE  in the popup view")
@@ -264,6 +276,12 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 mainDesc = educationEventArray[currentRow].mainDescription!.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#", with: "", options: .regularExpression, range: nil)
                 mainDesc =  mainDesc.replacingOccurrences(of: "&#039;", with: "'", options: .regularExpression, range: nil)
                 eventPopup.eventDescription.text = mainDesc
+                
+                Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                    AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_event_popup,
+                    AnalyticsParameterItemName: eventPopup.eventTitle.text ?? "",
+                    AnalyticsParameterContentType: "cont"
+                    ])
             }
         }
         else {
@@ -275,6 +293,12 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 mainDesc = mainDesc.replacingOccurrences(of: "&#039;", with: "'", options: .regularExpression, range: nil)
                 eventPopup.eventDescription.text = mainDesc
             }
+            
+            Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_event_popup,
+                AnalyticsParameterItemName: eventPopup.eventTitle.text ?? "",
+                AnalyticsParameterContentType: "cont"
+                ])
         }
         self.view.addSubview(eventPopup)
      
@@ -335,6 +359,12 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             }
 
                 self.addEventToCalendar(title:  (selectedEvent?.title)!, description: selectedEvent?.mainDescription, startDate: startDt, endDate: endDt)
+                
+                Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                    AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_add_to_calender_item,
+                    AnalyticsParameterItemName: selectedEvent?.title ?? "",
+                    AnalyticsParameterContentType: "cont"
+                    ])
                 
             }
         }

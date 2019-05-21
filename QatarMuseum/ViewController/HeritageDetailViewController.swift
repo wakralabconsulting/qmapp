@@ -127,9 +127,16 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         closeButton.addTarget(self, action: #selector(closeTouchDownAction), for: .touchDown)
         
         closeButton.layer.shadowColor = UIColor.black.cgColor
-        closeButton.layer.shadowOffset = CGSize(width: 4, height: 4)
-        closeButton.layer.shadowRadius = 3
-        closeButton.layer.shadowOpacity = 2.0
+        closeButton.layer.shadowOffset = CGSize(width: 5, height: 5)
+        closeButton.layer.shadowRadius = 5
+        closeButton.layer.shadowOpacity = 1.0
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_header_close,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
+        
         view.addSubview(closeButton)
     }
     
@@ -236,6 +243,12 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         } else {
             showLocationErrorPopup()
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_location_map,
+            AnalyticsParameterItemName: pageNameString ?? "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     func showLocationErrorPopup() {
@@ -243,6 +256,12 @@ class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITable
         popupView  = ComingSoonPopUp(frame: self.view.frame)
         popupView.comingSoonPopupDelegate = self
         popupView.loadLocationErrorPopup()
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_location_map,
+            AnalyticsParameterItemName:"Location_Error",
+            AnalyticsParameterContentType: "cont"
+            ])
         self.view.addSubview(popupView)
     }
     

@@ -130,6 +130,13 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     
     @IBAction func didTapPlayButton(_ sender: UIButton) {
         self.playButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_tourguide_play,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
+        
         loadComingSoonPopup()
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
@@ -142,7 +149,29 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     @IBAction func didTapStartTour(_ sender: UIButton) {
         self.startTourButton.transform = CGAffineTransform(scaleX: 1, y: 1)
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), tourGuideDetailID: \(String(describing: tourGuideDetail?.nid))")
-        self.performSegue(withIdentifier: "miaTourToPreviewSegue", sender: self)
+        // self.performSegue(withIdentifier: "miaTourToPreviewSegue", sender: self)
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        let shortDetailsView =  self.storyboard?.instantiateViewController(withIdentifier: "previewContainerId") as! PreviewContainerViewController
+        shortDetailsView.museumId = museumId ?? "0"
+        shortDetailsView.tourGuideId = tourGuideDetail?.nid
+        if ((tourGuideDetail?.nid == "12216") || (tourGuideDetail?.nid == "12226")) {
+            shortDetailsView.fromScienceTour = true
+            self.present(shortDetailsView, animated: false, completion: nil)
+        } else {
+            //if (tourGuideDetail?.nid == "12471") || (tourGuideDetail?.nid == "12916") {
+            shortDetailsView.fromScienceTour = false
+            self.present(shortDetailsView, animated: false, completion: nil)
+        }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_tourguide_start,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     @IBAction func startTourButtonTouchDown(_ sender: UIButton) {
@@ -165,6 +194,12 @@ class MiaTourDetailViewController: UIViewController, HeaderViewProtocol, comingS
     //MARK: Poup Delegate
     func closeButtonPressed() {
         self.popupView.removeFromSuperview()
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_header_close,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     //MARK: Header delegate

@@ -100,6 +100,12 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
             let appDelegate = UIApplication.shared.delegate
             appDelegate?.window??.rootViewController = homeViewController
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_header_close,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     @IBAction func didTapPlayPauseButton(_ sender: UIButton) {
@@ -113,6 +119,12 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
             playButton.tag = 0
             videoView.pause()
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_education_play,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     @IBAction func didTapDiscoverButton(_ sender: UIButton) {
@@ -120,6 +132,22 @@ class EducationViewController: UIViewController,AVPlayerViewControllerDelegate,H
        self.discoverButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         self.performSegue(withIdentifier: "educationToEventSegue", sender: self)
        
+        //self.discoverButton.backgroundColor = UIColor.viewMycultureBlue
+        self.discoverButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        let eventView =  self.storyboard?.instantiateViewController(withIdentifier: "eventPageID") as! EventViewController
+        eventView.fromHome = false
+        eventView.isLoadEventPage = false
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionFade
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_discover_play,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
+        self.present(eventView, animated: false, completion: nil)
     }
     //For Button Animations
     @IBAction func discovereButtonTouchDown(_ sender: UIButton) {

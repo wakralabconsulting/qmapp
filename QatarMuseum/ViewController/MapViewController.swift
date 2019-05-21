@@ -10,6 +10,7 @@ import MapKit
 import UIKit
 import CoreLocation
 import CocoaLumberjack
+import Firebase
 
 class MapViewController: UIViewController, HeaderViewProtocol, MKMapViewDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var mapView: MKMapView!
@@ -168,6 +169,11 @@ class MapViewController: UIViewController, HeaderViewProtocol, MKMapViewDelegate
         transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
         view.window!.layer.add(transition, forKey: kCATransition)
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_header_close,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
         self.dismiss(animated: false, completion: nil)
     }
     override func didReceiveMemoryWarning() {

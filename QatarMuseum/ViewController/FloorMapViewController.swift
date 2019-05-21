@@ -477,6 +477,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
         }
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), TourType: \(String(describing: fromTourString))")
         
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_floormap_loadmap,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     //Function for show level 2 marker
     func showLevelTwoMarker() {
@@ -807,6 +813,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
            // }
             DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), TourType: \(String(describing: fromTourString))")
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_floormap_loadthird,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     @IBAction func didtapSecondbutton(_ sender: UIButton) {
@@ -849,6 +861,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             //}
             DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), TourType: \(String(describing: fromTourString))")
         }
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_floormap_loadsecond,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     @IBAction func didTapFirstButton(_ sender: UIButton) {
@@ -865,6 +882,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             removeMarkers()
             DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_floormap_loadfirst,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     override func didReceiveMemoryWarning() {
@@ -1033,6 +1056,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
         }
         
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), TourType: \(String(describing: fromTourString))")
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_floormap_objectclose,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     //Present detail popup using Bottomsheet
     func viewDetailButtonTapAction() {
@@ -1044,6 +1072,28 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
     @IBAction func didTapNumberSearch(_ sender: UIButton) {
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         self.performSegue(withIdentifier: "floormapToNumSearchSegue", sender: self)
+//        if(fromScienceTour) {
+//            let transition = CATransition()
+//            transition.duration = 0.3
+//            transition.type = kCATransitionPush
+//            transition.subtype = kCATransitionFromLeft
+//            self.view.window!.layer.add(transition, forKey: kCATransition)
+//            self.dismiss(animated: false, completion: nil)
+//        } else {
+            let numberPadView = self.storyboard?.instantiateViewController(withIdentifier: "artifactNumberPadViewId") as! ArtifactNumberPadViewController
+            let transition = CATransition()
+            transition.duration = 0.3
+            transition.type = kCATransitionFade
+            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+            view.window!.layer.add(transition, forKey: kCATransition)
+            self.present(numberPadView, animated: false, completion: nil)
+//        }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_floormap_numbersearch,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     //MARK:Header Protocol
@@ -1069,7 +1119,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             self.dismiss(animated: true, completion: nil)
         }
         
-        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_header_close,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     func filterButtonPressed() {
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
@@ -1256,6 +1310,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
                 isPaused = false
             }
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_floormap_playpause,
+            AnalyticsParameterItemName: isPaused,
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     @IBAction func sliderValueChange(_ sender: UISlider) {
@@ -1270,6 +1330,11 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
         }
         
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), IsFirstLoad: \(firstLoad)")
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_floormap_sliderchange,
+            AnalyticsParameterItemName: isPaused,
+            AnalyticsParameterContentType: "cont"
+            ])
     }
 
     func setupTimer(){
@@ -1340,6 +1405,12 @@ class FloorMapViewController: UIViewController, GMSMapViewDelegate, HeaderViewPr
             self.avPlayer = nil
             self.timer?.invalidate()
         }
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_header_back,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
     }
     
     //MARK: WebServiceCall

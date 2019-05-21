@@ -207,6 +207,11 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromBottom
         self.view.window!.layer.add(transition, forKey: kCATransition)
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_header_back,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
         self.dismiss(animated: false, completion: nil)
     }
     
@@ -257,6 +262,11 @@ class ObjectDetailViewController: UIViewController, UITableViewDelegate, UITable
         selectedCell?.avPlayer = nil
         selectedCell?.timer?.invalidate()
         selectedCell?.closeAudio()
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_objectdetail_buttonaction,
+            AnalyticsParameterItemName: "",
+            AnalyticsParameterContentType: "cont"
+            ])
         dismiss(animated: false, completion: nil)
         
     }
