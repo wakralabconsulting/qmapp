@@ -161,13 +161,8 @@ static NSMutableDictionary *sLibraryVersions;
       if (!((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') ||
             (character >= '0' && character <= '9') || character == '_' || character == '-')) {
         [NSException raise:kFirebaseCoreErrorDomain
-<<<<<<< HEAD
-                    format:@"App name should only contain Letters, "
-                           @"Numbers, Underscores, and Dashes."];
-=======
                     format:@"App name can only contain alphanumeric (A-Z,a-z,0-9), "
                            @"hyphen (-), and underscore (_) characters"];
->>>>>>> origin/QMDev/Firebase_Analytics_Test
       }
     }
 
@@ -431,15 +426,10 @@ static NSMutableDictionary *sLibraryVersions;
 
   // This is the new way of sending information to SDKs.
   // TODO: Do we want this on a background thread, maybe?
-<<<<<<< HEAD
-  for (Class<FIRLibrary> library in sRegisteredAsConfigurable) {
-    [library configureWithApp:app];
-=======
   @synchronized(self) {
     for (Class<FIRLibrary> library in sRegisteredAsConfigurable) {
       [library configureWithApp:app];
     }
->>>>>>> origin/QMDev/Firebase_Analytics_Test
   }
 }
 
@@ -497,44 +487,12 @@ static NSMutableDictionary *sLibraryVersions;
       }
       sLibraryVersions[name] = version;
     }
-<<<<<<< HEAD
-    sLibraryVersions[name] = version;
-=======
->>>>>>> origin/QMDev/Firebase_Analytics_Test
   } else {
     FIRLogError(kFIRLoggerCore, @"I-COR000027",
                 @"The library name (%@) or version number (%@) contain invalid characters. "
                 @"Only alphanumeric, dash, underscore and period characters are allowed.",
                 name, version);
-<<<<<<< HEAD
   }
-}
-
-+ (void)registerInternalLibrary:(nonnull Class<FIRLibrary>)library
-                       withName:(nonnull NSString *)name
-                    withVersion:(nonnull NSString *)version {
-  // This is called at +load time, keep the work to a minimum.
-
-  // Ensure the class given conforms to the proper protocol.
-  if (![(Class)library conformsToProtocol:@protocol(FIRLibrary)] ||
-      ![(Class)library respondsToSelector:@selector(componentsToRegister)]) {
-    [NSException raise:NSInvalidArgumentException
-                format:@"Class %@ attempted to register components, but it does not conform to "
-                       @"`FIRLibrary or provide a `componentsToRegister:` method.",
-                       library];
-  }
-
-  [FIRComponentContainer registerAsComponentRegistrant:library];
-  if ([(Class)library respondsToSelector:@selector(configureWithApp:)]) {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-      sRegisteredAsConfigurable = [[NSMutableArray alloc] init];
-    });
-    [sRegisteredAsConfigurable addObject:library];
-=======
->>>>>>> origin/QMDev/Firebase_Analytics_Test
-  }
-  [self registerLibrary:name withVersion:version];
 }
 
 + (void)registerInternalLibrary:(nonnull Class<FIRLibrary>)library
@@ -582,13 +540,8 @@ static NSMutableDictionary *sLibraryVersions;
   NSString *expectedBundleID = [self expectedBundleID];
   // The checking is only done when the bundle ID is provided in the serviceInfo dictionary for
   // backward compatibility.
-<<<<<<< HEAD
-  if (expectedBundleID != nil && ![FIRBundleUtil hasBundleIdentifier:expectedBundleID
-                                                           inBundles:bundles]) {
-=======
   if (expectedBundleID != nil && ![FIRBundleUtil hasBundleIdentifierPrefix:expectedBundleID
                                                                  inBundles:bundles]) {
->>>>>>> origin/QMDev/Firebase_Analytics_Test
     FIRLogError(kFIRLoggerCore, @"I-COR000008",
                 @"The project's Bundle ID is inconsistent with "
                 @"either the Bundle ID in '%@.%@', or the Bundle ID in the options if you are "
@@ -705,19 +658,11 @@ static NSMutableDictionary *sLibraryVersions;
     return NO;
   }
 
-<<<<<<< HEAD
-  NSString *const pattern = @"^\\d+:ios:[a-f0-9]+$";
-  NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern
-                                                                         options:0
-                                                                           error:NULL];
-  if (!regex) {
-=======
   // Validate version part (see part between '*' symbols below)
   // '<version #>:*<project number>*:ios:<fingerprint of bundle id>'.
   NSInteger projectNumber = NSNotFound;
   if (![stringScanner scanInteger:&projectNumber]) {
     // NO project number found.
->>>>>>> origin/QMDev/Firebase_Analytics_Test
     return NO;
   }
 

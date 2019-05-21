@@ -6,6 +6,7 @@ PODS:
   - Crashlytics (3.12.0):
     - Fabric (~> 1.9.0)
   - Fabric (1.9.0)
+  - FBRetainCycleDetector (0.1.4)
   - Firebase/Core (5.20.2):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 5.8.1)
@@ -82,8 +83,10 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - CocoaLumberjack
     - Crashlytics
     - Fabric
+    - FBRetainCycleDetector
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -92,8 +95,11 @@ SPEC REPOS:
     - GoogleMaps
     - GooglePlaces
     - GoogleUtilities
+    - KeychainSwift
     - Kingfisher
+    - MLeaksFinder
     - nanopb
+    - SSZipArchive
     - YouTubePlayer
 
 SPEC CHECKSUMS:
@@ -102,7 +108,6 @@ SPEC CHECKSUMS:
   Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   FBRetainCycleDetector: 46f8179bbb1c587deee3ea838a1a3ee02acf5015
-  KeychainSwift: bea6bd9f98af7b8d7ca4aa79fe105c00fab532db
   Firebase: 0c8cf33f266410c61ab3e2265cfa412200351d9c
   FirebaseAnalytics: ece1aa57a4f43c64d53a648b5a5e05151aae947b
   FirebaseCore: f1a9a8be1aee4bf71a2fc0f4096df6788bdfda61
@@ -111,6 +116,7 @@ SPEC CHECKSUMS:
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   GooglePlaces: 3d06e6c99654545b4738ce49648745779c25f2ef
   GoogleUtilities: 273e67030e0de313e7304f6dcfa96fc5214f6c23
+  KeychainSwift: bea6bd9f98af7b8d7ca4aa79fe105c00fab532db
   Kingfisher: 64539b51826b778206daa6ed815d12653caa69dd
   MLeaksFinder: 8c435bd2f6d070af18cff082b503b21adc130fc0
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
@@ -119,4 +125,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: aa0e3892381f87609ce785fa4ae143eabba382a0
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.0

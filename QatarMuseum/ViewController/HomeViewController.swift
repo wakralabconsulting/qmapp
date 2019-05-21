@@ -613,124 +613,124 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         self.present(exhibitionView, animated: false, completion: nil)
     }
     
-    func eventbuttonPressed() {
-        let eventView =  self.storyboard?.instantiateViewController(withIdentifier: "eventPageID") as! EventViewController
-        eventView.fromHome = true
-        eventView.isLoadEventPage = true
-        eventView.fromSideMenu = true
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
-            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_button_item,
-            AnalyticsParameterItemName: "eventbuttonPressed_from_Home_Menu",
-            AnalyticsParameterContentType: "cont"
-            ])
-        self.present(eventView, animated: false, completion: nil)
-    }
-    
-    func educationButtonPressed() {
-        let educationView =  self.storyboard?.instantiateViewController(withIdentifier: "educationPageID") as! EducationViewController
-        educationView.fromSideMenu = true
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
-            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_button_item,
-            AnalyticsParameterItemName: "educationButtonPressed_from_Home_Menu",
-            AnalyticsParameterContentType: "cont"
-            ])
-        self.present(educationView, animated: false, completion: nil)
-    }
-    
-    func tourGuideButtonPressed() {
-        let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
-        tourGuideView.fromSideMenu = true
-        tourGuideView.exhibitionsPageNameString = ExhbitionPageName.tourGuideList
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromRight
-        view.window!.layer.add(transition, forKey: kCATransition)
-        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
-            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_button_item,
-            AnalyticsParameterItemName: "tourGuideButtonPressed_from_Home_Menu",
-            AnalyticsParameterContentType: "cont"
-            ])
-        self.present(tourGuideView, animated: false, completion: nil)
-    }
-    
-    func heritageButtonPressed() {
-        let heritageView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
-        heritageView.fromSideMenu = true
-        heritageView.exhibitionsPageNameString = ExhbitionPageName.heritageList
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
-            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_button_item,
-            AnalyticsParameterItemName: "heritageButtonPressed_from_Home_Menu",
-            AnalyticsParameterContentType: "cont"
-            ])
-        self.present(heritageView, animated: false, completion: nil)
-    }
-    
-    func publicArtsButtonPressed() {
-        let publicArtsView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
-        publicArtsView.fromSideMenu = true
-        publicArtsView.exhibitionsPageNameString = ExhbitionPageName.publicArtsList
-        let transition = CATransition()
-        transition.duration = 0.25
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
-            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_button_item,
-            AnalyticsParameterItemName: "publicArtsButtonPressed_from_Home_Menu",
-            AnalyticsParameterContentType: "cont"
-            ])
-        self.present(publicArtsView, animated: false, completion: nil)
-    }
-    
-    func parksButtonPressed() {
-        let parksView =  self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
-        parksView.pageNameString = PageName.SideMenuPark
-        let transition = CATransition()
-        transition.duration = 0.25
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
-            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_button_item,
-            AnalyticsParameterItemName: "parksButtonPressed_from_Home_Menu",
-            AnalyticsParameterContentType: "cont"
-            ])
-        self.present(parksView, animated: false, completion: nil)
-    }
-    
-    func diningButtonPressed() {
-        let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
-        diningView.fromHome = true
-        diningView.fromSideMenu = true
-        diningView.exhibitionsPageNameString = ExhbitionPageName.diningList
-        let transition = CATransition()
-        transition.duration = 0.25
-        transition.type = kCATransitionFade
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
-            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_button_item,
-            AnalyticsParameterItemName: "diningButtonPressed_from_Home_Menu",
-            AnalyticsParameterContentType: "cont"
-            ])
-        self.present(diningView, animated: false, completion: nil)
-    }
+//    func eventbuttonPressed() {
+//        let eventView =  self.storyboard?.instantiateViewController(withIdentifier: "eventPageID") as! EventViewController
+//        eventView.fromHome = true
+//        eventView.isLoadEventPage = true
+//        eventView.fromSideMenu = true
+//        let transition = CATransition()
+//        transition.duration = 0.3
+//        transition.type = kCATransitionFade
+//        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+//            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_button_item,
+//            AnalyticsParameterItemName: "eventbuttonPressed_from_Home_Menu",
+//            AnalyticsParameterContentType: "cont"
+//            ])
+//        self.present(eventView, animated: false, completion: nil)
+//    }
+//    
+//    func educationButtonPressed() {
+//        let educationView =  self.storyboard?.instantiateViewController(withIdentifier: "educationPageID") as! EducationViewController
+//        educationView.fromSideMenu = true
+//        let transition = CATransition()
+//        transition.duration = 0.3
+//        transition.type = kCATransitionFade
+//        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+//            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_button_item,
+//            AnalyticsParameterItemName: "educationButtonPressed_from_Home_Menu",
+//            AnalyticsParameterContentType: "cont"
+//            ])
+//        self.present(educationView, animated: false, completion: nil)
+//    }
+//    
+//    func tourGuideButtonPressed() {
+//        let tourGuideView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+//        tourGuideView.fromSideMenu = true
+//        tourGuideView.exhibitionsPageNameString = ExhbitionPageName.tourGuideList
+//        let transition = CATransition()
+//        transition.duration = 0.3
+//        transition.type = kCATransitionPush
+//        transition.subtype = kCATransitionFromRight
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+//            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_button_item,
+//            AnalyticsParameterItemName: "tourGuideButtonPressed_from_Home_Menu",
+//            AnalyticsParameterContentType: "cont"
+//            ])
+//        self.present(tourGuideView, animated: false, completion: nil)
+//    }
+//    
+//    func heritageButtonPressed() {
+//        let heritageView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+//        heritageView.fromSideMenu = true
+//        heritageView.exhibitionsPageNameString = ExhbitionPageName.heritageList
+//        let transition = CATransition()
+//        transition.duration = 0.3
+//        transition.type = kCATransitionFade
+//        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+//            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_button_item,
+//            AnalyticsParameterItemName: "heritageButtonPressed_from_Home_Menu",
+//            AnalyticsParameterContentType: "cont"
+//            ])
+//        self.present(heritageView, animated: false, completion: nil)
+//    }
+//    
+//    func publicArtsButtonPressed() {
+//        let publicArtsView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+//        publicArtsView.fromSideMenu = true
+//        publicArtsView.exhibitionsPageNameString = ExhbitionPageName.publicArtsList
+//        let transition = CATransition()
+//        transition.duration = 0.25
+//        transition.type = kCATransitionFade
+//        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+//            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_button_item,
+//            AnalyticsParameterItemName: "publicArtsButtonPressed_from_Home_Menu",
+//            AnalyticsParameterContentType: "cont"
+//            ])
+//        self.present(publicArtsView, animated: false, completion: nil)
+//    }
+//    
+//    func parksButtonPressed() {
+//        let parksView =  self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
+//        parksView.pageNameString = PageName.SideMenuPark
+//        let transition = CATransition()
+//        transition.duration = 0.25
+//        transition.type = kCATransitionFade
+//        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+//            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_button_item,
+//            AnalyticsParameterItemName: "parksButtonPressed_from_Home_Menu",
+//            AnalyticsParameterContentType: "cont"
+//            ])
+//        self.present(parksView, animated: false, completion: nil)
+//    }
+//    
+//    func diningButtonPressed() {
+//        let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
+//        diningView.fromHome = true
+//        diningView.fromSideMenu = true
+//        diningView.exhibitionsPageNameString = ExhbitionPageName.diningList
+//        let transition = CATransition()
+//        transition.duration = 0.25
+//        transition.type = kCATransitionFade
+//        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+//            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_button_item,
+//            AnalyticsParameterItemName: "diningButtonPressed_from_Home_Menu",
+//            AnalyticsParameterContentType: "cont"
+//            ])
+//        self.present(diningView, animated: false, completion: nil)
+//    }
     
     
     func culturePassButtonPressed() {
@@ -768,20 +768,20 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
     }
     
-    func settingsButtonPressed() {
-        let settingsView =  self.storyboard?.instantiateViewController(withIdentifier: "settingsId") as! SettingsViewController
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromRight
-        view.window!.layer.add(transition, forKey: kCATransition)
-        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
-            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_button_item,
-            AnalyticsParameterItemName: "settingsButtonPressed_from_Home_Menu",
-            AnalyticsParameterContentType: "cont"
-            ])
-        self.present(settingsView, animated: false, completion: nil)
-    }
+//    func settingsButtonPressed() {
+//        let settingsView =  self.storyboard?.instantiateViewController(withIdentifier: "settingsId") as! SettingsViewController
+//        let transition = CATransition()
+//        transition.duration = 0.3
+//        transition.type = kCATransitionPush
+//        transition.subtype = kCATransitionFromRight
+//        view.window!.layer.add(transition, forKey: kCATransition)
+//        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+//            AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_button_item,
+//            AnalyticsParameterItemName: "settingsButtonPressed_from_Home_Menu",
+//            AnalyticsParameterContentType: "cont"
+//            ])
+//        self.present(settingsView, animated: false, completion: nil)
+//    }
     
     func menuEventPressed() {
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")

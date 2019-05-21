@@ -460,19 +460,19 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                         ])
                     self.present(parkView, animated: false, completion: nil)
                 } else {
-                    let parkView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
-                    parkView.pageNameString = PageName.SideMenuPark
-                    let transition = CATransition()
-                    transition.duration = 0.3
-                    transition.type = kCATransitionFade
-                    transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-                    view.window!.layer.add(transition, forKey: kCATransition)
-                    Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
-                        AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museum_parksside,
-                        AnalyticsParameterItemName: parkView.pageNameString ?? "",
-                        AnalyticsParameterContentType: "cont"
-                        ])
-                    self.present(parkView, animated: false, completion: nil)
+//                    let parkView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
+//                    parkView.pageNameString = PageName.SideMenuPark
+//                    let transition = CATransition()
+//                    transition.duration = 0.3
+//                    transition.type = kCATransitionFade
+//                    transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+//                    view.window!.layer.add(transition, forKey: kCATransition)
+//                    Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+//                        AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museum_parksside,
+//                        AnalyticsParameterItemName: parkView.pageNameString ?? "",
+//                        AnalyticsParameterContentType: "cont"
+//                        ])
+//                    self.present(parkView, animated: false, completion: nil)
                 }
             } else if((selectedItem == "Dining") || (selectedItem == "الطعام")) {
                 let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
@@ -509,6 +509,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 loadComingSoonPopup()
             }
         }
+    }
     }
     
     @IBAction func didTapPrevious(_ sender: UIButton) {
@@ -678,8 +679,12 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     }
     func aboutCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,aboutDetailtArray:[Museum]?) {
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
+        
         if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
-            let fetchData = checkAddedToCoredata(entityName: "AboutEntity", idKey: "id" , idValue: aboutDetailtArray![0].id, managedContext: managedContext) as! [AboutEntity]
+            let fetchData = checkAddedToCoredata(entityName: "AboutEntity",
+                                                 idKey: "id" ,
+                                                 idValue: aboutDetailtArray![0].id,
+                                                 managedContext: managedContext) as! [AboutEntity]
             
             if (fetchData.count > 0) {
                 let aboutDetailDict = aboutDetailtArray![0]
@@ -698,7 +703,10 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 self.saveToCoreData(aboutDetailDict: aboutDetailDict!, managedObjContext: managedContext)
             }
         } else {
-            let fetchData = checkAddedToCoredata(entityName: "AboutEntityArabic", idKey:"id" , idValue: aboutDetailtArray![0].id, managedContext: managedContext) as! [AboutEntityArabic]
+            let fetchData = checkAddedToCoredata(entityName: "AboutEntityArabic",
+                                                 idKey:"id" ,
+                                                 idValue: aboutDetailtArray![0].id,
+                                                 managedContext: managedContext) as! [AboutEntityArabic]
             if (fetchData.count > 0) {
                 let aboutDetailDict = aboutDetailtArray![0]
                 let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutEntityArabic")
@@ -983,8 +991,6 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
             commonDetail.pageNameString = PageName.SideMenuPark
         }
         
-    }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+        
     }
 }

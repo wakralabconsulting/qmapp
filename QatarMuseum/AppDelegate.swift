@@ -2762,10 +2762,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName!)
         let deleteRequest = NSBatchDeleteRequest( fetchRequest: fetchRequest)
-        do{
+        do {
             try managedContext.execute(deleteRequest)
             return true
-        }catch let error as NSError {
+        } catch _ as NSError {
             return false
         }
         

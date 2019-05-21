@@ -300,9 +300,6 @@ Copyright 2019 Google
 
 ## FirebaseInstanceID
 
-<<<<<<< HEAD
-Copyright 2019 Google
-=======
 
                                  Apache License
                            Version 2.0, January 2004
@@ -506,7 +503,6 @@ Copyright 2019 Google
    See the License for the specific language governing permissions and
    limitations under the License.
 
->>>>>>> origin/QMDev/Firebase_Analytics_Test
 
 ## GoogleAppMeasurement
 

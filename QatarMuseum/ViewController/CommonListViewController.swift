@@ -475,7 +475,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                 ])
         } else if (exhibitionsPageNameString == ExhbitionPageName.diningList) {
             let diningId = diningListArray[indexPath.row].id
-            loadDiningDetailAnimation(idValue: diningId!)
+//            loadDiningDetailAnimation(idValue: diningId!)
             Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
                 AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_dining_detail,
                 AnalyticsParameterItemName: exhibitionsPageNameString ?? "",
@@ -493,14 +493,13 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         else if (exhibitionsPageNameString == ExhbitionPageName.facilitiesSecondList) {
             DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
             self.performSegue(withIdentifier: "commonListToPanelDetailSegue", sender: self)
-                loadMiaTourDetail(currentRow: indexPath.row - 1)
+//                loadMiaTourDetail(currentRow: indexPath.row - 1)
                 Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
                     AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_miatour_detail,
                     AnalyticsParameterItemName: exhibitionsPageNameString ?? "",
                     AnalyticsParameterContentType: "cont"
                     ])
             }
-        }
         else if (exhibitionsPageNameString == ExhbitionPageName.facilitiesSecondList) {
             loadTourSecondDetailPage(selectedRow: indexPath.row, fromTour: false, pageName: ExhbitionPageName.facilitiesSecondList)
             Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
@@ -543,6 +542,7 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                     ])
             }
         }
+    
         
     }
 
@@ -573,35 +573,35 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
     }
     func loadExhibitionDetailAnimation(exhibitionId: String) {
     }
-//    func loadTourSecondDetailPage(selectedRow: Int?,fromTour:Bool?,pageName: ExhbitionPageName?) {
-//        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
-//
-//        let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
-//
-//        panelView.selectedRow = selectedRow
-//
-//        if(pageName == ExhbitionPageName.nmoqTourSecondList) {
-//            panelView.nmoqTourDetail = nmoqTourDetail
-//            panelView.panelDetailId = tourDetailId
-//
-//            if (fromTour)! {
-//                panelView.pageNameString = NMoQPanelPage.TourDetailPage
-//            } else {
-//                panelView.pageNameString = NMoQPanelPage.PanelDetailPage
-//            }
-//        } else if(pageName == ExhbitionPageName.facilitiesSecondList) {
-//            panelView.pageNameString = NMoQPanelPage.FacilitiesDetailPage
-//            panelView.panelDetailId = facilitiesDetail![selectedRow!].nid
-//            panelView.facilitiesDetail = facilitiesDetail
-//            panelView.fromCafeOrDining = true
-//        }
-//        let transition = CATransition()
-//        transition.duration = 0.25
-//        transition.type = kCATransitionPush
-//        transition.subtype = kCATransitionFromRight
-//        view.window!.layer.add(transition, forKey: kCATransition)
-//        self.present(panelView, animated: false, completion: nil)
-//    }
+    func loadTourSecondDetailPage(selectedRow: Int?,fromTour:Bool?,pageName: ExhbitionPageName?) {
+        DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
+
+        let panelView =  self.storyboard?.instantiateViewController(withIdentifier: "paneldetailViewId") as! PanelDiscussionDetailViewController
+
+        panelView.selectedRow = selectedRow
+
+        if(pageName == ExhbitionPageName.nmoqTourSecondList) {
+            panelView.nmoqTourDetail = nmoqTourDetail
+            panelView.panelDetailId = tourDetailId
+
+            if (fromTour)! {
+                panelView.pageNameString = NMoQPanelPage.TourDetailPage
+            } else {
+                panelView.pageNameString = NMoQPanelPage.PanelDetailPage
+            }
+        } else if(pageName == ExhbitionPageName.facilitiesSecondList) {
+            panelView.pageNameString = NMoQPanelPage.FacilitiesDetailPage
+            panelView.panelDetailId = facilitiesDetail![selectedRow!].nid
+            panelView.facilitiesDetail = facilitiesDetail
+            panelView.fromCafeOrDining = true
+        }
+        let transition = CATransition()
+        transition.duration = 0.25
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(panelView, animated: false, completion: nil)
+    }
     //MARK: Header delegate
     func headerCloseButtonPressed() {
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
@@ -1570,7 +1570,10 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
         } else {
             langVar = "0"
         }
-            fetchData = checkAddedToCoredata(entityName: "DiningEntity", idKey: "lang", idValue: langVar, managedContext: managedContext) as! [DiningEntity]
+            fetchData = checkAddedToCoredata(entityName: "DiningEntity",
+                                             idKey: "lang",
+                                             idValue: langVar,
+                                             managedContext: managedContext) as! [DiningEntity]
             if (fetchData.count > 0) {
                 for i in 0 ... (diningListArray?.count)!-1 {
                     let diningListDict = diningListArray![i]

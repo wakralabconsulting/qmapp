@@ -359,9 +359,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
-<<<<<<< HEAD
-			<string>Copyright 2019 Google</string>
-=======
 			<string>
                                  Apache License
                            Version 2.0, January 2004
@@ -565,7 +562,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
    See the License for the specific language governing permissions and
    limitations under the License.
 </string>
->>>>>>> origin/QMDev/Firebase_Analytics_Test
 			<key>License</key>
 			<string>Apache</string>
 			<key>Title</key>
