@@ -1577,7 +1577,10 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
             if (fetchData.count > 0) {
                 for i in 0 ... (diningListArray?.count)!-1 {
                     let diningListDict = diningListArray![i]
-                    let fetchResult = checkAddedToCoredata(entityName: "DiningEntity", idKey: "id", idValue: diningListArray![i].id, managedContext: managedContext)
+                    let fetchResult = checkAddedToCoredata(entityName: "DiningEntity",
+                                                           idKey: "id",
+                                                           idValue: diningListArray![i].id,
+                                                           managedContext: managedContext)
                     //update
                     if(fetchResult.count != 0) {
                         let diningdbDict = fetchResult[0] as! DiningEntity
@@ -1592,11 +1595,9 @@ class CommonListViewController: UIViewController,UITableViewDelegate,UITableView
                         catch{
                             print(error)
                         }
-                    }
-                    else {
+                    } else {
                         //save
                         self.saveToDiningCoreData(diningListDict: diningListDict, managedObjContext: managedContext, lang: lang)
-                        
                     }
                 }
             }

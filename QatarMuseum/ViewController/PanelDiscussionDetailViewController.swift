@@ -1569,7 +1569,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
         }
     }
     func collectionDetailCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+//        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "CollectionDetailsEntity", idKey: "categoryCollection" , idValue: collectionName, managedContext: managedContext) as! [CollectionDetailsEntity]
             
             if (fetchData.count > 0) {
@@ -1586,6 +1586,7 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                         collectiondbDict.categoryCollection =  collectionDetailDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                         collectiondbDict.nid = collectionDetailDict.nid
                         collectiondbDict.image = collectionDetailDict.image
+                        collectiondbDict.language = Utils.getLanguage()
                         
                         do{
                             try managedContext.save()
@@ -1606,60 +1607,61 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                 }
                 
             }
-        }
-        else {
-            let fetchData = checkAddedToCoredata(entityName: "CollectionDetailsEntityAr", idKey:"categoryCollection" , idValue: collectionName, managedContext: managedContext) as! [CollectionDetailsEntityAr]
-            if (fetchData.count > 0) {
-                for i in 0 ... collectionDetailArray.count-1 {
-                    let collectionDetailDict = collectionDetailArray[i]
-                    let fetchResult = checkAddedToCoredata(entityName: "CollectionDetailsEntityAr", idKey: "nid", idValue: collectionDetailArray[i].nid, managedContext: managedContext) as! [CollectionDetailsEntityAr]
-                    //update
-                    if(fetchResult.count != 0) {
-                        let collectiondbDict = fetchResult[0]
-                        collectiondbDict.titleAr = collectionDetailDict.title
-                        collectiondbDict.bodyAr = collectionDetailDict.body
-                        collectiondbDict.categoryCollection =  collectionDetailDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-                        collectiondbDict.imageAr = collectionDetailDict.image
-                        
-                        do{
-                            try managedContext.save()
-                        }
-                        catch{
-                            print(error)
-                        }
-                    } else {
-                        self.collectionDetailSaveToCoreData(collectionDetailDict: collectionDetailDict, managedObjContext: managedContext)
-                    }
-                }//for
-            } //if
-            else {
-                for i in 0 ... collectionDetailArray.count-1 {
-                    let collectionDetailDict : CollectionDetail?
-                    collectionDetailDict = collectionDetailArray[i]
-                    self.collectionDetailSaveToCoreData(collectionDetailDict: collectionDetailDict!, managedObjContext: managedContext)
-                }
-            }
-        }
+//        }
+//        else {
+//            let fetchData = checkAddedToCoredata(entityName: "CollectionDetailsEntityAr", idKey:"categoryCollection" , idValue: collectionName, managedContext: managedContext) as! [CollectionDetailsEntityAr]
+//            if (fetchData.count > 0) {
+//                for i in 0 ... collectionDetailArray.count-1 {
+//                    let collectionDetailDict = collectionDetailArray[i]
+//                    let fetchResult = checkAddedToCoredata(entityName: "CollectionDetailsEntityAr", idKey: "nid", idValue: collectionDetailArray[i].nid, managedContext: managedContext) as! [CollectionDetailsEntityAr]
+//                    //update
+//                    if(fetchResult.count != 0) {
+//                        let collectiondbDict = fetchResult[0]
+//                        collectiondbDict.titleAr = collectionDetailDict.title
+//                        collectiondbDict.bodyAr = collectionDetailDict.body
+//                        collectiondbDict.categoryCollection =  collectionDetailDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+//                        collectiondbDict.imageAr = collectionDetailDict.image
+//
+//                        do{
+//                            try managedContext.save()
+//                        }
+//                        catch{
+//                            print(error)
+//                        }
+//                    } else {
+//                        self.collectionDetailSaveToCoreData(collectionDetailDict: collectionDetailDict, managedObjContext: managedContext)
+//                    }
+//                }//for
+//            } //if
+//            else {
+//                for i in 0 ... collectionDetailArray.count-1 {
+//                    let collectionDetailDict : CollectionDetail?
+//                    collectionDetailDict = collectionDetailArray[i]
+//                    self.collectionDetailSaveToCoreData(collectionDetailDict: collectionDetailDict!, managedObjContext: managedContext)
+//                }
+//            }
+//        }
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }
     func collectionDetailSaveToCoreData(collectionDetailDict: CollectionDetail, managedObjContext: NSManagedObjectContext) {
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+//        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let collectiondbDict: CollectionDetailsEntity = NSEntityDescription.insertNewObject(forEntityName: "CollectionDetailsEntity", into: managedObjContext) as! CollectionDetailsEntity
             collectiondbDict.title = collectionDetailDict.title
             collectiondbDict.body = collectionDetailDict.body
             collectiondbDict.nid = collectionDetailDict.nid
             collectiondbDict.categoryCollection =  collectionDetailDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
             collectiondbDict.image = collectionDetailDict.image
+        collectiondbDict.language = Utils.getLanguage()
             
-        }
-        else {
-            let collectiondbDict: CollectionDetailsEntityAr = NSEntityDescription.insertNewObject(forEntityName: "CollectionDetailsEntityAr", into: managedObjContext) as! CollectionDetailsEntityAr
-            collectiondbDict.titleAr = collectionDetailDict.title
-            collectiondbDict.bodyAr = collectionDetailDict.body
-            collectiondbDict.nid = collectionDetailDict.nid
-            collectiondbDict.categoryCollection =  collectionDetailDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-            collectiondbDict.imageAr = collectionDetailDict.image
-        }
+//        }
+//        else {
+//            let collectiondbDict: CollectionDetailsEntityAr = NSEntityDescription.insertNewObject(forEntityName: "CollectionDetailsEntityAr", into: managedObjContext) as! CollectionDetailsEntityAr
+//            collectiondbDict.titleAr = collectionDetailDict.title
+//            collectiondbDict.bodyAr = collectionDetailDict.body
+//            collectiondbDict.nid = collectionDetailDict.nid
+//            collectiondbDict.categoryCollection =  collectionDetailDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+//            collectiondbDict.imageAr = collectionDetailDict.image
+//        }
         do {
             try managedObjContext.save()
             
@@ -1673,9 +1675,12 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
     func fetchCollectionDetailsFromCoredata() {
         let managedContext = getContext()
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+//            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var collectionArray = [CollectionDetailsEntity]()
-                collectionArray = checkAddedToCoredata(entityName: "CollectionDetailsEntity", idKey: "categoryCollection", idValue: collectionName, managedContext: managedContext) as! [CollectionDetailsEntity]
+                collectionArray = checkAddedToCoredata(entityName: "CollectionDetailsEntity",
+                                                       idKey: "categoryCollection",
+                                                       idValue: collectionName,
+                                                       managedContext: managedContext) as! [CollectionDetailsEntity]
                 if (collectionArray.count > 0) {
                     for i in 0 ... collectionArray.count-1 {
                         let collectionDict = collectionArray[i]
@@ -1683,7 +1688,11 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                             self.showNodata()
                             
                         } else {
-                            self.collectionDetailArray.insert(CollectionDetail(title: collectionDict.title, image: collectionDict.image, body: collectionDict.body, nid: collectionDict.nid, categoryCollection: collectionDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)), at: 0)
+                            self.collectionDetailArray.insert(CollectionDetail(title: collectionDict.title,
+                                                                               image: collectionDict.image,
+                                                                               body: collectionDict.body,
+                                                                               nid: collectionDict.nid,
+                                                                               categoryCollection: collectionDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)), at: 0)
                         }
                         
                     }
@@ -1702,39 +1711,39 @@ class PanelDiscussionDetailViewController: UIViewController,LoadingViewProtocol,
                         self.loadingView.showNoDataView()
                     }
                 }
-            } else {
-                var collectionArray = [CollectionDetailsEntityAr]()
-                collectionArray = checkAddedToCoredata(entityName: "CollectionDetailsEntityAr", idKey: "categoryCollection", idValue: collectionName, managedContext: managedContext) as! [CollectionDetailsEntityAr]
-                if(collectionArray.count > 0) {
-                    for i in 0 ... collectionArray.count-1 {
-                        let collectionDict = collectionArray[i]
-                        if((collectionDict.titleAr == nil) && (collectionDict.bodyAr == nil)) {
-                            if(self.networkReachability?.isReachable == false) {
-                                self.showNoNetwork()
-                            } else {
-                                self.loadingView.showNoDataView()
-                            }
-                        } else {
-                            self.collectionDetailArray.insert(CollectionDetail(title: collectionDict.titleAr, image: collectionDict.imageAr, body: collectionDict.bodyAr, nid: collectionDict.nid, categoryCollection: collectionDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)), at: 0)
-                            
-                        }
-                    }
-                    if(collectionDetailArray.count == 0){
-                        if(self.networkReachability?.isReachable == false) {
-                            self.showNoNetwork()
-                        } else {
-                            self.loadingView.showNoDataView()
-                        }
-                    }
-                    tableView.reloadData()
-                } else {
-                    if(self.networkReachability?.isReachable == false) {
-                        self.showNoNetwork()
-                    } else {
-                        self.loadingView.showNoDataView()
-                    }
-                }
-            }
+//            } else {
+//                var collectionArray = [CollectionDetailsEntityAr]()
+//                collectionArray = checkAddedToCoredata(entityName: "CollectionDetailsEntityAr", idKey: "categoryCollection", idValue: collectionName, managedContext: managedContext) as! [CollectionDetailsEntityAr]
+//                if(collectionArray.count > 0) {
+//                    for i in 0 ... collectionArray.count-1 {
+//                        let collectionDict = collectionArray[i]
+//                        if((collectionDict.titleAr == nil) && (collectionDict.bodyAr == nil)) {
+//                            if(self.networkReachability?.isReachable == false) {
+//                                self.showNoNetwork()
+//                            } else {
+//                                self.loadingView.showNoDataView()
+//                            }
+//                        } else {
+//                            self.collectionDetailArray.insert(CollectionDetail(title: collectionDict.titleAr, image: collectionDict.imageAr, body: collectionDict.bodyAr, nid: collectionDict.nid, categoryCollection: collectionDict.categoryCollection?.replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)), at: 0)
+//
+//                        }
+//                    }
+//                    if(collectionDetailArray.count == 0){
+//                        if(self.networkReachability?.isReachable == false) {
+//                            self.showNoNetwork()
+//                        } else {
+//                            self.loadingView.showNoDataView()
+//                        }
+//                    }
+//                    tableView.reloadData()
+//                } else {
+//                    if(self.networkReachability?.isReachable == false) {
+//                        self.showNoNetwork()
+//                    } else {
+//                        self.loadingView.showNoDataView()
+//                    }
+//                }
+//            }
         }
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
     }

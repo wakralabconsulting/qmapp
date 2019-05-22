@@ -674,13 +674,19 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     
     func educationEventCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+//        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let dateID = getUniqueDate()
-            let fetchData = checkAddedToCoredata(entityName: "EducationEventEntity", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EducationEventEntity]
+            let fetchData = checkAddedToCoredata(entityName: "EducationEventEntity",
+                                                 idKey: "dateId",
+                                                 idValue: dateID,
+                                                 managedContext: managedContext) as! [EducationEventEntity]
             if (fetchData.count > 0) {
                 for i in 0 ... educationEventArray.count-1 {
                     let educationDict = educationEventArray[i]
-                    let fetchResultData = checkAddedToCoredata(entityName: "EducationEventEntity", idKey: "itemId", idValue: educationDict.itemId, managedContext: managedContext) as! [EducationEventEntity]
+                    let fetchResultData = checkAddedToCoredata(entityName: "EducationEventEntity",
+                                                               idKey: "itemId",
+                                                               idValue: educationDict.itemId,
+                                                               managedContext: managedContext) as! [EducationEventEntity]
                     if ( fetchResultData.count > 0) {
                         let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "EducationEventEntity")
                         if(isDeleted == true) {
@@ -696,37 +702,39 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     self.saveToCoreData(educationEventDict: educationEvent, dateId: dateID, managedObjContext: managedContext)
                 }
             }
-        } else {
-            let dateID = getUniqueDate()
-            let fetchData = checkAddedToCoredata(entityName: "EducationEventEntityAr", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EducationEventEntityAr]
-            if (fetchData.count > 0) {
-                for i in 0 ... educationEventArray.count-1 {
-                    let educationDict = educationEventArray[i]
-                    let fetchResultData = checkAddedToCoredata(entityName: "EducationEventEntityAr", idKey: "itemId", idValue: educationDict.itemId, managedContext: managedContext) as! [EducationEventEntityAr]
-                    if ( fetchResultData.count > 0) {
-                        let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "EducationEventEntityAr")
-                        if(isDeleted == true) {
-                            self.saveToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
-                        }
-                    } else {
-                        self.saveToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
-                    }
-                }
-                
-               
-            }
-            else {
-               for i in 0 ... educationEventArray.count-1 {
-                    let educationEvent = educationEventArray[i]
-                self.saveToCoreData(educationEventDict: educationEvent, dateId: dateID, managedObjContext: managedContext)
-                }
-            }
-        }
+//        } else {
+//            let dateID = getUniqueDate()
+//            let fetchData = checkAddedToCoredata(entityName: "EducationEventEntityAr", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EducationEventEntityAr]
+//            if (fetchData.count > 0) {
+//                for i in 0 ... educationEventArray.count-1 {
+//                    let educationDict = educationEventArray[i]
+//                    let fetchResultData = checkAddedToCoredata(entityName: "EducationEventEntityAr", idKey: "itemId", idValue: educationDict.itemId, managedContext: managedContext) as! [EducationEventEntityAr]
+//                    if ( fetchResultData.count > 0) {
+//                        let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "EducationEventEntityAr")
+//                        if(isDeleted == true) {
+//                            self.saveToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
+//                        }
+//                    } else {
+//                        self.saveToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
+//                    }
+//                }
+//
+//
+//            }
+//            else {
+//               for i in 0 ... educationEventArray.count-1 {
+//                    let educationEvent = educationEventArray[i]
+//                self.saveToCoreData(educationEventDict: educationEvent, dateId: dateID, managedObjContext: managedContext)
+//                }
+//            }
+//        }
     }
         
-    func saveToCoreData(educationEventDict: EducationEvent,dateId: String?, managedObjContext: NSManagedObjectContext) {
+    func saveToCoreData(educationEventDict: EducationEvent,
+                        dateId: String?,
+                        managedObjContext: NSManagedObjectContext) {
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+//        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 let edducationInfo: EducationEventEntity = NSEntityDescription.insertNewObject(forEntityName: "EducationEventEntity", into: managedObjContext) as! EducationEventEntity
                 edducationInfo.dateId = dateId
                 edducationInfo.itemId = educationEventDict.itemId
@@ -734,6 +742,8 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 edducationInfo.register = educationEventDict.register
                 edducationInfo.title = educationEventDict.title
                 edducationInfo.pgmType = educationEventDict.programType
+        edducationInfo.language = Utils.getLanguage()
+        
             edducationInfo.mainDesc = educationEventDict.mainDescription
             if(educationEventDict.fieldRepeatDate != nil) {
             if((educationEventDict.fieldRepeatDate?.count)! > 0) {
@@ -743,6 +753,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     edEventDate.fieldRepeatDate = educationEventDict.fieldRepeatDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
                     eventDateEntity = edEventDate
+                    eventDateEntity.language = Utils.getLanguage()
                     edducationInfo.addToFieldRepeatDates(eventDateEntity)
                     
                     do {
@@ -762,7 +773,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     var eventAgeEntity: EdAgeGroupEntity!
                     let eventAge: EdAgeGroupEntity = NSEntityDescription.insertNewObject(forEntityName: "EdAgeGroupEntity", into: managedObjContext) as! EdAgeGroupEntity
                     eventAge.ageGroup = educationEventDict.ageGroup![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-                    
+                    eventAge.language = Utils.getLanguage()
                     eventAgeEntity = eventAge
                     edducationInfo.addToAgeGroupRelation(eventAgeEntity)
                     do {
@@ -781,6 +792,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     let event: EdEventTopicsEntity = NSEntityDescription.insertNewObject(forEntityName: "EdEventTopicsEntity", into: managedObjContext) as! EdEventTopicsEntity
                     event.associatedTopic = educationEventDict.associatedTopics![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
+                    event.language = Utils.getLanguage()
                     eventSubEntity = event
                     edducationInfo.addToAssTopicRelation(eventSubEntity)
                     do {
@@ -799,6 +811,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     let event: EdStartDateEntity = NSEntityDescription.insertNewObject(forEntityName: "EdStartDateEntity", into: managedObjContext) as! EdStartDateEntity
                     event.startDate = educationEventDict.startDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
+                    event.language = Utils.getLanguage()
                     eventSubEntity = event
                     edducationInfo.addToStartDateRelation(eventSubEntity)
                     do {
@@ -817,6 +830,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     let event: EdEndDateEntity = NSEntityDescription.insertNewObject(forEntityName: "EdEndDateEntity", into: managedObjContext) as! EdEndDateEntity
                     event.endDate = educationEventDict.endDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
+                    event.language = Utils.getLanguage()
                     eventSubEntity = event
                     edducationInfo.addToEndDateRelation(eventSubEntity)
                     do {
@@ -829,116 +843,116 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 }
             }
           
-        }
-        else {
-        
-                let edducationInfo: EducationEventEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EducationEventEntityAr", into: managedObjContext) as! EducationEventEntityAr
-            
-                if((educationEventDict.fieldRepeatDate?.count)! > 0) {
-                    let fieldRepeatId = educationEventDict.fieldRepeatDate![0]
-                    edducationInfo.fieldRepeatDate =  fieldRepeatId
-                }
-            
-                edducationInfo.dateId = dateId
-                edducationInfo.itemId = educationEventDict.itemId
-                edducationInfo.introductionText = educationEventDict.introductionText
-                edducationInfo.registerAr = educationEventDict.register
-                edducationInfo.titleAr = educationEventDict.title
-                edducationInfo.pgmTypeAr = educationEventDict.programType
-            edducationInfo.mainDesc = educationEventDict.mainDescription
-            if(educationEventDict.fieldRepeatDate != nil) {
-            if((educationEventDict.fieldRepeatDate?.count)! > 0) {
-                for i in 0 ... (educationEventDict.fieldRepeatDate?.count)!-1 {
-                    var eventDateEntity: EdEventDateEntityAr!
-                    let edEventDate: EdEventDateEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EdEventDateEntityAr", into: managedObjContext) as! EdEventDateEntityAr
-                    edEventDate.fieldRepeatDate = educationEventDict.fieldRepeatDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-                    
-                    eventDateEntity = edEventDate
-                    edducationInfo.addToFieldRepeatDates(eventDateEntity)
-                    
-                    do {
-                        try managedObjContext.save()
-                        
-                    } catch let error as NSError {
-                        print("Could not save. \(error), \(error.userInfo)")
-                    }
-                    
-                }
-            }
-        }
-           
-            //AgeGroup
-            if((educationEventDict.ageGroup?.count)! > 0) {
-                for i in 0 ... (educationEventDict.ageGroup?.count)!-1 {
-                    var eventAgeEntity: EdAgeGroupEntityAr!
-                    let eventAge: EdAgeGroupEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EdAgeGroupEntityAr", into: managedObjContext) as! EdAgeGroupEntityAr
-                    eventAge.ageGroup = educationEventDict.ageGroup![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-                    
-                    eventAgeEntity = eventAge
-                    edducationInfo.addToAgeGroupRelation(eventAgeEntity)
-                    do {
-                        try managedObjContext.save()
-                        
-                    } catch let error as NSError {
-                        print("Could not save. \(error), \(error.userInfo)")
-                    }
-                    
-                }
-            }
-            //Associated_topics
-            if((educationEventDict.associatedTopics?.count)! > 0) {
-                for i in 0 ... (educationEventDict.associatedTopics?.count)!-1 {
-                    var eventSubEntity: EdEventTopicsEntityAr!
-                    let event: EdEventTopicsEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EdEventTopicsEntityAr", into: managedObjContext) as! EdEventTopicsEntityAr
-                    event.associatedTopic = educationEventDict.associatedTopics![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-                    
-                    eventSubEntity = event
-                    edducationInfo.addToAssTopicRelation(eventSubEntity)
-                    do {
-                        try managedObjContext.save()
-                        
-                    } catch let error as NSError {
-                        print("Could not save. \(error), \(error.userInfo)")
-                    }
-                    
-                }
-            }
-            //StartDate
-            if((educationEventDict.startDate?.count)! > 0) {
-                for i in 0 ... (educationEventDict.startDate?.count)!-1 {
-                    var eventSubEntity: EdStartDateEntityAr!
-                    let event: EdStartDateEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EdStartDateEntityAr", into: managedObjContext) as! EdStartDateEntityAr
-                    event.startDate = educationEventDict.startDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-                    
-                    eventSubEntity = event
-                    edducationInfo.addToStartDateRelation(eventSubEntity)
-                    do {
-                        try managedObjContext.save()
-                        
-                    } catch let error as NSError {
-                        print("Could not save. \(error), \(error.userInfo)")
-                    }
-                    
-                }
-            }
-            //endDate
-            if((educationEventDict.endDate?.count)! > 0) {
-                for i in 0 ... (educationEventDict.endDate?.count)!-1 {
-                    var eventSubEntity: EdEndDateEntityAr!
-                    let event: EdEndDateEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EdEndDateEntityAr", into: managedObjContext) as! EdEndDateEntityAr
-                    event.endDate = educationEventDict.endDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-                    
-                    eventSubEntity = event
-                    edducationInfo.addToEndDateRelation(eventSubEntity)
-                    do {
-                        try managedObjContext.save()
-                        
-                    } catch let error as NSError {
-                        print("Could not save. \(error), \(error.userInfo)")
-                    }
-                    
-                }
-            }        }
+//        }
+//        else {
+//
+//                let edducationInfo: EducationEventEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EducationEventEntityAr", into: managedObjContext) as! EducationEventEntityAr
+//
+//                if((educationEventDict.fieldRepeatDate?.count)! > 0) {
+//                    let fieldRepeatId = educationEventDict.fieldRepeatDate![0]
+//                    edducationInfo.fieldRepeatDate =  fieldRepeatId
+//                }
+//
+//                edducationInfo.dateId = dateId
+//                edducationInfo.itemId = educationEventDict.itemId
+//                edducationInfo.introductionText = educationEventDict.introductionText
+//                edducationInfo.registerAr = educationEventDict.register
+//                edducationInfo.titleAr = educationEventDict.title
+//                edducationInfo.pgmTypeAr = educationEventDict.programType
+//            edducationInfo.mainDesc = educationEventDict.mainDescription
+//            if(educationEventDict.fieldRepeatDate != nil) {
+//            if((educationEventDict.fieldRepeatDate?.count)! > 0) {
+//                for i in 0 ... (educationEventDict.fieldRepeatDate?.count)!-1 {
+//                    var eventDateEntity: EdEventDateEntityAr!
+//                    let edEventDate: EdEventDateEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EdEventDateEntityAr", into: managedObjContext) as! EdEventDateEntityAr
+//                    edEventDate.fieldRepeatDate = educationEventDict.fieldRepeatDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+//
+//                    eventDateEntity = edEventDate
+//                    edducationInfo.addToFieldRepeatDates(eventDateEntity)
+//
+//                    do {
+//                        try managedObjContext.save()
+//
+//                    } catch let error as NSError {
+//                        print("Could not save. \(error), \(error.userInfo)")
+//                    }
+//
+//                }
+//            }
+//        }
+//
+//            //AgeGroup
+//            if((educationEventDict.ageGroup?.count)! > 0) {
+//                for i in 0 ... (educationEventDict.ageGroup?.count)!-1 {
+//                    var eventAgeEntity: EdAgeGroupEntityAr!
+//                    let eventAge: EdAgeGroupEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EdAgeGroupEntityAr", into: managedObjContext) as! EdAgeGroupEntityAr
+//                    eventAge.ageGroup = educationEventDict.ageGroup![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+//
+//                    eventAgeEntity = eventAge
+//                    edducationInfo.addToAgeGroupRelation(eventAgeEntity)
+//                    do {
+//                        try managedObjContext.save()
+//
+//                    } catch let error as NSError {
+//                        print("Could not save. \(error), \(error.userInfo)")
+//                    }
+//
+//                }
+//            }
+//            //Associated_topics
+//            if((educationEventDict.associatedTopics?.count)! > 0) {
+//                for i in 0 ... (educationEventDict.associatedTopics?.count)!-1 {
+//                    var eventSubEntity: EdEventTopicsEntityAr!
+//                    let event: EdEventTopicsEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EdEventTopicsEntityAr", into: managedObjContext) as! EdEventTopicsEntityAr
+//                    event.associatedTopic = educationEventDict.associatedTopics![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+//
+//                    eventSubEntity = event
+//                    edducationInfo.addToAssTopicRelation(eventSubEntity)
+//                    do {
+//                        try managedObjContext.save()
+//
+//                    } catch let error as NSError {
+//                        print("Could not save. \(error), \(error.userInfo)")
+//                    }
+//
+//                }
+//            }
+//            //StartDate
+//            if((educationEventDict.startDate?.count)! > 0) {
+//                for i in 0 ... (educationEventDict.startDate?.count)!-1 {
+//                    var eventSubEntity: EdStartDateEntityAr!
+//                    let event: EdStartDateEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EdStartDateEntityAr", into: managedObjContext) as! EdStartDateEntityAr
+//                    event.startDate = educationEventDict.startDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+//
+//                    eventSubEntity = event
+//                    edducationInfo.addToStartDateRelation(eventSubEntity)
+//                    do {
+//                        try managedObjContext.save()
+//
+//                    } catch let error as NSError {
+//                        print("Could not save. \(error), \(error.userInfo)")
+//                    }
+//
+//                }
+//            }
+//            //endDate
+//            if((educationEventDict.endDate?.count)! > 0) {
+//                for i in 0 ... (educationEventDict.endDate?.count)!-1 {
+//                    var eventSubEntity: EdEndDateEntityAr!
+//                    let event: EdEndDateEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EdEndDateEntityAr", into: managedObjContext) as! EdEndDateEntityAr
+//                    event.endDate = educationEventDict.endDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+//
+//                    eventSubEntity = event
+//                    edducationInfo.addToEndDateRelation(eventSubEntity)
+//                    do {
+//                        try managedObjContext.save()
+//
+//                    } catch let error as NSError {
+//                        print("Could not save. \(error), \(error.userInfo)")
+//                    }
+//
+//                }
+//            }        }
         do {
             try managedObjContext.save()
             
@@ -952,10 +966,13 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
         let managedContext = getContext()
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+//            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var educationArray = [EducationEventEntity]()
                 let dateID = self.getUniqueDate()
-                educationArray = self.checkAddedToCoredata(entityName: "EducationEventEntity", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EducationEventEntity]
+                educationArray = self.checkAddedToCoredata(entityName: "EducationEventEntity",
+                                                           idKey: "dateId",
+                                                           idValue: dateID,
+                                                           managedContext: managedContext) as! [EducationEventEntity]
                 if (educationArray.count > 0) {
                     for i in 0 ... educationArray.count-1 {
                         var dateArray : [String] = []
@@ -1003,60 +1020,60 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                         self.loadingView.showNoDataView()
                     }
                 }
-            } else {
-                var educationArray = [EducationEventEntityAr]()
-                let dateID = self.getUniqueDate()
-                educationArray = self.checkAddedToCoredata(entityName: "EducationEventEntityAr", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EducationEventEntityAr]
-                if (educationArray.count > 0) {
-                    for i in 0 ... educationArray.count-1 {
-                        var dateArray : [String] = []
-                        let educationInfo = educationArray[i]
-                        let educationInfoArray = (educationInfo.fieldRepeatDates?.allObjects) as! [EdEventDateEntityAr]
-                        for i in 0 ... educationInfoArray.count-1 {
-                            dateArray.append(educationInfoArray[i].fieldRepeatDate!)
-                        }
-                        var ageGrpArray : [String] = []
-                        let ageInfoArray = (educationInfo.ageGroupRelation?.allObjects) as! [EdAgeGroupEntityAr]
-                        for i in 0 ... ageInfoArray.count-1 {
-                            ageGrpArray.append(ageInfoArray[i].ageGroup!)
-                        }
-                        var topicsArray : [String] = []
-                        let topicsInfoArray = (educationInfo.assTopicRelation?.allObjects) as! [EdEventTopicsEntityAr]
-                        for i in 0 ... topicsInfoArray.count-1 {
-                            topicsArray.append(topicsInfoArray[i].associatedTopic!)
-                        }
-                        var startDateArray : [String] = []
-                        let startDateInfoArray = (educationInfo.startDateRelation?.allObjects) as! [EdStartDateEntityAr]
-                        for i in 0 ... startDateInfoArray.count-1 {
-                            startDateArray.append(startDateInfoArray[i].startDate!)
-                        }
-                        var endDateArray : [String] = []
-                        let endDateInfoArray = (educationInfo.endDateRelation?.allObjects) as! [EdEndDateEntityAr]
-                        for i in 0 ... endDateInfoArray.count-1 {
-                            endDateArray.append(endDateInfoArray[i].endDate!)
-                        }
-
-                        self.educationEventArray.insert(EducationEvent(itemId: educationArray[i].itemId, introductionText: educationArray[i].introductionText, register: educationArray[i].registerAr, fieldRepeatDate: dateArray, title: educationArray[i].titleAr, programType: educationArray[i].pgmTypeAr, mainDescription: educationArray[i].mainDesc, ageGroup: ageGrpArray, associatedTopics: topicsArray, museumDepartMent: educationArray[i].museumDepartMent, startDate: startDateArray, endDate: endDateArray), at: i)
-                        
-                        
-                    }
-                    if(educationEventArray.count == 0){
-                        if(self.networkReachability?.isReachable == false) {
-                            self.showNoNetwork()
-                        } else {
-                            self.loadingView.showNoDataView()
-                        }
-                    }
-                    eventCollectionView.reloadData()
-                }
-                else{
-                    if(self.networkReachability?.isReachable == false) {
-                        self.showNoNetwork()
-                    } else {
-                        self.loadingView.showNoDataView()
-                    }
-                }
-            }
+//            } else {
+//                var educationArray = [EducationEventEntityAr]()
+//                let dateID = self.getUniqueDate()
+//                educationArray = self.checkAddedToCoredata(entityName: "EducationEventEntityAr", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EducationEventEntityAr]
+//                if (educationArray.count > 0) {
+//                    for i in 0 ... educationArray.count-1 {
+//                        var dateArray : [String] = []
+//                        let educationInfo = educationArray[i]
+//                        let educationInfoArray = (educationInfo.fieldRepeatDates?.allObjects) as! [EdEventDateEntityAr]
+//                        for i in 0 ... educationInfoArray.count-1 {
+//                            dateArray.append(educationInfoArray[i].fieldRepeatDate!)
+//                        }
+//                        var ageGrpArray : [String] = []
+//                        let ageInfoArray = (educationInfo.ageGroupRelation?.allObjects) as! [EdAgeGroupEntityAr]
+//                        for i in 0 ... ageInfoArray.count-1 {
+//                            ageGrpArray.append(ageInfoArray[i].ageGroup!)
+//                        }
+//                        var topicsArray : [String] = []
+//                        let topicsInfoArray = (educationInfo.assTopicRelation?.allObjects) as! [EdEventTopicsEntityAr]
+//                        for i in 0 ... topicsInfoArray.count-1 {
+//                            topicsArray.append(topicsInfoArray[i].associatedTopic!)
+//                        }
+//                        var startDateArray : [String] = []
+//                        let startDateInfoArray = (educationInfo.startDateRelation?.allObjects) as! [EdStartDateEntityAr]
+//                        for i in 0 ... startDateInfoArray.count-1 {
+//                            startDateArray.append(startDateInfoArray[i].startDate!)
+//                        }
+//                        var endDateArray : [String] = []
+//                        let endDateInfoArray = (educationInfo.endDateRelation?.allObjects) as! [EdEndDateEntityAr]
+//                        for i in 0 ... endDateInfoArray.count-1 {
+//                            endDateArray.append(endDateInfoArray[i].endDate!)
+//                        }
+//
+//                        self.educationEventArray.insert(EducationEvent(itemId: educationArray[i].itemId, introductionText: educationArray[i].introductionText, register: educationArray[i].registerAr, fieldRepeatDate: dateArray, title: educationArray[i].titleAr, programType: educationArray[i].pgmTypeAr, mainDescription: educationArray[i].mainDesc, ageGroup: ageGrpArray, associatedTopics: topicsArray, museumDepartMent: educationArray[i].museumDepartMent, startDate: startDateArray, endDate: endDateArray), at: i)
+//
+//
+//                    }
+//                    if(educationEventArray.count == 0){
+//                        if(self.networkReachability?.isReachable == false) {
+//                            self.showNoNetwork()
+//                        } else {
+//                            self.loadingView.showNoDataView()
+//                        }
+//                    }
+//                    eventCollectionView.reloadData()
+//                }
+//                else{
+//                    if(self.networkReachability?.isReachable == false) {
+//                        self.showNoNetwork()
+//                    } else {
+//                        self.loadingView.showNoDataView()
+//                    }
+//                }
+//            }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
@@ -1065,13 +1082,19 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     //MARK: EVENT DB
     func eventCoreDataInBackgroundThread(managedContext: NSManagedObjectContext) {
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+//        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let dateID = getUniqueDate()
-            let fetchData = checkAddedToCoredata(entityName: "EventEntity", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EventEntity]
+            let fetchData = checkAddedToCoredata(entityName: "EventEntity",
+                                                 idKey: "dateId",
+                                                 idValue: dateID,
+                                                 managedContext: managedContext) as! [EventEntity]
             if (fetchData.count > 0) {
                 for i in 0 ... educationEventArray.count-1 {
                     let educationDict = educationEventArray[i]
-                    let fetchResultData = checkAddedToCoredata(entityName: "EventEntity", idKey: "itemId", idValue: educationDict.itemId, managedContext: managedContext) as! [EventEntity]
+                    let fetchResultData = checkAddedToCoredata(entityName: "EventEntity",
+                                                               idKey: "itemId",
+                                                               idValue: educationDict.itemId,
+                                                               managedContext: managedContext) as! [EventEntity]
                     if ( fetchResultData.count > 0) {
                         let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "EventEntity")
                         if(isDeleted == true) {
@@ -1087,31 +1110,31 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     self.saveEventToCoreData(educationEventDict: educationEvent, dateId: dateID, managedObjContext: managedContext)
                 }
             }
-        } else {
-            let dateID = getUniqueDate()
-            let fetchData = checkAddedToCoredata(entityName: "EventEntityArabic", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EventEntityArabic]
-            
-            //Anything in Db
-            if (fetchData.count > 0) {
-                for i in 0 ... educationEventArray.count-1 {
-                    let educationDict = educationEventArray[i]
-                    let fetchResultData = checkAddedToCoredata(entityName: "EventEntity", idKey: "itemId", idValue: educationDict.itemId, managedContext: managedContext) as! [EventEntity]
-                    if ( fetchResultData.count > 0) {
-                        let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "EventEntityArabic")
-                        if(isDeleted == true) {
-                            self.saveEventToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
-                        }
-                    } else {
-                        self.saveEventToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
-                    }
-                }
-            } else {
-                for i in 0 ... educationEventArray.count-1 {
-                    let educationEvent = educationEventArray[i]
-                self.saveEventToCoreData(educationEventDict: educationEvent, dateId: dateID, managedObjContext: managedContext)
-                }
-            }
-        }//Anything in Db
+//        } else {
+//            let dateID = getUniqueDate()
+//            let fetchData = checkAddedToCoredata(entityName: "EventEntityArabic", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EventEntityArabic]
+//
+//            //Anything in Db
+//            if (fetchData.count > 0) {
+//                for i in 0 ... educationEventArray.count-1 {
+//                    let educationDict = educationEventArray[i]
+//                    let fetchResultData = checkAddedToCoredata(entityName: "EventEntity", idKey: "itemId", idValue: educationDict.itemId, managedContext: managedContext) as! [EventEntity]
+//                    if ( fetchResultData.count > 0) {
+//                        let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "EventEntityArabic")
+//                        if(isDeleted == true) {
+//                            self.saveEventToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
+//                        }
+//                    } else {
+//                        self.saveEventToCoreData(educationEventDict: educationDict, dateId: dateID, managedObjContext: managedContext)
+//                    }
+//                }
+//            } else {
+//                for i in 0 ... educationEventArray.count-1 {
+//                    let educationEvent = educationEventArray[i]
+//                self.saveEventToCoreData(educationEventDict: educationEvent, dateId: dateID, managedObjContext: managedContext)
+//                }
+//            }
+//        }//Anything in Db
     }
     
     func deleteExistingEvent(managedContext:NSManagedObjectContext,entityName : String?) ->Bool? {
@@ -1131,7 +1154,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     }
     func saveEventToCoreData(educationEventDict: EducationEvent,dateId: String?, managedObjContext: NSManagedObjectContext) {
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function), line: \(#line)")
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+//        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 let edducationInfo: EventEntity = NSEntityDescription.insertNewObject(forEntityName: "EventEntity", into: managedObjContext) as! EventEntity
                 edducationInfo.dateId = dateId
                 edducationInfo.itemId = educationEventDict.itemId
@@ -1141,6 +1164,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                 edducationInfo.pgmType = educationEventDict.programType
                 edducationInfo.museumDepartMent = educationEventDict.museumDepartMent
             edducationInfo.mainDesc = educationEventDict.mainDescription
+        edducationInfo.language = Utils.getLanguage()
             
             //Date
              if(educationEventDict.fieldRepeatDate != nil){
@@ -1150,6 +1174,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     let edEventDate: EventDateEntity = NSEntityDescription.insertNewObject(forEntityName: "EventDateEntity", into: managedObjContext) as! EventDateEntity
                     edEventDate.fieldRepeatDate = educationEventDict.fieldRepeatDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
+                    eventDateEntity.language = Utils.getLanguage()
                     eventDateEntity = edEventDate
                     edducationInfo.addToFieldRepeatDates(eventDateEntity)
                     do {
@@ -1170,6 +1195,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     let eventAge: EventAgeGroupEntity = NSEntityDescription.insertNewObject(forEntityName: "EventAgeGroupEntity", into: managedObjContext) as! EventAgeGroupEntity
                     eventAge.ageGroup = educationEventDict.ageGroup![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
 
+                    eventAge.language = Utils.getLanguage()
                     eventAgeEntity = eventAge
                     edducationInfo.addToAgeGroupRelation(eventAgeEntity)
                     do {
@@ -1188,6 +1214,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     let event: EventTopicsEntity = NSEntityDescription.insertNewObject(forEntityName: "EventTopicsEntity", into: managedObjContext) as! EventTopicsEntity
                     event.associatedTopic = educationEventDict.associatedTopics![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
+                    event.language = Utils.getLanguage()
                     eventSubEntity = event
                     edducationInfo.addToAssTopicRelation(eventSubEntity)
                     do {
@@ -1206,6 +1233,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     let event: EventStartDateEntity = NSEntityDescription.insertNewObject(forEntityName: "EventStartDateEntity", into: managedObjContext) as! EventStartDateEntity
                     event.startDate = educationEventDict.startDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
+                    event.language = Utils.getLanguage()
                     eventSubEntity = event
                     edducationInfo.addToStartDateRelation(eventSubEntity)
                     do {
@@ -1224,6 +1252,7 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                     let event: EventEndDateEntity = NSEntityDescription.insertNewObject(forEntityName: "EventEndDateEntity", into: managedObjContext) as! EventEndDateEntity
                     event.endDate = educationEventDict.endDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
                     
+                    event.language = Utils.getLanguage()
                     eventSubEntity = event
                     edducationInfo.addToEndDateRelation(eventSubEntity)
                     do {
@@ -1237,114 +1266,114 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
             }
             
             
-        }
-        else {
-            
-           
-                let edducationInfo: EventEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "EventEntityArabic", into: managedObjContext) as! EventEntityArabic
-                 edducationInfo.dateId = dateId
-                edducationInfo.itemId = educationEventDict.itemId
-                edducationInfo.introductionText = educationEventDict.introductionText
-                edducationInfo.registerAr = educationEventDict.register
-                edducationInfo.titleAr = educationEventDict.title
-                edducationInfo.pgmTypeAr = educationEventDict.programType
-                edducationInfo.museumDepartMent = educationEventDict.museumDepartMent
-            edducationInfo.mainDesc = educationEventDict.mainDescription
-            if(educationEventDict.fieldRepeatDate != nil) {
-            if((educationEventDict.fieldRepeatDate?.count)! > 0) {
-                for i in 0 ... (educationEventDict.fieldRepeatDate?.count)!-1 {
-                    var eventDateEntity: EventDateEntityAr!
-                    let edEventDate: EventDateEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EventDateEntityAr", into: managedObjContext) as! EventDateEntityAr
-                    edEventDate.fieldRepeatDate = educationEventDict.fieldRepeatDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-                    
-                    eventDateEntity = edEventDate
-                    edducationInfo.addToFieldRepeatDates(eventDateEntity)
-                    
-                    do {
-                        try managedObjContext.save()
-                        
-                        
-                    } catch let error as NSError {
-                        print("Could not save. \(error), \(error.userInfo)")
-                    }
-                    
-                }
-            }
-        }
-            
-            //AgeGroup
-            if((educationEventDict.ageGroup?.count)! > 0) {
-                for i in 0 ... (educationEventDict.ageGroup?.count)!-1 {
-                    var eventAgeEntity: EventAgeGroupEntityAr!
-                    let eventAge: EventAgeGroupEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EventAgeGroupEntityAr", into: managedObjContext) as! EventAgeGroupEntityAr
-                    eventAge.ageGroup = educationEventDict.ageGroup![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-                    
-                    eventAgeEntity = eventAge
-                    edducationInfo.addToAgeGroupRelation(eventAgeEntity)
-                    do {
-                        try managedObjContext.save()
-                        
-                    } catch let error as NSError {
-                        print("Could not save. \(error), \(error.userInfo)")
-                    }
-                    
-                }
-            }
-            //Associated_topics
-            if((educationEventDict.associatedTopics?.count)! > 0) {
-                for i in 0 ... (educationEventDict.associatedTopics?.count)!-1 {
-                    var eventSubEntity: EventTopicsEntityAr!
-                    let event: EventTopicsEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EventTopicsEntityAr", into: managedObjContext) as! EventTopicsEntityAr
-                    event.associatedTopic = educationEventDict.associatedTopics![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-                    
-                    eventSubEntity = event
-                    edducationInfo.addToAssTopicRelation(eventSubEntity)
-                    do {
-                        try managedObjContext.save()
-                        
-                    } catch let error as NSError {
-                        print("Could not save. \(error), \(error.userInfo)")
-                    }
-                    
-                }
-            }
-            //StartDate
-            if((educationEventDict.startDate?.count)! > 0) {
-                for i in 0 ... (educationEventDict.startDate?.count)!-1 {
-                    var eventSubEntity: EventStartDateEntityAr!
-                    let event: EventStartDateEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EventStartDateEntityAr", into: managedObjContext) as! EventStartDateEntityAr
-                    event.startDate = educationEventDict.startDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-                    
-                    eventSubEntity = event
-                    edducationInfo.addToStartDateRelation(eventSubEntity)
-                    do {
-                        try managedObjContext.save()
-                        
-                    } catch let error as NSError {
-                        print("Could not save. \(error), \(error.userInfo)")
-                    }
-                    
-                }
-            }
-            //endDate
-            if((educationEventDict.endDate?.count)! > 0) {
-                for i in 0 ... (educationEventDict.endDate?.count)!-1 {
-                    var eventSubEntity: EventEndDateEntityAr!
-                    let event: EventEndDateEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EventEndDateEntityAr", into: managedObjContext) as! EventEndDateEntityAr
-                    event.endDate = educationEventDict.endDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
-                    
-                    eventSubEntity = event
-                    edducationInfo.addToEndDateRelation(eventSubEntity)
-                    do {
-                        try managedObjContext.save()
-                        
-                    } catch let error as NSError {
-                        print("Could not save. \(error), \(error.userInfo)")
-                    }
-                    
-                }
-            }
-        }
+//        }
+//        else {
+//
+//
+//                let edducationInfo: EventEntityArabic = NSEntityDescription.insertNewObject(forEntityName: "EventEntityArabic", into: managedObjContext) as! EventEntityArabic
+//                 edducationInfo.dateId = dateId
+//                edducationInfo.itemId = educationEventDict.itemId
+//                edducationInfo.introductionText = educationEventDict.introductionText
+//                edducationInfo.registerAr = educationEventDict.register
+//                edducationInfo.titleAr = educationEventDict.title
+//                edducationInfo.pgmTypeAr = educationEventDict.programType
+//                edducationInfo.museumDepartMent = educationEventDict.museumDepartMent
+//            edducationInfo.mainDesc = educationEventDict.mainDescription
+//            if(educationEventDict.fieldRepeatDate != nil) {
+//            if((educationEventDict.fieldRepeatDate?.count)! > 0) {
+//                for i in 0 ... (educationEventDict.fieldRepeatDate?.count)!-1 {
+//                    var eventDateEntity: EventDateEntityAr!
+//                    let edEventDate: EventDateEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EventDateEntityAr", into: managedObjContext) as! EventDateEntityAr
+//                    edEventDate.fieldRepeatDate = educationEventDict.fieldRepeatDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+//
+//                    eventDateEntity = edEventDate
+//                    edducationInfo.addToFieldRepeatDates(eventDateEntity)
+//
+//                    do {
+//                        try managedObjContext.save()
+//
+//
+//                    } catch let error as NSError {
+//                        print("Could not save. \(error), \(error.userInfo)")
+//                    }
+//
+//                }
+//            }
+//        }
+//
+//            //AgeGroup
+//            if((educationEventDict.ageGroup?.count)! > 0) {
+//                for i in 0 ... (educationEventDict.ageGroup?.count)!-1 {
+//                    var eventAgeEntity: EventAgeGroupEntityAr!
+//                    let eventAge: EventAgeGroupEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EventAgeGroupEntityAr", into: managedObjContext) as! EventAgeGroupEntityAr
+//                    eventAge.ageGroup = educationEventDict.ageGroup![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+//
+//                    eventAgeEntity = eventAge
+//                    edducationInfo.addToAgeGroupRelation(eventAgeEntity)
+//                    do {
+//                        try managedObjContext.save()
+//
+//                    } catch let error as NSError {
+//                        print("Could not save. \(error), \(error.userInfo)")
+//                    }
+//
+//                }
+//            }
+//            //Associated_topics
+//            if((educationEventDict.associatedTopics?.count)! > 0) {
+//                for i in 0 ... (educationEventDict.associatedTopics?.count)!-1 {
+//                    var eventSubEntity: EventTopicsEntityAr!
+//                    let event: EventTopicsEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EventTopicsEntityAr", into: managedObjContext) as! EventTopicsEntityAr
+//                    event.associatedTopic = educationEventDict.associatedTopics![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+//
+//                    eventSubEntity = event
+//                    edducationInfo.addToAssTopicRelation(eventSubEntity)
+//                    do {
+//                        try managedObjContext.save()
+//
+//                    } catch let error as NSError {
+//                        print("Could not save. \(error), \(error.userInfo)")
+//                    }
+//
+//                }
+//            }
+//            //StartDate
+//            if((educationEventDict.startDate?.count)! > 0) {
+//                for i in 0 ... (educationEventDict.startDate?.count)!-1 {
+//                    var eventSubEntity: EventStartDateEntityAr!
+//                    let event: EventStartDateEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EventStartDateEntityAr", into: managedObjContext) as! EventStartDateEntityAr
+//                    event.startDate = educationEventDict.startDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+//
+//                    eventSubEntity = event
+//                    edducationInfo.addToStartDateRelation(eventSubEntity)
+//                    do {
+//                        try managedObjContext.save()
+//
+//                    } catch let error as NSError {
+//                        print("Could not save. \(error), \(error.userInfo)")
+//                    }
+//
+//                }
+//            }
+//            //endDate
+//            if((educationEventDict.endDate?.count)! > 0) {
+//                for i in 0 ... (educationEventDict.endDate?.count)!-1 {
+//                    var eventSubEntity: EventEndDateEntityAr!
+//                    let event: EventEndDateEntityAr = NSEntityDescription.insertNewObject(forEntityName: "EventEndDateEntityAr", into: managedObjContext) as! EventEndDateEntityAr
+//                    event.endDate = educationEventDict.endDate![i].replacingOccurrences(of: "<[^>]+>|&nbsp;|&|#039;", with: "", options: .regularExpression, range: nil)
+//
+//                    eventSubEntity = event
+//                    edducationInfo.addToEndDateRelation(eventSubEntity)
+//                    do {
+//                        try managedObjContext.save()
+//
+//                    } catch let error as NSError {
+//                        print("Could not save. \(error), \(error.userInfo)")
+//                    }
+//
+//                }
+//            }
+//        }
         do {
             try managedObjContext.save()
             
@@ -1357,10 +1386,13 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
     func fetchEventFromCoredata() {
         let managedContext = getContext()
         do {
-            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+//            if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
                 var educationArray = [EventEntity]()
                 let dateID = getUniqueDate()
-                educationArray = checkAddedToCoredata(entityName: "EventEntity", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EventEntity]
+                educationArray = checkAddedToCoredata(entityName: "EventEntity",
+                                                      idKey: "dateId",
+                                                      idValue: dateID,
+                                                      managedContext: managedContext) as! [EventEntity]
                 if (educationArray.count > 0) {
                     for i in 0 ... educationArray.count-1 {
                         var dateArray : [String] = []
@@ -1409,62 +1441,62 @@ class EventViewController: UIViewController,UICollectionViewDelegate,UICollectio
                         self.loadingView.showNoDataView()
                     }
                 }
-            }
-            else {
-                var educationArray = [EventEntityArabic]()
-                let dateID = getUniqueDate()
-                educationArray = checkAddedToCoredata(entityName: "EventEntityArabic", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EventEntityArabic]
-                if (educationArray.count > 0) {
-                    for i in 0 ... educationArray.count-1 {
-                        var dateArray : [String] = []
-                        let educationInfo = educationArray[i]
-                        let educationInfoArray = (educationInfo.fieldRepeatDates?.allObjects) as! [EventDateEntityAr]
-                        for i in 0 ... educationInfoArray.count-1 {
-                            dateArray.append(educationInfoArray[i].fieldRepeatDate!)
-                        }
-                        
-                        var ageGrpArray : [String] = []
-                        let ageInfoArray = (educationInfo.ageGroupRelation?.allObjects) as! [EventAgeGroupEntityAr]
-                        for i in 0 ... ageInfoArray.count-1 {
-                            ageGrpArray.append(ageInfoArray[i].ageGroup!)
-                        }
-                        var topicsArray : [String] = []
-                        let topicsInfoArray = (educationInfo.assTopicRelation?.allObjects) as! [EventTopicsEntityAr]
-                        for i in 0 ... topicsInfoArray.count-1 {
-                            topicsArray.append(topicsInfoArray[i].associatedTopic!)
-                        }
-                        var startDateArray : [String] = []
-                        let startDateInfoArray = (educationInfo.startDateRelation?.allObjects) as! [EventStartDateEntityAr]
-                        for i in 0 ... startDateInfoArray.count-1 {
-                            startDateArray.append(startDateInfoArray[i].startDate!)
-                        }
-                        var endDateArray : [String] = []
-                        let endDateInfoArray = (educationInfo.endDateRelation?.allObjects) as! [EventEndDateEntityAr]
-                        for i in 0 ... endDateInfoArray.count-1 {
-                            endDateArray.append(endDateInfoArray[i].endDate!)
-                        }
-                        
-                        self.educationEventArray.insert(EducationEvent(itemId: educationArray[i].itemId, introductionText: educationArray[i].introductionText, register: educationArray[i].registerAr, fieldRepeatDate: dateArray, title: educationArray[i].titleAr, programType: educationArray[i].pgmTypeAr, mainDescription: educationArray[i].mainDesc, ageGroup: ageGrpArray, associatedTopics: topicsArray, museumDepartMent: educationArray[i].museumDepartMent, startDate: startDateArray, endDate: endDateArray), at: i)
-                        
-                       
-                    }
-                    if(educationEventArray.count == 0){
-                        if(self.networkReachability?.isReachable == false) {
-                            self.showNoNetwork()
-                        } else {
-                            self.loadingView.showNoDataView()
-                        }
-                    }
-                    eventCollectionView.reloadData()
-                }
-                else{
-                    if(self.networkReachability?.isReachable == false) {
-                        self.showNoNetwork()
-                    } else {
-                        self.loadingView.showNoDataView()
-                    }
-                }
-            }
+//            }
+//            else {
+//                var educationArray = [EventEntityArabic]()
+//                let dateID = getUniqueDate()
+//                educationArray = checkAddedToCoredata(entityName: "EventEntityArabic", idKey: "dateId", idValue: dateID, managedContext: managedContext) as! [EventEntityArabic]
+//                if (educationArray.count > 0) {
+//                    for i in 0 ... educationArray.count-1 {
+//                        var dateArray : [String] = []
+//                        let educationInfo = educationArray[i]
+//                        let educationInfoArray = (educationInfo.fieldRepeatDates?.allObjects) as! [EventDateEntityAr]
+//                        for i in 0 ... educationInfoArray.count-1 {
+//                            dateArray.append(educationInfoArray[i].fieldRepeatDate!)
+//                        }
+//
+//                        var ageGrpArray : [String] = []
+//                        let ageInfoArray = (educationInfo.ageGroupRelation?.allObjects) as! [EventAgeGroupEntityAr]
+//                        for i in 0 ... ageInfoArray.count-1 {
+//                            ageGrpArray.append(ageInfoArray[i].ageGroup!)
+//                        }
+//                        var topicsArray : [String] = []
+//                        let topicsInfoArray = (educationInfo.assTopicRelation?.allObjects) as! [EventTopicsEntityAr]
+//                        for i in 0 ... topicsInfoArray.count-1 {
+//                            topicsArray.append(topicsInfoArray[i].associatedTopic!)
+//                        }
+//                        var startDateArray : [String] = []
+//                        let startDateInfoArray = (educationInfo.startDateRelation?.allObjects) as! [EventStartDateEntityAr]
+//                        for i in 0 ... startDateInfoArray.count-1 {
+//                            startDateArray.append(startDateInfoArray[i].startDate!)
+//                        }
+//                        var endDateArray : [String] = []
+//                        let endDateInfoArray = (educationInfo.endDateRelation?.allObjects) as! [EventEndDateEntityAr]
+//                        for i in 0 ... endDateInfoArray.count-1 {
+//                            endDateArray.append(endDateInfoArray[i].endDate!)
+//                        }
+//
+//                        self.educationEventArray.insert(EducationEvent(itemId: educationArray[i].itemId, introductionText: educationArray[i].introductionText, register: educationArray[i].registerAr, fieldRepeatDate: dateArray, title: educationArray[i].titleAr, programType: educationArray[i].pgmTypeAr, mainDescription: educationArray[i].mainDesc, ageGroup: ageGrpArray, associatedTopics: topicsArray, museumDepartMent: educationArray[i].museumDepartMent, startDate: startDateArray, endDate: endDateArray), at: i)
+//
+//
+//                    }
+//                    if(educationEventArray.count == 0){
+//                        if(self.networkReachability?.isReachable == false) {
+//                            self.showNoNetwork()
+//                        } else {
+//                            self.loadingView.showNoDataView()
+//                        }
+//                    }
+//                    eventCollectionView.reloadData()
+//                }
+//                else{
+//                    if(self.networkReachability?.isReachable == false) {
+//                        self.showNoNetwork()
+//                    } else {
+//                        self.loadingView.showNoDataView()
+//                    }
+//                }
+//            }
         }
     }
     
