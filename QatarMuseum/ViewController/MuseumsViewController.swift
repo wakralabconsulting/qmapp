@@ -680,7 +680,7 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
     func aboutCoreDataInBackgroundThread(managedContext: NSManagedObjectContext,aboutDetailtArray:[Museum]?) {
         DDLogInfo(NSStringFromClass(type(of: self)) + "Function: \(#function)")
         
-        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
+//        if ((LocalizationLanguage.currentAppleLanguage()) == ENG_LANGUAGE) {
             let fetchData = checkAddedToCoredata(entityName: "AboutEntity",
                                                  idKey: "id" ,
                                                  idValue: aboutDetailtArray![0].id,
@@ -702,26 +702,26 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                 aboutDetailDict = aboutDetailtArray?[0]
                 self.saveToCoreData(aboutDetailDict: aboutDetailDict!, managedObjContext: managedContext)
             }
-        } else {
-            let fetchData = checkAddedToCoredata(entityName: "AboutEntityArabic",
-                                                 idKey:"id" ,
-                                                 idValue: aboutDetailtArray![0].id,
-                                                 managedContext: managedContext) as! [AboutEntityArabic]
-            if (fetchData.count > 0) {
-                let aboutDetailDict = aboutDetailtArray![0]
-                let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutEntityArabic")
-                if(isDeleted == true) {
-                    var aboutDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDescriptionEntityAr")
-                    aboutDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutMultimediaFileEntityAr")
-                    print(aboutDeleted ?? true)
-                    self.saveToCoreData(aboutDetailDict: aboutDetailDict, managedObjContext: managedContext)
-                }
-            } else {
-                let aboutDetailDict : Museum?
-                aboutDetailDict = aboutDetailtArray?[0]
-                self.saveToCoreData(aboutDetailDict: aboutDetailDict!, managedObjContext: managedContext)
-            }
-        }
+//        } else {
+//            let fetchData = checkAddedToCoredata(entityName: "AboutEntityArabic",
+//                                                 idKey:"id" ,
+//                                                 idValue: aboutDetailtArray![0].id,
+//                                                 managedContext: managedContext) as! [AboutEntityArabic]
+//            if (fetchData.count > 0) {
+//                let aboutDetailDict = aboutDetailtArray![0]
+//                let isDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutEntityArabic")
+//                if(isDeleted == true) {
+//                    var aboutDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutDescriptionEntityAr")
+//                    aboutDeleted = self.deleteExistingEvent(managedContext: managedContext, entityName: "AboutMultimediaFileEntityAr")
+//                    print(aboutDeleted ?? true)
+//                    self.saveToCoreData(aboutDetailDict: aboutDetailDict, managedObjContext: managedContext)
+//                }
+//            } else {
+//                let aboutDetailDict : Museum?
+//                aboutDetailDict = aboutDetailtArray?[0]
+//                self.saveToCoreData(aboutDetailDict: aboutDetailDict!, managedObjContext: managedContext)
+//            }
+//        }
     }
     
     func saveToCoreData(aboutDetailDict: Museum, managedObjContext: NSManagedObjectContext) {
