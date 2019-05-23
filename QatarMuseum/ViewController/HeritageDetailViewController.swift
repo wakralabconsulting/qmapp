@@ -12,10 +12,10 @@ import Firebase
 import UIKit
 import CocoaLumberjack
 
-enum PageName{
-    case heritageDetail
-    case publicArtsDetail
-}
+//enum PageName{
+//    case heritageDetail
+//    case publicArtsDetail
+//}
 class HeritageDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, comingSoonPopUpProtocol,LoadingViewProtocol, iCarouselDelegate,iCarouselDataSource {
     @IBOutlet weak var heritageDetailTableView: UITableView!
     @IBOutlet weak var loadingView: LoadingView!

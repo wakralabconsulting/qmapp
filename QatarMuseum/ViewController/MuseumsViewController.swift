@@ -460,19 +460,19 @@ class MuseumsViewController: UIViewController,KASlideShowDelegate,TopBarProtocol
                         ])
                     self.present(parkView, animated: false, completion: nil)
                 } else {
-//                    let parkView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
-//                    parkView.pageNameString = PageName.SideMenuPark
-//                    let transition = CATransition()
-//                    transition.duration = 0.3
-//                    transition.type = kCATransitionFade
-//                    transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-//                    view.window!.layer.add(transition, forKey: kCATransition)
-//                    Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
-//                        AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museum_parksside,
-//                        AnalyticsParameterItemName: parkView.pageNameString ?? "",
-//                        AnalyticsParameterContentType: "cont"
-//                        ])
-//                    self.present(parkView, animated: false, completion: nil)
+                    let parkView = self.storyboard?.instantiateViewController(withIdentifier: "heritageDetailViewId") as! HeritageDetailViewController
+                    parkView.pageNameString = PageName.SideMenuPark
+                    let transition = CATransition()
+                    transition.duration = 0.3
+                    transition.type = kCATransitionFade
+                    transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+                    view.window!.layer.add(transition, forKey: kCATransition)
+                    Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                        AnalyticsParameterItemID: FirebaseAnalyticsEvents.tapped_museum_parksside,
+                        AnalyticsParameterItemName: parkView.pageNameString ?? "",
+                        AnalyticsParameterContentType: "cont"
+                        ])
+                    self.present(parkView, animated: false, completion: nil)
                 }
             } else if((selectedItem == "Dining") || (selectedItem == "الطعام")) {
                 let diningView =  self.storyboard?.instantiateViewController(withIdentifier: "exhibitionViewId") as! CommonListViewController
